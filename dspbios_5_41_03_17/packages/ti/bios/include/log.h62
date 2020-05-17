@@ -1,0 +1,508 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== log.h62 ========
+;
+;
+
+        .if ($isdefed("LOG_") = 0)    ; prevent multiple includes of this file
+LOG_    .set    1
+
+        .include chk.h62
+        .include gbl.h62
+        .include trc.h62
+
+;
+;  ======== LOG Event IDs ========
+;
+LOG_PRDBEGIN    .set    0
+LOG_PRDEND      .set    1
+LOG_SWIPOST     .set    2
+LOG_SWIBEGIN    .set    3
+LOG_SWIEND      .set    4
+LOG_PRDTICK     .set    5           ; logged for each PRD_F_tick
+LOG_CLKINT      .set    6           ; logged for each CLK interrupt
+LOG_HWIBEGIN    .set    7
+LOG_USRMSG      .set    8
+LOG_USRERR      .set    9
+LOG_TSKBLOCKED  .set    10
+LOG_TSKDONE     .set    11
+LOG_TSKRUNNING  .set    12
+LOG_TSKREADY    .set    13
+LOG_SEMPOST     .set    14      
+LOG_TSKYIELD    .set    15
+
+;
+;  ======== LOG Enable bits ========
+;
+LOG_ENABLETARG    .set    0001H        ; set and cleared by target
+LOG_ENABLEHOST    .set    0002H        ; set and cleared by host
+
+;
+;  ======== LOG_Obj ========
+;  The LOG object structure definition
+;
+LOG_Obj         .struct
+bufend  .word   1                  ; end address of trace buffer
+flag    .word   1                  ; flag == 0 <=> trace enabled
+seqnum  .word   1                  ; sequence number
+curptr  .word   1                  ; address of trace event to be
+                                   ; written next
+lenmask .word   1                  ; length of buffer - 1
+bufbeg  .word   1                  ; base address of trace buffer
+LOG_A_OBJSIZE   .endstruct
+
+LOG_BASE        .set    LOG_Obj.bufend
+
+LOG_O_BUFEND    .set    LOG_Obj.bufend-LOG_BASE
+LOG_O_FLAG      .set    LOG_Obj.flag-LOG_BASE
+LOG_O_SEQNUM    .set    LOG_Obj.seqnum-LOG_BASE
+LOG_O_CURPTR    .set    LOG_Obj.curptr-LOG_BASE
+LOG_O_LENMASK   .set    LOG_Obj.lenmask-LOG_BASE
+LOG_O_BUFBEG    .set    LOG_Obj.bufbeg-LOG_BASE
+
+;
+;  ======== LOG_Event ========
+;  The LOG event structure definition
+;
+LOG_Event       .struct
+seq     .word   1               ; event sequence number
+val1    .word   1               ; arbitrary word value
+val2    .word   1               ; ditto
+val3    .word   1               ; ditto
+LOG_A_EVENTSIZE .endstruct
+
+;
+;  ======== LOG_NOOP ========
+;  Define this symbol to "compile out" all LOG macros
+;
+;  LOG_NOOP       .set 1          ; Note: LOG_NOOP is defined when
+                               ; uncommented
+;
+
+;
+;  Assert that LOG_Events have size equal to a power of two
+;
+        .if ((LOG_A_EVENTSIZE - 1) & LOG_A_EVENTSIZE) != 0
+            .emsg "LOG_A_EVENTSIZE must be a power of 2"
+        .endif
+ 
+        .global LOG_F_event, LOG_F_reset
+        .global LOG_D_system
+        .global LOG_system
+
+        .global _LOG_event              ; defined in log.s62
+        .global _LOG_reset              ; defined in log_rese.s62
+
+        .global _LOG_copy
+        .global _LOG_event5
+
+        ; this needs to be a .ref to reforce symbols to be defined for VBD
+        .ref LOG_A_TABBEG, LOG_A_TABEND, LOG_A_TABLEN
+
+;
+;# ======== LOG_Obj ========
+;  Allocate a LOG object and properly initialize all fields.
+;
+;  Parameters:
+;       bufbeg  - starting address of buffer containing data (must be
+;                 aligned on a power of 2 word boundary (for wrapping)).
+;       buflen  - length of buffer in words (must be power of 2 
+;          and >= LOG_A_EVENTSIZE)
+;       mode    - if mode == "fixed", buffer is treated as a fixed
+;                 length buffer; otherwise events continuously wrap within
+;                 buffer.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    ":GBL_Obj$regs:", LOG_Obj$regs
+LOG_Obj         .macro cflag, name, id, bufseg, buflen, mode, type, format
+        CHK_domain LOG_Obj, mode, "circular,fixed", "circular"
+        .asg ":CHK_status:", mode
+        .if ($isdefed("LOG_NOOP") = 1)
+            .mexit
+        .elseif ($symcmp(":mode:", "error") = 0)
+            .emsg "LOG_Obj mode error."
+        .endif
+
+        .global :name:$buf
+        .global :name:$size
+        .global :name:$datatype
+
+        .if ($symcmp(":type:", "system") = 0)    ; if (type == "system")
+:name:$datatype .set    0
+        .elseif ($symcmp(":type:", "printf") = 0)    ; if (type == "printf")
+:name:$datatype .set    1
+        .elseif ($symcmp(":type:", "raw data") = 0)   ; if (type == "raw data")
+:name:$datatype .set    2
+
+        .global :name:$fmtstr
+
+        ; place ":format:" string into .printf section and create symbol for it
+        .sect ".printf"
+:name:$fmtstr   .string ":format:"
+        .byte   0               ; place null character at end of string
+        .endif
+
+
+        .var    bufbeg
+        .var    flag
+        .if ((:cflag: != 0) & (:buflen: > 0))
+            .if (((:buflen: - 1) & :buflen:) != 0)
+                .emsg   "The LOG :name: buffer size must be a power of 2"
+            .endif
+
+            .asg        0, flag         ; enable LOG
+            .asg        ":name:$buf", bufbeg
+
+                                       ;
+                                       ; place log buffers into 
+                                                                           ; .log0, .log1, etc. sections
+            
+            GBL_Obj     :bufbeg:, buflen, ".:name:$buf", "noalign", -1, 1
+
+:name:$size .set        :buflen:
+
+        .else
+            .asg        1, flag         ; disable LOG
+            .asg        0, bufbeg
+:name:$buf  .set        0
+:name:$size .set        0
+        .endif
+
+        .sect ".log"                    ; place all LOG objects in
+                                        ; ".log"
+        .global :name:                  ; make name globally visable
+        .global :name:$log
+
+:name:$log .set 0
+
+:name:  .tag    LOG_Obj                 ; declare name as having type
+                                        ; LOG_Obj
+
+                                        ; allocate and initialize 
+:name:                                  ; LOG_Obj (in current section)
+
+        .word    0                      ; bufend 
+        .word    0                      ; flag
+        .word    0                      ; seqnum 
+        .word    0                      ; curptr
+        .word    0                      ; lenmask 
+        .word    0                      ; bufbeg
+
+        .sect ".cinit"
+        .align  8
+        .field  STD_TARGWORDMAUS * 6
+        .field  :name:    
+    .if ($symcmp(":mode:", "fixed") = 0)    ; if (mode == "fixed")
+        .field  :bufbeg:+(:buflen: * STD_TARGWORDMAUS)-1 ; bufend = bufbeg+buflen-1
+    .else                               ; else
+        .field  0                       ;    bufend = 0
+    .endif
+        .field  :flag:                  ; flag
+        .field  0                       ; seqnum = 0
+        .field  :bufbeg:                ; curptr
+                                        ; lenmask (= buflen-1)
+        .field  (:buflen: * STD_TARGWORDMAUS)-1
+        .field  :bufbeg:                ; bufbeg
+    .sect    ".log"
+
+        .endm
+
+;
+;#  ======== LOG_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LOG_config$regs
+LOG_config      .macro _enabled
+        .endm
+
+;
+;# ======== LOG_disable ========
+;  To disable a log
+;#
+;#  Preconditions:
+;#      a4  = address of the LOG object
+;#
+;#  Postconditions:
+;#      none
+;#
+;
+        .asg    "a0", LOG_disable$regs
+LOG_disable     .macro 
+ 
+        mvk 1, a0                         
+        stw a0, *+a4(LOG_O_FLAG)        ; flag = 1 to disable the log
+
+        .endm
+
+;
+;# ======== LOG_enable ========
+;  To enable a log
+;#
+;#  Preconditions:
+;#      a4  = address of the LOG object
+;#
+;#  Postconditions:
+;#      none
+;#
+;
+        .asg    "a0", LOG_enable$regs
+LOG_enable      .macro 
+ 
+        mvk 0, a0                         
+        stw a0, *+a4(LOG_O_FLAG)        ; flag = 0 to enable the log
+
+        .endm
+
+;
+;# ======== LOG_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LOG_end$regs
+LOG_end .macro
+        .endm
+
+;
+;# ======== LOG_error ========
+;  Write user error event to system log.
+;#
+;#  Preconditions:
+;#      b4  = arg0
+;#
+;#  Postconditions:
+;#      none
+;#
+;
+        .asg "a4,a6,b3,b6,:LOG_F_event$regs:", LOG_error$regs
+LOG_error      .macro  format, section
+        CHK_nargs LOG_error, "format"
+ 
+        .sect   ".printf"
+strer?  .byte   ":format:"      ; put format string in .printf section
+        .byte   0               ; '\0' terminate format string
+
+        .if ($symlen(section) != 0)     ; if section is specified, change to
+                                        ; that section
+                .sect   ":section:"
+        .else
+                .text
+        .endif
+
+        mvkl LOG_F_event,b3        ; change to FAR call
+||      mvkl LOG_D_system, a4
+        mvkh LOG_F_event,b3
+||      mvkh LOG_D_system, a4
+        b b3                       ; start branch to LOG_F_event
+
+        ldw *a4, a4                     ; load addr of LOG_system object
+                                   ; arg0 already in val 1 register
+        mvkl strer?,a6             ; put format string addr into val2 register
+  ||    mvkl LOG_USRERR,b6         ; put LOG_USRERR tag into val3 register 
+        mvkh strer?,a6          
+  ||    mvkh LOG_USRERR,b6      
+        mvkl loger?,b3             ; setup return address to end of macro
+        mvkh loger?,b3
+loger?: 
+        .endm
+
+ 
+;
+;# ======== LOG_event ========
+;  Write event to trace buffer
+;#
+;#  Preconditions:
+;#      a4  = address of the LOG object
+;#      b4  = val1
+;#      a6  = val2
+;#      b6  = val3
+;#
+;#  Postconditions:
+;#      none
+;#
+;
+        .asg    "b3,:LOG_F_event$regs:", LOG_event$regs
+LOG_event       .macro 
+        .if ($isdefed("LOG_NOOP") = 1)
+            .mexit              ; if LOG compiled out, exit macro now
+        .endif
+ 
+        mvkl LOG_F_event,b3     ; change to FAR call
+        mvkh LOG_F_event,b3
+        b b3                    ; start branch to LOG_F_event 
+        mvkl loge?,b3           ; setup return address to end of macro
+        mvkh loge?,b3
+        nop 3
+loge?:
+        .endm
+
+;
+;# ======== LOG_init ========
+;  Runtime initialization for LOG
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LOG_init$regs
+LOG_init        .macro
+        ; only expand if the LOG module is configured by the user
+        .if (LOG$ = 1)
+        .endif
+
+        .endm
+
+;
+;# ======== LOG_message ========
+;  Write user message event to system log if TRC_GBLHOST and
+;  TRC_GBLTARG are enabled.
+;#
+;#  Preconditions:
+;#      b4  = arg0
+;#
+;#  Postconditions:
+;#      none
+;#
+;
+        .asg "a1,a4,a6,b3,b6,:TRC_query$regs:,:LOG_F_event$regs:", LOG_message$regs
+LOG_message      .macro  format, section
+        CHK_nargs LOG_message, "format"
+ 
+        .sect   ".printf"
+strem?  .byte   ":format:"         ; put format string in .printf section
+        .byte   0                  ; '\0' terminate format string
+
+        .if ($symlen(section) != 0)     ; if section is specified, change to
+                                        ; that section
+                .sect   ":section:"
+        .else
+                .text
+        .endif
+
+        TRC_query 0                ; query 0, checking TRC_GBLHOST, TRC_GBLTARG
+        mv a4,a1                   ; a4=0 if both are enabled
+
+ [a1]   b logem?                   ; if TRC_GBLHOST and TRC_GBLTARG are not 
+                                   ; both enabled then jump past logging event
+ [!a1]  mvkl LOG_F_event,b3        ; change to FAR call
+||[!a1] mvkl LOG_D_system, a4
+ [!a1]  mvkh LOG_F_event,b3
+||[!a1] mvkh LOG_D_system, a4
+ [!a1]  b b3                       ; start branch to LOG_F_event
+
+ [!a1]  ldw *a4, a4                     ; load addr of LOG_system object
+                                   ; arg0 already in val 1 regiter
+ [!a1]  mvkl strem?,a6             ; put format string addr into val2 register
+||[!a1] mvkl LOG_USRMSG,b6         ; put LOG_USRMSG tag into val3 register 
+ [!a1]  mvkh strem?,a6          
+||[!a1] mvkh LOG_USRMSG,b6      
+ [!a1]  mvkl logem?,b3             ; setup return address to end of macro
+        mvkh logem?,b3
+logem?: 
+        .endm
+
+;
+;# ======== LOG_printf ========
+;#
+;# Preconditions:
+;#      a4 = address of the LOG object
+;#      b4 = arg0
+;#      a6 = arg1 
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#    - LOG_printf (even the C version) supports 0, 1, or 2 arguments
+;#      after the format string.
+;#    - The format string address is put in b6 as the third value for LOG_event
+;
+        .asg    "b3,b6,:LOG_F_event$regs:", LOG_printf$regs
+LOG_printf      .macro  format, section
+        CHK_nargs LOG_printf, "format"
+ 
+        .sect   ".printf"
+str?    .byte   ":format:"
+        .byte   0               ; '\0' terminate printf string
+
+        .if ($symlen(section) != 0)     ; if section is specified, change to
+                                        ; that section
+                .sect   ":section:"
+        .else
+                .text
+        .endif
+
+        mvkl LOG_F_event,b3     ; change to FAR call
+        mvkh LOG_F_event,b3
+        b b3                    ; start branch to LOG_F_event
+        mvkl str? ,b6           ; put format string addr in register
+        mvkh str? ,b6           ; b6 as val3
+        mvkl logp?,b3           ; setup return address to end of macro
+        mvkh logp?,b3
+        nop
+logp?: 
+        .endm
+
+;
+;# ======== LOG_reset ========
+;  Reset the fields of a log to their initial value
+;  and set each word in log buffer to 0xffffffff
+;
+;#
+;# Preconditions:
+;#      a4  = address of the LOG object
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg "b3,:LOG_F_reset$regs:", LOG_reset$regs
+LOG_reset       .macro
+        mvkl LOG_F_reset,b3     ; change to FAR call
+        mvkh LOG_F_reset,b3
+        b b3
+        mvkl logr?,b3           ; setup return address to end of macro
+        mvkh logr?,b3
+        nop 3
+logr?: 
+        .endm
+
+;
+;# ======== LOG_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LOG_startup$regs
+LOG_startup        .macro
+        .endm
+
+
+        .endif          ; if LOG_ is not defined

@@ -1,0 +1,32 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectName="mpeg2dec"
+ProjectDir="F:\Alpana\MPEG2_Decoder\DEV_100_V_MPEG2_D_1_10_006__9XDm_changes_1.0_ref_Memtab\100_V_MPEG2_D_1_10\DM644x_MP_001\Client\Build\"
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Debug"
+
+[Source Files]
+Source="..\Test\Src\alg_control.c"
+Source="..\Test\Src\alg_create.c"
+Source="..\Test\Src\alg_malloc.c"
+Source="..\Test\Src\bios_rts.c"
+Source="..\Test\Src\buffermanager.c"
+Source="..\Test\Src\testappconfigparser.c"
+Source="..\Test\Src\TestAppDecoder.c"
+Source="MPEG2VDecApp.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-g -q -fr"$(Proj_dir)\Obj" -i"..\Inc" -i"..\..\..\Inc" -i"$(Install_dir)\C6000\cgtools\include" -i"$(Install_dir)\bios_5_32_02\packages" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\dman3\" -i"$(Install_dir)\framework_components_2_20_00_15\packages" -i"$(Install_dir)\framework_components_2_20_00_15\fctools\packages" -d"C6000" -d"LITTLE_ENDIAN" -d"USE_DSP_DMA=1" -d"TARGET_6400" -d"CHIP_DAVINCI" -d"HDTV_1080I" -d"_RTS_MODE" -d"DISABLE_ACPY3_INTERFACE" -d"NASSERT" -mt -ml3 -mv6400+ 
+
+["Linker" Settings: "Debug"]
+Options=-q -c -m"$(Proj_dir)\Map\TestAppDecoder.map" -o"$(Proj_dir)\Out\TestAppDecoder.out" -w -x -i"..\..\..\lib" -i"$(Install_dir)\C6000\cgtools\lib\" -i"$(Install_dir)\bios_5_32_02\packages\ti\bios\lib" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\dman3\lib" -l"mpeg2vdec_ti.l64P" -l"dman3.a64P" -l"rts64plus.lib" -l"biosDM420.a64P"
+
+["MPEG2VDecApp.cmd" Settings: "Debug"]
+LinkOrder=1
+

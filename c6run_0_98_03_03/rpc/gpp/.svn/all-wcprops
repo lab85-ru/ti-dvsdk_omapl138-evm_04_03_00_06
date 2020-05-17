@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/gpp
+END
+gpp_stubs_math.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/gpp/gpp_stubs_math.c
+END
+gpp_stubs_time.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/gpp/gpp_stubs_time.c
+END
+gpp_stubs_user.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/gpp/gpp_stubs_user.c
+END
+gpp_stubs_stdlib.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/gpp/gpp_stubs_stdlib.c
+END
+gpp_stubs_stdio.c
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/gpp/gpp_stubs_stdio.c
+END
+gpp_stubs_ctype.c
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/gpp/gpp_stubs_ctype.c
+END
+gpp_stubs_string.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/gpp/gpp_stubs_string.c
+END
+gpp_stubs_io.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/gpp/gpp_stubs_io.c
+END

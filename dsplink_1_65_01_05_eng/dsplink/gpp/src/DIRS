@@ -1,0 +1,104 @@
+#   ============================================================================
+#   @file   DIRS
+#
+#   @path   $(DSPLINK)/gpp/src/
+#
+#   @desc   This file defines the set of sub directories to be considered
+#           by the MAKE system.
+#
+#   @ver    1.65.01.05_eng
+#   ============================================================================
+#   Copyright (C) 2002-2009, Texas Instruments Incorporated -
+#   http://www.ti.com/
+#
+#   Redistribution and use in source and binary forms, with or without
+#   modification, are permitted provided that the following conditions
+#   are met:
+#   
+#   *  Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
+#   
+#   *  Redistributions in binary form must reproduce the above copyright
+#      notice, this list of conditions and the following disclaimer in the
+#      documentation and/or other materials provided with the distribution.
+#   
+#   *  Neither the name of Texas Instruments Incorporated nor the names of
+#      its contributors may be used to endorse or promote products derived
+#      from this software without specific prior written permission.
+#   
+#   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+#   THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+#   PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+#   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+#   EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#   PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#   OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#   OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+#   EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#   ============================================================================
+
+
+#   ============================================================================
+#   Generic information about the component
+#   ============================================================================
+
+DIR_NAME    := SRC
+
+
+#   ============================================================================
+#   List of directories in the component
+#   ============================================================================
+ifeq ("$(TI_DSPLINK_GPPOS)", "Linux")
+ifeq ("$(TI_DSPLINK_PLATFORM)", "OMAPL138")
+DIRS  +=     \
+    api
+else # ifeq ("$(TI_DSPLINK_PLATFORM)", "OMAPL138")
+ifeq ("$(TI_DSPLINK_PLATFORM)", "OMAP3530")
+DIRS  +=     \
+    api
+else # ifeq ("$(TI_DSPLINK_PLATFORM)", "OMAPL138")
+ifeq ("$(TI_DSPLINK_PLATFORM)", "DAVINCIHD")
+DIRS  +=     \
+    api
+else # ifeq ("$(TI_DSPLINK_PLATFORM)", "DAVINCIHD")
+ifeq ("$(TI_DSPLINK_PLATFORM)", "OMAPL1XX")
+DIRS  +=     \
+    api
+else # ifeq ("$(TI_DSPLINK_PLATFORM)", "OMAPL1XX")
+ifeq ("$(TI_DSPLINK_PLATFORM)", "DA8XX")
+DIRS  +=     \
+    api
+else # ifeq ("$(TI_DSPLINK_PLATFORM)", "DA8XX")
+ifeq ("$(TI_DSPLINK_PLATFORM)", "DA850")
+DIRS  +=     \
+    api
+else # ifeq ("$(TI_DSPLINK_PLATFORM)", "DA850")
+ifeq ("$(TI_DSPLINK_PLATFORM)", "DAVINCI")
+DIRS  +=     \
+    api
+else # ifeq ("$(TI_DSPLINK_PLATFORM)", "DAVINCI")
+DIRS  +=     \
+    arch     \
+    gen      \
+    osal     \
+    ldrv     \
+    pmgr     \
+    api
+endif  # ifeq ("$(TI_DSPLINK_PLATFORM)", "OMAP3530")
+endif  # ifeq ("$(TI_DSPLINK_PLATFORM)", "OMAPL138")
+endif  # ifeq ("$(TI_DSPLINK_PLATFORM)", "DAVINCIHD")
+endif  # ifeq ("$(TI_DSPLINK_PLATFORM)", "OMAPL1XX")
+endif  # ifeq ("$(TI_DSPLINK_PLATFORM)", "DA8XX")
+endif  # ifeq ("$(TI_DSPLINK_PLATFORM)", "DA850")
+endif  # ifeq ("$(TI_DSPLINK_PLATFORM)", "DAVINCI")
+else  # ifeq ("$(TI_DSPLINK_GPPOS)", "Linux")
+DIRS  +=     \
+    arch     \
+    gen      \
+    osal     \
+    ldrv     \
+    pmgr     \
+    api
+endif  # ifeq ("$(TI_DSPLINK_GPPOS)", "Linux")

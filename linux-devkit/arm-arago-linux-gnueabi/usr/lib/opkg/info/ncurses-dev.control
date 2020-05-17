@@ -1,0 +1,14 @@
+Package: ncurses-dev
+Version: 5.9-r0.6
+Description: Ncurses library
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: armv5te
+OE: ncurses
+Homepage: http://www.gnu.org/software/ncurses/ncurses.html
+Build: install/d0bd439
+Depends: ncurses (= 5.9-r0.6), libformw5, libtic5, libpanel5, libmenu5, libticw5, libtinfo5, libform5, libpanelw5, libmenuw5, libncurses5
+Recommends: libc6-dev, ncurses-libncurses-dev, ncurses-libtinfo-dev, ncurses-libncursesw-dev, ncurses-dev, ncurses-libformw-dev, ncurses-libtic-dev, ncurses-libpanel-dev, ncurses-libmenu-dev, ncurses-libticw-dev, ncurses-libform-dev, ncurses-libpanelw-dev, ncurses-libmenuw-dev, ncurses-terminfo-base-dev
+Source: ftp://ftp.gnu.org/gnu/ncurses/ncurses-5.9.tar.gz file://tic-hang.patch file://config.cache

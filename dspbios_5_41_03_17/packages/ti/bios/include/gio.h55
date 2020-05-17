@@ -1,0 +1,145 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== gio.h55 ========
+;
+;
+
+        .if ($isdefed("GIO_") = 0)  ; prevent multiple includes of this file
+GIO_    .set    1
+
+        .include cinit.h55
+        .include std.h55
+
+;
+;# ======== GIO_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", GIO_Obj$regs
+GIO_Obj .macro
+        .endm
+
+;
+;# ======== GIO_config ========
+;  Static configuration of the GIO module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GIO_config$regs
+GIO_config      .macro _createfxn, _deletefxn, _pendfxn, _postfxn
+
+        .if (GIO$ = 1)
+
+
+isIomconfigAligned      .set    LONGALIGN
+GIO_config      .struct
+createFxn       CodePtr 1 ;
+deleteFxn       CodePtr 1 ;
+pendFxn         CodePtr 1 ;
+postFxn         CodePtr 1 ;
+GIO_A_CONFIGSIZE  .endStruct
+
+            ;
+            ; Allocate GIO$configObject
+            ;
+            .global GIO$config
+            C55_allocateObject   isIomconfigAligned, GIO$config,  GIO_A_CONFIGSIZE, ".gio"
+            ;
+            ; Initialize GIO$config object
+            ;
+            C55_cinitHeader CINITALIGN, isIomconfigAligned, GIO$config , GIO_A_CONFIGSIZE, DATAPAGE 
+            C55_cinitBegin      isIomconfigAligned
+            C55_cinitCodePtr    :_createfxn:
+            C55_cinitCodePtr    :_deletefxn:
+            C55_cinitCodePtr    :_pendfxn:
+            C55_cinitCodePtr    :_postfxn:
+            C55_cinitEnd                isIomconfigAligned
+
+            ;
+            ; Allocate space for _GIO
+            ;
+            .global _GIO
+            C55_allocateObject   isDataPtrAligned, _GIO, DATAPTRSIZE, ".bss"
+
+            ;
+            ; Initialize _GIO
+            ;
+
+            C55_cinitHeader CINITALIGN, isDataPtrAligned, _GIO , DATAPTRSIZE, DATAPAGE
+            C55_cinitBegin  isDataPtrAligned
+            C55_cinitDataPtr GIO$config
+            C55_cinitEnd    isDataPtrAligned
+
+        .endif
+
+        .endm
+
+;
+;# ======== GIO_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GIO_end$regs
+GIO_end .macro
+        .endm
+
+;
+;# ======== GIO_init ========
+;  Runtime initialization of the GIO module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GIO_init$regs
+GIO_init        .macro
+
+        ; only expand if the GIO module is configured
+        .if (GIO$ = 1)
+        .endif
+
+        .endm
+
+;
+;# ======== GIO_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", GIO_startup$regs
+GIO_startup        .macro
+        .endm
+
+        .endif          ; if GIO_ is not defined

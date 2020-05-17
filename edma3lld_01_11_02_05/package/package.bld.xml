@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="edma3_lld_01_03_09_05" version="01, 03, 09" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+    </sources>
+    <configurations>
+    </configurations>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="package/rel/edma3_lld_01_03_09_05.tar.dep" src="package/rel/edma3_lld_01_03_09_05.xdc.inc"/>
+    </makefiles>
+    <targets>
+    </targets>
+    <libraries>
+    </libraries>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="edma3_lld_01_03_09_05"
+        pname="edma3_lld_01_03_09_05.tar"
+        label="default"
+    >
+        <file name="package.bld"/>
+        <file name="config.bld"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package/package.rel.dot"/>
+        <file name="software-manifest.pdf"/>
+        <file name="docs"/>
+        <file name="packages"/>
+        <file name="package/package.bld.xml"/>
+        <file name="release_notes_edma3_lld_01_11_02.html"/>
+        <file name="examples"/>
+        <file name="package/package.ext.xml"/>
+        <file name="package/build.cfg"/>
+    </release>
+    </releases>
+    <repositories>
+    <repository name="packages"
+        pname="packages">
+        <importedRelease
+            package="ti.sdo.edma3.rm"
+            pname="ti_sdo_edma3_rm.tar"
+            label="undefined">
+        </importedRelease>
+        <importedRelease
+            package="ti.sdo.edma3.drv.sample"
+            pname="ti_sdo_edma3_drv_sample.tar"
+            label="undefined">
+        </importedRelease>
+        <importedRelease
+            package="ti.sdo.edma3.rm.sample"
+            pname="ti_sdo_edma3_rm_sample.tar"
+            label="undefined">
+        </importedRelease>
+        <importedRelease
+            package="ti.sdo.edma3.drv"
+            pname="ti_sdo_edma3_drv.tar"
+            label="undefined">
+        </importedRelease>
+        <importedRelease
+            package="ti.sdo.edma3.common"
+            pname="ti_sdo_edma3_common.tar"
+            label="undefined">
+        </importedRelease>
+    </repository>
+    </repositories>
+</package>

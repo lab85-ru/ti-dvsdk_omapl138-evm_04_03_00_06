@@ -1,0 +1,124 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== msgq.h62 ========
+;
+;
+
+        .if ($isdefed("MSGQ_") = 0)  ; prevent multiple includes of this file
+MSGQ_   .set    1
+
+        .include std.h62
+
+;
+;# ======== MSGQ_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", MSGQ_Obj$regs
+MSGQ_Obj        .macro
+        .endm
+
+
+;# ======== MSGQ_config ========
+;  Static configuration of the MSGQ module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", MSGQ_config$regs
+MSGQ_config     .macro _useMSGQ
+        .endm
+
+;
+;# ======== MSGQ_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", MSGQ_end$regs
+MSGQ_end .macro
+        .endm
+
+;
+;# ======== MSGQ_init ========
+;  Runtime initialization of the MSGQ module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", MSGQ_init$regs
+MSGQ_init       .macro
+
+        ; only expand if the MSGQ module is configured
+        .if (MSGQ_USEMSGQ)
+          .ref _MSGQ_init
+ 
+           mvkl   _MSGQ_init,a4
+           mvkh   _MSGQ_init,a4
+           b      a4
+           mvkl   msgqinit?, b3
+           mvkh   msgqinit?, b3
+           nop 3
+msgqinit?:
+
+        .endif
+
+        .endm
+
+;
+;# ======== MSGQ_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", MSGQ_startup$regs
+MSGQ_startup        .macro
+
+        ; only expand if the MSGQ module is configured
+        .if (MSGQ_USEMSGQ)
+          .ref _MSGQ_startup
+ 
+           mvkl   _MSGQ_startup,a4
+           mvkh   _MSGQ_startup,a4
+           b      a4
+           mvkl   msgqstartup?, b3
+           mvkh   msgqstartup?, b3
+           nop 3
+msgqstartup?:
+
+        .endif
+        .endm
+
+        .endif          ; if MSGQ_ is not defined
+    

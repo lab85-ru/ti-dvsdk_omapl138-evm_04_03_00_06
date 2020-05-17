@@ -1,0 +1,113 @@
+/*
+ *  Load platform file for evmOMAPL137
+ */
+utils.loadPlatform("ti.platforms.evmOMAPL137");
+
+/*
+ * Enable common BIOS features used by all examples
+ */
+bios.enableRealTimeAnalysis(prog);
+bios.enableMemoryHeaps(prog);
+bios.enableRtdx(prog);
+bios.enableTskManager(prog);
+
+/* Enable ECM Handler */
+bios.ECM.ENABLE = 1;
+
+/*
+ * Enable heap usage.
+ * Note: Heap Size is so large due to VPSS test application
+ */
+bios.MEM.instance("SDRAM").createHeap = 1;
+bios.MEM.instance("SDRAM").heapSize = 0x01000000;
+
+bios.LOG.instance("LOG_system").bufLen = 1024;
+bios.LOG.instance("LOG_system").bufSeg = prog.get("IRAM");
+
+bios.LOG_system.bufLen = 1024;
+bios.LOG_system.logType = "circular";
+
+bios.LOG.create("trace");
+bios.LOG.instance("trace").bufLen = 1024;
+bios.LOG.instance("trace").bufSeg = prog.get("IRAM");
+
+bios.LOG.create("DVTEvent_Log");
+bios.LOG.instance("DVTEvent_Log").bufSeg = prog.get("IRAM");
+bios.LOG.instance("DVTEvent_Log").bufLen = 8192;
+bios.LOG.instance("DVTEvent_Log").comment = "DVT";
+
+/*Decide on sections*/
+bios.SIO.OBJMEMSEG = prog.get("SDRAM");
+bios.DIO.OBJMEMSEG = prog.get("SDRAM");
+bios.SEM.OBJMEMSEG = prog.get("SDRAM");
+bios.MBX.OBJMEMSEG = prog.get("SDRAM");
+bios.QUE.OBJMEMSEG = prog.get("SDRAM");
+bios.LCK.OBJMEMSEG = prog.get("SDRAM");
+bios.SWI.OBJMEMSEG = prog.get("SDRAM");
+bios.TSK.OBJMEMSEG = prog.get("SDRAM");
+bios.TSK.STACKSEG = prog.get("SDRAM");
+bios.PRD.OBJMEMSEG = prog.get("SDRAM");
+bios.MEM.BIOSOBJSEG = prog.get("SDRAM");
+bios.MEM.MALLOCSEG = prog.get("SDRAM");
+bios.MEM.ARGSSEG = prog.get("SDRAM");
+bios.MEM.STACKSEG = prog.get("SDRAM");
+bios.MEM.GBLINITSEG = prog.get("SDRAM");
+bios.MEM.TRCDATASEG = prog.get("SDRAM");
+bios.MEM.OBJSEG = prog.get("SDRAM");
+bios.MEM.SYSDATASEG = prog.get("SDRAM");
+bios.MEM.TEXTSEG = prog.get("SDRAM");
+bios.MEM.SWITCHSEG = prog.get("SDRAM");
+bios.MEM.BSSSEG = prog.get("SDRAM");
+bios.MEM.CINITSEG = prog.get("SDRAM");
+bios.MEM.FARSEG = prog.get("SDRAM");
+bios.MEM.PINITSEG = prog.get("SDRAM");
+bios.MEM.CONSTSEG = prog.get("SDRAM");
+bios.MEM.DATASEG = prog.get("SDRAM");
+bios.MEM.CIOSEG = prog.get("SDRAM");
+bios.MEM.BIOSSEG = prog.get("SDRAM");
+bios.MEM.SYSINITSEG = prog.get("SDRAM");
+bios.MEM.HWISEG = prog.get("SDRAM");
+bios.MEM.HWIVECSEG = prog.get("SDRAM");
+bios.MEM.RTDXTEXTSEG = prog.get("SDRAM");
+
+bios.MEM.MALLOCSEG = prog.get("SDRAM");
+bios.BUF.OBJMEMSEG = prog.get("SDRAM");
+bios.LOG.OBJMEMSEG = prog.get("SDRAM");
+bios.STS.OBJMEMSEG = prog.get("SDRAM");
+bios.IDL.OBJMEMSEG = prog.get("SDRAM");
+bios.DHL.OBJMEMSEG = prog.get("SDRAM");
+bios.RTDX.RTDXDATASEG = prog.get("SDRAM");
+bios.TSK.instance("TSK_idle").stackMemSeg = prog.get("SDRAM");
+bios.LOG.instance("LOG_system").bufSeg = prog.get("SDRAM");
+bios.HST.OBJMEMSEG = prog.get("SDRAM");
+bios.HST.instance("RTA_fromHost").bufSeg = prog.get("SDRAM");
+bios.HST.instance("RTA_toHost").bufSeg = prog.get("SDRAM");
+bios.SYS.TRACESEG = prog.get("SDRAM");
+bios.PIP.OBJMEMSEG = prog.get("SDRAM");
+bios.CLK.OBJMEMSEG = prog.get("SDRAM");
+bios.CLK.RESETTIMER = 1;
+
+/*ECM configuration*/
+bios.HWI.instance("HWI_INT7").interruptSelectNumber = 0;
+bios.HWI.instance("HWI_INT8").interruptSelectNumber = 1;
+bios.HWI.instance("HWI_INT9").interruptSelectNumber = 2;
+bios.HWI.instance("HWI_INT10").interruptSelectNumber = 3;
+
+bios.TSK.instance("TSK_idle").order = 1;
+
+/*task configuration*/
+bios.TSK.create("echoTask");
+bios.TSK.instance("echoTask").stackSize = 32768;
+bios.TSK.instance("echoTask").fxn = prog.extern("echo");
+bios.TSK.instance("echoTask").comment = "Echo Task";
+bios.TSK.instance("TSK_idle").order = 1;
+bios.TSK.instance("echoTask").order = 2;
+
+/* SDRAM size is 128MB, Heap is 48MB, Stack is 32K */
+bios.MEM.STACKSIZE = 0x8000;
+bios.MEM.instance("SDRAM").len = 0x08000000;
+bios.MEM.instance("IRAM").base = 0x11810000;
+// !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+
+prog.gen();
+

@@ -1,0 +1,378 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;  ======== dev.h55 ========
+;
+;
+
+        .if ($isdefed("DEV_") = 0)  ; prevent multiple includes of this file
+DEV_    .set    1
+
+        .include std.h55
+        .include cinit.h55
+        .include obj.h55
+
+DEV_SIOTYPE             .set    0
+DEV_IOMTYPE             .set    1
+DEV_OTHERTYPE           .set    2
+
+;------------------------------------------------------------------------
+isDevBookAligned        .set    isDataPtrAligned        ; Dev_Book has DataPtr element
+
+DEV_Book        .struct
+d_devinit       DataPtr 1       ; pointer to table of init functions
+numinitfxns     Int     1       ; number of init functions
+d_numinitfxns   DataPtr 1       ; pointer to number of init functions
+endPad          .align  isDevBookAligned
+DEV_A_BOOKSIZE  .endstruct
+
+isDeviceAligned  .set   LONGALIGN               ; Dev_device has a long
+isDevInitAligned .set   isCodePtrAligned        ; DevInit table has function pointer
+
+DEV_Device              .struct         ; device config. (see dev.h)
+name            DataPtr         1       ; device name
+fxns            DataPtr         1       ; pointer to device function table
+devid           Long            1       ; device id (stores function ptr!)
+params          DataPtr         1       ; pointer to device parameter
+type            Int             1       ; device type
+hdev            DataPtr         1       ; pointer to device handle
+endPad          .align          isDeviceAligned 
+DEV_A_DEVICESIZE        .endstruct
+
+
+DEV_DEVSIZE     .equ    DEV_A_DEVICESIZE
+
+        .eval OBJ_HDRSIZE + DEV_DEVSIZE, DEV_ENTRYSIZE
+
+isDevFrameAligned       .set    isDataPtrAligned        ; Dev_Frame has DataPtr as elemeent
+
+DEV_Frame       .struct                 ; frame object (see dev.h)
+lnkNext         DataPtr         1       ; link.next
+lnkPrev         DataPtr         1       ; link.prev
+addr            DataPtr         1       ; buffer address
+size            size_t          1       ; buffer size
+misc            DataPtr         1       ; miscellaneous item of type Arg
+arg             DataPtr         1       ; user argument (void*)
+cmd             Int             1       ; command for mini-driver
+status          Int             1       ; status of command
+endPad          .align          isDevFrameAligned
+DEV_A_FRAMESIZE .endstruct
+
+
+isDevFxnsAligned        .set    isCodePtrAligned        ; Dev_Fxns has CodePtr as member
+DEV_FRAMESIZE   .equ    DEV_A_FRAMESIZE
+
+DEV_Fxns        .struct         ; table of device driver functions(see dev.h)
+close           CodePtr   1     ; device 'close' function pointer
+ctrl            CodePtr   1     ; device 'control' function pointer
+idleFxn         CodePtr   1     ; device 'ideling' function pointer
+issue           CodePtr   1     ; pointer to 'issue' function for IO
+open            CodePtr   1     ; device 'open' function pointer
+ready           CodePtr   1     ; device 'ready' function pointer
+reclaim         CodePtr   1     ; pointer to 'reclaim' function for IO
+endPad          .align   isDevFxnsAligned       
+DEV_A_FXNSSIZE  .endstruct
+
+
+
+
+isDevObjAligned         .set    LONGALIGN       ; Dev_Obj has DevFxns that has
+                                ; alignment constraints
+
+DEV_Obj         .struct
+todevice        DataPtr 1       ; ptr to toDevice Queue
+fromdevice      DataPtr 1       ; ptr to fromDevice Queue
+bufsize         size_t  1       ; Stream buffer size (unsigned)
+nbufs           Int     1       ; Number of Stream buffers (unsigned)
+segid           Int     1       ; Memory Segment ID
+mode            Int     1       ; Stream operation mode
+devid           Long    1       ; Device ID (works as a FxnPtr!)
+params          DataPtr 1       ; ptr to Stream device parameters
+object          DataPtr 1       ; ptr to Stream device specific object
+pad0            .align  isDevFxnsAligned                                
+fxns            .tag   DEV_Fxns ; Table of driver function pointers
+timeout         Int     1       ; Timeout (unsigned) value
+align           Int     1       ; Stream buffer alignment (unsigned)
+callback        DataPtr 1       ; ptr to callback parameters
+endPad          .align  isDevObjAligned
+DEV_A_OBJSIZE   .endstruct
+        
+;
+; callback points to a structure with a function and two arguments
+;
+DevChanParamsAligned    .set    isCodePtrAligned        ; callback has CodePtr as elemeent
+
+
+;------------------------------------------------------------------------
+
+;
+;# ======== DEV_cinitFrame ========
+;  Macro to setup the 'values' section to .cinit DEV_Frame structure
+;
+;  Preconditions:
+;   The caller must setup .cinit header record via C55_cinitHeader
+;  Postconditions:
+;   none
+
+DEV_cinitFrame  .macro  q_next, q_prev, addr, size, misc, arg, cmd, status
+
+  C55_cinitBegin isDevFrameAligned      ; .cinit DEV_Frame instance's entries
+
+  C55_cinitDataPtr      :q_next:        ; DEV_Frame.link.next
+  C55_cinitDataPtr      :q_prev:        ; DEV_Frame.link.prev
+  C55_cinitDataPtr      :addr:          ; DEV_Frame.addr
+  C55_cinitsize_t       :size:          ; DEV_Frame.size
+  C55_cinitDataPtr      :misc:          ; DEV_Frame.misc, type=(void*)
+  C55_cinitDataPtr      :arg:           ; DEV_Frame.arg, type=(void*)
+  C55_cinitInt          :cmd:           ; DEV_Frame.cmd
+  C55_cinitInt          :status:        ; DEV_Frame.status
+
+  C55_cinitEnd   isDevFrameAligned
+                .endm
+
+;
+;# ======== DEV_cinitObj ========
+;  Macro to setup the 'values' section to .cinit DEV_Obj structure
+;
+;  Preconditions:
+;   The caller must setup .cinit header record via C55_cinitHeader
+;  Postconditions:
+;   none
+;  calling constraints:
+;   This macro forces the driver function table entries to NULLs.
+;   The caller is not required to pass NULLs for initializing the
+;   driver function table entries
+;
+
+DEV_cinitObj  .macro todevice, fromdevice, bufsize, nbufs, segid, mode, devid, params, object, timeout, align, callback
+
+  C55_cinitBegin        isDevObjAligned ; .cinit DEV_Obj instance's entries
+
+  C55_cinitDataPtr      :todevice:      ; ptr to downstream frames Que
+  C55_cinitDataPtr      :fromdevice:    ; ptr to upstream frames Que
+  C55_cinitsize_t       :bufsize:       ; configured buffer size (Uns)
+  C55_cinitInt          :nbufs:         ; configured number of buffers (Uns)
+  C55_cinitInt          :segid:         ; Memory segment ID
+  C55_cinitInt          :mode:          ; DEV_INPUT/DEV_OUTPUT
+  C55_cinitLong         :devid:         ; device id (works as fxnptr too!)
+  C55_cinitDataPtr      :params:        ; ptr to device specific parameters
+  C55_cinitDataPtr      :object:        ; ptr to device specific object
+  C55_cinitCodePtr      0               ; DEV_close()
+  C55_cinitCodePtr      0               ; DEV_ctrl()
+  C55_cinitCodePtr      0               ; DEV_idle()
+  C55_cinitCodePtr      0               ; DEV_issue()
+  C55_cinitCodePtr      0               ; DEV_open()
+  C55_cinitCodePtr      0               ; DEV_ready()
+  C55_cinitCodePtr      0               ; DEV_reclaim()
+  C55_cinitInt          :timeout:       ; timeout value for DEV_reclaim()
+  C55_cinitInt          :align:         ; configured buffer alignment (Uns)
+  C55_cinitDataPtr      :callback:      ; ptr to callback parameters
+
+  C55_cinitEnd          isDevObjAligned
+        .endm
+
+;
+;# ======== DEV_config ========
+;  Static configuration of the DEV module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DEV_config$regs
+DEV_config      .macro 
+        .asg    0,      DEV$devCount
+        .asg    0,      DEV$initCount
+        .endm
+
+;
+;# ======== DEV_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DEV_Obj$regs
+DEV_Obj .macro cflag, name, id
+        .endm
+
+;
+;# ======== DEV_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", DEV_startup$regs
+DEV_startup        .macro
+        .endm
+
+;
+;# ======== DEV_end ========
+;  Invoked at the end of all other configuration declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DEV_end$regs
+DEV_end .macro
+
+ .if (DEV$NUMDEVICES > 0)       ; expand only if devices are configured.
+
+  .global       _DEV_devinit
+  .global       _DEV_D_devinit          ; init pointer to _DEV_devinit
+  .global       __DEV_NUMINITFXNS
+  .global       __DEV_D_NUMINITFXNS     ; init pointer to DEV_NUMINITFXNS
+
+
+
+;------------------------------------------------------------------------
+; Allocate Space for an array of device initialization functions.
+; This space is .cinit'ed via DEV_addDevice macro on a device-by-device basis.
+
+  C55_allocateObject isDevInitAligned, _DEV_devinit, (DEV$initCount * CODEPTRSIZE), ".bss"
+
+;------------------------------------------------------------------------
+; Allocate Space for Device Book structure which is a place holder for all 
+; variables used by DEV module internally. Also, .cinit these using the 
+; appropriate cinit macros.
+;
+DEV_BOOK                .tag    DEV_Book        ; declare type
+  C55_allocateObject isDevBookAligned, DEV_BOOK, DEV_A_BOOKSIZE, ".bss"
+
+_DEV_D_devinit          .set    DEV_BOOK.d_devinit
+__DEV_NUMINITFXNS       .set    DEV_BOOK.numinitfxns
+__DEV_D_NUMINITFXNS     .set    DEV_BOOK.d_numinitfxns
+
+  C55_cinitHeader CINITALIGN, isDevBookAligned, DEV_BOOK, DEV_A_BOOKSIZE, DATAPAGE
+  C55_cinitBegin isDevBookAligned
+
+  C55_cinitDataPtr      _DEV_devinit            ; cinit _DEV_D_devinit
+  C55_cinitInt          DEV$initCount           ; cinit __DEV_NUMINITFXNS
+  C55_cinitDataPtr      __DEV_NUMINITFXNS       ; cinit __DEV_D_NUMINITFXNS
+
+  C55_cinitEnd  isDevBookAligned
+
+        .endif          ; .if (DEV$NUMDEVICES > 0)
+
+        .endm           ; end of DEV_end macro
+
+;
+;# ======== DEV_addDevice ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+DEV_addDevice   .macro _name, _fxns, _devid, _params, _initfxn, _type, _hdev
+
+  .var  thisDevinit
+  .global :_name:$device
+  .global :_name:$obj
+
+  C55_allocateObject isDeviceAligned, :_name:$obj, DEV_ENTRYSIZE, .devtable
+ 
+:_name:$device .set :_name:$obj + OBJ_HDRSIZE
+
+  ; :_name:$device points to begining of DEV_Device entry. Note that
+  ; :_name: can't be used here because :_name: is a string already 
+  ; allocated in const by Obj's that call this macro. 
+  ; So :_name: cannot be redefined, to point to this DEV_Device entry.
+
+  C55_cinitHeader CINITALIGN, isDeviceAligned, :_name:$obj, DEV_ENTRYSIZE, DATAPAGE
+  C55_cinitBegin isDeviceAligned
+  OBJ_cinitObj          :_name:$obj, OBJ_DEV, DEV_ENTRYSIZE
+  C55_cinitDataPtr      :_name:         ; Pointer to Device name string
+  C55_cinitDataPtr      :_fxns:         ; Pointer to Device function table
+  C55_cinitLong         :_devid:        ; Device ID (also serves as FxnPtr!)
+  C55_cinitDataPtr      :_params:       ; Pointer to Device parameters
+  C55_cinitInt          :_type:         ; Device type
+  C55_cinitDataPtr      :_hdev:         ; Pointer to Device handle
+  C55_cinitEnd   isDeviceAligned
+
+;
+; Prevent multiple appearances of a driver Dxx_init function in the
+; _DEV_devinit table even when there are  multiple occurrences of
+; different devices for the same driver. DXX_init should be only called
+; once!
+;
+; Only add to _DEV_devinit real functions. Do not add 0's.
+  .if ($isname(":_initfxn:") = 1)
+    .if ($isdefed("DEV$:_initfxn:") = 0)
+
+DEV$:_initfxn:  .set    1
+
+    .global     :_initfxn:
+
+    ;
+    ; Note: At this point, DEV$initCount is one-less than the
+    ;       number of devices already added to Configuration,
+    ;       'including' this particular device !
+    ;
+    .asg  "(_DEV_devinit + (DEV$initCount * CODEPTRSIZE))", thisDevinit
+
+    C55_cinitHeader CINITALIGN, isDevInitAligned, thisDevinit, CODEPTRSIZE, DATAPAGE
+    C55_cinitBegin      isDevInitAligned        ; align to 32bit boundary
+    C55_cinitCodePtr    :_initfxn:              ; Pointer to Device initfunction
+    C55_cinitEnd        isDevInitAligned        ; align to 32bit coundary
+
+;
+; increment DEV$initCount for use by the next call of this macro and
+; DEV_end. DEV$initCount keep track of the size of _DEV_devinit.
+; Note: By the time DEV_end macro is invoked, all static DEVices
+;       have already been added and DEV$NUMDEVICES & DEV$initCount are
+;       both properly updated to reflect the correct counts
+;
+    .eval       DEV$initCount+1, DEV$initCount
+
+    .endif      ; endif ($isdefed(DEV$:_initfxn:) = 0)
+  .endif        ; endif ($isname(":_initfxn:") = 1)
+
+; increment DEV$devCount for use by the next call of this macro
+  .eval DEV$devCount+1, DEV$devCount
+
+        .endm   ; End DEV_addDevice macro
+
+;
+;# ======== DEV_init ========
+;  Runtime initialization of the DEV module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DEV_init$regs
+DEV_init        .macro
+        .if DEV$NUMDEVICES != 0 ; if DEV$NUMOFDEVICES !- 0
+                .global     _DEV_init
+                .global _SIO_startup
+                call _DEV_init
+        .endif                  ; endif DEV$NUMOFDEVICES
+   .endm                        ; End DEV_init macro
+
+        .endif                  ; .if ($isdefed("DEV_")=0)

@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_DM6441.tci ========
+ *  This file contains BIOS settings for DM6441 (DaVinci).
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_DM420.tci");
+
+/*
+ *  ======== bios.initDM6441 ========
+ *  BIOS initialization for the DM6441 is same as for DM420
+ */
+bios.initDM6441 = bios.initDM420;

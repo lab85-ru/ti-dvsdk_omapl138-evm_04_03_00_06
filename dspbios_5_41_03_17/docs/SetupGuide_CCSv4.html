@@ -1,0 +1,770 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st1="urn:schemas-microsoft-com:office:smarttags" xmlns="http://www.w3.org/TR/REC-html40"><head>
+
+
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+
+  
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+
+
+  
+  <meta name="Generator" content="Microsoft FrontPage 5.0">
+
+
+  
+  <meta name="Originator" content="Microsoft Word 11">
+
+
+  
+  <link rel="Edit-Time-Data" href="file:///R:/products/sabios-g02x/src/doc/GettingStartedGuide520_files/editdata.mso">
+
+
+
+  
+  
+  
+  <title>DSP/BIOS™ Setup Guide</title><o:smarttagtype namespaceuri="urn:schemas-microsoft-com:office:smarttags" name="State"></o:smarttagtype>
+  <o:smarttagtype namespaceuri="urn:schemas-microsoft-com:office:smarttags" name="place" downloadurl="http://www.5iantlavalamp.com/"></o:smarttagtype><!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:LastAuthor>A0323832</o:LastAuthor>
+  <o:Revision>30</o:Revision>
+  <o:TotalTime>4002</o:TotalTime>
+  <o:LastPrinted>2004-04-01T15:54:00Z</o:LastPrinted>
+  <o:Created>2005-03-29T16:22:00Z</o:Created>
+  <o:LastSaved>2005-03-30T22:07:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>3104</o:Words>
+  <o:Characters>17698</o:Characters>
+  <o:Company>Texas Instruments Inc</o:Company>
+  <o:Lines>147</o:Lines>
+  <o:Paragraphs>41</o:Paragraphs>
+  <o:CharactersWithSpaces>20761</o:CharactersWithSpaces>
+  <o:Version>11.5703</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+
+  
+  <style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:536871559 0 0 0 415 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman"; margin-left:0in; margin-right:0in; margin-top:0in}
+h1
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	mso-font-kerning:16.0pt;
+	font-weight:bold;}
+h2
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:14.0pt;
+	font-family:Arial;
+	font-weight:bold;
+	font-style:italic;}
+h3
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:13.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+h4
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoListBullet, li.MsoListBullet, div.MsoListBullet
+	{mso-style-update:auto;
+	margin-top:4.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	mso-pagination:widow-orphan;
+	mso-list:l1 level1 lfo1;
+	tab-stops:list .5in;
+	font-size:10.0pt;
+	font-family:Verdana;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoListNumber, li.MsoListNumber, div.MsoListNumber
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.25in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	mso-pagination:widow-orphan;
+	mso-list:l0 level1 lfo2;
+	tab-stops:list .25in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoListBullet2, li.MsoListBullet2, div.MsoListBullet2
+	{mso-style-update:auto;
+	margin-top:4.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	mso-pagination:widow-orphan;
+	mso-list:l5 level1 lfo3;
+	tab-stops:list .75in;
+	font-size:10.0pt;
+	font-family:Verdana;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:-120;
+	mso-list-type:simple;
+	mso-list-template-ids:235147538;}
+@list l0:level1
+	{mso-level-style-link:"List Number";
+	mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;}
+@list l1
+	{mso-list-id:-119;
+	mso-list-type:simple;
+	mso-list-template-ids:-1664451218;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-style-link:"List Bullet";
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l2
+	{mso-list-id:308632791;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1640387616 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l2:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3
+	{mso-list-id:1037660357;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-373227952 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l3:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l3:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4
+	{mso-list-id:1563756356;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-459094688 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l4:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l4:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5
+	{mso-list-id:1591281273;
+	mso-list-type:hybrid;
+	mso-list-template-ids:87198840 -2080050284 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:9.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l5:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+  </style><!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]--></head>
+<body style="" lang="EN-US" link="blue" vlink="purple">
+
+
+
+<div class="Section1">
+
+<p class="MsoNormal" style="text-align: center;" align="center">
+
+
+
+</p><table width="100%"><tbody><tr><td bgcolor="black" width="1"><a href="http://www.ti.com/"> <img style="border: 0px solid ; width: 222px; height: 54px;" alt="Texas Instruments" src="tilogo.gif"></a></td>
+<td bgcolor="red"><img style="width: 314px; height: 26px;" alt="Technology for Innovators" src="titagline.gif"></td></tr></tbody></table>
+
+
+
+<h1 style="text-align: center;" align="center"><span style="font-size: 20pt; font-family: Verdana;">Installation and Setup for DSP/BIOS 5.41</span></h1>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">This version of DSP/BIOS is delivered as a component of Code
+Composer Studio v4 (CCStudio). It is available for Microsoft Windows.
+It includes support for all DSP families supported by DSP/BIOS:  C28x, 
+C55x, and C6x.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p><p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">For the latest information about what’s new in this
+release and any known issues, see the release
+notes (which, in turn, has links to other documents).<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">This document describes how to perform the following
+tasks:<o:p></o:p></span></p>
+
+
+
+<ul><li><span style="font-family: Symbol;"><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
+</span></span>
+<small style="font-family: Verdana;"><a style="color: blue; text-decoration: underline;" href="#_Installing_DSP/BIOS">Installing
+DSP/BIOS</a></small></li><li style="font-family: Verdana;"><small><span style=""></span><a style="color: blue; text-decoration: underline;" href="#_Setting_System_Variables">Setting System Variables</a></small></li><li style="font-family: Verdana;"><small><a href="#_Coordinating_with_CCStudio">Coordinating
+with CCStudio</a></small></li><ul style="font-family: Verdana;"><li><small><a href="#_Conversion_v33to_v4">Converting CCSv3.3 Projects to CCSv4 Projects<br></a> </small></li></ul><li style="font-family: Verdana;"><small><a href="#_DSP/BIOS_Examples">DSP/BIOS
+Examples</a></small></li><li style="font-family: Verdana;"><small><a href="#_More_Information_About_DSP/BIOS">More
+Information About DSP/BIOS</a></small></li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2><a name="_Installing_DSP/BIOS"></a><span style="font-size: 16pt; font-family: Verdana;">Installing DSP/BIOS </span></h2>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">DSP/BIOS 5.41 is installed as part of the CCSv4 installation process.&nbsp;</span></p><br><p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">If you ever need to uninstall
+DSP/BIOS, an uninstaller is provided for Windows (Control Panel -&gt;
+Add/Remove Programs).</span><span style="font-size: 10pt; font-family: Verdana;"><o:p></o:p></span></p>
+
+
+
+<h2><a name="_Setting_System_Variables"></a><span style="font-size: 16pt; font-family: Verdana;">Setting System Variables<o:p></o:p></span></h2>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><b>If you want to build with DSP/BIOS 5.41 outside the CCSv4 environment,  follow these steps</b>:<o:p></o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;">
+<font size="2"><span style="font-family: Verdana;">1</span></font><span style="font-size: 10pt; font-family: Verdana;">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">Create the BIOS_INSTALL_DIR</span><span style="font-size: 10pt; font-family: Verdana;"> system environment variable, and
+set it to </span><i style=""><span style="font-size: 10pt; font-family: &quot;Courier New&quot;;">&lt;install_dir&gt;</span></i><font size="2"><span style="font-family: Courier New;">/</span></font><span style="font-size: 10pt; font-family: &quot;Courier New&quot;;">bios_5_41</span><span style="font-size: 10pt; font-family: Verdana;">. </span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 9pt; text-indent: -9pt;"><span style="font-size: 10pt; font-family: Verdana;"><o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.5in; text-indent: -0.25in;"><b style=""><span style="font-size: 10pt; font-family: Verdana;"><span style=""></span></span></b><span style="font-size: 10pt; font-family: Verdana;"><span style=""></span><span style=""></span>
+
+
+</span></p>
+
+
+
+
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><font size="2">
+<span style="font-family: Verdana;">2</span></font><span style="font-size: 10pt; font-family: Verdana;">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">Insert the&nbsp;location of the XDCtools 3.15 installation at
+the beginning of your PATH system environment variable. (Remove any DSP/BIOS or XDCtools locations that were
+put in for earlier&nbsp;DSP/BIOS or XDCtools installations.)<span style="">&nbsp;</span></span><font size="2"><span style="font-family: Verdana;"></span></font><small><span class="MsoNormal" style="font-size: 10pt; font-family: Verdana;">For Windows use back slashes (“\”) and&nbsp;</span><font class="MsoNormal" face="Verdana">a semicolon (;) between each system environment variable you add to the PATH</font><span class="MsoNormal" style="font-size: 10pt; font-family: Verdana;">. For example:</span></small></p>
+
+
+
+<pre style="margin: 6pt 0in 0.0001pt 49.5pt;"><span style="font-family: monospace;">C:\Program Files\Texas Instruments\xdctools_3_15</span></pre>
+
+
+
+
+
+
+
+
+
+
+
+<h2 style=""><a name="_Coordinating_with_CCStudio"></a><span style="font-size: 16pt; font-family: Verdana;">Coordinating with CCStudio v4<o:p></o:p></span></h2>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">In
+order to correctly build DSP/BIOS 5.41 applications, you need to enable
+DSP/BIOS support when creating a DSP/BIOS project. To watch a demo that
+creates a CCSv4 project that uses DSP/BIOS, see the <a href="http://software-dl.ti.com/dsps/dsps_public_sw/sdo_ccstudio/CCSv4/Demos/helloworldBIOS5.htm">Hello World DSP/BIOS 5 demo</a>. See Section 2.1 of the <span style="font-style: italic;">TMS320 DSP/BIOS v5.41 User’s Guide</span> (SPRU423) for&nbsp;descriptions of the steps in this demo. You can perform this demo yourself to test your installation.</span></p><p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;"></span> &nbsp; &nbsp; </p><p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">When
+you are creating a CCSv4 project, the key step is to select the "Use
+DSP/BIOS v5.xx" option in the Target Content area of the "CCS Project
+Settings" page.&nbsp;</span></p><p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;"></span> &nbsp; &nbsp; </p><p class="MsoNormal" style="margin-left: 0.25in;"><img style="width: 421px; height: 97px;" alt="Target content options" src="ccsproj_tc.png"><span style="font-size: 10pt; font-family: Verdana;"></span></p><p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;"></span> &nbsp; &nbsp; &nbsp; </p><p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><o:p>If
+you want to modify the version of DSP/BIOS used to build an existing
+project, right-click on the project name in the CCSv4 list of projects
+and choose <span style="font-weight: bold;">Build Properties</span>. In the <span style="font-weight: bold;">CCS Build Settings</span> category, go to the <span style="font-weight: bold;">General</span> tab and choose the DSP/BIOS version you want to use.</o:p></span></p><br><h3 style="margin-left: 0.25in;"><a name="_Conversion_v33to_v4"></a><span style="font-family: Verdana;">Converting CCSv3.3 Projects to CCSv4 Projects<o:p></o:p></span></h3>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">To import a CCSv3.3 project, choose <span style="font-weight: bold;">Project &gt; Import Legacy CCSv3.3 Project</span>
+in CCSv4. Follow the instructions in the import wizard. For more
+information about converting CCSv3.3 projects to CCSv4 projects, go to
+the <a href="http://tiexpressdsp.com/wiki/index.php?title=CCSv4">Code Composer Studio Mediawiki</a> and read the "Migration" section of the page.<br><br>If
+you are importing a project that uses DSP/BIOS, the import wizard asks
+you to select the version of DSP/BIOS you want the imported project to
+use. It is recommended that you select DSP/BIOS 5.41. This version of
+DSP/BIOS is compatible with previous 5.x versions. If you select a
+DSP/BIOS 6.x version, you will need to make changes to your source code
+and configuration. If you select a DSP/BIOS version prior to 5.41, you
+will not have access to the ROV tool and Real-time Analysis debugging
+features.<o:p></o:p></span></p><p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><o:p></o:p></span></p><h2 style=""><a name="_DSP/BIOS_Examples"></a><span style="font-size: 16pt; font-family: Verdana;">DSP/BIOS
+Examples<o:p></o:p></span></h2>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">You can use the following sources
+for example DSP/BIOS applications:<o:p></o:p></span></p>
+
+
+
+<ul><li><span style="font-family: Symbol;"><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span><small style="font-family: Verdana;"><b style="">DSP/BIOS
+Examples.</b> Some DSP/BIOS example source code and configurations are provided with this version of DSP/BIOS in the &lt;<i style="">install_dir</i>&gt;\packages\ti\bios\examples
+directory. You can create your own CCSv4 projects that
+contain&nbsp;these .c and .tcf files. The source code contains comments
+about what the examples do.&nbsp;</small><span style="font-size: 10pt; font-family: Verdana;"><br>&nbsp; &nbsp;<br>The
+DSP/BIOS examples come preconfigured for a variety of platforms. If you
+have a platform that is not included, you should use a text editor to
+modify&nbsp;the .tcf file for the platform that is most closely related
+to
+yours. In particular, you will likely need to modify the platform named
+in the utils.loadPlatform() statement and the MEM module settings. See </span><span style="font-size: 10pt; font-family: Verdana;">the <span style="font-style: italic;">DSP/BIOS Textual Configuration (Tconf) User’s Guide</span> (SPRU007) for more information about platforms and .tcf files<o:p>. </o:p></span><small><span style="font-weight: bold; font-family: Verdana;">Note*</span><span style="font-family: Verdana;">
+When building the examples for 28x or 55x it is necessary to open the
+project build properties and set the appropriate values. For instance,
+28x and 55x only large model is supported so these options need to be
+set for the compiler. The evm5505 and evm5515 examples will need to be
+set to huge model and the --ptrdiff_size set from 16 to 32. These can
+be found under the Build Properties --&gt; C/C++ Build --&gt; C5500
+Compiler --&gt; Runtime Model Options.</span></small></li></ul><ul><li><small><span style="font-family: Symbol;"></span><b style="font-family: Verdana;">Application
+Notes.</b><span style="font-family: Verdana;"> A number of application notes have been provided about various
+aspects of DSP/BIOS. Go to </span><a style="font-family: Verdana;" href="http://www.dspvillage.com/">www.dspvillage.com</a><span style="font-family: Verdana;">
+and choose </span><b style="font-family: Verdana;">Technical
+Documents &gt; Application Notes</b><span style="font-family: Verdana;">. Choose the "View by Software" tab and select
+the "Operating Systems (OS/RTOS)" item.<br></span>&nbsp; &nbsp; <br style="font-family: Verdana;"></small></li><li style="font-family: Verdana;"><small><span style=""></span><b style="">Device
+Driver Developer’s Kit.</b> This kit comes with examples of how to develop
+drivers and how to integrate third-party drivers.</small></li></ul><span style="font-size: 10pt; font-family: &quot;Courier New&quot;;"><span style=""></span></span><p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><br></span><span style="font-size: 10pt; font-family: Verdana;"><o:p></o:p></span></p>
+
+
+
+<h2 style=""><a name="_More_Information_About_DSP/BIOS"></a><span style="font-size: 16pt; font-family: Verdana;">More Information About DSP/BIOS<o:p></o:p></span></h2>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">See the following documents
+available with this release and also on <a href="http://www.dspvillage.com/">www.dspvillage.com</a> to
+learn about DSP/BIOS:<o:p></o:p></span></p>
+
+
+
+<ul><li><span style="font-family: Symbol;"><span style=""></span></span><small style="font-family: Verdana;"><a href="http://www-s.ti.com/sc/techlit/spru423"><i style="">TMS320
+DSP/BIOS User’s Guide</i></a> (SPRU423)</small></li><li style="font-family: Verdana;"><small><span style=""></span><a href="http://www-s.ti.com/sc/techlit/spru404"><i style="">TMS320C5000
+DSP/BIOS API Reference Guide</i></a> (SPRU404)</small></li><li style="font-family: Verdana;"><small><span style=""></span><a href="http://www-s.ti.com/sc/techlit/spru403"><i style="">TMS320C6000
+DSP/BIOS API Reference Guide</i></a> (SPRU403)</small></li><li style="font-family: Verdana;"><small><a href="http://www-s.ti.com/sc/techlit/spru625"><span style="font-style: italic;">TMS320C28x DSP/BIOS&nbsp;API Reference Guide</span></a> (SPRU625)</small></li><li style="font-family: Verdana;"><small><a href="http://www-s.ti.com/sc/techlit/spru007"><span style=""><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;</span></span></a><i style=""><a href="http://www-s.ti.com/sc/techlit/spru007">DSP/BIOS
+Textual Configuration (Tconf) User’s Guide</a> </i>(SPRU007)</small></li><li style="font-family: Verdana;"><small><span style=""></span><i style=""><a href="http://www-s.ti.com/sc/techlit/spru616">DSP/BIOS
+Driver Developer’s Guide</a> </i>(SPRU616)</small></li><li style="font-family: Verdana;"><small><span style=""><span style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span>Online help in the DSP/BIOS Configuration Tool</small></li><li style="font-family: Verdana;"><small><span style="font-size: 10pt;"></span><a href="http://tiexpressdsp.com/wiki/index.php?title=Category:DSPBIOS">TI eXpressDSP Wiki</a><span style="font-size: 10pt;"><a href="http://tiexpressdsp.com/wiki/index.php?title=Category:DSPBIOS"></a> </span></small></li><li style="font-family: Verdana;"><small><span style="font-style: normal; font-variant: normal; font-weight: normal;">Release</span> notes</small></li><li style="font-family: Verdana;"><small><a href="http://focus.ti.com/dsp/docs/dspsupporttechdocs.tsp?sectionId=3&amp;tabId=409&amp;techDoc=1&amp;familyId=44&amp;documentCategoryId=1&amp;toolTypeId=5&amp;toolTypeFlagId=1&amp;viewType=0">Application notes</a></small></li><li style="font-family: Verdana;"><small><span style=""></span>DSP/BIOS Link documentation and application
+notes (for multiprocessor or OMAP applications)</small></li><li style="font-family: Verdana;"><small><a href="http://rtsc.eclipse.org/docs-tip/Main_Page">RTSC-Pedia</a> for wiki-based information on RTSC and XDCtools<br></small></li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in; font-family: Verdana;"><span style="font-size: 10pt;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in; font-family: Verdana;"><span style="font-size: 10pt;">&nbsp;</span></p><p class="MsoNormal" style="margin-left: 0.25in; font-family: Verdana;"><span style="font-size: 10pt;"><o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="font-family: Verdana; text-align: left;"><span style="font-size: 9pt;"><img style="width: 600px; height: 33px;" alt="Texas Instruments: The World Leader in DSP and Analog" src="logocorp.gif"></span></p><p class="MsoNormal" style="font-family: Verdana;"><span style="font-size: 9pt;">Copyright </span><span style="font-size: 9pt;">©</span><span style="font-size: 9pt;"> </span><span style="font-size: 9pt;">2009, Texas Instruments Incorporated<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="font-family: Verdana;"><span style="font-size: 9pt;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="font-family: Verdana;"><span style="font-size: 9pt;">Code Composer Studio, DSP/BIOS, eXpressDSP, and TMS320 are
+among the trademarks of Texas Instruments. See <a href="http://www.ti.com">www.ti.com</a> for a list of trademarks
+and registered trademarks belonging to Texas Instruments.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="font-family: Verdana;">&nbsp;</p>
+
+
+
+</div>
+
+
+
+</body></html>

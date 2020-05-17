@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_TCI6487.tci ========
+ *  This file contains BIOS settings for TCI6487.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_TCI6488.tci");
+
+/*
+ *  ======== bios.initTCI6487 ========
+ *  BIOS initialization for the TCI6487 is same as for TCI6488
+ */
+bios.initTCI6487 = bios.initTCI6488;

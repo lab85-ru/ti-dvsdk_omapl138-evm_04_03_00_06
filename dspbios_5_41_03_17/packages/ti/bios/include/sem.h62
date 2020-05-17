@@ -1,0 +1,161 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== sem.h62 ========
+;
+;
+
+        .if ($isdefed("SEM_") = 0)    ; prevent multiple includes of this file
+SEM_    .set    1
+
+        .include std.h62
+        .include obj.h62
+
+        .if ($isdefed("PRIORITY") = 0)
+            .eval       8, SEM_CORESIZE
+        .else
+            .eval       9, SEM_CORESIZE
+        .endif
+
+        .eval  OBJ_HDRSIZE+SEM_CORESIZE, SEM_OBJSIZE
+
+SEM_O_COUNT     .set    4       ; This is the offset to sem->count
+SEM_O_PENDQ     .set    5       ;             offset to sem->pendQ
+
+;
+;# ======== SEM_config ========
+;  Static configuration of the SEM module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SEM_config$regs
+SEM_config      .macro
+
+        .global __SEM_dopost
+        .endm
+
+;
+;# ======== SEM_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", SEM_Obj$regs
+SEM_Obj .macro cflag, name, id, _count
+
+        .global :name:
+
+
+:name:$obj      .usect  ".sem", OBJ_HDRSIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+:name:          .usect  ".sem", SEM_CORESIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+          .sect ".cinit"
+          .align        STD_TARGALIGN
+          .word SEM_OBJSIZE * STD_TARGWORDMAUS
+          .word :name:$obj
+
+          ; A label for this object, ":name:", will be set in OBJ_Obj
+
+          OBJ_Obj :name:, OBJ_SEM, SEM_CORESIZE ; allocates 3 words
+          SEM_core :name:, :_count:             ; allocates 7 words
+
+        .endm
+
+;
+;# ======== SEM_init ========
+;  Runtime initialization of the SEM module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SEM_init$regs
+SEM_init        .macro
+
+        ; only expand if the SEM module is configured
+        .if (SEM$ = 1)
+        .endif
+
+        .endm
+
+;
+;# ======== SEM_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", SEM_startup$regs
+SEM_startup        .macro
+
+        .if     SEM$NUMOF != 0
+        .endif
+        .endm
+
+;
+;# ======== SEM_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SEM_end$regs
+SEM_end .macro
+        .endm
+
+;
+;# ======== SEM_core ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", SEM_core$regs
+SEM_core        .macro  name, _count
+
+        .global __SEM_dopost
+
+        .word   0, 0                                    ; SEM.job.wListElem
+        .word   0                                       ; SEM.job.wCount
+        .word   __SEM_dopost                            ; SEM.job.fxn
+
+        .word   :_count:                                ; SEM.count
+        .word   :name: + SEM_O_PENDQ * STD_TARGWORDMAUS ; SEM.pendQ
+        .word   :name: + SEM_O_PENDQ * STD_TARGWORDMAUS ; SEM.pendQ
+        .word   0       ; name
+        .if ($isdefed("PRIORITY") = 1)
+            .word       0                                       ; SEM.priority
+        .endif          ; if PRIORITY is not defined    
+
+        .endm
+
+        .endif          ; if SEM_ is not defined

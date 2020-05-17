@@ -1,0 +1,149 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  All rights reserved. Property of Texas Instruments Incorporated.
+ *  Restricted rights to use, duplicate or disclose this code are
+ *  granted through contract.
+ *
+ */
+/*
+ *  ======== bigtime.tcf ========
+ *  Configuration script used to generate the example's configuration files
+ */
+
+utils.loadPlatform("ti.platforms.evm6748");
+/*
+ *  ======== evm6748_common.tci ========
+ *  Custom settings that apply only to the evm6748 platform.
+ *
+ */
+
+/*
+ * Enable common BIOS features used by all examples
+ */
+bios.enableRealTimeAnalysis(prog);
+bios.enableMemoryHeaps(prog);
+bios.enableRtdx(prog);	
+bios.enableTskManager(prog);
+
+/*
+ * Enable heaps in IRAM and define label SEG0 for heap usage.
+ */
+
+ 
+bios.IRAM.createHeap      = true;
+bios.IRAM.enableHeapLabel = true;
+bios.IRAM["heapLabel"]    = prog.extern("SEG0");
+bios.IRAM.heapSize        = 0x2000;
+bios.MEM.BIOSOBJSEG = prog.get("IRAM");
+bios.MEM.MALLOCSEG = prog.get("IRAM");
+
+/*
+ *  The following statements will enable the MAR bit for MAR 128.
+ *  (MAR 192 to MAR 223 are enabled by default).
+ *  This will make the memory ranges (0x8000 0000 - 0x8001 FFFF) and
+ *  (0xC000 0000 - 0xDFFF FFFF) cacheable.
+ */
+bios.GBL.C64PLUSCONFIGURE = 1;
+bios.GBL.C64PLUSMAR128to159 = 0x00000001;
+
+
+/*
+ *  When using the ARM with DSP, the ARM will share Timer 1 with the DSP.
+ *  The ARM needs to enable power to Timer 1, program the timer for "32-bit unchainded" mode
+ *  and take it out of reset.  The BIOS CLK should be driven with Timer 1 and not reset
+ *  the timer.
+ *
+ *  In most production ARM+DSP systems we recommend removing these 2
+ *  lines and sharing Timer1 with the Arm.  This will free up Timer0 for use by the
+ *  application.
+ *
+ *  The workaround below is used to make the DSP-side applications work "out of the box"
+ *  without any need for coordination with the ARM OS.
+ */
+
+bios.CLK.TIMERSELECT = "Timer 0";      /* Select Timer 0 to drive BIOS CLK */
+bios.CLK.RESETTIMER = true;          /* Take the selected timer our of reset */
+
+/*
+ *  Increase the buffer size of the LOG_system LOG object
+ */
+
+bios.LOG_system.bufLen = 512;
+
+/*
+ *  Create a trace LOG object for printing basic program output. 
+ */
+
+trace = bios.LOG.create("trace");
+trace.bufLen = 32;
+trace.logType = "circular";
+
+/* 
+ * Create LOG objects for printing output of each Clock. Also store these values
+ * in an array of LOG objects so property values can be set in a loop.
+ */
+
+var logArray = new Array();
+logArray["idlLog0"] = bios.LOG.create("idlLog0");
+logArray["prdLog0"] = bios.LOG.create("prdLog0");
+logArray["prdLog1"] = bios.LOG.create("prdLog1");
+logArray["tskLog0"] = bios.LOG.create("tskLog0");
+logArray["tskLog1"] = bios.LOG.create("tskLog1");
+
+/* Set the buffer length and log type of each log object */
+
+for (var i in logArray) { 
+    logArray[i].bufLen = 256;
+    logArray[i].logType = "circular";
+}
+
+/* 
+ * Create IDL object idlClock. This IDL object is mapped to the clockIdle 
+ * function.
+ */
+
+idlClock = bios.IDL.create("idlClock");
+idlClock["fxn"] = prog.extern("clockIdle");
+idlClock.calibration = 0;
+
+/* 
+ * Create PRD objects prdClock0 and prdClock1, both of which are mapped to the
+ * function clockPrd, but will run at different times because they have
+ * different periods.
+ */ 
+
+prdClock0 = bios.PRD.create("prdClock0");
+prdClock0.period = 1;
+prdClock0.mode = "continuous";
+prdClock0["fxn"] = prog.extern("clockPrd");
+prdClock0.arg0 = prog.extern("cl1");
+
+prdClock1 = bios.PRD.create("prdClock1");
+prdClock1.period = 1000;
+prdClock1.mode = "continuous";
+prdClock1["fxn"] = prog.extern("clockPrd");
+prdClock1.arg0 = prog.extern("cl2");
+
+/* Create two semaphores for code synchronization */
+sem0 = bios.SEM.create("sem0");
+sem0.count = 1;
+
+sem1= bios.SEM.create("sem1");
+sem1.count = 1;
+
+/* Create TSK objects task0 and task1, both mapped to the clockTask function */
+
+task0 = bios.TSK.create("task0");
+task0.priority = 1;
+task0.fxn = prog.extern("clockTask");
+task0.arg0 = prog.extern ("cl3");
+
+task1 = bios.TSK.create("task1");
+task1.priority = 1;
+task1.fxn = prog.extern("clockTask");
+task1.arg0 = prog.extern ("cl4");
+// !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+
+if (config.hasReportedError == false) {
+    prog.gen();
+}

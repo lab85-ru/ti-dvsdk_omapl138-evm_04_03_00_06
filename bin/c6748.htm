@@ -1,0 +1,188 @@
+﻿<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>TMS320C6748 - Start Your Development</title>
+<style type="text/css">
+.style1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: large;
+	color: #FF0000;
+}
+.style2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: small;
+}
+.style3 {
+	font-size: 48pt;
+}
+.style6 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: x-large;
+	color: #FF0000;
+}
+.style7 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: xx-small;
+}
+.style9 {
+	color: #0000FF;
+}
+</style>
+</head>
+
+<body>
+
+<p class="style6"><strong>TMS320C6748 Software Components and Installation Guide</strong></p>
+<p class="style2">This guide will provide you an overview of the available components and installation information to begin your TMS320C6748 development.</p>
+
+<p class="style2">Review the instructions in the <a href="../Guides/OMAP-L138_EVM_User_Guide.pdf">Zoom OMAP-L138 EVM User Guide</a> for how to connect the TMS320C6748 SOM to the baseboard and setup/install Code Composer Studio (CCS) to communicate to the device via the JTAG emulation.</p>
+
+<p class="style6"><strong>Components</strong></p>
+
+<p class="style2">The following is a list of the development software components and tools available on the TMS320C6748 device.  All the components are available for download from the Software and Development Tools section on the <a href="http://www.ti.com/c6748">TMS320C6748 device page</a></p>
+
+<p class="style1"><b>&nbsp;&nbsp;Foundational Software Libraries</b> </p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;1.</b> C64x+ (fixed) and C674x (floating-point) DSP Library (DSPLIB) - A set of optimized functions that serve as building blocks for various signal processing applications.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;2.</b> C64x+ Image Library (IMGLIB) - A collection of building block kernels used for image and video processing applications.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;3.</b> C64x+ IQMATH - A collection of highly optimized and high precision fixed point mathematical functions that support variable Q point format for the variables.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;4.</b> C67x Fast Run-Time Support (fastMath) library - A collection of optimized floating-point math functions for C programmers.</p>
+
+<p class="style1"><b>&nbsp;&nbsp;Application components</b> </p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;5.</b> BIOS Platform Support Package (BIOSPSP) - A full compliment of DSP/BIOS based device drivers (I2C, McAsp, SPI, UART, etc.)</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;6.</b> EDMA3 Low Level Driver (EDMA3 LLD) - A device driver for using and safely sharing EDMA3 resources in an application.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;7.</b> DSP/BIOS USB package (BIOSUSB) - A JUNGO USB stack capable of USB Host or USB Driver functionality leveraging DSP/BIOS.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;8.</b> Network Developer's Kit (NDK) - A DSP/BIOS based TCP/IP network stack and services.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;9.</b> Network Support Package (NSP) -  A platform specific network device driver support for NDK development.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;10.</b> DSP/BIOS Real-time File System (RTFS) - A POSIX-compliant embedded FAT file system for devices running DSP/BIOS</p>
+
+<p class="style1"><b>&nbsp;&nbsp;Multimedia components</b> </p>
+
+<p class="style2">&nbsp;&nbsp;For multimedia support (video, image, speech, and audio) on the TMS320C6748 (DSP-only) device the following components are available:</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;11.</b>Multimedia Framework Product (MFP - Codec Engine w/ cetools) - A collection of software components which includes Codec Engine to invocate and instantiate XDAIS-compliant algorithms and XDM-compliant codecs.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;</b>Various C64x+ DSP core-based XDM-compliant Video, Image, Speech and Audio Codecs available from TI <a href="http://focus.ti.com/dsp/docs/dspfindtoolswbytooltype.tsp?sectionId=3&tabId=1460&toolTypeId=65&familyId=44">here</a>. </p>
+
+<p class="style1"><b>&nbsp;&nbsp;Tools</b> </p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;12.</b> C6000 Code Generation Tools (CGTools) - A foundational tools for building applications for the C6000 DSP core.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;13.</b> C6Flo Graphical Development Tool - A tool to create working C6000 DSP applications from an intuitive block diagram view..</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;14.</b> PRU Software Development Package - A required tools for developing software to leverage the Programmable Realtime Unit Subsystem</p>
+
+<p class="style2">Additional required components (DSP/BIOS v5.41 and XDCTools v3.20) for DSP build and development are provided as part of the CCS v4.2 installer.</p>
+
+<p class="style2">Visit the <a href="http://www.ti.com/c6748"> TMS320C6748 device page </a> for a complete list of DSP software components and tools as more become available for this device.</p>
+
+<p class="style6"><strong>Installation</strong></p>
+
+<p class="style2">A DVD with CCS v4.2 has been provided in the kit.  Install CCS v4.2 (<b>default recommended - C:\Program Files\Texas Instruments</b>) before proceeding with the TMS320C6748 components installation.</p>
+
+<p class="style2"><b>NOTE:</b> Refer to the <a href=" http://processors.wiki.ti.com/index.php/FAQ_-_CCSv4#Q:_Is_Windows_7_supported.3F">CCSv4 Windows 7 support FAQ page</a> for information on possible conflicts when installing and running on Windows 7.</p>
+
+<p class="style2">CCS v4.2 includes the CGTools v7.0.x.  Most component libraries and examples have been built and validated using CGTools v6.1.x.  We recommend downloading and installing the most recent CGTools v6.1.x as this will provided a cleaner rebuild process for the various components and examples provided. All components can be rebuilt using the CGTools v7.0.x if desired. There are no known issues using CGTools v7.0.x at this time.</p>
+
+<p class="style2">The various components listed come in different installation packages(exe, tar.gz, zip, zip w/ exe).</p>
+
+<p class="style2">It is recommended that all components be installed in the same directory as CCSv4 (<b>C:\Program Files\Texas Instruments</b>). If a non default directory is selected ensure you specify a unique directory during the installation of the component.  Otherwise all components will be installed in the same base directory.</p> 
+
+<p class="style2"><b>1.</b> For installation of components with self installers (*.exe),  run the installer, follow the installation instructions and set the Destination Folder to the same directory as your CCSv4 installation. If installing in a non default directory ensure a unique directory is selected for the Destination Folder. For CGTools, you might specify something similar to the following: C:\my_ccsv4_install_dir\C6000 Code Generation Tools 6.1.17)</p>
+
+<p class="style2"><b>2.</b> For installation of components in ZIP format (*.zip), install the component by extracting the file into the directory where CCSv4 was installed. As part of the extraction a unique directory will be created (e.g. ndk_2_20_00_19). If the ZIP file contains an installer (*.exe), extract the file and run the installer as per step 1.</p>
+
+<p class="style2"><b>3.</b> For installation of components as tarball (*.tar.gz), install the component by extracting the file into the directory where CCSv4 was installed. As part of the extraction a unique directory will be created (e.g. rtfs_1_10_02_32 directory will be created.</p>
+
+<p class="style2">For more information on the components, refer to the Release Notes and within the docs directory of the components installation/extracted directory. Additional information can also be found in the <a href="http://processors.wiki.ti.com/index.php/Getting_Started_Guide_for_C6748"> Getting Started Guide (GSG) for the TMS320C6748</a>.</p>
+
+<p class="style6"><strong>Starting your Development on the TMS320C6748 device </strong></p>
+
+<p class="style2">Most of the components installed contain a mixture of CCSv3.3 and/or CCSv4 example projects that use DSP/BIOS 5.41.x,  CGTools 6.1.x, and XDCTools 3.20.x.  Each component installed requires a its own set of environment variables that need to be defined for the application example projects to locate it's dependent components.</p>
+
+<p class="style2">Open the Environment Variables window, to do so Right-click "My Computer" and select Properties.  From the Advanced tab select Environment Variables. For the components above, here is a list of the environment variables need to be defined. <b>NOTE:</b> Not all components require all the variables, refer to the Release Note or docs folder for a given component for more information on its dependencies. </p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;BIOS_INSTALL_DIR = C:\Program Files\Texas Instruments\bios_5_41_07_24</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;PSP_DRIVERS_INSTALL_DIR = C:\Program Files\Texas Instruments\pspdrivers_01_30_01</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;NDK_INSTALL_DIR = C:\Program Files\Texas Instruments\ndk_2_20_00_19</p> 
+<p>&nbsp;&nbsp;&nbsp;&nbsp;NSP_INSTALL_DIR = C:\Program Files\Texas Instruments\nsp_1_00_00_09</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;EDMA3_BIOS5_INSTALLDIR = C:\Program Files\Texas Instruments\edma3_lld_01_11_01_04</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;XDCROOT = C:/Program Files/Texas Instruments/xdctools_3_20_03_63</p>
+
+<p class="style2">Some of the variables might already be defined in your system due to previous installed versions of the same components.  Make appropriate adjustments to the variable to reflect the installation location of the new components.</p>
+
+<p class="style1"><b>&nbsp;&nbsp;Importing CCSv4 projects</b> </p>
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;1.</b> To open a component's CCSv4 projects, start CCS.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;</b> If not previously started after installing the components, you will be prompted to enable the new components discovered extension site and restart CCS.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;2.</b> Select "Project->Import Existing CCS/CCE Eclipse Project" from the menu.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;3.</b> Uncheck the "Copy projects into workspace" option. Enable "Select search-directory" option and click Browse.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;4.</b> Point to the root directory of a component installed (e.g. C:\Program Files\Texas Instruments\pspdrivers_01_30_01) and click OK.  CCS will scan the selected directory to find all available CCSv4 projects.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;</b>For the NSP examples enable the "Select archive file" option in step 3. Browse to <b>C:\Program Files\Texas Instruments\nsp_1_00_00_09\packages\ti\ndk\examples</b> directory and select ndk_evm6748_bios5_examples.zip file.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;5.</b> Enlarge the Import project window to see all available projects options to import.  Select the correct projects for your given device (C6748 or evm6748) and click Finish.  <b>NOTE:</b> Projects with the same name can not be opened up simultaneously in the same workspace.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;6.</b> Once projects have been imported, set the desired project to be built to Active by Right-clicking on the project name and selecting "Set as Active Project". Then select Project->Rebuild Active Project from the menu to begin rebuilding.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;</b>Most CCSv4 project were create to use CGTools v6.1.x. If CGTools v6.1.x was not installed a build error message will appear in the Problems window. You can either install CGTools v6.1.x or changing the settings for each project properties to use CGTools v7.0.x <b>NOTE:</b> Only the included NSP CCSv4 example projects have the properties set to use the CGTools v7.0.x, most other components must be changed manually as previously stated.</p>
+
+<p class="style1"><b>&nbsp;&nbsp;Importing CCSv3.3 projects</b> </p>
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;</b>It is recommended to import the CCSv4 projects instead if available for the component.</p>
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;1.</b> To open a component's CCSv3.3 projects(*.pjt), start CCS.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;</b> If not previously started after installing the components, you will be prompted to enable the new components discovered extension site and restart CCS.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;2.</b> Select "Project->Import Legacy CCSv3.3 Project" from the menu.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;3.</b> Select "Keep original location for each project" option and Enable "Create a subfolder for each Eclipse project". Enable "Select search-directory" option and click Browse.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;4.</b> Point to the root directory of a component installed and click OK.  CCS will scan the selected directory to find all available CCSv4 projects.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;5.</b> Enlarge the Import project window to see all available projects options to import.  Select the correct projects for your given device (C6748 or evm6748) and click Next.  <b>NOTE:</b> Projects with the same name can not be opened up simultaneously in the same workspace.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;6.</b> Select the Code Generation Tools version for each project and click Next.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;7.</b> Select "Automatically determine DSP/BIOSv5.x support enablement" and click Finish.</p>
+
+<p class="style2"><b>&nbsp;&nbsp;&nbsp;&nbsp;8.</b> Once projects have been imported, set the desired project to be built to Active by Right-clicking on the project name and selecting "Set as Active Project". Then select Project->Rebuild Active Project from the menu to begin rebuilding.</p>
+
+<p class="style2"><b> Congratulations </b> You are now setup to begin development on the TMS320C6748 device. You can also find information on the components by visiting the <a href="http://processors.wiki.ti.com/index.php/Main_Page">Texas Instruments Embedded Processors Wiki</a> and searching the component.</p>
+
+<p> </p>
+<p class="style6"><strong>Support</strong></p>
+<p class="style2">
+<a href="http://e2e.ti.com/support/dsp/tms320c6000_high_performance_dsps/default.aspx">TMS320C6748 Support Forums</a> - Active community of TIers and other customers like you already using the TMS320C6748 EVM.</p>
+
+<p class="style2">
+<a href="http://e2e.ti.com/support/embedded/default.aspx">BIOS Support Forums</a> - Active community for DSP/BIOS and DSP/BIOS related component (NDK, RTFS, MFP, etc.) questions and answers.
+
+<p class="style2">
+You may find your question has already been answer with a quick Search of the Forums.&nbsp; If not, a quick post will likely provide you the answers you need.&nbsp; </p>
+
+<p class="style2">You can also find information on the various devices and components by visiting the <a href="http://processors.wiki.ti.com/index.php/Main_Page">Texas Instruments Embedded Processors Wiki</a>.</p>
+<p class="style2">
+<a href="mailto:support@ti.com?subject=TMS320C6748 EVM Support Question">
+Support@ti.com</a> - a support email list you may submit your question to.</p>
+<p class="style6"><strong>Software Updates</strong></p>
+<p class="style2">We are continually improving the quality and content of the 
+software we provide on the TMS320C6748 EVM.&nbsp; Updates to the components may be obtained
+on the <a href="http://www.ti.com/c6748">TMS320C6748 page</a> as they become available.</p>
+<p class="style2">&nbsp;</p>
+<p class="style7"><strong>Copyright 2010 - Texas Instrument, Incorporated</strong></p>
+
+</body>
+
+</html>

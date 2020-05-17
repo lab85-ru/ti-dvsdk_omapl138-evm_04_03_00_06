@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# Default OMAPL138 EVM memory map
+#
+# Start Addr    Size    Description
+# -------------------------------------------
+# 0xC0000000     32 MB  Linux
+# 0xC2000000     18 MB  CMEM
+# 0xC3200000     14 MB  CODEC SERVER
+
+
+load () {
+    modprobe cmemk phys_start=0xC2000000 phys_end=0xC3200000 useHeapIfPoolUnavailable=1 allowOverlap=1
+    modprobe dsplinkk
+    modprobe dm365mmap
+    mknod /dev/dm365mmap c `awk "\\$2==\"dm365mmap\" {print \\$1}" /proc/devices` 0
+}
+
+unload () {
+    rmmod cmemk 2>/dev/null
+    rmmod dsplinkk 2>/dev/null
+    rmmod dm365mmap 2>/dev/null
+    rm -f /dev/dm365mmap
+}
+
+case "$1" in
+      start) 
+            load
+             ;;
+       stop) 
+            unload           
+             ;;
+       restart) 
+            unload           
+            load
+             ;;
+        *)
+             echo "$0 <start/stop/restart>"
+             ;;
+esac
+

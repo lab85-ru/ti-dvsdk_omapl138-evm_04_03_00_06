@@ -1,0 +1,24 @@
+/*
+*  Copyright 2006 by Texas Instruments Incorporated.
+*
+*  All rights reserved. Property of Texas Instruments Incorporated.
+*  Restricted rights to use, duplicate or disclose this code are
+*  granted through contract.
+*
+*/
+
+
+Pkg.otherFiles=[
+        'edma3_xdcpaths_common.dat',
+        'package.bld',
+];
+
+
+
+
+
+
+
+
+
+

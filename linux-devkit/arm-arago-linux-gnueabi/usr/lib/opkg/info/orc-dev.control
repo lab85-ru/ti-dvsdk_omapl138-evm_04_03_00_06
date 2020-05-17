@@ -1,0 +1,14 @@
+Package: orc-dev
+Version: 0.4.10-r0.6
+Description: orc - The Oil Runtime Compiler
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: orc
+Architecture: armv5te
+OE: orc
+Homepage: http://code.entropywave.com/projects/orc/
+Build: install/d0bd439
+Depends: orc (= 0.4.10-r0.6), liborc-test-0.4-0, liborc-0.4-0
+Recommends: liborc-0.4-dev, liborc-test-0.4-dev, libc6-dev, orc-dev, libgcc1-dev
+Source: http://code.entropywave.com/download/orc/orc-0.4.10.tar.gz;name=orc

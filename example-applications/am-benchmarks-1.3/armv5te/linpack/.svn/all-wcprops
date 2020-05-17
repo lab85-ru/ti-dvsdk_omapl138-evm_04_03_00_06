@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/am_benchmarks/!svn/ver/63/trunk/armv5te/linpack
+END
+makefile.init
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/am_benchmarks/!svn/ver/63/trunk/armv5te/linpack/makefile.init
+END
+linpack.c
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/am_benchmarks/!svn/ver/63/trunk/armv5te/linpack/linpack.c
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/am_benchmarks/!svn/ver/63/trunk/armv5te/linpack/.project
+END
+.cproject
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/am_benchmarks/!svn/ver/63/trunk/armv5te/linpack/.cproject
+END

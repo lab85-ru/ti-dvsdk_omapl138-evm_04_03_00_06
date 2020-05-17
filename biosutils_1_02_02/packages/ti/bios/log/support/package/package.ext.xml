@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/release.dtd -->
+<release name="" label="" date="" buildCount="">
+<package name="ti.bios.log.support"
+    version="1, 0, 2, 02"/>
+<imports>
+    <package name="ti.bios"
+        version=""/>
+    <package name="ti.bios.utils"
+        version=""/>
+</imports>
+<references>
+    <package name="ti.bios"
+        version="5, 2, 5, 12">
+        <file name="Build.xs"/>
+        <file name="include/_hook.h"/>
+        <file name="include/_log.h"/>
+        <file name="include/atm.h"/>
+        <file name="include/fxn.h"/>
+        <file name="include/hwi.h"/>
+        <file name="include/knl.h"/>
+        <file name="include/log.h"/>
+        <file name="include/mem.h"/>
+        <file name="include/obj.h"/>
+        <file name="include/prd.h"/>
+        <file name="include/que.h"/>
+        <file name="include/sem.h"/>
+        <file name="include/std.h"/>
+        <file name="include/sts.h"/>
+        <file name="include/swi.h"/>
+        <file name="include/sys.h"/>
+        <file name="include/tistdtypes.h"/>
+        <file name="include/trc.h"/>
+        <file name="include/trg.h"/>
+        <file name="include/tsk.h"/>
+        <file name="package.xs"/>
+        <file name="package/ti.bios.sch"/>
+    </package>
+    <package name="xdc.bld"
+        version="1, 0, 1">
+        <file name="BuildEnvironment.xs"/>
+        <file name="Executable.xs"/>
+        <file name="ITarget.xs"/>
+        <file name="ITargetFilter.xs"/>
+        <file name="Library.xs"/>
+        <file name="PackageContents.xs"/>
+        <file name="Repository.xs"/>
+        <file name="Script.xs"/>
+        <file name="Utils.xs"/>
+        <file name="_gen.xs"/>
+        <file name="package.xs"/>
+        <file name="package/xdc.bld.sch"/>
+    </package>
+    <targetRoot base="/db/toolsrc/library/vendors2005/ti/c6x/6.1.5/Linux/"
+        trgs="ti.targets.C674">
+        <file name="include/linkage.h"/>
+        <file name="include/stdarg.h"/>
+        <file name="include/stddef.h"/>
+        <file name="include/stdint.h"/>
+        <file name="include/string.h"/>
+    </targetRoot>
+    <package name="xdc.services.intern.xsr"
+        version="1, 0, 0">
+        <file name="java/package.jar"/>
+        <file name="package/xdc.services.intern.xsr.sch"/>
+    </package>
+    <package name="xdc.services.global"
+        version="1, 0, 0">
+        <file name="Clock.xs"/>
+        <file name="java/package.jar"/>
+        <file name="package/xdc.services.global.sch"/>
+    </package>
+    <package name="xdc.services.intern.cmd"
+        version="1, 0, 0, 0">
+        <file name="java/package.jar"/>
+        <file name="package/xdc.services.intern.cmd.sch"/>
+    </package>
+    <package name="xdc.corevers"
+        version="16, 0, 1, 0">
+        <file name="package/xdc.corevers.sch"/>
+    </package>
+    <package name="xdc.shelf"
+        version="1, 0, 0, 0">
+        <file name="java/antlr.jar"/>
+        <file name="java/js.jar"/>
+        <file name="java/junit.jar"/>
+        <file name="java/tar.jar"/>
+        <file name="java/xbean.jar"/>
+        <file name="package/xdc.shelf.sch"/>
+    </package>
+    <package name="ti.psl"
+        version="5, 0, 0, 0">
+        <file name="package.xs"/>
+        <file name="package/ti.psl.sch"/>
+    </package>
+    <package name="xdc.services.spec"
+        version="1, 0, 0, 0">
+        <file name="java/package.jar"/>
+        <file name="package/xdc.services.spec.sch"/>
+    </package>
+    <package name="xdc"
+        version="1, 1, 1, 0">
+        <file name="IPackage.xdc"/>
+        <file name="IPackage.xs"/>
+        <file name="om2.xs"/>
+        <file name="package.xs"/>
+        <file name="package/xdc.sch"/>
+        <file name="recap.xs"/>
+        <file name="std.h"/>
+        <file name="template.xs"/>
+        <file name="xdc.tci"/>
+        <file name="xmlgen.xs"/>
+        <file name="xmlgen2.xs"/>
+    </package>
+    <targetRoot base="/db/toolsrc/library/vendors2005/ti/c6x/6.0.14/Linux/"
+        trgs="ti.targets.C64P,ti.targets.C64">
+        <file name="include/linkage.h"/>
+        <file name="include/stdarg.h"/>
+        <file name="include/stddef.h"/>
+        <file name="include/stdint.h"/>
+        <file name="include/string.h"/>
+    </targetRoot>
+    <package name="xdc.services.intern.gen"
+        version="1, 0, 0, 0">
+        <file name="java/package.jar"/>
+        <file name="package/xdc.services.intern.gen.sch"/>
+    </package>
+    <package name="ti.rtdx"
+        version="2, 0, 0, 4">
+        <file name="Settings.xs"/>
+        <file name="package.xs"/>
+        <file name="package/ti.rtdx.sch"/>
+    </package>
+    <package name="ti.targets"
+        version="1, 0, 2, 0">
+        <file name="ITarget.xs"/>
+        <file name="package.xs"/>
+        <file name="package/ti.targets.sch"/>
+        <file name="std.h"/>
+    </package>
+    <package name="ti.bios.utils"
+        version="2, 0, 2, 02">
+        <file name="Load.h"/>
+        <file name="package.xs"/>
+        <file name="package/ti.bios.utils.sch"/>
+    </package>
+    <package name="tisb.release.filters"
+        version="1, 0, 0, 0">
+        <file name="libvers.xdt"/>
+    </package>
+    <xdcRoot base="/db/rtree/install/trees/products/xdcprod-j61/product/Linux/xdctools_3_10_05_61/">
+        <file name="/packages/xdc/package.xdc"/>
+        <file name="include/utils.tci"/>
+    </xdcRoot>
+</references>
+<orphans>
+    <file name="/db/vtree/library/trees/biosutils/biosutils-c02x/src/config.bld"/>
+</orphans>
+</release>

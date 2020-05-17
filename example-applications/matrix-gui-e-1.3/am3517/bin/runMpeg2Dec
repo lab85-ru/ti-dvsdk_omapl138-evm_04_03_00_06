@@ -1,0 +1,12 @@
+#!/bin/sh
+default_display="`cat /sys/devices/platform/omapdss/manager0/display`"
+if [ "$default_display" = "dvi" ]; then
+        filename="/usr/share/ti/video/HistoryOfTI-480p.m2v"
+else
+        filename="/usr/share/ti/video/HistoryOfTI-WQVGA.m2v"
+fi
+if [ ! -f $filename ]; then
+        echo "Video clip not found"
+        exit 1
+fi
+gst-launch-0.10 filesrc location=$filename ! mpegvideoparse ! ffdec_mpeg2video ! ffmpegcolorspace ! fbdevsink

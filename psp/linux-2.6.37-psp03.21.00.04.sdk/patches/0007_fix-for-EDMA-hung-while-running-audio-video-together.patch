@@ -1,0 +1,12 @@
+diff -Naur kernel_ori/arch/arm/mach-davinci/board-da850-evm.c kernel_new/arch/arm/mach-davinci/board-da850-evm.c
+--- kernel_ori/arch/arm/mach-davinci/board-da850-evm.c	2011-11-19 20:36:20.376225403 +0530
++++ kernel_new/arch/arm/mach-davinci/board-da850-evm.c	2011-11-19 20:36:55.268224181 +0530
+@@ -1032,7 +1032,7 @@
+ 	.num_serializer	= ARRAY_SIZE(da850_iis_serializer_direction),
+ 	.tdm_slots	= 2,
+ 	.serial_dir	= da850_iis_serializer_direction,
+-	.asp_chan_q	= EVENTQ_1,
++	.asp_chan_q	= EVENTQ_0,
+ 	.version	= MCASP_VERSION_2,
+ 	.txnumevt	= 1,
+ 	.rxnumevt	= 1,

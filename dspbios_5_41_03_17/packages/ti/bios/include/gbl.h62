@@ -1,0 +1,715 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== gbl.h62 ========
+;
+;
+
+        .if ($isdefed("GBL_") = 0)    ; prevent multiple includes of this file
+
+GBL_            .set    1
+
+        .asg 5205h, GBL_VERSION         ; Major BIOS version number used 
+                                        ; by _GBL_getVersion and GBL_init.
+
+        .include std.h62
+        .include c6x.h62
+        .include chk.h62
+        .include trc.h62
+
+        .global GBL_R_sysdp
+        .global GBL_A_SYSDP, GBL_A_SYSPAGE
+        .global GBL_stackend, GBL_stackbeg
+        .global GBL_CACHE
+;
+; Changed below .global from .ref since .ref was producing a warning
+; for the C55 (which probably shouldn't be happening anyway).
+; .global GBL_TRCMASKVALUE doesn't need to be here at all since the
+; symbol is .set in the cfg.h62 file.  It's left here for consistency
+; with other targets and "not to rock the boat".
+;
+        .global GBL_TRCMASKVALUE
+
+        .global GBL_initdone
+        .global _GBL_getVersion
+        .global GBL_versionMismatch
+
+GBL_SYSC_LICFG0 .set    0x01C20040      ; address of SYSC LICFG0 register
+                                        ; on 2430, 3430
+GBL_GEMTRUECOMPENMASK .set 0xFFFF8FFF   ; to clear GEM true completion bit 15.
+
+WUGENMEVTSET0MASK       .set    0xffffffff      ; Wugen MEVTSET0 mask
+WUGENMEVTSET1MASK       .set    0x0000ffff      ; Wugen MEVTSET1 mask
+WUGENMEVTSET2MASK       .set    0x000fffff      ; Wugen MEVTSET2 mask
+WUGENMEVTSET0           .set    0x01c21080      ; address of Wugen MEVTSET0
+EVTCLR0                 .set    0x01800040      ; address of EVTCLR0
+
+;
+;# ======== GBL_Obj ========
+;  Allocate "size" words in section sect and give it the name "name".
+;
+;  Both the section and the alignFlag arguments are optional; section
+;  defaults to ".bss" and alignFlag defaults to no alignment.
+;
+;  Objects created in the ".data" section are initialized to 0.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GBL_Obj$regs
+GBL_Obj .macro name, size, section, alignFlag, fillValue, alignValue
+        CHK_domain "GBL_Obj", alignFlag, "noalign,align", "noalign"
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "GBL_Obj align parameter error."
+        .endif
+        .asg ":CHK_status:", alignFlag
+
+        CHK_nargs "GBL_Obj", size
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "GBL_Obj size parameter error."
+        .endif
+
+        .if ($symlen(section) = 0)
+            .asg ".bss", section
+        .endif
+
+        .if ($symlen(fillValue) != 0)
+            .sect ".gblinit"
+            .word :size:
+            .word :name:
+            .word :fillValue:
+        .endif
+
+        .if (($symcmp(section, ".data") = 0) | ($symcmp(alignFlag, "align") = 0))
+            .sect ":section:"
+            .if ($symcmp(alignFlag, "align") = 0)
+                .align  :alignValue:
+            .endif
+:name::
+            ;
+            ; Can't use .space directive here because it reserves
+            ; bits for some processors and bytes for others.
+            ;
+            .loop :size:
+                .word 0
+            .endloop
+        .else
+:name::     .usect ":section:", :size: * (STD_TARGWORDMAUS / STD_TARGCHARMAUS), (STD_TARGWORDMAUS / STD_TARGCHARMAUS)
+        .endif
+
+        .endm
+
+;
+;# ======== GBL_config ========
+;  Static configuration of the GBL module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", GBL_config$regs
+        .if ($isdefed("_64P_"))
+GBL_config .macro _rom,  _procid, _clkin, _freq, _dsptype, _dspsubtype, _clktype, _bigendian, _userinit, _userinitfxn, _enableinst, _supportcsl, _trcmaskvalue, _callcslcfginit, _cache, _l2configure, _l1pmode, _l1dmode, _l2mode, _l2mar0_31, _l2mar32_63, _l2mar64_95, _l2mar96_127, _l2mar128_159, _l2mar160_191, _l2mar192_223, _l2mar224_255, _sk, _truecomp, _addr0, _addr1, _addr2
+        
+        CHK_nargs "GBL_config", _addr2
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "GBL_config size parameter error."
+        .endif
+
+GBL_GEMTRUECOMPENVAL    .set    (:_truecomp: << 15)
+
+        ; reference special symbol GBL_boot defined in BIOS boot file to make
+        ; sure we are linking correct boot file (workaround for SDSsq24217)
+        .ref GBL_boot
+
+        .asg    :_userinitfxn:, USERINITFXN     ; used by GBL_init
+
+        .if (GBL_DSPSUBTYPE != 6499 & GBL_DSPSUBTYPE != 6747 & GBL_DSPSUBTYPE != 6748)
+            .emsg "Project build options do not match Global configuration settings.  Compiler options specify -mv64+, but configuration is not for C64x+"
+        .endif ; GBL_SUBTYPE != 6499
+
+        ;
+        ; print a warning message if project build options do not match
+        ; global configuration options.
+        ;
+        .if .BIG_ENDIAN
+            .if (GBL_BIGENDIAN == 0)
+                .emsg "Project build options do not match Global configuration settings.  Compiler options specify Big Endian, configuration set for Little Endian."
+            .endif
+        .else
+            .if (GBL_BIGENDIAN == 1)
+                .emsg "Project build options do not match Global configuration settings.  Compiler options specify Little Endian, configuration set for Big Endian."
+            .endif
+        .endif
+
+        ; initialize 'gblinit' variable, used in GBL_init
+gblinit .sect ".gblinit"
+
+        ;
+        ; fill stack with '0xc0ffee'
+        ;
+        ; Don't overwrite the bottom 16 words to avoid trashing
+        ; valid stack data. (Only one of these words contains
+        ; valid data, but just to be safe we leave 16 untouched).
+        ;
+        ; (stacksize / wordsize) since size is in words
+        ;
+        .word ( (GBL_stackend-GBL_stackbeg+1) / STD_TARGWORDMAUS ) - 16 ; nwords
+        .word GBL_stackbeg                      ; addr
+        .word 0xc0ffee                          ; value
+
+        .endm
+        .else
+GBL_config .macro _rom,  _procid, _clkin, _freq, _dsptype, _dspsubtype, _clktype, _bigendian, _userinit, _userinitfxn, _enableinst, _cache, _l2configure, _l2mode, _l2priority, _l2marmask, _supportcsl, _trcmaskvalue, _callcslcfginit, _c641xl2priority, _l2marmask1, _l2marmask2, _l2marmask3, _l2marmask4, _l2marmask5, _l2configalloc, _l2alloc
+        
+        ; reference special symbol GBL_boot defined in BIOS boot file to make sure
+        ; we are linking correct boot file (workaround for SDSsq24217)
+        .ref GBL_boot
+
+        .asg    :_userinitfxn:, USERINITFXN     ; used by GBL_init
+
+        .if (GBL_DSPSUBTYPE == 6499 | GBL_DSPSUBTYPE == 6747 | GBL_DSPSUBTYPE == 6748)
+            .emsg "Project build options do not match Global configuration settings.  Compiler options do not specify -mv64+, but configuration is for C64x+"
+        .endif ; GBL_SUBTYPE == 6499
+
+        ;
+        ; print a warning message if project build options do not match
+        ; global configuration options.
+        ;
+        .if .BIG_ENDIAN
+            .if (GBL_BIGENDIAN == 0)
+                .emsg "Project build options do not match Global configuration settings.  Compiler options specify Big Endian, configuration set for Little Endian."
+            .endif
+        .else
+            .if (GBL_BIGENDIAN == 1)
+                .emsg "Project build options do not match Global configuration settings.  Compiler options specify Little Endian, configuration set for Big Endian."
+            .endif
+        .endif
+
+        ; initialize 'gblinit' variable, used in GBL_init
+gblinit .sect ".gblinit"
+
+        ;
+        ; fill stack with '0xc0ffee'
+        ;
+        ; Don't overwrite the bottom 16 words to avoid trashing
+        ; valid stack data. (Only one of these words contains
+        ; valid data, but just to be safe we leave 16 untouched).
+        ;
+        ; (stacksize / wordsize) since size is in words
+        ;
+        .word ( (GBL_stackend-GBL_stackbeg+1) / STD_TARGWORDMAUS ) - 16 ; nwords
+        .word GBL_stackbeg                      ; addr
+        .word 0xc0ffee                          ; value
+
+        .endm
+        .endif
+
+;
+;# ======== GBL_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", GBL_end$regs
+GBL_end .macro
+
+        .sect ".gblinit"
+        .word 0                 ; end of gblinit table marker
+
+        .endm
+
+;
+;# ======== GBL_init ========
+;  Runtime initialization of the GBL module
+;
+;# Preconditions
+;#      none
+;#
+;# Postconditions
+;#      none
+;#
+;
+        .asg    "", GBL_init$regs
+GBL_init        .macro
+
+        ; call _GBL_getVersion
+        mvkl    _GBL_getVersion, b3
+        mvkh    _GBL_getVersion, b3
+        b b3
+        mvkl versret?,b3
+        mvkh versret?,b3
+        nop 3 
+versret?:
+        mvkl    GBL_VERSION, a1
+        mvkh    GBL_VERSION, a1
+ 
+        sub a4,a1,a1
+        cmpeq a1,0,a1
+
+GBL_versionMismatch?:
+  [!a1] b GBL_versionMismatch? 
+        nop 5
+        
+        ; SDSsq43119 - bug found for 6x big-endian where PROCID was not being
+        ; returned correctly.
+        ; GBL_procId is initialized here instead of creating a cinit
+        ; record in biosdata.s62 because PROCID is 16bits and it is not 
+        ; possible to generate a 16bit cinit record where the value is 
+        ; relocatable. This change was only done for 6x. All others use
+        ; cinit record to initialize PROCID.
+        .ref _GBL_procId
+        mvkl    GBL_PROCID, a1
+        mvkl    _GBL_procId, b3 
+        mvkh    _GBL_procId, b3 
+        sth     a1, *b3
+
+        ; SDSCM22090 - Initialize the WUGEN to its default state from reset
+        ; Also clear the EVTFLAG[0:3] registers here. The IFR will be cleared
+        ; further below.
+        .if ((GBL_CLKTYPE == 2430) | (GBL_CLKTYPE == 3430))
+            mvkl WUGENMEVTSET0MASK, a1
+||          mvkl WUGENMEVTSET0, b1
+            mvkh WUGENMEVTSET0MASK, a1
+||          mvkh WUGENMEVTSET0, b1
+            mvkl WUGENMEVTSET1MASK, a2
+            mvkl WUGENMEVTSET2MASK, b2
+||          stw  a1, *b1++              ; mask all events in WUGEN MEVT0
+            mvkh WUGENMEVTSET1MASK, a2
+||          mvkh WUGENMEVTSET2MASK, b2
+            mvkl EVTCLR0, b0
+||          stw  a2, *b1++              ; mask all events in WUGEN MEVT1
+            mvkh EVTCLR0, b0
+||          stw  b2, *b1                ; mask all events in WUGEN MEVT2
+                                        ; clear all event flags with a1
+            stw  a1, *b0++              ; clear event flag register 0
+            stw  a1, *b0++              ; ckear event flag register 1
+            stw  a1, *b0++              ; ckear event flag register 2
+            stw  a1, *b0++              ; ckear event flag register 3
+
+        .endif
+
+        ; only call user init function if non-zero
+        .if (GBL_USERINIT != 0)
+        ; USERINITFXN below is defined in GBL_config
+            mvkl :USERINITFXN:, b3
+            mvkh :USERINITFXN:, b3
+            b b3
+            mvkl ginit?, b3
+            mvkh ginit?, b3
+            nop 3
+ginit?:
+        .endif
+
+        .if ($isdefed("_64P_"))
+
+        .if GBL_ENABLE_SK == 1
+
+        .global _SK_registerOSIntr
+        .global _SK_registerOSHWE
+        .global _SK_registerOSSWE
+
+        stw     b10, *SP--[4]
+        stw     b11, *SP[1]
+        stw     a10, *SP[2]
+
+        ;
+        ; Register intr vectors 2-14 with SK.
+        ;
+        mvk     14-2, b11               ; register 14 intrs (bdec-adjusted)
+        mvk     2, a10                  ; start with intr #2
+        mvkl    hwi2, b10
+        mvkh    hwi2, b10
+
+skRegisterLoop:
+        mvkl    _SK_registerOSIntr, b3
+        mvkh    _SK_registerOSIntr, b3
+        bnop    b3, 0
+        addkpc  reg1, b3, 2
+        mv      a10, a4
+        mv      b10, b4
+reg1:
+        
+        bdec    skRegisterLoop, b11
+        addaw   b10, 8, b10             ; next vector addr
+        add     a10, 1, a10             ; next intr #
+        nop     3
+
+        ;
+        ; Register NMI vector with SK for exceptions.
+        ;
+        mvkl    _SK_registerOSHWE, b3
+        mvkh    _SK_registerOSHWE, b3
+        bnop    b3, 0
+        addkpc  reg2, b3, 2
+        mvkl    hwi1, a4
+        mvkh    hwi1, a4
+reg2:
+
+        ;
+        ; Register NMI vector with SK for SWE processing.
+        ;
+        mvkl    _SK_registerOSSWE, b3
+        mvkh    _SK_registerOSSWE, b3
+        bnop    b3, 0
+        addkpc  reg3, b3, 2
+        mvkl    hwi1, a4
+        mvkh    hwi1, a4
+reg3:
+
+        ldw     *SP[1], b11
+        ldw     *SP[2], a10
+        ldw     *++SP[4], b10
+
+        .else   ; GBL_ENABLE_SK
+
+        .global HWI_A_VECS
+
+        mvkl HWI_A_VECS,a0
+        mvkh HWI_A_VECS,a0
+        mvc a0,istp                 ; load interrupt service table pointer
+
+        .endif  ; GBL_ENABLE_SK
+
+        .else   ; _64P_
+
+        .global HWI_A_VECS
+
+        mvkl HWI_A_VECS,a0
+        mvkh HWI_A_VECS,a0
+        mvc a0,istp                 ; load interrupt service table pointer
+
+        .endif  ; _64P_
+
+        .if (GBL_DSPSUBTYPE != 6799) ; no HWI_REGS on Antara chip
+
+        .if STD_TMS320C6400PLUS | STD_TMS320C6740
+
+        .if GBL_ENABLE_SK == 1
+
+        .global _SK_setEventReg
+;
+; Register number in ECM space of INTMUX1 register
+;
+INTMUX1_EVENT_INDEX     .set    0x104 / 4
+
+        mvk     INTMUX1_EVENT_INDEX, a4 ; put event register number in A4
+        mvkl    HWI_INTRMUX1, b4        ; Value for Interrupt Mux Register 1
+        mvkh    HWI_INTRMUX1, b4
+        callp   _SK_setEventReg, b3
+
+        mvk     INTMUX1_EVENT_INDEX+1, a4 ; put event register number in A4
+        mvkl    HWI_INTRMUX2, b4        ; Value for Interrupt Mux Register 2
+        mvkh    HWI_INTRMUX2, b4
+        callp   _SK_setEventReg, b3
+
+        mvk     INTMUX1_EVENT_INDEX+2, a4 ; put event register number in A4
+        mvkl    HWI_INTRMUX3, b4        ; Value for Interrupt Mux Register 3
+        mvkh    HWI_INTRMUX3, b4
+        callp   _SK_setEventReg, b3
+
+        .else   ; GBL_ENABLE_SK == 1
+
+        mvkl HWI_REGS,a0            ; load addr of Interrupt Selector Regs
+        mvkh HWI_REGS,a0
+
+        mvkl HWI_INTRMUX1,b1    ; Value for Interrupt Mux Register 1
+        mvkh HWI_INTRMUX1,b1
+        stw b1,*a0++            ; Store into Interrupt Mux Register
+
+        mvkl HWI_INTRMUX2,b1    ; Value for Interrupt Mux Register 2
+        mvkh HWI_INTRMUX2,b1
+        stw b1,*a0++            ; Store into Interrupt Mux Register
+
+        mvkl HWI_INTRMUX3,b1    ; Value for Interrupt Mux Register 3
+        mvkh HWI_INTRMUX3,b1
+        stw b1,*a0++            ; Store into Interrupt Mux Register
+
+        .endif  ; GBL_ENABLE_SK == 1
+
+        .else   ; STD_TMS320C6400PLUS | STD_TMS320C6740
+
+        mvkl HWI_REGS,a0            ; load addr of Interrupt Selector Regs
+        mvkh HWI_REGS,a0
+
+        mvkl HWI_INTRMULTHIGH,b1    ; Value for Interrupt Multiplexer High
+        mvkh HWI_INTRMULTHIGH,b1
+        stw b1,*a0++                ; Store into Interrupt Multiplexer High
+
+        mvkl HWI_INTRMULTLOW,b1     ; Value for Interrupt Multiplexer Low
+        mvkh HWI_INTRMULTLOW,b1
+        stw b1,*a0++                ; Store into Interrupt Multiplexer Low
+        
+        mvkl HWI_POLARITYMASK,b1    ; Value for External Interrupt Polarity
+        mvkh HWI_POLARITYMASK,b1
+        stw b1,*a0                  ; Store into External Interrupt Polarity
+
+        .endif
+
+        nop 5                       ; allow settling for possible spurious
+        nop 5                       ; interrupts (10 cycles, per TI)
+
+        .endif                      ; endif GBL_DSPSUBTYPE != 6799      
+        mvk 0xffffffff,b1           ; clear any bits in IFR using ICR
+        mvc b1,icr
+
+        mvc ier,b1
+        or 2,b1,b1
+        mvc b1,ier                  ; set NMIE bit (required to enable ISRs)
+
+        .if GBL_SUPPORTCSL
+            .ref    _GBL_cslInit
+
+            mvkl    _GBL_cslInit, b0
+            mvkh    _GBL_cslInit, b0
+            b       b0
+            mvkl    hwi_init_ret?, b3
+            mvkh    hwi_init_ret?, b3
+            nop 3
+
+hwi_init_ret?:
+
+        .endif
+
+        ; 
+        ; L2 CACHE initialization
+        ;
+        
+        .if (GBL_L2CONFIGURE != 0)
+            .if ($isdefed("_64P_"))
+                .ref  _GBL_cacheInit64P
+
+                mvkl  _GBL_cacheInit64P, b0
+                mvkh  _GBL_cacheInit64P, b0
+                
+                mvkl GBL_L1DMODE, a4
+||              mvkl GBL_L1PMODE, b12
+                mvkh GBL_L1DMODE, a4
+||              mvkh GBL_L1PMODE, b12
+                stw a4, *SP--
+
+                mvkl GBL_L2MODE, a4
+||              mvkl GBL_L2MAR0_31, b4
+                mvkh GBL_L2MODE, a4
+||              mvkh GBL_L2MAR0_31, b4
+                mvkl GBL_L2MAR32_63, a6
+||              mvkl GBL_L2MAR64_95, b6
+                mvkh GBL_L2MAR32_63, a6
+||              mvkh GBL_L2MAR64_95, b6
+                mvkl GBL_L2MAR96_127, a8
+||              mvkl GBL_L2MAR128_159, b8
+                b       b0
+                mvkh GBL_L2MAR96_127, a8
+||              mvkh GBL_L2MAR128_159, b8
+                mvkl GBL_L2MAR160_191, a10
+||              mvkl GBL_L2MAR192_223, b10
+                mvkh GBL_L2MAR160_191, a10
+||              mvkh GBL_L2MAR192_223, b10
+                mvkl GBL_L2MAR224_255, a12
+||              mvkl  gbl_cacheinit_ret?, b3
+                mvkh GBL_L2MAR224_255, a12
+||              mvkh  gbl_cacheinit_ret?, b3
+gbl_cacheinit_ret?
+                addaw SP, 1, SP
+                
+
+            .elseif ($isdefed("_64_"))
+                .ref  _GBL_cslCacheInit64
+
+                mvkl  _GBL_cslCacheInit64, b0
+                mvkh  _GBL_cslCacheInit64, b0
+
+                mvkl GBL_L2MODE, a4
+||              mvkl GBL_C641XL2PRIORITY, b4
+                mvkh GBL_L2MODE, a4
+||              mvkh GBL_C641XL2PRIORITY, b4
+                mvkl GBL_L2MARMASK1, a6
+||              mvkl GBL_L2MARMASK2, b6
+                mvkh GBL_L2MARMASK1, a6
+||              mvkh GBL_L2MARMASK2, b6
+                mvkl GBL_L2MARMASK3, a8
+||              mvkl GBL_L2MARMASK4, b8
+                b b0
+                mvkh GBL_L2MARMASK3, a8
+||              mvkh GBL_L2MARMASK4, b8
+                mvkl GBL_L2MARMASK5, a10
+||              mvkl GBL_L2CONFIGALLOC, b10
+                mvkh GBL_L2MARMASK5, a10
+||              mvkh GBL_L2CONFIGALLOC, b10
+                mvkl GBL_L2ALLOC, a12
+||              mvkl  gbl_cslcacheinit_ret?, b3
+                mvkh GBL_L2ALLOC, a12
+||              mvkh  gbl_cslcacheinit_ret?, b3
+            .else
+                .ref  _GBL_cslCacheInit
+
+                mvkl  _GBL_cslCacheInit, b0
+                mvkh  _GBL_cslCacheInit, b0
+
+                b       b0
+                mvkl  GBL_L2MODE, a4
+||              mvkl  GBL_L2MARMASK, b4
+                mvkh  GBL_L2MODE, a4
+                mvkh  GBL_L2MARMASK, b4
+                mvkl  gbl_cslcacheinit_ret?, b3
+                mvkh  gbl_cslcacheinit_ret?, b3
+            .endif
+
+        .endif  ; GBL_L2CONFIGURE
+
+        ; set GEM Completion bit for omap 2430, 3430
+        .if ((GBL_CLKTYPE == 2430) | (GBL_CLKTYPE == 3430))
+            mvkl GBL_SYSC_LICFG0, b0
+            mvkh GBL_SYSC_LICFG0, b0
+            ldw  *b0, b1
+            mvkl GBL_GEMTRUECOMPENVAL, a0
+            mvkh GBL_GEMTRUECOMPENVAL, a0
+            mvkl GBL_GEMTRUECOMPENMASK, a1
+            mvkh GBL_GEMTRUECOMPENMASK, a1
+            and  b1, a1, b1
+            or   b1, a0, b1
+            stw  b1, *b0
+
+        .endif
+
+gbl_cslcacheinit_ret?:
+
+        ;
+        ; CACHE initialization
+        ;
+
+        mvc     csr, b0                 ; get CSR
+
+        .if (STD_TMS320C6400PLUS)
+        .else
+        mvkl    HWI_D_ccmask, b2
+        mvkh    HWI_D_ccmask, b2
+        ldw     *b2, b2                 ; get cache bits from configuration
+        nop     1
+
+        mvk     C6X_CCFIELDS, b1
+        and     b1, b0, b1              ; extract pcc+dcc fields of csr
+        xor     b1, b0, b0              ; clear pcc+dcc fields of csr
+        or      b2, b0, b0              ; change pcc and dcc fields
+        .endif
+
+        mvc     b0, csr                 ; save CSR with new cache state
+
+        ;
+        ;  Calling TRC_init from here until there is at trc.cdb file.
+        ;
+        TRC_init
+
+        ;
+        ;  fill memory using triples (nwords, addr, value) from 
+        ;  gblinit table.
+        ;
+        mvkl    gblinit, a4
+        mvkh    gblinit, a4
+
+loop0?:
+        ldw     *a4++[1], b0            ; nwords
+        ldw     *a4++[1], a0            ; address
+        ldw     *a4++[1], b2            ; value
+        nop     3
+ [!b0]  b       done?
+        nop     5
+
+loop1?:
+        stw     b2, *a0++[1]
+        sub     b0, 1, b0
+ [b0]   b       loop1?
+        nop     5
+
+        b       loop0?
+        nop     5
+done?:
+        mvk     1, a2
+ ||     mvkl    GBL_initdone, b2
+        mvkh    GBL_initdone, b2
+        stw     a2, *b2
+
+        .endm
+
+;
+;# ======== GBL_preamble ========
+;
+;  This macro is called by the generated *cfg.s62 files at the beginning
+;  of the <OS>_init and <OS>_start routines.  It stores the subroutine
+;  return address register (b3) onto the stack.
+;
+GBL_preamble    .macro
+        stw     b3, *SP--[2]
+
+        .endm
+
+;
+;# ======== GBL_postamble ========
+;
+;  This macro is called by the generated *cfg.s62 files at the end 
+;  of the <OS>_init and <OS>_start routines, to effect a return from
+;  the routines.  It includes restoring the return address into
+;  Register b3 from the stack.
+;
+GBL_postamble    .macro
+        ldw     *++SP[2], b3
+        nop     4
+        b       b3
+        nop     5
+
+        .endm
+
+;
+;# ======== GBL_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", GBL_startup$regs
+GBL_startup        .macro
+        .endm
+
+;
+;# ======== GBL_variable ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", GBL_varaible$regs
+GBL_variable    .macro name, value
+
+        .bss    :name:,4,4
+        .global :name:
+        
+        .sect ".cinit"
+        .align 8
+        .field 4
+        .field :name:
+        .field :value:
+        .endm
+
+        .endif          ; if GBL_ is not defined

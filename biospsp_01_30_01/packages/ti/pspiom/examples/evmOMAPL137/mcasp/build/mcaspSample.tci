@@ -1,0 +1,20 @@
+bios.UDEV.create("mcasp1");
+bios.UDEV.instance("mcasp1").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("mcasp1").initFxn = prog.extern("mcaspUserInit");
+bios.UDEV.instance("mcasp1").params = prog.extern("mcaspParams");
+bios.UDEV.instance("mcasp1").fxnTable = prog.extern("Mcasp_IOMFXNS");
+bios.UDEV.instance("mcasp1").deviceId = 1;
+
+/*
+ *  Add instance of DIO object to use the configured codec. This is the device
+ *  SIO streams use.
+ */
+var dioCodec = bios.DIO.create("dioMcaspOUT");
+dioCodec.deviceName = prog.get("mcasp1");
+dioCodec.useCallBackFxn = false;
+dioCodec.chanParams = prog.extern("mcasp_chanparam");
+
+var dioCodec = bios.DIO.create("dioMcaspIN");
+dioCodec.deviceName = prog.get("mcasp1");
+dioCodec.useCallBackFxn = false;
+dioCodec.chanParams = prog.extern("mcasp_chanparam");

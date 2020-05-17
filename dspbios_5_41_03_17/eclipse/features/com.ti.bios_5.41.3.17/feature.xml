@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.ti.bios_5.41.3.17"
+      label="BIOS"
+      version="5.41.3.17"
+      provider-name="Texas Instruments">
+
+   <description url="http://ti.com">
+      BIOS.
+   </description>
+
+   <copyright>
+      Copyright Texas Instruments 2009
+   </copyright>
+
+   <license>
+      See Code Composer Studio license for specific terms and conditions.
+   </license>
+
+
+    <plugin
+        id="com.ti.bios.rta"
+        version="5.41.3.17"
+        unpack="false" />
+
+    <plugin
+        id="com.ti.bios.rtscRegistry_5.41.3.17"
+        version="5.41.3.17"
+        unpack="false" />
+
+</feature>

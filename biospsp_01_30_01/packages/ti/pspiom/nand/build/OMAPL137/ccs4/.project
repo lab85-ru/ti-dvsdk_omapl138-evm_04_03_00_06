@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>nand</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.rtsc.xdctools.buildDefinitions.XDC.xdcNature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>ddc_nand.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/nand/src/ddc_nand.c</locationURI>
+		</link>
+		<link>
+			<name>ddc_nandFtl.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/nand/src/ddc_nandFtl.c</locationURI>
+		</link>
+		<link>
+			<name>llc_nand.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/nand/src/llc_nand.c</locationURI>
+		</link>
+		<link>
+			<name>dda_nandBios.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/nand/src/dda_nandBios.c</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

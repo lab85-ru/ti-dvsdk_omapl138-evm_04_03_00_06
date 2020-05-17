@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/dsp
+END
+dsp_stubs_math.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/dsp/dsp_stubs_math.c
+END
+dsp_stubs_time.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/dsp/dsp_stubs_time.c
+END
+dsp_stubs_user.c
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/dsp/dsp_stubs_user.c
+END
+dsp_stubs_stdlib.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/dsp/dsp_stubs_stdlib.c
+END
+dsp_stubs_stdio.c
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/dsp/dsp_stubs_stdio.c
+END
+dsp_stubs_ctype.c
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/dsp/dsp_stubs_ctype.c
+END
+dsp_stubs_string.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/dsp/dsp_stubs_string.c
+END
+dsp_stubs_io.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/dsp/dsp_stubs_io.c
+END

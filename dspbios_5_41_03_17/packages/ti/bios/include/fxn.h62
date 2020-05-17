@@ -1,0 +1,153 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== fxn.h62 ========
+;
+;
+
+        .if ($isdefed("FXN_") = 0)    ; prevent multiple includes of this file
+FXN_    .set    1
+
+        .include std.h62
+        .include chk.h62
+
+;
+;  ======== FXN_Obj ========
+;
+FXN_Obj         .struct
+fxn             .word   1
+arg1            .word   1
+arg0            .word   1
+FXN_A_OBJSIZE   .endstruct
+
+FXN_BASE        .set    FXN_Obj.fxn
+
+FXN_O_FXN       .set    FXN_Obj.fxn - FXN_BASE
+FXN_O_ARG1      .set    FXN_Obj.arg1 - FXN_BASE
+FXN_O_ARG0      .set    FXN_Obj.arg0 - FXN_BASE
+
+        .global FXN_execute, _FXN_execute, FXN_F_run, _FXN_F_run
+        .global FXN_F_nop, FXN_F_zero, _FXN_F_zero
+
+;
+;# ======== FXN_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", FXN_Obj$regs
+FXN_Obj .macro  name, fxn, arg0, arg1, section
+    CHK_nargs "FXN_Obj", section
+    .if ($symcmp(":CHK_status:", "error") = 0)
+        .emsg "FXN_Obj parameter error"
+    .endif
+
+:name:  .tag    FXN_Obj
+
+:name:  .usect ":section:", STD_TARGWORDMAUS * 3, STD_TARGWORDMAUS
+
+        .sect ".cinit"
+
+        .align 8
+        .field  STD_TARGWORDMAUS * 3
+        .field :name:
+        .field  :fxn:          ; fxn
+        .field  :arg1:         ; arg1
+        .field  :arg0:         ; arg0
+
+        .endm
+
+;
+;# ======== FXN_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", FXN_config$regs
+FXN_config      .macro
+        .endm
+
+;
+;# ======== FXN_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", FXN_end$regs
+FXN_end .macro
+        .endm
+
+;
+;# ======== FXN_init ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", FXN_init$regs
+FXN_init        .macro
+        .endm
+
+;
+;# ======== FXN_execute ========
+;
+;# Preconditions:
+;#      a4 = FXN_Obj handle
+;#
+;# Postconditions:
+;#      none
+;#
+;  Modifies:
+;       Since FXN_execute can call an arbitrary C function, we list the
+;       entire set of C temporary registers.
+;
+        .asg "a0,a1,a2,a3,a4,a5,a6,a7,a8,a9,b0,b1,b2,b3,b4,b5,b6,b7,b8,b9", FXN_execute$regs
+FXN_execute     .macro
+        ; load FXN_obj params into registers
+        ldw *+a4(0),a0          ; get fxn addr
+        ldw *+a4(4),b4          ; load arg1 to proper C register
+        ldw *+a4(8),a4          ; load arg0 to proper C register 
+        mvkl fxne?,b3           ; setup fxn return to end of macro
+        mvkh fxne?,b3
+
+        b a0                    ; branch to function
+        nop 5
+fxne?:
+        .endm
+
+;
+;# ======== FXN_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", FXN_startup$regs
+FXN_startup        .macro
+        .endm
+
+
+        .endif          ; if FXN_ is not defined

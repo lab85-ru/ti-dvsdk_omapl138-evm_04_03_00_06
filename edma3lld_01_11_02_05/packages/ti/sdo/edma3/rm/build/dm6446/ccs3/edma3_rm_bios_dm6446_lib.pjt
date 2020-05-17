@@ -1,0 +1,42 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Library
+CPUFamily=TMS320C64XX
+Tool="Archiver"
+Tool="Compiler"
+Config="Debug"
+Config="iDebug"
+Config="iRelease"
+Config="Release"
+
+[Source Files]
+Source="..\..\..\src\configs\edma3_dm644x_cfg.c"
+Source="..\..\..\src\edma3_rm_gbl_data.c"
+Source="..\..\..\src\edma3resmgr.c"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\dm6446\Debug\edma3_rm_bios.lib"
+
+["Archiver" Settings: "iDebug"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\dm6446\Debug\edma3_rm_bios_i.lib"
+
+["Archiver" Settings: "iRelease"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\dm6446\Release\edma3_rm_bios_i.lib"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\dm6446\Release\edma3_rm_bios.lib"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "iDebug"]
+Options=-g -pdr -fr"$(Proj_dir)\iDebug" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -d"EDMA3_INSTRUMENTATION_ENABLED" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "iRelease"]
+Options=-pdr -o2 -fr"$(Proj_dir)\iRelease" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -d"EDMA3_INSTRUMENTATION_ENABLED" -d"_RELEASE" -mv6400+
+
+["Compiler" Settings: "Release"]
+Options=-pdr -o2 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -d"_RELEASE" -mv6400+
+

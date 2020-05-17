@@ -1,0 +1,12 @@
+Package: pinmux-utility
+Version: 1.1.4.0-r1.0.6
+Description: Texas Instruments Pinmux Utility
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: da850-omapl138-evm
+OE: pinmux-utility
+Homepage: unknown
+Build: install/d0bd439
+Source: https://gforge.ti.com/gf/download/frsrelease/461/4210/Pin_Setup_AM18xx_01_00_1076_03.zip;name=omapl138

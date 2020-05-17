@@ -1,0 +1,496 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== gbl.h28 ========
+;
+;
+
+    .if ($isdefed("GBL_") = 0)    ; prevent multiple includes of this file
+
+GBL_    .set    1
+
+    .asg 5205h, GBL_VERSION     ; Major BIOS version number used 
+                                ; by _GBL_getVersion and GBL_init.
+
+    .include c28.h28
+    .include chk.h28
+    .include std.h28
+    .include trc.h28
+
+ALLIGNMENT   .set    1
+NOALIGNMENT  .set    0
+WORDSIZE     .set    1
+LONGSIZE     .set    (2 * WORDSIZE)
+
+    .ref GBL_stackend, GBL_stackbeg
+    .ref ___bss__
+
+    .global GBL_TRCMASKVALUE
+    .global GBL_MODIFYPLLCA, GBL_PLLCR, GBL_PLLWAITCYCLE
+    .global GBL_initdone
+    .global _GBL_getVersion
+
+;
+;# ======== GBL_Obj ========
+;  Allocate "size" words in section sect and give it the name "name".
+;  Both the section and the alignFlag arguments are optional; section
+;  defaults to ".ebss" and alignFlag defaults to no alignment.
+;  Objects created in the ".data" section are initialized to 0.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GBL_Obj$regs
+GBL_Obj .macro name, size, section, alignFlag, fillValue, alignValue
+        CHK_domain "GBL_Obj", alignFlag, "noalign,align", "noalign"
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "GBL_Obj align parameter error."
+        .endif
+        .asg ":CHK_status:", alignFlag
+
+        CHK_nargs "GBL_Obj",size 
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "GBL_Obj size parameter error."
+        .endif
+
+        .if ($symlen(section) = 0)
+            .asg ".ebss", section
+        .endif
+
+        .if ($symlen(fillValue) != 0)
+            .sect ".gblinit"
+            .word :size:
+            .xlong  :name:
+            .word :fillValue:
+        .endif
+
+        .if (($symcmp(section, ".data") = 0) | ($symcmp(alignFlag, "align") = 0))
+            .sect ":section:"
+            .if ($symcmp(alignFlag, "align") = 0)
+                .align :alignValue:
+            .endif
+:name::
+            ;
+            ; Can't use .space directive here because it reserves
+            ; bits for some processors and bytes for others.
+            ;
+            .loop       :size:
+                .word 0
+            .endloop
+
+        .else
+:name::     .usect ":section:", :size: * (STD_TARGWORDMAUS / STD_TARGCHARMAUS)
+        .endif
+
+        .endm
+
+;
+;# ======== GBL_config ========
+;  Static configuration of the GBL module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+    .asg    "", GBL_config$regs
+GBL_config .macro _rom, _procid, _clkin, _freq, _dsptype, _dspsubtype, _userlimpmodeabortfxn, _pllwaitcycle, _modifypllcr, _pllcr, _plldiv, _userinit, _userinitfxn, _enableinst, _largemodel, _supportcsl, _trcmaskvalue, _callcslcfginit
+
+        CHK_nargs "GBL_config", _callcslcfginit
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "GBL_config size parameter error -- cdb/h28 mismatch."
+        .endif
+
+        .if ((GBL_DSPSUBTYPE = 28300) | (GBL_DSPSUBTYPE = 28200) | (GBL_DSPSUBTYPE = 28020))
+        .global GBL_PLLSTS
+        ; map 4, 2, 1 to '00b', '10b', and '11b' respectiely
+GBL_PLLSTS    .set    4 - :_plldiv:
+        .endif
+
+        .if (GBL_DSPSUBTYPE = 28340)
+            .global GBL_PLLSTS
+            ; map 8, 4, 2 to '00b', '01b', and '10b' respectively
+            .if (:_plldiv: = 8)
+GBL_PLLSTS    .set    0
+            .elseif (:_plldiv: = 4)
+GBL_PLLSTS    .set    1
+            .elseif (:_plldiv: = 2)
+GBL_PLLSTS    .set    2
+            .endif
+        .endif
+
+        ; reference special symbol GBL_boot defined in BIOS boot file to make sure
+        ; we are linking correct boot file (workaround for SDSsq24217)
+        .ref GBL_boot
+
+        .def TRC_cinit
+        .def TRC_R_mask, _TRC_R_mask
+        .asg    :_userinitfxn:, USERINITFXN     ; used by GBL_init
+        .asg    :_userlimpmodeabortfxn:, USERLIMPMODEABORTFXN   ; 280x Pll 
+
+gblinit .sect ".gblinit"
+
+; triplet (# of words, address, value) initialisation records
+; inserted in this section will be processed by GBL_init
+; macro for run-time initialisation of a specified contiguous
+; block of words. The end of table sentinel is "0" and
+; is inserted by GBL_end macro
+
+; Even though, linker cmd (sourced from mem.cdb) file has exact
+; same information, below table is still retained to allow for
+; stack stamping at run-time (such as following a reset sequence
+; w/o a re-load) via invocation of GBL_init macro
+        ; Don't overwrite the top 8 words to avoid trashing
+        ; valid stack data. (Only one of these cells is contains
+        ; valid data, but just to be safe we leave 8 protected).
+
+        .word ((GBL_stackend-GBL_stackbeg+1)/(STD_TARGWORDMAUS))-8 
+                                                        ; nwords
+        .xlong  GBL_stackbeg+8                          ; addr
+        .word 0xbeef                                    ; value
+
+        ;
+        ;  DEFINE A SPECIAL WORD THAT WILL BE COPIED TO TRC_R_mask
+        ;  AT PROGRAM INITIALIZATION, INSTEAD OF PUTTING TRC_cinit
+        ;  INTO THE .cinit SECTION.
+        ;  THIS WAY WE CAN WRITE TO BOTH TRC_R_mask AND TRC_cinit
+        ;  AND APPLICATION PROGRAMS CAN STILL USE THE .cinit SECTION
+        ;  AFTER INITIALIZATION IS DONE.
+        ;
+        ; The TRC_R_mask gets initialzed by host side too. The  value
+        ; assigment to TRC_R_mask occurs at  auto_init(in cinit records)
+        ; as well in bios_init
+        ; The following is the sequence of code illustrates this
+
+        ; 1)  .cinit  --> do otherInits... TRC_R_mask = value .... otherInits;
+        ; 2)  bios-init  --> do TRC_R_mask = TRC_cinit ;
+
+        ; TRC_R_mask  can also be written thru the RTA panel .The panel
+        ; does not have knowledge, as to where is the execution
+        ; control of the program is. ie is in 1, or 2 or in between
+        ; or after it.  Writing to TRC_R_mask
+        ; directly from the RTA panel, can fetch wrong results. For
+        ; example if the  the exeuction control was in section 1
+        ;  ie in cinit record initialisation, but has not
+        ; reached the TRC_R_mask initilisaion, a write from the RTA
+        ; panel would always be overwritten by the cinit initialisation.
+        ; An another variable called TRC_cinit is used  to avoid this
+        ; problem. The RTA panel would  write both to TRC_cinit,
+        ; as well as TRC_R_mask.  The above  sequence of writes
+        ; will not be a problem, as the bios_init, which  assigns
+        ; the TRC_R_mask variable, will overwrite the "C" initialisation
+        ; and the value written by the RTA_panel will prevail.
+
+        .sect ".trcdata"
+TRC_cinit:  .word GBL_TRCMASKVALUE
+TRC_R_mask: .word GBL_TRCMASKVALUE
+_TRC_R_mask .set        TRC_R_mask
+
+GBL_initdone .sect ".trcdata"   ; Note that  GBL_initdone has to
+        .word 0                 ; be initialized during load  time
+    .endm                       ; and also we want to put it in a
+                                ; section known to BIOS, that is
+                                ; why gblinit is choosen. This variable
+                                ; is NOT like other variables in
+                                ; gblinit, which get re initialized
+                                ; on doing a restart. It exists in
+                                ; gblinit  for the sole reason that
+                                ; the variable  must exists in some
+                                ; section and gblinit was choosesn
+
+;
+;# ======== GBL_end ========
+; Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GBL_end$regs
+GBL_end .macro
+
+    .sect ".gblinit"
+    .word 0                     ; end of gblinit table marker
+    
+    .endm
+
+;
+;# ======== GBL_init ========
+;  Runtime initialization of the GBL module
+;
+;# Preconditions
+;#    none
+;#
+;# Postconditions
+;#    none
+;#
+;
+        .asg    "acc,xar0,xar4,xar5,:TRC_init$regs:", GBL_init$regs
+GBL_init        .macro
+
+        lcr _GBL_getVersion
+        sub al, #GBL_VERSION
+selfspin?:
+        b selfspin?,NEQ 
+
+PLLXCLK_REG             .set    0x7010  ; address of XCLK (2802x and 2803x) 
+PLLCLKCTL_REG           .set    0x7012  ; address of CLKCTL (2802x and 2803x) 
+
+PLLSTS_REG              .set    0x7011  ; address of PLLSTS
+PLLCR_REG               .set    0x7021  ; address of PLLCR 
+
+PLLSTS_MCLKSTS_BIT      .set    3       ; Missing Clock Status Bit
+                                        ; 0: mormal, 1: Limp Mode
+
+PLLSTS_PLLLOCKS_BIT     .set    0       ; PLL Lock Status Bit
+                                        ; 0: locking, 1: stable 
+PLLSTS_MCLKOFF_DISABLE  .set    0x0040  ; Missing clock-detect off Bit
+                                        ; 1: disable
+PLLSTS_MCLKOFF_ENABLE   .set    0xFFBF  ; 0: enable 
+DEVICECNF_REG           .set    0x0880
+DEVICECNF_PLLRESET_BIT  .set    0x5
+
+        .if (GBL_DSPSUBTYPE = 28000)            ; 280x device:2808, 2806, 2801
+
+            .if (GBL_MODIFYPLLCR != 0)
+                mov     ah, *(PLLSTS_REG)
+                tbit    ah, #PLLSTS_MCLKSTS_BIT ; PLL in Limp mode?  
+                b       :USERLIMPMODEABORTFXN:, TC      ; Call Limp Abort Fxn 
+                eallow                          ; normal mode
+                or      ah, #PLLSTS_MCLKOFF_DISABLE     
+                mov     *(PLLSTS_REG), ah       ; Disable missing clock detect
+                mov     al, #GBL_PLLCR          ; Load PLLCR value in al
+                mov     *(PLLCR_REG), al        ; Load the count into PLL REG
+waitPlllocks?:
+                mov     ah, *(PLLSTS_REG)
+                tbit    ah, #PLLSTS_PLLLOCKS_BIT        
+                                                ; PLLLOCKS bit set?     
+                bf      waitPlllocks?, NTC      ; wait for PLLLOCKS bit to set
+                and     ah, #PLLSTS_MCLKOFF_ENABLE
+                mov     *(PLLSTS_REG), ah       ; Enable missing clock detect
+                edis
+            .endif
+
+        .elseif (GBL_DSPSUBTYPE = 28100)        ; 281x device: 2812, 2811, 2810
+
+            .if (GBL_MODIFYPLLCR != 0)
+
+               ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+               ;When the new PLL divide ratio is specified the    ;
+               ;PLL first goes to BYPASS mode and switches to new ;
+               ;count without a glitch. So there is no other      ;
+               ;operation required.                               ;
+               ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+               
+                eallow
+                mov AL, #GBL_PLLCR      ; Load PLLCR value in al
+                mov *(PLLCR_REG), @AL   ; Load the count into PLL REG
+                edis
+                mov  ah, #(GBL_PLLWAITCYCLE >> 16 )
+                mov  al, #(GBL_PLLWAITCYCLE & 0xffff)
+                sfr  acc, #3            ; right shift acc by 3 i.e. acc = acc/8
+                bf   nowait?, EQ        ; if wait cycles are 0 go to no wait
+                                        ; the value which is lost in right shift
+                                        ; operation will be less then or equal  
+                                        ; to 7 which is taken care by cycles    
+                                        ; to come here
+                                        ; as following loop takes 8 cycles for
+                                        ; one iteration
+wait?:                                  ; loop here for acc times
+                nop
+                nop
+                nop
+                subb acc, #1
+                bf wait?, NEQ           ; check if acc has become 0
+nowait?:
+            .endif
+
+        .elseif ( (GBL_DSPSUBTYPE = 28300) | (GBL_DSPSUBTYPE = 28200) | (GBL_DSPSUBTYPE = 28020) )
+
+            .if (GBL_MODIFYPLLCR != 0)
+                mov     ah, *(PLLSTS_REG)
+                tbit    ah, #PLLSTS_MCLKSTS_BIT ; PLL in Limp mode?  
+                b       :USERLIMPMODEABORTFXN:, TC      ; Call Limp Abort Fxn 
+                eallow                          ; normal mode
+                or      ah, #PLLSTS_MCLKOFF_DISABLE     
+                mov     *(PLLSTS_REG), ah   ; Disable missing clock detect
+                
+                mov ah, *(PLLSTS_REG)   ; Set to divide by 4 to prevent overclocking:
+                and ah, #0xfe7f         ; Clear bits 7 & 8
+                mov *(PLLSTS_REG), ah   ; Write register
+                
+                mov     al, #GBL_PLLCR   ; Load PLLCR value in al
+                mov     *(PLLCR_REG), al    ; Write register
+waitPlllocks?:
+                mov     ah, *(PLLSTS_REG)
+                tbit    ah, #PLLSTS_PLLLOCKS_BIT    ; PLLLOCKS bit set? 
+                bf      waitPlllocks?, NTC              ; wait for PLLLOCKS bit to set
+                and     ah, #PLLSTS_MCLKOFF_ENABLE
+                mov     *(PLLSTS_REG), ah               ; Enable missing clock detect
+                
+                mov ah, *(PLLSTS_REG)   ; Now set the actual divider:
+                and ah, #0xfe7f         ; Clear bits 7 & 8
+                mov al, #GBL_PLLSTS     ; Load PLLDIV value computed above
+                lsl al, 7               ; Shift the bits into place
+                or ah, al               ; Set bits
+                mov *(PLLSTS_REG), ah   ; Write register
+                
+                edis
+            .endif
+
+        .elseif (GBL_DSPSUBTYPE = 28340)
+
+            .if (GBL_MODIFYPLLCR != 0)
+                eallow                          ; normal mode
+                
+                ; divide by 8 to avoid overclocking
+                mov ah, *(PLLSTS_REG)   
+                and ah, #0xfe7f         ; Clear bits 7 & 8
+                mov *(PLLSTS_REG), ah
+                
+                mov     al, #GBL_PLLCR   ; Load PLLCR value in al
+                mov     *(PLLCR_REG), al ; Write register
+waitPlllocks?:
+                mov     ah, *(PLLSTS_REG)
+                tbit    ah, #PLLSTS_PLLLOCKS_BIT    ; PLLLOCKS bit set? 
+                bf      waitPlllocks?, NTC          ; wait for lock
+
+                mov ah, *(PLLSTS_REG)   ; Now set the actual divider:
+                and ah, #0xfe7f         ; Clear bits 7 & 8
+                mov al, #GBL_PLLSTS     ; Load PLLDIV value computed above
+                lsl al, 7               ; Shift the bits into place
+                or ah, al               ; Set bits
+                mov *(PLLSTS_REG), ah   ; Write register
+                
+                edis
+            .endif
+
+        .endif                          ; end if 281x/280x/28FP device
+    
+   TRC_init
+
+; Stack fill table defined in ".gblinit" section, 
+; specifies records as triplets (#of words, address, value).
+; End of initilaisation table is denoted by a "0" record
+; inserted by GBL_end macro
+           movl xar0, #gblinit
+startloop:
+           movz ar4,*xar0++             ; ar4 = count of words to fill
+           cmp @ar4,#0
+           sb endloop, EQ
+           dec @ar4                     ; repeat(csr) will go 
+                                        ; one extra loop
+                                        ; ... therefore, csr is set to
+           mov al, *xar0++              ; read the lower 16 bits 
+           mov ah, *xar0++              ; read the upper 16 bits 
+           movl xar5, acc               ; Load the address in xar5
+        
+                                        ; xar5=target address,
+                                        ; ar1 moves to value
+           mov al, *xar0++              ; al=fill value,
+           
+                                        ; ar1 moves to next triplet
+           rpt @ar4                     ; do(csr + 1)=count number of 
+           ||mov *xar5++, al            ; loops
+                                        ; write fill value at given
+                                        ; address
+                                        ; advance ar3 to next word
+                                        ; location to fill
+           sb startloop, UNC            ; loop back to process more
+                                        ; triplets (if any)
+endloop:
+
+        .if (GBL_USERINIT != 0)         ;  if user func is configured
+           lcr :USERINITFXN:            ;  call (*fxn)
+        .endif
+
+        movl xar4, #GBL_initdone        ;GBL_initdone = 1
+        mov *xar4, #1
+
+    .endm
+
+;
+;# ======== GBL_preamble ========
+;
+;  This macro is called by the generated *cfg.s28 files at the beginning
+;  of the <OS>_init and <OS>_start routines.
+;
+;#
+;# Preconditions:
+;#     none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+;        .asg    "ah,sp", GBL_preamble$regs
+GBL_preamble    .macro
+                mov ah, sp              ; Save stack in ah
+                asp                     ; Align stack pointer
+                push acc                ; Save SP in ah on stack
+                .endm
+
+;
+;# ======== GBL_postamble ========
+;
+;  This macro is called by the generated *cfg.s28 files at the end 
+;  of the <OS>_init and <OS>_start routines, to effect a return from
+;  the routines.
+;
+;#
+;# Preconditions:
+;#     none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+;        .asg    "sp", GBL_postamble$regs
+GBL_postamble    .macro
+                pop sp                  ; restore sp 
+                lretr                   ; Return from BIOS_init
+    .endm
+
+;# ======== GBL_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+    .asg    "", GBL_startup$regs
+GBL_startup        .macro
+    .endm
+
+
+;
+;# ======== GBL_variable ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", GBL_varaible$regs
+GBL_variable    .macro name, value
+        .endm
+        .endif

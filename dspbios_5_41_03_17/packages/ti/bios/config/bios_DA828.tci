@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_DA828.tci ========
+ *  This file contains BIOS settings for DA828.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_L137.tci");
+
+/*
+ *  ======== bios.initDA828 ========
+ *  BIOS initialization for the DA828 is same as for OMAPL137 
+ */
+bios.initDA828 = bios.initL137;

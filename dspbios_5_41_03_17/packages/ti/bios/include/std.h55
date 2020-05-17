@@ -1,0 +1,86 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== std.h55 ========
+;
+;  This header file provides a means of defining assembler or
+;  processor-specific values.
+;
+
+        .if ($isdefed("STD_") = 0)    ; prevent multiple includes of this file
+STD_    .set    1
+
+    .if $isdefed("__HUGE_MODEL__")
+        .if (__HUGE_MODEL__)
+_55H_           .set    1
+        .if ($isdefed("_VCORE3_") = 0)
+_VCORE3_        .set    1       
+        .endif
+        .else
+_55H_           .set    0
+        .endif
+    .else
+_55H_           .set    0
+    .endif
+
+    .if $isdefed("__LARGE_MODEL__")
+        .if (__LARGE_MODEL__)
+_55L_   .set    1
+        .else
+_55L_   .set    0
+        .endif
+    .else
+_55L_   .set    0
+    .endif
+
+    .if $isdefed("__TMS320C55X_PLUS_BYTE__")
+        .if (__TMS320C55X_PLUS_BYTE__)
+_55Pb_  .set    1
+        .else
+_55Pb_  .set    0       
+        .endif
+     .else
+_55Pb_  .set    0       
+    .endif
+
+    .if $isdefed("__TMS320C55X_PLUS_WORD__")
+        .if (__TMS320C55X_PLUS_WORD__)
+_55Pw_  .set    1
+        .else
+_55Pw_  .set    0       
+        .endif
+    .else
+_55Pw_  .set    0       
+    .endif
+
+    .if $isdefed("__TMS320C55X_PLUS__")
+        .if (__TMS320C55X_PLUS__)
+_55P_   .set    1
+        .else
+_55P_   .set    0       
+        .endif
+    .else
+_55P_   .set    0       
+    .endif
+
+    .if (_55Pb_)
+STD_TARGWORDBITS        .set 16 
+STD_TARGWORDMAUS        .set 2          ; 55Pb = 2 bytes per 16 bit word
+STD_TARGCHARMAUS        .set 1 
+STD_TARGALIGN           .set 2
+STD_TARGSTKALIGNMASK    .set 0xfffc
+STD_DSPFAMILY           .set 55
+STD_FLOATDSP            .set 0          ; does this DSP support float?
+    .else
+STD_TARGWORDBITS        .set 16 
+STD_TARGWORDMAUS        .set 1 
+STD_TARGCHARMAUS        .set 1 
+STD_TARGALIGN           .set 1
+STD_TARGSTKALIGNMASK    .set 0xfffe
+STD_DSPFAMILY           .set 55
+STD_FLOATDSP            .set 0          ; does this DSP support float?
+    .endif
+
+        .endif                          ; .if $isdefed("STD_") = 0)

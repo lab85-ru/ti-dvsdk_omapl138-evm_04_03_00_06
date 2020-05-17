@@ -1,0 +1,3036 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;  ======== hwi.h55 ========
+;
+
+    .if ($isdefed("HWI_") = 0)    ; prevent multiple includes of this file
+HWI_    .set    1
+ABSOPERATION .set  1
+NEGOPERATION .set  2
+
+    .include std.h55
+    .include c55.h55
+    .include chk.h55
+    .include clk.h55
+    .include gbl.h55
+    .include swi.h55
+    .include trc.h55
+    .include sts.h55
+
+    .if $isdefed("_2420_")      ; include platform specific hwi.h55
+        .include hwi2420.h55
+    .endif
+
+    .if $isdefed("_2320_")      ; include platform specific hwi.h55
+        .include hwi2320.h55
+    .endif
+
+    .if !(_55H_) & !(_55P_)
+HWI_F_DISPISR_SIZE  .set    7
+    .endif
+
+
+    .ref _HWI_STKTOP, _HWI_STKBOTTOM, _HWI_SYSSTKTOP, _HWI_SYSSTKBOTTOM
+
+    .global HWI_D_spsave, HWI_D_sspsave
+    .global HWI_D_stktopaddr, HWI_D_systkbotaddr, HWI_D_systktopaddr
+    .global HWI_D_stkbotaddr, HWI_D_inhwi
+
+
+
+    .global HWI_A_VECS                  ; These two symbols are defined
+    .global _HWI_A_VECS                 ; in *cfg.s55. _HWI_A_VECS  is
+                                        ; for C access to vector table
+
+    .global  FXN_F_selfLoop             ; ISR for self looping. ivec
+                                        ; has issues with self looping
+                                        ; hence had to introduce this
+                                        ; psedo ISR that does self
+                                        ; looping.
+    .mmregs
+
+    .if (_55Pb_)                                ; override .ivec arguments for _55Pb_
+
+        ;
+        ; This structure reflects the context for each HWI ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+        ;                       XSP
+        ; Bios ctxt---> |----------------| 
+        ;               |  hole          | 
+        ;               |----------------| 
+        ;               |  AC1G[32-40]   |
+        ;               |----------------| 
+        ;               |  hole          | 
+        ;               |----------------| 
+        ;               |  AC0G[32-40]   |
+        ;               |----------------| 
+        ;               |  AC1[16-31]    |
+        ;               |----------------| 
+        ;               |  AC1[0-15]     |
+        ;               |----------------| 
+        ;               |  AC0[16-31]    |
+        ;               |----------------| 
+        ;               |  AC0[0-15]     |
+        ;               |----------------| 
+        ;               |  AR1[16-31]    |
+        ;               |----------------| 
+        ;               |  AR1[0-15]     |
+        ;               |----------------| 
+        ;               |  ST3 "Upper"   | 
+        ;               |----------------| 
+        ;               |  ST3           |
+        ; Bios ctxt---> |----------------| 
+        ;               |  AR0[16-31]    |
+        ;               |----------------| 
+        ;               |  AR0[0-15]     |
+        ; H/w ctxt ---->|----------------|
+        ;               |  CFCT          |
+        ;               |  RETA[16-23|   |
+        ;               |----------------| 
+        ;               |  RETA[0-15|    |
+        ;               |----------------| 
+        ;               |  DBSTAT        |
+        ;               |----------------| 
+        ;               |  ST1           |
+        ;               |----------------| 
+        ;               |  ST0           |
+        ;               |----------------| 
+        ;               |  ST2           |
+        ; H/w ctxt ---->|----------------|
+        ;  
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+HWICTXT_Obj         .struct
+reg_ac1g        Long    1
+reg_ac0g        Long    1
+reg_ac1         Long    1
+reg_ac0         Long    1
+reg_xar1        Long    1
+reg_st3_upper   Int     1
+reg_st3         Int     1
+reg_xar0        Long    1
+reg_retal       Long    1
+reg_dbstat      Int     1
+reg_st1         Int     1
+reg_st0         Int     1
+reg_st2         Int     1
+HWICTXT_A_OBJSIZE   .endstruct
+
+HWICTXT_BASE            .set    HWICTXT_Obj.reg_ac1g
+HWICTXT_O_REG_AC1G      .set    HWICTXT_Obj.reg_ac1g - HWICTXT_BASE
+HWICTXT_O_REG_AC0G      .set    HWICTXT_Obj.reg_ac0g - HWICTXT_BASE
+HWICTXT_O_REG_AC1       .set    HWICTXT_Obj.reg_ac1 - HWICTXT_BASE
+HWICTXT_O_REG_AC0       .set    HWICTXT_Obj.reg_ac0 - HWICTXT_BASE
+HWICTXT_O_REG_XAR1      .set    HWICTXT_Obj.reg_xar1 - HWICTXT_BASE
+HWICTXT_O_REG_ST3       .set    HWICTXT_Obj.reg_st3 - HWICTXT_BASE
+HWICTXT_O_REG_XAR0      .set    HWICTXT_Obj.reg_xar0 - HWICTXT_BASE
+HWICTXT_O_REG_RETAL     .set    HWICTXT_Obj.reg_retal - HWICTXT_BASE
+HWICTXT_O_REG_ST1       .set    HWICTXT_Obj.reg_st1 - HWICTXT_BASE
+HWICTXT_O_REG_ST2       .set    HWICTXT_Obj.reg_st2 - HWICTXT_BASE
+
+    .else ; (_55Pb_)
+        ;
+        ; This structure reflects the context for each HWI ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+        ; Bios ctxt---> |----------------|       |--------------|  
+        ;               |  AC1G[32-40]   |       |  hole        | 
+        ;               |----------------|       |--------------|  
+        ;               |  AC0G[32-40]   |       |  hole        | 
+        ;               |----------------|       |--------------|  
+        ;               |  AC1[0-15]     |       |  AC1[16-31]  | 
+        ;               |----------------|       |--------------|  
+        ;               |  AC0[0-15]     |       |  AC0[16-31]  | 
+        ;               |----------------|       |--------------|  
+        ;               |  AR1[0-15]     |       |   AR1[16-23] | 
+        ;               |----------------|       |--------------|  
+        ;               |   ST3          |       |   ....       |
+        ; Bios ctxt---> |----------------|       |--------------|  
+        ;               |  AR0[0-15]     |       |   AR0[16-23] | 
+        ; H/w ctxt ---->|----------------|       |--------------|
+        ;               |                |       |     CFCT     | 
+        ;               |RETA[0-15|      |       | RETA[16-23]  |
+        ;               |----------------|       |--------------|  
+        ;               | ST1            |       |   DBSTAT     |
+        ;               |----------------|       |--------------|  
+        ;               |    ST2         |       |   ST0        |
+        ; H/w ctxt ---->|----------------|       |--------------|
+        ;  
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+HWICTXT_Obj         .struct
+reg_ac1g        Int     1           
+reg_ac0g        Int     1                  
+reg_ac1         Int     1                  
+reg_ac0         Int     1                  
+reg_xar1        Int     1                  
+reg_st3         Int     1                  
+reg_xar0        Int     1                  
+reg_retal       Int     1                  
+reg_st1         Int      1                  
+reg_st2         Int     1                  
+HWICTXT_A_OBJSIZE   .endstruct
+
+HWICTXT_BASE            .set    HWICTXT_Obj.reg_ac1g
+HWICTXT_O_REG_AC1G      .set    HWICTXT_Obj.reg_ac1g - HWICTXT_BASE
+HWICTXT_O_REG_AC0G      .set    HWICTXT_Obj.reg_ac0g - HWICTXT_BASE
+HWICTXT_O_REG_AC1       .set    HWICTXT_Obj.reg_ac1 - HWICTXT_BASE
+HWICTXT_O_REG_AC0       .set    HWICTXT_Obj.reg_ac0 - HWICTXT_BASE
+HWICTXT_O_REG_XAR1      .set    HWICTXT_Obj.reg_xar1 - HWICTXT_BASE
+HWICTXT_O_REG_ST3       .set    HWICTXT_Obj.reg_st3 - HWICTXT_BASE
+HWICTXT_O_REG_XAR0      .set    HWICTXT_Obj.reg_xar0 - HWICTXT_BASE
+HWICTXT_O_REG_RETAL     .set    HWICTXT_Obj.reg_retal - HWICTXT_BASE
+HWICTXT_O_REG_ST1       .set    HWICTXT_Obj.reg_st1 - HWICTXT_BASE
+HWICTXT_O_REG_ST2       .set    HWICTXT_Obj.reg_st2 - HWICTXT_BASE
+
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;  ST1 and ST2 register are the same offset as DBSTAT and ST0
+;  as per the above diagram.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+
+BIOSCTXT_Obj         .struct
+reg_ac1g        Int     1           
+reg_ac0g        Int     1                  
+reg_ac1         Int     1                  
+reg_ac0         Int     1                  
+reg_xar1        Int     1                  
+reg_st3         Int     1                  
+reg_xar0        Int     1                  
+BIOSCTXT_A_OBJSIZE   .endstruct
+
+BIOSCTXT_BASE           .set    BIOSCTXT_Obj.reg_ac1g
+BIOSCTXT_O_REG_AC1G     .set    BIOSCTXT_Obj.reg_ac1g - BIOSCTXT_BASE
+BIOSCTXT_O_REG_AC0G     .set    BIOSCTXT_Obj.reg_ac0g - BIOSCTXT_BASE
+BIOSCTXT_O_REG_AC1      .set    BIOSCTXT_Obj.reg_ac1 - BIOSCTXT_BASE
+BIOSCTXT_O_REG_AC0      .set    BIOSCTXT_Obj.reg_ac0 - BIOSCTXT_BASE
+BIOSCTXT_O_REG_XAR1     .set    BIOSCTXT_Obj.reg_xar1 - BIOSCTXT_BASE
+BIOSCTXT_O_REG_ST3      .set    BIOSCTXT_Obj.reg_st3 - BIOSCTXT_BASE
+BIOSCTXT_O_REG_XAR0     .set    BIOSCTXT_Obj.reg_xar0 - BIOSCTXT_BASE
+
+    .endif ; (_55Pb_)
+
+    .if ($isdefed("HWIdisp_Obj_") = 0)    ; 
+isHWIdispAligned .set LONGALIGN                 ; This structure has code
+                                        ; pointer and hence always
+                                        ; requires alignment
+
+;  ======== HWIdisp_Obj ========        ;Structure for HWI dispatcher
+;
+HWIdisp_Obj     .struct
+DFxn          CodePtr 1                 ;The address of the ISR
+i0mask        Int     1                 ;IER0 mask when in dispatcher
+i1mask        Int     1                 ;IER1 mask when in dispatcher
+arg           Args    1                 ;Argument for the ISR if any
+endPad         .align  isHWIdispAligned
+HWIdisp_A_OBJSIZE   .endstruct
+   
+;Offsets for the elements of the structure
+
+HWIdisp_BASE      .set    HWIdisp_Obj.DFxn
+HWIdisp_O_DFXN    .set    HWIdisp_Obj.DFxn   - HWIdisp_BASE
+HWIdisp_O_I0MASK  .set    HWIdisp_Obj.i0mask - HWIdisp_BASE
+HWIdisp_O_I1MASK  .set    HWIdisp_Obj.i1mask - HWIdisp_BASE
+HWIdisp_O_ARG     .set    HWIdisp_Obj.arg    - HWIdisp_BASE 
+    .endif      ; ($isdefed("HWIdisp_Obj_") = 0)    ; 
+
+
+    .if ($isdefed("HWI_Obj_") = 0)    ; 
+;# ======== HWI_Obj ========
+
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    ":HWI_mkStub$regs:", HWI_Obj$regs
+HWI_Obj .macro  cflag, name, id, fxn, monitor, addr, type, operation, client, dispatcher, arg, ier0mask, ier1mask
+        CHK_nargs "HWI_Obj", client
+        .if ($symcmp(":CHK_status:", "error") = 0)
+                .mexit
+        .endif
+
+        .if ($symcmp(":fxn:", "<nil>") = 0)
+                .mexit
+        .endif
+
+    .if (":cflag:" != 0)
+:name:  .set :id:
+    .endif
+
+        .var    vector, clientcfg, objaddrs
+
+        .asg hwi:id:, vector                    ; hwi:id: is the label
+                                                ; in  interrupt table
+                                                ; for interrupt 
+                                                ; :id:. If  user
+                                                ; has not enabled
+                                                ; this interrupt
+                                                ; through the config
+                                                ; file, the interrupt
+                                                ; vector branches to
+                                                ; itself
+        ;
+        ;removed code for plugging HWI_setIMRtrap function
+        ;for interrupt 31
+
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; only plug RTDX ISR if RTDX is enabled
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+        .if (:id: = 25)
+            .if (RTDX_USERTDX)
+                 .ref _RTDX_Poll
+                 .asg _RTDX_Poll, vector
+                 .asg _RTDX_Poll, fxn
+            ;.else
+            ;     .asg HWI_unused, fxn
+            .endif
+        .endif
+
+        .asg :dispatcher:, local_dispatch                                       
+        .asg 0, clientcfg
+       .if ($symcmp(":client:", "USER") != 0)   ; if the client is ~USER
+            .if ($symcmp(":client:", "RTDX") != 0)  ; if client is ~RTDX
+                .if ($symcmp(":client:", "CSL") == 0) ; if client is ~CSL
+                    .asg 1, clientcfg                 ; check for csl timer
+                .else                                 ; in-use.
+                    .if ( :client:$ = 1)         
+                        .asg 1, clientcfg                         
+                    .endif
+                .endif                                                            
+            .endif
+        .endif                                                  
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; HACK to make RTDX work to be removed
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        .if ($symcmp(":client:", "RTDX") == 0)  ; if clinet is RTDX
+                         .asg 1, clientcfg                        
+        .endif
+
+       
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; if this object is configured *and* is not "HWI_unused" or ""
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        .if (:cflag: != 0)
+            .if  ($symcmp(":fxn:", "HWI_unused") != 0)
+
+               .asg :fxn:, vector                ; ISR  
+                                                 ; if client is USER or
+                                                 ; another  configured  
+                                                 ; system module
+
+              .if ($symcmp(":name:","HWI_RESET") != 0)
+     
+
+
+                .if (($symcmp(":client:", "USER") = 0) | (:clientcfg: = 1))
+                                                ; if no monitor, simply 
+                                                ; branch to  user
+                                                ; function directly
+
+                  .if ($symcmp(":monitor:", "Nothing") = 0)
+                                                ; if monitor is disabled
+                  
+                      .if ( local_dispatch )    ; if dispatcher is enabled,
+                                                ; For all the interrupts( except
+                                                ; the timer interrupt) that use
+                                                ; the dispatcher, we now 
+                                                ; directly branch to the func
+                                                ; HWI_F_dispatch. From within
+                                                ; HWI_F_dispatch, we call the 
+                                                ; user defined function for
+                                                ; executing the ISR.(using
+                                                ; "HWI_dispatchTab" table.)
+                                                ;
+                                                ; For the timer interrupt, we
+                                                ; branch to the function
+                                                ; CLK_F_isr ( from where we may
+                                                ; branch to CLK_F_run which
+                                                ; eventually branches to the
+                                                ; dispatcher.)
+                                                ;
+                          .if !(_55H_) & !(_55P_)
+                                .ref  _HWI_F_DispIsr0
+                          .else
+                                .ref  _HWI_F_dispatch
+                          .endif
+
+                        
+                          .if($symcmp(":fxn:", "CLK_F_isr") == 0)
+                                .asg CLK_F_isr, vector
+CLK_INTID                       .equ    :id:
+                                .global CLK_INTID
+                          .else
+                                .if ($isdefed("_VCORE3_"))
+                                    .asg HWI_F_dispatch, vector
+                                .else
+                                    .asg (_HWI_F_DispIsr0 + :id: * HWI_F_DISPISR_SIZE), vector
+                                .endif
+                          .endif
+                      .else                     ; else if dispatcher is
+                                                ; disabled
+                          .asg :fxn:, vector    ;  ISR = :fxn:
+                      .endif
+
+                                                 
+                  .else                         ; else when monitor is
+                                                ; enabled
+                      .if ( local_dispatch )    ; dispatcher is  enabled
+
+                                                ; In case of all the interrupts
+                                                ; that use the dispatcher with
+                                                ; monitoring enabled,(except 
+                                                ; the timer interrupt),
+                                                ; from the stub function, we 
+                                                ; need to branch to the
+                                                ; dispatcher from where we call
+                                                ; the user-defined function.
+                                                ;
+                                                ; However, for the timer 
+                                                ; interrupt, from the stub
+                                                ; function, we need to branch
+                                                ; to CLK_F_isr.
+                                                ;
+                          .if($symcmp(":fxn:", "CLK_F_isr") == 0)
+                              HWI_mkStub ":name:_stub", monitor, addr, operation, :name:_STS, CLK_F_isr, ":type:"
+CLK_INTID                       .equ    :id:
+                                .global CLK_INTID
+                          .else
+                                .if ($isdefed("_VCORE3_"))
+                                    HWI_mkStub ":name:_stub", monitor, addr, operation, :name:_STS, HWI_F_dispatch, ":type:"
+                                .else
+                                    HWI_mkStub ":name:_stub", monitor, addr, operation, :name:_STS, (_HWI_F_DispIsr0 + :id: * HWI_F_DISPISR_SIZE), ":type:"
+                                .endif
+                          .endif
+                   
+                      .else
+                      ;
+                      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      ; When dispatcher is disabled then HWI_mkstub
+                      ; used with user function  as the function
+                      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      ;
+
+                          HWI_mkStub ":name:_stub", monitor, addr, operation, :name:_STS, :fxn:, ":type:"
+                      .endif
+                    .asg ":name:_stub", vector  ; vector = HWI stub
+                  .endif
+                .endif
+               .endif        
+              .else
+                  .asg "FXN_F_selfLoop", vector
+              .endif
+           .endif
+
+    .sect ".hwi_vec"
+
+    .global hwi:id:
+
+    .vli_off
+
+        .if ($symcmp(":name:", "HWI_RESET") = 0)
+            .if (_55Pb_)                                ; override .ivec arguments for _55Pb_
+                .asg "USE_RETA | STK_LINEAR | DATA_PTR_BYTE", stk_model
+            .endif
+hwi:id::    .ivec :vector: ,  stk_model         ;For reset the ISR is BIOS_rese
+        .elseif ($symcmp(":name:", "HWI_NMI") = 0)
+            .if ( local_dispatch )
+                .emsg "Can't use dispatcher with NMIs!"
+            .else
+hwi:id::    .ivec  :vector:                     ; Install interrupt vector
+            .endif
+        .else
+            .if  ($symcmp(":fxn:", "HWI_unused") = 0)
+                .asg    FXN_F_selfLoop, vector
+            .endif
+hwi:id::    .ivec  :vector:                     ; Install interrupt vector
+            .if !(_55P_) & ($isdefed("_VCORE3_")); laijin 3 cores fully support delay
+                .noremark 5110
+                .if (.MNEMONIC)                 ; if MNEMONIC assembler
+                    MOV #:id:, BIOS_MMR         ; write the interrupt number in
+                                                ; the register reserved for BIOS
+                .else
+                    BIOS_MMR = #:id: || mmap()
+                .endif
+                .remark 5110
+            .endif
+        .endif          
+
+    .vli_on
+
+                                                ; For the timer interrupt, we 
+                                                ; will call CLK_F_dispRun from
+                                                ; within the dispatcher, So,for
+                                                ; the timer interrupt, plugging
+                                                ; CLK_F_dispRun in "HWI_dispatch
+                                                ; Tab".
+                                                ;
+    .if ($symcmp(":fxn:", "CLK_F_isr") == 0)
+        .if (local_dispatch)                    ; This will prevent un-necessary
+                                                ; pulling in of CLK_F_run and
+                                                ; CLK_F_dispRun code ( and also
+                                                ; HWI_F_dispatch code) in case
+                                                ; CLK.HOOKFXN = CLK_F_rete
+            .ref CLK_F_dispRun
+            .asg CLK_F_dispRun, fxn
+        .endif
+    .endif
+
+    .if ($symcmp(":fxn:", "_RTDX_Poll") == 0)   ; Now, there is actually no such
+                                                ; function called RTDX_F_isr
+        .if (local_dispatch)                    ; From the dispatcher, we now
+                                                ; call _RTDX_Poll directly.This
+                                                ; is achieved by plugging in
+                                                ; _RTDX_Poll in HWI_dispatchTab
+            .ref _RTDX_Poll
+            .asg _RTDX_Poll, fxn
+        .endif
+    .endif
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;Creating a cinit record for the HWIdisp Object
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+    .if ( local_dispatch )
+    .ref  _HWI_dispatchTab
+     C55_cinitHeader   CINITALIGN, isHWIdispAligned, _HWI_dispatchTab + :id:*HWIdisp_A_OBJSIZE,  HWIdisp_A_OBJSIZE, DATAPAGE
+     C55_cinitBegin    isHWIdispAligned
+     C55_cinitCodePtr  :fxn:
+     C55_cinitInt      :ier0mask:
+     C55_cinitInt      :ier1mask:
+     C55_cinitArg      :arg: 
+     C55_cinitEnd      isHWIdispAligned
+    .endif
+    .endm
+    .endif ; ($isdefed("HWI_Obj_") = 0)    ; 
+
+
+
+    .if ($isdefed("HWI_config_") = 0)    ; 
+;# ======== HWI_config ========
+
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "", HWI_config$regs
+HWI_config      .macro dummy, stk_mode
+
+    .asg ":stk_mode:", stk_model; if stk_mode = C54X_STK then 1*32 slow ret mode
+                                ; if stk_mode = USE_RETA then 1*16 FAST RETURN
+                                ; if stk_mode = NO_RETA then SLOW RETURN mode
+                
+
+    .endm
+    .endif ; ($isdefed("HWI_config_") = 0)    ; 
+
+
+;# ======== HWI_nops ========
+    .if ($isdefed("_VCORE3_") = 0)    ; 
+HWI_nops        .macro
+        nop
+        nop
+        nop
+        nop
+        nop
+        nop
+        .endm
+    .else ;($isdefed("_VCORE3_") = 0)
+HWI_nops        .macro
+        .endm
+    .endif
+
+;# ======== HWI_disable ========
+;  Either 
+;    A. Disable interrupts 
+;  or 
+;    B. Push the current ST1 onto the stack
+;       then disable interrupts
+;       then pop the contents of the aforementioned ST1 
+;       to the designated key ( a memory location 
+;         or a register)
+
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+
+;#    intm = 1
+;#    Interrupts are disabled
+;#    key (if specified) = st1 when HWI_disable was invoked
+;#
+
+;  Note: If key is specified, the modified register list should include 
+;        the register that is used for the key. 
+    .asg    "intm", HWI_disable$regs
+HWI_disable    .macro key
+        .if ($symlen(":key:") = 0)              ; if no arguement is
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        bset #STBIT_INTM, st1_55; passed
+                        HWI_nops
+                .else
+                        bit (st1, #STBIT_INTM) = #1
+                        HWI_nops
+                .endif
+        .elseif ($firstch( ":key:", '|' ))      ; if a || qualifier
+                .emsg "HWI_disable with '||' not supported"
+        .else
+                CHK_nargs HWI_disable,  key
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh   ST1_55_MMR
+                        bset #STBIT_INTM, st1_55
+                        HWI_nops
+                    .if (_55Pb_)
+                        pop :key:
+                    .else
+                        pop *(#:key:)
+                    .endif
+                .else
+                        push(ST1_55_MMR)   || mmap()
+                        bit(st1, #STBIT_INTM) = #1 
+                        HWI_nops
+                    .if (_55Pb_)
+                        :key: = pop() 
+                    .else
+                        *(#:key:) = pop() 
+                    .endif
+                .endif
+        .endif
+    .endm
+
+;# ======== HWI_enable ========
+;  Either 
+;    A.   Enable interrupts 
+;  or 
+;    B.   If an argument is passed to the macro,
+;         bit 11 of the argument is taken as the 
+;         value to be written to the intm bit.
+;         If that bit is 0 then enable interrupts,
+;         Otherwise do nothing.
+
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    for HWI_enable
+;#      intm = 0 
+;#    for HWI_enable  address
+;#      intm = 0  if bit 11 of the 
+;#      designated memory location is 0, otherwise intm is not changed
+;#
+
+    .asg    "intm,tc1", HWI_enable$regs
+HWI_enable    .macro val
+        .if ($symlen(":val:") = 0)              ; if no arguement is
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        bclr #STBIT_INTM, st1_55                ; passed just
+                .else
+                        bit(st1, #STBIT_INTM) = #0      ; passed just  
+                .endif
+                                                ; enable interrupts
+        .elseif ($firstch( ":val:", '|' ))      ; if a || qualifier
+                .emsg "HWI_enable with '||' not supported"
+        .else
+                CHK_nargs HWI_enable, val
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        btst #STBIT_INTM, *(#:val:), tc1                ; check the
+                        xcc cond?, !tc1                         ; 11th bit
+                                bclr #STBIT_INTM, st1_55                ; in the passed
+cond?
+                                                                ; argument
+                .else
+                        tc1 = bit (*(#:val:), #STBIT_INTM)      ; check the
+                        if (!tc1) execute(AD_UNIT)              ; 11th bit
+                                bit(st1, #STBIT_INTM) = #0      ; in the passed
+                                                                ; argument
+                .endif
+        .endif
+    .endm
+
+
+
+;# ======== HWI_mkStub ========
+
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "", HWI_mkStub$regs
+    .global HWI_F_dispatch
+HWI_mkStub .macro name, monitor, addr, operation, stsName, fxn, type
+        
+        .sect ".hwi" 
+                                                        
+                                                ; first look at passed
+                                                ; parameters and figure
+                                                ; out what is to be done 
+
+        .var reg_name , underscore
+        .var firstChar, unaryop, stsop, len, monreg, push_ac0
+        .eval 0, monreg       
+
+        .eval $firstch(operation, '(') - 1, len         ; compute stsop
+        .asg ":operation(1, len):", stsop               ; the STS 
+                                                        ; operation to
+                                                        ; perform
+
+    
+    .asg 0 , unaryop
+
+
+
+
+                                                ; find the kind of
+                                                ; operation  to be done
+        .if ($symcmp(":operation(len + 2, 1):", "-") = 0)
+                .eval  NEGOPERATION, unaryop     ; Do the neg operation
+        .endif
+        .if ($symcmp(":operation(len + 2, 1):", "|") = 0)
+                .eval  ABSOPERATION,   unaryop      ; Do the abs operation
+        .endif
+
+
+        .eval $firstch(monitor, '_') - 1,  underscore
+        .asg ":monitor(1, underscore):",  reg_name
+                                                ; determine if  register
+                                                ; is to be monitored
+        .if ($isreg(":reg_name:") = 1)
+                .eval 1, monreg                 ; set flag  indicating
+                                                ; that a register  is
+                                                ; being  monitored
+        .elseif ($isreg(":monitor:") = 1)       ; if XSP/XSSP type
+                .eval 1, monreg                 ; set flag  indicating
+                                                ; that a register  is
+                                                ; being  monitored
+
+        .elseif ($symcmp("Stack Pointer", monitor) = 0)
+                .eval 1, monreg                 ; set flag  indicating 
+                .asg "sp_l", monitor            ; that sp is monitored
+
+        .elseif ($symcmp("tim", monitor) = 0)
+                .eval 1, monreg                 ; set flag  indicating 
+                                                ; that a timer  is
+                                                ; being  monitored
+        .endif                  
+
+
+        .asg 0, monitor_sp 
+        .asg 0, monitor_ssp 
+        .asg 0, monitor_t0
+        .asg 0, monitor_tim
+        .asg 0, xreg 
+        .if  ($symcmp("xsp", ":monitor:")== 0)
+                .eval 1, monitor_sp 
+        .endif 
+        
+        .if  ($symcmp("xssp", ":monitor:")== 0)
+                .eval 1, monitor_ssp 
+        .endif 
+
+        .if  ($symcmp("t0_l", ":monitor:")== 0)
+                .eval 1, monitor_t0
+        .endif 
+
+        .if  ($symcmp("tim", ":monitor:")== 0)
+                .eval 1,  monitor_tim           ; TIM register exists in
+                                                ; I/O space, and hence needs
+                                                ; to be loaded in accumulator
+                                                ; in special manner.
+        .endif 
+
+        .asg ":addr(1):", firstChar             ; convert addr to a
+                                                ; suitable constant 
+        .if ($iscons(":firstChar:") = 5)        ; if first char is 0-9,
+                                                ; addr's a number
+                .elseif ($isname(addr) & ($isdefed(addr) = 0))
+                .global addr                    ; else user defined 
+                                                ; symbol
+        .endif
+        .if ($firstch(":monitor:", 'x') = 1)   ; if of type XAR0-XAR7
+                .eval  1, xreg                  ; XSP/XSSP/XCDP
+                                                ; These kind of registers
+                                                ; have to be loaded into
+                                                ; accumulator in special manner.
+        .endif
+        .global :stsName:
+        
+
+
+                      ; now generate the stub  function
+
+:name::
+
+
+        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                psh t0                                  ; t0  need 
+                                                        ; to be  saved as 
+                                                        ; TRC_query  would
+                                                        ; modify 
+        .else
+                push(t0)                                ; t0  need 
+                                                        ; to be  saved as 
+                                                        ; TRC_query  would
+                                                        ; modify 
+        .endif
+                                                        
+        TRC_query TRC_STSHWI                    ; check if TRC_STSHWI 
+                                                ; is enabled 
+                                                ;(t0 != 0<=>TRC_STSHWI
+                                                ; is disabled)
+                                                ; if TRC_STSHWI not
+                                                ; enabled simply 
+                                                ; branch to interrupt 
+                                                ; function
+
+        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                bcc exit1?, t0 != #0                    ; goto interrupt fxn
+        .else
+                if (t0 != #0)  goto exit1?              ; goto interrupt fxn
+        .endif
+        .if (:monitor_t0: == 1)            
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop t0                          ; Pop t0 as it  is
+                                                        ; the register that
+                                                        ; is being STSED.
+                .else
+                        t0 = pop()                      ; Pop t0 as it  is
+                                                        ; the register that
+                                                        ; is being STSED.
+                .endif
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh t0                          ; Save it again
+                                                        ; to provide consistent
+                                                        ; stack image through
+                                                        ; the  two paths of exit1?
+                                                        ; If the control flow
+                                                        ; takes exit1? route 
+                                                        ; base on the above
+                                                        ; conditional, t0 will
+                                                        ; be popped at exit1?.
+                                                        ; Also if the control
+                                                        ; flow  does not take
+                                                        ; exit1?, it would
+                                                        ; eventaually hit the
+                                                        ; exit1? label, where
+                                                        ; pop would be again
+                                                        ; done. Hence This push
+                                                        ; is done to accomodate
+                                                        ; the  pop at exit1?.
+                .else
+                        push(t0)                        ; Save it again
+                                                        ; to provide consistent
+                                                        ; stack image through
+                                                        ; the  two paths of exit
+                                                        ; If the control flow
+                                                        ; takes exit1? route 
+                                                        ; base on the above
+                                                        ; conditional, t0 will
+                                                        ; be popped at exit1?.
+                                                        ; Also if the control
+                                                        ; flow  does not take
+                                                        ; exit1?, it would
+                                                        ; eventaually hit the
+                                                        ; exit1? label, where
+                                                        ; pop would be again
+                                                        ; done. Hence This push
+                                                        ; is done to accomodate
+                                                        ; the  pop at exit1?.
+                .endif
+        .endif
+
+
+        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                pshboth ac0                             ; These registers are
+                psh AC0G_MMR                            ; pushed as ac0 is used
+                                                        ; to hold the value of
+                                                        ; register to be Stsed.
+
+                                                ; Put value to be
+                                                ; monitored into  ac0
+                                                ; register. Note that it
+                                                ; is always possible to
+                                                ; assign to ac0  using
+                                                ; ac0 = reg || mmap ()
+                                                ; Note that elsif does not 
+                                                ; seem to work properly,
+                                                ; and hence  had to break
+                                                ; in  terms of .ifs
+
+        .else
+                pshboth(ac0)                    ; These registers are
+                push(AC0G_MMR) || mmap()        ; pushed as ac0 is used
+                                                ; to hold the value of
+                                                ; register to be Stsed.
+
+                                                ; Put value to be
+                                                ; monitored into  ac0
+                                                ; register. Note that it
+                                                ; is always possible to
+                                                ; assign to ac0  using
+                                                ; ac0 = reg || mmap ()
+                                                ; Note that elseif does not 
+                                                ; seem to work properly,
+                                                ; and hence  had to break
+                                                ; in  terms of .ifs
+
+        .endif
+    .if (:monreg: == 1)            
+        .if ($symcmp(":type:", "signed") == 0)
+               .if (monitor_tim)                ; if monitoring  TIM
+                    CLK_readCount :type:
+                .else
+                    .if (:xreg: == 1)           ; if register is of extended
+                                                ; register type
+                        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                                mov :monitor:, ac0
+                        .else
+                                ac0 = :monitor: 
+                        .endif
+                    .else
+                        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                                mov :monitor:_MMR, ac0
+                        .else
+                                ac0 = (:monitor:_MMR) || mmap()
+                        .endif
+                    .endif
+                .endif
+               .if (monitor_sp)                 ; if monitoring stack 
+                                                ; pointer  ac0 is
+                        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                                add #3, ac0
+                        .else
+                                ac0 = ac0 + #3  
+                        .endif
+                .endif
+                                                ; incremented by 3.
+                                                ; This is because, after
+                                                ; the entry   into the
+                                                ; ISR  there have been
+                                                ; 3  pushes that of
+                                                ; ac0_g, ac0, t0
+                                                ; these pushes decrement
+                                                ; the value of   stack i
+                                                ; pointer. Since STS
+                                                ; operation requires the
+                                                ; value of stack pointer
+                                                ; when   the ISR was 
+                                                ; entered, we  will have
+                                                ; to offset  these pushes.
+                                                ; We assume worst case scenario
+                                                ; which 1x32 slow stack mode 
+                                                ; for the above operation
+                                     
+                .if  (monitor_ssp)
+                        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                                add #3, ac0
+                        .else
+                                ac0 = ac0 + #3  
+                        .endif
+                .endif
+       .endif                                   ; symcmp
+       .if ($symcmp(":type:", "unsigned") == 0)
+               .if (monitor_tim)                ; if monitoring  TIM
+                    CLK_readCount :type:
+                .else
+                    .if (:xreg: == 1)           ; if register is of extended
+                        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                                mov :monitor:, ac0
+                        .else
+                                ac0 = :monitor: 
+                        .endif
+                    .else
+                        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                                mov uns(:monitor:_MMR), ac0
+                        .else
+                                ac0 = uns(:monitor:_MMR) || mmap()
+                        .endif
+                    .endif
+                .endif
+               .if (monitor_sp)                 ; if monitoring sp
+                        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                                add #3, ac0
+                        .else
+                                ac0 = ac0 + #3       
+                        .endif
+               .endif
+                .if  (monitor_ssp)
+                        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                                add #3, ac0
+                        .else
+                                ac0 = ac0 + #3       
+                        .endif
+                .endif
+       .endif
+       .if (:unaryop: == ABSOPERATION)          ; if it  is absolute
+                                                ; value
+                .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                        abs ac0, ac0
+                .else
+                        ac0 = |ac0|                     
+                .endif
+       .else
+            .if (:unaryop: == NEGOPERATION)     ; if its negation
+                .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                        neg ac0, ac0
+                .else
+                        ac0 = -ac0 
+                .endif
+            .endif
+       .endif    
+
+     .else                                      ; If monitoring an addr
+        .if ($symcmp(":type:", "signed") == 0)
+                .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                        mov *(#:addr:), ac0
+                .else
+                        ac0 = *(#:addr:) 
+                .endif
+        .endif
+        .if ($symcmp(":type:", "unsigned") == 0)
+                .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                        mov uns(*(#:addr:)), ac0
+                .else
+                        ac0 = uns(*(#:addr:)) 
+                .endif
+        .endif
+        .if (:unaryop: == ABSOPERATION)         ; if absolute value
+                .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                        abs ac0, ac0
+                .else
+                        ac0 = |ac0|
+                .endif
+        .else
+            .if (:unaryop: == NEGOPERATION)
+                .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                        neg ac0, ac0
+                .else
+                        ac0 = -ac0                      ; if negation
+                .endif
+            .endif
+        .endif    
+     .endif
+
+        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                pshboth ac1                             ; ar0, ac1_g,ac1_h,ac1_l
+                psh AC1G_MMR                    ; are used by STS 
+                                                        ; operation save them
+                bset #STBIT_SXMD, st1_55                  ; sxmd = 1
+
+           .if  (_55L_) | (_55H_)
+                pshboth xar0                            ; operation. save them
+                nop
+                nop
+                nop
+                .noremark 5573                          ; no remark to for CPU_43.
+                amov #:stsName:, xar0                   ; ar0 =  &StsObj     
+                .remark 5573                            ; no remark to for CPU_43.
+                stsop call                              ; Do STS operation
+                popboth xar0
+           .else
+                psh ar0                                 ; operation. save them
+                mov #:stsName:, ar0
+                stsop call
+                pop ar0
+           .endif
+
+                pop AC1G_MMR
+                popboth ac1
+                pop AC0G_MMR                    ; This  registers  
+                                                        ; was pushed
+                popboth ac0                             ; as ac0 was carrying 
+                                                        ; arguement
+                                                        ; to stsop
+        .else
+                pshboth(ac1)                            ; ar0, ac1_g,ac1_h,ac1_l
+                push(AC1G_MMR) || mmap()                        ; are used by STS 
+                                                        ; operation save them
+                bit(st1, #STBIT_SXMD) = #1              ; sxmd = 1
+            .if  (_55L_) | (_55H_)
+                pshboth(xar0)
+                nop
+                nop
+                nop
+                .noremark 5573                          ; no remark to for CPU_43.
+                xar0 = #:stsName:                       ; ar0 =  &StsObj
+                .remark 5573
+                stsop call                              ; Do STS operation
+                xar0 = popboth()
+            .else
+                push(ar0)
+                ar0 = #:stsName:
+                stsop call
+                ar0 = pop()                                    
+            .endif
+                AC1G_MMR = pop() || mmap()
+                ac1 = popboth()
+                AC0G_MMR = pop() || mmap()              ; This  registers 
+                                                        ; was pushed
+                ac0 = popboth()                         ; as ac0 was carrying 
+                                                        ; arguement
+                                                        ; to stsop
+        .endif
+
+exit1?:
+        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                pop t0                                  ; t0 was pushed as 
+                                                        ; TRC_query
+                                                        ; returned value in it.
+                b  :fxn:                              
+
+        .else
+                t0 = pop()                              ; t0 was pushed as 
+                                                        ; TRC_query
+                                                        ; returned value in it.
+                goto  :fxn:                              
+        .endif
+   .endm
+;# ======== HWI_restore ========
+;  Conditionally resets the intm bit.
+;#
+;# Preconditions:
+;#    intm = 1
+;#      
+;#
+;# Postconditions:
+;# NONE     
+;#
+;# Constraints and Calling Environment:
+;#      This macro must be invoked from an atomic context. i.e., the
+;#    instructions of this macro should not be interrupted.
+
+    .asg "intm, tc1",HWI_restore$regs
+HWI_restore .macro   key
+    .if ($symlen(key) = 0)                      ; if no param is passed
+        .asg "ac0_l", key                       ; use ac0_l
+    .endif
+
+    .if(.MNEMONIC); if ; MNEMONIC ; assembler
+    .if (_55Pb_)
+        btst #11, (:key:), tc1                  ; check the 11 bit
+    .else
+        btst #11, *(#:key:), tc1                ; check the 11 bit
+    .endif
+        xcc cond?, !tc1                         ; in the passed arg
+                bclr #STBIT_INTM, st1_55                ; if the bit is 0
+                                                ; enable arguments
+cond?
+    .else
+    .if (_55Pb_)
+        tc1 =  bit(:key:, @#STBIT_INTM)                 ; check the 11 bit
+    .else
+        tc1 =  bit(*(#:key:), #STBIT_INTM)      ; check the 11 bit
+    .endif
+        if  (!tc1)  execute(AD_UNIT)            ; in the passed arg
+                bit (st1, #STBIT_INTM) = #0     ; if the bit is 0
+                                                ; enable  interrupts
+    .endif
+
+  .endm 
+
+
+;# ======== HWI_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "", HWI_end$regs
+HWI_end .macro
+        .endm
+
+
+    .if ($isdefed("HWI_init_") = 0)
+;# ======== HWI_init ========
+;  Runtime initialization for HW ISRs
+
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+;# Dependencies:
+;#      none
+;#
+
+    .asg    "ifr0, ifr1, ivpd, ivph, ier0, ier1", HWI_init$regs
+HWI_init    .macro
+        
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; HWI_init used to clear ier0 and ier1. However, if        ;
+        ; the user_init function or a static C++ constructor       ;
+        ; writes a particular value to ier0 or ier1                ;
+        ; HWI_init would clear it back, as user_init is called     ;
+        ; before HWI_init. Hence HWI_init would nullify user_init  ;
+        ; code effect. Hence the clearing of ier0 is done in       ;
+        ; _c_int00                                                 ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                mov #((HWI_A_VECS >> 8) & 0xffff), IVPD_MMR
+                mov #((HWI_A_VECS >> 8) & 0xffff), IVPH_MMR
+                mov #0ffffh, IFR0_MMR
+                mov #0ffffh, IFR1_MMR
+        .else
+                IVPD_MMR = #((HWI_A_VECS >> 8) & 0xffff) || mmap()
+                IVPH_MMR = #((HWI_A_VECS >> 8) & 0xffff) || mmap()
+                IFR0_MMR = #0ffffh || mmap() 
+                IFR1_MMR = #0ffffh || mmap() 
+        .endif
+
+    .endm
+    .endif ; ($isdefed("HWI_disable_") = 0)
+
+
+;# ======== HWI_startup ========
+
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      intm == 0
+;#
+;# Dependencies:
+;#    Must come before SWI_startup, as intm = 0 is a precondition to
+;#    SWI_startup and interrupts must be enabled before software interrupts
+;#    are allowed to run.
+;#
+;#    Must follow CLK_startup to allow setting of PRD and timer control
+;#    register before interrupts are enabled.
+;#    Must follow PIP_startup to allow pipes to be ready before ISRs are
+;#    taken and I/O starts.
+;#
+    .asg ":HWI_enable$regs:", HWI_startup$regs
+HWI_startup .macro
+
+
+        HWI_enable                      ; globally enable interrupts
+
+    .endm
+
+;
+;# ======== HWI_setIer ========
+; set the value  of ier0 and ier1 as sepcified by mask0 and mask1 
+
+; HWI_setIer mask0, mask1
+; mask0 specifies bit mask for ier0 
+; mask1 specifies bit mask for ier1
+
+; Algorithm
+;    ier0 = ier0 & ~mask0       ; // modify ier bits based on
+;    ier1 = ier1 & ~mask1       ; //mask0 and mask1
+;                                 // This will prevent some 
+;                                 // interrupts from
+;                                 // happening and allow other
+;                                 // interrupts to happen in the
+;                                 // ISR context after the global
+;                                 // interrupt flag (intm) get
+;                                 // turned on (=0)
+
+;#
+;# Preconditions:
+;#    intm = 1
+;#
+;# Postconditions:
+;#  
+;# Constraints and Calling Environment:
+;#     This macro can be called only from HWI_enter and dispatcher
+;#
+
+  .asg  "ier0,ier1", HWI_setIer$regs
+HWI_setIer  .macro ierMask0, ierMask1  
+                
+        .asg "~:ierMask0:",mask0                ; These are asg as eval
+        .asg "~:ierMask1:",mask1                        ; does not work with
+                                                ; external reference 
+                                                ; symbols. 
+                                                ; CLK_F_isr has ierMask0
+                                                ; and ierMask1 as external
+                                                ; symbols supplied by
+                                                ; *cfg.h55
+
+
+
+ .if(.MNEMONIC)                 ; if ; MNEMONIC ; assembler
+        psh IER0_MMR            ; ier0 is saved in
+                                ; stack. This would
+                                ; be restored in 
+                                ; HWI_exit to
+                                ; determine the value
+                                ; with which it
+                                ; entered the ISR.
+        and #(mask0 & 0xffff), IER0_MMR
+                                ; Mask the specified
+                                ; bits.
+        psh IER1_MMR
+        and #(mask1 & 0xffff), IER1_MMR
+                                ; HWI_exit to
+                                ; compute  the  value of
+                                ; IMR  on entry to
+                                ; interrupt
+ .else
+        push(IER0_MMR) || mmap()        ; ier0 is saved in
+                                ; stack. This would
+                                ; be restored in 
+                                ; HWI_exit to
+                                ; determine the value
+                                ; with which it
+                                ; entered the ISR.
+        IER0_MMR = IER0_MMR  & #(mask0 & 0xffff) || mmap() 
+                                ; Mask the specified
+                                ; bits.
+        push(IER1_MMR) || mmap()                        
+        IER1_MMR =  IER1_MMR & #(mask1 & 0xffff) || mmap() 
+                                ; HWI_exit to compute  the
+                                ; value of  IMR  on entry to
+                                ; interrupt
+ .endif
+ .endm
+
+
+
+;# ======== HWI_restoreIer ========
+; Restore those bits of ier0 and ier1 which have 1 in the value
+; that is pushed in stack, and in the mask.
+
+; HWI_restoreIer mask0, mask1
+; mask0 specifies bit mask for ier0 
+; mask1 specifies bit mask for ier1
+
+;#
+;# Preconditions:
+;#    intm = 1
+;#
+;# Postconditions:
+;#  
+;# Constraints and Calling Environment:
+;#     This macro can be called only HWI_exit and dispatcher
+;#     The macro will read the value of ier0 and ier1 from stack
+;#     stored by HWI_setIer called in HWI_enter.
+
+  .asg  "xar0,xar1,ier0,ier1" ,HWI_restoreIer$regs
+HWI_restoreIer .macro  mask0, mask1
+ .if(.MNEMONIC)                         ; if ; MNEMONIC ; assembler
+        pop ar0,ar1                     ; get ier1/0 from stack
+                                        ; ar0 has ier1
+                                        ; ar1 has ier0
+        and #mask1, ar0                 ; enable those bits of
+        or IER1_MMR, ar0                ; ier1 that were one on
+        mov ar0, IER1_MMR               ; entry to ISR.
+        and #mask0, ar1                 ; enable those bits of
+        or IER0_MMR, ar1                ; ier0 that were one
+        mov ar1, IER0_MMR               ; on entry to ISR.
+ .else
+        ar0,ar1 = pop()                 ; get ier1/0 from stack
+                                        ; ar0 has ier1
+                                        ; ar1 has ier0
+        ar0 = ar0 & #mask1              ; enable those bits of
+        ar0 = ar0 | IER1_MMR || mmap()  ; ier1 that were one on
+        IER1_MMR = ar0 || mmap()        ; entry to ISR.
+        ar1 = ar1 & #mask0              ; enable those bits of
+        ar1 = ar1 | IER0_MMR || mmap()  ; ier0 that were one
+        IER0_MMR = ar1 || mmap()                ; on entry to ISR.
+ .endif
+ .endm
+
+
+;# ======== HWI_checkAndCallScheduler ========
+; Jump to scheduler if any SWI requires service
+
+; Algorithm:
+
+;    if (--SWI_D_lock >= 0) {
+;        rete (Enable interrupts and return)
+;    }
+;    if (SWI_D_curmask > SWI_D_curset) {
+;        rete (Enable interrupts and return)
+;    }
+;    rete -> SWI_F_exec (go to SWI_F_exec without enabling the interrupt)
+;    
+;#
+;# Preconditions:
+;#    intm = 1
+;#
+;# Postconditions:
+;#  
+;# Constraints and Calling Environment:
+;#     This macro can be called only  from HWI_exit
+;#
+
+  .asg "ar0,ac0", HWI_checkAndCallScheduler$regs
+HWI_checkAndCallScheduler .macro
+
+ .if  (_55L_) | (_55H_)  
+        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                cmp *(#SWI_D_lock) == #-1, tc1
+                bcc end?, !tc1                  ; If not in the BOTTOM 
+                                                ; ISR ,exit
+                mov *(#SWI_D_curset), ar0               
+                sub *(#SWI_D_curmask), ar0, ar0 ; compare the mask with 
+                bcc end?, ar0<#0                ; if no higher priority 
+                                                ; swi pending, goto exit
+
+                                                ; set the status 
+                                                ; registers to 
+                                                ; appropriate value
+
+                                                ; NOTE, these 
+                                                ; registers can
+                                                ; be  set in SWI_F_exec
+                                                ; but SWI_F_exec can
+                                                ; be entered 
+                                                ; synchronusly too
+                                                ; wherein the status
+                                                ; registers would have
+                                                ; the pre-requisite
+                                                ; value. We need not
+                                                ; set the values when
+                                                ; thes  scheduler is
+                                                ; entered synchronusly.
+                                                ; Moreover if the 
+                                                ; values are set, we
+                                                ; need to save and
+                                                ; restore these 
+                                                ; register in scheduler
+                                                ; costing more cycles.
+                mov #0, *(#SWI_D_lock)          ; lock the scheduler   
+                mov dbl(*(#SWI_D_execaddr)), ac0   ; ac0 = SWI_F_exec
+        .else                                   ; if MNEMONIC
+                tc1 = (*(#SWI_D_lock) == #-1)
+                if (!tc1) goto end?             ; If not in the BOTTOM 
+                                                ; ISR ,exit
+                ar0 = *(#SWI_D_curset)          
+                ar0 = ar0 - *(#SWI_D_curmask); compare the mask with 
+                if (ar0 < #0)  goto end?        ; if no higher priority 
+                                                ; swi pending, goto exit
+
+
+                                                ; NOTE, these 
+                                                ; registers can
+                                                ; be  set in SWI_F_exec
+                                                ; but SWI_F_exec can
+                                                ; be entered 
+                                                ; synchronusly too
+                                                ; wherein the status
+                                                ; registers would have
+                                                ; the pre-requisite
+                                                ; value. We need not
+                                                ; set the values when
+                                                ; thes  scheduler is
+                                                ; entered synchronusly.
+                                                ; Moreover if the 
+                                                ; values are set, we
+                                                ; need to save and
+                                                ; restore these 
+                                                ; register in scheduler
+                                                ; costing more cycles.
+                *(#SWI_D_lock) = #0             ; lock the scheduler   
+                ac0 = dbl(*(#SWI_D_execaddr))   ; ac0 = SWI_F_exec
+        .endif                                  ; endif MNEMONIC
+ .else                                          ; if small model.
+        .if(.MNEMONIC)                          ; if MNEMONIC  assembler
+                cmp *abs16(#SWI_D_lock) == #-1, tc1
+                bcc end?, !tc1                  ; If not in the BOTTOM 
+                                                ; ISR ,exit
+                mov *abs16(#SWI_D_curset), ar0
+                sub *abs16(#SWI_D_curmask), ar0, ar0; compare the 
+                                                ; mask with 
+                bcc end?, ar0 < #0              ; if no higher priority 
+                                                ; swi pending, goto exit
+                mov #0, *abs16(#SWI_D_lock)
+                mov dbl(*abs16(#SWI_D_execaddr)), ac0 ; ac0 = SWI_F_exec
+        .else
+                tc1 = (*abs16(#SWI_D_lock) == #-1)
+                if (!tc1) goto end?             ; If not in the BOTTOM 
+                                                ; ISR ,exit
+                ar0 = *abs16(#SWI_D_curset)
+                ar0 = ar0 - *abs16(#SWI_D_curmask); compare the 
+                                                ; mask with 
+                if (ar0 < #0)  goto end?        ; if no higher priority 
+                                                ; swi pending, goto exit
+                *abs16(#SWI_D_lock) = #0        
+                ac0 =dbl(*abs16(#SWI_D_execaddr)) ; ac0 = SWI_F_exec
+        .endif                                  ; if MNEMONIC
+  .endif                                        ; if LARGE model
+
+        call ac0                                ; call scheduler
+end?:   
+   .endm
+
+;# ======== HWI_checkAndRestoreStack ========
+; Restore the stack pointer to the TSK/HWI stack.
+
+; Algorithm:    
+;       if( HWI_D_spsave != 0)
+;       {
+;           if( xsp == HWI_STKBOTTOM )
+;           {
+;               xsp = *(HWI_D_spsave )
+;               xssp = *(HWI_D_sspsave)
+;               *(HWI_D_spsave) = 0
+;               *(HWI_D_sspsave) = 0
+;           }
+;       }
+;    
+;#
+;# Preconditions:
+;#    intm = 1
+;#
+;# Postconditions:
+;#  
+;# Constraints and Calling Environment:
+;#     This macro can be called only  from HWI_exit
+;#
+   .asg  "xar0,ac1", HWI_checkAndRestoreStack$regs
+HWI_checkAndRestoreStack  .macro
+        
+ .if(.MNEMONIC)                         
+        mov dbl(*(#HWI_D_spsave)), ac0
+        bcc NoSwitchRqud?, ac0 == #0
+                                        ; if HWI_D_spsave is 0 stack
+                                        ; switching didnt  happen
+        mov  dbl(*(#HWI_D_stkbotaddr)), xar0
+        mov xar0,  ac1
+        mov xsp, ac0
+        sub ac1, ac0
+        bcc BottomNotRchd?, ac0 != #0   ; If xsp != HWI_STKBOTTOM then 
+                                        ; stack bottom not reached
+        mov dbl(*(#HWI_D_spsave)), xsp  ; otherwise switch back to task stack
+        mov dbl(*(#HWI_D_sspsave)), xssp
+        mov ac0, dbl(*(#HWI_D_spsave))  ; make use the #0 value in ac0
+                                        ; mov ac0,dbl(*(#HWI_D_spsave)) replace
+                                        ; mov #0, *(#HWI_D_spsave) and
+                                        ; mov #0, *(#(HWI_D_spsave + 1))
+        mov ac0, dbl(*(#HWI_D_sspsave)) ; make use the #0 value in ac0
+                                        ; mov ac0,dbl(*(#HWI_D_sspsave)) replace
+                                        ; mov #0, *(#HWI_D_sspsave) and
+                                        ; mov #0, *(#(HWI_D_sspsave + 1))
+ .else                                  ; if algebraic assembler
+
+        ac0 = dbl(*(#HWI_D_spsave))
+        if(ac0 == #0) goto NoSwitchRqud? ; if HWI_D_spsave is 0 stack
+                                         ; switching didnt  happen
+        xar0 =  dbl(*(#HWI_D_stkbotaddr))
+        ac1 = xar0
+        ac0 = xsp
+        ac0 = ac0 - ac1         
+        if( ac0 != #0 ) goto BottomNotRchd?
+                                        ; If xsp != HWI_STKBOTTOM then 
+                                        ; stack bottom not reached
+        xsp = dbl(*(#HWI_D_spsave))     ; otherwise switch back to task stack
+        xssp = dbl(*(#HWI_D_sspsave))
+        dbl(*(#HWI_D_spsave)) = ac0     ; make use the #0 value in ac0
+                                        ; dbl(*(#HWI_D_spsave)) = ac0 replace
+                                        ; *(#HWI_D_spsave) = #0 and
+                                        ; *(#(HWI_D_spsave + 1)) = #0
+        dbl(*(#HWI_D_sspsave)) = ac0    ; make use the #0 value in ac0
+                                        ; dbl(*(#HWI_D_sspsave)) = ac0 replace
+                                        ; *(#HWI_D_sspsave) = #0 and
+                                        ; *(#(HWI_D_sspsave + 1 )) = #0
+ .endif                                 ; if algebraic 
+
+BottomNotRchd?:
+NoSwitchRqud?:
+        .endm
+
+; TURBO BIOS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;
+;# ======== HWI_saveRegForOperation ========
+;  Saves the registers that are needed for doing
+;  HWI prologue/epilogue operations
+;
+;#
+;# Preconditions:
+;#   intm = 1
+;#
+;# Postconditions:
+;#   none
+;#
+;# Constraints and Calling Environment:
+;#   This macro can be called only from HWI_enter and HWI_F_dispatch.
+;#
+;
+
+        .asg    "xar0", HWI_saveRegForOperation$regs
+HWI_saveRegForOperation .macro
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ; The BIOS context of xar0, st3, xar1, ac0 and ac1 is also
+    ; pushed into the stack for HWI prologue/epilogue operation. 
+    ; This is to simplify stack unrolling as it can work of one 
+    ; stack. Note that following context is made independent of 
+    ; stack models. This is required since this code is shared 
+    ; by HWI_enter and the hwi dispatcher (HWI_F_dispatch) and 
+    ; the dispatcher requires to read the value of st0.
+    ;
+    ; st0 is stored in system stack, and  it should be made
+    ; accessible at a constant offset.
+    ;
+    ; st0, st1, st2, dbstat, reta and cfct are automatically 
+    ; saved by the hardware
+    ; 
+    ; the following code save the following registers in order:
+    ; xar0, st3, xar1, ac0, ac1, ac0g, ac1g. ac0 will be used to 
+    ; get the address of the SWI scheduler. ar0/ar1 would be used 
+    ; to save sp/ssp. ac1 is required for common interrupt stack 
+    ; implementation.
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    .if (.MNEMONIC)                     ; mnemonic assembler
+      pshboth xar0
+      mov ST3_55_MMR ,ar0
+      pshboth xar0
+      pshboth xar1
+      pshboth ac0
+      pshboth ac1
+      mov AC0G_MMR, ar0
+      pshboth xar0 
+      mov AC1G_MMR, ar0
+      pshboth xar0 
+    .else                               ; algebraic assembler
+      pshboth(xar0)
+      ar0 = ST3_55_MMR || mmap()
+      pshboth(xar0)
+      pshboth(xar1)
+      pshboth(ac0)
+      pshboth(ac1)
+      ar0 = AC0G_MMR || mmap()
+      pshboth(xar0)
+      ar0 = AC1G_MMR || mmap()
+      pshboth(xar0)
+    .endif
+
+    ; Fix for SDSsq24499:
+    ; When SWI_D_lock is 0xffff, for ++SWI_D_lock to correctly work we need 
+    ; SXMD = 1 and SATD = 0. Consider the following condition where SXMD = 0 
+    ; and SATD = 1 and SWI_D_lock is 0xffff. In this case ++SWI_D_lock will 
+    ; make SWI_D_lock 0x7fff (by saturation) though the expected value should 
+    ; be zero. The worse thing is when that saturation happens and --SWI_D_lock
+    ; occurs, the SWI_D_lock value would be 0x7ffe. This implies that the 
+    ; scheduler is still locked and no scheduling would occur. Hence we need 
+    ; to make sure SXMD = 1 and SATD = 0 when SWI_D_lock is 0xffff. Since this 
+    ; is part of C precondition we can used setBiosSTbits. This would increase
+    ; the interrpt latency by 4 cycles.
+
+    C55_setBiosSTbits       ; set the status registers as expected by
+                            ; C compiler and other bios requirements.
+
+        .endm
+
+    .if ($isdefed("HWI_checkAndChangeStack_") = 0)    ; 
+;
+;# ======== HWI_checkAndChangeStack ========
+;
+;  Checks if in HWI stack. If not switch from task stack to HWI stack.
+;
+;  Algorithm:
+;
+;    if (in_HWI_stack() == FALSE) {
+;      switch_to_HWI_stack();
+;    }
+;
+;    where
+;    
+;      in_HWI_stack() is equivalent to 
+;        _HWI_STKTOP <= xsp <= _HWI_STKBOTTOM,
+;
+;    and
+;
+;      switch_to_HWI_stack() do the following
+;        {
+;           HWI_D_spsave = xsp;
+;           HWI_D_sspsave = xssp;
+;           xsp = _HWI_STKBOTTOM;
+;           xssp = _HWI_SYSSTKBOTTOM;
+;        }
+;
+;#
+;# Preconditions:
+;#   intm = 1
+;#
+;# Postconditions:
+;#   in HWI stack
+;#  
+;# Constraints and Calling Environment:
+;#   This macro can be called only from HWI_enter and HWI_F_dispatch
+;#
+
+        .asg   "ac0,ac1,xar0,xsp,xssp", HWI_checkAndChangeStack$regs
+HWI_checkAndChangeStack .macro
+    .if (.MNEMONIC)                     ; mnemonic assembler
+        nop                     ; Worked around CPU_42, CPU_43
+        nop                     ; Added 5 nops.
+        nop
+        nop
+        nop
+        bclr m40                ; M40 should be 0 for comparison shown below
+        mov dbl(*(#HWI_D_stkbotaddr)),xar0      ; xar0 = _HWI_STKBOTTOM
+        mov xar0, ac1           ; ac1 = _HWI_STKBOTTOM
+        mov xsp, ac0            ; ac0 holds xsp
+        sub ac0, ac1            ; ac1 = ac1- ac0
+        bcc notOnHWIstack?, ac1 < #0
+                                ; if _HWI_STKBOTTOM < xsp then not on HWI stack
+                                ; otherwise do the following
+        mov dbl(*(#HWI_D_stktopaddr)), xar0     ; xar0 = _HWI_STKTOP
+        mov xar0, ac1           ; ac1 = _HWI_STKTOP
+        sub ac0, ac1            ; ac1 = ac1- ac0 where ac0 holds xsp
+        bcc OnHWIstack?, ac1 <= #0
+                                ; if _HWI_STKTOP <= xsp then on HWI stack
+notOnHWIstack?:
+        mov xsp, dbl(*(#HWI_D_spsave))
+        mov xssp, dbl(*(#HWI_D_sspsave))
+                                ; Save the xsp and xssp of task stack
+        nop                     ; Worked around CPU_42, CPU_43
+        nop
+        nop
+        nop
+        nop
+        mov dbl(*(#HWI_D_stkbotaddr)), xsp
+        mov dbl(*(#HWI_D_systkbotaddr )), xssp
+                                ; Point xsp and xssp to HWI stack
+OnHWIstack?:
+    .else                       ; algebraic assembler
+    .if $isdefed("_VCORE3_") == 0
+        nop                     ; Worked around CPU_42, CPU_43
+        nop                     ; Added 5 nops.
+        nop
+        nop
+        nop
+    .endif
+        bit(st1, #STBIT_M40) = #0 ; M40 should be 0 for comparison shown below
+        xar0 = dbl(*(#HWI_D_stkbotaddr))        ; xar0 = _HWI_STKBOTTOM
+        ac1 = xar0              ; ac1 = _HWI_STKBOTTOM
+        ac0 = xsp               ; ac0 holds xsp
+        ac1 = ac1 - ac0         ; ac1 = ac1- ac0
+        if( ac1 < #0 ) goto notOnHWIstack? 
+                                ; if _HWI_STKBOTTOM < xsp then not on HWI stack
+                                ; otherwise do the following
+        xar0 =  dbl(*(#HWI_D_stktopaddr))       ; xar0 = _HWI_STKTOP
+        ac1 = xar0              ; ac1 = _HWI_STKTOP
+        ac1 = ac1 - ac0         ; ac1 = ac1- ac0 where ac0 holds xsp
+        if( ac1 <= #0 ) goto OnHWIstack?
+                                ; if _HWI_STKTOP <= xsp then on HWI stack
+notOnHWIstack?:
+        dbl(*(#HWI_D_spsave)) = xsp 
+        dbl(*(#HWI_D_sspsave)) = xssp
+    .if $isdefed("_VCORE3_") == 0
+        nop                     ; Save the xsp and xssp of task stack                     
+        nop                     ; Worked around CPU_42, CPU_43                            
+        nop
+        nop
+        nop
+    .endif
+        xsp = dbl(*(#HWI_D_stkbotaddr))
+        xssp = dbl(*(#HWI_D_systkbotaddr))
+                                ; Point xsp and xssp to HWI stack
+OnHWIstack?:
+    .endif
+        .endm   
+    .endif      ; ($isdefed("HWI_checkAndChangeStack_") = 0)    ; 
+
+;
+;# ======== HWI_evenStackPtr ========
+;  Align the stack pointer to make a  C call.
+;
+;  Algorithm:
+;    save old XSP and XSSP
+;    make SP to next lower even address
+;
+;#
+;# Preconditions:
+;#   intm = 0
+;#
+;# Postconditions:
+;#   XSP, XSSP are in even address
+;#
+;# Constraints and Calling Environment:
+;#   This macro can be called only from HWI_enter and HWI_F_dispatch .
+;#
+;
+
+        .asg  "xar0,xar1,xsp,xssp", HWI_evenStackPtr$regs
+HWI_evenStackPtr .macro
+    .if  (_55L_) | (_55H_)  
+        .if (.MNEMONIC)                 ; mnemonic assembler
+          mov xsp, xar0         ; save sp in ar0
+          and #STD_TARGSTKALIGNMASK, SP_MMR     ; make sp even
+          mov xssp, xar1        ; save ssp in ar1
+          and #STD_TARGSTKALIGNMASK, SSP_MMR    ; make ssp even
+          pshboth xar0          ; save xsp/xssp in stack
+          pshboth xar1
+        .else                           ; algebraic assembler
+          xar0 = xsp            ; save sp in ar0
+          SP_MMR = SP_MMR & #STD_TARGSTKALIGNMASK || mmap()     ; make sp even
+          xar1 = xssp           ; save ssp in ar1
+          SSP_MMR = SSP_MMR & #STD_TARGSTKALIGNMASK || mmap()   ; make ssp even
+          pshboth(xar0)         ; save xsp/xssp in stack
+          pshboth(xar1)
+        .endif
+    .else
+        .if (.MNEMONIC)                 ; mnemonic assembler
+          mov SP_MMR, ar0       ; save sp in ar0
+          mov ssp, ar1          ; save ssp in ar1
+          and #STD_TARGSTKALIGNMASK, SP_MMR     ; make sp even
+          and #STD_TARGSTKALIGNMASK, SSP_MMR    ; make ssp even
+          psh ar0, ar1          ; save sp/ssp in stack
+                                ; sp/ssp are even; two pushes make them even
+        .else                           ; algebraic assembler
+          ar0 = SP_MMR || mmap()        ; save sp in ar0
+          ar1 = SSP_MMR || mmap()       ; save ssp in ar1
+          SP_MMR = SP_MMR & #STD_TARGSTKALIGNMASK || mmap()  ; make sp even
+          SSP_MMR = SSP_MMR & #STD_TARGSTKALIGNMASK || mmap(); make ssp even
+          push (ar0,ar1)        ; save sp/ssp in stack
+                                ; sp/ssp are even; two pushes make them even
+        .endif
+    .endif
+    .endm
+
+    .if ($isdefed("HWI_enter_") = 0)    ; 
+;
+;# ======== HWI_enter ========
+;
+;  prologue for ISR (HWI function)
+;
+;  HWI_enter m0, m1, m2, m3, m4, im0, im1
+;
+;  m0 is the mask to indicate which of the following registers to be saved:
+;      xar0, xar1, xar2, xar3, xar4, xar5, xar6, xar7, t0, t1, t2, t3.
+;
+;  m1 is the mask to indicate which of the following registers to be saved:
+;      ac0, ac1, ac2, ac3.
+;
+;  m2 is the mask to indicate which of the following registers to be saved:
+;      ier0, ifr0, dbier0, ier1, ifr1, dbier1, st0, st1, st2, st3, 
+;      trn0, bk03, brc0, dph, cdph.
+;
+;  m3 is the mask to indicate which of the following registers to be saved:
+;      dp, cdp, dph, pdp, bk47, bkc, bsa01, bsa23, bsa45, bsa67, bsac, 
+;      ivpd, ivph, trn1. 
+;
+;  m4 is the mask to indicate which of the following registers to be saved:
+;      brc1, brs1, csr, rsa0h, rsa0L, rea0h, rea0L, rsa1h, rsa1L,
+;      rea1h, rea1L, rptc 
+;
+;  im0 is the mask to indicate which bits of ier0 to be disabled.
+;
+;  im1 is the mask to indicate which bits of ier1 to be disabled.
+;
+;  Algorithm:
+;
+;  HWI_enter in Pseudo C Language
+;
+;  Void HWI_enter(RM m0, RM m1, RM m2, RM m3, RM m4, IM im0, IM im1)
+;  {
+;                       /* 
+;                          Note that when HWI_enter is entered, 
+;                          st0, st1, st2, dbstat, reta and cfct have 
+;                          already been automatically saved onto the 
+;                          stack by the hardware. 
+;                       */
+;
+;    save_registers(xar0, st3, xar1, ac0, ac1);
+;
+;    even_align_sp/ssp();
+;
+;    if (in_HWI_stack() == FALSE) {
+;      switch_to_HWI_stack();
+;    }
+;
+;    SWI_D_lock++;
+;
+;    temp0 = ier0; /* ier0 has THE_IER0_VALUE_ON_ENTRY */;
+;    temp1 = ier1; /* ier1 has THE_IER1_VALUE_ON_ENTRY */;
+;
+;    disable_bits_in_iers(im0, im1); /* based on the bits  
+;                                       in im0 and im1    */
+;
+;    enable_interrupts(); /* to allow nested interrupts */
+;
+;    if (all_masks_show_save_by_caller(m0, m1, m2, m3, m4) == TRUE) {
+;       save_c_context_registers_in_an_efficient_way();
+;    }
+;    else if (all_masks_show_bios_ctx(m0, m1, m2, m3, m4) == TRUE) {
+;       save_bios_context_registers_in_an_efficient_way();
+;    }
+;    else {
+;       save_reg_group0(m0 & ~xar0 & ~xar1)
+;       save_reg_group1(m1 & ~ac0 & ~ac1);
+;       save_reg_group2(m2 & ~st0 & ~st1 & ~st2 & ~st3);
+;       save_reg_group3(m3);
+;       save_reg_group4(m4);
+;    }
+;
+;    save(temp0, temp1);
+;
+;    save_sp_and_make_sp_even();
+;  }
+;
+;  where
+;
+;  temp0 - a register serves as a temporary placeholder.
+;
+;  temp1 - a register serves as a temporary placeholder.
+;
+;  THE_IER0_VALUE_ON_ENTRY - value of ier0 at the time HWI_enter was entered.
+;
+;  THE_IER1_VALUE_ON_ENTRY - value of ier1 at the time HWI_enter was entered.
+;
+;#
+;# Preconditions:
+;#   intm = 1
+;#
+;# Postconditions:
+;#   intm = 0, cpl = 1, sxmd = 1, m40 = 0, satd = 0, frct = 0, 54cm = 0
+;#   arms = 1, cdplc = 0, ar[0-7]lc = 0, sata = 0, smul = 0
+;#
+;# Constraints and Calling Environment:
+;#   This macro must be the first operation in an ISR that uses any 
+;#   BIOS API calls which involves the scheduler. Basically, this 
+;#   macro must be called at the beginning of a function used to process a 
+;#   hardware interrupt. Such functions must be written in assembly language.
+;#
+;
+    .asg    "intm,ar1,:C55_save$regs:", HWI_enter$regs
+HWI_enter       .macro m0, m1, m2, m3, m4, im0, im1
+        
+    HWI_saveRegForOperation ; save the register that is needed for doing
+                            ; the HWI prologue/epilogue operation.
+                            ; These registers are xar0, st3, xar1, ac0, ac1.
+                            ; These registers will be restored by 
+                            ; HWI_restoreRegFromOperation in HWI_exit.
+
+    HWI_evenStackPtr        ; SDSsq26852 fix.Need to even align sp/ssp before
+                            ; saving in HWI_D_spsave.
+
+    HWI_checkAndChangeStack ; Checks if in HWI stack. If not switch 
+                            ; from task stack to HWI stack.
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ; Remark 5571 corresponds to CPU bug 41.                ;
+    ; Note that an interrupt can occur at point when M40 = 1;
+    ; and SWI_D_lock will be incremented. However the carry ;
+    ; bit is saved in the stack so that on a restore to     ;
+    ; user code no problem occurs. Also user ISR cannot     ;
+    ; make any assumption on carry bit. His code will have  ;
+    ; to set the bit first, and then act upon it            ;
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    .if  (_55L_) | (_55H_)  
+        .noremark 5571          ; Safe wrt CPU_41
+                                ; Switch off remark
+        .if (.MNEMONIC)         ; mnemonic assembler
+          add #1, *(#SWI_D_lock)
+          add #1, *(#HWI_D_inhwi)
+        .else                   ; algebraic assembler
+          *(#SWI_D_lock) = *(#SWI_D_lock) + #1  
+          *(#HWI_D_inhwi) = *(#HWI_D_inhwi) + #1  
+        .endif
+        .remark 5571            ; Switch remark on.
+    .else
+        .noremark 5571          ; Safe wrt CPU_41
+                                ; Switch off remark
+        .if (.MNEMONIC)         ; mnemonic assembler
+          add #1, *abs16(#SWI_D_lock)
+          add #1, *abs16(#HWI_D_inhwi)
+        .else                   ; algebraic assembler
+          *abs16(#SWI_D_lock) = *abs16(#SWI_D_lock) + #1  
+          *abs16(#HWI_D_inhwi) = *abs16(#HWI_D_inhwi) + #1  
+        .endif
+        .remark 5571            ; Switch remark on.
+    .endif
+
+    .asg "~:im0:", mask0
+    .asg "~:im1:", mask1
+    .if (.MNEMONIC)             ; mnemonic assembler
+      mov IER0_MMR ,ac0
+      mov IER1_MMR ,ac1
+      and #(mask0 & 0xffff), IER0_MMR   ; mask the specified bits.
+      and #(mask1 & 0xffff), IER1_MMR
+    .else                       ; algebraic assembler
+      ac0 = IER0_MMR || mmap()
+      ac1 = IER1_MMR || mmap()
+      IER0_MMR = IER0_MMR & #(mask0 & 0xffff) || mmap(); mask the specified bits
+      IER1_MMR = IER1_MMR & #(mask1 & 0xffff) || mmap() 
+    .endif
+                            ; Note: assignment of bits through bit operaton 
+                            ;       occupies two bytes. assignment through
+                            ;       an '&' or '|' operation takes 7 bytes. 
+                            ;       so, if the number of 0/1 assignment < 3
+                            ;       choose bit operation else assign through
+                            ;       '&' or '|' operation.
+
+    HWI_enable              ; globally enable interrupts 
+                            ; to allow nested interrupts
+
+    .if ((:m0: == C55_AR_DR_SAVE_BY_CALLER_MASK) & (:m1: == C55_ACC_SAVE_BY_CALLER_MASK) & (:m2: == C55_MISC1_SAVE_BY_CALLER_MASK) & (:m3: == C55_MISC2_SAVE_BY_CALLER_MASK) & (:m4: == C55_MISC3_SAVE_BY_CALLER_MASK))
+              C55_saveCContext  ; if all register mask specfifies SAVE_BY_CALLER
+                                ; then use C55_saveCContext to save C context
+                                ; registers in an efficient way
+    .elseif ((:m0: == C55_AR_DR_BIOS_CONTEXT_MASK) & (:m1: == C55_ACC_BIOS_CONTEXT_MASK) & (:m2: == C55_MISC1_BIOS_CONTEXT_MASK) & (:m3: == C55_MISC2_BIOS_CONTEXT_MASK) & (:m4: == C55_MISC3_BIOS_CONTEXT_MASK))
+              C55_saveBiosContext       ; if all register mask specifies
+                                        ; BIOS_CONTEXT then use 
+                                        ; C55_saveBiosContext to save bios
+                                        ; context registers in an efficient way
+    .else
+      C55_saveRegGroup 0, (:m0: & ~(C55_AR0 | C55_AR1)) 
+      C55_saveRegGroup 1, (:m1: & ~(C55_AC0 | C55_AC1))
+      C55_saveRegGroup 2, (:m2: & ~(C55_ST03_MASK))
+      C55_saveRegGroup 3, (:m3:)
+      C55_saveRegGroup 4, (:m4:)
+    .endif
+
+    .if (.MNEMONIC)             ; mnemonic assembler
+      psh ac0, ac1
+    .else                       ; algebraic assembler
+      push(ac0, ac1)
+    .endif
+
+    HWI_evenStackPtr            ; save sp and ssp and make both of them even
+
+    .endm
+    .endif      ; ($isdefed("HWI_enter_") = 0)    ; 
+
+;
+;# ======== HWI_restoreStackPtr ========
+;  Restores the value of stack before  it was evened
+;#
+;# Preconditions:
+;#   intm = 0
+;#
+;# Postconditions:
+;#  
+;# Constraints and Calling Environment:
+;#   This macro can be called only from HWI_exit and HWI_F_dispatch .
+;#   This macro will restore the value of the SP that were stored in
+;#   the stack by HWI_evenStackPtr
+;#
+
+        .asg  "xar1,xar0,xsp,xssp", HWI_restoreStackPtr$regs
+HWI_restoreStackPtr     .macro
+    .if  (_55L_) | (_55H_)  
+        .if (.MNEMONIC)                 ; mnemonic assembler
+          popboth xar1
+          popboth xar0
+          mov xar0, xsp                 ; restore sp/ssp
+          mov xar1, xssp 
+        .else                           ; algebraic assembler
+          xar1 = popboth()
+          xar0 = popboth()
+          xsp  = xar0                   ; restore sp/ssp
+          xssp = xar1 
+        .endif
+    .else
+        .if (.MNEMONIC)                 ; mnemonic assembler
+          pop ar0, ar1
+          mov ar1, SSP_MMR  
+          mov ar0, sp                   ; restore sp/ssp
+        .else                           ; algebraic assembler
+          ar0,ar1 = pop()
+          SSP_MMR = ar1 || mmap()       ; restore ssp
+          SP_MMR = ar0 || mmap()        ; restore sp
+        .endif
+    .endif
+    .endm
+
+;
+;# ======== HWI_preseveGlobalBits ======== 
+;
+;#
+;# Preconditions:
+;#   SP points to a context image of a HWI context
+;#
+;# Postconditions:
+;#   none
+;#
+;# Constraints and Calling Environment:
+;#   This function needs to be called from HWI_exit 
+;
+;  Algorithm:
+;
+; This structure reflects the context for each HWI ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+; Bios ctxt---> |----------------|       |--------------|  
+;               |  AC1G[32-40]   |       |  hole        | 
+;               |----------------|       |--------------|  
+;               |  AC0G[32-40]   |       |  hole        | 
+;               |----------------|       |--------------|  
+;               |  AC1[0-15]     |       |  AC1[16-31]  | 
+;               |----------------|       |--------------|  
+;               |  AC0[0-15]     |       |  AC0[16-31]  | 
+;               |----------------|       |--------------|  
+;               |  AR1[0-15]     |       |   AR1[16-23] | 
+;               |----------------|       |--------------|  
+;               |   ST3          |       |   ....       |
+; Bios ctxt---> |----------------|       |--------------|  
+;               |  AR0[0-15]     |       |   AR0[16-23] | 
+; H/w ctxt ---->|----------------|       |--------------|
+;               |                |       |     CFCT     | 
+;               |RETA[0-15|      |       | RETA[16-23]  |
+;               |----------------|       |--------------|  
+;               | ST1            |       |    DBSTAT    |
+;               |----------------|       |--------------|  
+;               |    ST2         |       |   ST0        |
+; H/w ctxt ---->|----------------|       |--------------|
+;  
+; Above is the stack image  of an interrupt context.
+; Global bits of ST1 and ST3 should not altered acrosscontext switch. 
+; preserve_global_bits updates the XF and HM bits of the saved ST1 register 
+; value (in the stack) and updates the CAFRZ, CAEN, CACLR, HINT, CBERR, MPNMC, 
+; AVIS and CLKOFF bits of the saved ST3 register value (in the stack) to make 
+; the value of those bits equal to the current value of those bits in ST1 and 
+; ST3.
+;
+
+        .asg    "xar0,xar1,ac0_g,ac0_h,ac0_l", HWI_preserveGlobalBits$regs
+HWI_preserveGlobalBits  .macro dummy
+    .if (.MNEMONIC)                     ; mnemonic assembler
+      mov xsp, xar0                         ; xar0 = xsp
+
+      mov *ar0(#HWICTXT_O_REG_ST3), ac0     ; ac0 = saved st3 in stack
+
+      and #C55_ST3LCL_BITMASK, ac0, ac0     ; extract the value of local bits
+                                            ; and zero the global bits
+
+      mov ST3_55_MMR, ar1                   ; ar1 = current st3
+
+      and #C55_ST3GBL_BITMASK, ar1, ar1     ; extract the the value of global 
+                                            ; bits and make local bits zero.
+
+      or ac0, ar1                           ; OR them to obtain  lcl + gbl image
+
+      mov ar1, *ar0(#HWICTXT_O_REG_ST3)     ; write back into stack
+
+      mov *ar0(#HWICTXT_O_REG_ST1), ac0     ; ac0 = saved st1 in stack
+
+      and #C55_ST1LCL_BITMASK, ac0, ac0     ; extract the value of local bits
+                                            ; and zero the global bits
+
+      mov ST1_55_MMR, ar1                   ; ar1 = current st1
+
+      and #C55_ST1GBL_BITMASK, ar1, ar1     ; extract the the value of global 
+                                            ; bits and make local bits zero.
+
+      or ac0, ar1                           ; OR them to obtain  lcl + gbl image
+
+      mov ar1, *ar0(#HWICTXT_O_REG_ST1)     ; write back into stack
+
+    .else                               ; algebraic assembler
+      xar0 = xsp                            ; xar0 = xsp
+
+      ac0 = *ar0(#HWICTXT_O_REG_ST3)        ; ac0 = saved st3 in stack
+
+      ac0 = ac0 & #C55_ST3LCL_BITMASK       ; extract the value of local bits
+                                            ; and zero the global bits
+
+      ar1 = ST3_55_MMR || mmap()            ; ar1 = current st3
+
+      ar1 = ar1 & #C55_ST3GBL_BITMASK       ; extract the the value of global 
+                                            ; bits and make local bits zero.
+
+      ar1 = ac0 | ar1                       ; OR them to obtain  lcl + gbl image
+
+      *ar0(#HWICTXT_O_REG_ST3) = ar1        ; write back into stack
+
+      ac0 = *ar0(#HWICTXT_O_REG_ST1)        ; ac0 = saved st1 in stack
+
+      ac0 = ac0 & #C55_ST1LCL_BITMASK       ; extract the value of local bits
+                                            ; and zero the global bits
+
+      .noremark 5650                        ; Safe wrt CPU_68
+                                            ; Switch remark off.
+      ar1 = ST1_55_MMR || mmap()            ; ar1 = current st1
+      .remark 5650                          ; Switch remark on.
+
+      ar1 = ar1 & #C55_ST1GBL_BITMASK       ; extract the the value of global 
+                                            ; bits and make local bits zero.
+
+      ar1 = ac0  | ar1                      ; OR them to obtain  lcl + gbl image
+
+      *ar0(#HWICTXT_O_REG_ST1) = ar1        ; write back into stack
+    .endif
+    .endm
+
+    .if ($isdefed("HWI_restoreRegAfterOperation_") = 0)
+;
+;# ======== HWI_restoreRegAfterOperation =========
+;  Restores the registers that are needed for doing
+;  HWI prologue/epilogue operations
+;
+;#
+;# Preconditions:
+;#   intm = 1
+;#
+;# Postconditions:
+;#   none
+;#
+;# Constraints and Calling Environment:
+;#   This macro can be called only from HWI_exit and HWI_F_dispatch.
+;#   This macro will restore registers that were saved in
+;#   HWI_saveRegForOperation. 
+;#
+;
+
+        .asg    "", HWI_restoreRegAfterOperation$regs
+HWI_restoreRegAfterOperation    .macro
+    .if (.MNEMONIC)                     ; mnemonic assembler
+      popboth xar0
+      mov ar0, AC1G_MMR 
+      popboth xar0
+      mov ar0, AC0G_MMR
+      popboth ac1
+      popboth ac0
+      popboth xar1
+      popboth xar0
+      mov ar0, ST3_55_MMR
+      popboth xar0
+    .else                               ; algebraic assembler
+      xar0 = popboth()
+      AC1G_MMR = ar0 || mmap()
+      xar0 = popboth()
+      AC0G_MMR = ar0 || mmap()
+      ac1 = popboth()
+      ac0 = popboth()
+      xar1 = popboth()
+      xar0 = popboth()
+      ST3_55_MMR = ar0 || mmap()
+      xar0 = popboth()
+    .endif
+    nop                                 ; Worked around CPU_99
+    nop                                 ; Added six nops.
+    nop
+    nop
+    nop
+    nop
+    .endm
+    .endif      ; ($isdefed("HWI_restoreRegAfterOperation_") = 0)
+
+    .if ($isdefed("HWI_exit_") = 0)    ; 
+;
+;# ======== HWI_exit ========
+;
+;  Hardware ISR epiloge
+;  epilogue for ISR (HWI function)
+;
+;  HWI_exit m0, m1, m2, m3, m4, im0, im1
+;
+;  m0 is the mask to indicate which of the following registers to be restored:
+;      xar0, xar1, xar2, xar3, xar4, xar5, xar6, xar7, t0, t1, t2, t3.
+;
+;  m1 is the mask to indicate which of the following registers to be restored:
+;      ac0, ac1, ac2, ac3.
+;
+;  m2 is the mask to indicate which of the following registers to be restored:
+;      ier0, ifr0, dbier0, ier1, ifr1, dbier1, st0, st1, st2, st3, 
+;      trn0, bk03, brc0, dph, cdph.
+;
+;  m3 is the mask to indicate which of the following registers to be restored:
+;      dp, cdp, dph, pdp, bk47, bkc, bsa01, bsa23, bsa45, bsa67, bsac, 
+;      ivpd, ivph, trn1. 
+;
+;  m4 is the mask to indicate which of the following registers to be restored:
+;      brc1, brs1, csr, rsa0h, rsa0L, rea0h, rea0L, rsa1h, rsa1L,
+;      rea1h, rea1L, rptc 
+;
+;  im0 is the mask to indicate which bits of ier0 to be restored.
+;
+;  im1 is the mask to indicate which bits of ier1 to be restored.
+;
+;  Algorithm:
+;
+;  HWI_exit in Pseudo C Language
+;
+;  Void HWI_exit(RM m0, RM m1, RM m2, RM m3, RM m4, IM im0, IM im1)
+;  {
+;    set_bits_in_status_registers_for_bios();
+;
+;    restore_sp();
+;
+;    restore(temp0, temp1);
+;
+;    disable_interrupts();
+;
+;    restore_bits_in_iers(im0 & temp0, im1 & temp1); 
+;
+;    SWI_D_lock--;
+;
+;    if (SWI_D_lock >= 0) { /* SWI scheduler is locked */
+;       goto end;
+;    }
+;  
+;    if (higher_priority_SWI_is_pending() == FALSE) {
+;       goto end;
+;    }
+;  
+;    lock_the_SWI_scheduler(); /* SWI_D_lock = 0 */
+;
+;  dorun:
+;
+;    enable_interrupts();
+;
+;               /* 
+;                   As shown below, save all BIOS context registers except 
+;                   registers already saved during the HWI_enter procedure. 
+;               */
+;
+;    if (all_masks_show_save_by_caller(m0, m1, m2, m3, m4) == TRUE) {
+;       save_registers_in_an_efficient_way(diff_context(BIOS, C));
+;                               /*
+;                                 based on version 2.30 tool's C convention,
+;                                   diff_context(BIOS, C) = {} so do nothing.
+;
+;                                 based on version 2.04 tool's C convention,
+;                                   diff_context(BIOS, C) = 
+;                                      {TRN0L,BK03L,DPH,CDPH
+;                                       DPL,CDPL,PDPL,BK47L,BKCL
+;                                       BSA01L,BSA23L,BSA45L,BSA67L,BSACL,TRN1L}
+;                               */
+;    }
+;    else if (all_masks_show_bios_ctx(m0, m1, m2, m3, m4) == TRUE) {
+;       do_nothing();
+;                               /*
+;                                   because all BIOS context registers have
+;                                   been saved already (during the HWI_enter
+;                                   procedure).
+;                               */      
+;    }
+;    else {
+;       save_reg_group0(BIOS_CTX_REGMASK0 & ~(m0 | xar0 | xar1));
+;       save_reg_group1(BIOS_CTX_REGMASK1 & ~(m1 | ac0 | ac1));
+;       save_reg_group2(BIOS_CTX_REGMASK2 & ~(m2|st0|st1|st2|st3));
+;       save_reg_group3(BIOS_CTX_REGMASK3 & ~m3);
+;       save_reg_group4(BIOS_CTX_REGMASK4 & ~m4);
+;                               /*
+;                                   Note: the union of
+;                                       BIOS_CTX_REGMASK0, BIOS_CTX_REGMASK1,
+;                                       BIOS_CTX_REGMASK2, BIOS_CTX_REGMASK3,
+;                                       and BIOS_CTX_REGMASK4
+;                                   represents all the BIOS context registers.
+;                               */
+;    }
+;
+;                               /*  
+;                                  Note: the function address in SWI_D_runaddr
+;                                  can be the address of SWI_F_run or the 
+;                                  address of FXN_F_nop, depending on the 
+;                                  configuration. 
+;                               */
+;
+;    call_the_function_in_SWI_D_runaddr(); 
+;
+;                               /* 
+;                                   Note: at this point, after SWI_F_run
+;                                       returns, we could be in either the 
+;                                       HWI stack or task stack.  
+;                               */
+;
+;    if (all_masks_show_save_by_caller(m0, m1, m2, m3, m4) == TRUE) {
+;       restore_registers_in_an_efficient_way(diff_context(BIOS, C);
+;                               /*
+;                                 based on version 2.30 tool's C convention,
+;                                   diff_context(BIOS, C) = {} so do nothing.
+;
+;                                 based on version 2.04 tool's C convention,
+;                                   diff_context(BIOS, C) = 
+;                                      {TRN0L,BK03L,DPH,CDPH
+;                                       DPL,CDPL,PDPL,BK47L,BKCL
+;                                       BSA01L,BSA23L,BSA45L,BSA67L,BSACL,TRN1L}
+;                               */
+;    }
+;    else if (all_masks_show_bios_ctx(m0, m1, m2, m3, m4) == TRUE) {
+;         do_nothing();
+;    }
+;    else {
+;       restore_reg_group4(BIOS_CTX_REGMASK4 & ~m4);
+;       restore_reg_group3(BIOS_CTX_REGMASK3 & ~m3);
+;       restore_reg_group2(BIOS_CTX_REGMASK2 & ~(m2|st0|st1|st2|st3));
+;       restore_reg_group1(BIOS_CTX_REGMASK1 & ~(m1 | ac0 | ac1));
+;       restore_reg_group0(BIOS_CTX_REGMASK0 & ~(m0 | xar0 | xar1));
+;                               /*
+;                                   Note: the union of
+;                                       BIOS_CTX_REGMASK0, BIOS_CTX_REGMASK1,
+;                                       BIOS_CTX_REGMASK2, BIOS_CTX_REGMASK3,
+;                                       and BIOS_CTX_REGMASK4
+;                                   represents all the BIOS context registers.
+;                               */
+;    }
+;
+;    disable_interrupts();
+;
+;    if (higher_priority_SWI_is_pending() == TRUE) {
+;       goto godorun;
+;                               /* 
+;                                  keep looping when there is any higher
+;                                  priority swi pending. In the 
+;                                  beginning of the loop, reenable interrupts.
+;                               */
+;    }
+;    else {
+;                               /*
+;                                  Otherwise, we are exiting. 
+;                               */
+;                               /*
+;                                  check if we switched to HWI stack through 
+;                                  godorun. If yes, switch back to task stack.
+;                               */
+;                               /*
+;                                  Note that we don't need to check 
+;                                  HWI_D_spsave for non-zero as usual since if 
+;                                  SP is at HWI_STKBOTTOM, it got changed 
+;                                  through godorun where we always save SP to 
+;                                  HWI_D_spsave in the switch_to_HWI_stack()
+;                                  function for the (in_HWI_stack() == FALSE)
+;                                  case.
+;                               */
+;       if (at_bottom_of_HWI_stack() == TRUE) { 
+;                               /* sp == HWI_D_stkbottom */
+;           sp = HWI_D_spsave;
+;           HWI_D_spsave = 0;
+;                               /*
+;                                  Assign 0 to _HWI_D_spsave to tell the world
+;                                  that we are out of the HWI stack.
+;                               */
+;       }
+;
+;       goto exiting;
+;
+;    }
+;
+;  godorun:
+;
+;    if (in_HWI_stack() == FALSE) {
+;       switch_to_HWI_stack();
+;    }
+;
+;    goto dorun;
+;
+;  exiting:
+;                               /*
+;                                  At this point, no higher priority swi 
+;                                  is pending.
+;                               */
+;    Unlock_the_SWI_scheduler();        /* SWI_D_lock = -1 */
+;
+;                               /* 
+;                                  However at this point, interrupts are
+;                                  still disabled to ensure that we do not
+;                                  miss any swi. Thus, the SWI scheduler can 
+;                                  only be entered again right after we 
+;                                  reenable the interrupts and return. 
+;                               */
+;
+;                               /* 
+;                                  Note: at this point, we could be in either
+;                                  the HWI stack or task stack
+;                               */
+;  end:
+;
+;    if (all_masks_show_save_by_caller(m0, m1, m2, m3, m4) == TRUE) {
+;       restore_c_context_registers_in_an_efficient_way();
+;    }
+;    else if (all_masks_show_bios_ctx(m0, m1, m2, m3, m4) == TRUE) {
+;       restore_bios_context_registers_in_an_efficient_way();
+;    }
+;    else {
+;       restore_reg_group4(m4);
+;       restore_reg_group3(m3);
+;       restore_reg_group2(m2 & ~st0 & ~st1 & ~st2 & ~st3);
+;       restore_reg_group1(m1 & ~ac0 & ~ac1);
+;       restore_reg_group0(m0 & ~xar0 & ~xar1);
+;    }
+;
+;    if (lowest_level_in_HWI_stack() == FALSE) {
+;
+;         goto endx;
+;                               /* 
+;                                  If we are not the lowest level in the HWI 
+;                                  stack then we could be in either the HWI 
+;                                  stack or task stack. Don't switch at all.
+;                                  Just go to endx.
+;                               */
+;    }
+;    else {
+;
+;                               /* 
+;                                  If we are the lowest level in the HWI 
+;                                  stack at this point, we know we switched 
+;                                  from task stack. So, we need to switch back
+;                                  to task stack then go to endx.
+;                               */
+;         switch_to_task_stack();       
+;                               /*
+;                                  sp = HWI_D_spsave;
+;                                  HWI_D_spsave = 0;
+;                                  Assign 0 to _HWI_D_spsave to tell the world
+;                                  that we are out of the HWI stack.
+;                               */
+;
+;                               /*
+;                                  at this point sp is the task sp when the
+;                                  task-to-HWI stack switch happened.
+;                               */
+;
+;         goto endx;
+;
+;    }
+;
+;  endx:
+;
+;    restore_original_sp(); 
+;                               /*
+;                                  the original sp/ssp that was even aligned
+;                                  in HWI_enter.
+;                               */
+;
+;    preserve_global_bits();
+;                               /*
+;                                  preserve_global_bits() updates the XF and HM 
+;                                  bits of the saved ST1 register value (in the 
+;                                  stack) and updates the CAFRZ, CAEN, CACLR,
+;                                  HINT, CBERR, MPNMC, AVIS and CLKOFF bits of
+;                                  the saved ST3 register value (in the stack)
+;                                  to make the value of those bits equal to the
+;                                  current value of those bits in ST1 and ST3.
+;                               */ 
+;
+;    restore_registers(xar0, st3, xar1, ac0, ac1);
+;
+;    return_with_interrupts_enabled();
+;                               /* 
+;                                  Note that return_with_interrupts_enabled() 
+;                                  will automatically restore st0, st1, st2, 
+;                                  dbstat, reta and cfct from the stack.
+;                               */
+;
+;  }
+; 
+;  where
+;
+;  temp0 - a register serves as a temporary placeholder.
+;
+;  temp1 - a register serves as a temporary placeholder.
+;
+;  THE_IER0_VALUE_ON_ENTRY - value of ier0 at the time HWI_enter was entered.
+;
+;  THE_IER1_VALUE_ON_ENTRY - value of ier1 at the time HWI_enter was entered.
+;
+;  diff_context(BIOS, C) : [BIOS context register set] -
+;                          [C save-by-caller context register set]
+;
+;                          = {} based on version 2.30 tool's C convention.
+;
+;                          = { trn0, bk03, dph, cdph, dp, cdp, pdp, bk47, bkc,
+;                              bsa01, bsa23, bsa45, bsa67, bsac, trn1 }
+;                               based on version 2.04 tool's C convention.
+;
+;                                       where
+;
+;                          [BIOS context register set]
+;
+;                          = { xar0, xar1, xar2, xar3, xar4, t0, t1,
+;                              ac0, ac1,ac2, ac3, trn0, bk03, brc0,
+;                              dph, cdph, dp, cdp, pdp, bk47, bkc,
+;                              bsa01, bsa23, bsa45, bsa67, bsac,
+;                              trn1, brc1, brs1, csr, rsa0h, rsa0L,
+;                              rea0h, rea0L, rsa1h, rsa1L, rea1h, rea1L, rptc }
+;
+;                                       and
+;
+;                          [C save-by-caller context register set]
+;
+;                          = { xar0, xar1, xar2, xar3, xar4, t0, t1,
+;                              ac0, ac1,ac2, ac3, trn0, bk03, brc0,
+;                              dph, cdph, dp, cdp, pdp, bk47, bkc,
+;                              bsa01, bsa23, bsa45, bsa67, bsac,
+;                              trn1, brc1, brs1, csr, rsa0h, rsa0L,
+;                              rea0h, rea0L, rsa1h, rsa1L, rea1h, rea1L, rptc }
+;                               based on version 2.30 tool's C convention.
+;
+;                                       and
+;
+;                          = { xar0, xar1, xar2, xar3, xar4, t0, t1,
+;                              ac0, ac1,ac2, ac3, brc0, brc1, brs1,
+;                              csr, rsa0h, rsa0L, rea0h, rea0L, rsa1h,
+;                              rsa1L, rea1h, rea1L, rptc }
+;                               based on version 2.04 tool's C convention.
+;
+;  BIOS_CTX_REGMASK0: the mask that represents the following subset of BIOS 
+;                     context registers. 
+;
+;                     xar0, xar1, xar2, xar3, xar4, t0, t1.
+;
+;  BIOS_CTX_REGMASK1: the mask that represents the following subset of BIOS 
+;                     context registers. 
+;
+;                     ac0, ac1, ac2, ac3.
+;       
+;  BIOS_CTX_REGMASK2: the mask that represents the following subset of BIOS 
+;                     context registers. 
+;
+;                     trn0, bk03, brc0, dph, cdph.
+;
+;  BIOS_CTX_REGMASK3: the mask that represents the following subset of BIOS 
+;                     context registers. 
+;
+;                     dp, cdp, dph, pdp, bk47, bkc, bsa01, bsa23, bsa45, 
+;                     bsa67, bsac, trn1. 
+;                                        
+;  BIOS_CTX_REGMASK4: the mask that represents the following subset of BIOS 
+;                     context registers. 
+;
+;                     brc1, brs1, csr, rsa0h, rsa0L, rea0h, rea0L, rsa1h, rsa1L,
+;                     rea1h, rea1L, rptc. 
+;
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#   intm = 0
+;#
+;# Constraints and Calling Environment:
+;#   This macro must be the last operation in an ISR that uses any 
+;#   BIOS API calls which involves the scheduler. Basically, this 
+;#   macro must be called at the end of a function used to process a 
+;#   hardware interrupt. Such functions must be written in assembly language.
+;#
+
+    .asg    "ier0,ier1,intm,ar1,:C55_restore$regs:", HWI_exit$regs
+HWI_exit        .macro m0, m1, m2, m3, m4, im0, im1
+        
+    ; Fix for SDSsq24499:
+    ; For --SWI_D_lock below to correctly work we need SXMD = 1 and SATD = 0.
+    ; Since this is part of C precondition we can used setBiosSTbits. 
+    ; This would increase the interrpt latency by 4 cycles.
+
+    C55_setBiosSTbits       ; set the status registers as expected by
+                            ; C compiler and other bios requirements.
+
+    HWI_restoreStackPtr
+
+    .if (.MNEMONIC)                     ; mnemonic assembler
+      pop ar0, ar1
+    .else                               ; algebraic assembler
+      ar0,ar1 = pop()
+    .endif
+
+    HWI_disable
+
+    .if (.MNEMONIC)                     ; mnemonic assembler
+      and #im0, ar0         ; enable ier0 bits that were 1 on entry to HWI_enter
+      or IER0_MMR, ar0
+      mov ar0, IER0_MMR
+      and #im1, ar1         ; enable ier1 bits that were 1 on entry to HWI_enter
+      or IER1_MMR, ar1
+      mov ar1, IER1_MMR
+    .else                               ; algebraic assembler
+                            ; enable ier0 bits that were 1 on entry to HWI_enter
+      ar0 = ar0 & #im0
+      ar0 = ar0 | IER0_MMR || mmap()
+      IER0_MMR = ar0 || mmap()
+                            ; enable ier1 bits that were 1 on entry to HWI_enter
+      ar1 = ar1 & #im1
+      ar1 = ar1 | IER1_MMR || mmap()
+      IER1_MMR = ar1 || mmap()
+    .endif
+
+    .if  (_55L_) | (_55H_)  
+      .noremark 5571                    ; Safe wrt CPU_41
+                                        ; Switch off remark
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        add #-1, *(#SWI_D_lock)
+        add #-1, *(#HWI_D_inhwi)
+      .else                             ; algebraic assembler
+        *(#SWI_D_lock) = *(#SWI_D_lock) - #1  
+        *(#HWI_D_inhwi) = *(#HWI_D_inhwi) - #1  
+      .endif
+      .remark 5571                      ; Switch remark on.
+    .else
+      .noremark 5571                    ; Safe wrt CPU_41
+                                        ; Switch off remark
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        add #-1, *abs16(#SWI_D_lock)
+        add #-1, *abs16(#HWI_D_inhwi)
+      .else                             ; algebraic assembler
+        *abs16(#SWI_D_lock) = *abs16(#SWI_D_lock) - #1  
+        *abs16(#HWI_D_inhwi) = *abs16(#HWI_D_inhwi) - #1  
+      .endif
+      .remark 5571                      ; Switch remark on.
+    .endif
+
+    .if  (_55L_) | (_55H_)  
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        cmp *(#SWI_D_lock) == #-1, tc1
+        bcc end?, !tc1      ; If SWI scheduler is locked goto end?
+        mov *(#SWI_D_curset), ar0               
+        sub *(#SWI_D_curmask), ar0, ar0
+        bcc end?, ar0<#0    ; if no higher priority swi is pending, goto end?
+        mov #0, *(#SWI_D_lock)      ; lock the SWI scheduler   
+      .else                             ; algebraic assembler
+        tc1 = (*(#SWI_D_lock) == #-1)
+        if (!tc1) goto end? ; If SWI scheduler is locked goto end?
+        ar0 = *(#SWI_D_curset)          
+        ar0 = ar0 - *(#SWI_D_curmask)
+        if (ar0 < #0) goto end?; if no higher priority swi is pending, goto end?
+                            ; !!! Weird! need a newline/CR between ? and *
+        *(#SWI_D_lock) = #0         ; lock the SWI scheduler   
+      .endif
+    .else
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        cmp *abs16(#SWI_D_lock) == #-1, tc1
+        bcc end?, !tc1      ; If SWI scheduler is locked goto end?
+        mov *abs16(#SWI_D_curset), ar0
+        sub *abs16(#SWI_D_curmask), ar0, ar0
+        bcc end?, ar0 < #0  ; if no higher priority swi is pending, goto end?
+        mov #0, *abs16(#SWI_D_lock) ; lock the SWI scheduler   
+      .else                             ; algebraic assembler
+        tc1 = (*abs16(#SWI_D_lock) == #-1)
+        if (!tc1) goto end? ; If SWI scheduler is locked goto end?      
+        ar0 = *abs16(#SWI_D_curset)
+        ar0 = ar0 - *abs16(#SWI_D_curmask)
+        if (ar0 < #0) goto end?; if no higher priority swi is pending, goto end?
+                            ; !!! Weird! need a newline/CR between ? and *
+        *abs16(#SWI_D_lock) = #0    ; lock the SWI scheduler    
+      .endif
+    .endif
+
+
+dorun?:
+
+    HWI_enable
+
+    .if ((:m0: == C55_AR_DR_SAVE_BY_CALLER_MASK) & (:m1: == C55_ACC_SAVE_BY_CALLER_MASK) & (:m2: == C55_MISC1_SAVE_BY_CALLER_MASK) & (:m3: == C55_MISC2_SAVE_BY_CALLER_MASK) & (:m4: == C55_MISC3_SAVE_BY_CALLER_MASK))
+        C55_saveBiosCdiffContext ; if all register mask specfifies 
+                                 ; SAVE_BY_CALLER then use 
+                                 ; C55_saveBiosCdiffContext to save
+                                 ; diff_context(BIOS, C) in an efficient
+                                 ; way. Note that diff_context(BIOS, C)
+                                 ; = [BIOS context register set] -
+                                 ; [C save-by-caller context register set]
+
+                                 ; based on version 2.30 tool's C convention,
+                                 ; diff_context(BIOS, C) = {} so do nothing.
+                                        
+                                 ; based on version 2.04 tool's C convention,
+                                 ; diff_context(BIOS, C) =
+                                 ;   {trn0, bk03, dph, cdph, dp, cdp, 
+                                 ;    pdp, bk47, bkc, bsa01, bsa23, 
+                                 ;    bsa45, bsa67, bsac, trn1}
+
+    .elseif ((:m0: == C55_AR_DR_BIOS_CONTEXT_MASK) & (:m1: == C55_ACC_BIOS_CONTEXT_MASK) & (:m2: == C55_MISC1_BIOS_CONTEXT_MASK) & (:m3: == C55_MISC2_BIOS_CONTEXT_MASK) & (:m4: == C55_MISC3_BIOS_CONTEXT_MASK))
+        C55_doNothing            ; because all BIOS context registers 
+                                 ; have been saved already (during the 
+                                 ; HWI_enter macro call)
+
+    .else
+      C55_saveRegGroup 0, (C55_BIOS_CTX_REGMASK0 & ~(:m0: | C55_AR0 | C55_AR1)) 
+      C55_saveRegGroup 1, (C55_BIOS_CTX_REGMASK1 & ~(:m1: | C55_AC0 | C55_AC1))
+      C55_saveRegGroup 2, (C55_BIOS_CTX_REGMASK2 & ~(:m2: | C55_ST03_MASK))
+      C55_saveRegGroup 3, (C55_BIOS_CTX_REGMASK3 & ~(:m3:))
+      C55_saveRegGroup 4, (C55_BIOS_CTX_REGMASK4 & ~(:m4:))
+                                 ;                                  
+                                 ; Note: the union of
+                                 ; C55_BIOS_CTX_REGMASK0, C55_BIOS_CTX_REGMASK1,
+                                 ; C55_BIOS_CTX_REGMASK2, C55_BIOS_CTX_REGMASK3,
+                                 ; and C55_BIOS_CTX_REGMASK4
+                                 ; represents all the BIOS context registers.
+                                 ; 
+
+    .endif
+
+    .if  (_55L_) | (_55H_)  
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        mov dbl(*(#SWI_D_runaddr)), ac0         ; ac0 = SWI_F_run or FXN_F_nop
+      .else                             ; algebraic assembler
+        ac0 = dbl(*(#SWI_D_runaddr))            ; ac0 = SWI_F_run or FXN_F_nop
+      .endif
+    .else
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        mov dbl(*abs16(#SWI_D_runaddr)), ac0    ; ac0 = SWI_F_run or FXN_F_nop
+      .else                             ; algebraic assembler
+        ac0 = dbl(*abs16(#SWI_D_runaddr))       ; ac0 = SWI_F_run or FXN_F_nop
+      .endif
+    .endif
+
+                                ; Note: the function address in SWI_D_runaddr
+                                ; can be the address of SWI_F_run or the
+                                ; address of FXN_F_nop, depending on the
+                                ; configuration.
+
+    call ac0                    ; call SWI_F_run (SWI scheduler) or FXN_F_nop
+
+                                ; Note: at this point, after SWI_F_run
+                                ; returns, we could be in either the 
+                                ; HWI stack or task stack.  
+
+    .if ((:m0: == C55_AR_DR_SAVE_BY_CALLER_MASK) & (:m1: == C55_ACC_SAVE_BY_CALLER_MASK) & (:m2: == C55_MISC1_SAVE_BY_CALLER_MASK) & (:m3: == C55_MISC2_SAVE_BY_CALLER_MASK) & (:m4: == C55_MISC3_SAVE_BY_CALLER_MASK))
+              C55_restoreBiosCdiffContext; if all register mask specfifies 
+                                 ; SAVE_BY_CALLER then use 
+                                 ; C55_restoreBiosCdiffContext to restore
+                                 ; diff_context(BIOS, C) in an efficient
+                                 ; way. Note that diff_context(BIOS, C)
+                                 ; = [BIOS context register set] -
+                                 ;[C save-by-caller context register set]
+
+                                 ; based on version 2.30 tool's C convention,
+                                 ; diff_context(BIOS, C) = {} so do nothing.
+                                        
+                                 ; based on version 2.04 tool's C convention,
+                                 ; diff_context(BIOS, C) =
+                                 ;   {trn0, bk03, dph, cdph, dp, cdp, 
+                                 ;    pdp, bk47, bkc, bsa01, bsa23, 
+                                 ;    bsa45, bsa67, bsac, trn1}
+
+    .elseif ((:m0: == C55_AR_DR_BIOS_CONTEXT_MASK) & (:m1: == C55_ACC_BIOS_CONTEXT_MASK) & (:m2: == C55_MISC1_BIOS_CONTEXT_MASK) & (:m3: == C55_MISC2_BIOS_CONTEXT_MASK) & (:m4: == C55_MISC3_BIOS_CONTEXT_MASK))
+              C55_doNothing      ; since no register needs to be restored
+    .else
+      C55_restoreRegGroup 4, (C55_BIOS_CTX_REGMASK4 & ~(:m4:))
+      C55_restoreRegGroup 3, (C55_BIOS_CTX_REGMASK3 & ~(:m3:))
+      C55_restoreRegGroup 2, (C55_BIOS_CTX_REGMASK2 & ~(:m2: | C55_ST03_MASK))
+      C55_restoreRegGroup 1, (C55_BIOS_CTX_REGMASK1 & ~(:m1: | C55_AC0|C55_AC1))
+      C55_restoreRegGroup 0, (C55_BIOS_CTX_REGMASK0 & ~(:m0: | C55_AR0|C55_AR1))
+                                 ;                                  
+                                 ; Note: the union of
+                                 ; C55_BIOS_CTX_REGMASK0, C55_BIOS_CTX_REGMASK1,
+                                 ; C55_BIOS_CTX_REGMASK2, C55_BIOS_CTX_REGMASK3,
+                                 ; and C55_BIOS_CTX_REGMASK4
+                                 ; represents all the BIOS context registers.
+                                 ; 
+
+    .endif
+
+    HWI_disable
+
+                                ; keep looping when there is any higher
+                                ; priority swi pending. In the 
+                                ; beginning of the loop, reenable interrupts.
+
+    .if  (_55L_) | (_55H_)  
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        mov *(#SWI_D_curset), ar0               
+        sub *(#SWI_D_curmask), ar0, ar0
+        bcc godorun?, ar0 >= #0         ; if higher priority swi is pending, 
+                                        ; goto godorun?
+      .else                             ; algebraic assembler
+        ar0 = *(#SWI_D_curset)          
+        ar0 = ar0 - *(#SWI_D_curmask)
+        if (ar0 >= #0) goto godorun?    ; if higher priority swi is pending, 
+                                        ; goto godorun?
+      .endif
+    .else
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        mov *abs16(#SWI_D_curset), ar0
+        sub *abs16(#SWI_D_curmask), ar0, ar0
+        bcc godorun?, ar0 >= #0         ; if higher priority swi is pending, 
+                                        ; goto godorun?
+      .else                             ; algebraic assembler
+        ar0 = *abs16(#SWI_D_curset)
+        ar0 = ar0 - *abs16(#SWI_D_curmask)
+        if (ar0 >= #0) goto godorun?    ; if higher priority swi is pending, 
+                                        ; goto godorun?
+      .endif
+    .endif
+
+    .if (.MNEMONIC)                     ; mnemonic assembler
+      mov dbl(*(#HWI_D_stkbotaddr)), xar0
+      mov xar0, ac1
+      mov xsp, ac0
+      sub ac1, ac0
+      bcc exiting?, ac0 != #0           ; If xsp != _HWI_STKBOTTOM then 
+                                        ; goto exiting?
+      mov dbl(*(#HWI_D_spsave)), xsp    ; otherwise switch back to task stack
+      mov dbl(*(#HWI_D_sspsave)), xssp  ; and then goto exiting?
+      mov ac0, dbl(*(#HWI_D_spsave))    ; make use the #0 value in ac0
+                                        ; mov ac0,dbl(*(#HWI_D_spsave)) replace
+                                        ; mov #0, *(#HWI_D_spsave) and
+                                        ; mov #0, *(#(HWI_D_spsave + 1))
+      mov ac0, dbl(*(#HWI_D_sspsave))   ; make use the #0 value in ac0
+                                        ; mov ac0,dbl(*(#HWI_D_sspsave)) replace
+                                        ; mov #0, *(#HWI_D_sspsave) and
+                                        ; mov #0, *(#(HWI_D_sspsave + 1))
+      b exiting?
+    .else                               ; algebraic assembler
+      xar0 = dbl(*(#HWI_D_stkbotaddr))
+      ac1 = xar0
+      ac0 = xsp
+      ac0 = ac0 - ac1           
+      if (ac0 != #0) goto exiting?      ; If xsp != _HWI_STKBOTTOM then 
+                                        ; goto exiting?
+      xsp = dbl(*(#HWI_D_spsave))       ; otherwise switch back to task stack
+      xssp = dbl(*(#HWI_D_sspsave))     ; and then goto exiting?
+      dbl(*(#HWI_D_spsave)) = ac0       ; make use the #0 value in ac0
+                                        ; dbl(*(#HWI_D_spsave)) = ac0 replace
+                                        ; *(#HWI_D_spsave) = #0 and
+                                        ; *(#(HWI_D_spsave + 1)) = #0
+      dbl(*(#HWI_D_sspsave)) = ac0      ; make use the #0 value in ac0
+                                        ; dbl(*(#HWI_D_sspsave)) = ac0 replace
+                                        ; *(#HWI_D_sspsave) = #0 and
+                                        ; *(#(HWI_D_sspsave + 1 )) = #0
+      goto exiting?
+    .endif
+
+godorun?:
+
+    HWI_checkAndChangeStack ; Checks if in HWI stack. If not switch 
+                            ; from task stack to HWI stack.
+
+    .if (.MNEMONIC)                     ; mnemonic assembler
+      b dorun?
+    .else                               ; algebraic assembler
+      goto dorun?
+    .endif
+
+exiting?:
+                            ; At this point, no higher priority swi is pending
+    .if  (_55L_) | (_55H_)  
+      .if (.MNEMONIC)               ; mnemonic assembler
+        mov #-1, *(#SWI_D_lock)     ; unlock the SWI scheduler   
+      .else                         ; algebraic assembler
+        *(#SWI_D_lock) = #-1        ; unlock the SWI scheduler   
+      .endif
+    .else
+      .if (.MNEMONIC)               ; mnemonic assembler
+        mov #-1, *abs16(#SWI_D_lock); unlock the SWI scheduler   
+      .else                         ; algebraic assembler
+        *abs16(#SWI_D_lock) = #-1   ; unlock the SWI scheduler   
+      .endif
+    .endif
+                                    ; However at this point, interrupts are
+                                    ; still disabled to ensure that we do not
+                                    ; miss any swi. Thus, the SWI scheduler can 
+                                    ; only be entered again right after we 
+                                    ; reenable the interrupts and return. 
+
+                                    ; Note: at this point, we could be in either
+                                    ;       the HWI stack or task stack
+end?:
+    .if ((:m0: == C55_AR_DR_SAVE_BY_CALLER_MASK) & (:m1: == C55_ACC_SAVE_BY_CALLER_MASK) & (:m2: == C55_MISC1_SAVE_BY_CALLER_MASK) & (:m3: == C55_MISC2_SAVE_BY_CALLER_MASK) & (:m4: == C55_MISC3_SAVE_BY_CALLER_MASK))
+              C55_restoreCContext       ; if all register mask specfifies 
+                                        ; SAVE_BY_CALLER then use 
+                                        ; C55_restoreCContext to restore C 
+                                        ; context registers in an efficient way
+    .elseif ((:m0: == C55_AR_DR_BIOS_CONTEXT_MASK) & (:m1: == C55_ACC_BIOS_CONTEXT_MASK) & (:m2: == C55_MISC1_BIOS_CONTEXT_MASK) & (:m3: == C55_MISC2_BIOS_CONTEXT_MASK) & (:m4: == C55_MISC3_BIOS_CONTEXT_MASK))
+              C55_restoreBiosContext    ; if all register mask specifies
+                                        ; BIOS_CONTEXT then use 
+                                        ; C55_restoreBiosContext to restore bios
+                                        ; context registers in an efficient way
+    .else
+      C55_restoreRegGroup 4, (:m4:)
+      C55_restoreRegGroup 3, (:m3:)
+      C55_restoreRegGroup 2, (:m2: & ~(C55_ST03_MASK))
+      C55_restoreRegGroup 1, (:m1: & ~(C55_AC0 | C55_AC1))
+      C55_restoreRegGroup 0, (:m0: & ~(C55_AR0 | C55_AR1)) 
+    .endif
+
+                                ; If we are not the lowest level in the HWI 
+                                ; stack then we could be in either the HWI 
+                                ; stack or task stack. Don't switch at all.
+                                ; Just go to endx?.
+
+                                ; If we are the lowest level in the HWI 
+                                ; stack at this point, we know we switched 
+                                ; from task stack. So, we need to switch back
+                                ; to task stack then go to endx
+    .if (.MNEMONIC)                     ; mnemonic assembler
+      mov dbl(*(#HWI_D_spsave)), ac0
+      bcc endx?, ac0 == #0
+      mov dbl(*(#HWI_D_stkbotaddr)), xar0
+      mov xar0, ac1
+      mov xsp, ac0
+      sub ac1, ac0
+      bcc endx?, ac0 != #0
+      mov dbl(*(#HWI_D_spsave)), xsp    ; otherwise switch back to task stack
+      mov dbl(*(#HWI_D_sspsave)), xssp  ; and then goto endx?
+      mov ac0, dbl(*(#HWI_D_spsave))    ; make use the #0 value in ac0
+                                        ; mov ac0,dbl(*(#HWI_D_spsave)) replace
+                                        ; mov #0, *(#HWI_D_spsave) and
+                                        ; mov #0, *(#(HWI_D_spsave + 1))
+      mov ac0, dbl(*(#HWI_D_sspsave))   ; make use the #0 value in ac0
+                                        ; mov ac0,dbl(*(#HWI_D_sspsave)) replace
+                                        ; mov #0, *(#HWI_D_sspsave) and
+                                        ; mov #0, *(#(HWI_D_sspsave + 1))
+    .else                               ; algebraic assembler
+      ac0 = dbl(*(#HWI_D_spsave))
+      if(ac0 == #0) goto endx?
+      xar0 = dbl(*(#HWI_D_stkbotaddr))
+      ac1 = xar0
+      ac0 = xsp
+      ac0 = ac0 - ac1           
+      if (ac0 != #0) goto endx?
+      xsp = dbl(*(#HWI_D_spsave))       ; otherwise switch back to task stack
+      xssp = dbl(*(#HWI_D_sspsave))     ; and then goto endx?
+      dbl(*(#HWI_D_spsave)) = ac0       ; make use the #0 value in ac0
+                                        ; dbl(*(#HWI_D_spsave)) = ac0 replace
+                                        ; *(#HWI_D_spsave) = #0 and
+                                        ; *(#(HWI_D_spsave + 1)) = #0
+      dbl(*(#HWI_D_sspsave)) = ac0      ; make use the #0 value in ac0
+                                        ; dbl(*(#HWI_D_sspsave)) = ac0 replace
+                                        ; *(#HWI_D_sspsave) = #0 and
+                                        ; *(#(HWI_D_sspsave + 1 )) = #0
+    .endif
+
+endx?
+
+    HWI_restoreStackPtr         ; SDSsq26852 fix. Restoring sp/ssp that was
+                                ; even aligned in HWI_enter.
+
+    HWI_preserveGlobalBits      ; preserve_global_bits updates the XF and HM 
+                                ; bits of the saved ST1 register value (in the 
+                                ; stack) and updates the CAFRZ, CAEN, CACLR,
+                                ; HINT, CBERR, MPNMC, AVIS and CLKOFF bits of
+                                ; the saved ST3 register value (in the stack)
+                                ; to make the value of those bits equal to the
+                                ; current value of those bits in ST1 in ST3.
+
+    HWI_restoreRegAfterOperation    ; restore registers that were saved by
+                                    ; HWI_saveRegForOperation. 
+
+                                ; Safe wrt CPU_99, since the workaround has
+                                ; been added in HWI_restoreRegAfterOperation.
+                                ; Hence, this return instruction is safe.
+    .if (.MNEMONIC)             ; mnemonic assembler
+      reti                      ; return with interrupts enabled 
+    .else                       ; algebraic assembler
+      return_int                ; return with interrupts enabled         
+    .endif
+                                ; Note that reti or return_int 
+                                ; will automatically restore st0, st1, st2, 
+                                ; dbstat, reta and cfct from the stack.
+        .endm
+    .endif      ; ($isdefed("HWI_exit_") = 0)    ; 
+
+; TURBO BIOS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    .endif    ; HWI_ not defined

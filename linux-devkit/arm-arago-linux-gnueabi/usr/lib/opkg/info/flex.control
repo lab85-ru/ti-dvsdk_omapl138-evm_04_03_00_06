@@ -1,0 +1,13 @@
+Package: flex
+Version: 2.5.35-r7.1.6
+Description: Flex is a tool for generating programs that recognize lexical patterns in text.
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: armv5te
+OE: flex
+Homepage: unknown
+Build: install/d0bd439
+Depends: libc6 (>= 2.9)
+Source: http://downloads.sourceforge.net/flex/flex-2.5.35.tar.bz2;name=flex

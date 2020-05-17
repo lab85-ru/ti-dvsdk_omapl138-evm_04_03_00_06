@@ -1,0 +1,103 @@
+#!/bin/sh
+
+
+
+#
+# Turn on the ALSA Mixer
+#
+configure_alsa_mixer()
+{
+   amixer sset 'Left PGA Mixer Mic3L' on
+   amixer sset 'Left PGA Mixer Mic3R' on
+   amixer sset 'Right PGA Mixer Mic3L' on
+   amixer sset 'Right PGA Mixer Mic3R' on
+
+   amixer cset name='PCM Playback Volume' 75%,75%
+   amixer cset name='PGA Capture Volume' 75%,75%
+}
+
+
+
+#
+# In order to view video, the graphics plane needs to be
+# disabled. Once the video has finished playing the graphics
+# plane needs to be re-enabled. 
+#
+# Call this function with 0 to disable graphics and 1 to
+# enable it.
+# 
+configure_graphics()
+{
+    echo $1 > /sys/devices/platform/vpss/graphics0/enabled
+    echo $1 > /sys/devices/platform/vpss/graphics1/enabled
+}
+
+
+
+#
+# In the OMTB dual_display_encode_decode script, we run the
+# video for 60 seconds before pausing the output. To start the
+# video again, a message has to be posted to pipe on which OMTB
+# is listening. Once, OMTB gets the message, it starts playing 
+# for another 60 seconds. 
+# 
+# Call this function to 'unpause' the video.
+#
+unpause_video()
+{
+    cd /usr/share/ti/ti-omtb
+
+    ./unpause_omx.xv5T test_pipe U
+
+    sleep 60
+}
+
+
+
+# 
+# When running OMTB for the first time, configuration of ALSA
+# setting up of the lock file etc has to be done. The OMTB script
+# creates a pipe and then runs for 5 seconds before pausing. So, 
+# we need to wait for the pipe to be created before we are sure that
+# the video is running.
+#
+# Call this function to setup and execute OMTB for the first time.
+# 
+# This function must be called only once. Once that's called, unpause
+# the video so that it runs for a full minute.
+#
+execute_omtb()
+{
+    cd /usr/share/ti/ti-omtb
+
+    touch /tmp/OMTB.lock
+    rm -f test_pipe
+    ./omtb_dm816xbm_a8host.xv5T dual_display_encode_decode.oms &
+ 
+    until [ -e test_pipe ]
+    do
+        sleep 1
+    done
+}
+
+
+#
+# Run OMTB only if we have installed multimedia. 
+#
+if [ -e /usr/share/ti/ti-omtb ] 
+then
+    # Disable Graphics Plane so that Video can be seen.
+    configure_graphics 0
+    
+    if [ -e /tmp/OMTB.lock ]
+    then 
+        unpause_video
+    else
+       configure_alsa_mixer
+       execute_omtb
+       unpause_video
+    fi
+    
+    # Enable Graphics again.
+    configure_graphics 1
+fi

@@ -1,0 +1,96 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_5502.tci ========
+ *  This file contains BIOS settings for c5502.
+ *  Note: all memory addresses in this file are defined in words.
+ *
+ */
+
+/*
+ *  ======== bios.internal.setupMemory5502 ========
+ *  This function is the top-level function that will remove all MEM segments
+ *  from the cdb file.  It will take your physical memory map from calling
+ *  getMemoryMap() and create MEM instances in cdb.
+ *  It will then set sections to the default segment specified and fix up
+ *  the length and/or base of MEM segments if needed.
+ */
+bios.internal.setupMemory5502 = function (prog)
+{
+    /*
+     *  BIOS MEM segments will be created from object model memory definitions.
+     *  Place default code and data sections into specified memory segments.
+     */
+    bios.initializeMemory(prog, "DARAM", "DARAM");
+
+    /*
+     *  The base of DARAM is initialized to 0x60 (word address) because
+     *  address 0x0 to 0x5f are reserved for memory map registers.
+     *  The interrupt vectors are placed at 0x7f80 to 0x8000.
+     *  The remaining length of memory in DARAM is calculated below.
+     */
+    var vect = prog.module("MEM").instance("VECT");
+    vect.base = 0x7f80;
+
+    var daram = prog.module("MEM").instance("DARAM");
+    daram.len = vect.base - daram.base;
+}
+
+/*
+ *  ======== bios.init5502 ========
+ *  BIOS initialization for the c5502.
+ */
+bios.init5502 = function (prog, baseseed)
+{
+    /*
+     *  Find configuration seed files to load
+     */
+    if (baseseed == null) {
+        baseseed = "ti/bios/config/cdb/c5502.cdb";
+    }
+
+    var seed = utils.findSeed(baseseed);
+    if (seed != null) {
+        try {
+            prog.load(seed);
+        }
+        catch (e) {
+            throw new Error ("Can't load configuration seed '" + seed + "' : "
+                + e);
+        }
+    }
+    else {
+        throw new Error ("Can't find configuration seed: " + baseseed);
+    }
+
+    /* Set CHIPTYPE to cpu.deviceName. */
+    prog.module("GBL").CHIPTYPE = prog.cpu.deviceName;
+
+    /* set CLKOUT to be the value of cpu.clockRate. */
+    bios.internal.setClkout(prog);
+
+    /* set the memory model in GBL based on build options */
+    if (prog.build.target.model.dataModel == "huge") {
+        throw new Error ("Huge model not supported");
+    }
+    else {
+        prog.module("GBL").MEMORYMODEL = "LARGE";
+    }
+    
+    /* If the old memory names are used, we call the function that sets up
+     * the old external memory names, while the internal names (and some old 
+     * ones are retained from the CDB file.
+     */
+    if (bios.supportOldMemoryNames) {
+	bios.internal.oldMemoryNames(prog);
+    }
+    else {
+	/* set the default memory segments for 5502 using new memory names */
+	bios.internal.setupMemory5502(prog);
+    }
+
+    /* initialize some memory map registers */
+    bios.internal.initializeRegisterMap(prog);
+}

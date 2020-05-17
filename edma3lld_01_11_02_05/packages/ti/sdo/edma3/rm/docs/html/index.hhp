@@ -1,0 +1,57 @@
+[OPTIONS]
+Compiled file=EDMA3_Resource_Manager.chm
+Compatibility=1.1
+Full-text search=Yes
+Contents file=index.hhc
+Default Window=main
+Default topic=index.html
+Index file=index.hhk
+Language=0x409 English (United States)
+Title=EDMA3 Resource Manager
+
+[WINDOWS]
+main="EDMA3 Resource Manager","index.hhc","index.hhk","index.html","index.html",,,,,0x23520,,0x10387e,,,,,,,,0
+
+[FILES]
+index.html
+edma3__common_8h_source.html
+edma3__log_8h_source.html
+edma3__rl__cc_8h_source.html
+edma3__rl__tc_8h_source.html
+edma3__rm_8h_source.html
+edma3resmgr_8h_source.html
+group__Edma3RMIntrMgrMain.html
+group__Edma3RMIntrMgrInst.html
+group__Edma3RMStatus.html
+group__Edma3RMIntrMgrChannel.html
+group__Edma3ResType.html
+group__Edma3RMMain.html
+group__Edma3RMUsage.html
+group__Edma3RMErrCode.html
+group__Edma3ResMgr.html
+group__EDMA3.html
+group__Edma3ResMgrInt.html
+group__Edma3ResMgrIntObjMaint.html
+group__Edma3RMIntBoundVals.html
+modules.html
+annotated.html
+classes.html
+functions.html
+functions_vars.html
+structEDMA3__RM__ChBoundResources.html
+structEDMA3__RM__GblConfigParams.html
+structEDMA3__RM__GblErrCallbackParams.html
+structEDMA3__RM__Instance.html
+structEDMA3__RM__InstanceInitConfig.html
+structEDMA3__RM__MiscParam.html
+structEDMA3__RM__Obj.html
+structEDMA3__RM__Param.html
+structEDMA3__RM__ParamentryRegs.html
+structEDMA3__RM__PaRAMRegs.html
+structEDMA3__RM__ResDesc.html
+structEDMA3__RM__TccCallbackParams.html
+files.html
+tabs.css
+tab_b.gif
+tab_l.gif
+tab_r.gif

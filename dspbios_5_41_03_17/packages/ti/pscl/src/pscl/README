@@ -1,0 +1,14 @@
+The PSCL libraries are built using the corresponding source files:
+
+pscl.a674: pscl.c
+
+pscl_cfg_evm6748.a674: pscl_config_evm6748.c
+
+pscl_cfg_evm6748_372.a674: pscl_config_evm6748_372.c
+
+pscl_cfg_evm6748_408.a674: pscl_config_evm6748_408.c
+
+pscl_cfg_evm6748_456.a674: pscl_config_evm6748_456.c
+
+pscl_cfg_null.a674: pscl_config_null.c
+

@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_DA850.tci ========
+ *  This file contains BIOS settings for DA850.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_L137.tci");
+
+/*
+ *  ======== bios.initDA850 ========
+ *  BIOS initialization for the DA850 is same as for L137 
+ */
+bios.initDA850 = bios.initL137;

@@ -1,0 +1,7 @@
+#!/bin/sh
+filename="/usr/share/ti/video/HistoryOfTIAV-VGA.mp4"
+if [ ! -f $filename ]; then
+        echo "Video clip not found"
+        exit 1
+fi
+gst-launch-0.10 filesrc location=$filename ! qtdemux name=demux demux.audio_00 ! faad ! alsasink sync=false demux.video_00 ! queue ! ffdec_mpeg4 ! ffmpegcolorspace ! fbdevsink device=/dev/fb0

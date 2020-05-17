@@ -1,0 +1,103 @@
+;
+;  Copyright 2007 by Texas Instruments Incorporated.
+;  All rights reserved. Property of Texas Instruments Incorporated.
+;  Restricted rights to use, duplicate or disclose this code are
+;  granted through contract.
+;
+;  @(#) PSL 5,1,0 09-24-2007 (psl-c03)
+;
+;-----------------------------------------------------------------------------
+; PSLcpld_5510DSK.s55
+; 
+;
+; This file contains code that is specific to the C5510 DSK board.
+;-----------------------------------------------------------------------------
+
+
+;******************************************************************************
+; _PSL_setDSKVcoreMonBit
+;
+; On the C5510 DSK board, temporarily disable the power monitor's ability
+; to reset the DSP.  This will prevent the DSP from resetting if the 
+; DSK's "Power Good" signal goes low during transitions between different
+; voltages.  The monitoring of "Power Good" can be disabled by setting
+; bit 4 (VORE_MON bit) of the CPLD MISC register, which is at address 
+; 0x300006.  This routine will be called immediately prior to initiating
+; a voltage change.
+;
+; Note: Since the address (0x300006) is greater than 16-bits, this
+; cannot be done in C code since the upper bits of a pointer are not
+; changed in the small memory model.  Therefore, this must be done
+; in assembly code.  For consistency, it will also be done in assembly
+; for the large memory model.
+;
+;******************************************************************************
+   .global _PSL_setDSKVcoreMonBit       
+_PSL_setDSKVcoreMonBit
+   
+   ; This routine follows standard calling conventions.  However, in the
+   ; small memory model, the upper bits of an address register cannot
+   ; be changed.  Therefore, save the address register here.
+   PSHBOTH XAR0
+   
+   ; NOP's required by 55x Silicon Errata Advisory CPU_7
+   NOP
+   NOP
+   NOP
+   NOP
+   NOP
+
+   ; set bit 4 (VCORE_MON bit)
+   AMAR *(#0x300006),XAR0
+   OR #0x10,*AR0
+   
+   ; Restore the address regiser.
+   POPBOTH XAR0
+   
+   RET
+
+
+;******************************************************************************
+; _PSL_clrDSKVcoreMonBit
+;
+; Enable the power monitor's ability to reset the DSP.  This will allow
+; the DSP to reset if the DSK's "Power Good" signal goes low during normal
+; operation. The monitoring of "Power Good" can be enabled by clearing
+; bit 4 (VCORE_MON bit) of the CPLD MISC register, which is at address 
+; 0x300006.  This routine will be called immediately following a voltage
+; change.
+;
+; Note: Since the address (0x300006) is greater than 16-bits, this
+; cannot be done in C code since the upper bits of a pointer are not
+; changed in the small memory model.  Therefore, this must be done
+; in assembly code.  For consistency, it will also be done in assembly
+; for the large memory model.
+;
+;******************************************************************************
+   .global _PSL_clrDSKVcoreMonBit       
+_PSL_clrDSKVcoreMonBit
+   
+   ; This routine follows standard calling conventions.  However, in the
+   ; small memory model, the upper bits of an address register cannot
+   ; be changed.  Therefore, save the address register here.
+   PSHBOTH XAR0
+   
+   ; NOP's required by 55x Silicon Errata Advisory CPU_7
+   NOP
+   NOP
+   NOP
+   NOP
+   NOP
+
+   ; clear bit 4 (VCORE_MON bit)
+   AMAR *(#0x300006),XAR0
+   AND #0xFFEF,*AR0
+   
+   ; Restore the address regiser.
+   POPBOTH XAR0
+   
+   RET
+
+
+   .end
+

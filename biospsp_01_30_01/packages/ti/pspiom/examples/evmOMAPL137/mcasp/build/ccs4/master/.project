@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>mcaspSampleMaster</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.rtsc.xdctools.buildDefinitions.XDC.xdcNature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>mcaspSample.tci</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/mcasp/build/mcaspSample.tci</locationURI>
+		</link>
+		<link>
+			<name>mcaspSampleMaster_io.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/mcasp/src/mcaspSampleMaster_io.c</locationURI>
+		</link>
+		<link>
+			<name>mcaspSampleMaster_main.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/mcasp/src/mcaspSampleMaster_main.c</locationURI>
+		</link>
+		<link>
+			<name>mcaspsample.tcf</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/mcasp/build/mcaspsample.tcf</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

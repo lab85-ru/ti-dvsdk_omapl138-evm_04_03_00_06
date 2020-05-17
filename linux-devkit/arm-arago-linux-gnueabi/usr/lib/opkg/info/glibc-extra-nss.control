@@ -1,0 +1,13 @@
+Package: glibc-extra-nss
+Version: 2.9-r7.6
+Description: glibc: nis, nisplus and hesiod search services
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: LGPLv2.1+
+Architecture: armv5te
+OE: external-toolchain-arago
+Homepage: unknown
+Build: install/d0bd439
+Depends: libc6 (>= 2.9)
+Source: file://SUPPORTED

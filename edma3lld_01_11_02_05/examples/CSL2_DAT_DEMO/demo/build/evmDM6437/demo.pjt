@@ -1,0 +1,43 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Tool="XDC"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\..\dat_edma3LLD\csl2_dat.c"
+Source="..\..\..\dat_edma3LLD\csl2_dat_edma3lld.c"
+Source="..\..\bios_adapter\dat_edma3lld_biosadapter.c"
+Source="..\..\src\main.c"
+Source="demo.tcf"
+Source="demo.cmd"
+
+[Generated Files]
+Source="democfg.s62"
+Source="democfg_c.c"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\dat_edma3LLD\" -i"$(Proj_dir)\..\..\..\csl2_legacy_include\" -i"$(Proj_dir)\..\..\..\..\..\packages\" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "Release"]
+Options=-pdr -o3 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\dat_edma3LLD\" -i"$(Proj_dir)\..\..\..\csl2_legacy_include\" -i"$(Proj_dir)\..\..\..\..\..\packages\" -d"_RELEASE" -ms0 -mv6400+
+
+["DspBiosBuilder" Settings: "Debug"]
+Options=-Dconfig.importPath="%BIOS_INSTALL_DIR%/packages/ti/bios/examples/common;"
+
+["DspBiosBuilder" Settings: "Release"]
+Options=-Dconfig.importPath="%BIOS_INSTALL_DIR%/packages/ti/bios/examples/common;"
+
+["Linker" Settings: "Debug"]
+Options=-c -m".\bin\Debug\demo.map" -o".\bin\Debug\demo.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\rtdx\lib\c6000" -i"$(Proj_dir)\..\..\..\..\..\packages\ti\sdo\edma3\drv\lib\Debug" -i"$(Proj_dir)\..\..\..\..\..\packages\ti\sdo\edma3\drv\sample\lib\dm6437\Debug" -i"$(Proj_dir)\..\..\..\..\..\packages\ti\sdo\edma3\rm\lib\dm6437\Debug" -l"log8.a64P" -l"edma3_drv_bios.lib" -l"edma3_drv_bios_sample.lib" -l"edma3_rm_bios.lib"
+
+["Linker" Settings: "Release"]
+Options=-c -m".\bin\Release\demo.map" -o".\bin\Release\demo.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\rtdx\lib\c6000" -i"$(Proj_dir)\..\..\..\..\..\packages\ti\sdo\edma3\drv\lib\Release" -i"$(Proj_dir)\..\..\..\..\..\packages\ti\sdo\edma3\drv\sample\lib\dm6437\Release" -i"$(Proj_dir)\..\..\..\..\..\packages\ti\sdo\edma3\rm\lib\dm6437\Release" -l"log8.a64P" -l"edma3_drv_bios.lib" -l"edma3_drv_bios_sample.lib" -l"edma3_rm_bios.lib"

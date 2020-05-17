@@ -1,0 +1,1115 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== gbl.h55 ========
+;
+;
+
+    .if ($isdefed("GBL_") = 0)    ; prevent multiple includes of this file
+
+GBL_    .set    1
+
+    .asg 5205h, GBL_VERSION     ; Major BIOS version number used 
+                                ; by _GBL_getVersion and GBL_init.
+
+    .include c55.h55
+    .include chk.h55
+    .include std.h55
+    .include trc.h55
+
+ALLIGNMENT       .set    1
+NOALLIGNMENT     .set    0
+
+    .mmregs
+
+    .ref GBL_stackend, GBL_stackbeg
+    .ref GBL_sysstackend, GBL_sysstackbeg
+    .ref ___bss__
+
+;
+; Changed below .global from .ref since .ref was producing a warning
+; for the C55 (which probably shouldn't be happening anyway).
+; .global GBL_TRCMASKVALUE doesn't need to be here at all since the
+; symbol is .set in the cfg.h55 file.  It's left here for consistency
+; with other targets and "not to rock the boat".
+;
+    .global GBL_TRCMASKVALUE
+    .global GBL_initdone
+    .global _GBL_getVersion
+    .global GBL_F_biosbootfxn
+
+    .global gblinit
+
+;
+;# ======== GBL_Obj ========
+;  Allocate "size" words in section sect and give it the name "name".
+;
+;  Both the section and the alignFlag arguments are optional; section
+;  defaults to ".bss" and alignFlag defaults to no alignment.
+;
+;  Objects created in the ".data" section are initialized to 0.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GBL_Obj$regs
+GBL_Obj .macro name, size, section, alignFlag, fillValue, alignValue
+        CHK_domain "GBL_Obj", alignFlag, "noalign,align", "noalign"
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "GBL_Obj align parameter error."
+        .endif
+        .asg ":CHK_status:", alignFlag
+
+        CHK_nargs "GBL_Obj", size
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "GBL_Obj size parameter error."
+        .endif
+
+        .if ($symlen(section) = 0)
+            .asg ".bss", section
+        .endif
+
+        .if ($symlen(fillValue) != 0)
+            .sect ".gblinit"
+            .word :size:
+        .if  (_55L_) | (_55H_)  
+            .xlong  :name:
+        .else
+            .word :name: & 0xffff
+        .endif
+            .word :fillValue:
+        .endif
+
+        .if (($symcmp(section, ".data") = 0) | ($symcmp(alignFlag, "align") = 0))
+            .sect ":section:"
+            .if ($symcmp(alignFlag, "align") = 0)
+                .align :alignValue:
+            .endif
+:name::
+            ;
+            ; Can't use .space directive here because it reserves
+            ; bits for some processors and bytes for others.
+            ;
+            .loop       :size:
+                .word 0
+            .endloop
+
+        .elseif ($symcmp(":section:", ".bss") = 0)
+            .bss :name:, :size: * (STD_TARGWORDMAUS / STD_TARGCHARMAUS)
+        .else
+:name::     .usect ":section:", :size: * (STD_TARGWORDMAUS / STD_TARGCHARMAUS)
+        .endif
+
+        .endm
+
+;
+;# ======== GBL_config ========
+;  Static configuration of the GBL module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+    .asg    "", GBL_config$regs
+GBL_config .macro  _rom, _procid, _clkin, _freq, _dsptype, _dspsubtype, _clktype, _modifyclkmd, _clkmd, _pllm, _plldiv0, _plldiv1, _userinit, _userinitfxn, _enableinst, _largemode, _enableicache, _cachetype, _cacheicrtag1, _cacheicrtag2, _supportcsl, _trcmaskvalue, _callcslcfginit, _bootfxn, _dcrpostedwrite
+
+        ; reference special symbol GBL_boot defined in BIOS boot file to make sure
+        ; we are linking correct boot file (workaround for SDSsq24217)
+        .ref GBL_boot
+
+   ;;ELVIS      .def TRC_cinit
+   ;;ELVIS      .def TRC_R_mask, _TRC_R_mask
+        .asg    :_userinitfxn:, USERINITFXN     ; used by GBL_init
+
+        ;
+        ; print a warning message if project build options do not match
+        ; global configuration options.
+        ;
+        .if  (_55L_) | (_55H_)
+            .if (GBL_LARGEMODEL == 0)
+                .emsg "Project build options do not match Global configuration settings.  Compiler options specify large model, configuration set for small model."
+            .endif
+        .else
+            .if (GBL_LARGEMODEL == 1)
+                .emsg "Project build options do not match Global configuration settings.  Compiler options specify small model, configuration set for large model."
+            .endif
+        .endif
+
+        ;
+        ; Check for _2420_ defined if GBL_DSPSUBTYPE = 2420.
+        ; Generate error msg if not.
+        ;
+
+        .if (GBL_DSPSUBTYPE == 2420)
+            .if ($isdefed("_2420_") = 0)
+                .emsg "For OMAP2420 builds, the symbol _2420_ must be defined!"
+            .endif
+        .endif
+
+gblinit .sect ".gblinit"
+
+; triplet (# of words, address, value) initialisation records
+; inserted in this section will be processed by GBL_init
+; macro for run-time initialisation of a specified contiguous
+; block of words. The end of table sentinel is "0" and
+; is inserted by GBL_end macro
+
+; Even though, linker cmd (sourced from mem.cdb) file has exact
+; same information, below table is still retained to allow for
+; stack stamping at run-time (such as following a reset sequence
+; w/o a re-load) via invocation of GBL_init macro
+; ************************************************************
+; Note: Lead3 linker uses "byte" granularity. But, GBL_init
+;       will interpret the count as # of 16bit (2bytes) words!
+; ************************************************************
+        .if (_55Pb_)
+                .word ((GBL_stackend-GBL_stackbeg+1)/(STD_TARGWORDMAUS))-16 ; nwords
+                .xlong  GBL_stackbeg                            ; addr
+                .word 0xbeef                                    ; value
+        .elseif  (_55L_) | (_55H_)  
+                .word ((GBL_stackend-GBL_stackbeg+1)/(STD_TARGWORDMAUS))-8 ; nwords
+                .xlong  GBL_stackbeg                            ; addr
+                .word 0xbeef                                    ; value
+
+                .word ((GBL_sysstackend-GBL_sysstackbeg+1)/(STD_TARGWORDMAUS))-8 ; nwords
+                .xlong GBL_sysstackbeg                          ; addr
+                .word 0xfeeb                                    ; value
+        .else                                                   
+                .word ((GBL_stackend-GBL_stackbeg+1)/(STD_TARGWORDMAUS))-8 ; nwords
+                .word GBL_stackbeg & 0xffff                     ; addr
+                .word 0xbeef                                    ; value
+
+                .word ((GBL_sysstackend-GBL_sysstackbeg+1)/(STD_TARGWORDMAUS))-8 ; nwords
+                .word GBL_sysstackbeg & 0xffff                  ; addr
+                .word 0xfeeb                                    ; value
+        .endif
+
+        ;
+        ;  DEFINE A SPECIAL WORD THAT WILL BE COPIED TO TRC_R_mask
+        ;  AT PROGRAM INITIALIZATION, INSTEAD OF PUTTING TRC_cinit
+        ;  INTO THE .cinit SECTION.
+        ;  THIS WAY WE CAN WRITE TO BOTH TRC_R_mask AND TRC_cinit
+        ;  AND APPLICATION PROGRAMS CAN STILL USE THE .cinit SECTION
+        ;  AFTER INITIALIZATION IS DONE.
+        ;
+        ; The TRC_R_mask gets initialzed by host side too. The  value
+        ; assigment to TRC_R_mask occurs at  auto_init(in cinit records)
+        ; as well in bios_init
+        ; The following is the sequence of code illustrates this
+
+        ; 1)  .cinit  --> do otherInits... TRC_R_mask = value .... otherInits;
+        ; 2)  bios-init  --> do TRC_R_mask = TRC_cinit ;
+
+        ; TRC_R_mask  can also be written thru the RTA panel .The panel
+        ; does not have knowledge, as to where is the execution
+        ; control of the program is. ie is in 1, or 2 or in between
+        ; or after it.  Writing to TRC_R_mask
+        ; directly from the RTA panel, can fetch wrong results. For
+        ; example if the  the exeuction control was in section 1
+        ;  ie in cinit record initialisation, but has not
+        ; reached the TRC_R_mask initilisaion, a write from the RTA
+        ; panel would always be overwritten by the cinit initialisation.
+        ; An another variable called TRC_cinit is used  to avoid this
+        ; problem. The RTA panel would  write both to TRC_cinit,
+        ; as well as TRC_R_mask.  The above  sequence of writes
+        ; will not be a problem, as the bios_init, which  assigns
+        ;  the TRC__R_mask variable, will overwrite the "C" initialisation
+        ; and the value written by the RTA_panel will prevail.
+
+        ;; ELVIS#
+        ;; Moved trcdata section declaration to trc.s55 for ROMMing     ;;
+        ;; See ELVIS design document for more details                   ;;
+
+    .endm                       
+                        
+;
+;# ======== GBL_end ========
+; Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GBL_end$regs
+GBL_end .macro
+
+    .sect ".gblinit"
+    .word 0                     ; end of gblinit table marker
+    
+    .endm
+
+;
+;# ======== GBL_init ========
+;  Runtime initialization of the GBL module
+;
+;#
+;# Preconditions
+;#   none
+;#
+;# Postconditions
+;#   none
+;#
+;
+        .asg "ac0,ar1,ar2,ar3,csr,:TRC_init$regs:", GBL_init$regs
+GBL_init    .macro
+
+    call _GBL_getVersion
+
+    .if (.MNEMONIC)                     ; mnemonic assembler
+      .if (_55Pb_)                      ; as per Ryijin calling conventions
+          sub #GBL_VERSION, ac0.l
+selfspin?:
+          bcc selfspin?, ac0.l != #0
+      .else
+          sub #GBL_VERSION, t0
+selfspin?:
+          bcc selfspin?, t0 != #0
+      .endif
+    .else                               ; algebraic assembler
+      .if (_55Pb_)
+          ac0.l = ac0.l - #GBL_VERSION
+selfspin?:
+          if (ac0.l != #0) goto selfspin?
+      .else
+          t0 = t0 - #GBL_VERSION
+selfspin?:
+          if (t0 != #0) goto selfspin?
+      .endif
+    .endif
+    ; DPORT write configured to be posted when
+    ; GBL_DCRPOSTEDWRITE is enabled by user
+    ; Refer to  2420 TRM for details
+    .if (GBL_CLKTYPE == 2420)
+        .if (GBL_DCRPOSTEDWRITE)
+            .if (.MNEMONIC)                     ; mnemonic assembler
+                or #0x80, port(#0x200)
+            .else
+                *port(#0x200) |= 0x80
+            .endif
+        .endif
+    .endif
+
+    ; 5561 I-cache programming support ;
+    .if (GBL_CLKTYPE == 5561)
+        ; Below .set represents the I-cache configurations
+        ; This values should not be changed since this
+        ; values are needed for comparison with GBL_CACHETYPE
+        ; which is emitted from the cdb in the same order.  
+GBL_2WAY_NO_RAMSET      .set 0
+GBL_2WAY_ONE_RAMSET     .set 1
+GBL_2WAY_TWO_RAMSET     .set 2
+
+        ; I-cache Registers address and bit positions.
+GBL_ICGC_REG            .set    0x1400
+GBL_ICWC_REG            .set    0x1403
+GBL_ICSTAT_REG          .set    0x1404
+GBL_ICRC1_REG           .set    0x1405
+GBL_ICRTAG1_REG         .set    0x1406
+GBL_ICRC2_REG           .set    0x1407
+GBL_ICRTAG2_REG         .set    0x1408
+GBL_IEN_BIT             .set    0x2
+GBL_R1TVALID_BIT        .set    15
+GBL_R2TVALID_BIT        .set    15
+
+        ; I-cache register initialize values for different
+        ; I-cache configurations 
+        .if(GBL_CACHETYPE == GBL_2WAY_NO_RAMSET)
+GBL_CACHE_ICGC  .set 0xcbff
+GBL_CACHE_ICWC  .set 0x000f
+GBL_CACHE_ICRC1 .set 0x0002
+GBL_CACHE_ICRC2 .set 0x0002
+        .elseif(GBL_CACHETYPE == GBL_2WAY_ONE_RAMSET)
+GBL_CACHE_ICGC  .set 0xce1f
+GBL_CACHE_ICWC  .set 0x000f
+GBL_CACHE_ICRC1 .set 0x000f
+GBL_CACHE_ICRC2 .set 0x0002
+        .elseif(GBL_CACHETYPE == GBL_2WAY_TWO_RAMSET)
+GBL_CACHE_ICGC  .set 0xcfff
+GBL_CACHE_ICWC  .set 0x000f
+GBL_CACHE_ICRC1 .set 0x000f
+GBL_CACHE_ICRC2 .set 0x000f
+        .endif
+
+        .if( GBL_ENABLEICACHE)
+                .if(.MNEMONIC)
+                        .if(GBL_CACHETYPE == GBL_2WAY_NO_RAMSET)
+                                ; Write to ICGC, ICWC to chose I-cache
+                                ; configuration
+                                ; Set CAEN bit in ST3
+                                ; Check IEN bit ICSTAT to ensure        
+                                ; I-cache is enabled with the configuration.
+                                mov #GBL_CACHE_ICGC, ar1
+                                mov ar1, port(#GBL_ICGC_REG)
+                                
+                                mov #GBL_CACHE_ICWC, ar1
+                                mov ar1, port(#GBL_ICWC_REG)
+
+                                mov #GBL_CACHE_ICRC1, ar1
+                                mov ar1, port(#GBL_ICRC1_REG)
+                                
+                                mov #GBL_CACHE_ICRC2, ar1
+                                mov ar1, port(#GBL_ICRC2_REG)
+
+                                bset #STBIT_CAEN, st3_55
+checkIEnbld:
+                                mov port(#GBL_ICSTAT_REG), ar1
+                                btst #GBL_IEN_BIT, AR1_MMR, TC1
+                                bcc checkIEnbld, !tc1
+
+                        .elseif(GBL_CACHETYPE == GBL_2WAY_ONE_RAMSET)
+                                ; Write to ICGC, ICWC, ICRC1 to chose I-cache
+                                ; configuration
+                                ; Set CAEN bit in ST3
+                                ; Check IEN bit ICSTAT to ensure        
+                                ; I-cache is enabled with the configuration.
+                                ; Write ICRTAG1 entered by user
+                                ; into ICRTAG1 register. Check R1TVALID bit
+                                ; in ICRC1 reg to check RAM set filling.
+                                ; (store 23:12 of address in ICRTAG registers)
+                                mov #GBL_CACHE_ICGC, ar1
+                                mov ar1, port(#GBL_ICGC_REG)
+                                
+                                mov #GBL_CACHE_ICWC, ar1
+                                mov ar1, port(#GBL_ICWC_REG)
+                                
+                                mov #GBL_CACHE_ICRC1, ar1
+                                mov ar1, port(#GBL_ICRC1_REG)
+                                
+                                mov #GBL_CACHE_ICRC2, ar1
+                                mov ar1, port(#GBL_ICRC2_REG)
+
+                                bset #STBIT_CAEN, st3_55
+checkIEnbld:
+                                mov port(#GBL_ICSTAT_REG), ar1
+                                btst #GBL_IEN_BIT, AR1_MMR, TC1
+                                bcc checkIEnbld, !tc1
+
+                                mov #(GBL_CACHEICRTAG1 >> 12), ar1
+                                mov ar1, port(#GBL_ICRTAG1_REG)
+checkR1valid:
+                                mov port(#GBL_ICRC1_REG), ar1
+                                btst #GBL_R1TVALID_BIT, AR1_MMR, TC1
+                                bcc checkR1valid, !tc1
+
+                        .elseif(GBL_CACHETYPE == GBL_2WAY_TWO_RAMSET)
+                                ; Write to ICGC, ICWC, ICRC1,ICRC2 to chose 
+                                ; I-cache configuration.
+                                ; Set CAEN bit in ST3
+                                ; Check IEN bit ICSTAT to ensure        
+                                ; I-cache is enabled with the configuration.
+                                ; Write ICRTAG1 entered by user
+                                ; into ICRTAG1 register. Check R1TVALID bit
+                                ; in ICRC1 reg to check RAM set filling.
+                                ; Write ICRTAG2 entered by user
+                                ; into ICRTAG2 register. Check R1TVALID bit
+                                ; in ICRC2 reg to check RAM set filling.
+                                ; (store 23:12 of address in ICRTAG registers)
+
+
+                                mov #GBL_CACHE_ICGC, ar1
+                                mov ar1, port(#GBL_ICGC_REG)
+                                
+                                mov #GBL_CACHE_ICWC, ar1
+                                mov ar1, port(#GBL_ICWC_REG)
+                                
+                                mov #GBL_CACHE_ICRC1, ar1
+                                mov ar1, port(#GBL_ICRC1_REG)
+                                
+                                mov #GBL_CACHE_ICRC2, ar1
+                                mov ar1, port(#GBL_ICRC2_REG)
+                                
+                                bset #STBIT_CAEN, st3_55
+checkIEnbld:
+                                mov port(#GBL_ICSTAT_REG), ar1
+                                btst #GBL_IEN_BIT, AR1_MMR, TC1
+                                bcc checkIEnbld, !tc1
+
+                                mov #(GBL_CACHEICRTAG1 >> 12), ar1
+                                mov ar1, port(#GBL_ICRTAG1_REG)
+
+checkR1valid:
+                                mov port(#GBL_ICRC1_REG), ar1
+                                btst #GBL_R1TVALID_BIT, AR1_MMR, TC1
+                                bcc checkR1valid, !tc1
+
+                                mov #(GBL_CACHEICRTAG2 >> 12), ar1
+                                mov ar1, port(#GBL_ICRTAG2_REG)
+
+checkR2valid:
+                                mov port(#GBL_ICRC2_REG), ar1
+                                btst #GBL_R2TVALID_BIT, AR1_MMR, TC1
+                                bcc checkR2valid, !tc1
+
+                        .endif
+
+                .else ; Algebraic
+
+                        .if(GBL_CACHETYPE == GBL_2WAY_NO_RAMSET)
+                                ; Write to ICGC, ICWC to chose I-cache
+                                ; configuration
+                                ; Set CAEN bit in ST3
+                                ; Check IEN bit ICSTAT to ensure        
+                                ; I-cache is enabled with the configuration.
+                                ar1 = #GBL_CACHE_ICGC
+                                *port(#GBL_ICGC_REG) = ar1
+                                
+                                ar1 =  #GBL_CACHE_ICWC
+                                *port(#GBL_ICWC_REG) = ar1
+                                
+                                bit(st3, #STBIT_CAEN) = #1
+checkIEnbld:
+                                ar1 = *port(#GBL_ICSTAT_REG)
+                                tc1 = bit ( AR1_MMR,#GBL_IEN_BIT) || mmap()
+                                if(!tc1) goto checkIEnbld
+
+                        .elseif(GBL_CACHETYPE == GBL_2WAY_ONE_RAMSET)
+                                ; Write to ICGC, ICWC, ICRC1 to chose I-cache
+                                ; configuration
+                                ; Set CAEN bit in ST3
+                                ; Check IEN bit ICSTAT to ensure        
+                                ; I-cache is enabled with the configuration.
+                                ; Write ICRTAG1 entered by user
+                                ; into ICRTAG1 register. Check R1TVALID bit
+                                ; in ICRC1 reg to check RAM set filling.
+                                ; (store 23:12 of address in ICRTAG registers)
+                                ar1 = #GBL_CACHE_ICGC
+                                *port(#GBL_ICGC_REG) = ar1
+                                
+                                ar1 =  #GBL_CACHE_ICWC
+                                *port(#GBL_ICWC_REG) = ar1
+                                
+                                ar1 =  #GBL_CACHE_ICRC1
+                                *port(#GBL_ICRC1_REG) = ar1
+                                
+                                bit(st3, #STBIT_CAEN) = #1
+checkIEnbld:
+
+                                ar1 = *port(#GBL_ICSTAT_REG)
+                                tc1 = bit ( AR1_MMR,#GBL_IEN_BIT) || mmap()
+                                if(!tc1) goto checkIEnbld
+
+                                ar1 = #(GBL_CACHEICRTAG1 >> 12)
+                                *port(#GBL_ICRTAG1_REG) = ar1
+                                
+checkR1valid:
+                                ar1 = *port(#GBL_ICRC1_REG)
+                                tc1 = bit ( AR1_MMR,#GBL_R1TVALID_BIT) || mmap()
+                                if(!tc1) goto checkR1valid
+
+                        .elseif(GBL_CACHETYPE == GBL_2WAY_TWO_RAMSET)
+                                ; Write to ICGC, ICWC, ICRC1,ICRC2 to chose 
+                                ; I-cache configuration.
+                                ; Set CAEN bit in ST3
+                                ; Check IEN bit ICSTAT to ensure        
+                                ; I-cache is enabled with the configuration.
+                                ; Write ICRTAG1 entered by user
+                                ; into ICRTAG1 register. Check R1TVALID bit
+                                ; in ICRC1 reg to check RAM set filling.
+                                ; Write ICRTAG2 entered by user
+                                ; into ICRTAG2 register. Check R1TVALID bit
+                                ; in ICRC2 reg to check RAM set filling.
+                                ; (store 23:12 of address in ICRTAG registers)
+                                ar1 = #GBL_CACHE_ICGC
+                                *port(#GBL_ICGC_REG) = ar1
+                                
+                                ar1 =  #GBL_CACHE_ICWC
+                                *port(#GBL_ICWC_REG) = ar1
+                                
+                                ar1 =  #GBL_CACHE_ICRC1
+                                *port(#GBL_ICRC1_REG) = ar1
+                                
+                                ar1 =  #GBL_CACHE_ICRC2
+                                *port(#GBL_ICRC2_REG) = ar1
+                                
+                                bit(st3, #STBIT_CAEN) = #1
+checkIEnbld:
+
+                                ar1 = *port(#GBL_ICSTAT_REG)
+                                tc1 = bit ( AR1_MMR,#GBL_IEN_BIT) || mmap()
+                                if(!tc1) goto checkIEnbld
+
+                                ar1 = #(GBL_CACHEICRTAG1 >> 12)
+                                *port(#GBL_ICRTAG1_REG) = ar1
+                                
+checkR1valid:
+                                ar1 = *port(#GBL_ICRC1_REG)
+                                tc1 = bit ( AR1_MMR,#GBL_R1TVALID_BIT) || mmap()
+                                if(!tc1) goto checkR1valid
+
+                                ar1 = #(GBL_CACHEICRTAG2 >> 12)
+                                *port(#GBL_ICRTAG2_REG) = ar1
+                                
+checkR2valid:
+                                ar1 = *port(#GBL_ICRC2_REG)
+                                tc1 = bit ( AR1_MMR,#GBL_R2TVALID_BIT) || mmap()
+                                if(!tc1) goto checkR2valid
+
+                        .endif
+
+                .endif  ; Endif Algeriac
+        .endif          ; Endif IfCACHE Enabled
+    .endif              ; Endif If CLKTYPE == 5561
+
+
+
+    .if (GBL_CLKTYPE == 1510) ; if helen device 
+GBL_CLKMD_REG           .set    0x4000  ; address of CLKMD
+GBL_CLKMD_PLLENABLE_BIT .set    0x4
+GBL_CLKMD_LOCK_BIT      .set    0x0
+    .elseif (GBL_CLKTYPE == 5502) ; if C5502 device 
+GBL_PLLCSR_REG          .set    0x1c80  ; address of the PLLCSR register
+GBL_PLLM_REG            .set    0x1c88  ; address of the PLLM register
+GBL_PLLDIV0_REG         .set    0x1c8a  ; address of the PLLDIV0 register
+GBL_PLLDIV1_REG         .set    0x1c8c  ; address of the PLLDIV1 register
+GBL_PLLCSR_PLLEN_BIT    .set    0x0
+GBL_PLLCSR_PLLRST_BIT   .set    0x3
+GBL_PLLCSR_LOCK_BIT     .set    0x5
+    .else
+GBL_CLKMD_REG           .set    0x1c00  ; address of CLKMD
+GBL_CLKMD_PLLENABLE_BIT .set    0x4
+GBL_CLKMD_LOCK_BIT      .set    0x0
+
+GBL_REV_ID              .set    0x3804
+    .endif
+
+    .if (GBL_CLKTYPE != 1510); PLL programming for helen 
+                                                ; device is not supported
+     .if (GBL_CLKTYPE == 5502); PLL programming for c5502 
+
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ;                                                                            ;
+      ; Algorithm for C5502's PLL programming:                                     ;
+      ;                                                                            ;
+      ; PLLEN = 0  ; Switch to bypass mode by setting the PLLEN bit to 0.          ;
+      ;                                                                            ;
+      ; PLLRST = 1 ; Set the PLL to its reset state by setting the PLLRST bit to 1.;
+      ;                                                                            ;
+      ; while (LOCK != 0)   ; Check if entered BYPASS mode.                        ;
+      ;                     ; The while loop break => BYPASS mode is entered.      ;
+      ;                                                                            ;
+      ; PLLM = GBL_PLLM                                                            ;
+      ; PLLDIV0 = GBL_PLLDIV0 ; Change the PLL setting                             ; 
+      ;                       ; through the PLLM and PLLDIV0 bits.                 ;
+      ;                                                                            ;
+      ; repeat (#300)                                                              ;    
+      ;   nop         ; Wait for at least 1 microsecond.                           ;
+      ;                                                                            ;
+      ; PLLRST = 0 ; Release the PLL from its reset state by                       ;
+      ;            ; setting the PLLRST bit to 0.                                  ;
+      ;                                                                            ;
+      ; while (LOCK != 1)  ; Wait for the PLL to relock by polling the LOCK bit    ;
+      ;                    ; or by setting up a LOCK interrupt.                    ;
+      ;                    ; Check if entered LOCK mode.                           ;
+      ;                    ; The while loop break => LOCK mode is entered          ;
+      ;                                                                            ;
+      ; PLLEN = 1  ; Switch back to PLL mode by setting the PLLEN bit to 1.        ;
+      ;                                                                            ;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   
+       .if (.MNEMONIC)                  ; mnemonic assembler
+
+         .if (GBL_MODIFYCLKMD != 0)
+        
+PLL_config:   
+
+           mov port(#GBL_PLLCSR_REG), ar1
+           btstclr #GBL_PLLCSR_PLLEN_BIT, AR1_MMR, tc1
+           mov ar1, port(#GBL_PLLCSR_REG)       ; PLLEN = 0 to get to BYPASS mode
+
+           mov port(#GBL_PLLCSR_REG), ar1
+           btstset #GBL_PLLCSR_PLLRST_BIT, AR1_MMR, tc1
+           mov ar1, port(#GBL_PLLCSR_REG) ; set the PLL to its reset state
+
+checkLockForBypass:
+
+           mov port(#GBL_PLLCSR_REG), ar1
+           btst #GBL_PLLCSR_LOCK_BIT, AR1_MMR, tc1
+           bcc checkLockForBypass, tc1  ; wait for the LOCK bit to be 0 (means bypass)
+
+                                        ; at this point BYPASS mode is entered
+
+           mov #GBL_PLLM, ar1
+           mov ar1, port(#GBL_PLLM_REG) ; set the PLLM value  
+
+           mov #GBL_PLLDIV0, ar1
+           mov ar1, port(#GBL_PLLDIV0_REG) ; set the PLLDIV0 value  
+
+           rpt #300
+             nop                        ; wait for at least 1 microsecond       
+
+           mov port(#GBL_PLLCSR_REG), ar1
+           btstclr #GBL_PLLCSR_PLLRST_BIT, AR1_MMR, tc1
+           mov ar1, port(#GBL_PLLCSR_REG) ; Release the PLL from its reset state
+
+checkLockForPllEnable:
+
+           mov port(#GBL_PLLCSR_REG), ar1
+           btst #GBL_PLLCSR_LOCK_BIT, AR1_MMR, tc1
+           bcc checkLockForPllEnable, !tc1 ; wait for LOCK to be 1 (means lock)
+
+                                        ; at this point LOCK mode is entered
+
+           mov port(#GBL_PLLCSR_REG), ar1
+           btstset #GBL_PLLCSR_PLLEN_BIT, AR1_MMR, tc1
+           mov ar1, port(#GBL_PLLCSR_REG) ; PLLEN = 1 to switch to PLL mode
+
+           mov #GBL_PLLDIV1, ar1
+           mov ar1, port(#GBL_PLLDIV1_REG) ; set the PLLDIV1 value  
+
+         .endif
+
+       .else                            ; algebraic assembler
+
+         .if (GBL_MODIFYCLKMD != 0)
+ 
+PLL_config:   
+
+           ar1 = *port(#GBL_PLLCSR_REG)
+           tc1=bit(AR1_MMR,#GBL_PLLCSR_PLLEN_BIT), bit(AR1_MMR,#GBL_PLLCSR_PLLEN_BIT) = #0 || mmap()
+           *port(#GBL_PLLCSR_REG) = ar1 ; PLLEN = 0 to get to BYPASS mode
+
+           ar1 = *port(#GBL_PLLCSR_REG)
+           tc1=bit(AR1_MMR,#GBL_PLLCSR_PLLRST_BIT),bit(AR1_MMR,#GBL_PLLCSR_PLLRST_BIT)= #1 || mmap()
+           *port(#GBL_PLLCSR_REG) = ar1 ; Set the PLL to its reset state
+
+checkLockForBypass:
+
+           ar1 = *port(#GBL_PLLCSR_REG)
+           tc1 = bit(AR1_MMR, #GBL_PLLCSR_LOCK_BIT) || mmap() 
+           if (tc1) goto checkLockForBypass ; wait for LOCK to be 0 (means bypass)
+
+                                        ; at this point BYPASS mode is entered
+
+           ar1 = #GBL_PLLM
+           *port(#GBL_PLLM_REG) = ar1   ; Set the PLLM value  
+
+           ar1 = #GBL_PLLDIV0
+           *port(#GBL_PLLDIV0_REG) = ar1 ; Set the PLLDIV0 value  
+
+           repeat(#300)
+             nop                        ; wait for at least 1 microsecond       
+
+           ar1 = *port(#GBL_PLLCSR_REG)
+           tc1=bit(AR1_MMR,#GBL_PLLCSR_PLLRST_BIT),bit(AR1_MMR,#GBL_PLLCSR_PLLRST_BIT)= #0 || mmap()
+           *port(#GBL_PLLCSR_REG) = ar1 ; Release the PLL from its reset state
+
+checkLockForPllEnable:
+
+           ar1 = *port(#GBL_PLLCSR_REG)
+           tc1 = bit(AR1_MMR, #GBL_PLLCSR_LOCK_BIT) || mmap() 
+           if (!tc1) goto checkLockForPllEnable ; wait for LOCK to be 1 (means lock)
+
+                                        ; at this point LOCK mode is entered
+           
+           ar1 = *port(#GBL_PLLCSR_REG)
+           tc1=bit(AR1_MMR,#GBL_PLLCSR_PLLEN_BIT), bit(AR1_MMR,#GBL_PLLCSR_PLLEN_BIT) = #1 || mmap()
+           *port(#GBL_PLLCSR_REG) = ar1 ; PLLEN = 1 to switch to PLL mode
+
+           ar1 = #GBL_PLLDIV1
+           *port(#GBL_PLLDIV1_REG) = ar1 ; Set the PLLDIV1 value  
+
+         .endif
+
+       .endif
+
+     .elseif (GBL_CLKTYPE == 5505) ; if (GBL_CLKTYPE != 5502)
+        ; No pll support for 5505
+     .else ; if (GBL_CLKTYPE != 5505)
+
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        .if (GBL_MODIFYCLKMD != 0)
+        
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ; Determine the PLL type present on the Silicon.                     ;
+          ; For Silicon Rev. 1.2
+          ; REV_ID: 0x8050                                                     ;
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        
+          mov port(#GBL_REV_ID), ac0            ; load ac0 with REV_ID[15:0]
+          sub  #0x8050, ac0                     ; 0x8050 implies SI 1.2
+          bcc DPLL_config, ac0 != #0            ; if ac0 == 0x8050->Si has APLL
+                                                ; else use DPLL.
+APLL_config:
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;  CLKMD = Value                                        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                mov #GBL_CLKMD,ar1
+                mov ar1,port(#GBL_CLKMD_REG)
+
+
+                b EndofPllPrgmng
+
+DPLL_config:   
+
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ; Algorithm for DPLL programming:                                    ;
+          ;                                                                    ;
+          ; PLL_ENABLE = 0      ; Initialize to BYPASS mode                    ;
+          ; while (LOCK != 0)   ; Check if entered BYPASS mode                 ;
+          ;                     ; the while loop break=>BYPASS mode is entered ;
+          ;                                                                    ;
+          ; CLKMD = GBL_CLKMD | (PLL_ENABLE = 1) ; set the GBL_CLKMD value and ;
+          ;                                      ; try to get to LOCK mode     ;
+          ; while (LOCK != 1)   ; Check if entered LOCK mode                   ;
+          ;                     ; the while loop break=>LOCK mode is entered   ;
+          ;                                                                    ;
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+          mov port(#GBL_CLKMD_REG), ar1
+          btstclr #GBL_CLKMD_PLLENABLE_BIT, AR1_MMR, tc1
+          mov ar1, port(#GBL_CLKMD_REG) ; PLLENABLE = #0 to get to BYPASS mode
+
+checkLockForBypass:
+          mov port(#GBL_CLKMD_REG), ar1
+          btst #GBL_CLKMD_LOCK_BIT, AR1_MMR, TC1
+          bcc checkLockForBypass, tc1   ; wait for LOCK to be 0 (means bypass)
+
+                                        ; at this point BYPASS mode is entered
+          mov #GBL_CLKMD, ar1
+          btstset #GBL_CLKMD_PLLENABLE_BIT, AR1_MMR, tc1
+          mov ar1, port(#GBL_CLKMD_REG) ; set the GBL_CLKMD value and try to 
+                                        ; get to LOCK mode
+
+checkLockForPllEnable:
+          mov port(#GBL_CLKMD_REG), ar1
+          btst #GBL_CLKMD_LOCK_BIT, AR1_MMR, TC1
+          bcc checkLockForPllEnable,!tc1    ; wait for LOCK to be 1 (means lock)
+
+                                        ; at this point LOCK mode is entered
+
+        .endif
+
+      .else                             ; algebraic assembler
+        .if (GBL_MODIFYCLKMD != 0)
+ 
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ; Determine the PLL type present on the Silicon.                     ;
+          ; For Silicon Rev. 1.2
+          ; REV_ID: 0x8050                                                     ;
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        
+          ac0 = *port(#GBL_REV_ID)              ; load ac0 with REV_ID[15:0]
+          ac0 = ac0 - #0x8050                   ; 0x8050 means APLL
+          if( ac0 != #0 ) goto DPLL_config      ; if ac0 == 0x8050->Si has APLL
+                                                ; else use DPLL.
+APLL_config:
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;  CLKMD = Value                                        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ar1 =  #GBL_CLKMD
+                *port(#GBL_CLKMD_REG) = ar1
+                goto EndofPllPrgmng
+DPLL_config:   
+
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ; Algorithm for DPLL programming:                                    ;
+          ;                                                                    ;
+          ; PLL_ENABLE = 0      ; Initialize to BYPASS mode                    ;
+          ; while (LOCK != 0)   ; Check if entered BYPASS mode                 ;
+          ;                     ; the while loop break=>BYPASS mode is entered ;
+          ;                                                                    ;
+          ; CLKMD = GBL_CLKMD | (PLL_ENABLE = 1) ; set the GBL_CLKMD value and ;
+          ;                                      ; try to get to LOCK mode     ;
+          ; while (LOCK != 1)   ; Check if entered LOCK mode                   ;
+          ;                     ; the while loop break=>LOCK mode is entered   ;
+          ;                                                                    ;
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+          ar1 = *port(#GBL_CLKMD_REG)
+          tc1 = bit(AR1_MMR, #GBL_CLKMD_PLLENABLE_BIT),bit(AR1_MMR, #GBL_CLKMD_PLLENABLE_BIT) = #0 || mmap()
+          *port(#GBL_CLKMD_REG) = ar1   ; PLLENABLE = #0 to get to BYPASS mode
+
+checkLockForBypass:
+          ar1 = *port(#GBL_CLKMD_REG)
+          tc1 = bit(AR1_MMR, #GBL_CLKMD_LOCK_BIT) || mmap() 
+          if (tc1) goto checkLockForBypass; wait for LOCK to be 0 (means bypass)
+
+                                        ; at this point BYPASS mode is entered
+          ar1 = #GBL_CLKMD
+          tc1 = bit(AR1_MMR, #GBL_CLKMD_PLLENABLE_BIT),bit(AR1_MMR, #GBL_CLKMD_PLLENABLE_BIT) = #1 || mmap()
+          *port(#GBL_CLKMD_REG) = ar1   ; set the GBL_CLKMD value and try to 
+                                        ; get to LOCK mode
+checkLockForPllEnable:
+          ar1 = *port(#GBL_CLKMD_REG)
+          tc1 = bit(AR1_MMR, #GBL_CLKMD_LOCK_BIT) || mmap() 
+          if(!tc1) goto checkLockForPllEnable; wait for LOCK to be 1(means lock)
+
+                                        ; at this point LOCK mode is entered
+           
+        .endif
+      .endif
+     .endif
+    .endif
+
+EndofPllPrgmng:
+
+    TRC_init
+
+    ; Stack fill record table is defined in ".gblinit" section where each record
+    ; is specified as triplets (number of words, address, value). End of the 
+    ; record table is denoted by a "0" record inserted by GBL_end macro.
+
+    .if (.MNEMONIC)                     ; mnemonic assembler
+      nop                               ; Worked around CPU_42, CPU_43.
+      nop                               ; Added 5 nops.
+      nop
+      nop
+      nop
+      amov #gblinit, xar1               ; start of initialisation table
+    .else                               ; algebraic assembler
+      nop                               ; Worked around CPU_42, CPU_43.
+      nop                               ; Added 5 nops.
+      nop
+      nop
+      nop
+      xar1 = #gblinit                   ; start of initialisation table
+    .endif
+
+startloop:
+
+    .if (.MNEMONIC)                     ; mnemonic assembler
+      mov *ar1+, ar2                    ; ar2 = number of words to fill
+      bcc endloop, ar2 == #0
+      sub #1, ar2, ar2                  ; repeat(csr) will go one extra loop
+      mov ar2, csr                      ; therefore, csr is set number  - 1
+    .else                               ; algebraic assembler
+      ar2 = *ar1+                       ; ar2 = number of words to fill
+      compare(ar2 == #0) goto endloop
+      ar2 -= #1                         ; repeat(csr) will go one extra loop
+      csr = ar2                         ; therefore, csr is set number  - 1
+    .endif
+
+    .if  (_55L_) | (_55H_)  
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        mov uns(*ar1+) << #16, ac0      ; read the upper 8 bits of address
+        mov uns(*ar1+), ac1             ; read the lower 16 bits
+        or ac1, ac0                     ; concatenate to form 23 bit address 
+        mov ac0, xar3                   ; xar3 = target address
+      .else                             ; algebraic assembler
+        ac0 = uns(*ar1+) << #16         ; read the upper 8 bits of address
+        ac1 = uns(*ar1+)                ; read the lower 16 bits
+        ac0 = ac0 | ac1                 ; concatenate to form 23 bit address 
+        xar3 = ac0                      ; xar3 = target address
+      .endif
+    .else
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        mov *ar1+, ar3                  ; ar3 = target address
+      .else                             ; algebraic assembler
+        ar3 = *ar1+                     ; ar3 = target address
+      .endif
+    .endif
+
+    .if (.MNEMONIC)                     ; mnemonic assembler
+                                        ; ar1 points to value now
+      mov *ar1+, ar2                    ; ar2 = fill value
+                                        ; ar1 points to next triplet
+      rpt csr                           ; do (csr + 1) (number of words) loops
+      mov ar2, *ar3+                    ; write fill value at given address
+                                        ; advance ar3 to next word location
+      b startloop                       ; loop back to process more 
+                                        ; triplets (if any)
+
+    .else                               ; algebraic assembler
+                                        ; ar1 points to value now
+      ar2 = *ar1+                       ; ar2 = fill value
+                                        ; ar1 points to next triplet
+      repeat(csr)                       ; do (csr + 1) (number of words) loops
+      *ar3+ = ar2                       ; write fill value at given address
+                                        ; advance ar3 to next word location
+      goto startloop                    ; loop back to process more
+                                        ; triplets (if any)
+    .endif
+
+endloop:
+
+    .if (.MNEMONIC)                     ; mnemonic assembler
+      nop                               ; Worked around CPU_42, CPU_43.
+      nop                               ; Added 5 nops.
+      nop
+      nop
+      nop
+      amov #___bss__, xar1; reinitialize xar1 with data page value (___bss__)
+    .else                               ; algebraic assembler
+      nop                               ; Worked around CPU_42, CPU_43.
+      nop                               ; Added 5 nops.
+      nop
+      nop
+      nop
+      xar1 = #___bss__    ; reinitialize xar1 with data page value (___bss__)
+    .endif
+
+
+    .if (GBL_USERINIT != 0)     ; if user func is configured
+        call :USERINITFXN:      ; call (*fxn)
+    .endif
+
+    .if  (_55L_) | (_55H_)  
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        mov #1, *(#GBL_initdone); indicate that the initialization is done
+      .else                             ; algebraic assembler
+        *(#GBL_initdone) = #1   ; indicate that the initialization is done
+      .endif
+    .else
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        mov #1, *abs16(#GBL_initdone)
+      .else                             ; algebraic assembler
+        *abs16(#GBL_initdone) = #1
+      .endif
+    .endif
+                                
+        .endm
+
+;
+;# ======== GBL_preamble ========
+;
+;  This macro is called by the generated *cfg.s55 files at the beginning
+;  of the <OS>_init and <OS>_start routines.
+;
+;#
+;# Preconditions:
+;#   none
+;#
+;# Postconditions:
+;#   sp and ssp are both even
+;#
+;
+;        .asg    "xar0,xar1", GBL_preamble$regs
+GBL_preamble    .macro
+    .if  (_55L_) | (_55H_)      ; if large model
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        mov xsp, xar0           ; save sp in ar0
+        and #STD_TARGSTKALIGNMASK, SP_MMR       ; make sp even
+        mov xssp, xar1          ; save ssp in ar1
+        and #STD_TARGSTKALIGNMASK, SSP_MMR      ; make ssp even
+        pshboth xar0            ; save xsp/xssp in stack
+        pshboth xar1
+      .else                             ; algebraic assembler
+        xar0 = xsp              ; save sp in ar0
+        SP_MMR = SP_MMR & #STD_TARGSTKALIGNMASK || mmap()       ; make sp even
+        xar1  = xssp            ; save ssp in ar1
+        SSP_MMR = SSP_MMR & #STD_TARGSTKALIGNMASK || mmap()     ; make ssp even
+        pshboth(xar0)           ; save xsp/xssp in stack
+        pshboth(xar1)
+      .endif
+    .else               ; if small model
+      .if (.MNEMONIC)                   ; mnemonic assembler
+        mov SP_MMR, ar0         ; save sp in ar0
+        mov ssp, ar1            ; save ssp in ar1
+        and #STD_TARGSTKALIGNMASK, SP_MMR       ; make sp even
+        and #STD_TARGSTKALIGNMASK, SSP_MMR      ; make ssp even
+        psh ar0, ar1            ; save sp/ssp in stack
+                                ; sp/ssp are even -- two pushes make sp/ssp even
+      .else                             ; algebraic assembler
+        ar0 = SP_MMR || mmap()  ; save sp in ar0
+        ar1 = ssp               ; save ssp in ar1
+        SP_MMR = SP_MMR & #STD_TARGSTKALIGNMASK || mmap()       ; make sp even
+        SSP_MMR = SSP_MMR & #STD_TARGSTKALIGNMASK || mmap()     ; make ssp even
+        push (ar0,ar1)          ; save sp/ssp in stack
+                                ; sp/ssp are even -- two pushes make sp/ssp even
+      .endif
+    .endif
+        .endm
+
+;
+;# ======== GBL_postamble ========
+;
+;  This macro is called by the generated *cfg.s55 files at the end 
+;  of the <OS>_init and <OS>_start routines, to effect a return from
+;  the routines.
+;
+;#
+;# Preconditions:
+;#     none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+;        .asg    "xar0,xar1", GBL_postamble$regs
+GBL_postamble    .macro
+        .if  (_55L_) | (_55H_)  
+                .if(.MNEMONIC)                  ; if  MNEMONIC ;
+                                                ; assembler
+                        popboth xar1            ; restore SSP/SP
+                        popboth xar0
+                        mov xar0, xsp           ; restore sp/ssp
+                        mov xar1, xssp
+                .else
+                        xar1 = popboth()        ; restore SSP/SP
+                        xar0 = popboth()
+                        xsp  = xar0             ; restore sp/ssp
+                        xssp = xar1 
+                .endif
+        .else                                   ; small model
+                .if(.MNEMONIC); if ; MNEMONIC ; assembler
+                        pop ar0, ar1
+                        mov ar1, SSP_MMR 
+                        mov ar0, sp ; restore sp/ssp
+                .else
+                        ar0,ar1 = pop()
+                        SSP_MMR = ar1 || mmap() 
+                        sp = ar0                ; PARALLEL REMOVED
+                .endif
+        .endif  
+    return
+    .endm
+
+;# ======== GBL_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+    .asg    "", GBL_startup$regs
+GBL_startup        .macro
+    .endm
+
+
+;
+;# ======== GBL_variable ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", GBL_varaible$regs
+GBL_variable    .macro name, value
+
+        .bss    :name:,4,4
+        .global :name:
+
+        .sect ".cinit"
+        .align 1
+        .field :name:,24 
+        .field    0,8 
+        .field :value:
+        .endm
+
+
+
+
+
+
+ .endif

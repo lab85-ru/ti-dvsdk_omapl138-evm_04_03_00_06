@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/TI814x
+END
+loadmodules.sh
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/TI814x/loadmodules.sh
+END
+platform.bld
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/TI814x/platform.bld
+END
+unloadmodules.sh
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/TI814x/unloadmodules.sh
+END
+sysbios6.xs
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/TI814x/sysbios6.xs
+END
+platform.mak
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/TI814x/platform.mak
+END

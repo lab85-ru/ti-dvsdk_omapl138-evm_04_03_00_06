@@ -1,0 +1,193 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== chk.h55 ========
+;
+;
+        .if ($isdefed("CHK_") = 0)    ; prevent multiple includes of this file
+        
+CHK_    .set    1
+
+;
+;# ======== CHK_nargs ========
+;  Check that the exact number of arguments have been passed to 
+;  the macro named "name".  The parameter "argn" is the last formal
+;  parameter to the macro "name".
+;
+;  The global variable CHK_status is set to 
+;       "error"         if an error was detected
+;       ""              otherwise; i.e., no error was detected
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", CHK_nargs$regs
+CHK_nargs       .macro name, argn
+        .nolist
+        .asg "", CHK_status
+        
+        .if ($symlen(argn) = 0)
+            .emsg  ":name: was passed too few parameters."
+            .asg "error", CHK_status
+        .elseif ($firstch(argn, ',') != 0)
+            .emsg  ":name: was passed too many parameters."
+                .asg "error", CHK_status
+        .endif
+        .list
+        .endm
+
+;
+;# ======== CHK_void ========
+;  Check that the exact number of arguments have been passed to 
+;  the macro named "name".  The parameter "dummy" is a dummy
+;  parameter to the macro "name".
+;
+;  The global variable CHK_status is set to 
+;       "error"         if an error was detected
+;       ""              otherwise; i.e., no error was detected
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", CHK_void$regs
+CHK_void        .macro name, dummy
+        .nolist
+        .asg "", CHK_status
+        .if ($symlen(dummy) != 0)
+            .emsg  ":name: was passed too many parameters."
+            .asg "error", CHK_status
+        .endif
+        .list
+        .endm
+
+;
+;# ======== CHK_domain ========
+;  Check that the variable :variable: is one of the enumerated values
+;  in the list :values:.
+;
+;  The global variable CHK_status is set to 
+;       "error"         if variable is not one of the enumerated values
+;       variable        if variable != "" is one of the enumerated values
+;       "value"         if variable == "" and "value" is the enumerated
+;                       value after the "" value in values.
+;
+;  Thus CHK_status is always set to a non-empty string; if variable is 
+;  valid then CHK_status is set to a valid member of values, otherwise it 
+;  is set to "error".
+;
+;  Examples:
+;       CHK_domain STS_add, "jump", "b,call"            ; CHK_status = error
+;       CHK_domain STS_add, "call", "b,call"            ; CHK_status = call
+;       CHK_domain STS_add, "", "b,call"                ; CHK_status = error
+;       CHK_domain STS_add, "", "b,call", "call"        ; CHK_status = call
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", CHK_domain$regs
+CHK_domain      .macro name, variable, values, default
+;       .nolist
+        .var tmp, domain, elem
+        .asg ":values:", domain         ; save valid values in domain
+        .asg ":variable:", elem         ; save variable in elem
+
+        .if ($symlen(":elem:") = 0)
+            .if ($symlen(":default:") != 0)
+                .asg ":default:", CHK_status
+            .else
+                .emsg ":name:: parameter '' is not a member of {:values:}"
+                .asg "error", CHK_status
+            .endif
+            .list
+            .mexit
+        .endif
+                
+                    .asg ":elem:", CHK_status
+; v.170 assembler issue hence code is commented.
+;       .loop
+;           .if ($ismember(tmp, domain) != 0)   
+;               .if ($symcmp(":tmp:", ":elem:") = 0)
+;                   .asg ":tmp:", CHK_status
+;                   .if ($symlen(":tmp:") = 0)
+;                       .if ($ismember(tmp, domain))
+;                           .asg ":tmp:", CHK_status
+;                       .endif
+;                   .endif
+;                   .break
+;               .endif                          
+;           .else                               
+;               .emsg ":name:: argument ':elem:' is not a member of {:values:}"
+;               .asg "error", CHK_status
+;               .break
+;           .endif                              
+;     .endloop
+
+        .list
+
+        .endm
+
+;
+;# ======== CHK_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", CHK_config$regs
+CHK_config      .macro
+        .endm
+
+;
+;# ======== CHK_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", CHK_end$regs
+CHK_end .macro
+        .endm
+
+;
+;# ======== CHK_init ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", CHK_init$regs
+CHK_init .macro
+        .endm
+
+        .endif                      ; if CHK_ not defined

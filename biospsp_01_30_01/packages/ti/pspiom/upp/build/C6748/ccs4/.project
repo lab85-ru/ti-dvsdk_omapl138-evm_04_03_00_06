@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>upp</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.rtsc.xdctools.buildDefinitions.XDC.xdcNature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>UppLocal.h</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/upp/src/UppLocal.h</locationURI>
+		</link>
+		<link>
+			<name>Upp.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/upp/src/Upp.c</locationURI>
+		</link>
+		<link>
+			<name>Upp_ioctl.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/upp/src/Upp_ioctl.c</locationURI>
+		</link>
+		<link>
+			<name>Upp.h</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/upp/Upp.h</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

@@ -1,0 +1,129 @@
+#!/bin/bash
+#   ============================================================================
+#   @file   dsplink
+#
+#   @path   $(DSPLINK)/etc/target/scripts/Linux/
+#
+#   @desc   BASH script to (un)load the DSP/BIOS(TM) LINK driver.
+#
+#   @ver    1.65.01.05_eng
+#   ============================================================================
+#   Copyright (C) 2002-2009, Texas Instruments Incorporated -
+#   http://www.ti.com/
+#
+#   Redistribution and use in source and binary forms, with or without
+#   modification, are permitted provided that the following conditions
+#   are met:
+#   
+#   *  Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
+#   
+#   *  Redistributions in binary form must reproduce the above copyright
+#      notice, this list of conditions and the following disclaimer in the
+#      documentation and/or other materials provided with the distribution.
+#   
+#   *  Neither the name of Texas Instruments Incorporated nor the names of
+#      its contributors may be used to endorse or promote products derived
+#      from this software without specific prior written permission.
+#   
+#   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+#   THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+#   PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+#   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+#   EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#   PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#   OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#   OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+#   EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#   ============================================================================
+
+
+CMD="$1"
+DSPLINK_MODULE="/opt/dsplink/dsplinkk.o"
+
+if [ "$2" != "" ]
+then
+    DSPLINK_MODULE="$2"/dsplinkk.o
+fi
+
+DSPLINK_NODE="/dev/dsplink"
+
+if [[ ("$CMD" == "load") || ("$CMD" == "LOAD") ]]
+then
+    CMD="LOAD"
+else
+    if [[ ("$CMD" == "unload") || ("$CMD" == "UNLOAD") ]]
+    then
+        CMD="UNLOAD"
+    else
+        echo "usage: dsplink <load | unload> [path to dsplinkk.o]"
+        exit 1
+    fi
+fi
+
+#   ============================================================================
+#   Load DSP/BIOS(TM) LINK Driver
+#   ============================================================================
+
+if [ "$CMD"  == "LOAD" ]
+then
+    #   ------------------------------------------------------------------------
+    #   Remove any stale device node(s)
+    #   ------------------------------------------------------------------------
+
+    if [ -e $DSPLINK_NODE ]
+    then
+        rm -f $DSPLINK_NODE
+    fi
+
+    if [ -e $DSPLINK_MODULE ]
+    then
+        insmod $DSPLINK_MODULE || exit 1
+
+        #   --------------------------------------------------------------------
+        #   Get major number for device
+        #   --------------------------------------------------------------------
+
+        MAJ=`awk "\\$2==\"dsplink\" {print \\$1}" /proc/devices`
+
+        if [ "$MAJ" == "" ]
+        then
+            echo "Error: Could not find the DSP/BIOS(TM) LINK Driver."
+            exit 1
+        fi
+
+        CNT=`echo "$MAJ" | wc -l`
+        if [ $CNT != 1 ]
+        then
+            echo "Error: Multiple instance  DSP/BIOS(TM) LINK Driver found."
+            exit 1
+        fi
+
+        #   --------------------------------------------------------------------
+        #   Make a device node with obtained major number
+        #   --------------------------------------------------------------------
+        mknod $DSPLINK_NODE c $MAJ 0
+
+        echo "DSP/BIOS(TM) LINK Driver loaded successfully."
+
+    else
+        echo "Error: Module $DSPLINK_MODULE not found"
+        exit 1
+    fi
+fi
+
+
+#   ============================================================================
+#   Unload DSP/BIOS(TM) LINK Driver
+#   ============================================================================
+
+if [ "$CMD"  == "UNLOAD" ]
+then
+    rm $DSPLINK_NODE
+    rmmod dsplinkk
+    echo "DSP/BIOS(TM) LINK Driver unloaded successfully."
+fi
+
+exit 0

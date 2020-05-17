@@ -1,0 +1,146 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Tool="XDC"
+Config="Debug"
+Config="iDebug"
+Config="iRelease"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\common.c"
+Source="..\..\src\dma_chain_test.c"
+Source="..\..\src\dma_link_test.c"
+Source="..\..\src\dma_misc_test.c"
+Source="..\..\src\dma_ping_pong_test.c"
+Source="..\..\src\dma_poll_test.c"
+Source="..\..\src\dma_test.c"
+Source="..\..\src\main.c"
+Source="..\..\src\qdma_link_test.c"
+Source="..\..\src\qdma_test.c"
+Source="main_XDC.cfg"
+Source="main_XDC.tcf"
+Source="ping_pong.cmd"
+Source="xdcpaths.dat"
+
+[Generated Files]
+Source="main_XDCcfg.s62"
+Source="main_XDCcfg_c.c"
+Source="xdcconfig\cfg.c"
+Source="xdcconfig\linker.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-g -@"=$(Proj_dir)/xdcconfig/compiler.opt" -pdr -fr"$(Proj_dir)\Debug" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "iDebug"]
+Options=-g -@"=$(Proj_dir)/xdcconfig/compiler.opt" -pdr -fr"$(Proj_dir)\iDebug" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "iRelease"]
+Options=-@"=$(Proj_dir)/xdcconfig/compiler.opt" -pdr -o2 -fr"$(Proj_dir)\iRelease" -d"_RELEASE" -mv6400+
+
+["Compiler" Settings: "Release"]
+Options=-@"=$(Proj_dir)/xdcconfig/compiler.opt" -pdr -o2 -fr"$(Proj_dir)\Release" -d"_RELEASE" -mv6400+
+
+["DspBiosBuilder" Settings: "Debug"]
+Options=-Dconfig.importPath="%BIOS_INSTALL_DIR%/packages/ti/bios/examples/common;"
+
+["DspBiosBuilder" Settings: "iDebug"]
+Options=-Dconfig.importPath="%BIOS_INSTALL_DIR%/packages/ti/bios/examples/common;"
+
+["DspBiosBuilder" Settings: "iRelease"]
+Options=-Dconfig.importPath="%BIOS_INSTALL_DIR%/packages/ti/bios/examples/common;"
+
+["DspBiosBuilder" Settings: "Release"]
+Options=-Dconfig.importPath="%BIOS_INSTALL_DIR%/packages/ti/bios/examples/common;"
+
+["Linker" Settings: "Debug"]
+Options=-c -m".\Debug\main_XDC.map" -o".\Debug\main_XDC.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\rtdx\lib\c6000"
+
+["Linker" Settings: "iDebug"]
+Options=-c -m".\iDebug\main_XDC.map" -o".\iDebug\main_XDC.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\rtdx\lib\c6000" -l"log8.a64P"
+
+["Linker" Settings: "iRelease"]
+Options=-c -m".\iRelease\main_XDC.map" -o".\iRelease\main_XDC.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\rtdx\lib\c6000" -l"log8.a64P"
+
+["Linker" Settings: "Release"]
+Options=-c -m".\Release\main_XDC.map" -o".\Release\main_XDC.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\rtdx\lib\c6000"
+
+["XDC" Settings: "Debug"]
+Options=--xdcpathsfile="xdcpaths.dat" -tti.targets.C64P -pti.platforms.sdp2430 -rdebug --tcf -Dconfig.importPath="$(Proj_dir)\.." -w
+
+["XDC" Settings: "iDebug"]
+Options=--xdcpathsfile="xdcpaths.dat" -tti.targets.C64P -pti.platforms.sdp2430 -ridebug --tcf -Dconfig.importPath="$(Proj_dir)\.." -w
+
+["XDC" Settings: "iRelease"]
+Options=--xdcpathsfile="xdcpaths.dat" -tti.targets.C64P -pti.platforms.sdp2430 -rirelease --tcf -Dconfig.importPath="$(Proj_dir)\.." -w
+
+["XDC" Settings: "Release"]
+Options=--xdcpathsfile="xdcpaths.dat" -tti.targets.C64P -pti.platforms.sdp2430 -rrelease --tcf -Dconfig.importPath="$(Proj_dir)\.." -w
+
+["main_XDC.tcf" Settings: "Debug"]
+ExcludeFromBuild=true
+
+["main_XDC.tcf" Settings: "iDebug"]
+ExcludeFromBuild=true
+
+["main_XDC.tcf" Settings: "iRelease"]
+ExcludeFromBuild=true
+
+["main_XDC.tcf" Settings: "Release"]
+ExcludeFromBuild=true
+
+["xdcpaths.dat" Settings: "Debug"]
+ExcludeFromBuild=true
+
+["xdcpaths.dat" Settings: "iDebug"]
+ExcludeFromBuild=true
+
+["xdcpaths.dat" Settings: "iRelease"]
+ExcludeFromBuild=true
+
+["xdcpaths.dat" Settings: "Release"]
+ExcludeFromBuild=true
+
+["xdcconfig\cfg.c" Settings: "Debug"]
+ExcludeFromBuild=true
+
+["xdcconfig\cfg.c" Settings: "iDebug"]
+ExcludeFromBuild=true
+
+["xdcconfig\cfg.c" Settings: "iRelease"]
+ExcludeFromBuild=true
+
+["xdcconfig\cfg.c" Settings: "Release"]
+ExcludeFromBuild=true
+
+["xdcconfig\linker.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["xdcconfig\linker.cmd" Settings: "iDebug"]
+LinkOrder=1
+
+["xdcconfig\linker.cmd" Settings: "iRelease"]
+LinkOrder=1
+
+["xdcconfig\linker.cmd" Settings: "Release"]
+LinkOrder=1
+
+["ping_pong.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["ping_pong.cmd" Settings: "iDebug"]
+LinkOrder=1
+
+["ping_pong.cmd" Settings: "iRelease"]
+LinkOrder=1
+
+["ping_pong.cmd" Settings: "Release"]
+LinkOrder=1
+

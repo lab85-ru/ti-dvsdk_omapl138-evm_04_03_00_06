@@ -1,0 +1,22 @@
+
+/* Add Mcbsp driver to DEV table */
+bios.UDEV.create("mcbsp1");
+bios.UDEV.instance("mcbsp1").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("mcbsp1").initFxn = prog.extern("mcbspUserInit");
+bios.UDEV.instance("mcbsp1").params = prog.extern("mcbspParams");
+bios.UDEV.instance("mcbsp1").fxnTable = prog.extern("Mcbsp_IOMFXNS");
+bios.UDEV.instance("mcbsp1").deviceId = 1;
+
+/*
+ *  Add instance of DIO object to use the configured Mcbsp. This is the device
+ *  SIO streams use.
+ */
+var dioCodecOUT = bios.DIO.create("dioMcbspOUT");
+dioCodecOUT.deviceName = prog.get("mcbsp1");
+dioCodecOUT.useCallBackFxn = false;
+dioCodecOUT.chanParams = prog.extern("mcbspChanparam");
+
+var dioCodecIN = bios.DIO.create("dioMcbspIN");
+dioCodecIN.deviceName = prog.get("mcbsp1");
+dioCodecIN.useCallBackFxn = false;
+dioCodecIN.chanParams = prog.extern("mcbspChanparam");

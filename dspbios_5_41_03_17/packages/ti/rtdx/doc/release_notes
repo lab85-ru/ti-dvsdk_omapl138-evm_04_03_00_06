@@ -1,0 +1,381 @@
+
+                       RTDX Package 2,0,0,5 Release Notes
+
+Last updated:  1 November, 2008
+
+
+The RTDX Package 2,0,0,5 release notes are divided into four sections, 
+"General Information", "New In This Release", "Known Issues" and 
+"Fixed In This Release".
+
+---------------------------------------------------------------------------
+                        General Information
+---------------------------------------------------------------------------
+
+Real-Time Data Exchange (RTDX) enables you to capture real-time data as it 
+is being produced by an application program running on the target processor. 
+The data is captured without interfering with the real-time operation of 
+the target application. It is then sent to the RTDX Host Library, which can 
+record the data on the host. 
+
+This package is a 100% RTSC-ized package that includes RTDX libraries and
+header files for C28 (large model only), C55 (large and huge model), C62, C67, 
+C67+, C674, C64, C64+ (all C6x (except C674) with both little endian and big 
+endian), Arm7 (big and little endian), Arm9 (little endian) and Arm9t (little 
+endian). In fact, the libraries and header files for C62, C67 and C67+ are the 
+same. These libraries support JTAG-RTDX for all ISA mentioned above and support 
+high speed RTDX (HSRTDX) for those C6x ISA (except C67+) mentioned above. 
+There is no HSRTDX support for C28, C55 and C67+.
+
+The versions of code generation tools used to build the RTDX libraries of this
+package are:
+
+C6X: 6.0.16 except 6.1.5 for 674 (Primus).
+C55X: lead3v3.2.2
+C28X: 5.0.0B2
+Arm7: 4.5.0A08023
+Arm9: 4.5.0
+
+---------------------------------------------------------------------------
+                       New In This Release
+---------------------------------------------------------------------------
+
+none
+
+---------------------------------------------------------------------------
+                           Known Issues
+---------------------------------------------------------------------------
+
+  -  The XDS560 Rev. D cable will only run HS-RTDX no higher than 34 MHz
+
+
+---------------------------------------------------------------------------
+                       Fixed In This Release
+---------------------------------------------------------------------------
+
+none
+
+
+
+
+                       RTDX Package 2,0,0,4 Release Notes
+
+Last updated:  14 August, 2008
+
+
+The RTDX Package 2,0,0,4 release notes are divided into four sections, 
+"General Information", "New In This Release", "Known Issues" and 
+"Fixed In This Release".
+
+---------------------------------------------------------------------------
+                        General Information
+---------------------------------------------------------------------------
+
+Real-Time Data Exchange (RTDX) enables you to capture real-time data as it 
+is being produced by an application program running on the target processor. 
+The data is captured without interfering with the real-time operation of 
+the target application. It is then sent to the RTDX Host Library, which can 
+record the data on the host. 
+
+This package is a 100% RTSC-ized package that includes RTDX libraries and
+header files for C28 (large model only), C55 (large and huge model), C62, C67, 
+C67+, C674, C64, C64+ (all C6x (except C674) with both little endian and big 
+endian), Arm7 (big and little endian), Arm9 (little endian) and Arm9t (little 
+endian). In fact, the libraries and header files for C62, C67 and C67+ are the 
+same. These libraries support JTAG-RTDX for all ISA mentioned above and support 
+high speed RTDX (HSRTDX) for those C6x ISA (except C67+) mentioned above. 
+There is no HSRTDX support for C28, C55 and C67+.
+
+The versions of code generation tools used to build the RTDX libraries of this
+package are:
+
+C6X: 6.0.16 except 6.1.2 for 674 (Primus).
+C55X: lead3v3.2.2
+C28X: 5.0.0B2
+Arm7: 4.5.0A08023
+Arm9: 4.5.0
+
+---------------------------------------------------------------------------
+                       New In This Release
+---------------------------------------------------------------------------
+
+C55X huge model RTDX libraries for legacy DSP/BIOS such as BIOS 5.3x
+
+---------------------------------------------------------------------------
+                           Known Issues
+---------------------------------------------------------------------------
+
+  -  The XDS560 Rev. D cable will only run HS-RTDX no higher than 34 MHz
+
+
+---------------------------------------------------------------------------
+                       Fixed In This Release
+---------------------------------------------------------------------------
+
+  Identifier                Headline
+  ----------    -----------------------------------------------------------
+
+  SDSCM00026791 "RTDX can still send data if flow control is paused".
+                This release of RTDX resolves the problem.
+
+  SDSCM00027007 "RTDX_Buffer_Size return is off by 4".
+                This release fixes the problem by only subtracting the size of 
+                the header and not correcting for the other 4 bytes.
+
+  SDSCM00027069 "RTDX needs to support huge model libraries for 5505 and newer 
+                55x cores".
+                This release implements the enhancement.
+
+  SDSCM00027351 "need to use 6.0 tools to build all 6x (except Primus to use 
+                6.1) rtdx libraries and tests (except rtdx driver to use 6.1)".
+                This release implements the change.
+
+
+
+                       RTDX Package 2,0,0,3 Release Notes
+
+Last updated:  23 June, 2008
+
+
+The RTDX Package 2,0,0,3 release notes are divided into four sections, 
+"General Information", "New In This Release", "Known Issues" and 
+"Fixed In This Release".
+
+---------------------------------------------------------------------------
+                        General Information
+---------------------------------------------------------------------------
+
+Real-Time Data Exchange (RTDX) enables you to capture real-time data as it 
+is being produced by an application program running on the target processor. 
+The data is captured without interfering with the real-time operation of 
+the target application. It is then sent to the RTDX Host Library, which can 
+record the data on the host. 
+
+This package is a 100% RTSC-ized package that includes RTDX libraries and
+header files for C28 (large model only), C55, C62, C67, C67+, C674, C64, C64+
+(all C6x (except C674) with both little endian and big endian), Arm7 (big and 
+little endian), Arm9 (little endian) and Arm9t (little endian). In fact, the 
+libraries and header files for C62, C67 and C67+ are the same. These 
+libraries support JTAG-RTDX for all ISA mentioned above and support high 
+speed RTDX (HSRTDX) for those C6x ISA (except C67+) mentioned above. 
+There is no HSRTDX support for C28, C55 and C67+.
+
+The versions of code generation tools used to build the RTDX libraries of this
+package are:
+
+C6X: 6.1.2
+C55X: lead3v3.2.2
+C28X: 5.0.0B2
+Arm7: 4.5.0A08023
+Arm9: 4.5.0B1
+
+---------------------------------------------------------------------------
+                       New In This Release
+---------------------------------------------------------------------------
+
+C674 RTDX libraries.
+
+---------------------------------------------------------------------------
+                           Known Issues
+---------------------------------------------------------------------------
+
+  -  The XDS560 Rev. D cable will only run HS-RTDX no higher than 34 MHz
+
+
+---------------------------------------------------------------------------
+                       Fixed In This Release
+---------------------------------------------------------------------------
+
+  Identifier                Headline
+  ----------    -----------------------------------------------------------
+
+  SDSCM00024529 "ti.rtdx getLibs() fails for non-default profiles". 
+                This release of RTDX resolves the problem. 
+
+  SDSCM00026032 "move rtdxBufferSize config from RtdxDvr to RtdxModule".
+                This release does move rtdxBufferSize config from RtdxDvr
+                to RtdxModule. 
+
+  SDSCM00026347 "RTDX - Automatic placement of code and data sections".
+                This release does automatic placement of .rtdx_code and
+                .rtdx_data sections if the user does not specify the placement
+                of those sections.
+
+
+
+                       RTDX Package 2,0,0,2 Release Notes
+
+Last updated:  25 April, 2008
+
+
+The RTDX Package 2,0,0,2 release notes are divided into four sections, 
+"General Information", "New In This Release", "Known Issues" and 
+"Fixed In This Release".
+
+---------------------------------------------------------------------------
+                        General Information
+---------------------------------------------------------------------------
+
+Real-Time Data Exchange (RTDX) enables you to capture real-time data as it 
+is being produced by an application program running on the target processor. 
+The data is captured without interfering with the real-time operation of 
+the target application. It is then sent to the RTDX Host Library, which can 
+record the data on the host. 
+
+This package is a 100% RTSC-ized package that includes RTDX libraries and
+header files for C28 (large model only), C55, C62, C67, C67+, C64, C64+
+(all C6x with both little endian and big endian), Arm7 (big and little 
+endian), Arm9 (little endian) and Arm9t (little endian). In fact, the 
+libraries and header files for C62, C67 and C67+ are the same. These 
+libraries support JTAG-RTDX for all ISA mentioned above and support high 
+speed RTDX (HSRTDX) for those C6x ISA (except C67+) mentioned above. 
+There is no HSRTDX support for C28, C55 and C67+.
+
+The versions of code generation tools used to build the RTDX libraries of this
+package are:
+
+C6X: 6.0.16
+C55X: lead3v3.2.2
+C28X: 5.0.0B2
+Arm7: 4.4.0B2
+Arm9: 4.5.0A08023
+
+---------------------------------------------------------------------------
+                       New In This Release
+---------------------------------------------------------------------------
+
+none
+
+---------------------------------------------------------------------------
+                           Known Issues
+---------------------------------------------------------------------------
+
+  -  The XDS560 Rev. D cable will only run HS-RTDX no higher than 34 MHz
+
+
+---------------------------------------------------------------------------
+                       Fixed In This Release
+---------------------------------------------------------------------------
+
+  Identifier                Headline
+  ----------    -----------------------------------------------------------
+
+  SDSCM00005120 "Compilation Failure for RTDX projects for ARM 9". 
+                This release of RTDX resolves the problem. 
+
+
+
+
+                       RTDX Package 2,0,0,1 Release Notes
+
+Last updated:  2 November, 2007
+
+
+The RTDX Package 2,0,0,1 release notes are divided into three sections, 
+"General Information", "New In This Release", and "Known Issues".
+
+---------------------------------------------------------------------------
+                        General Information
+---------------------------------------------------------------------------
+
+Real-Time Data Exchange (RTDX) enables you to capture real-time data as it 
+is being produced by an application program running on the target processor. 
+The data is captured without interfering with the real-time operation of 
+the target application. It is then sent to the RTDX Host Library, which can 
+record the data on the host. 
+
+This package is a 100% RTSC-ized package that includes RTDX libraries and
+header files for C28 (large model only), C55, C62, C67, C67+, C64 and C64+
+(all C6x with both little endian and big endian). In fact, the libraries and
+header files for C62, C67 and C67+ are the same. These libraries support
+JTAG-RTDX for all ISA mentioned above and support high speed RTDX (HSRTDX)
+for those C6x ISA mentioned above. There is no HSRTDX support for C28 and C55.
+
+The versions of code generation tools used to build the RTDX libraries of this
+package are:
+
+C6X: 6.0.14
+C55X: lead3v3.2.2
+C28X: 5.0.0B2
+
+---------------------------------------------------------------------------
+                       New In This Release
+---------------------------------------------------------------------------
+
+none
+
+---------------------------------------------------------------------------
+                           Known Issues
+---------------------------------------------------------------------------
+
+  -  C28x must use xds510 based emulators 
+
+  -  The XDS560 Rev. D cable will only run HS-RTDX no higher than 34 MHz
+
+
+---------------------------------------------------------------------------
+                       Fixed In This Release
+---------------------------------------------------------------------------
+
+  Identifier                Headline
+  ----------    -----------------------------------------------------------
+
+  SDSCM00020878 "remove -g and rebuild the RTDX libraries". 
+                removed -g and rebuilt the RTDX libraries for C6x so that 
+                CCS will not pop up a window complaining about not able to
+                find a source file. 
+
+
+
+
+                       RTDX Package 2,0,0 Release Notes
+
+Last updated:  9 October, 2007
+
+
+The RTDX Package 2,0,0 release notes are divided into three sections, 
+"General Information", "New In This Release", and "Known Issues".
+
+---------------------------------------------------------------------------
+                        General Information
+---------------------------------------------------------------------------
+
+Real-Time Data Exchange (RTDX) enables you to capture real-time data as it 
+is being produced by an application program running on the target processor. 
+The data is captured without interfering with the real-time operation of 
+the target application. It is then sent to the RTDX Host Library, which can 
+record the data on the host. 
+
+This package is a 100% RTSC-ized package that includes RTDX libraries and
+header files for C28 (large model only), C55, C62, C67, C67+, C64 and C64+
+(all C6x with both little endian and big endian). In fact, the libraries and
+header files for C62, C67 and C67+ are the same. These libraries support
+JTAG-RTDX for all ISA mentioned above and support high speed RTDX (HSRTDX)
+for those C6x ISA mentioned above. There is no HSRTDX support for C28 and C55.
+
+The versions of code generation tools used to build the RTDX libraries of this
+package are:
+
+C6X: 6.0.14
+C55X: lead3v3.2.2
+C28X: 5.0.0B2
+
+---------------------------------------------------------------------------
+                       New In This Release
+---------------------------------------------------------------------------
+
+Two new APIs are provided to support callbacks, which are used to enable thread
+friendly behavior (blocking vs. spinning).  
+
+These are RTDX_readCB() and RTDX_writeCB().
+
+
+---------------------------------------------------------------------------
+                           Known Issues
+---------------------------------------------------------------------------
+
+  -  C28x must use xds510 based emulators 
+
+  -  The XDS560 Rev. D cable will only run HS-RTDX no higher than 34 MHz
+
+

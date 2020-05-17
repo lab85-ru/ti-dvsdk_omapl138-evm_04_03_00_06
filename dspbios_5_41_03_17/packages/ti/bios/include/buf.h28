@@ -1,0 +1,152 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== buf.h28 ========
+;
+;
+
+        .if ($isdefed("BUF_") = 0)  ; prevent multiple includes of this file
+BUF_    .set    1
+
+        .include std.h28
+        .include obj.h28
+
+isBufAligned    .set    2
+BUF_Obj         .struct
+startaddr       DataPtr     1  ; Starting address of buffer pool
+size            sizep       1  ; Original size of buffer before alignment 
+postalignsize   sizep       1  ; Size of buffer after alignment          
+nextfree        DataPtr     1  ; Pointer to next free buffer            
+totalbuffers    Int         1  ; Total number of buffers in pool
+freebuffers     Int         1  ; Number of free buffers in pool
+segid           Int         1  ; Memory segment for buffer pool
+endPad          .align   isBufAligned
+BUF_A_OBJSIZE   .endstruct
+
+BUF_CORESIZE    .set    BUF_A_OBJSIZE   
+
+BUF_BASE        .set    BUF_Obj.startaddr               
+
+
+        .eval   OBJ_HDRSIZE+BUF_CORESIZE, BUF_OBJSIZE
+
+;
+;# ======== BUF_config ========
+;  Static configuration of the BUF module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", BUF_config$regs
+BUF_config      .macro _enabled
+        .endm
+
+
+;
+;# ======== BUF_init ========
+;  Runtime initialization of the BUF module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", BUF_init$regs
+BUF_init        .macro
+
+        ; only expand if the BUF module is configured
+        .if (BUF$ = 1)
+            .ref _BUF_init
+            lcr _BUF_init 
+        .endif
+
+        .endm
+
+;
+;# ======== BUF_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", BUF_startup$regs
+BUF_startup        .macro
+
+        .if     BUF$NUMOF != 0
+        .endif
+        .endm
+
+;
+;# ======== BUF_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", BUF_end$regs
+BUF_end .macro
+        .endm
+
+;
+;# ======== BUF_Obj ========
+;
+;#            name       -  name of buffer pool object
+;#            size      -  size of each buffer
+;#            numbuff   -  number of buffers in the pool
+;#            align     -  alignment required for bufferpool
+;#            bseg      -  segment in which buffer pool has to be allocated
+;#            postalignsize   -  size of each buffer after alignment
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", BUF_Obj$regs
+BUF_Obj .macro cflag, name, id, bseg, numbuff, size, align, postalignsize
+
+        .global :name:
+        .global :name:$databeg
+
+
+        ; Set blocking bit as 0 here, no C macro interface safe for SDSsq31971
+        C28_allocateObject  isBufAligned , :name:$obj, BUF_OBJSIZE, .buf, 0     
+
+:name:                  .set  :name:$obj + OBJ_HDRSIZE
+
+        C28_cinitHeader  CINITALIGN, isBufAligned, :name:$obj, BUF_OBJSIZE  
+        C28_cinitBegin          isBufAligned
+        OBJ_cinitObj            :name:, OBJ_BUF, BUF_CORESIZE 
+        C28_cinitDataPtr        :name:$databeg  ; Startaddress field is defined in linker command file
+        C28_cinitsizep          :size:          ; original buffer size before alignment
+        C28_cinitsizep          :postalignsize: ; size after alignment
+        C28_cinitDataPtr        :name:$databeg  ; Address of first free buffer
+        C28_cinitInt            :numbuff:       ; Total numner of buffers in pool
+        C28_cinitInt            :numbuff:       ; Number of free buffers in pool
+        C28_cinitInt            :bseg:          ; Memory segment of buffer pool
+        C28_cinitEnd            isBufAligned
+
+        .endm
+
+        .endif          ; if BUF_ is not defined

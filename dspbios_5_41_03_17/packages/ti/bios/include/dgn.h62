@@ -1,0 +1,211 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== dgn.h62 ========
+;
+;
+
+        .if ($isdefed("DGN_H62") = 0)   ; prevent multiple includes of this file
+DGN_H62 .set    1
+
+        .include std.h62
+        .include dev.h62
+ 
+;
+;# ======== DGN_config ========
+;  Static configuration of the DGN module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DGN_config$regs
+DGN_config      .macro _enabled
+
+        .if ($isdefed("STD_FLOATDSP") = 0)
+DGN_FLOATDSP    .set 0
+        .elseif (STD_FLOATDSP = 1)
+DGN_FLOATDSP    .set 1
+        .else
+DGN_FLOATDSP    .set 0
+        .endif
+        
+        .if (DGN_FLOATDSP == 1)
+
+        .global _DGN_fconst
+        .global _DGN_frand
+        .global _DGN_fsine
+        .global _DGN_user
+
+        .asg    _DGN_fconst,  DGN_CONST
+        .asg    _DGN_frand,  DGN_RAND
+        .asg    _DGN_fsine,  DGN_SINE
+        .asg    _DGN_user,   DGN_USER
+
+        .else
+
+        .global _DGN_iconst
+        .global _DGN_irand
+        .global _DGN_isine
+        .global _DGN_user
+
+        .asg    _DGN_iconst, DGN_CONST
+        .asg    _DGN_irand,  DGN_RAND
+        .asg    _DGN_isine,  DGN_SINE
+        .asg    _DGN_user,   DGN_USER
+
+        .endif
+
+        .endm
+
+;
+;# ======== DGN_end ========
+;  Invoked at the end of all other configuration declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DGN_end$regs
+DGN_end .macro
+        .endm
+
+;
+;# ======== DGN_init ========
+;  Runtime initialization of the DGN module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DGN_init$regs
+DGN_init        .macro
+        .endm
+
+;
+;# ======== DGN_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", DGN_startup$regs
+DGN_startup        .macro
+        .if     DGN$NUMOF != 0
+
+        ;
+        ; DGN_init is #defined as SYS_nop in dgn.h,
+        ; so we won't do anything here.
+        ;
+        ;.global _DGN_init
+        ; call   _DGN_init
+
+        .endif
+        .endm
+
+;
+;# ======== DGN_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DGN_Obj$regs
+DGN_Obj .macro cflag, name, id, _useDefaults, _devId, _constant, _randSeed, _randLower, _randUpper, _sineGain, _sineFreq, _sinePhase, _sineRate, _userFxn, _userArg
+        .sect   ".const"
+DGN_:name:      .byte   "/:name:", 0    ; Set up string "/<devName>"
+
+        .if (:_useDefaults: == 0)
+
+; Reserve space for DGN_Params:
+SIO_:name:$params: .usect ".dgn",10 * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+            .if $isname(":_userFxn:")
+                .ref    :_userFxn:
+            .endif
+
+            .if $isname(":_userArg:")
+                ;
+                ; This symbol declaration/reference needs to be performed
+                ; using a .global instead of a .ref.  This is due to the
+                ; fact that _userArg might be defined within the same cfg
+                ; file that uses this DGN_Obj macro (in the case where
+                ; _userArg is a reference to a symbol that is created
+                ; within the configuration) and you get an assembler warning
+                ; if you try to .ref a symbol which is already defined.
+                ;
+                .global :_userArg:
+            .endif
+
+;
+; DGN_Params: The following block must match the DGN_Params structure in dgn.h.
+;
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       10 * STD_TARGWORDMAUS,SIO_:name:$params
+
+            .if (DGN_FLOATDSP == 1)
+                .float  :_constant:
+                .word   :_randSeed:
+                .float  :_randLower:
+                .float  :_randUpper:
+                .float  :_sineGain:
+                .float  :_sineFreq:
+                .float  :_sinePhase:
+                .word   :_sineRate:
+                .word   :_userFxn:
+                .word   :_userArg:
+            .else
+                .word   :_constant:
+                .word   :_randSeed:
+                .word   :_randLower:
+                .word   :_randUpper:
+                .word   :_sineGain:
+                .word   :_sineFreq:
+                .word   :_sinePhase:
+                .word   :_sineRate:
+                .word   :_userFxn:
+                .word   :_userArg:
+            .endif
+
+        .else                           ; if :_useDefaults:
+
+;
+; This matches SIO_:_device:$params
+;
+SIO_:name:$params       .set    0       ; to select default paramters, use NULL
+
+        .endif
+
+;
+; This adds an entry to the device table, DEV_devtab, and init table DEV_devinit
+;
+        .global _DGN_FXNS
+        DEV_addDevice DGN_:name:, _DGN_FXNS, :_devId:, SIO_:name:$params, 0, DEV_SIOTYPE, 0
+
+        .endm
+
+
+        .endif          ; if DGN_H62 is not defined
+

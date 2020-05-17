@@ -1,0 +1,265 @@
+C6Run Project Changelog
+-----------------------
+
+v0.98.03.03 - 15-Nov-2011
+  Improved back-end library build support (fixes build issue with DVSDK and DSPLink
+    platforms when not using DspTskMode=1). Back-end library should now include symbols
+    from the OS and other linked against libraries.  This should allow/improve linking
+    when calling native OS functions in your code.
+  Fixes issues when using C99 'bool' type for function parameters in c6runlib.
+  Fixes issues with code analysis for c6runlib when parameter names contain same name
+    as the function name.
+  Moved Linux signal handling to only apply to C6RunApp applications, not C6RunLib.
+  Fix issues of v0.98.02.02 (debug build issues, cleaning of dependent components).
+  Added extra testcase to frontend test project to validate debug builds.
+
+    
+v0.98.02.02 - 12-Nov-2011
+  DO NOT USE
+  
+
+v0.98.01.01 - 02-Sep-2011
+  Re-added support for DSPLink/DSPBios5 based platforms.
+    All features from 0.98.00.00 now available for legacy platforms.
+  Updated platform definitions for various platforms.
+    Corrected memory map for TI81xx platforms (aligned with 5.02 EZSDK)
+    Fix to BIOS clock frequency for TI814x platform.
+  Modified 'make distclean' target to not remove dependent component 
+    directories.
+  Updated Rules.mak to latest components (notably SysLink 2.00.02.80, which
+    contains a required fix for TI814x).
+  Changed name of generated environment file from 'environment.sh' to 
+    'c6run-environment.sh'.
+  
+
+v0.98.00.00
+  Release for TI816x and TI814x platforms ONLY.  DSPLink platforms not supported
+    with this release.
+  Updated component dependencies to latest required versions for SysLink 2.00.00.78
+    general release (SysBios, IPC, and XDCTools all required updates).
+  Fixed support for COFF usage under SysLink.
+  Workaround for known SysLink issue (SDOCM00075737 - ProcMgr ELF loader
+    does not support argc/argv loading). Argument passing for c6runapp
+    programs now happens using the control message queue when sending the
+    start command to the DSP framework.
+  Added SysLink platforms for OMAP3 parts, made them all use COFF format. 
+    OMAP3 platforms not tested with SysLink for this release
+  Updated 'make install' target to respect common GNU Makefile conventions.
+  NEW FEATURE: Added better support for multi-threading calls to the DSP 
+    when using c6runlib. Now 256 function calls can be in-flight to the DSP.
+  NEW FEATURE: Added support for asynchronous function calls in c6runlib.  Every
+    function that is analyzed for remoting to the DSP is also used to create 
+    asynchronous support functions.  A function of the form:
+      <FxnReturnType> <FxnName> ( <FxnArguments> );
+    will cause the generation of the following three functions:
+      C6RUN_RPC_AsyncHandle <FxnName>_asyncBegin    ( <FxnArguments> );
+      bool                  <FxnName>_asyncIsDone   ( C6RUN_RPC_AsyncHandle );
+      <FxnReturnType>       <FxnName>_asyncEnd      ( C6RUN_RPC_AsyncHandle );
+    These can be used to allow the calling thread to do work while waiting for the DSP
+    to finish the actual function execution.
+  
+  
+      
+v0.97.03.03 - 14-Apr-2011
+  Fixed bug in c6runlib front-ends so that generated associated files (stubs and 
+    fxn_list files) are named the same as output object files names, instead of input
+    source names.
+  Added testcases for front-end tools to use as a regression test for any future changes
+    to the front-end tools.
+  Fixed c6runlib-ar issue where txt files of DSP-side linker command options were not 
+    being cleaned up.
+  Added DSP compiler option so that DSP stub files generated without associated header
+    files containing function declarations will not generate warnings about implicit
+    function declarations.
+  Added DSP linker option to hide a spurious warning that the compiler generates for 
+    application created for SysLink platforms (Warning was 'creating output section 
+    ".plt" without a SECTIONS specification.')
+  Fixed broken test case for compiling code with C6x instrinsics (it compiled but would
+    not actually run).
+  Added checks to generated GPP-side stubs so that if buffer lookup fails, the program
+    will warn you and abort cleanly.  
+
+v0.97.02.02 - 25-Mar-2011
+  Fixed memory system bug when the returned virtual base address (as given from 
+    CMEM) was not a multiple of the bin size.
+  Added multi-threaded GPP demo to the test cases.  Right now this requires manual
+    initialization of the C6Run framework in the main thread before starting the 
+    sub threads which call the DSP.
+  Changed cache handling for INOUT buffers to use a single WbInv call instead of 
+    a separate writeback and invalidate on the GPP side (reduces number of CMEM 
+    ioctl's called).
+    
+v0.97.01.01 - 21-Mar-2011
+  Update to officially support DSPLink/Bios5. Fixed issue with clock() function for 
+    DSPLink/Bios5. Fixed issue with DSPLink DSP-side libraries not getting made
+    as needed by the backend library build.
+  Updated SysLink platforms to include compiler define required for SysLink library
+    builds for the DSP (SYSLINK_BUILD_RTOS #define)
+  Fixed 'make get_components' target to fetch SysLink download from public location.
+  Added DSP-side logging adapter, allowing some OS specific modules to become OS agnostic.
+
+v0.97.00.00 - 14-Mar-2011
+  First official release to support SysLink (new IPC) and SysBios 6 (new RTOS for DSP).
+  Update to Makefile and build system to support both DSPLink and SysLink. Regression
+    testing for DSPLink was not performed - only SysLink support is confirmed. 
+  Tested SysLink on C6A816x EVM using 2.00.00.67a Syslink and SysBios 6.31.04.27
+  Compatible with 7.2.2 C6000 compiler release. 7.2.0 is NOT supported due to a bug.
+  Updated front-end tools so only destination locations are used for temp files, rather
+    than source location.
+  Updated C6RunLib RPC generation to handle function declarations in the C source files
+    without trying to generate stubs for the same (only defined functions will get stubs
+    generated). This allows extern function declarations without issues.
+  Updated backend library code to shutdown DSP and SysLink properly.
+  Added preliminary functionality for measuring DSP load.  Added test case for same.
+
+v0.96.00.00 - 23-Feb-2011
+  Various updates to support new IPC mechanism (SysLink) and new RTOS (SysBios6)
+    These features are experimental at this time and are not necessarily for 
+    general consumption.
+  Changes to default options for compiling and linking. Removed the --gcc option
+    for the C6000 compiler since there was an issue with this when used with the 
+    7.2.0 compiler release. also removed the -ms option since it also appeared to 
+    be causing issues with loop optimization with -O3.
+  Added void_fxn_time test case, which allows timing the roundtrip function call to 
+    the DSP core.
+
+v0.95.02.02 - 29-Dec-2010
+  Fixed memory allocation and buffer lookup issues. Now passing pointer arguments
+    that reside in the middle of a buffer will cause buffer lookup and cache ops
+    to take place properly for the buffer
+  Fixed c6runlib-cc issues when compiling multiple C files with a single command call.
+  Added groundwork for supporting SysLink (next-gen IPC layer from TI).
+
+v0.95.01.01 - 30-Nov-2010
+  Fixed (again) use of 'make get_components' to respect SDK_PATH.  If this variable
+    is used properly the get_components step will now respect the desired path
+    for the dependent components. SDK_PATH will default to current directory if 
+    C6RUN_INSTALL_DIR is empty and SDK_PATH variable does not exist in the environment.
+  Fixed build issue where DSP linker command file was not being created properly on the
+    first build attempt. Resulted in Angstrom/Arago recipe failures.
+  Updated RPC macros and generation code to use more obtuse variable names to avoid 
+    conflicts with the users own code.
+
+v0.95.00.00 - 05-Nov-2010
+  Updated filesysem hierarchy. Moved perl code to lib path, made all backend 
+    outputs into libraries. Tested with beagleboard in Angstrom toolchain SDK.
+  Fixed use of 'make get_components' to respect SDK_PATH.  If this variable
+    is used properly the get_components step will now respect the desired path
+    for the dependent components.
+
+v0.94.05.06 - 01-Nov-2010
+  Added fix for shutdown issues (kernel oops!) seen on OMAP3 platforms. This
+    appears to have been related to a race condition.
+  Some initial (but unused) changes for migrating to BIOS6 (Sys/Bios).
+
+v0.94.04.05 - 04-Oct-2010
+  Added support for dm6467t platform, build tested against official DVSDK 3.10.
+  Untested dm6446 platform added.
+  Updated README and other included documention.
+
+v0.94.04.04 - 29-Sep-2010
+  Bug fix for OMAP3 platforms reporting MMU faults (removed DSP-side Link cleanup).
+  Updated use of CFLAGS variable (replaced all instances of ARM_CFLAGS).
+  Known issue: fflush API does not work as expected from the DSP side.
+  Fixes to cio_example to fix scanf misuse and deal with the fflush bug.
+
+v0.94.03.03 - 15-Sep-2010
+  Bug fix to memory buffer lookup routines.
+  Update to front-end tools and example and test makefiles
+  Fix to top-level makefile to save memory map variables to config.mak
+    This is required since the variables are needed during the build step
+  Revert ARM9 platforms to use soft float instead of softfp.  
+
+v0.94.02.02
+  Bug fixes and other misc. updates
+
+v0.94.01.01
+  Changed naming for buffer modifiers from IN, OUT, INOUT, to INBUF, OUTBUF, INOUTBUF.
+    This is due to some weird issue with the TI C6000 assembler not liking IN and OUT.
+  Added missing license headers and files.
+
+v0.94.00.00
+  Added configure time determination of memory map.  User no longer needs to edit
+    a number of disparate files to do this.
+  Updated ARM-based builds to use environment provided CFLAGS, LDSFLAGS variables 
+    and to eliminate any possible machine specific params that might conflict with
+    other components of the system.
+  Began adding in dsp-rpc-posix project code (this is still a work in progress).
+  Removed redundant platforms and updated all platforms to use the new configure-
+    time memory map determination.
+  Updated output back-end components to sit in lib directory, instead of the specific
+    platform directory. Changed their names as well.
+  Renamed generated Rules.sh to environment.sh and moved it back to top-level directory.
+    It can now be sourced to setup any required variables.
+  Added C6Run option to explicitly request keeping the DSP image and map file.
+  Added a doc directory (right now it just redirects users to the wiki page)
+
+v0.93.00.00
+  Major refactoring in RPC analysis code to make it OO based. 
+  Updated RPC analysis code to correctly deal with pre-processor directives that
+    could affect generated stubs. Code being analyzed is now pre-processed by 
+    GCC before 
+  Updated RPC code to allow C6000 C intrinsics to be used. This was an issue when
+    doing translation unit generation via GCC because GCC did not understand these
+    intrinsics.  Got around this by providing a compatibility header file that is
+    provided to the compiler using -include option.
+
+v0.92.01.01 - v0.92.03.03
+  Various updates and fixes for build system/Makefiles.
+
+v0.92 - 23-Aug-2010
+  Updates to build system to ensure compatibility with OE/Angstrom.
+  Addition of top-level make targets info and check, which can be used to check
+    that the paths in Rules.mak (or in system environment) are all correct.
+  Update to front-end tools to allow addition of pre-built DSP libraries into
+    the linking/build process for the DSP executable.
+  Update to RPC stub generator to detect variadic functions, struct arguments, 
+    enum arguments.
+  Update to RPC stub generator to pick up specialized buffer types from the 
+    function's definition in the source.
+  Update to RPC stub generator to use ARM side stubs and DSP side stubs.
+  Removal of get_dependencies.sh script and merge of this functionality into the
+    top-level makefile('make get_components').  Also split version numbers out
+    in the Rules.mak file.
+  Updated version numbering to four numbers (instead of simple two numbers).
+
+  
+v0.83 - 07-Jul-2010
+  Bug fix in c6runlib-ar where DSP codegen tools not being in path (specifically
+    nm6x) would cause the execution to fail.
+  Added script to get dependencies for the C6Run project. This should make it
+    much easier to get started.
+  Update to DSP-side assembly dispatch routine to allow 10 arguments to be passed
+    and result to be returned correctly.
+  Adding vector argument test case.
+  Adding in malloc replacement for ARM side to use CMEM.  This slows down all memory
+    allocations by 1 to 2 orders or magnitude, but means user does not need to change
+    any application code.  By default all buffers are INOUT buffers, which means
+    cache operations happen on both send to the DSP and return from the DSP.
+  Update all platforms loadmodules.sh scripts to remove all CMEM pools. CMEM region
+    is now entirely heap.
+    
+v0.82 - 25-Jun-2010
+  Bug fix for passing scalar float arguments to functions on the DSP 
+    using C6RunLib.
+  Added error check in RPC generation script to avoid functions that return
+    pointers to memory.
+  Adding multitude of test cases.
+  Fixed issue with passing 9 arguments to functions on the DSP.
+  Fixed build issues with using DSPLink updates from the platform paths
+  Fixed build issues where release version of DSPLink was not created properly.
+  
+v0.81 - 11-Jun-2010
+  Updated build tools and code so that DSPLink memory map configuration
+    happens at run-time instead of build-time.
+  Alpha quality release.
+  Tested on Hawkboard/OMAP-L138 only.
+    
+v0.80 - 10-Jun-2010
+  Initial release to include C6RunLib fucntionality.
+  Release merges support for C6RunLib and C6RunApp into single build
+    system and backend libraries.  Front-end scripts handle specific 
+    differences.
+  Alpha quality release.
+  Tested on Hawkboard/OMAP-L138 only.
+  

@@ -1,0 +1,9 @@
+Package: ti-cgt6x-src
+Version: 6_1_14-r4
+Description: Patched sources for ti-cgt6x
+Section: devel
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI
+Architecture: all
+Source: http://install.source.dir.local/ti_cgt_c6000_6.1.14_setup_linux_x86.bin;name=cgt6xbin

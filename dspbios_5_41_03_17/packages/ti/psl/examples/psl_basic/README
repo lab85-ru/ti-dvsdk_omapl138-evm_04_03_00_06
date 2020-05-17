@@ -1,0 +1,52 @@
+
+psl_basic example
+
+Purpose: 
+
+This example shows how to use some of the basic functionality that
+is provided by the PSL.  It shows:
+
+  - how to initialize the PSL
+  - how to change the frequency and voltage using the PSL.
+  - how to determine the current frequency and voltage settings.
+
+Design:
+
+    In this example, when the function main() executes, PSL is initialized, 
+sets an initial frequency of 200 MHz with a voltage of 1.6v.  The program then
+runs func1() and prints the current frequency and voltage setting that func1()
+ran at.  The program then sets frequency to 72 MHz with a voltage of 1.1v and
+runs func2() and prints the current frequency and voltage setting that func2()
+ran at.  The program then sets frequency to 200 MHz with a voltage of 1.6v and
+runs func3() and prints the current frequency and voltage setting that func2()
+ran at.
+
+Expected output for dsk5510
+
+    Output of this program is sent to the standard output stream as follows:
+
+Executing func1.
+Current frequency: 200.000000 MHz, Current voltage: 1.600000 volts
+
+Executing func2.
+Current frequency: 72.000000 MHz, Current voltage: 1.100000 volts
+
+Executing func3.
+Current frequency: 200.000000 MHz, Current voltage: 1.600000 volts
+
+
+------------------
+Expected output for evm5509a
+
+    Output of this program is sent to the standard output stream as follows:
+
+Executing func1.
+Current frequency: 192.000000 MHz, Current voltage: 1.600000 volts
+
+Executing func2.
+Current frequency: 72.000000 MHz, Current voltage: 1.200000 volts
+
+Executing func3.
+Current frequency: 192.000000 MHz, Current voltage: 1.600000 volts
+
+

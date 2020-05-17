@@ -1,0 +1,241 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== hook.h55 ========
+;
+;
+        .if ($isdefed("HOOK_") = 0)  ; prevent multiple includes of this file
+HOOK_   .set    1
+
+        .include std.h55
+        .include cinit.h55
+
+;
+;# ======== HOOK_config ========
+;  Static configuration of the HOOK module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", HOOK_config$regs
+HOOK_config     .macro  knl_index
+
+        .if (HOOK$ == 1)
+
+            .def        __HOOK_initFxnTable
+            .def        __HOOK_createFxnTable
+            .def        __HOOK_deleteFxnTable
+            .def        __HOOK_exitFxnTable
+            .def        __HOOK_readyFxnTable
+            .def        __HOOK_switchFxnTable
+
+        .endif
+
+        .asg    0, HOOK$index
+        .eval   :knl_index:, HOOK$knl_index
+
+        .ref    __HOOK_knlId
+
+        C55_cinitHeader CINITALIGN, isIntAligned, __HOOK_knlId, INTSIZE, DATAPAGE 
+        C55_cinitBegin  isIntAligned
+        C55_cinitInt  HOOK$knl_index
+        C55_cinitEnd  isIntAligned
+
+        .endm
+
+
+;
+;# ======== HOOK_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", HOOK_Obj$regs
+HOOK_Obj        .macro  cflag, name, id, initFxn, createFxn, deleteFxn, exitFxn, callSwitch, switchFxn, callReady, readyFxn
+
+        .def    :name:
+:name:  .set    HOOK$index
+
+        .asg    HOOK$index, index
+        .if  (_55L_) | (_55H_)  
+            .asg        2 * STD_TARGWORDMAUS, fxnPtrSize
+        .else
+            .asg        1 * STD_TARGWORDMAUS, fxnPtrSize
+        .endif
+
+        C55_cinitHeader CINITALIGN, isCodePtrAligned, __HOOK_initFxnTable + (index * fxnPtrSize), CODEPTRSIZE, DATAPAGE 
+        C55_cinitBegin  isCodePtrAligned
+        C55_cinitCodePtr        :initFxn:
+        C55_cinitEnd    isCodePtrAligned
+
+        C55_cinitHeader CINITALIGN, isCodePtrAligned, __HOOK_createFxnTable + (index * fxnPtrSize), CODEPTRSIZE, DATAPAGE 
+        C55_cinitBegin  isCodePtrAligned
+        C55_cinitCodePtr        :createFxn:
+        C55_cinitEnd    isCodePtrAligned
+
+        C55_cinitHeader CINITALIGN, isCodePtrAligned, __HOOK_deleteFxnTable + (index * fxnPtrSize), CODEPTRSIZE, DATAPAGE 
+        C55_cinitBegin  isCodePtrAligned
+        C55_cinitCodePtr        :deleteFxn:
+        C55_cinitEnd    isCodePtrAligned
+
+        C55_cinitHeader CINITALIGN, isCodePtrAligned, __HOOK_exitFxnTable + (index * fxnPtrSize), CODEPTRSIZE, DATAPAGE 
+        C55_cinitBegin  isCodePtrAligned
+        C55_cinitCodePtr        :exitFxn:
+        C55_cinitEnd    isCodePtrAligned
+
+        C55_cinitHeader CINITALIGN, isCodePtrAligned, __HOOK_readyFxnTable + (index * fxnPtrSize), CODEPTRSIZE, DATAPAGE 
+        C55_cinitBegin  isCodePtrAligned
+        .if     (:callReady:)
+                C55_cinitCodePtr        :readyFxn:
+        .else
+                C55_cinitCodePtr        -1
+        .endif
+        C55_cinitEnd    isCodePtrAligned
+
+
+        C55_cinitHeader CINITALIGN, isCodePtrAligned, __HOOK_switchFxnTable + (index * fxnPtrSize), CODEPTRSIZE, DATAPAGE 
+        C55_cinitBegin  isCodePtrAligned
+        .if     (:callSwitch:)
+                C55_cinitCodePtr        :switchFxn:
+        .else
+                C55_cinitCodePtr        -1
+        .endif
+        C55_cinitEnd    isCodePtrAligned
+
+        .eval   HOOK$index+1, HOOK$index
+
+        .endm
+
+
+;
+;# ======== HOOK_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", HOOK_end$regs
+HOOK_end .macro
+
+        ; expand only if HOOK is enabled.
+        .if (HOOK$ == 1)
+
+            C55_allocateObject isCodePtrAligned,  __HOOK_initFxnTable:,  HOOK$index *CODEPTRSIZE,    .bss
+            C55_allocateObject isCodePtrAligned,  __HOOK_createFxnTable:,  HOOK$index *CODEPTRSIZE,    .bss
+            C55_allocateObject isCodePtrAligned,  __HOOK_deleteFxnTable:,  HOOK$index *CODEPTRSIZE,    .bss
+            C55_allocateObject isCodePtrAligned,  __HOOK_exitFxnTable:,  HOOK$index *CODEPTRSIZE,    .bss
+            C55_allocateObject isCodePtrAligned,  __HOOK_readyFxnTable:,  HOOK$index *CODEPTRSIZE,    .bss
+            C55_allocateObject isCodePtrAligned,  __HOOK_switchFxnTable:,  HOOK$index *CODEPTRSIZE,    .bss
+
+            .ref        __HOOK_switchFxnTablePtr
+            C55_cinitHeader CINITALIGN, isCodePtrAligned, __HOOK_switchFxnTablePtr, CODEPTRSIZE, DATAPAGE 
+            C55_cinitBegin              isCodePtrAligned
+            C55_cinitCodePtr    __HOOK_switchFxnTable
+            C55_cinitEnd                isCodePtrAligned
+
+            .ref        __HOOK_readyFxnTablePtr
+            C55_cinitHeader CINITALIGN, isCodePtrAligned, __HOOK_readyFxnTablePtr, CODEPTRSIZE, DATAPAGE 
+            C55_cinitBegin              isCodePtrAligned
+            C55_cinitCodePtr    __HOOK_readyFxnTable
+            C55_cinitEnd                isCodePtrAligned
+
+            .ref        __HOOK_initFxnTablePtr
+            C55_cinitHeader CINITALIGN, isCodePtrAligned, __HOOK_initFxnTablePtr, CODEPTRSIZE, DATAPAGE 
+            C55_cinitBegin              isCodePtrAligned
+            C55_cinitCodePtr    __HOOK_initFxnTable
+            C55_cinitEnd                isCodePtrAligned
+
+            .ref        __HOOK_createFxnTablePtr
+            C55_cinitHeader CINITALIGN, isCodePtrAligned, __HOOK_createFxnTablePtr, CODEPTRSIZE, DATAPAGE 
+            C55_cinitBegin              isCodePtrAligned
+            C55_cinitCodePtr    __HOOK_createFxnTable
+            C55_cinitEnd                isCodePtrAligned
+
+            .ref        __HOOK_deleteFxnTablePtr
+            C55_cinitHeader CINITALIGN, isCodePtrAligned, __HOOK_deleteFxnTablePtr, CODEPTRSIZE, DATAPAGE 
+            C55_cinitBegin              isCodePtrAligned
+            C55_cinitCodePtr    __HOOK_deleteFxnTable
+            C55_cinitEnd                isCodePtrAligned
+
+            .ref        __HOOK_exitFxnTablePtr
+            C55_cinitHeader CINITALIGN, isCodePtrAligned, __HOOK_exitFxnTablePtr, CODEPTRSIZE, DATAPAGE 
+            C55_cinitBegin              isCodePtrAligned
+            C55_cinitCodePtr    __HOOK_exitFxnTable
+            C55_cinitEnd                isCodePtrAligned
+
+        .endif
+
+        .ref    __HOOK_NUMHOOKS
+
+        C55_cinitHeader CINITALIGN, isIntAligned, __HOOK_NUMHOOKS, INTSIZE, DATAPAGE 
+        C55_cinitBegin  isIntAligned
+        C55_cinitInt  HOOK$index
+        C55_cinitEnd  isIntAligned
+
+        .endm
+
+;
+;# ======== HOOK_init ========
+;  Runtime initialization of the HOOK module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", HOOK_init$regs
+HOOK_init       .macro
+
+        ; only expand if the HOOK module is configured
+        .if (HOOK$ = 1)
+            .ref        __HOOK_doInit
+
+            call        __HOOK_doInit
+        .endif
+
+        .endm
+
+
+;
+;# ======== HOOK_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", HOOK_startup$regs
+HOOK_startup        .macro
+
+        ; only expand if the HOOK module is configured
+        .if (HOOK$ = 1)
+
+        .endif
+
+        .endm
+
+        .endif          ; if HOOK_ is not defined
+

@@ -1,0 +1,22 @@
+/*
+ * ======== LCDC Raster Configuration ========
+ */
+
+/* Add Lcdc Raster driver to DEV table */
+bios.UDEV.create("RASTER0");
+bios.UDEV.instance("RASTER0").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("RASTER0").initFxn = prog.extern("userRasterInit");
+bios.UDEV.instance("RASTER0").params = prog.extern("rasterParams");
+bios.UDEV.instance("RASTER0").fxnTable = prog.extern("Raster_IOMFXNS");
+bios.UDEV.instance("RASTER0").deviceId = 0;
+
+/*
+ *  Add instance of DIO object to use for the LCD writes.  This is the device
+ *  SIO streams use.
+ */
+var rasterDio = bios.DIO.create("rasterDio");
+rasterDio.deviceName = prog.get("RASTER0"); // connect the UDEV instance to DIO
+rasterDio.useCallBackFxn = false;
+
+// specify the name of the ChanParams object, that's defined in the app's C code
+rasterDio.chanParams = prog.extern("rasterChanParams");

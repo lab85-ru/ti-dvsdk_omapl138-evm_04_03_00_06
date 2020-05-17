@@ -1,0 +1,20 @@
+#!/bin/sh
+
+filename="/usr/share/ti/audio/HistoryOfTI.aac"
+if [ ! -f $filename ]; then
+        echo "Audio clip not found"
+        exit 1
+fi
+echo ""
+echo ""
+echo "Unmute left headset" 
+amixer cset name='HeadsetL Mixer AudioL1' on
+echo "Unmute right headset" 
+amixer cset name='HeadsetR Mixer AudioR1' on
+amixer -c 0 set Headset 0+ unmute
+echo ""
+echo "Length of audio clip: 18 seconds"
+echo ""
+echo "Launch GStreamer pipeline"
+echo ""
+gst-launch-0.10 filesrc location=$filename ! faad ! alsasink

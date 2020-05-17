@@ -1,0 +1,100 @@
+
+psl_timer example
+
+Purpose: 
+
+This example shows how to use the callback hooks that are provided 
+by the PSL to adjust peripherals before/after scaling operations.
+These hook functions are called by the PSL's PSL_changeSetpoints
+function.
+
+This particular test uses the callback hooks to stop a timer before
+a scaling operation, and to reprogram and restart the timer following
+a scaling operation.  This example uses the CSL to program the timer.
+The callback functions and timer setup code are located in timer.c.
+
+
+Design:
+
+    In this example, when the function main() executes, PSL is initialized, 
+sets an initial frequency of 200 MHz with a voltage of 1.6v.  The program then
+runs func1() and prints the current frequency and voltage setting that func1()
+ran at.  
+
+    The timer is programmed to trigger every 10 microseconds regardless
+of the frequency.  This test counts the number of timer interrupts that 
+occur.  Since the timer triggers every 10 microseconds, the number of
+interrupts that occur will depend on the frequencies which are used.  See 
+note below.   
+
+    The program then sets frequency to 72 MHz with a voltage of 1.1v.  Before
+the frequency/voltage is changed the timer is stopped/restared before/after 
+the frequency/voltage scaling operation in the StopTimer0/RestartTimer0
+callbacks.  The program then runs func2() and prints the current frequency
+and voltage setting that func2() ran at.
+
+    The program then sets frequency to 200 MHz with a voltage of 1.6v.  Before
+the frequency/voltage is changed the timer is stopped/restared before/after 
+the frequency/voltage scaling operation in the StopTimer0/RestartTimer0
+callbacks.  The program then runs func3() and prints the current frequency
+and voltage setting that func3() ran at.
+
+  Finally the program closes the timer and prints the number of timer
+interrupts.
+
+
+    NOTE:  Since the timer triggers every 10 microseconds, the number of
+interrupts that occur will depend on the frequencies which are used.
+Change the frequency at which func2 is executed to see how this 
+affects the number of timer interrupts.  Instead of executing func2
+at 72 MHz, execute it at a lower frequency and then at a higher
+frequency.  Try 48 MHz and 144 MHz.  
+
+To execute at 48 MHz:
+
+  1. Add a setpoint variable and its initialization:
+       _48MHzSetpoint = 3;  // PSL_cpuFreqTable[3] represents 48 MHz
+  2. Change first call to PSL_changeSetpoints to pass address 
+     of _48MHzSetpoint.
+
+To execute at 144 MHz:
+
+  1. Add a setpoint variable and its initialization:
+       _144MHzSetpoint = 11;  // PSL_cpuFreqTable[11] represents 144 MHz
+  2. Change first call to PSL_changeSetpoints to pass address 
+     of _144MHzSetpoint.
+
+To use other frequencies, refer to the frequencies in PSL_cpuFreqTable.
+
+
+Expected output for dsk5510:
+
+    Output of this program is sent to the standard output stream as follows:
+
+Executing func1.
+Current frequency: 200.000000 MHz, Current voltage: 1.600000 volts
+
+Executing func2.
+Current frequency: 72.000000 MHz, Current voltage: 1.100000 volts
+
+Executing func3.
+Current frequency: 200.000000 MHz, Current voltage: 1.600000 volts
+
+The number of Timer0 interrupts is 175
+
+
+-------------------
+Expected output for evm5509a:
+
+    Output of this program is sent to the standard output stream as follows:
+
+Executing func1.
+Current frequency: 192.000000 MHz, Current voltage: 1.600000 volts
+
+Executing func2.
+Current frequency: 72.000000 MHz, Current voltage: 1.200000 volts
+
+Executing func3.
+Current frequency: 192.000000 MHz, Current voltage: 1.600000 volts
+
+The number of Timer0 interrupts is 171

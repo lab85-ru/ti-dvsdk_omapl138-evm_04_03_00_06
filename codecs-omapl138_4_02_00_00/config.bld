@@ -1,0 +1,24 @@
+/*
+ *  ======== config.bld ========
+ * User note: YOU MUST MODIFY THIS FILE TO SPECIFY THE COMPILER TOOL PATHS.
+ *
+ * Edit this file to specify compiler toolchain paths, and any custom
+ * compiler/linker options.
+ */
+
+/* location of your C6000 codegen tools */
+var C674 = xdc.useModule('ti.targets.C674');
+
+/* location of your CG tools */
+C674.rootDir=java.lang.System.getenv("CODEGEN_INSTALL_DIR");
+C674.platform = "ti.platforms.evmOMAPL138";
+
+/*
+ *  ======== Build.targets ========
+ * list of targets (ISAs + compilers) to build for
+ */
+Build.targets = [
+    C674,
+];
+
+

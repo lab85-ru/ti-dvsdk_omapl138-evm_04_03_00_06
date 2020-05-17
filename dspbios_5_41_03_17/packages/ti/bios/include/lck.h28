@@ -1,0 +1,124 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== lck.h28 ========
+;
+;                       C28_cinitHeader in LCK_Obj
+;! 29-Jan-2002  bhushan Created for large model
+;
+
+        .if ($isdefed("LCK_") = 0)  ; prevent multiple includes of this file
+LCK_    .set    1
+
+        .include std.h28
+        .include sem.h28
+        .include cinit.h28
+
+LCK_Obj         .struct
+sem     .tag    SEM_Obj                 ;/* use SEM_new() to initialize */
+value    Int    1                       ;/* current non-negative lock value */
+owner   CodePtr 1                       ;/* task handle of owner */
+LCK_A_OBJSIZE   .endstruct
+
+LCK_OBJSIZE     .set LCK_A_OBJSIZE
+        
+
+;
+;# ======== LCK_config ========
+;  Static configuration of the LCK module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", LCK_config$regs
+LCK_config      .macro
+        .endm
+
+;
+;# ======== LCK_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+isLckAligned   .set   2                         ;Alignment is required for MBX
+        .asg    "", LCK_Obj$regs
+LCK_Obj .macro cflag, name, id
+
+        C28_allocateObject isLckAligned, :name:, LCK_OBJSIZE * STD_TARGWORDMAUS, .lck, 0                                        ; allocating memory
+        C28_cinitHeader  STD_TARGALIGN, isLckAligned, :name:, LCK_OBJSIZE * STD_TARGWORDMAUS
+        C28_cinitBegin   isLckAligned
+        SEM_core :name:, 1                      ; lock->sem, STS object is null
+        C28_cinitInt   0                                ; lock->value
+        C28_cinitCodePtr   0                            ; lock->owner
+        C28_cinitEnd     isLckAligned
+        .endm
+
+;
+;# ======== LCK_init ========
+;  Runtime initialization of the LCK module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", LCK_init$regs
+LCK_init        .macro
+
+        ; only expand if the LCK module is configured
+        .if (LCK$ = 1)
+        .endif
+
+        .endm
+
+;
+;# ======== LCK_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LCK_startup$regs
+LCK_startup        .macro
+
+        .if     LCK$NUMOF != 0
+        .endif
+        .endm
+
+;
+;# ======== LCK_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", LCK_end$regs
+LCK_end .macro
+        .endm
+
+        .endif          ; if LCK_ is not defined
+    

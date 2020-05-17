@@ -1,0 +1,17 @@
+
+/* Add Mcasp driver to DEV table */
+bios.UDEV.create("mcasp2");
+bios.UDEV.instance("mcasp2").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("mcasp2").initFxn = prog.extern("userMcasp2Init");
+bios.UDEV.instance("mcasp2").params = prog.extern("mcasp2Params");
+bios.UDEV.instance("mcasp2").fxnTable = prog.extern("Mcasp_IOMFXNS");
+bios.UDEV.instance("mcasp2").deviceId = 2;
+
+/*
+ *  Add instance of DIO object to use the configured Mcasp. This is the device
+ *  SIO streams use.
+ */
+var dioCodec = bios.DIO.create("dioMcaspOUT");
+dioCodec.deviceName = prog.get("mcasp2");
+dioCodec.useCallBackFxn = false;
+dioCodec.chanParams = prog.extern("mcasp2_chanparam");

@@ -1,0 +1,33 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C67XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="Linker"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\Idma_example.c"
+Source="..\c6747.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-g -fr"..\obj\debug" -i"..\..\..\..\..\..\..\" -d"_DEBUG" -mo -ml3 -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-o3 -fr"..\obj\release" -i"..\..\..\..\..\..\..\" -mo -ml3 -mv6740
+
+["Linker" Settings: "Debug"]
+Options=-c -m"..\..\obj\debug\Idma_example.map" -o"..\..\obj\debug\Idma_example.out" -w -x -l"rts6740.lib"
+
+["Linker" Settings: "Release"]
+Options=-c -m"..\..\obj\release\Idma_example.map" -o"..\..\obj\release\Idma_example.out" -w -x -l"rts6740.lib"
+
+["c6747.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["c6747.cmd" Settings: "Release"]
+LinkOrder=1

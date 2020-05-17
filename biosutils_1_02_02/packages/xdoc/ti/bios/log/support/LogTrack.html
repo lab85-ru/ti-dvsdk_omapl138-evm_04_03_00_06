@@ -1,0 +1,201 @@
+<html>
+<head>
+<title>module ti.bios.log.support.LogTrack</title>
+<meta name="description" content="LogTrack module">
+<link rel="stylesheet" type="text/css" href="../../../../xdoc.css" />
+</head>
+<body><div id="xdocWrapper"><div id="xdocContent">
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">module</span> <span class="xdoc-id">ti.bios.log.support.</span><span class="xdoc-id">LogTrack</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../../ti/bios/log/support/LogAux.html" title="module LogAux"><img class="xdocHdrArrow" src="../../../../Arrow_left.png"/></a></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../../ti/bios/log/support/package.html" title="package ti.bios.log.support"><img class="xdocHdrArrow" src="../../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../../index.html#ti/bios/log/support/LogTrack.html">index URL</a></div>
+<p class="xdocHdrSummary">LogTrack module</p>
+<ul class="xdocToc">
+<li class="xdocToc"><a class="xdocToc" href="#meta-synop">XDCscript usage</a></li>
+<li class="xdocToc"><a class="xdocToc" href="#spec-synop">XDCspec declarations</a></li>
+<li class="xdocToc"><a class="xdocToc" href="#xdocElems">Individual elements</a></li>
+<li class="xdocToc"><a class="xdocToc" href="#xdoc-desc">Additional documentation</a></li>
+</ul>
+<div class="xdocBrief">
+The LogTrack module is used for tracking values which include CPU load, user
+  defined values, and dynamic TSK creation.  The LogTrack module "tracks," or
+  prints out information about these values to the two special BIOS logs
+  "ti_bios_log_track" and "ti_bios_log_create".
+[&nbsp;<a class="xdocBrief" href="#xdoc-desc">more</a>&nbsp;...&nbsp;]
+</div>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id">XDCspec</span></tt> summary</td>
+<td class="xdocLabelRight">sourced in <span class="xdocLabelFile">ti/bios/log/support/LogTrack.xdc</span></td>
+</tr></table>
+<div class="xdocSynX">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">module</span> <go><span class="xdoc-id">LogTrack</span></go> {<b>&nbsp;&nbsp;...</b>
+</div>
+</div>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynM">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">var</span> LogTrack = <span class="xdoc-kw3">xdc.useModule</span>(<span class="xdoc-id">'ti.bios.log.support.LogTrack'</span>);
+</div>
+<div class='xdocSynHdr'>module-wide config parameters</div>
+
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#create.Log.Size">LogTrack.<span class="xdoc-id">createLogSize</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;size of the "ti_bios_log_create" log</span></span></a> = <i><span class="xdoc-kw2">Int</span></i> 1024;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#track.Log.Size">LogTrack.<span class="xdoc-id">trackLogSize</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;size of the "ti_bios_log_track" log</span></span></a> = <i><span class="xdoc-kw2">Int</span></i> 4096;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><a class="xdocSynGo" href="#track.Period">LogTrack.<span class="xdoc-id">trackPeriod</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;period of the PRD which prints out CPU load and the user defined addresses in the LogTrack_Config structure</span></span></a> = <i><span class="xdoc-kw2">Int</span></i> 10;
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+</div>
+<span id='spec-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id">XDCspec</span></tt> declarations</td>
+<td class="xdocLabelRight">sourced in <span class="xdocLabelFile">ti/bios/log/support/LogTrack.xdc</span></td>
+</tr></table>
+<div class="xdocSynX">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">package</span> <a class="xdoc-link" href="../../../../ti/bios/log/support/package.html" title="ti.bios.log.support">ti.bios.log.support</a>;
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">module</span> <go><span class="xdoc-id">LogTrack</span></go> {
+</div>
+<div class='xdocSynHdr'>module-wide config parameters</div>
+
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><span class="xdoc-kw1">config</span> <span class="xdoc-kw2">Int</span>&nbsp;<a class="xdocSynGo" href="#create.Log.Size"><span class="xdoc-id">createLogSize</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;size of the "ti_bios_log_create" log</span></span></a> = 1024;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><span class="xdoc-kw1">config</span> <span class="xdoc-kw2">Int</span>&nbsp;<a class="xdocSynGo" href="#track.Log.Size"><span class="xdoc-id">trackLogSize</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;size of the "ti_bios_log_track" log</span></span></a> = 4096;
+</div>
+<div class="xdocSynCode">
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;</tt><tt></tt><span class="xdoc-kw1">config</span> <span class="xdoc-kw2">Int</span>&nbsp;<a class="xdocSynGo" href="#track.Period"><span class="xdoc-id">trackPeriod</span><span class="xdocSynHoverShadow"><span class="xdocSynHover">//&nbsp;period of the PRD which prints out CPU load and the user defined addresses in the LogTrack_Config structure</span></span></a> = 10;
+</div>
+<div class="xdocSynCode">
+<tt></tt>}
+</div>
+</div>
+<span id="xdoc-desc"></span>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">The LogTrack module is used for tracking values which include CPU load, user
+  defined values, and dynamic TSK creation.  The LogTrack module "tracks," or
+  prints out information about these values to the two special BIOS logs
+  "ti_bios_log_track" and "ti_bios_log_create".</div>
+<div class="xdocText">To use the LogTrack module, import the configuration code from one of the
+  following two files, depending on the build type (Tconf or RTSC) being used
+  for the user's program:</div>
+<div class="xdocText">a. ti/bios/log/support/LogTrack.tci</div>
+<div class="xdocText">If the user app is built using Tconf, then include this file into
+         the build by adding the following statement into the *.tcf file:</div>
+<div class="xdocText"><PRE class="Example">         utils.importFile('LogTrack.tci');
+</PRE></div>
+<div class="xdocText">b. ti/bios/log/support/package.xs</div>
+<div class="xdocText">If the user app is built using RTSC, then the user must use the Load
+         module. This is done by adding the following line to the *.cfg file:</div>
+<div class="xdocText"><PRE class="Example">         var LogTrack = xdc.useModule('ti.bios.log.support.LogTrack');
+</PRE></div>
+<div class="xdocText">NOTE: The two above mentioned methods are mutually exclusive.  One can't
+           use both method 'a' and method 'b' in the same program build; the
+           user must choose the appropriate one for their build.</div>
+<div class="xdocText">Additionally, it's necessary to call the module's init function, which
+  should be called during program startup:</div>
+<div class="xdocText"><PRE class="Example">  LogTrack_init()
+</PRE></div>
+<div class="xdocText">The LogTrack module's init function could be called from the user's main()
+  function, for example.</div>
+<div class="xdocText">By default, a BIOS PRD object (which runs every 10ms) prints out the CPU
+  load of the DSP, followed by four zero values.  These values are printed to
+  the BIOS log "ti_bios_log_track".
+  Also, the user may change these four values that the LogTrack module prints.
+  This may be done by setting the address locations of those values using the 
+  following API:</div>
+<div class="xdocText"><PRE class="Example">  extern Void LogTrack_setTrackAddrs(Uint32 *addr1, Uint32 *addr2, Uint32
+          *addr3, Uint32 *addr4);
+</PRE></div>
+<div class="xdocText">In order for an address to be valid, it must be a memory mapped address.  It
+  is required that all four arguments to this API be filled; however if the
+  user does not wish to print four different address values, then the address
+  0x0 may be supplied as a "don't care" value.  This API will print the value
+  stored in each address, unless it is address 0x0, in which case it will
+  print "0".</div>
+<div class="xdocText">The LogTrack module also contains a hook function to print information about
+  dynamically created BIOS tasks (TSK).  Each time a BIOS TSK instance is
+  created at run time, its information is printed to the "ti_bios_log_create"
+  BIOS log.</div>
+<div id="xdocElems">
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="create.Log.Size"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">LogTrack.</span><span class="xdoc-id">createLogSize</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../../ti/bios/log/support/LogTrack.html" title="module LogTrack"><img class="xdocHdrArrow" src="../../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../../index.html#ti/bios/log/support/LogTrack.html#create.Log.Size">index URL</a></div>
+<p class="xdocHdrSummary">size of the "ti_bios_log_create" log</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynM">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>LogTrack.<span class="xdoc-id">createLogSize</span> = <i><span class="xdoc-kw2">Int</span></i> 1024;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="track.Log.Size"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">LogTrack.</span><span class="xdoc-id">trackLogSize</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../../ti/bios/log/support/LogTrack.html" title="module LogTrack"><img class="xdocHdrArrow" src="../../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../../index.html#ti/bios/log/support/LogTrack.html#track.Log.Size">index URL</a></div>
+<p class="xdocHdrSummary">size of the "ti_bios_log_track" log</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynM">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>LogTrack.<span class="xdoc-id">trackLogSize</span> = <i><span class="xdoc-kw2">Int</span></i> 4096;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<a class="xdocAnchor" id="track.Period"></a>
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">config</span> <span class="xdoc-id">LogTrack.</span><span class="xdoc-id">trackPeriod</span>&nbsp;&nbsp;<small><span class="xdocSynSum">//&nbsp;module-wide</span></small></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../../ti/bios/log/support/LogTrack.html" title="module LogTrack"><img class="xdocHdrArrow" src="../../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../../index.html#ti/bios/log/support/LogTrack.html#track.Period">index URL</a></div>
+<p class="xdocHdrSummary">period of the PRD which prints out CPU load and the user defined addresses in the LogTrack_Config structure</p>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynM">
+<div class="xdocSynCode">
+<tt></tt><tt></tt>LogTrack.<span class="xdoc-id">trackPeriod</span> = <i><span class="xdoc-kw2">Int</span></i> 10;
+</div>
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+</div>
+<div id="xdocDate">generated on Sat, 23 May 2009 00:29:50 GMT</div>
+</div></div></body>
+</html>

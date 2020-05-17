@@ -1,0 +1,12 @@
+/usr/include/blkid/blkid.h
+/usr/lib/pkgconfig/blkid.pc
+/usr/include/mount/mount.h
+/usr/lib/libblkid.so
+/usr/include/uuid/uuid.h
+/usr/lib/pkgconfig/uuid.pc
+/usr/lib/libmount.la
+/usr/lib/pkgconfig/mount.pc
+/usr/lib/libuuid.la
+/usr/lib/libmount.so
+/usr/lib/libblkid.la
+/usr/lib/libuuid.so

@@ -1,0 +1,233 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== idl.h55 ========
+;
+;
+        .if ($isdefed("IDL_") = 0)              ; prevent multiple includes of
+                                                ; this file
+IDL_    .set    1
+
+        .include cinit.h55
+        .include chk.h55
+        .include fxn.h55
+        .include gbl.h55
+        .include std.h55
+ 
+        .global IDL_A_TABBEG                    ; beginning of table of idle
+                                                ; functions
+        .global _IDL_busy, IDL_F_busy
+        .global _IDL_loop, IDL_F_loop
+        .global _IDL_calibrate
+        .global _IDL_stub
+        .global IDL_D_tabbeg, _IDL_D_TABBEG
+        .global _IDL_F_loop
+        .global _IDL_init
+        .global IDL_D_calibrate                 ; pointer to CPU calibration 
+                                                ; function
+        .global IDL_D_calbeg
+        .global IDL_NULL
+        .global IDL_CALIBRFXN                   ; defined by the Configuration 
+                                                ; Tool.
+
+        .global IDL_D_tabbeg
+
+isIdlAligned    .set    LONGALIGN
+;
+;
+;  ======== IDL_Obj ========
+;
+IDL_Obj         .struct
+fxn     CodePtr   1                             ; function to execute
+endPad  .align  isIdlAligned
+IDL_A_OBJSIZE   .endstruct
+
+
+IDL_BASE        .set    IDL_Obj.fxn
+IDL_O_FXN       .set    IDL_Obj.fxn - IDL_BASE
+;
+;# ======== IDL_Obj ========
+;  Allocate an idle fxn object and initialize all fields.
+;
+;  Note that all idle objects are allocated in a distinguished section
+;  named ".idl"; this insures that all objs are contiguous (this is
+;  required by the implementation of FXN_F_run())
+;
+;  Parameters:
+;       cflag   - configuration flag
+;       name    - name of idle object
+;       id      - id of idle object
+;       fxn     - function to call
+;       calibration     - If this object's fxn forms part of
+;                         Idle time.
+;
+;  fxn is called at idle level.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", IDL_Obj$regs
+IDL_Obj         .macro cflag, name, id, fxn, calibration
+        CHK_nargs "IDL_Obj", calibration
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .mexit
+        .endif
+
+        .var fxnlen
+        .eval $symlen(":fxn:"),fxnlen
+
+        .if (:cflag: = 0)                       ; if this object is not really
+                                                ; to be allocated
+            .mexit                              ; exit quietly now
+        .endif
+
+        .global :name:$
+        .global :name:
+
+        .if ($symcmp(":fxn:", "0") != 0)
+                .global :fxn:
+        .endif
+
+
+:name:$ .tag    IDL_Obj                         ; declare name$ as having type
+                                                ; IDL_Obj
+
+        C55_allocateObject   isIdlAligned, :name:$, IDL_A_OBJSIZE , ".idlcal"
+        C55_cinitHeader      CINITALIGN, isIdlAligned, :name:$, IDL_A_OBJSIZE, DATAPAGE
+        .if (:calibration: != 0)                ; if to be included in
+                                                ; IDL  callibration fxn
+                C55_cinitCodePtr   :fxn: 
+        .else
+                C55_cinitCodePtr   FXN_F_nop 
+
+        .endif
+
+
+:name:  .tag    IDL_Obj                         ; declare name as having type
+                                                ; IDL_Obj
+
+        C55_allocateObject   isIdlAligned, :name:, IDL_A_OBJSIZE , ".idl"
+        C55_cinitHeader      CINITALIGN, isIdlAligned, :name:, IDL_A_OBJSIZE, DATAPAGE
+        C55_cinitCodePtr   :fxn: 
+        .endm
+
+;
+;# ======== IDL_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+
+        .asg    "", IDL_config$regs
+IDL_config      .macro _useclkidltime, _calibrfxn, _calibrerror
+        .asg :_useclkidltime:,USECLKIDLTIME     ; used by IDL_init
+        .endm
+
+;
+;# ======== IDL_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    ":IDL_Obj$regs:", IDL_end$regs
+IDL_end .macro
+        IDL_Obj 1,IDL_END,-1,0,1  ; NULL terminated idle function table
+        .endm
+
+;
+;# ======== IDL_init ========
+;  Runtime initialization for IDL. It runs the IDL_D_calibrate functions
+;  if the auto-caluculate CPU calibration is selected by the configuration
+;  tool.
+;
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#      This routine inherits the dependencies of the function configured 
+;#      as IDL_D_calibrate (IDL_F_calibrate is the default).
+;#
+        .asg    "ac0_g,ac0_h,ac0_l", IDL_init$regs
+IDL_init .macro
+        ; only expand if the IDL module is configured by the user
+        .if (IDL$ = 1)
+                .if (:USECLKIDLTIME:)   ; defined in IDL_config
+                        call _IDL_init
+                 .endif
+        .endif
+        .endm
+
+;
+;# ======== IDL_loop ========
+;
+;  Enter a loop executing list of idle functions and never return.
+;
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#      none (never returns!)
+;#
+;
+        .asg    ":IDL_F_loop$regs:", IDL_loop$regs
+IDL_loop .macro
+        goto _IDL_loop 
+        .endm
+
+
+;
+;# ======== IDL_run ========
+;  Run one-pass through the configured NULL-terminated idle
+;  function list.
+;
+;#
+;# Preconditions:
+;#      ar0 = address of null terminated table of idle functions to execute
+;#
+;# Postconditions:
+;#
+;
+        .asg    ":FXN_F_run$regs:", IDL_run$regs
+IDL_run .macro
+        call FXN_F_run
+        .endm
+
+
+;
+;# ======== IDL_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#      none
+;#
+        .asg    "", IDL_startup$regs
+IDL_startup        .macro
+        .endm
+        .endif          ; if IDL_ is not defined
+

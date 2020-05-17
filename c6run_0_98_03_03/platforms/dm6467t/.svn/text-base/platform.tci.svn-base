@@ -1,0 +1,170 @@
+/*
+ * platform.tci
+ *
+ *  Platform-independent BIOS configuration include file.
+ *  This file defines the common configuration.
+ *
+ * Copyright (C) 2010   Texas Instruments Incorporated - http://www.ti.com/ 
+ * 
+ * 
+ *  Redistribution and use in source and binary forms, with or without 
+ *  modification, are permitted provided that the following conditions 
+ *  are met:
+ *
+ *    Redistributions of source code must retain the above copyright 
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ *    Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the 
+ *    documentation and/or other materials provided with the   
+ *    distribution.
+ *
+ *    Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
+ *  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
+ *  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+ *  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+ *  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+ *  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+ *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+*/
+
+/*  ============================================================================
+ *  Memory map variables (must be filled in at config time)
+ *  ============================================================================
+ */
+var DSP_REGION_BASE_ADDR = 0x00000000;
+var DSP_REGION_CMEM_SIZE = 0x00000000;
+var DSP_REGION_CODE_SIZE = 0x00000000;
+
+
+/*  ============================================================================
+ *  Load assert support
+ *  ============================================================================
+ */
+utils.importFile("assert.tci");
+
+/*  ============================================================================
+ *  Load base TCI file.
+ *  ============================================================================
+ */
+utils.loadPlatform("ti.platforms.evmDM6467");
+
+/*  ============================================================================
+ *  Enable common BIOS features used by all examples
+ *  ============================================================================
+ */
+bios.disableRealTimeAnalysis(prog);
+bios.enableMemoryHeaps(prog);
+bios.disableRtdx(prog);
+bios.enableTskManager(prog);
+
+
+/*  ============================================================================
+ *  MEM
+ *  ============================================================================
+ */
+prog.module("MEM").STACKSIZE  = 0x1000;
+ 
+/*  ============================================================================
+ *  MEM : RESET_VECTOR
+ *  ============================================================================
+ */
+var RESET_VECTOR = prog.module("MEM").create("RESET_VECTOR");
+RESET_VECTOR.base        = DSP_REGION_BASE_ADDR + DSP_REGION_CMEM_SIZE;
+RESET_VECTOR.len         = 0x00000080;
+RESET_VECTOR.space       = "code/data";
+RESET_VECTOR.createHeap  = false;
+RESET_VECTOR.comment     = "RESET_VECTOR";
+
+/*  ============================================================================
+ *  MEM : DSPLINKMEM
+ *  ============================================================================
+ */
+var DSPLINKMEM = prog.module("MEM").create("DSPLINKMEM");
+DSPLINKMEM.len              = 0x30000;
+DSPLINKMEM.createHeap       = false;
+DSPLINKMEM.comment          = "DSPLINKMEM";
+
+/*  ============================================================================
+ *  MEM : POOLMEM
+ *  ============================================================================
+ */
+var POOLMEM = prog.module("MEM").create("POOLMEM");
+POOLMEM.len         = 0xD0000 ;
+POOLMEM.createHeap  = false;
+POOLMEM.comment     = "POOLMEM";
+
+/*  ============================================================================
+ *  MEM : IRAM
+ *  ============================================================================
+ */
+var IRAM    = prog.module("MEM").instance("IRAM");
+IRAM.len    = 0x10000 ;
+
+/*  ============================================================================
+ *  MEM : DDR
+ *  ============================================================================
+ */
+var EXTRAM = prog.module("MEM").instance("DDR2");
+EXTRAM.base          = RESET_VECTOR.base + RESET_VECTOR.len ;
+EXTRAM.len           = DSP_REGION_CODE_SIZE - RESET_VECTOR.len - DSPLINKMEM.len - POOLMEM.len;
+EXTRAM.space         = "code/data";
+EXTRAM.createHeap    = true;
+EXTRAM.heapSize      = DSP_REGION_CODE_SIZE/2;
+EXTRAM.comment       = "EXTRAM";
+
+/*  ============================================================================
+ *  MEM : Set memory regions to sit at the proper location
+ *  ============================================================================
+ */
+DSPLINKMEM.base   = EXTRAM.base + EXTRAM.len;
+POOLMEM.base      = DSPLINKMEM.base + DSPLINKMEM.len ;
+
+/*  
+ *  Set all code and data sections to use External RAM
+ */
+bios.setMemCodeSections (prog, EXTRAM) ;
+bios.setMemDataNoHeapSections (prog, EXTRAM) ;
+bios.setMemDataHeapSections (prog, EXTRAM) ;
+
+prog.module("MEM").BIOSSEG    = IRAM;
+prog.module("MEM").SYSINITSEG = IRAM;
+prog.module("MEM").TEXTSEG    = EXTRAM;
+prog.module("MEM").BIOSOBJSEG = EXTRAM;
+prog.module("MEM").MALLOCSEG  = EXTRAM;
+
+
+/*  ============================================================================
+ *  GBL (MAR bits will be modified at configure time)
+ *  ============================================================================
+ */
+prog.module("GBL").ENABLEALLTRC       = false ;
+prog.module("GBL").PROCID             = parseInt (arguments [0]) ;
+prog.module("GBL").C64PLUSCONFIGURE   = true;
+prog.module("GBL").C64PLUSMAR0to31    = 0x00000000;
+prog.module("GBL").C64PLUSMAR32to63   = 0x00000000;
+prog.module("GBL").C64PLUSMAR64to95   = 0x00000000;
+prog.module("GBL").C64PLUSMAR96to127  = 0x00000000;
+prog.module("GBL").C64PLUSMAR128to159 = 0x00000000;
+prog.module("GBL").C64PLUSMAR160to191 = 0x00000000;
+prog.module("GBL").C64PLUSMAR192to223 = 0x000000C0;
+prog.module("GBL").C64PLUSMAR224to255 = 0x00000000;
+prog.module("GBL").C64PLUSL1DCFG      = "32k";
+prog.module("GBL").C64PLUSL1PCFG      = "32k";
+prog.module("GBL").C64PLUSL2CFG       = "64k" ;
+
+/*  ============================================================================
+ *  TSK : Set stacks to use External RAM
+ *  ============================================================================
+ */
+prog.module("TSK").STACKSEG = EXTRAM;
+

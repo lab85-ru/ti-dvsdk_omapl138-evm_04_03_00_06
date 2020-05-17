@@ -1,0 +1,25 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== bios.h28 ========
+;
+
+        .include chk.h28
+        .include clk.h28
+        .include fxn.h28
+        .include gbl.h28
+        .include hst.h28
+        .include hwi.h28
+        .include idl.h28
+        .include log.h28
+        .include mem.h28
+        .include pip.h28
+        .include prd.h28
+        .include sts.h28
+        .include swi.h28
+        .include trc.h28
+
+        .global BIOS_init       ; BIOS initialization function
+        .global BIOS_start      ; BIOS start function

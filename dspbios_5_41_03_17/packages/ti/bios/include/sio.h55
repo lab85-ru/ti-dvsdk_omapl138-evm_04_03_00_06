@@ -1,0 +1,400 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== sio.h55 ========
+;
+        .if ($isdefed("SIO_") = 0)   ; prevent multiple includes of this file
+SIO_    .set    1
+
+        .include std.h55
+        .include dev.h55
+        .include obj.h55
+        .include que.h55
+        .include fxn.h55
+        .include cinit.h55
+
+SIO_INPUT       .set    0
+SIO_OUTPUT      .set    1
+
+SIO_STANDARD     .set   0
+SIO_ISSUERECLAIM .set   1
+
+isSioAligned    .set    LONGALIGN       ; Embedded DEV_Fxn mandates even alignment
+SIO_Obj         .struct
+pad0            .align          isDevObjAligned
+dobj            .tag            DEV_Obj ; The embedded Device Object
+flush           Int             1       ; Stream flush flag
+pad0            .align      isQueAligned
+framelist       .tag            QUE_Obj ; Start of frame list
+standardFrame   DataPtr         1       ; frame used only by SIO_STANDARD model
+model           Int             1       ; SIO_STANDARD or SIO_ISSUERECLAIM
+pfxns           DataPtr         1       ; pointer to DEV_Fxns
+endPad          .align          isSioAligned
+SIO_A_OBJSIZE   .endstruct
+
+SIO_ChanParams  .struct
+cbfxn           CodePtr
+arg0            Arg
+arg1            Arg
+endPad          .align          DevChanParamsAligned
+SIO_O_CHANPARAMS .endstruct
+
+SIO_BASE        .set    SIO_Obj.dobj
+SIO_O_FRAMELIST .set    SIO_Obj.framelist - SIO_BASE
+
+                .eval SIO_A_OBJSIZE, SIO_CORESIZE
+                .eval SIO_CORESIZE + OBJ_HDRSIZE, SIO_OBJSIZE
+                .eval SIO_O_FRAMELIST, SIO_FRAMELISTOFFSET
+                .eval SIO_O_CHANPARAMS, SIO_CHANPARAMSIZE
+
+;
+;# ======== SIO_config ========
+;  Static configuration of the SIO module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SIO_config$regs
+SIO_config      .macro
+        .endm
+
+;
+;# ======== SIO_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SIO_end$regs
+SIO_end .macro
+        .endm
+
+;
+;# ======== SIO_init ========
+;  Runtime initialization of the SIO module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SIO_init$regs
+SIO_init        .macro
+        .if SIO$NUMOF != 0              ; if SIO$NUMOF !- 0
+            .global _SIO_init
+            call _SIO_init
+        .endif                          ; endif SIO$NUMOF
+
+        .endm
+
+
+;
+;# ======== SIO_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "xar0,xar1", SIO_startup$regs
+SIO_startup        .macro
+        .endm
+
+;
+;# ======== SIO_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", SIO_Obj$regs
+SIO_Obj .macro cflag, name, id, _device, _ctrl, _devId, _fxns, _mode, _bufsize, _nbufs, _bufSegid, _align, _flush, _allocBuf, _model, _timeout, _useChanParams, _cbFxn, _arg0, _arg1
+
+  .global       :name:
+  .eval 0, newbufsize
+
+  .sect         ".const"
+:name:$ctrl     .string ":_ctrl:",0
+
+;
+; 'allocBuf' allows us to allocate buffers for what would normally
+; be empty frames.  These buffer addresses are gathered from
+; the stream with the SIO_staticbuf() API.  This allows SIO to be
+; used in a completely static world.
+;
+
+  .if :_model: = SIO_STANDARD
+    .eval :_nbufs:, nframes
+    .eval :_nbufs:, nbufs       ; allocate SIO_STANDARD bufs
+    .eval :_bufsize:, bufsize
+    .eval :_nbufs: + 1, _nbufs  ; SIO_STANDARD model has n+1 buffers
+  .else
+    .eval :_nbufs:, nframes
+    .if :_allocBuf:
+      .eval :_nbufs:, nbufs     ; allocate issue/reclaim bufs
+      .eval :_bufsize:, bufsize
+    .else
+      .eval 0, nbufs
+      .eval 0, bufsize          ; no buffers allocated for issue/reclaim
+    .endif
+  .endif
+
+;----------------------------------------------------------------------------
+; Allocate (even aligned) space for the OBJ header preamble for SIO object
+; 
+  C55_allocateObject isObjAligned, :name:$obj, (OBJ_HDRSIZE), ".SIO$bss"
+
+;----------------------------------------------------------------------------
+; Allocate (even aligned) space for the SIO_Obj (also termed SIO Core) itself
+; 
+  C55_allocateObject isSioAligned, :name:, (SIO_CORESIZE), ".SIO$bss"
+
+;----------------------------------------------------------------------------
+; Allocate downstream/upstream device QUEs, Device Frame & Buffer pools
+; 
+ C55_allocateObject isQueAligned, :name:$todevice, (QUE_ELEMSIZE), ".SIO$obj"
+
+
+ C55_allocateObject isQueAligned, :name:$frdevice, (QUE_ELEMSIZE), ".SIO$obj"
+
+
+ C55_allocateObject isDevFrameAligned, :name:$framepool, (DEV_FRAMESIZE * :nframes:), ".SIO$obj"
+
+ ;
+ ; the following piece of code will align each individual buffer
+ ;
+ .eval  0, kount
+ .eval (:bufsize: + (:_align: - 1)) & ( ~(:_align: - 1)), newbufsize
+
+ ; :newbufsize: is equal to multiple of :align:. This is needed
+ ; for all the buffers to start at 'align'ed boundary from the start
+ ; of .:name:$bufs section. Note that .:name:$bufs section will also
+ ; start from 'align'ed boundary.
+
+ .loop :nframes:
+      .global :name:$bufpool:kount:
+      C55_allocateObject   1, :name:$bufpool:kount:, :newbufsize: , ".:name:$bufs"
+      .eval kount+1, kount
+ .endloop
+ ; Note that in the above buffer allocation for all the buffers size is of 
+ ; multiple of align value (newbufsize). This implementation is different
+ ; from PIP where last buffer size was usect'd with the default size without
+ ; modifying it.  This was okay in PIP case because there were no frames
+ ; to start on align boundary after the last buffer.
+ ; Whereas in SIO buffers, if allocbuf is true, one more buffer may get
+ ; added into .:name:$bufs section hence above loop allocates all the buffers
+ ; with multiples of 'align' value.
+
+ 
+;------------------------------------------------------------------------------
+; allocate and initialize callback parameter in DEV_Obj
+;
+ .if (:_useChanParams:)
+     .global :name:$callback
+     C55_allocateObject DevChanParamsAligned, :name:$callback, (SIO_CHANPARAMSIZE), ".SIO$obj"
+     ;
+     ; cinit callback structure
+     ;
+     C55_cinitHeader  CINITALIGN, DevChanParamsAligned, :name:$callback, (SIO_CHANPARAMSIZE) , DATAPAGE
+     C55_cinitBegin     DevChanParamsAligned
+     C55_cinitCodePtr   :_cbFxn:
+     C55_cinitArg       :_arg0:
+     C55_cinitArg       :_arg1:
+     C55_cinitEnd       DevChanParamsAligned
+ .endif
+
+;----------------------------------------------------------------------------
+; Allocate stream->standardFrame frame for SIO_STANDARD model case alone.
+; Also, allocate buffer if user has set 'allocBuf' to TRUE, ie., application
+; is *not* allocating buffer on its own.
+;
+  .if (:_model: = SIO_STANDARD)
+ C55_allocateObject isDevFrameAligned, :name:$standardframe, ( DEV_FRAMESIZE ), ".SIO$obj"
+
+    .if (:_allocBuf:)
+     .global :name:$standardaddr
+   C55_allocateObject 1, :name:$standardaddr,  :bufsize: , ".:name:$bufs"
+
+  ; If allocBuf is true one more buffer will be allocated in the section
+  ; .:name:$bufs. Since this is the last buffer in the section .:name:$bufs,
+  ; default size - :bufsize: will be used instead of modified :newbufsize:
+
+    .endif
+
+  .endif
+
+  ;--------------------------------------------------------------------------
+  ; Define symbolic name for SIO_Obj.framelist
+  ;
+  .asg  "(:name: + SIO_FRAMELISTOFFSET)", :name:$frlist
+
+  ;-------------------------------------------------------------------------
+  ; Define symbolic name for head of QUE of DEV_Frames
+  ; SIO_Obj.framelist.next is later, set to this (ie., 1st Frame)
+  ;
+  .asg ":name:$framepool", :name:$frlist$next
+
+  ;-------------------------------------------------------------------------
+  ; Define symbolic name for tail of QUE of DEV_Frames
+  ; SIO_Obj.framelist.prev is later, set to this (ie., Last Frame)
+  ;
+  .asg "(:name:$framepool + (:nframes: - 1) * DEV_FRAMESIZE)", :name:$frlist$prev
+
+;----------------------------------------------------------------------------
+; .cinit the DEV_Frames on the Framelist. We'll loop around inorder
+; to stitch the header QUE_Elem correctly. The symbol :name:$frlist$next
+; will be asigned to address of 1st DEV_Frame on framelist. The address of
+; last DEV_Frame on this framelist will be asigned to symbol 
+; :name:$frlist$prev. These two symbolic QUE_Handle's will be used
+; later on to cinit the downstream and upstream QUE_Handles of the
+; SIO_Obj itself i.e., SIO_Obj.framelist record.
+;
+  .var kount            ; loop count variable
+  .var thisFrame        ; current DEV_Frame pointer
+  .var nextFrame        ; next DEV_Frame pointer
+  .var prevFrame        ; previous DEV_Frame pointer
+  .var frameBuffer      ; DEV_Frame buffer start address
+
+  .eval 0, kount
+  .loop
+  .asg "(:name:$bufpool:kount:)", frameBuffer
+  .asg "(:name:$framepool + (:kount: * DEV_FRAMESIZE))", thisFrame
+    C55_cinitHeader CINITALIGN, isDevFrameAligned, thisFrame, DEV_FRAMESIZE, DATAPAGE
+    .if (:kount: = :nframes: - 1)       ; if this is the last DEV_Frame
+       .asg "(:name: + SIO_FRAMELISTOFFSET)", nextFrame
+    .else
+       .asg "(thisFrame + DEV_FRAMESIZE)", nextFrame
+    .endif
+
+    .if :kount: = 0                     ; if this is first DEV_Frame
+       .asg "(:name: + SIO_FRAMELISTOFFSET)", prevFrame
+    .else
+       .asg "(thisFrame - DEV_FRAMESIZE)", prevFrame
+    .endif
+
+    ; Note: Below macro has builtin Begin/End alignment checks
+    DEV_cinitFrame  :nextFrame:, :prevFrame:, :frameBuffer:, :bufsize:, 0, 0, 0, 0
+    ;
+    ; Advance current DEV frame Buffer address & loop count for next pass
+    ;
+    .eval :kount: + 1, kount
+
+    .break      (kount == :nframes:)    ; break loop if done :nframes: passes
+
+  .endloop
+
+  ;
+  ; initialize the extra DEV_Frame needed for SIO_STANDARD model
+  ;
+  .if :_model: = SIO_STANDARD
+      .asg ":name:$standardframe", thisFrame
+      .asg 0, nextFrame
+      .asg 0, prevFrame
+      .if :_allocBuf:
+          ; User has asked Bios to allocate Frame buffer
+          .asg ":name:$standardaddr", frameBuffer
+      .else
+          ; Application shall allocate Frame buffer on its own
+          .asg 0, frameBuffer
+      .endif
+      C55_cinitHeader CINITALIGN, isDevFrameAligned, thisFrame, DEV_FRAMESIZE, DATAPAGE
+      .if :_allocBuf:
+          DEV_cinitFrame :nextFrame:, :prevFrame:, :frameBuffer:, :bufsize:, 0, 0, 0, 0
+      .else
+          DEV_cinitFrame :nextFrame:, :prevFrame:, :frameBuffer:, 0, 0, 0, 0, 0
+      .endif
+  .endif
+
+  ;
+  ; .cinit the OBJ header record for this SIO Object via OBJ_Obj macro
+  ;
+  C55_cinitHeader  CINITALIGN, isObjAligned, :name:$obj, OBJ_HDRSIZE, DATAPAGE
+  OBJ_cinitObj :name:, OBJ_SIO, SIO_CORESIZE
+
+  ;
+  ; .cinit the SIO_Obj object itself
+  ;
+  C55_cinitHeader  CINITALIGN, isSioAligned, :name:, SIO_CORESIZE, DATAPAGE
+  ; The running .cinit offset reset to 0 by above macro, is live untill
+  ; End of SIO_Obj macro ie., runs thru' all subsequent C55_cinit... calls
+
+  C55_cinitBegin   isSioAligned 
+  ; Note: for all statically created SIO objects, memsegment ID is -1
+  .asg -1, sioMemSegID
+  .if   $symcmp("input", ":_mode:") = 0
+    .asg SIO_INPUT, sioMode
+  .else
+    .asg SIO_OUTPUT, sioMode
+  .endif
+
+  ; 
+  ; Note: ":name:$ctrl" is the device->object field.  Static streams
+  ; use this field to hold the 'control' string until SIO_init()
+  ; gets a chance to call Dxx_open().  This field is usually
+  ; overwritten by Dxx_open().
+  ;
+  ; Note: At this point (assembly time) we don't know the entries
+  ; in the Device driver function functions table.  The best we
+  ; can do is to store the address of the functions table, then
+  ; do some run-time initialization.
+  ;
+
+  .if (:_useChanParams:)
+      .asg      :name:$callback, callback
+  .else
+      .asg      0, callback
+  .endif
+      DEV_cinitObj      :name:$todevice, :name:$frdevice, :_bufsize:, :_nbufs:, :sioMemSegID:, :sioMode:, :_devId:, SIO_:_device:$params, :name:$ctrl, :_timeout:, :_align:, :callback:
+
+  C55_cinitInt          :_flush:
+  C55_cinitDataPtr      :name:$frlist$next
+  C55_cinitDataPtr      :name:$frlist$prev
+
+  .if :_model: = SIO_STANDARD
+    C55_cinitDataPtr    :name:$standardframe
+  .else
+    C55_cinitDataPtr    0
+  .endif
+  C55_cinitInt          :_model:
+
+  C55_cinitDataPtr      :_fxns:
+  C55_cinitEnd          isSioAligned
+
+  ;
+  ; cinit downstream queue to empty condition
+  ;
+  C55_cinitHeader  CINITALIGN, isQueAligned, :name:$todevice, QUE_A_OBJSIZE, DATAPAGE
+  QUE_cinitObj  :name:$todevice
+
+  ;
+  ; cinit upstream queue to empty condition
+  ;
+  C55_cinitHeader  CINITALIGN, isQueAligned, :name:$frdevice, QUE_A_OBJSIZE, DATAPAGE
+  QUE_cinitObj  :name:$frdevice
+
+        .endm           ; End SIO_Obj macro
+
+        .endif          ; .if ($isdefed("SIO_") = 0) 

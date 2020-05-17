@@ -1,0 +1,422 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== prd.h28 ========
+;
+
+
+        .if ($isdefed("PRD_") = 0)   ; prevent multiple includes of this file
+PRD_    .set    1
+
+        .include std.h28
+        .include chk.h28
+        .include cinit.h28
+        .include fxn.h28
+        .include sts.h28
+        .include swi.h28
+
+;
+;  ======== PRD_Obj ========
+;
+
+isPrdAligned    .set 2
+
+PRD_Obj         .struct
+
+
+status   Int    1                               ; PRD On/Off status 
+kount    Int    1                               ; 0 < kount <= period
+period   Int    1                               ; number of ticks before triggering fxn
+nticks  Int     1                               ; total number
+                                                ; of elapsed
+                                                ; ticks
+pad0    .align isFxnAligned
+fxnobj  .tag    FXN_Obj                         ; User defined call back
+                                                ; func Ptr & 2 args
+sts     DataPtr  1                              ; pointer to Stastics
+                                                ; accumulator object
+endPad  .align   isPrdAligned
+PRD_A_OBJSIZE   .endstruct
+
+;
+;  ======== PRD_Obj offsets ========
+;
+PRD_BASE        .set    PRD_Obj.status
+PRD_O_STATUS    .set    PRD_Obj.status-PRD_BASE
+PRD_O_COUNT     .set    PRD_Obj.kount-PRD_BASE
+PRD_O_PERIOD    .set    PRD_Obj.period-PRD_BASE
+PRD_O_NTICKS    .set    PRD_Obj.nticks-PRD_BASE
+PRD_O_FXNOBJ    .set    PRD_Obj.fxnobj-PRD_BASE
+PRD_O_STS       .set    PRD_Obj.sts-PRD_BASE
+
+PRD_STARTPRD    .set    0x8000
+PRD_STOPPRD     .set    0x7fff
+PRD_STATUS_BIT .set 15
+
+        .global PRD_F_swi, PRD_F_tick 
+        .global PRD_D_tickh, PRD_D_tickl, PRD_D_thook
+        .global PRD_D_cur, PRD_D_elapsed, PRD_D_prevtim
+        .global PRD_D_swihandle, PRD_D_scalar, PRD_D_tabbeg, PRD_D_tablen
+        .global PRD_SCALAR, PRD_SWIHANDLE
+        .global PRD_A_TABBEG, PRD_A_TABLEN
+
+        .global PRD_THOOKFXN  ; defined in the Configuration Tool.
+        .global _PRD_D_tick   ; symbol accessed by C BIOS API . SEM_pend()
+
+;
+;# ======== PRD_Obj ========
+;  Allocate a PRD object and initialize all fields.
+;
+;  Note that all PRD objects are allocated in a distinguished
+;  section named ".prd"; this insures that all objs are contiguous
+;  (this is required by the implementation of PRD_F_swi() which must
+;  decrement the count field of each PRD object).
+;
+;  Parameters:
+;       cflag   - configuration flag
+;       name    - name of PRD object
+;       id      - id of PRD object
+;       prd     - 16-bit unsigned PRD period (in PRD ticks / prescaler)
+;       mode    - "continuous" or "one-shot"
+;       fxn     - function to call when count reaches 0
+;       arg0,1  - arguments for fxn
+;
+;  fxn is called at SWI level. 
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    ":FXN_Obj$regs:,:STS_Obj$regs:", PRD_Obj$regs
+PRD_Obj         .macro cflag, name, id, prd, mode, fxn, arg0, arg1, order, filter, maxformat, sumformat, avgformat, unittype
+        .if (:cflag: = 0)
+            .mexit
+        .endif
+
+        CHK_nargs "PRD_Obj", arg1
+        .var    cont
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .mexit
+        .endif
+
+        CHK_domain PRD_Obj, mode, "continuous,one-shot"
+        .asg ":CHK_status:", mode
+        .if ($symcmp(":mode:", "error") = 0)
+            .mexit
+        .endif
+
+        .global :name:$prd      ; generate symbol for vbd/rta
+:name:$prd .set 0
+        .global :name:$period   ; generate period symbol for vbd/rta
+:name:$period .set      :prd:
+        .global :name:$mode     ; generate mode symbol for vbd/rta
+        .if ($symcmp(":mode:", "continuous") = 0)
+:name:$mode .set        0
+             .asg   1, cont     ; continuous
+        .else
+:name:$mode .set        1
+             .asg   0, cont     ; one-shot
+        .endif
+        .global :name:$ord      ; generate order symbol for vbd/rta
+:name:$ord .set :order:
+
+        .global :name:, :name:$aaa, :fxn:
+
+        ; Set blocking bit as 0 here, since we need to keep PRD_Obj contiunous
+        ; address and we don't have C macro interface to access
+        ; PRD macro so it is safe SDSsq31971
+        C28_allocateObject isPrdAligned, :name:, PRD_A_OBJSIZE, .prd, 0
+:name:$aaa .set   :name:  + PRD_O_STS
+
+:name:  .tag    PRD_Obj         ; declare name as having type PRD_Obj
+        C28_cinitHeader CINITALIGN, isPrdAligned, :name: , PRD_A_OBJSIZE 
+
+         C28_cinitBegin          isPrdAligned
+         C28_cinitInt :cont: << 15 | (1-:cont:) << 14   ; status
+         C28_cinitInt  :prd:                            ; kount
+         C28_cinitInt  :prd:                            ; period
+         C28_cinitInt   0                               ; nticks
+         Fxn_cinitObj :fxn:, :arg0:, :arg1:             ; FXN obj
+         C28_cinitDataPtr :name:$sts                    ; pointer to
+                                                        ; STS_Obj
+         C28_cinitEnd    isPrdAligned
+
+        STS_Obj 1, :name:$sts, 0, :filter:, ":maxformat:", ":sumformat:", ":avgformat:", -1, :unittype:, -1, -1, -1, 0, 0
+        .eval PRD$prdCount + 1, PRD$prdCount
+
+        .endm
+
+;
+;# ======== PRD_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", PRD_config$regs
+PRD_config      .macro _scalar, _thook
+
+        ; Currenly, GCONF routine will pass above 2 parameters
+        ; to this macro even though we don't use them here.
+        ; Need to declare related variables as globals in the
+        ; prd.cdb results in this GCONF inconsistency. This is a
+        ; known issue to be fixed when Gconf cleanup occurs.
+
+        .asg 0, PRD_swihandle
+        .eval 0, PRD$prdCount
+
+        ; expand only if the PRD module is configured by the user
+        .if (PRD$ = 1)
+            .if (PRD$NUMOF > 0)
+                .if (SWI$ != 1)
+                    .emsg "PRD objects require the configuration of SWI"
+                    .mexit
+                .endif
+                .asg "PRD_swi", PRD_swihandle
+            .endif
+        .endif
+        
+        .endm
+
+
+;# ======== PRD_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PRD_end$regs
+PRD_end .macro
+PRD_SWIHANDLE .set :PRD_swihandle:
+                        ; (PRD Configured) ? &(PRD_swi) : NULL
+        .endm
+
+;
+;# ======== PRD_init ========
+;  Runtime initialization for PRD
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PRD_init$regs
+PRD_init        .macro
+
+        ; only expand if the PRD module is configured by the user 
+        .if (PRD$ = 1) 
+        .endif
+
+        .endm
+
+;
+;# ======== PRD_start ========
+;  (Re)start "one-shot" timer
+;
+;#
+;# Preconditions:
+;#      xar4 = address of the PRD object
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "ah,al,xar0", PRD_start$regs
+PRD_start       .macro dummy
+        CHK_void PRD_start, dummy
+        ;---------------------------------------------------------------
+        ; During the initial configuration time itself, the continuous
+        ; PRDs are permanently enabled by-way of MSB(bit15)of status=1.
+        ; For One-Shot PRDs however, the bit14 alone is set to 1 during
+        ; initial configuration. the bit14 for a continuous PRD is 0.
+        ; One-Shot PRD's status bit15 will be 0 until an explicit
+        ; PRD_start is issued on it. This PRD_start macro enables the
+        ; One-Shot PRD for just "One single" trigger by way of setting
+        ; bit15 to 1. Soon as, the One-Shot fires, its bit15 is reset
+        ; (see PRD_F_swi) and remains that way untill another PRD_start
+        ; is issued. The manipulation of On/Off of the enable bit in 
+        ; PRD status word is accomplished by a bit-wise XOR of status 
+        ; word with itself left-shifted (and thereby bringing one-Shot 
+        ; config notifier bit14 to bit15 position) one position.
+        ; See PRD_F_swi in prd.s28 for more details on actual usage 
+        ;-----------------------------------------------------------------
+
+        or      *xar4, #PRD_STARTPRD    ;set the MSB of status field
+        ;-----------------------------------------------------------------
+        ; Fix for SDSsq20709 - kount for one-shot should be reset when
+        ; PRD_start gets called.
+        ;-----------------------------------------------------------------
+        mov     ah, *+xar4[#PRD_O_PERIOD] ; ah = period
+        mov     *+xar4[#PRD_O_COUNT],ah   ;count = period
+        ;-----------------------------------------------------------------
+        ; if we came here by way of a PRD_start call made by the
+        ; fxnobj run by the PRD_F_swi for another PRD that was
+        ; listed ahead of us in the Configuration table, then we must
+        ; avoid the problem of running the fxnobj of this PRD
+        ; in the same PRD_F_swi pass. We must wait upuntil next
+        ; invocation of PRD_F_swi. To be able to do this, we just
+        ; accumulate PRD_D_elapsed into this PRD's count value.
+        ; this way, when the present running PRD_F_swi context
+        ; reaches this PRD, a down count of PRD_D_elapsed from
+        ; the count value will put this PRD back to its configured
+        ; period and NOT Zero. 
+        ;
+        ; For more info. please refer to DDTS prob rep# SDSsq05721
+        ;
+        ;       if(PRD_D_cur < addressOf(PRD_Obj)){
+        ;
+        ;       /* we are being started by a PRD which is ahead of 
+        ;        * us in the table of configured PRDs. We therefore,
+        ;        * must avoid chances of prematurely down counting
+        ;        * to <= 0 & hence saying 'we'll fire'. We must adjust
+        ;        * our internal tick-counter(kount)to indeed allow a lapse
+        ;        * of as many ticks as was originally configured for us.
+        ;        * To do this, we rise our counter setting by the present
+        ;        * PRD elapsed tick value.
+        ;        * Following sequence starting with the trigger of 
+        ;        * Driving PRD, explains things further ...
+        ;        * 
+        ;        * This PRD's internal Tick Counter     When/Comment
+        ;        * -------------------------            ----------------
+        ;        * =One-Shot PERIOD                     At Initial Congig.
+        ;        *
+        ;        * +=PRD_elapsed                        When a PRD ahead of
+        ;        *                                      us in table, just
+        ;        *                                      started us in a pass
+        ;
+        ;        *                                      of PRD_F_swi func.
+        ;        *
+        ;        * -=PRD_elapsed                        When we leave above
+        ;        * (back to One-Shot PERIOD)            PRD_F_swi func. after
+        ;        *                                      walking thru' all
+        ;        *                                      config'd PRDs in table.
+        ;        *
+        ;        * <=0 & hence Fired !                  After a lapse of atleast
+        ;        *                                      PERIOD #of ticks from
+        ;        *                                      now on.
+        ;        */
+        ;               PRD.kount += PRD_D_elapsed ticks;
+        ;       }
+        ;--------------------------------------------------------
+                movl    xar0,   #PRD_D_cur
+                movl    acc , *xar0             ;address of cur PRD in acc
+                subl    acc, xar4               ; acc = currPRD - this PRD
+                sb      started?, geq           ; if cur after this don't 
+                                                ; adjust the count value
+                mov     ah, *+xar4[#PRD_O_COUNT] ; ah = this PRD count value
+                movl    xar0, #PRD_D_elapsed     
+                add     ah, *xar0               ; ah = PRD_D_elapsed + count
+                                                ;       value
+                mov     *+xar4[#PRD_O_COUNT],ah ;count value = ah
+
+started?:
+        .endm
+
+;
+;# ======== PRD_stop ========
+;  stop "one-shot" timer
+;
+;#
+;# Preconditions:
+;#      xar4 = address of the PRD object
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PRD_stop$regs
+PRD_stop        .macro dummy
+        CHK_void PRD_stop, dummy
+                tclr    *xar4, #PRD_STATUS_BIT ;clear the status bit
+        .endm
+
+;
+;# ======== PRD_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "xar0", PRD_startup$regs
+PRD_startup        .macro
+        .var    prdcount
+        .eval   PRD$prdCount - 1 , prdcount
+        .asg "#:prdcount:", prdcount
+
+                movl    xar0, #PRD_D_tablen
+                mov     *xar0, prdcount
+                ;*(#PRD_D_tablen) = prdcount
+        .endm
+
+;
+;# ======== PRD_tick ========
+
+;  Advance prd timer counter (kount) and, if necessary, post PRD_F_swi.
+;  This function is designed to be called from interrupt service routines. 
+;
+;#
+;# Preconditions:
+;#      intm = 1 dbgm = 1
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      This API should be invoked from interrupt service routines.
+;#      All the registers that are modified by this API should be 
+;#      saved and restored before and after the API is invoked 
+;#      respectively.
+;#
+;
+        .asg    ":PRD_F_tick$regs:", PRD_tick$regs
+PRD_tick        .macro dummy
+        CHK_void PRD_tick, dummy
+        lcr     PRD_F_tick
+        .endm
+
+;
+;# ======== PRD_getticks ========
+;  Return the current time in PRD ticks.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      ah = PRD_D_tickh
+;#      al = PRD_D_tickl
+;#
+; Note: PRD_D_tickh is aligned at Even word (16bit) boundary
+;       and PRD_D_tickl is aligned at immediate next 16bit word
+;       boundary. This is done to ensure correct Lmem access of
+;       entire 32bit tick value
+;
+        .asg    "xar0, acc", PRD_getticks$regs
+PRD_getticks    .macro dummy
+        CHK_void PRD_getticks, dummy
+                movl    xar0, #PRD_D_tickh
+                movl    acc, *xar0 
+        .endm
+
+        .endif          ; if PRD_ is not defined
+

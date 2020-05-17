@@ -1,0 +1,6 @@
+0xd2e246f1	IPS_register	/opt/ti-dvsdk_omapl138-evm_04_03_00_06/dsplink_1_65_01_05_eng/dsplink/gpp/src/dsplinkk	EXPORT_SYMBOL
+0xd75705bd	IPS_unregister	/opt/ti-dvsdk_omapl138-evm_04_03_00_06/dsplink_1_65_01_05_eng/dsplink/gpp/src/dsplinkk	EXPORT_SYMBOL
+0xd095175d	LDRV_PROC_getState	/opt/ti-dvsdk_omapl138-evm_04_03_00_06/dsplink_1_65_01_05_eng/dsplink/gpp/src/dsplinkk	EXPORT_SYMBOL
+0xcc26c3e2	LDRV_PROC_setState	/opt/ti-dvsdk_omapl138-evm_04_03_00_06/dsplink_1_65_01_05_eng/dsplink/gpp/src/dsplinkk	EXPORT_SYMBOL
+0x13157eef	PMGR_PROC_getSymbolAddress	/opt/ti-dvsdk_omapl138-evm_04_03_00_06/dsplink_1_65_01_05_eng/dsplink/gpp/src/dsplinkk	EXPORT_SYMBOL
+0xa2bd7858	IPS_notify	/opt/ti-dvsdk_omapl138-evm_04_03_00_06/dsplink_1_65_01_05_eng/dsplink/gpp/src/dsplinkk	EXPORT_SYMBOL

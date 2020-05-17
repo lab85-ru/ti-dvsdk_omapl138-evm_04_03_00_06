@@ -1,0 +1,39 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== std.h28 ========
+;
+;  This header file provides a means of defining assembler or
+;  processor-specific values.
+;
+
+        .if ($isdefed("STD_") = 0)    ; prevent multiple includes of this file
+STD_    .set    1
+
+STD_TARGWORDBITS        .set 16 
+STD_TARGWORDMAUS        .set 1 
+STD_TARGCHARMAUS        .set 1 
+STD_TARGALIGN           .set 1
+STD_DSPFAMILY           .set 28
+
+        .if $isdefed(".TMS320C2800_FPU32")
+            .if .TMS320C2800_FPU32
+STD_TMS320C2800FPU     .set 1
+            .else
+STD_TMS320C2800FPU     .set 0
+            .endif
+        .else
+STD_TMS320C2800FPU     .set 0
+        .endif
+
+        
+        .if (STD_TMS320C2800FPU)
+STD_FLOATDSP            .set 1          ; This DSP supports float.
+        .else
+STD_FLOATDSP            .set 0          ; This DSP does not support float.
+        .endif
+
+
+        .endif                          ; .if $isdefed("STD_") = 0)

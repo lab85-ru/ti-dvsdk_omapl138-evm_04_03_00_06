@@ -1,0 +1,316 @@
+Audio Soc example for OMAPL138 devices
+
+Audio Soc example v1.00.00.03
+
+Release Notes Fri August 8, 2010
+
+-----------------------------
+INTRODUCTION
+-----------------------------
+This release of the Audio Soc example is targeted for the OMAP L138 device.
+
+The audio Soc example contains both a DSP-side and ARM-side application.
+The sample application uses a DSP-side output audio driver in-conjunction with 
+the ARM-side application to passed a PCM data (via a file) to the DSP for 
+processing using BIOS Link.
+
+The GPP-side application uses BIOS Link's PROC module (to load and run DSP 
+application), POOL module (to allocate contiguous memory in a shared region), 
+and MSGQ module (to pass data buffers to the DSP). 
+
+The DSP-side application uses the BIOS Platform Support Package (BIOS PSP) 
+drivers in conjunction with the DSP EDMA3 Low Level Driver (EDMA3 LLD) to 
+configure the DSP to process audio sample output which is being inputted by 
+the GPP application.  The DSP has three DSP/BIOS tasks (input, process and 
+output) to handle the incoming data, process and output it.  The DSP/BIOS 
+MSGQ module is used to synchronize and pass/process the data in the different 
+TSKs.
+
+More detailed information on the application can be found at:
+
+http://wiki.davincidsp.com/index.php/Audio_Soc_example
+
+-----------------------------
+DEPENDENCIES
+-----------------------------
+DSP/BIOS v5.41.02.14 
+  - Available @ http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/bios/dspbios/5_41_02_14/index_FDS.html
+
+XDCTools v3.16.01.27
+  - Available @ http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/rtsc/3_16_01_27/index_FDS.html
+
+C6000 Code Generation Tools (CGT) v6.1.9
+  - Available @ (requires my.ti.com account) https://www-a.ti.com/downloads/sds_support/CodeGenerationTools.htm
+
+BIOS Link v1.65.00.01
+  - Available @ http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/DSPLink/
+
+BIOS Platform Support Package (PSP) v1.30.00 
+  - Available @ http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/bios_psp/BIOSPSP/01_30/index_FDS.html
+
+  NOTE: This package is currently only available as a Windows PC install. To 
+  use on a Linux host, the product must be installed on a Windows PC and the 
+  entire directory copied to a Linux host machine. 
+
+  ADDITIONAL NOTE: Version 1.30.00 is the offical release of this package.
+  Version 1.30.00.06 is a Beta release which is slightly older, make sure to 
+  use v1.30.00 of this package.
+
+EDMA3 Low Level Driver (LLD) v1.10.00.01
+  - Available @  http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/edma3_lld/edma3-lld-bios5/01_10_00_01/index_FDS.html
+
+Code Sourcery G++ Lite 2009q1-203 toolchain for ARM 
+  - Available @ http://www.codesourcery.com/sgpp/lite/arm/portal/release858
+
+NOTE: Most, if not all, components above are available as part of the 
+OMAPL138 SDK Arm Product Download  
+
+The latest OMAPL138 ARM Linux SDK is available @: 
+    http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/omap_l138/1_00/latest/index_FDS.html
+
+-----------------------------
+PACKAGE CONTENT
+-----------------------------
+This software package contains the following subdirectories
+
+common - Contains common files shared by both DSP and GPP application 
+
+data - Contains sample PCM data file
+
+dsp - Contains common DSP-side application files to handle the audio output 
+      data
+
+dsp/<platform> - Contains platform specific DSP-side application files to 
+                 handle the audio output data in addition to platform specific
+                 DSP/BIOS configuration files
+
+gpp - Contains common ARM-side application files to passed data to the DSP 
+      using BIOS Link
+
+-----------------------------
+INSTALLATION and USAGE
+-----------------------------
+Extract the file (audio_soc_example_X_XX_XX_XX.tar.gz) on Linux host machine 
+into a directory of choice.
+
+NOTE: If the application is provided as part of the SDK release, extraction 
+will not be necessary. 
+
+Prerequisite to build application:
+
+    Linux kernel image:
+
+        Since the DSP-side application will be using the audio driver (I2C, 
+        McAsp, AIC) the kernel must disable the Advanced Linux Sound 
+        Architecture (ALSA) driver to avoid conflicts.  From menuconfig go to 
+        Device Drivers-> Sound card support and exclude it.
+
+        For more information on re-building and configuring the kernel on
+        OMAPL138 see:
+            http://wiki.davincidsp.com/index.php/GSG:_Building_Software_Components_for_OMAP-L1#Rebuilding_the_Linux_kernel
+
+        There is a GNU makefile target that can be executed that will disable
+        the appropriate driver for the Linux Kernel and re-build a uImage.
+        From the top level directory of this package, type the following in a
+        Terminal window:
+           make audio_soc_linux
+        
+        This will re-build the default Linux kernel for your target with the
+        appropriate driver (ASLA) disabled. A new uImage (uImage_audioSoc) will
+        be created, it can be found in the Linux source directory under
+        arch/arm/boot/.  Use this file to boot your device.
+ 
+    BIOS Link:
+
+        BIOS Link must be built for the correct platform and target.
+
+        If this example package was obtained as part of an SDK release, 
+        go the top level SDK install directory and type:
+            make dsplink
+
+        This will rebuild DSP Link appropriately. See the following link for 
+        more information:
+            http://wiki.davincidsp.com/index.php/Building_The_OMAP-L1_SDK#Quick_build_instructions_for_OMAPL-138
+
+        BIOS Link can also be rebuilt manually and independent of the SDK 
+        installation.  Information on how to do this for the OMAPL138 can
+        be found at:
+            http://wiki.davincidsp.com/index.php/Building_The_OMAP-L1_SDK#DSPLink
+
+    BIOS Platform Support Package (PSP):
+
+        This package must be installed on the Linux host machine for the 
+        application to build.  This package is currently only available with 
+        the OMAPL138 DSP Product Download or from the link listed in the 
+        Dependencies section of this document.
+
+	To use this on the Linux host machine, install the package on a 
+        Windows PC and copy the entire BIOS PSP package to the Linux host 
+        machine.  Make sure the Rules.make points to the correct path for 
+        the BIOSPSP_INSTALL_DIR.
+
+To build application:
+
+    If this example was obtained as part of the SDK installation, go to the
+    top level SDK directory an execute the following command to build the
+    application:
+        make audio_soc_examples
+
+    This will build both the gpp and dsp application in addition to re-building
+    the Linux kernel with the appropriate drivers disabled (See 'Prerequisites 
+    to build application -> Linux Kernel image' section above).  You can then
+    proceed to the "run the application" section below.
+
+    If this example was obtained as a stand-alone package, go to the root 
+    directory where this package was extracted/installed.  The root directory 
+    can be identified by the presence of a Rules.make file 
+
+    Edit the Rules.make file to point to the correct paths for all the dependent
+    components.  Make sure to set the PLATFORM variable for which the
+    application will be built for.
+
+    From the command line in the root directory type:
+        make 
+    
+    This will build both GPP and DSP-side application for the platform specified
+    in Rules.make
+
+    You can also individually build the GPP or the DSP side application by 
+    typing:
+        make dsp
+        make gpp
+
+    To cleanup the build type:
+        make clean
+
+    Either from the root directory or the gpp (or dsp) application directory.
+
+To run the application:
+
+    Boot the device using the Linux kernel that was rebuilt (uImage_audioSoc) 
+    as described in 'Prerequisites to build application -> Linux Kernel image' 
+    section above or the previous section 'To build application' 
+
+    As part of the BIOS Link build, a kernel module (dsplinkk.ko) was created
+    that needs to be installed (insmod) on your target system.  If BIOS Link 
+    was re-built as part of the SDK, the kernel module (release profile) will 
+    be located in the <SDK_ROOT_DIR>/kernel_binaries/<platform> directory.  
+    Otherwise it will be located in the 
+    <LINK_INSTALL_DIR>/gpp/export/BIN/Linux/<PLATFORM>/RELEASE (or DEBUG) 
+    directory.
+
+    Copy the dsplinkk.ko to your target file system and insmod it as follows:
+        mknod /dev/dsplink c 230 0
+        insmod dsplinkk.ko
+
+    For more information regarding loading and running BIOS Link applications
+    refer to Section 1.5.4 of the InstallGuide_Guide_Linux_OMAPL138.pdf
+    located in the BIOS Link doc directory.
+
+    Copy the GPP and DSP audio Soc application to the target file system.
+    The GPP application (audioSoc_gpp) is located in the gpp/<platform>/Release
+    (or Debug) directory.  The DSP application (audioSoc_dsp.out) is 
+    located in the dsp/<platform>/Debug directory.  
+
+    NOTE:  The GPP audio application's profile (Release or Debug) must match the
+    profile for the BIOS Link module previously installed (insmod dsplinkk.ko)
+    for the application to successfully run.
+
+    From the target system run:
+        ./audioSoc_gpp audioSoc_dsp.out davincieffect_clip.pcm
+ 
+    The application will load/run the DSP application using the audio PCM data 
+    file as input for the DSP audio driver to process. The DSP-side application
+    will output the audio data via the line out (mini jack connector). 
+ 
+    ****************************************************************************
+    ****************************************************************************
+    NOTE: The audio file passed into the application (last parameter) must be 
+    a PCM data file.  The file must be in little endian format with 16-bit 
+    linear PCM data.
+
+    A sample audio PCM file (davincieffect_clip.pcm) is provided in the data 
+    directory of the application's root dir.
+
+    The sample PCM file is sampled at 48kHz which corresponds to the audio 
+    driver's configuration parameters (audioChanParamsOUT) on the DSP-side.
+    The sample rate for the audio driver must be changed to reflect the PCM
+    files sample rate.  The parameter is located in the deviceDriverInit.c file
+    for the platform being used (e.g. dsp/evmOMAPL138 directory).
+
+    Future releases will allow the passing of the audio file sample rate 
+    from the GPP-side.
+
+    ****************************************************************************
+
+    The Movie Player (mplayer - GNU GPL v2) project can be used to convert most
+    audio format files (MP3, WMA, etc) to a raw (no header) PCM data file. 
+    Information on mplayer can be found at:
+        http://www.mplayerhq.hu/
+     
+    To install mplayer on Ubuntu, execute the following command from a Terminal
+    window:
+         sudo apt-get install mplayer
+
+    Various binary builds are avaiable for multiple host OSes (Windows, OS X,
+    Fedora, etc) are available:
+        http://www.mplayerhq.hu/design7/dload.html#binaries
+    and
+        http://www.mplayerhq.hu/design7/projects.html#unofficial_packages
+
+    Once installed on your Host machine, from a command prompt run mplayer as
+    follows to convert an supported audio file to RAW pcm:
+        mplayer -vc null -vo null -ao pcm:nowaveheader:fast:file=<output file>.pcm <input file>.mp3
+
+    The output screen will display the sample rate at which the original file 
+    was sampled at.  Make sure that this sample rate corresponds to the sample 
+    rate configuration for the audio driver on the DSP (as previously described
+    above).
+    ****************************************************************************
+    ****************************************************************************
+
+
+-----------------------------
+HOST SUPPORT
+-----------------------------
+This release supports installation and development on Linux workstation.
+
+-----------------------------
+DEVICE SUPPORT
+-----------------------------
+This release supports the Texas Instruments L138 EVM board.
+
+Though there is support to build the audio Soc application for the OMAPL137 EVM,
+functionality has not yet been validated on the device.
+
+-----------------------------
+VALIDATION INFORMATION
+-----------------------------
+The validation of the application was performed on an OMAPL138 Evaluation
+Module (EVM) using all the component version listed in the Dependencies
+Section.
+
+-----------------------------
+KNOWN ISSUES AND LIMITATIONS
+-----------------------------
+None
+
+-----------------------------
+FIXED DEFECTS
+-----------------------------
+-- In v1.00.00.03 --
+
+* The audio application properly terminates the DSP (deletes driver) and stops 
+  EDMA/McASP drivers when no more data is being processed on the GPP.
+
+* CTRL+C functionalitiy has been added to the GPP application and properly
+  terminates the application.
+
+-- In v1.00.00.02 --
+
+* The GPP audio_main.c when calling POOL_free was freeing a pointer to the 
+  buffer (&AppDataBuf) not the buffer (AppDatBuff) itself which issued the 
+  following BIOS Link error status:
+    "POOL_free () DataBuf failed. Status = [0x8013]" 
+  when the application is terminated.  The error message is only visable on 
+  certain version of DSP/BIOS Link. 

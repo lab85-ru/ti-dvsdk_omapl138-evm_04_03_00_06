@@ -1,0 +1,210 @@
+#   ============================================================================
+#   @file   SOURCES
+#
+#   @path   $(DSPLINK)/gpp/src/arch/
+#
+#   @desc   This file contains list of source files to be compiled.
+#
+#   @ver    1.65.01.05_eng
+#   ============================================================================
+#   Copyright (C) 2002-2009, Texas Instruments Incorporated - http://www.ti.com/
+#
+#   This program is free software; you can redistribute it and/or modify it
+#   under the terms of the GNU General Public License as published by the
+#   Free Software Foundation version 2.
+#   
+#   This program is distributed "as is" WITHOUT ANY WARRANTY of any kind,
+#   whether express or implied; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+#   General Public License for more details.
+#   ============================================================================
+
+SOURCES  := CFG_map.c \
+            dsp.c
+
+# DM6446GEM - DaVinci
+ifeq ($(findstring DM6446GEM, $(TI_DSPLINK_DSPDEVICES)), DM6446GEM)
+# Sources with shared memory code
+    ifeq ("$(TI_DSPLINK_DM6446GEM_PHYINTERFACE)", "SHMEM")
+        SOURCES += DM6446GEM$(DIRSEP)shmem$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)dm6446gem_phy_shmem.c
+    endif
+# Sources with generic code
+    SOURCES += DM6446GEM$(DIRSEP)dm6446gem.c
+    SOURCES += DM6446GEM$(DIRSEP)dm6446gem_hal.c
+    SOURCES += DM6446GEM$(DIRSEP)dm6446gem_hal_intgen.c
+    SOURCES += DM6446GEM$(DIRSEP)dm6446gem_hal_pwr.c
+    SOURCES += DM6446GEM$(DIRSEP)dm6446gem_hal_boot.c
+    SOURCES += DM6446GEM$(DIRSEP)dm6446gem_map.c
+endif
+
+# DA8XXGEM - Primus 
+ifeq ($(findstring DA8XXGEM, $(TI_DSPLINK_DSPDEVICES)), DA8XXGEM)
+# Sources with shared memory code
+    ifeq ("$(TI_DSPLINK_DA8XXGEM_PHYINTERFACE)", "SHMEM")
+        SOURCES += DA8XXGEM$(DIRSEP)shmem$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)da8xxgem_phy_shmem.c
+    endif
+# Sources with generic code
+    SOURCES += DA8XXGEM$(DIRSEP)da8xxgem.c
+    SOURCES += DA8XXGEM$(DIRSEP)da8xxgem_hal.c
+    SOURCES += DA8XXGEM$(DIRSEP)da8xxgem_hal_intgen.c
+    SOURCES += DA8XXGEM$(DIRSEP)da8xxgem_hal_pwr.c
+    SOURCES += DA8XXGEM$(DIRSEP)da8xxgem_hal_boot.c
+    SOURCES += DA8XXGEM$(DIRSEP)da8xxgem_map.c
+endif
+
+#DM6437 - DM64LC
+ifeq ($(findstring DM6437, $(TI_DSPLINK_DSPDEVICES)), DM6437)
+# Sources with PCI physical interface
+    ifeq ("$(TI_DSPLINK_DM6437_PHYINTERFACE)", "PCI")
+        SOURCES += DM6437$(DIRSEP)pci$(DIRSEP)dm6437_hal_pci_intgen.c
+        SOURCES += DM6437$(DIRSEP)pci$(DIRSEP)dm6437_hal_pci_dma.c
+        SOURCES += DM6437$(DIRSEP)pci$(DIRSEP)dm6437_hal_pci_boot.c
+        SOURCES += DM6437$(DIRSEP)pci$(DIRSEP)dm6437_hal_pci_pwr.c
+        SOURCES += DM6437$(DIRSEP)pci$(DIRSEP)dm6437_hal_pci_rdwr.c
+        SOURCES += DM6437$(DIRSEP)pci$(DIRSEP)dm6437_hal_pci_map.c
+        SOURCES += DM6437$(DIRSEP)pci$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)2.6.18$(DIRSEP)dm6437_phy_pci.c
+    endif
+# Sources with PCI physical interface
+    ifeq ("$(TI_DSPLINK_DM6437_PHYINTERFACE)", "VLYNQ")
+        SOURCES += DM6437$(DIRSEP)vlynq$(DIRSEP)dm6437_hal_vlynq_intgen.c
+        SOURCES += DM6437$(DIRSEP)vlynq$(DIRSEP)dm6437_hal_vlynq_dma.c
+        SOURCES += DM6437$(DIRSEP)vlynq$(DIRSEP)dm6437_hal_vlynq_boot.c
+        SOURCES += DM6437$(DIRSEP)vlynq$(DIRSEP)dm6437_hal_vlynq_pwr.c
+        SOURCES += DM6437$(DIRSEP)vlynq$(DIRSEP)dm6437_hal_vlynq_rdwr.c
+        SOURCES += DM6437$(DIRSEP)vlynq$(DIRSEP)dm6437_hal_vlynq_map.c
+        SOURCES += DM6437$(DIRSEP)vlynq$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)dm6437_phy_vlynq.c
+    endif
+# Sources with generic code
+    SOURCES += DM6437$(DIRSEP)dm6437_hal.c
+    SOURCES += DM6437$(DIRSEP)dm6437_map.c
+    SOURCES += DM6437$(DIRSEP)dm6437.c
+endif
+
+#DM6467GEM - DaVinci-HD
+ifeq ($(findstring DM6467GEM, $(TI_DSPLINK_DSPDEVICES)), DM6467GEM)
+# Sources with shared memory code
+    ifeq ("$(TI_DSPLINK_DM6467GEM_PHYINTERFACE)", "SHMEM")
+        SOURCES += DM6467GEM$(DIRSEP)shmem$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)dm6467gem_phy_shmem.c
+        SOURCES += DM6467GEM$(DIRSEP)shmem$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)dm6467gem_dspclk.c
+    endif
+# Sources with generic code
+    SOURCES += DM6467GEM$(DIRSEP)dm6467gem.c
+    SOURCES += DM6467GEM$(DIRSEP)dm6467gem_hal.c
+    SOURCES += DM6467GEM$(DIRSEP)dm6467gem_hal_intgen.c
+    SOURCES += DM6467GEM$(DIRSEP)dm6467gem_hal_pwr.c
+    SOURCES += DM6467GEM$(DIRSEP)dm6467gem_hal_boot.c
+    SOURCES += DM6467GEM$(DIRSEP)dm6467gem_map.c
+endif
+
+#DRA44XGEM - Jacinto 1
+ifeq ($(findstring DRA44XGEM, $(TI_DSPLINK_DSPDEVICES)), DRA44XGEM)
+# Sources with shared memory code
+    ifeq ("$(TI_DSPLINK_DRA44XGEM_PHYINTERFACE)", "SHMEM")
+        SOURCES += dra44xgem$(DIRSEP)shmem$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)dra44xgem_phy_shmem.c
+    endif
+# Sources with generic code
+    SOURCES += dra44xgem$(DIRSEP)dra44xgem.c
+    SOURCES += dra44xgem$(DIRSEP)dra44xgem_hal.c
+    SOURCES += dra44xgem$(DIRSEP)dra44xgem_hal_intgen.c
+    SOURCES += dra44xgem$(DIRSEP)dra44xgem_hal_pwr.c
+    SOURCES += dra44xgem$(DIRSEP)dra44xgem_hal_boot.c
+    SOURCES += dra44xgem$(DIRSEP)dra44xgem_map.c
+endif
+
+#DRX416GEM - Jacinto 2
+ifeq ($(findstring DRX416GEM, $(TI_DSPLINK_DSPDEVICES)), DRX416GEM)
+# Sources with shared memory code
+    ifeq ("$(TI_DSPLINK_DRX416GEM_PHYINTERFACE)", "SHMEM")
+        SOURCES += DRX416GEM$(DIRSEP)shmem$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)drx416gem_phy_shmem.c
+    endif
+# Sources with generic code
+    SOURCES += DRX416GEM$(DIRSEP)drx416gem.c
+    SOURCES += DRX416GEM$(DIRSEP)drx416gem_hal.c
+    SOURCES += DRX416GEM$(DIRSEP)drx416gem_hal_intgen.c
+    SOURCES += DRX416GEM$(DIRSEP)drx416gem_hal_pwr.c
+    SOURCES += DRX416GEM$(DIRSEP)drx416gem_hal_boot.c
+    SOURCES += DRX416GEM$(DIRSEP)drx416gem_map.c
+endif
+
+#DM648 - Kailash
+ifeq ($(findstring DM648, $(TI_DSPLINK_DSPDEVICES)), DM648)
+# Sources with PCI physical interface
+    ifeq ("$(TI_DSPLINK_DM648_PHYINTERFACE)", "PCI")
+        SOURCES += DM648$(DIRSEP)pci$(DIRSEP)dm648_hal_pci_intgen.c
+        SOURCES += DM648$(DIRSEP)pci$(DIRSEP)dm648_hal_pci_dma.c
+        SOURCES += DM648$(DIRSEP)pci$(DIRSEP)dm648_hal_pci_boot.c
+        SOURCES += DM648$(DIRSEP)pci$(DIRSEP)dm648_hal_pci_pwr.c
+        SOURCES += DM648$(DIRSEP)pci$(DIRSEP)dm648_hal_pci_rdwr.c
+        SOURCES += DM648$(DIRSEP)pci$(DIRSEP)dm648_hal_pci_map.c
+        SOURCES += DM648$(DIRSEP)pci$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)$(TI_DSPLINK_GPPOSVERSION)$(DIRSEP)dm648_phy_pci.c
+    endif
+    SOURCES += DM648$(DIRSEP)dm648_hal.c
+    SOURCES += DM648$(DIRSEP)dm648_map.c
+    SOURCES += DM648$(DIRSEP)dm648.c
+endif
+
+#DM642
+ifeq ($(findstring DM642, $(TI_DSPLINK_DSPDEVICES)), DM642)
+# Sources with PCI physical interface
+    ifeq ("$(TI_DSPLINK_DM642_PHYINTERFACE)", "PCI")
+        SOURCES += DM642$(DIRSEP)pci$(DIRSEP)dm642_hal_pci_intgen.c
+        SOURCES += DM642$(DIRSEP)pci$(DIRSEP)dm642_hal_pci_dma.c
+        SOURCES += DM642$(DIRSEP)pci$(DIRSEP)dm642_hal_pci_boot.c
+        SOURCES += DM642$(DIRSEP)pci$(DIRSEP)dm642_hal_pci_pwr.c
+        SOURCES += DM642$(DIRSEP)pci$(DIRSEP)dm642_hal_pci_rdwr.c
+        SOURCES += DM642$(DIRSEP)pci$(DIRSEP)dm642_hal_pci_map.c
+        SOURCES += DM642$(DIRSEP)pci$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)$(TI_DSPLINK_GPPOSVERSION)$(DIRSEP)dm642_phy_pci.c
+    endif
+    SOURCES += DM642$(DIRSEP)dm642_hal.c
+    SOURCES += DM642$(DIRSEP)dm642_map.c
+    SOURCES += DM642$(DIRSEP)dm642.c
+endif
+
+# OMAP2530
+ifeq ($(findstring OMAP2530, $(TI_DSPLINK_DSPDEVICES)), OMAP2530)
+# Sources with shared memory code
+    ifeq ("$(TI_DSPLINK_OMAP2530_PHYINTERFACE)", "SHMEM")
+        SOURCES += OMAP2530$(DIRSEP)shmem$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)omap2530_phy_shmem.c
+    endif
+# Sources with generic code
+    SOURCES += OMAP2530$(DIRSEP)omap2530.c
+    SOURCES += OMAP2530$(DIRSEP)omap2530_hal.c
+    SOURCES += OMAP2530$(DIRSEP)omap2530_hal_intgen.c
+    SOURCES += OMAP2530$(DIRSEP)omap2530_hal_mmu.c
+    SOURCES += OMAP2530$(DIRSEP)omap2530_hal_pwr.c
+    SOURCES += OMAP2530$(DIRSEP)omap2530_hal_boot.c
+    SOURCES += OMAP2530$(DIRSEP)omap2530_map.c
+endif
+
+# OMAP3530
+ifeq ($(findstring OMAP3530, $(TI_DSPLINK_DSPDEVICES)), OMAP3530)
+# Sources with shared memory code
+    ifeq ("$(TI_DSPLINK_OMAP3530_PHYINTERFACE)", "SHMEM")
+        SOURCES += OMAP3530$(DIRSEP)shmem$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)omap3530_phy_shmem.c
+        SOURCES += OMAP3530$(DIRSEP)shmem$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)omap3530_dspclk.c
+    endif
+# Sources with generic code
+    SOURCES += OMAP3530$(DIRSEP)omap3530.c
+    SOURCES += OMAP3530$(DIRSEP)omap3530_hal.c
+    SOURCES += OMAP3530$(DIRSEP)omap3530_hal_intgen.c
+    SOURCES += OMAP3530$(DIRSEP)omap3530_hal_mmu.c
+    SOURCES += OMAP3530$(DIRSEP)omap3530_hal_pwr.c
+    SOURCES += OMAP3530$(DIRSEP)omap3530_hal_boot.c
+    SOURCES += OMAP3530$(DIRSEP)omap3530_map.c    
+endif
+
+# TNETV107XGEM - Leo
+ifeq ($(findstring TNETV107XGEM, $(TI_DSPLINK_DSPDEVICES)), TNETV107XGEM)
+# Sources with shared memory code
+    ifeq ("$(TI_DSPLINK_TNETV107XGEM_PHYINTERFACE)", "SHMEM")
+        SOURCES += TNETV107XGEM$(DIRSEP)shmem$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)tnetv107xgem_phy_shmem.c
+    endif
+# Sources with generic code
+    SOURCES += TNETV107XGEM$(DIRSEP)tnetv107xgem.c
+    SOURCES += TNETV107XGEM$(DIRSEP)tnetv107xgem_hal.c
+    SOURCES += TNETV107XGEM$(DIRSEP)tnetv107xgem_hal_intgen.c
+    SOURCES += TNETV107XGEM$(DIRSEP)tnetv107xgem_hal_pwr.c
+    SOURCES += TNETV107XGEM$(DIRSEP)tnetv107xgem_hal_boot.c
+    SOURCES += TNETV107XGEM$(DIRSEP)tnetv107xgem_map.c
+endif
+

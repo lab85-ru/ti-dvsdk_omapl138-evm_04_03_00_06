@@ -1,0 +1,43 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectName="logserverexample"
+ProjectDir="D:\ndk-a08\ndk_1_91\packages\ti\ndk\example\network\logserverexample\evmdm642\"
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Custom"
+
+[Source Files]
+Source="%BSL_EVMDM6437_INSTALLDIR%\lib\evmdm6437bsl.lib"
+Source="%NDK_INSTALL_DIR%\packages\ti\ndk\lib\c64plus\hal\hal_ser_stub.lib"
+Source="%NDK_INSTALL_DIR%\packages\ti\ndk\lib\c64plus\hal\hal_timer_bios.lib"
+Source="%NDK_INSTALL_DIR%\packages\ti\ndk\lib\c64plus\miniPrintf.lib"
+Source="%NDK_INSTALL_DIR%\packages\ti\ndk\lib\c64plus\netctrl.lib"
+Source="%NDK_INSTALL_DIR%\packages\ti\ndk\lib\c64plus\nettool.lib"
+Source="%NDK_INSTALL_DIR%\packages\ti\ndk\lib\c64plus\os.lib"
+Source="%NDK_INSTALL_DIR%\packages\ti\ndk\lib\c64plus\stack.lib"
+Source="%NDK_INSTALL_DIR%\packages\ti\ndk\lib\hal\evmdm6437\hal_eth_dm64lc.lib"
+Source="%NDK_INSTALL_DIR%\packages\ti\ndk\lib\hal\evmdm6437\hal_userled_dm6437.lib"
+Source="%BIOSUTILS_INSTALL_DIR%\packages\ti\bios\log\ndk\examples\common\logserverexample.c"
+Source="%BIOSUTILS_INSTALL_DIR%\packages\ti\bios\log\ndk\examples\common\logserverstacksetup.c"
+Source="evmdm6437init.c"
+Source="logserverexample.tcf"
+
+[Generated Files]
+Source="logserverexamplecfg.s62"
+Source="logserverexamplecfg_c.c"
+Source="logserverexamplecfg.cmd"
+
+["Compiler" Settings: "Custom"]
+Options=-g -q -fr"$(Proj_dir)\debug" -i"%NDK_INSTALL_DIR%\packages\ti\ndk\inc" -i"%NDK_INSTALL_DIR%\packages\ti\ndk\example\tools" -i"%BSL_EVMDM6437_INSTALLDIR%\include" -i"%BIOS_INSTALL_DIR%\packages" -i"%BIOSUTILS_INSTALL_DIR%\packages" -i"%BIOSUTILS_INSTALL_DIR%\packages\ti\bios\log\ndk\include" -i"%NDK_INSTALL_DIR%\packages\ti\ndk\example\tools\common\cgi" -d"CHIP_DM643" -mv6400+ --c64p_l1d_workaround=on
+
+["DspBiosBuilder" Settings: "Custom"]
+Options=-Dconfig.importPath="%NDK_INSTALL_DIR%/packages/ti/ndk/inc/tci;%BIOSUTILS_INSTALL_DIR%\packages\ti\bios\log\ndk\examples\common;%BIOSUTILS_INSTALL_DIR%\packages\ti\bios\log\support;%BIOSUTILS_INSTALL_DIR%\packages\ti\bios\utils" -v6x -DCCS_BUILD=true
+
+["Linker" Settings: "Custom"]
+Options=-q -c -m"$(Proj_dir)\debug\logserverexample.map" -o".\bin\logserverexample.out" -w -x -i"%BIOS_INSTALL_DIR%/packages/ti/rtdx/lib/c6000" -l"%BIOSUTILS_INSTALL_DIR%/packages/ti/bios/log/support/lib/logsupport.a64P" -l"%BIOSUTILS_INSTALL_DIR%/packages/ti/bios/log/ndk/lib/logservercgi.a64P" -l"%BIOSUTILS_INSTALL_DIR%/packages/ti/bios/utils/lib/utils.a64P" --xml_link_info="$(Proj_dir)\debug\logserverexample.xml"
+

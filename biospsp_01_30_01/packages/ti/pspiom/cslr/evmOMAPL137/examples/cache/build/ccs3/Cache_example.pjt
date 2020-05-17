@@ -1,0 +1,35 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C67XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\Cache_example.c"
+Source="..\OMAPL137.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-g -k -al -fr"..\obj\debug" -i"..\..\..\..\..\..\.." -d"_DEBUG" -mo -ml3 -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-k -al -o3 -fr"..\obj\release" -i"..\..\..\..\..\..\.." -mo -ml3 -mv6740
+
+["Linker" Settings: "Debug"]
+Options=-c -m"..\..\obj\debug\Cache_example.map" -o"..\..\obj\debug\Cache_example.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\bios\lib\" -l"bios6747.a674" -l"rts6740.lib"
+
+["Linker" Settings: "Release"]
+Options=-c -m"..\..\obj\release\Cache_example.map" -o"..\..\obj\release\Cache_example.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\bios\lib\" -l"bios6747.a674" -l"rts6740.lib"
+
+["OMAPL137.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["OMAPL137.cmd" Settings: "Release"]
+LinkOrder=1
+

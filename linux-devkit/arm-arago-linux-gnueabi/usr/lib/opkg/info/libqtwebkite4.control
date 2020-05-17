@@ -1,0 +1,13 @@
+Package: libqtwebkite4
+Version: 4.6.3-r29.2-arago4.6
+Description: Version 4.6.3-r29.2-arago4 of package qt4-embedded
+Section: libs
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: LGPLv2.1
+Architecture: armv5te
+OE: qt4-embedded
+Homepage: http://www.trolltech.com
+Build: install/d0bd439
+Depends: libphonone4 (>= 4.6.3), libqtdbuse4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Source: ftp://ftp.trolltech.com/qt/source/qt-everywhere-opensource-src-4.6.3.tar.gz file://blacklist-fraudulent-comodo-certificates-patch.diff file://0001-cross-compile.patch file://0002-fix-resinit-declaration.patch file://0004-no-qmake.patch file://hack-out-pg_config.patch file://0006-freetype-host-includes.patch file://0008-qt-lib-infix.patch file://0009-support-2bpp.patch file://0010-no-simpledecoration-example.patch file://fix-config-tests.patch file://qt-config.patch file://0001-wsegl2-support.patch file://g++.conf file://linux.conf file://qte.sh

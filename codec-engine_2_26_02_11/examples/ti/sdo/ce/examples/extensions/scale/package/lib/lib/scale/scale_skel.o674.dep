@@ -1,0 +1,21 @@
+package/lib/lib/scale/scale_skel.o674: scale_skel.c /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/xdc/std.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/skel.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/osal/Memory.h ./scale.h ./_scale.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stdarg.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stddef.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/ti/targets/std.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/visa.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/examples/ti/sdo/ce/examples/extensions/scale/../../../../../../ti/sdo/ce/examples/codecs/scale/iscale.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/Engine.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdais_6_26_01_03/packages/ti/xdais/xdas.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stdint.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/node/node.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdais_6_26_01_03/packages/ti/xdais/ialg.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/Server.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/ipc/Comm.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stdio.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/linkage.h 
+scale_skel.c:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/xdc/std.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/skel.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/osal/Memory.h:
+./scale.h:
+./_scale.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stdarg.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stddef.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/ti/targets/std.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/visa.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/examples/ti/sdo/ce/examples/extensions/scale/../../../../../../ti/sdo/ce/examples/codecs/scale/iscale.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/Engine.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdais_6_26_01_03/packages/ti/xdais/xdas.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stdint.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/node/node.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdais_6_26_01_03/packages/ti/xdais/ialg.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/Server.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/codec-engine_2_26_02_11/packages/ti/sdo/ce/ipc/Comm.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stdio.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/linkage.h:

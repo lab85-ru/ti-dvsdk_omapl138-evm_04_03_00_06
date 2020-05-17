@@ -1,0 +1,401 @@
+<?xml version="1.0"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.psl" version="5, 0, 0, 0">
+    <units>
+    </units>
+    <sources>
+        <srcFile name="src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg.c"/>
+        <srcFile name="src/build/psl_cfg/../../psl_cfg/dsk5510/PSLclk_cfg_DSK5510.c"/>
+        <srcFile name="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="src/build/psl_cfg/../../psl_cfg/evm5509a/PSLclk_cfg_evm5509a.c"/>
+        <srcFile name="src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg_delay.s55"/>
+        <srcFile name="src/build/psl_cfg/../../volt_reg/dsk5510/PSLcpld_5510DSK.s55"/>
+        <srcFile name="src/build/psl_cfg/../../psl_cfg/c5503/PSLvolt_cfg_null.c"/>
+        <srcFile name="src/build/psl_cfg/../../psl_cfg/dsk5510/PSLvolt_cfg_DSK5510.c"/>
+        <srcFile name="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="src/build/psl_cfg/../../volt_reg/dsk5510/PSLvolt_reg_DSK5510.c"/>
+        <srcFile name="package/package.c"/>
+        <srcFile name="src/build/psl/../../pll/c5510/PSLpll_C5510.c"/>
+        <srcFile name="src/build/psl_cfg/../../psl_cfg/c5510/PSLvolt_cfg_null.c"/>
+        <srcFile name="src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.c"/>
+        <srcFile name="src/build/psl_cfg/../../psl_cfg/c5503/PSLclk_cfg_c5503.c"/>
+        <srcFile name="src/build/psl_cfg/../../psl_cfg/c5509a/PSLclk_cfg_c5509a.c"/>
+        <srcFile name=".ident.c"/>
+        <srcFile name="src/build/psl_cfg/../../psl_cfg/c5507/PSLvolt_cfg_null.c"/>
+        <srcFile name="src/build/psl_cfg/../../psl_cfg/c5507/PSLclk_cfg_c5507.c"/>
+        <srcFile name="src/build/psl_cfg/../../volt_reg/evm5509a/PSLvolt_reg_evm5509a.c"/>
+        <srcFile name="src/build/psl_cfg/../../psl_cfg/evm5509a/PSLvolt_cfg_evm5509a.c"/>
+        <srcFile name="src/build/psl_cfg/../../psl_cfg/c5509a/PSLvolt_cfg_null.c"/>
+        <srcFile name="src/build/psl_cfg/../../psl_cfg/c5510/PSLclk_cfg_c5510.c"/>
+    </sources>
+    <configurations>
+    </configurations>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="lib/PSL_debug_c5510.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5510/src/build/psl/../../pll/c5510/PSLpll_C5510.o55.dep" src="src/build/psl/../../pll/c5510/PSLpll_C5510.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5510/src/build/psl/../../generic/PSLvolt.o55.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5510/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5510/src/build/psl/../../generic/PSL.o55.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5510/package.o55.dep" src="package/package.c"/>
+        <srcFile name="lib/PSL_cfg_c5507.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5507/src/build/psl_cfg/../../psl_cfg/c5507/PSLclk_cfg_c5507.o55.dep" src="src/build/psl_cfg/../../psl_cfg/c5507/PSLclk_cfg_c5507.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5507/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5507/src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.o55.dep" src="src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5507/package.o55.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5507/src/build/psl_cfg/../../psl_cfg/c5507/PSLvolt_cfg_null.o55.dep" src="src/build/psl_cfg/../../psl_cfg/c5507/PSLvolt_cfg_null.c"/>
+        <srcFile name="lib/PSL_c5510.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_c5510/src/build/psl/../../pll/c5510/PSLpll_C5510.o55L.dep" src="src/build/psl/../../pll/c5510/PSLpll_C5510.c"/>
+        <srcFile name="package/lib/lib/PSL_c5510/src/build/psl/../../generic/PSLvolt.o55L.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_c5510/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_c5510/src/build/psl/../../generic/PSL.o55L.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_c5510/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="lib/PSL_cfg_c5507.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5507/src/build/psl_cfg/../../psl_cfg/c5507/PSLclk_cfg_c5507.o55L.dep" src="src/build/psl_cfg/../../psl_cfg/c5507/PSLclk_cfg_c5507.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5507/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5507/src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.o55L.dep" src="src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5507/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5507/src/build/psl_cfg/../../psl_cfg/c5507/PSLvolt_cfg_null.o55L.dep" src="src/build/psl_cfg/../../psl_cfg/c5507/PSLvolt_cfg_null.c"/>
+        <srcFile name="lib/PSL_cfg_c5509a.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5509a/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5509a/src/build/psl_cfg/../../psl_cfg/c5509a/PSLclk_cfg_c5509a.o55.dep" src="src/build/psl_cfg/../../psl_cfg/c5509a/PSLclk_cfg_c5509a.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5509a/src/build/psl_cfg/../../psl_cfg/c5509a/PSLvolt_cfg_null.o55.dep" src="src/build/psl_cfg/../../psl_cfg/c5509a/PSLvolt_cfg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5509a/src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.o55.dep" src="src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5509a/package.o55.dep" src="package/package.c"/>
+        <srcFile name="lib/PSL_c5507.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_c5507/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_c5507/src/build/psl/../../generic/PSLvolt.o55L.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_c5507/src/build/psl/../../generic/PSL.o55L.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_c5507/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_c5507/src/build/psl/../../pll/c5509a/PSLpll_C5509a.o55L.dep" src="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="lib/PSL_c5509a.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_c5509a/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_c5509a/src/build/psl/../../generic/PSLvolt.o55L.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_c5509a/src/build/psl/../../generic/PSL.o55L.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_c5509a/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_c5509a/src/build/psl/../../pll/c5509a/PSLpll_C5509a.o55L.dep" src="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="lib/PSL_c5509a.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_c5509a/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_c5509a/src/build/psl/../../generic/PSLvolt.o55.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_c5509a/src/build/psl/../../generic/PSL.o55.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_c5509a/package.o55.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_c5509a/src/build/psl/../../pll/c5509a/PSLpll_C5509a.o55.dep" src="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="lib/PSL_debug_c5510.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5510/src/build/psl/../../pll/c5510/PSLpll_C5510.o55L.dep" src="src/build/psl/../../pll/c5510/PSLpll_C5510.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5510/src/build/psl/../../generic/PSLvolt.o55L.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5510/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5510/src/build/psl/../../generic/PSL.o55L.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5510/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="lib/PSL_cfg_c5510.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5510/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5510/src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.o55.dep" src="src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5510/src/build/psl_cfg/../../psl_cfg/c5510/PSLvolt_cfg_null.o55.dep" src="src/build/psl_cfg/../../psl_cfg/c5510/PSLvolt_cfg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5510/package.o55.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5510/src/build/psl_cfg/../../psl_cfg/c5510/PSLclk_cfg_c5510.o55.dep" src="src/build/psl_cfg/../../psl_cfg/c5510/PSLclk_cfg_c5510.c"/>
+        <srcFile name="lib/PSL_cfg_c5509a.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5509a/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5509a/src/build/psl_cfg/../../psl_cfg/c5509a/PSLclk_cfg_c5509a.o55L.dep" src="src/build/psl_cfg/../../psl_cfg/c5509a/PSLclk_cfg_c5509a.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5509a/src/build/psl_cfg/../../psl_cfg/c5509a/PSLvolt_cfg_null.o55L.dep" src="src/build/psl_cfg/../../psl_cfg/c5509a/PSLvolt_cfg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5509a/src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.o55L.dep" src="src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5509a/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="lib/PSL_debug_c5507.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5507/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5507/src/build/psl/../../generic/PSLvolt.o55L.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5507/src/build/psl/../../generic/PSL.o55L.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5507/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5507/src/build/psl/../../pll/c5509a/PSLpll_C5509a.o55L.dep" src="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="lib/PSL_debug_c5503.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5503/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5503/src/build/psl/../../generic/PSLvolt.o55.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5503/src/build/psl/../../generic/PSL.o55.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5503/package.o55.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5503/src/build/psl/../../pll/c5509a/PSLpll_C5509a.o55.dep" src="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="lib/PSL_debug_c5509a.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5509a/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5509a/src/build/psl/../../generic/PSLvolt.o55.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5509a/src/build/psl/../../generic/PSL.o55.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5509a/package.o55.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5509a/src/build/psl/../../pll/c5509a/PSLpll_C5509a.o55.dep" src="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="lib/PSL_cfg_dsk5510.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg_delay.o55.dep" src="src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg_delay.s55"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/src/build/psl_cfg/../../psl_cfg/dsk5510/PSLvolt_cfg_DSK5510.o55.dep" src="src/build/psl_cfg/../../psl_cfg/dsk5510/PSLvolt_cfg_DSK5510.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/src/build/psl_cfg/../../volt_reg/dsk5510/PSLcpld_5510DSK.o55.dep" src="src/build/psl_cfg/../../volt_reg/dsk5510/PSLcpld_5510DSK.s55"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg.o55.dep" src="src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/src/build/psl_cfg/../../volt_reg/dsk5510/PSLvolt_reg_DSK5510.o55.dep" src="src/build/psl_cfg/../../volt_reg/dsk5510/PSLvolt_reg_DSK5510.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/package.o55.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/src/build/psl_cfg/../../psl_cfg/dsk5510/PSLclk_cfg_DSK5510.o55.dep" src="src/build/psl_cfg/../../psl_cfg/dsk5510/PSLclk_cfg_DSK5510.c"/>
+        <srcFile name="lib/PSL_cfg_dsk5510.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg_delay.o55L.dep" src="src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg_delay.s55"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/src/build/psl_cfg/../../psl_cfg/dsk5510/PSLvolt_cfg_DSK5510.o55L.dep" src="src/build/psl_cfg/../../psl_cfg/dsk5510/PSLvolt_cfg_DSK5510.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/src/build/psl_cfg/../../volt_reg/dsk5510/PSLcpld_5510DSK.o55L.dep" src="src/build/psl_cfg/../../volt_reg/dsk5510/PSLcpld_5510DSK.s55"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg.o55L.dep" src="src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/src/build/psl_cfg/../../volt_reg/dsk5510/PSLvolt_reg_DSK5510.o55L.dep" src="src/build/psl_cfg/../../volt_reg/dsk5510/PSLvolt_reg_DSK5510.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_dsk5510/src/build/psl_cfg/../../psl_cfg/dsk5510/PSLclk_cfg_DSK5510.o55L.dep" src="src/build/psl_cfg/../../psl_cfg/dsk5510/PSLclk_cfg_DSK5510.c"/>
+        <srcFile name="lib/PSL_c5507.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_c5507/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_c5507/src/build/psl/../../generic/PSLvolt.o55.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_c5507/src/build/psl/../../generic/PSL.o55.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_c5507/package.o55.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_c5507/src/build/psl/../../pll/c5509a/PSLpll_C5509a.o55.dep" src="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="lib/PSL_cfg_c5503.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5503/src/build/psl_cfg/../../psl_cfg/c5503/PSLclk_cfg_c5503.o55.dep" src="src/build/psl_cfg/../../psl_cfg/c5503/PSLclk_cfg_c5503.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5503/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5503/src/build/psl_cfg/../../psl_cfg/c5503/PSLvolt_cfg_null.o55.dep" src="src/build/psl_cfg/../../psl_cfg/c5503/PSLvolt_cfg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5503/src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.o55.dep" src="src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5503/package.o55.dep" src="package/package.c"/>
+        <srcFile name="lib/PSL_cfg_evm5509a.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg_delay.o55.dep" src="src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg_delay.s55"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/src/build/psl_cfg/../../volt_reg/evm5509a/PSLvolt_reg_evm5509a.o55.dep" src="src/build/psl_cfg/../../volt_reg/evm5509a/PSLvolt_reg_evm5509a.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/src/build/psl_cfg/../../psl_cfg/evm5509a/PSLvolt_cfg_evm5509a.o55.dep" src="src/build/psl_cfg/../../psl_cfg/evm5509a/PSLvolt_cfg_evm5509a.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/src/build/psl_cfg/../../psl_cfg/evm5509a/PSLclk_cfg_evm5509a.o55.dep" src="src/build/psl_cfg/../../psl_cfg/evm5509a/PSLclk_cfg_evm5509a.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg.o55.dep" src="src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/package.o55.dep" src="package/package.c"/>
+        <srcFile name="lib/PSL_cfg_c5510.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5510/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5510/src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.o55L.dep" src="src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5510/src/build/psl_cfg/../../psl_cfg/c5510/PSLvolt_cfg_null.o55L.dep" src="src/build/psl_cfg/../../psl_cfg/c5510/PSLvolt_cfg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5510/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5510/src/build/psl_cfg/../../psl_cfg/c5510/PSLclk_cfg_c5510.o55L.dep" src="src/build/psl_cfg/../../psl_cfg/c5510/PSLclk_cfg_c5510.c"/>
+        <srcFile name="lib/PSL_cfg_c5503.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5503/src/build/psl_cfg/../../psl_cfg/c5503/PSLclk_cfg_c5503.o55L.dep" src="src/build/psl_cfg/../../psl_cfg/c5503/PSLclk_cfg_c5503.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5503/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5503/src/build/psl_cfg/../../psl_cfg/c5503/PSLvolt_cfg_null.o55L.dep" src="src/build/psl_cfg/../../psl_cfg/c5503/PSLvolt_cfg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5503/src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.o55L.dep" src="src/build/psl_cfg/../../volt_reg/null/PSLvolt_reg_null.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_c5503/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="lib/PSL_debug_c5509a.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5509a/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5509a/src/build/psl/../../generic/PSLvolt.o55L.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5509a/src/build/psl/../../generic/PSL.o55L.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5509a/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5509a/src/build/psl/../../pll/c5509a/PSLpll_C5509a.o55L.dep" src="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="lib/PSL_c5503.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_c5503/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_c5503/src/build/psl/../../generic/PSLvolt.o55L.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_c5503/src/build/psl/../../generic/PSL.o55L.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_c5503/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_c5503/src/build/psl/../../pll/c5509a/PSLpll_C5509a.o55L.dep" src="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="lib/PSL_c5510.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_c5510/src/build/psl/../../pll/c5510/PSLpll_C5510.o55.dep" src="src/build/psl/../../pll/c5510/PSLpll_C5510.c"/>
+        <srcFile name="package/lib/lib/PSL_c5510/src/build/psl/../../generic/PSLvolt.o55.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_c5510/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_c5510/src/build/psl/../../generic/PSL.o55.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_c5510/package.o55.dep" src="package/package.c"/>
+        <srcFile name="lib/PSL_debug_c5503.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5503/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5503/src/build/psl/../../generic/PSLvolt.o55L.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5503/src/build/psl/../../generic/PSL.o55L.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5503/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5503/src/build/psl/../../pll/c5509a/PSLpll_C5509a.o55L.dep" src="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="lib/PSL_debug_c5507.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5507/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5507/src/build/psl/../../generic/PSLvolt.o55.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5507/src/build/psl/../../generic/PSL.o55.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5507/package.o55.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_debug_c5507/src/build/psl/../../pll/c5509a/PSLpll_C5509a.o55.dep" src="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="lib/PSL_cfg_evm5509a.a55L.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg_delay.o55L.dep" src="src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg_delay.s55"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/.ident.o55L.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/src/build/psl_cfg/../../volt_reg/evm5509a/PSLvolt_reg_evm5509a.o55L.dep" src="src/build/psl_cfg/../../volt_reg/evm5509a/PSLvolt_reg_evm5509a.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/src/build/psl_cfg/../../psl_cfg/evm5509a/PSLvolt_cfg_evm5509a.o55L.dep" src="src/build/psl_cfg/../../psl_cfg/evm5509a/PSLvolt_cfg_evm5509a.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/src/build/psl_cfg/../../psl_cfg/evm5509a/PSLclk_cfg_evm5509a.o55L.dep" src="src/build/psl_cfg/../../psl_cfg/evm5509a/PSLclk_cfg_evm5509a.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg.o55L.dep" src="src/build/psl_cfg/../../volt_reg/gpio55x/PSLvolt_reg.c"/>
+        <srcFile name="package/lib/lib/PSL_cfg_evm5509a/package.o55L.dep" src="package/package.c"/>
+        <srcFile name="lib/PSL_c5503.a55.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/PSL_c5503/.ident.o55.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/PSL_c5503/src/build/psl/../../generic/PSLvolt.o55.dep" src="src/build/psl/../../generic/PSLvolt.c"/>
+        <srcFile name="package/lib/lib/PSL_c5503/src/build/psl/../../generic/PSL.o55.dep" src="src/build/psl/../../generic/PSL.c"/>
+        <srcFile name="package/lib/lib/PSL_c5503/package.o55.dep" src="package/package.c"/>
+        <srcFile name="package/lib/lib/PSL_c5503/src/build/psl/../../pll/c5509a/PSLpll_C5509a.o55.dep" src="src/build/psl/../../pll/c5509a/PSLpll_C5509a.c"/>
+        <srcFile name="package/rel/ti_psl.tar.dep" src="package/rel/ti_psl.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.C55"
+            version="ti.targets.C55{1,0,2.77,0"
+            platform="ti.platforms.sim55xx"
+            isa="55"
+            suffix="55"
+            rootDir="/db/toolsrc/library/tools/default/c55/../lead3v2.77/Solaris"
+            os="undefined"
+            rts="ti.targets.rts5500">
+            <model endian="undefined"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+        <target name="ti.targets.C55_large"
+            version="ti.targets.C55_large{1,0,2.77,0"
+            platform="ti.platforms.sim55xx"
+            isa="55"
+            suffix="55L"
+            rootDir="/db/toolsrc/library/tools/default/c55/../lead3v2.77/Solaris"
+            os="undefined"
+            rts="ti.targets.rts5500">
+            <model endian="undefined"
+                codeModel="undefined"
+                dataModel="large"/>
+        </target>
+    </targets>
+    <libraries>
+    <library name="lib/PSL_debug_c5510"
+        pname="lib/PSL_debug_c5510.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_cfg_c5507"
+        pname="lib/PSL_cfg_c5507.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_c5510"
+        pname="lib/PSL_c5510.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_cfg_c5507"
+        pname="lib/PSL_cfg_c5507.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_cfg_c5509a"
+        pname="lib/PSL_cfg_c5509a.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_c5507"
+        pname="lib/PSL_c5507.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_c5509a"
+        pname="lib/PSL_c5509a.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_c5509a"
+        pname="lib/PSL_c5509a.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_debug_c5510"
+        pname="lib/PSL_debug_c5510.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_cfg_c5510"
+        pname="lib/PSL_cfg_c5510.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_cfg_c5509a"
+        pname="lib/PSL_cfg_c5509a.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_debug_c5507"
+        pname="lib/PSL_debug_c5507.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_debug_c5503"
+        pname="lib/PSL_debug_c5503.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_debug_c5509a"
+        pname="lib/PSL_debug_c5509a.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_cfg_dsk5510"
+        pname="lib/PSL_cfg_dsk5510.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_cfg_dsk5510"
+        pname="lib/PSL_cfg_dsk5510.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_c5507"
+        pname="lib/PSL_c5507.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_cfg_c5503"
+        pname="lib/PSL_cfg_c5503.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_cfg_evm5509a"
+        pname="lib/PSL_cfg_evm5509a.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_cfg_c5510"
+        pname="lib/PSL_cfg_c5510.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_cfg_c5503"
+        pname="lib/PSL_cfg_c5503.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_debug_c5509a"
+        pname="lib/PSL_debug_c5509a.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_c5503"
+        pname="lib/PSL_c5503.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_c5510"
+        pname="lib/PSL_c5510.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_debug_c5503"
+        pname="lib/PSL_debug_c5503.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_debug_c5507"
+        pname="lib/PSL_debug_c5507.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    <library name="lib/PSL_cfg_evm5509a"
+        pname="lib/PSL_cfg_evm5509a.a55L"
+        profile="release"
+        target="ti.targets.C55_large"/>
+    <library name="lib/PSL_c5503"
+        pname="lib/PSL_c5503.a55"
+        profile="release"
+        target="ti.targets.C55"/>
+    </libraries>
+    <executables>
+    </executables>
+    <releases relDir="package/rel/">
+    <release name="ti_psl"
+        pname="ti_psl.tar"
+        label="default"
+    >
+        <file name="lib/PSL_cfg_c5509a.a55L"/>
+        <file name="lib/PSL_debug_c5510.a55"/>
+        <file name="lib/PSL_c5510.a55L"/>
+        <file name="lib/PSL_cfg_c5507.a55"/>
+        <file name="package/package.ext.xml"/>
+        <file name="lib/PSL_c5507.a55L"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="lib/PSL_c5509a.a55"/>
+        <file name="lib/PSL_debug_c5510.a55L"/>
+        <file name="lib/PSL_cfg_c5510.a55"/>
+        <file name="lib/PSL_c5509a.a55L"/>
+        <file name="lib/PSL_cfg_c5509a.a55"/>
+        <file name="lib/PSL_cfg_c5507.a55L"/>
+        <file name="lib/PSL_debug_c5507.a55L"/>
+        <file name="lib/PSL_debug_c5503.a55"/>
+        <file name="package/package.rel.dot"/>
+        <file name="lib/PSL_debug_c5509a.a55"/>
+        <file name="package/package.xdc.xml"/>
+        <file name="lib/PSL_cfg_dsk5510.a55"/>
+        <file name="lib/PSL_cfg_dsk5510.a55L"/>
+        <file name="lib/PSL_c5507.a55"/>
+        <file name="lib/PSL_cfg_c5503.a55"/>
+        <file name="lib/PSL_cfg_evm5509a.a55"/>
+        <file name="lib/PSL_cfg_c5510.a55L"/>
+        <file name="package/package.cfg.inc"/>
+        <file name="lib/PSL_cfg_c5503.a55L"/>
+        <file name="lib/PSL_debug_c5509a.a55L"/>
+        <file name="lib/PSL_c5503.a55L"/>
+        <file name="lib/PSL_c5510.a55"/>
+        <file name="lib/PSL_debug_c5503.a55L"/>
+        <file name="package/package.bld.xml"/>
+        <file name="lib/PSL_debug_c5507.a55"/>
+        <file name="lib/PSL_cfg_evm5509a.a55L"/>
+        <file name="lib/PSL_c5503.a55"/>
+    </release>
+    </releases>
+</package>

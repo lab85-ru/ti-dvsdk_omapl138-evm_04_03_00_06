@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="gstticodecplugin_omapl138" version="" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+        <srcFile name="package/cfg/gstticodecplugin_omapl138_xv5T.c"/>
+    </sources>
+    <configurations>
+        <srcFile name="/opt/ti-dvsdk_omapl138-evm_04_03_00_06/gstreamer-ti_svnr919/src/gstticodecplugin_omapl138.cfg"/>
+    </configurations>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/cfg/gstticodecplugin_omapl138_xv5T.mak" src="package.bld"/>
+        <srcFile name="package/cfg/gstticodecplugin_omapl138_xv5T.ov5T.dep" src="package/cfg/gstticodecplugin_omapl138_xv5T.c"/>
+        <srcFile name="package/cfg/gstticodecplugin_omapl138_xv5T.dep" src="package/cfg/gstticodecplugin_omapl138_xv5T.cfg"/>
+        <srcFile name="package/rel/gstticodecplugin_omapl138.tar.dep" src="package/rel/gstticodecplugin_omapl138.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="gnu.targets.arm.GCArmv5T"
+            version="gnu.targets.arm.GCArmv5T{1,0,4.3,3"
+            platform="ti.platforms.evmOMAPL138"
+            isa="v5T"
+            suffix="v5T"
+            rootDir="/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/"
+            os="Linux"
+            rts="gnu.targets.arm.rtsv5T">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    </libraries>
+    <executables>
+    <executable name="gstticodecplugin_omapl138"
+        pname="gstticodecplugin_omapl138.xv5T"
+        target="gnu.targets.arm.GCArmv5T"
+        platform="ti.platforms.evmOMAPL138"
+        profile="release"
+        xCfgScript="package/cfg/gstticodecplugin_omapl138_xv5T.cfg"
+        xCfgPrefix="package/cfg/gstticodecplugin_omapl138_xv5T"
+        cfgScript="/opt/ti-dvsdk_omapl138-evm_04_03_00_06/gstreamer-ti_svnr919/src/gstticodecplugin_omapl138.cfg"
+        cfgArgs="null"
+        />
+    </executables>
+    <tests>
+    <test exeName="gstticodecplugin_omapl138.xv5T"
+        args=""
+        groupName="gstticodecplugin_omapl138.xv5T"
+        refOutput="undefined"
+        refExitCode="0"
+        execArgs=""
+        />
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="gstticodecplugin_omapl138"
+        pname="gstticodecplugin_omapl138.tar"
+        label="default"
+    >
+        <file name="package/build.cfg"/>
+        <file name="package/package.ext.xml"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package/package.bld.xml"/>
+        <file name="package/package.rel.dot"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

@@ -1,0 +1,9 @@
+Package: ti-biosutils-src
+Version: 1_02_02-r1
+Description: Patched sources for ti-biosutils
+Section: devel
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI
+Architecture: all
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/Bios_Utils/1_02_02_02/exports/biosutils_1_02_02.tar.gz;name=biosutilstarball

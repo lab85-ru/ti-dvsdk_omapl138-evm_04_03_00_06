@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/am_benchmarks/!svn/ver/66/trunk/armv7a/dhrystone
+END
+makefile.init
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/am_benchmarks/!svn/ver/63/trunk/armv7a/dhrystone/makefile.init
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/am_benchmarks/!svn/ver/63/trunk/armv7a/dhrystone/.project
+END
+.cproject
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/am_benchmarks/!svn/ver/63/trunk/armv7a/dhrystone/.cproject
+END
+dhry_1.c
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/am_benchmarks/!svn/ver/66/trunk/armv7a/dhrystone/dhry_1.c
+END
+dhry_2.c
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/am_benchmarks/!svn/ver/66/trunk/armv7a/dhrystone/dhry_2.c
+END
+dhry.h
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/am_benchmarks/!svn/ver/66/trunk/armv7a/dhrystone/dhry.h
+END

@@ -1,0 +1,306 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;!======== boot.s28 ========
+
+
+        .include idl.h28
+
+; Symbols from C/C++ Runtime
+        .ref    _main
+        .ref    _exit
+        .ref    BIOS_init
+        .ref    BIOS_start
+; Symbols defined by the Linker
+         .ref    cinit
+         .ref    pinit
+         .ref    ___bss__
+         .ref    __STACK_SIZE    ; can be set with -stack linker option
+                                                          
+; Symbols defined here (and have special meaning to the linker)
+        .def    _c_int00
+        .def    __stack
+
+;
+; Define special symbol to guarantee that this boot file gets linked
+; instead of boot file from rts.lib (SDSsq24217). The GBL_config macro
+; will reference this symbol forcing a linker error if non-bios boot.obj
+; has been linked with application.
+;
+        .def    GBL_boot
+GBL_boot        .set    1
+
+CONST_COPY .set 0
+
+WDCR_ADDR       .set    0x7029
+WDOG_DISABLE    .set    0x68    ; WDCHK=101, WDDIS=1
+
+;************************************************************************
+; Data Stack (size set by the Linker, not blocked, longword aligned) default size is 1K words.
+;************************************************************************
+
+__stack:        .usect  ".stack",0,0,1
+args            .sect   ".args"
+
+ 
+ ;************************************************************************
+ ; c_int00() - C/C++ Environment Entry Point
+ ;************************************************************************
+
+
+        .sect ".sysinit"
+
+_c_int00:
+    .asmfunc
+        setc INTM,DBGM          ;set atomic intm = 1, dbgm = 1
+        mov @al, #0
+        MOV IER,@al
+        MOV SP,#__stack         ; set to beginning of stack space
+
+****************************************************************************
+* INITIALIZE STATUS BIT FIELDS *NOT* INITIALIZED AT RESET                  *
+****************************************************************************
+        SPM     0                       ; set product shift to 0
+
+        C28OBJ                          ; select C28x object mode
+        C28ADDR                         ; clear the addressing mode
+        C28MAP                          ; set block M0 and M1 mode
+
+        .if .TMS320C2800_FPU32
+        SETFLG            RNDF32=1      ; Enable rounding in FPU32 mode.
+        .endif
+
+****************************************************************************
+* SETTING THESE STATUS BITS/REGISTER TO RESET VALUES.  IF YOU RUN          *
+* _c_int00 FROM RESET, YOU CAN REMOVE THIS CODE                            *
+****************************************************************************
+        CLRC    PAGE0                   ; use stack addressing mode
+        MOVW    DP,#___bss__            ; initialize DP to point BSS
+        CLRC    OVM                     ; turn off overflow mode
+        CLRC    SXM                     ; disable sign extension mode
+        ASP                             ; ensure SP is aligned
+
+;------------------------------------------------------------------------
+; Initialize Extended Address Registers
+;------------------------------------------------------------------------
+        movl xar0, #___bss__
+
+;------------------------------------------------------------------------
+; Perform autoinitialization.  Must be after other initialization since
+; C++ static initializers may be called.
+;------------------------------------------------------------------------
+****************************************************************************
+* SET THE EALLOW BIT BEFORE THE CINIT TABLE IS COPIED.                     *
+****************************************************************************
+        EALLOW
+
+****************************************************************************
+* DISABLE WATCHDOG TIMER BEFORE CALLING BIOS_INIT SDSsq 27779              *
+****************************************************************************
+
+        MOVL    XAR7, #WDCR_ADDR
+        MOV     *XAR7, #WDOG_DISABLE
+
+****************************************************************************
+*  IF cinit IS NOT -1, PROCESS CINIT INITIALIZATION TABLE                  *
+****************************************************************************
+        MOV     AL,#cinit
+        MOV     AH,#hi16(cinit)
+        ADDB    ACC,#1
+        B       BIOS_INIT,EQ            ; if cinit < 0 (-1) no init tables
+
+****************************************************************************
+*  PROCESS CINIT INITIALIZATION TABLE.  TABLE IS IN PROGRAM MEMORY IN THE  *
+*  FOLLOWING FORMAT:                                                       *
+*                                                                          *
+*       .word  <length of init data in words>                              *
+*       .word  or .long <address of variable to initialize>                *
+*       .word  <init data>                                                 *
+*       .word  ...                                                         *
+*                                                                          *
+*  If the variable's address is greater than 65535 (located in 'far'       *
+*  memory), then the address field of the cinit record will be 32-bits     *
+*  instead of the default 16-bits. The length value is negated to tag      *
+*  cinit records for those variables located in far memory.                *
+*                                                                          *
+*  The init table is terminated with a zero length                         *
+*                                                                          *
+****************************************************************************
+        MOVL    XAR7,#cinit             ; point XAR7 at start of table  
+        CLRC    TC                      ; reset TC bit used as far flag 
+        B       START, UNC              ; jump to start processing
+LOOP:
+        MOVB    AH,#0                   ; zero out upper addr bits
+        PREAD   AL,*XAR7                ; load address of variable to be inited
+        ADDB    XAR7,#1                 ; point to initialization data
+        B       GET_DATA,NTC            ; get data if variable is not far 
+        CLRC    TC                      ; reset TC bit used as far flag 
+        PREAD   AH,*XAR7                ; otherwise, get hi bits of 22-bit addr
+        ADDB    XAR7,#1
+GET_DATA:       
+        MOVL    XAR6,ACC                ; address
+        RPT     AR1                     ; repeat length + 1 times
+||      PREAD   *XAR6++,*XAR7           ; copy data from table to memory
+        
+        MOVL    ACC,XAR7                ; using ACC as temp, point XAR7 to 
+        ADD     ACC,AR1                 ; next cinit record since PREAD 
+        ADDB    ACC,#1                  ; doesn't change value of XAR7. 
+        MOVL    XAR7,ACC        
+START:
+        PREAD   AL,*XAR7                ; load length
+        B       GET_ADDR,GEQ            ; a length < 0 denotes far data  
+        NEG     AL                      ; negate value to get real length       
+        SETC    TC                      ; flag that the address field is 32-bits
+GET_ADDR:       
+        MOVZ    AR1,AL                  ; copy length value to loop register
+        NOP                             ; nops required for AR/BANZ pipeline bug
+        NOP                             ; in C1 core
+        ADDB    XAR7,#1                 ; point to address field
+        BANZ    LOOP,AR1--              ; if (length-- != 0) continue 
+
+BIOS_INIT:
+        movl XAR4, #___bss__
+        LCR BIOS_init
+
+****************************************************************************
+*  IF pinit IS NOT -1, PROCESS CONSTRUCTOR ROUTINES                        *
+****************************************************************************
+DO_PINIT:                       
+
+****************************************************************************
+* CLEAR THE EALLOW BIT AFTER THE CINIT TABLE IS COPIED.                    *
+****************************************************************************
+        EDIS
+        MOV     AL,#pinit
+        MOV     AH,#hi16(pinit)
+        ADDB    ACC,#1
+        B       DONE_INIT,EQ            ; if pinit < 0 (-1) no pinit table
+
+****************************************************************************
+*  PROCESS PINIT SECTION. TABLE CONSISTS OF CONSTRUCTOR ROUTINE ADDRESSES  *
+*  THAT POINT TO C++ INITIALIZATION FUNCTIONS. THESE ROUTINES MUST EXECUTE *
+*  BEFORE MAIN IS CALLED                                                   *
+****************************************************************************
+        MOVL    XAR7,#pinit             ; set up pointer to initialization table
+        B       START_PINIT, UNC        ; jump to start processing
+
+LOOP_PINIT:     
+        ADDB    XAR7,#1                 ; point to next table entry     
+        PUSH    XAR7                    ; save off table entry address 
+        MOVL    XAR7,ACC                ; load constructor routine address
+        LCR     *XAR7                   ; execute routine
+        POP     XAR7                    ; reload table entry address 
+        
+START_PINIT:    
+        PREAD   AL,*XAR7                ; unpack constructor routine address 
+        ADDB    XAR7,#1         
+        PREAD   AH,*XAR7        
+        TEST    ACC                     ; test for table end condition (zero)   
+        B       LOOP_PINIT,NEQ          ; process table entry if not zero
+        
+        
+****************************************************************************
+*  COPY CONSTANTS TO DATA MEMORY, IF NECESSARY                             *
+****************************************************************************
+DONE_INIT:
+        .if CONST_COPY
+        LCR _const_init
+        .endif 
+;------------------------------------------------------------------------
+; Call the user's program
+;------------------------------------------------------------------------
+        movl xar2,  #args
+        mov al,  *xar2++             ;set up argc 1st  param to main
+        addb XAR2, #1              ; traverse the hole created
+                                   ; by the alignment constraint
+        movl xar4,*xar2++       ;set up argv 2nd param to main
+        movl xar5,*xar2++       ;set up envp 3rd param to main
+        LCR _main
+                  
+;------------------------------------------------------------------------
+; Call BIOS_start
+;------------------------------------------------------------------------
+        LCR BIOS_start
+        IDL_loop 
+
+    .endasmfunc
+
+
+        .if CONST_COPY
+
+****************************************************************************
+* FUNCTION DEF : __const_init                                              *
+*                                                                          *
+*  COPY .CONST AND .ECONST SECTION FROM PROGRAM TO DATA MEMORY             *
+*                                                                          *
+*   The function depends on the following variables                        *
+*   defined in the linker command file                                     *
+*                                                                          *
+*   __c_load         ; global var containing start                         *
+*                      of .const in program memory                         *
+*   __const_run      ; global var containing run                           *
+*                      address in data memory                              *
+*   __const_length   ; global var length of .const                         *
+*                      section                                             *
+*                                                                          *
+*                                                                          *
+*   Similarly for constants to be placed into extended memory (far):       *
+*                                                                          *
+*   __ec_load         ; global var containing start                        *
+*                      of .econst in program memory                        *
+*   __econst_run      ; global var containing run                          *
+*                      address in data memory                              *
+*   __econst_length   ; global var length of .econst                       *
+*                      section                                             *
+*                                                                          *
+****************************************************************************
+        .global __const_length,  __c_load,  __const_run
+        .global __econst_length, __ec_load, __econst_run
+ 
+        .sect ".c_mark"              ; establish LOAD adress of
+        .label __c_load              ; .const section
+ 
+        .sect ".ec_mark"              ; establish LOAD adress of
+        .label __ec_load              ; .econst section
+ 
+        .text
+_const_init:    .asmfunc
+ 
+        MOV     AL,#__const_length
+        B       __econst_init,EQ
+        DEC     AL
+        MOVL    XAR6,#__const_run
+        MOVL    XAR7,#__c_load
+        RPT     AL
+||      PREAD   *XAR6++,*XAR7
+ 
+__econst_init:
+        MOVL    XAR6, #__econst_length
+        MOVL    ACC,XAR6
+        B       __end_const,EQ
+        MOVL    XAR6,#__econst_run
+        MOVL    XAR7,#__ec_load
+        DEC     AL
+        B       __econst_loop,GEQ
+        DEC     AH
+__econst_loop:
+        MOV     AR0,AH
+        RPT     AL
+||      PREAD   *XAR6++,*XAR7
+        MOV     AH,#0
+        ADDL    ACC,XAR7
+        ADDB    ACC, #1
+        MOVL    XAR7,ACC
+        MOV     AL, #0xffff
+        MOV     AH,AR0
+        SUBB    AH,#1
+        B       __econst_loop,GEQ
+ 
+******************************************************
+*  AT END OF CONSTANT SECTIONS RETURN TO CALLER      *
+******************************************************
+__end_const:
+        LRETR
+        .endasmfunc
+        .endif                  ;  if CONST_COPY

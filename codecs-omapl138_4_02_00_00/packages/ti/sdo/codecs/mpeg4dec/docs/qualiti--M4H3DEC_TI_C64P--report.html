@@ -1,0 +1,866 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>Compliance and Performance Test Report</TITLE></HEAD>
+<BODY>
+
+<STYLE TYPE="text/css">
+<!--
+.indented
+   {
+   padding-left: 25pt;
+   padding-right: 25pt;
+   }
+-->
+</STYLE>
+
+<TABLE BORDER="1" WIDTH="100%">
+  <TR>
+    <TD COLSPAN="2">
+      <CENTER><FONT SIZE="+2"><B>TMS320 DSP Algorithm Interoperability Standard</B></FONT></CENTER><BR>
+      <CENTER><FONT SIZE="+1"><B>QualiTI <a href="#compliance">Compliance</a> and <a href="#performance">Performance</a> Testing</B></font></CENTER><BR>
+    </TD>
+  </TR>
+  <TR>
+    <TD><B>Date</B></TD><TD>Tue Nov 03 2009 15:31:33 GMT+0530 (IST)</TD>
+  </TR>
+
+  <TR>
+    <TD><B>Vendor</B></TD><TD>TI</TD>
+  </TR>
+
+  <TR>
+    <TD><B>Algorithm</B></TD><TD>M4H3DEC</TD>
+  </TR>
+
+  <TR>
+    <TD><B>Architecture</B></TD><TD>C64P</TD>
+  </TR>
+  <TR>
+    <TD COLSPAN="2">
+
+      <B>Algorithm Base Directory:</B><BR>
+
+      &nbsp;&nbsp;&nbsp;C:\wizard\RTSC_packages\c64xplus_mpeg4dec_02_01_00_00_production\packages\ti\sdo\codecs\mpeg4dec\lib<BR>
+
+<BR>
+      <B>Algorithm Archive(s):</B><BR>
+
+      &nbsp;&nbsp;&nbsp;.\m4h3dec_ti.l64P<BR>
+<BR>
+      <B>Header File(s):</B><BR>
+<BR>
+    </TD>
+
+  </TR>
+
+
+      <TR>
+        <TD COLSPAN="2">
+        <a name=compliance>
+          <FONT SIZE="+1"><BR><br><CENTER><B>Compliance Test Report</B></CENTER><BR><br></font>
+        </a>
+        </TD>
+      </TR>
+
+      <TR>
+        <TD><B>Test Results</B></TD>
+        <td>
+        <font color="#00A000">PASS: 6</font><br>
+        <font color="#FF0000"><B>FAIL: 0</b></font>
+        &nbsp;&nbsp;&nbsp; 
+        
+        <br>
+        Skipped: 0<br>
+        Not apply: 0<br>
+        <b>Total: 6</b><br>
+        </td>
+      </TR>
+      <TR>
+
+        <TD COLSPAN="2">
+            <B>Test Notes</B><BR>
+            &nbsp;&nbsp;&nbsp;This report has been generated with QualiTI Version 6.20 - the XDAIS compliance and performance test suite. <BR><BR>
+
+
+        </TD>
+      </TR>
+
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rules 8, 9 and 10">XDAIS Rules 8, 9, 10: Namespace compliance</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">(Rule 8) All external definitions must be either API identifiers or API and vendor prefixed.<br><br>(Rule 9) All undefined references must refer either to the operations specified in Appendix B (a subset of C runtime support library functions and a subset of the DSP/BIOS HWI API functions), or TI's DSPLIB or IMGLIB functions or other XDAIS-compliant modules.<br><br>(Rule 10) All modules must follow the eXpressDSP naming conventions for those external declarations disclosed to the client.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rules 8, 9 and 10">XDAIS Rules 8, 9 and 10 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 12">XDAIS Rule 12: IALG interface implementation</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All algorithms must implement the IALG interface.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 12">XDAIS Rule 12 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 13+">XDAIS Rule 13+: correct linker section names</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">Each of the IALG methods implemented by an algorithm must be independently relocatable.<br><br>Additional rule: there should be no non-standard linker sections. (Standard linker sections are: ".cinit", ".switch", ".far", ".text", ".const", ".bss", ".pinit".)</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 13+">XDAIS Rule 13+ execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 15">XDAIS Rule 15: library filename extension</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">Each XDAIS-compliant algorithm must be packaged in an archive which has a name that follows a uniform naming convention.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 15">XDAIS Rule 15 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 25">XDAIS Rule 25: All C6x algorithms must be supplied in little-endian format</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All C6x algorithms must be supplied in little-endian format.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 25">XDAIS Rule 25 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 26">XDAIS Rule 26: All static/global data must be far on c6x</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All C6x algorithms must access all static and global data as far data.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 26">XDAIS Rule 26 execution log</a><br>
+        </TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="2">
+        <a name=performance>
+          <FONT SIZE="+1"><BR><br><CENTER><B>Performance Test Report</B></CENTER><BR><br></font>
+        </a>
+        </TD>
+      </TR>
+
+      <TR>
+        <TD><B>Test Results</B></TD>
+        <td>
+        <font color="#00A000">PASS: 2</font><br>
+        <font color="#FF0000"><B>FAIL: 0</b></font>
+        &nbsp;&nbsp;&nbsp; 
+        
+        <br>
+        Skipped: 0<br>
+        Not apply: 0<br>
+        <b>Total: 2</b><br>
+        </td>
+      </TR>
+      <TR>
+
+        <TD COLSPAN="2">
+            <B>Test Notes</B><BR>
+            &nbsp;&nbsp;&nbsp;This report has been generated with QualiTI Version 6.20 - the XDAIS compliance and performance test suite. <BR><BR>
+
+
+        </TD>
+      </TR>
+
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 20">XDAIS Rule 20: must declare worst-case stack requirements</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All algorithms must characterize their worst-case stack space memory requirements (including alignment).</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Performance test completed. Calculated Worst Case Stack is 1928 bytes.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 20">XDAIS Rule 20 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rules 21, 22">XDAIS Rules 21, 22: must characterize static data & program memory requirements</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All algorithms must characterize their static data & program memory requirements</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Performance test completed. CODE, DATA & UDATA sections characterized<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rules 21, 22">XDAIS Rules 21, 22 execution log</a><br>
+        </TD>
+      </TR>
+</TABLE>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<hr>
+<a name="log XDAIS Rules 8, 9 and 10">Test execution log for <b>XDAIS Rules 8, 9 and 10:</b></a><br>
+<PRE>
+Running test 'XDAIS Rules 8, 9 and 10'
+Extracting names of global symbols defined by the algorithm...
+ Running command:&gt; "C:\CCStudio_v3.3\C6000\cgtools\bin\nm6x.exe" -g C:\wizard\RTSC_packages\c64xplus_mpeg4dec_02_01_00_00_production\packages\ti\sdo\codecs\mpeg4dec\lib\.\m4h3dec_ti.l64P | "C:\QualiTi\xdais_7_00_00_04\packages\ti\xdais\qualiti\bin\grep\grep.exe" " [TBCU] "
+                   (from "C:\Documents and Settings\x0080816\Local Settings\Temp\qualiti_runcmd_12390.sh"
+  00039cbc B _M4H3DEC_TI_IALG
+  00039d00 B _M4H3DEC_TI_IDMA3
+  00039cbc B _M4H3DEC_TI_IM4H3DEC
+  00056220 T _M4H3DEC_TI_activate
+  0004e5c0 T _M4H3DEC_TI_alloc
+  000438a0 T _M4H3DEC_TI_control
+  000562c0 T _M4H3DEC_TI_deactivate
+  00011ca0 T _M4H3DEC_TI_decodeFrame
+  00056b80 T _M4H3DEC_TI_dmaChangeChannels
+  00056fe0 T _M4H3DEC_TI_dmaGetChannelCnt
+  00056360 T _M4H3DEC_TI_dmaGetChannels
+  00056be0 T _M4H3DEC_TI_dmaInit
+  00055d00 T _M4H3DEC_TI_free
+  0003adc0 T _M4H3DEC_TI_initObj
+  00056fa0 T _M4H3DEC_TI_moved
+  00056fc0 T _M4H3DEC_TI_numAlloc
+  00000000 U __divi
+  00000000 U __divu
+  00000000 U __remi
+  00000000 U __remu
+  00000000 U __strasgi_64plus
+  00000000 U _memcpy
+  00000000 U _memset
+Verifying that all global symbols are named XXX_TI_xxx ...
+and that no blacklisted external references are made
+
+</PRE>
+<a href="#XDAIS Rules 8, 9 and 10">back</a>
+<hr>
+<a name="log XDAIS Rule 12">Test execution log for <b>XDAIS Rule 12:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 12'
+Extracting names of global BSS data symbols...
+ Running command:&gt; "C:\CCStudio_v3.3\C6000\cgtools\bin\nm6x.exe" -g C:\wizard\RTSC_packages\c64xplus_mpeg4dec_02_01_00_00_production\packages\ti\sdo\codecs\mpeg4dec\lib\.\m4h3dec_ti.l64P | "C:\QualiTi\xdais_7_00_00_04\packages\ti\xdais\qualiti\bin\grep\grep.exe" " [BD] "
+                   (from "C:\Documents and Settings\x0080816\Local Settings\Temp\qualiti_runcmd_12391.sh"
+  00039cbc B _M4H3DEC_TI_IALG
+  00039d00 B _M4H3DEC_TI_IDMA3
+  00039cbc B _M4H3DEC_TI_IM4H3DEC
+Verifying that objects 'M4H3DEC_TI_IALG' and 'M4H3DEC_TI_IM4H3DEC' are defined...
+Data object 'M4H3DEC_TI_IALG' found.
+Data object 'M4H3DEC_TI_IM4H3DEC' found.
+
+</PRE>
+<a href="#XDAIS Rule 12">back</a>
+<hr>
+<a name="log XDAIS Rule 13+">Test execution log for <b>XDAIS Rule 13+:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 13+'
+Extracting names of all sections in which all algorithms' symbols are...
+ Running command:&gt; "C:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header C:\wizard\RTSC_packages\c64xplus_mpeg4dec_02_01_00_00_production\packages\ti\sdo\codecs\mpeg4dec\lib\.\m4h3dec_ti.l64P | "C:\cg_xml\bin\sectti.exe" --csv
+                   (from "C:\Documents and Settings\x0080816\Local Settings\Temp\qualiti_runcmd_12392.sh"
+  Reading from stdin ...
+  Library,Filename,Section,Type,Size
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.const:M4H3DEC_TI_dSect1,DATA,19628
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.far:M4H3DEC_TI_uSect1,UDATA,4672
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:M4H3DEC_TI_cSect1,CODE,95200
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text,CODE,1344
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_saveBBSnapshot_interlace,CODE,160
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_restoreBBSnapshot_interlace,CODE,160
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_resetBB_interlace,CODE,96
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_clipMV,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.cinit,DATA,4704
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_updateChromaBoundingBox_BVOP_interlace,CODE,384
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeMBHeaderB_interlace,CODE,3808
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeBVOP_interlace,CODE,19904
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_updateTopLeftPredictorMB,CODE,96
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_setConcealStart,CODE,288
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_scanToH263RSHeader,CODE,544
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_resetAcdcPredictors,CODE,96
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_padFrameBounday,CODE,192
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_initConcealStruct,CODE,704
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_temporalConclAlg,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_spatialInterpolate,CODE,1248
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_greyShade,CODE,1248
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_spatialConclAlg,CODE,320
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_setComputedGMv,CODE,96
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_intraConclAlg,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_initErrConcealObj,CODE,896
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_initConclArgs,CODE,224
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_estimateMvDP,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_estimateMvCurPrevFrm,CODE,480
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_estimateMv,CODE,672
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_collectErrIno,CODE,544
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_computeGlobalMv,CODE,1152
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_computSpatialNghbr,CODE,544
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_conceal,CODE,608
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_errorConceal,CODE,1280
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.switch,DATA,464
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_errConclnumAlloc,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_errConclAlloc,CODE,160
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_initDmaConfig,CODE,992
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_dmaXfrOutTemporal,CODE,960
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_dmaXfrOutSpatial,CODE,736
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_dmaXfrInTemporal,CODE,736
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_dmaXfrInSpatial,CODE,704
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_computeMedianOf4,CODE,64
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_computeMedianOf3,CODE,64
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_getBits,CODE,128
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_warping_mv_code,CODE,864
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vopNotPresent,CODE,544
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_scanToGoodHeader,CODE,768
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_read_vop_complexity_estimation_header,CODE,3232
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeComplexityEstimationHeader,CODE,960
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_GetPLUSHeader,CODE,1536
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeShortVideoHeader,CODE,1504
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_GetSliceHeader,CODE,224
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_GetMiniSliceHeader,CODE,64
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_setMbMv,CODE,64
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_initConclInfoBufs,CODE,64
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getMbStatus,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getMbRefMv,CODE,64
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getMbMv,CODE,64
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getMb4Mv,CODE,128
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getFrmEnergy,CODE,128
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_colorConversion,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_2D1D,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_1D2D,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_fieldtoframe,CODE,1888
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeMVFieldB,CODE,1152
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pred_fieldavg,CODE,1216
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pred_fieldUVavg,CODE,1216
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pred_fieldUV,CODE,2816
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pred_field,CODE,2816
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_predGMCChroma,CODE,1344
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_predGMC,CODE,1408
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeIMB_interlace,CODE,2688
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeIVOP_interlace,CODE,4768
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeIMB_DP,CODE,1024
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeIVOP_DP,CODE,7968
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeIMB_H263,CODE,2688
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_Reset_Filter_Flags,CODE,192
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_Filter_Horizontal_Edge,CODE,4224
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_Filter_Vertical_Edge,CODE,1408
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_Filter_First_Vertical_Edge,CODE,2848
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeIVOP_H263,CODE,7776
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_setBitStreamIndex,CODE,128
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algNumAlloc:_M4H3DEC_TI_numAlloc,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algMoved:_M4H3DEC_TI_moved,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algInit:_M4H3DEC_TI_initObj,CODE,3936
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:init:_M4H3DEC_TI_init,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algFree:_M4H3DEC_TI_free,CODE,192
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:exit:_M4H3DEC_TI_exit,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algDeactivate:_M4H3DEC_TI_deactivate,CODE,160
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_control,CODE,2688
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algAlloc:_M4H3DEC_TI_alloc,CODE,1056
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algActivate:_M4H3DEC_TI_activate,CODE,160
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:dmaInit:_M4H3DEC_TI_dmaInit,CODE,96
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:dmaGetChannels:_M4H3DEC_TI_dmaGetChannels,CODE,160
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:dmaGetChannelCnt:_M4H3DEC_TI_dmaGetChannelCnt,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:dmaChangeChannels:_M4H3DEC_TI_dmaChangeChannels,CODE,96
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_initializeDecoderObject,CODE,736
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getCurRefBufs,CODE,768
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_plain_idct,CODE,640
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_VertDeblockFilter,CODE,1408
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_StoreRow,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_LoadRow,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_HorizDeblockFilter,CODE,1536
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_Deringing_Luma,CODE,3424
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_PostFilter_422,CODE,1280
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_PostFilter,CODE,6336
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_Deringing_Chroma,CODE,2752
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deblock_s_hori_c,CODE,704
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deblock_l_hori_c,CODE,512
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deblock_horiz_c,CODE,1824
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deblock_l_vert_c,CODE,512
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deblock_s_vert_c,CODE,704
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deblock_vert_c,CODE,1888
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_detect_top_edge,CODE,192
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_dering_row,CODE,1440
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deringing_c,CODE,288
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_updateChromaBoundingBox_interlace,CODE,384
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeMVField,CODE,1344
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeMbHeaderP_interlace,CODE,3232
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodePVOP_interlace,CODE,15552
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodePVOP_DP,CODE,16160
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeMbHeaderP_H263,CODE,3200
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodePVOP_H263,CODE,15072
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_wait_id,CODE,224
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy2D2D_linked_int_tcc,CODE,512
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy2D2D_linked,CODE,480
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy2D2D,CODE,224
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy2D1D_linked_int_tcc,CODE,512
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy2D1D,CODE,224
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy1D2D_linked_int_tcc,CODE,512
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy1D2D_linked,CODE,480
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy1D2D,CODE,224
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy1D1D,CODE,224
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_clear_stats,CODE,96
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_busy,CODE,96
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeMbHeaderS,CODE,3488
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeSVOP,CODE,12832
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getBitStreamIndexH263,CODE,128
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_memCmpWindow,CODE,160
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy2D2D_sep_host,CODE,128
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy2D2DLinked_sep_host,CODE,192
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy2D1D_host,CODE,128
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy2D1DLinked_host,CODE,160
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy1D2D_host,CODE,128
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy1D2DLinked_host,CODE,160
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy1D1D_host,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_checkBitStuffing,CODE,96
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_byteAlignedShowBitsH263,CODE,128
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_byteAlignBitStreamNoStuffing,CODE,160
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldPMB_DPRVLC,CODE,928
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldPMB_DP,CODE,1376
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldIMB_DPRVLC,CODE,1408
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldIMB_DP,CODE,1696
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_oddifyClip,CODE,32
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_clipAcCoeff,CODE,96
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_applyAcPrediction_P_DP,CODE,2112
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_applyAcDcPred,CODE,6240
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldIMB_H263,CODE,960
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldIMB_H263_PLUS,CODE,1024
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldPMB_H263,CODE,864
+  C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldPMB_H263_PLUS,CODE,864
+Verifying that IALG functions are in separate sections,
+i.e. that there exist sections that match regexp /\.text:.*[aA]lloc.*/,
+and also that there are no non-standard sections.
+
+</PRE>
+<a href="#XDAIS Rule 13+">back</a>
+<hr>
+<a name="log XDAIS Rule 15">Test execution log for <b>XDAIS Rule 15:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 15'
+Verifying that the extension for library ".\m4h3dec_ti.l64P" is ".l64P"
+Verifying that the file ".\m4h3dec_ti.l64P" is really a library, and not a partially linked object file or something like that.
+ Running command:&gt; "C:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header C:\wizard\RTSC_packages\c64xplus_mpeg4dec_02_01_00_00_production\packages\ti\sdo\codecs\mpeg4dec\lib\.\m4h3dec_ti.l64P | "C:\QualiTi\xdais_7_00_00_04\packages\ti\xdais\qualiti\bin\grep\grep.exe" "&lt;archive&gt;"
+                   (from "C:\Documents and Settings\x0080816\Local Settings\Temp\qualiti_runcmd_12393.sh"
+  &lt;archive&gt;
+
+</PRE>
+<a href="#XDAIS Rule 15">back</a>
+<hr>
+<a name="log XDAIS Rule 20">Test execution log for <b>XDAIS Rule 20:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 20'
+Using call_graph on ofd output to find out worst case stack...
+ Running command:&gt; "C:\cg_xml\utils\ofd6x.exe" -xg --xml_indent=0 --obj_display=none,header,optheader,symbols --dwarf_display=none,dinfo  C:\wizard\RTSC_packages\c64xplus_mpeg4dec_02_01_00_00_production\packages\ti\sdo\codecs\mpeg4dec\lib\.\m4h3dec_ti.l64P | "C:\cg_xml\bin\call_graph.exe" --stack_max
+                   (from "C:\Documents and Settings\x0080816\Local Settings\Temp\qualiti_runcmd_12394.sh"
+  Reading from stdin ...
+  _M4H3DEC_TI_decodeFrame : wcs = 1928
+Extracting worst case stack from a stdout line that ends with ': wcs = &lt;num&gt;'
+Calculated worst case stack is 1928 bytes.
+
+</PRE>
+<a href="#XDAIS Rule 20">back</a>
+<hr>
+<a name="log XDAIS Rules 21, 22">Test execution log for <b>XDAIS Rules 21, 22:</b></a><br>
+<PRE>
+Running test 'XDAIS Rules 21, 22'
+Using sectti on ofd output to find static data & program memory requirements...
+ Running command:&gt; "C:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header C:\wizard\RTSC_packages\c64xplus_mpeg4dec_02_01_00_00_production\packages\ti\sdo\codecs\mpeg4dec\lib\.\m4h3dec_ti.l64P | "C:\cg_xml\bin\sectti.exe"
+                   (from "C:\Documents and Settings\x0080816\Local Settings\Temp\qualiti_runcmd_12395.sh"
+  Reading from stdin ...
+  ====================================================================
+  REPORT FOR LIBRARY: C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P
+  ====================================================================
+  
+  
+  ************************************************************
+  REPORT FOR FILE: m4h3dec_ti_plink.o64P
+  ************************************************************
+                            Name : Size (dec)  Size (hex)  Type
+  ------------------------------ : ----------  ----------  ----
+        .const:M4H3DEC_TI_dSect1 :      19628  0x00004cac  DATA 
+          .far:M4H3DEC_TI_uSect1 :       4672  0x00001240  UDATA
+         .text:M4H3DEC_TI_cSect1 :      95200  0x000173e0  CODE 
+                           .text :       1344  0x00000540  CODE 
+  .text:_M4H3DEC_TI_saveBBSnapshot_interlace :        160  0x000000a0  CODE 
+  .text:_M4H3DEC_TI_restoreBBSnapshot_interlace :        160  0x000000a0  CODE 
+  .text:_M4H3DEC_TI_resetBB_interlace :         96  0x00000060  CODE 
+        .text:_M4H3DEC_TI_clipMV :         32  0x00000020  CODE 
+                          .cinit :       4704  0x00001260  DATA 
+  .text:_M4H3DEC_TI_updateChromaBoundingBox_BVOP_interlace :        384  0x00000180  CODE 
+  .text:_M4H3DEC_TI_decodeMBHeaderB_interlace :       3808  0x00000ee0  CODE 
+  .text:_M4H3DEC_TI_decodeBVOP_interlace :      19904  0x00004dc0  CODE 
+  .text:_M4H3DEC_TI_updateTopLeftPredictorMB :         96  0x00000060  CODE 
+  .text:_M4H3DEC_TI_setConcealStart :        288  0x00000120  CODE 
+  .text:_M4H3DEC_TI_scanToH263RSHeader :        544  0x00000220  CODE 
+  .text:_M4H3DEC_TI_resetAcdcPredictors :         96  0x00000060  CODE 
+  .text:_M4H3DEC_TI_padFrameBounday :        192  0x000000c0  CODE 
+  .text:_M4H3DEC_TI_initConcealStruct :        704  0x000002c0  CODE 
+  .text:_M4H3DEC_TI_temporalConclAlg :         32  0x00000020  CODE 
+  .text:_M4H3DEC_TI_spatialInterpolate :       1248  0x000004e0  CODE 
+     .text:_M4H3DEC_TI_greyShade :       1248  0x000004e0  CODE 
+  .text:_M4H3DEC_TI_spatialConclAlg :        320  0x00000140  CODE 
+  .text:_M4H3DEC_TI_setComputedGMv :         96  0x00000060  CODE 
+  .text:_M4H3DEC_TI_intraConclAlg :         32  0x00000020  CODE 
+  .text:_M4H3DEC_TI_initErrConcealObj :        896  0x00000380  CODE 
+  .text:_M4H3DEC_TI_initConclArgs :        224  0x000000e0  CODE 
+  .text:_M4H3DEC_TI_estimateMvDP :         32  0x00000020  CODE 
+  .text:_M4H3DEC_TI_estimateMvCurPrevFrm :        480  0x000001e0  CODE 
+    .text:_M4H3DEC_TI_estimateMv :        672  0x000002a0  CODE 
+  .text:_M4H3DEC_TI_collectErrIno :        544  0x00000220  CODE 
+  .text:_M4H3DEC_TI_computeGlobalMv :       1152  0x00000480  CODE 
+  .text:_M4H3DEC_TI_computSpatialNghbr :        544  0x00000220  CODE 
+       .text:_M4H3DEC_TI_conceal :        608  0x00000260  CODE 
+  .text:_M4H3DEC_TI_errorConceal :       1280  0x00000500  CODE 
+                         .switch :        464  0x000001d0  DATA 
+  .text:_M4H3DEC_TI_errConclnumAlloc :         32  0x00000020  CODE 
+  .text:_M4H3DEC_TI_errConclAlloc :        160  0x000000a0  CODE 
+  .text:_M4H3DEC_TI_initDmaConfig :        992  0x000003e0  CODE 
+  .text:_M4H3DEC_TI_dmaXfrOutTemporal :        960  0x000003c0  CODE 
+  .text:_M4H3DEC_TI_dmaXfrOutSpatial :        736  0x000002e0  CODE 
+  .text:_M4H3DEC_TI_dmaXfrInTemporal :        736  0x000002e0  CODE 
+  .text:_M4H3DEC_TI_dmaXfrInSpatial :        704  0x000002c0  CODE 
+  .text:_M4H3DEC_TI_computeMedianOf4 :         64  0x00000040  CODE 
+  .text:_M4H3DEC_TI_computeMedianOf3 :         64  0x00000040  CODE 
+                  .text:_getBits :        128  0x00000080  CODE 
+  .text:_M4H3DEC_TI_warping_mv_code :        864  0x00000360  CODE 
+  .text:_M4H3DEC_TI_vopNotPresent :        544  0x00000220  CODE 
+  .text:_M4H3DEC_TI_scanToGoodHeader :        768  0x00000300  CODE 
+  .text:_M4H3DEC_TI_read_vop_complexity_estimation_header :       3232  0x00000ca0  CODE 
+  .text:_M4H3DEC_TI_decodeComplexityEstimationHeader :        960  0x000003c0  CODE 
+  .text:_M4H3DEC_TI_GetPLUSHeader :       1536  0x00000600  CODE 
+  .text:_M4H3DEC_TI_decodeShortVideoHeader :       1504  0x000005e0  CODE 
+  .text:_M4H3DEC_TI_GetSliceHeader :        224  0x000000e0  CODE 
+  .text:_M4H3DEC_TI_GetMiniSliceHeader :         64  0x00000040  CODE 
+       .text:_M4H3DEC_TI_setMbMv :         64  0x00000040  CODE 
+  .text:_M4H3DEC_TI_initConclInfoBufs :         64  0x00000040  CODE 
+   .text:_M4H3DEC_TI_getMbStatus :         32  0x00000020  CODE 
+    .text:_M4H3DEC_TI_getMbRefMv :         64  0x00000040  CODE 
+       .text:_M4H3DEC_TI_getMbMv :         64  0x00000040  CODE 
+      .text:_M4H3DEC_TI_getMb4Mv :        128  0x00000080  CODE 
+  .text:_M4H3DEC_TI_getFrmEnergy :        128  0x00000080  CODE 
+  .text:_M4H3DEC_TI_colorConversion :         32  0x00000020  CODE 
+          .text:_M4H3DEC_TI_2D1D :         32  0x00000020  CODE 
+          .text:_M4H3DEC_TI_1D2D :         32  0x00000020  CODE 
+  .text:_M4H3DEC_TI_fieldtoframe :       1888  0x00000760  CODE 
+  .text:_M4H3DEC_TI_decodeMVFieldB :       1152  0x00000480  CODE 
+  .text:_M4H3DEC_TI_pred_fieldavg :       1216  0x000004c0  CODE 
+  .text:_M4H3DEC_TI_pred_fieldUVavg :       1216  0x000004c0  CODE 
+  .text:_M4H3DEC_TI_pred_fieldUV :       2816  0x00000b00  CODE 
+    .text:_M4H3DEC_TI_pred_field :       2816  0x00000b00  CODE 
+  .text:_M4H3DEC_TI_predGMCChroma :       1344  0x00000540  CODE 
+       .text:_M4H3DEC_TI_predGMC :       1408  0x00000580  CODE 
+  .text:_M4H3DEC_TI_decodeIMB_interlace :       2688  0x00000a80  CODE 
+  .text:_M4H3DEC_TI_decodeIVOP_interlace :       4768  0x000012a0  CODE 
+  .text:_M4H3DEC_TI_decodeIMB_DP :       1024  0x00000400  CODE 
+  .text:_M4H3DEC_TI_decodeIVOP_DP :       7968  0x00001f20  CODE 
+  .text:_M4H3DEC_TI_decodeIMB_H263 :       2688  0x00000a80  CODE 
+  .text:_M4H3DEC_TI_Reset_Filter_Flags :        192  0x000000c0  CODE 
+  .text:_M4H3DEC_TI_Filter_Horizontal_Edge :       4224  0x00001080  CODE 
+  .text:_M4H3DEC_TI_Filter_Vertical_Edge :       1408  0x00000580  CODE 
+  .text:_M4H3DEC_TI_Filter_First_Vertical_Edge :       2848  0x00000b20  CODE 
+  .text:_M4H3DEC_TI_decodeIVOP_H263 :       7776  0x00001e60  CODE 
+  .text:_M4H3DEC_TI_setBitStreamIndex :        128  0x00000080  CODE 
+  .text:algNumAlloc:_M4H3DEC_TI_numAlloc :         32  0x00000020  CODE 
+  .text:algMoved:_M4H3DEC_TI_moved :         32  0x00000020  CODE 
+  .text:algInit:_M4H3DEC_TI_initObj :       3936  0x00000f60  CODE 
+     .text:init:_M4H3DEC_TI_init :         32  0x00000020  CODE 
+  .text:algFree:_M4H3DEC_TI_free :        192  0x000000c0  CODE 
+     .text:exit:_M4H3DEC_TI_exit :         32  0x00000020  CODE 
+  .text:algDeactivate:_M4H3DEC_TI_deactivate :        160  0x000000a0  CODE 
+       .text:_M4H3DEC_TI_control :       2688  0x00000a80  CODE 
+  .text:algAlloc:_M4H3DEC_TI_alloc :       1056  0x00000420  CODE 
+  .text:algActivate:_M4H3DEC_TI_activate :        160  0x000000a0  CODE 
+  .text:dmaInit:_M4H3DEC_TI_dmaInit :         96  0x00000060  CODE 
+  .text:dmaGetChannels:_M4H3DEC_TI_dmaGetChannels :        160  0x000000a0  CODE 
+  .text:dmaGetChannelCnt:_M4H3DEC_TI_dmaGetChannelCnt :         32  0x00000020  CODE 
+  .text:dmaChangeChannels:_M4H3DEC_TI_dmaChangeChannels :         96  0x00000060  CODE 
+  .text:_M4H3DEC_TI_initializeDecoderObject :        736  0x000002e0  CODE 
+  .text:_M4H3DEC_TI_getCurRefBufs :        768  0x00000300  CODE 
+               .text:_plain_idct :        640  0x00000280  CODE 
+  .text:_M4H3DEC_TI_VertDeblockFilter :       1408  0x00000580  CODE 
+      .text:_M4H3DEC_TI_StoreRow :         32  0x00000020  CODE 
+       .text:_M4H3DEC_TI_LoadRow :         32  0x00000020  CODE 
+  .text:_M4H3DEC_TI_HorizDeblockFilter :       1536  0x00000600  CODE 
+  .text:_M4H3DEC_TI_Deringing_Luma :       3424  0x00000d60  CODE 
+  .text:_M4H3DEC_TI_PostFilter_422 :       1280  0x00000500  CODE 
+    .text:_M4H3DEC_TI_PostFilter :       6336  0x000018c0  CODE 
+  .text:_M4H3DEC_TI_Deringing_Chroma :       2752  0x00000ac0  CODE 
+  .text:_M4H3DEC_TI_pp_deblock_s_hori_c :        704  0x000002c0  CODE 
+  .text:_M4H3DEC_TI_pp_deblock_l_hori_c :        512  0x00000200  CODE 
+  .text:_M4H3DEC_TI_pp_deblock_horiz_c :       1824  0x00000720  CODE 
+  .text:_M4H3DEC_TI_pp_deblock_l_vert_c :        512  0x00000200  CODE 
+  .text:_M4H3DEC_TI_pp_deblock_s_vert_c :        704  0x000002c0  CODE 
+  .text:_M4H3DEC_TI_pp_deblock_vert_c :       1888  0x00000760  CODE 
+  .text:_M4H3DEC_TI_detect_top_edge :        192  0x000000c0  CODE 
+  .text:_M4H3DEC_TI_pp_dering_row :       1440  0x000005a0  CODE 
+  .text:_M4H3DEC_TI_pp_deringing_c :        288  0x00000120  CODE 
+  .text:_M4H3DEC_TI_updateChromaBoundingBox_interlace :        384  0x00000180  CODE 
+  .text:_M4H3DEC_TI_decodeMVField :       1344  0x00000540  CODE 
+  .text:_M4H3DEC_TI_decodeMbHeaderP_interlace :       3232  0x00000ca0  CODE 
+  .text:_M4H3DEC_TI_decodePVOP_interlace :      15552  0x00003cc0  CODE 
+  .text:_M4H3DEC_TI_decodePVOP_DP :      16160  0x00003f20  CODE 
+  .text:_M4H3DEC_TI_decodeMbHeaderP_H263 :       3200  0x00000c80  CODE 
+  .text:_M4H3DEC_TI_decodePVOP_H263 :      15072  0x00003ae0  CODE 
+  .text:_M4H3DEC_TI_QDMA_wait_id :        224  0x000000e0  CODE 
+  .text:_M4H3DEC_TI_QDMA_copy2D2D_linked_int_tcc :        512  0x00000200  CODE 
+  .text:_M4H3DEC_TI_QDMA_copy2D2D_linked :        480  0x000001e0  CODE 
+  .text:_M4H3DEC_TI_QDMA_copy2D2D :        224  0x000000e0  CODE 
+  .text:_M4H3DEC_TI_QDMA_copy2D1D_linked_int_tcc :        512  0x00000200  CODE 
+  .text:_M4H3DEC_TI_QDMA_copy2D1D :        224  0x000000e0  CODE 
+  .text:_M4H3DEC_TI_QDMA_copy1D2D_linked_int_tcc :        512  0x00000200  CODE 
+  .text:_M4H3DEC_TI_QDMA_copy1D2D_linked :        480  0x000001e0  CODE 
+  .text:_M4H3DEC_TI_QDMA_copy1D2D :        224  0x000000e0  CODE 
+  .text:_M4H3DEC_TI_QDMA_copy1D1D :        224  0x000000e0  CODE 
+  .text:_M4H3DEC_TI_QDMA_clear_stats :         96  0x00000060  CODE 
+     .text:_M4H3DEC_TI_QDMA_busy :         96  0x00000060  CODE 
+  .text:_M4H3DEC_TI_decodeMbHeaderS :       3488  0x00000da0  CODE 
+    .text:_M4H3DEC_TI_decodeSVOP :      12832  0x00003220  CODE 
+  .text:_M4H3DEC_TI_getBitStreamIndexH263 :        128  0x00000080  CODE 
+  .text:_M4H3DEC_TI_memCmpWindow :        160  0x000000a0  CODE 
+  .text:_M4H3DEC_TI_datCopy2D2D_sep_host :        128  0x00000080  CODE 
+  .text:_M4H3DEC_TI_datCopy2D2DLinked_sep_host :        192  0x000000c0  CODE 
+  .text:_M4H3DEC_TI_datCopy2D1D_host :        128  0x00000080  CODE 
+  .text:_M4H3DEC_TI_datCopy2D1DLinked_host :        160  0x000000a0  CODE 
+  .text:_M4H3DEC_TI_datCopy1D2D_host :        128  0x00000080  CODE 
+  .text:_M4H3DEC_TI_datCopy1D2DLinked_host :        160  0x000000a0  CODE 
+  .text:_M4H3DEC_TI_datCopy1D1D_host :         32  0x00000020  CODE 
+  .text:_M4H3DEC_TI_checkBitStuffing :         96  0x00000060  CODE 
+  .text:_M4H3DEC_TI_byteAlignedShowBitsH263 :        128  0x00000080  CODE 
+  .text:_M4H3DEC_TI_byteAlignBitStreamNoStuffing :        160  0x000000a0  CODE 
+  .text:_M4H3DEC_TI_vldPMB_DPRVLC :        928  0x000003a0  CODE 
+     .text:_M4H3DEC_TI_vldPMB_DP :       1376  0x00000560  CODE 
+  .text:_M4H3DEC_TI_vldIMB_DPRVLC :       1408  0x00000580  CODE 
+     .text:_M4H3DEC_TI_vldIMB_DP :       1696  0x000006a0  CODE 
+    .text:_M4H3DEC_TI_oddifyClip :         32  0x00000020  CODE 
+   .text:_M4H3DEC_TI_clipAcCoeff :         96  0x00000060  CODE 
+  .text:_M4H3DEC_TI_applyAcPrediction_P_DP :       2112  0x00000840  CODE 
+  .text:_M4H3DEC_TI_applyAcDcPred :       6240  0x00001860  CODE 
+   .text:_M4H3DEC_TI_vldIMB_H263 :        960  0x000003c0  CODE 
+  .text:_M4H3DEC_TI_vldIMB_H263_PLUS :       1024  0x00000400  CODE 
+   .text:_M4H3DEC_TI_vldPMB_H263 :        864  0x00000360  CODE 
+  .text:_M4H3DEC_TI_vldPMB_H263_PLUS :        864  0x00000360  CODE 
+  
+  ------------------------------------------------------------
+  Totals by section type
+  ------------------------------------------------------------
+    Uninitialized Data :       4672  0x00001240
+      Initialized Data :      24796  0x000060dc
+                  Code :     326880  0x0004fce0
+
+</PRE>
+<a href="#XDAIS Rules 21, 22">back</a>
+<hr>
+<a name="log XDAIS Rule 25">Test execution log for <b>XDAIS Rule 25:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 25'
+Using ofd output to parse for endianness attribute...
+ Running command:&gt; "C:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,header C:\wizard\RTSC_packages\c64xplus_mpeg4dec_02_01_00_00_production\packages\ti\sdo\codecs\mpeg4dec\lib\.\m4h3dec_ti.l64P | "C:\QualiTi\xdais_7_00_00_04\packages\ti\xdais\qualiti\bin\grep\grep.exe" "&lt;endian&gt;"
+                   (from "C:\Documents and Settings\x0080816\Local Settings\Temp\qualiti_runcmd_12396.sh"
+  &lt;endian&gt;little&lt;/endian&gt;
+
+</PRE>
+<a href="#XDAIS Rule 25">back</a>
+<hr>
+<a name="log XDAIS Rule 26">Test execution log for <b>XDAIS Rule 26:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 26'
+Extracting names of all used sections to see if there is a '.bss' in there.
+[Using output generated by the command from test 'XDAIS Rule 13+"]:
+Running command:&gt; "C:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header C:\wizard\RTSC_packages\c64xplus_mpeg4dec_02_01_00_00_production\packages\ti\sdo\codecs\mpeg4dec\lib\.\m4h3dec_ti.l64P | "C:\cg_xml\bin\sectti.exe" --csv
+                  (from "C:\Documents and Settings\x0080816\Local Settings\Temp\qualiti_runcmd_12392.sh"
+Reading from stdin ...
+Library,Filename,Section,Type,Size
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.const:M4H3DEC_TI_dSect1,DATA,19628
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.far:M4H3DEC_TI_uSect1,UDATA,4672
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:M4H3DEC_TI_cSect1,CODE,95200
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text,CODE,1344
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_saveBBSnapshot_interlace,CODE,160
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_restoreBBSnapshot_interlace,CODE,160
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_resetBB_interlace,CODE,96
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_clipMV,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.cinit,DATA,4704
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_updateChromaBoundingBox_BVOP_interlace,CODE,384
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeMBHeaderB_interlace,CODE,3808
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeBVOP_interlace,CODE,19904
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_updateTopLeftPredictorMB,CODE,96
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_setConcealStart,CODE,288
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_scanToH263RSHeader,CODE,544
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_resetAcdcPredictors,CODE,96
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_padFrameBounday,CODE,192
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_initConcealStruct,CODE,704
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_temporalConclAlg,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_spatialInterpolate,CODE,1248
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_greyShade,CODE,1248
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_spatialConclAlg,CODE,320
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_setComputedGMv,CODE,96
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_intraConclAlg,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_initErrConcealObj,CODE,896
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_initConclArgs,CODE,224
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_estimateMvDP,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_estimateMvCurPrevFrm,CODE,480
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_estimateMv,CODE,672
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_collectErrIno,CODE,544
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_computeGlobalMv,CODE,1152
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_computSpatialNghbr,CODE,544
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_conceal,CODE,608
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_errorConceal,CODE,1280
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.switch,DATA,464
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_errConclnumAlloc,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_errConclAlloc,CODE,160
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_initDmaConfig,CODE,992
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_dmaXfrOutTemporal,CODE,960
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_dmaXfrOutSpatial,CODE,736
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_dmaXfrInTemporal,CODE,736
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_dmaXfrInSpatial,CODE,704
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_computeMedianOf4,CODE,64
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_computeMedianOf3,CODE,64
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_getBits,CODE,128
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_warping_mv_code,CODE,864
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vopNotPresent,CODE,544
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_scanToGoodHeader,CODE,768
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_read_vop_complexity_estimation_header,CODE,3232
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeComplexityEstimationHeader,CODE,960
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_GetPLUSHeader,CODE,1536
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeShortVideoHeader,CODE,1504
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_GetSliceHeader,CODE,224
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_GetMiniSliceHeader,CODE,64
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_setMbMv,CODE,64
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_initConclInfoBufs,CODE,64
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getMbStatus,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getMbRefMv,CODE,64
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getMbMv,CODE,64
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getMb4Mv,CODE,128
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getFrmEnergy,CODE,128
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_colorConversion,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_2D1D,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_1D2D,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_fieldtoframe,CODE,1888
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeMVFieldB,CODE,1152
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pred_fieldavg,CODE,1216
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pred_fieldUVavg,CODE,1216
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pred_fieldUV,CODE,2816
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pred_field,CODE,2816
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_predGMCChroma,CODE,1344
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_predGMC,CODE,1408
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeIMB_interlace,CODE,2688
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeIVOP_interlace,CODE,4768
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeIMB_DP,CODE,1024
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeIVOP_DP,CODE,7968
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeIMB_H263,CODE,2688
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_Reset_Filter_Flags,CODE,192
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_Filter_Horizontal_Edge,CODE,4224
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_Filter_Vertical_Edge,CODE,1408
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_Filter_First_Vertical_Edge,CODE,2848
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeIVOP_H263,CODE,7776
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_setBitStreamIndex,CODE,128
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algNumAlloc:_M4H3DEC_TI_numAlloc,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algMoved:_M4H3DEC_TI_moved,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algInit:_M4H3DEC_TI_initObj,CODE,3936
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:init:_M4H3DEC_TI_init,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algFree:_M4H3DEC_TI_free,CODE,192
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:exit:_M4H3DEC_TI_exit,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algDeactivate:_M4H3DEC_TI_deactivate,CODE,160
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_control,CODE,2688
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algAlloc:_M4H3DEC_TI_alloc,CODE,1056
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:algActivate:_M4H3DEC_TI_activate,CODE,160
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:dmaInit:_M4H3DEC_TI_dmaInit,CODE,96
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:dmaGetChannels:_M4H3DEC_TI_dmaGetChannels,CODE,160
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:dmaGetChannelCnt:_M4H3DEC_TI_dmaGetChannelCnt,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:dmaChangeChannels:_M4H3DEC_TI_dmaChangeChannels,CODE,96
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_initializeDecoderObject,CODE,736
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getCurRefBufs,CODE,768
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_plain_idct,CODE,640
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_VertDeblockFilter,CODE,1408
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_StoreRow,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_LoadRow,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_HorizDeblockFilter,CODE,1536
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_Deringing_Luma,CODE,3424
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_PostFilter_422,CODE,1280
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_PostFilter,CODE,6336
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_Deringing_Chroma,CODE,2752
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deblock_s_hori_c,CODE,704
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deblock_l_hori_c,CODE,512
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deblock_horiz_c,CODE,1824
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deblock_l_vert_c,CODE,512
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deblock_s_vert_c,CODE,704
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deblock_vert_c,CODE,1888
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_detect_top_edge,CODE,192
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_dering_row,CODE,1440
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_pp_deringing_c,CODE,288
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_updateChromaBoundingBox_interlace,CODE,384
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeMVField,CODE,1344
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeMbHeaderP_interlace,CODE,3232
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodePVOP_interlace,CODE,15552
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodePVOP_DP,CODE,16160
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeMbHeaderP_H263,CODE,3200
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodePVOP_H263,CODE,15072
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_wait_id,CODE,224
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy2D2D_linked_int_tcc,CODE,512
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy2D2D_linked,CODE,480
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy2D2D,CODE,224
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy2D1D_linked_int_tcc,CODE,512
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy2D1D,CODE,224
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy1D2D_linked_int_tcc,CODE,512
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy1D2D_linked,CODE,480
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy1D2D,CODE,224
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_copy1D1D,CODE,224
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_clear_stats,CODE,96
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_QDMA_busy,CODE,96
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeMbHeaderS,CODE,3488
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_decodeSVOP,CODE,12832
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_getBitStreamIndexH263,CODE,128
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_memCmpWindow,CODE,160
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy2D2D_sep_host,CODE,128
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy2D2DLinked_sep_host,CODE,192
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy2D1D_host,CODE,128
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy2D1DLinked_host,CODE,160
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy1D2D_host,CODE,128
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy1D2DLinked_host,CODE,160
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_datCopy1D1D_host,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_checkBitStuffing,CODE,96
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_byteAlignedShowBitsH263,CODE,128
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_byteAlignBitStreamNoStuffing,CODE,160
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldPMB_DPRVLC,CODE,928
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldPMB_DP,CODE,1376
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldIMB_DPRVLC,CODE,1408
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldIMB_DP,CODE,1696
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_oddifyClip,CODE,32
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_clipAcCoeff,CODE,96
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_applyAcPrediction_P_DP,CODE,2112
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_applyAcDcPred,CODE,6240
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldIMB_H263,CODE,960
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldIMB_H263_PLUS,CODE,1024
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldPMB_H263,CODE,864
+C:/wizard/RTSC_packages/c64xplus_mpeg4dec_02_01_00_00_production/packages/ti/sdo/codecs/mpeg4dec/lib/./m4h3dec_ti.l64P,m4h3dec_ti_plink.o64P,.text:_M4H3DEC_TI_vldPMB_H263_PLUS,CODE,864
+[end of reused output]
+
+Verifying that there are no '.bss' sections in the output
+
+</PRE>
+<a href="#XDAIS Rule 26">back</a>
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</BODY>
+</HTML>
+
+
+
+

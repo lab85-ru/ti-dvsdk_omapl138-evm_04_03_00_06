@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/lib/perl
+END
+dsprpcposix-rpcgen.pl
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/lib/perl/dsprpcposix-rpcgen.pl
+END
+c6runlib-rpcgen.pl
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/lib/perl/c6runlib-rpcgen.pl
+END
+c6runlib-fxnaddrgen.pl
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/lib/perl/c6runlib-fxnaddrgen.pl
+END

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="mycompany.platforms.myboard" version="1, 0, 0" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+    </sources>
+    <configurations>
+    </configurations>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="package/rel/mycompany_platforms_myboard.tar.dep" src="package/rel/mycompany_platforms_myboard.xdc.inc"/>
+    </makefiles>
+    <targets>
+    </targets>
+    <libraries>
+    </libraries>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="mycompany_platforms_myboard"
+        pname="../../../../exports/mycompany_platforms_myboard.tar"
+        label="default"
+        relScript="/db/ztree/library/trees/platform/platform-k29x/src/tisb/release/epl/copyright.rel">
+        <file name="Platform_55_Group2.tci"/>
+        <file name="package/package.ext.xml"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="Platform_67_Group1.tci"/>
+        <file name="readme.txt"/>
+        <file name="package/package.rel.dot"/>
+        <file name="Platform_67P_Group1.tci"/>
+        <file name="Platform_55_Group3.tci"/>
+        <file name="Platform_64P_Group1.tci"/>
+        <file name="Platform_62_Group1.tci"/>
+        <file name="Platform_28_Group1.tci"/>
+        <file name="Platform_64_Group1.tci"/>
+        <file name="Platform_55_Group1.tci"/>
+        <file name="package/build.cfg"/>
+        <file name="Platform_55P_Group1.tci"/>
+        <file name="package/package.bld.xml"/>
+        <file name="Platform_55_Group4.tci"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="Platform_54_Group1.tci"/>
+        <file name="parameterTable.txt"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

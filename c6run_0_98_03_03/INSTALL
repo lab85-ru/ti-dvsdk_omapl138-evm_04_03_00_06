@@ -1,0 +1,145 @@
+        INSTALLING C6Run
+        
+Current and up-to-date documentation on how to install the C6Run project
+can always be found on the Texas Instrument Embedded Processors wiki:
+        
+  http://processors.wiki.ti.com/index.php/Introduction_to_C6Run#Getting_Started_With_C6Run
+  
+  
+INSTALLING BINARIES
+===================
+
+There are no binary distributions of the C6Run project available. Particular 
+embedded targets are supported, but the source must be configure and built 
+for these targets by the end user
+
+The C6Run tools can be built inside the Angstrom distribution using recipes 
+that are available inside the SVN repository:
+
+  https://gforge.ti.com/gf/project/dspeasy/scmsvn/?action=browse&path=%2Frecipes%2F
+
+
+INSTALLING FROM SOURCE 
+======================
+
+Where To Get It
+---------------
+
+    * The C6Run project is an open source project hosted on TI's external GForge
+      server, gforge.ti.com. It is licensed under the standard three-clause 
+      BSD License. The official development project is here:
+        https://gforge.ti.com/gf/project/dspeasy
+    * The latest packaged, stand-alone release is available from the TI website:
+        http://focus.ti.com/docs/toolsw/folders/print/c6run-dsparmtool.html
+    * Packaged source releases are also available from the file release section 
+      of the GForge site:
+        https://gforge.ti.com/gf/project/dspeasy/frs/
+    * For developers, subversion access (using a subversion client) to the 
+      development trunk is available at https://gforge.ti.com/svn/dspeasy/trunk.
+
+        [host]$ svn checkout --username anonymous https://gforge.ti.com/svn/dspeasy/trunk
+
+      Note that the current trunk may not represent a stable version of the 
+      project. For SVN access to stable releases, you should checkout from a 
+      tags path:
+
+        [host]$ svn checkout --username anonymous https://gforge.ti.com/svn/dspeasy/tags/<MM>_<mm>_<pn>_<bn>
+
+      <MM>_<mm>_<pn>_<bn> is the release's particular version number (MM=major,
+      mm=minor, pn=patch number, bn=build number). 
+
+System Setup
+------------
+
+The C6Run tools are intended to be used on a Linux host development system, in
+the same way that the GCC cross-compiler tools for ARM are run on a Linux host.
+If you plan to use the C6Run tool in a standalone environment (outside of an SDK
+or Angstrom/OE), follow the steps provided below.
+
+  1. Un-tar the C6Run install package to some location on your host Linux system
+     (note that <MM>_<mm>_<pn>_<bn> reflects the version number of the package).
+       [host]$ tar -xvzf C6Run_<MM>_<mm>_<pn>_<bn>.tar.gz
+
+  2. Enter into the top-level directory of the package
+       [host]$ cd C6Run_<MM>_<mm>_<pn>_<bn>
+
+  3. Get and install the required dependencies listed previously (except the 
+     compilers - these must be downloaded and installed manually). The easiest
+     way to get these components is to use the 'make get_components' command. It
+     uses the wget utility on your Linux host system to download and install the
+     components in the C6Run top-level path. It should be run from within the 
+     C6Run_<MM>_<mm>_<pn>_<bn> directory. If you want to use any other versions 
+     of the dependent components, then you can edit the Rules.mak file to specify
+     different version numbers before running this step.
+       [host]$ make get_components
+
+  4. Edit the Rules.mak file at the top-level of the package. Make sure all paths
+     are correctly specified to point to the install location for the various 
+     dependencies given above. If you used the get_components target (above), 
+     most variables in this file are already correct.
+  5. For your targeted platform, edit the platforms/<PLATFORM_NAME>/platform.mak
+     file to reflect the location of the u-boot and linux kernel sources (needed 
+     for building any required Linux kernel modules). Generally speaking, you 
+     shouldn't need to edit anything further in this file.
+  6. Configure for your desired platform (run 'make help' to see available platforms)
+       [host]$ make <platform>_config
+
+     If you wish to alter the physical memory that the C6Run software will use, you
+     can provide the following variables when running the config step: 
+       DSP_REGION_BASE_ADDR=0xZZZZZZZZ, 
+       DSP_REGION_CMEM_SIZE=0xZZZZZZZZ, 
+       DSP_REGION_CODE_SIZE=0xZZZZZZZZ.
+     For example, the following command will indicate that the DSP reqion begins
+     at 0xC6000000, with the CMEM region being 16MB (0x01000000) in size, and 
+     the DSP code region also being 16MB (0x01000000). Then the total region
+     in use by the C6Run framework will be from 0xC6000000 to 0xC8000000.
+       [host]$ make DSP_REGION_BASE_ADDR=0xC6000000 \
+               DSP_REGION_CMEM_SIZE=0x01000000 \
+               DSP_REGION_CODE_SIZE=0x01000000 \
+               <platform>_config
+
+  7. (OPTIONAL) If you do not have a built kernel tree, you can use the C6Run
+     make system to build it (note that the kernel and uboot directories in 
+     platform.mak must be correct). A built kernel tree is required to build 
+     the kernel modules in the next step.
+       [host]$ make linux
+
+  8. From the top-level of the C6Run install location run 'make everything'.
+       [host]$ make everything
+
+     This may take some time and there will be a lot of output on the screen.
+     If something goes wrong, you can build the following targets separately
+     to get an idea of where the build failure originated:
+       * Clean and build DSP-side back-end C6Run library:
+           [host]$ make dsp_libs
+       * Clean and build ARM-side back-end C6Run library:
+           [host]$ make gpp_libs
+       * Clean and build CMEM and DSPLink kernel modules:
+           [host]$ make modules
+
+  9. If you intend to build any of the included test cases or examples, you can
+     do one of two things:
+       * Add the <C6Run Install Path>/bin directory and the bin directory of
+         the ARM cross-compiler tool to the system path. If not using the
+         CodeSourcery ARM GCC tools, you will also need to specify the 
+         environment variable ARM_TOOLCHAIN_PREFIX to contain the correct GCC
+         cross compiler prefix. The specifics of how to do this may vary from
+         one Linux distribution to another.
+       * Run the following
+           [host]$ source environment.sh
+
+         This will put all required variables into the current environment
+         based on the configuration provided at build time. If you exit your
+         terminal window and then open a new one, you will need to re-run
+         this command to get these environment variables back (they aren't
+         permanent). 
+
+  10. (OPTIONAL) Build the included example projects.
+        [host]$ make examples
+
+  11. (OPTIONAL) Build the included test cases.
+        [host]$ make tests
+
+  12. (OPTIONAL) Install the test cases, examples, and run-time scripts to a
+      specified path (typically a shared target filesystem path).
+        [host]$ make INSTALL_DIR=<desired install path> install_programs

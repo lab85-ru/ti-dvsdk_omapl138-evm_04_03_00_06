@@ -1,0 +1,59 @@
+clean::
+	$(RM) package/edma3_lld_01_03_09_05.sch
+	$(RM) package/.vers_g160
+	$(RM) package/.vers_r170
+	$(RM) package/.vers_b150
+	$(RM) package/.vers_c150
+	$(RM) package/.xdc-u17
+	$(RM) package/edma3_lld_01_03_09_05.java
+	$(RM) package/edma3_lld_01_03_09_05.class
+	$(RM) package/package_edma3_lld_01_03_09_05.c
+	$(RM) package/package.defs.h
+	$(RM) package/package.doc.xml
+	$(RM) package/edma3_lld_01_03_09_05.ccs
+
+.interfaces: package/edma3_lld_01_03_09_05.sch package/.vers_g160 package/.vers_r170 package/.vers_b150 package/.vers_c150 package/.xdc-u17 package/edma3_lld_01_03_09_05.java package/edma3_lld_01_03_09_05.class package/package_edma3_lld_01_03_09_05.c package/package.defs.h package/package.doc.xml package/edma3_lld_01_03_09_05.ccs 
+package/package.xdc.inc: package/.vers_g160
+package/.vers_g160:
+package/package.xdc.inc: package/.vers_r170
+package/.vers_r170:
+package/package.xdc.inc: package/.vers_b150
+package/.vers_b150:
+package/package.xdc.inc: package/.vers_c150
+package/.vers_c150:
+
+.interfaces: 
+
+# schema include file dependencies
+
+# schema update dependencies
+package/package.xdc.inc: xdc/IPackage.xdc
+xdc/IPackage.xdc:
+vpath xdc/IPackage.xdc $(XPKGVPATH)
+
+ifneq (clean,$(MAKECMDGOALS))
+C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/shelf/java/ecj.jar:
+package/package.xdc.inc: C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/shelf/java/ecj.jar
+C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/shelf/java/antlr.jar:
+package/package.xdc.inc: C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/shelf/java/antlr.jar
+C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/services/intern/gen/java/package.jar:
+package/package.xdc.inc: C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/services/intern/gen/java/package.jar
+C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/shelf/java/jsr173_api.jar:
+package/package.xdc.inc: C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/shelf/java/jsr173_api.jar
+C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/services/intern/cmd/java/package.jar:
+package/package.xdc.inc: C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/services/intern/cmd/java/package.jar
+C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/shelf/java/xbean.jar:
+package/package.xdc.inc: C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/shelf/java/xbean.jar
+C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/services/global/java/package.jar:
+package/package.xdc.inc: C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/services/global/java/package.jar
+C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/shelf/java/tar.jar:
+package/package.xdc.inc: C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/shelf/java/tar.jar
+C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/shelf/java/js.jar:
+package/package.xdc.inc: C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/shelf/java/js.jar
+C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/services/spec/java/package.jar:
+package/package.xdc.inc: C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/services/spec/java/package.jar
+C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/services/intern/xsr/java/package.jar:
+package/package.xdc.inc: C:/Program\ Files/Texas\ Instruments/xdctools_3_16_03_36/packages/xdc/services/intern/xsr/java/package.jar
+endif
+# goals for files generated during schema generation but unspecified by schema's pattern rule
+

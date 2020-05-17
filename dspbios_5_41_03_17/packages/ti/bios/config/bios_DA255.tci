@@ -1,0 +1,123 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_DA255.tci ========
+ *  This file contains BIOS settings for DA255.
+ *  This file is created based on the assumption that for configuration
+ *  purposes, 5509, 5509A, and DA255 are same. If that's not true, this file 
+ *  should change.
+ *  Note: all memory addresses in this file are defined in words.
+ *
+ */
+   
+/*
+ *  ======== bios.internal.setupMemoryDA255 ========
+ *  This function is the top-level function that will remove all MEM segments
+ *  from the cdb file.  It will take your physical memory map from calling
+ *  getMemoryMap() and create MEM instances in cdb.
+ *  It will then set sections to the default segment specified and fix up
+ *  the length and/or base of MEM segments if needed.
+ */
+bios.internal.setupMemoryDA255 = function (prog)
+{
+    /*
+     *  BIOS MEM segments will be created from object model memory definitions.
+     *  Place default code and data sections into specified memory segments.
+     */
+    bios.initializeMemory(prog, "SARAM", "DARAM");
+
+    /*
+     *  The base and length of DARAM and base of SARAM are initialized
+     *  to values from the object model.  See C5509.tci for details.
+     *  The interrupt vectors are placed at the end of physical SARAM.
+     *  The remaining length of memory in SARAM is calulated below.
+     */
+    var vect = prog.module("MEM").instance("VECT");
+    vect.base = 0x1ff80;
+
+    var saram = prog.module("MEM").instance("SARAM");
+    saram.len = vect.base - saram.base;
+}
+
+/*
+ *  ======== bios.initDA255 ========
+ *  BIOS initialization for the DA255.
+ */
+bios.initDA255 = function (prog, baseseed)
+{
+    /*
+     *  Find configuration seed files to load
+     */
+    if (baseseed == null) {
+	baseseed = "ti/bios/config/cdb/c55xx.cdb";
+    }
+
+    var seed = utils.findSeed(baseseed);
+    if (seed != null) {
+	try {
+	    prog.load(seed);
+	}
+	catch (e) {
+	    throw new Error ("Can't load configuration seed '" + seed + "' : "
+		+ e);
+	}
+    }
+    else {
+	throw new Error ("Can't find configuration seed: " + baseseed);
+    }
+
+    /* Set CHIPTYPE to "other" and DSPSUBTYPE to 5509, so the Power Manager
+     * can be used with this device.
+     */
+    prog.module("GBL").CHIPTYPE = "other";
+    prog.module("GBL").DSPSUBTYPE = 5509;
+
+    /* set CLKOUT to be the value of cpu.clockRate. */
+    bios.internal.setClkout(prog);
+
+    /* set the memory model in GBL based on build options */
+    if (prog.build.target.model.dataModel == "huge") {
+        throw new Error ("Huge model not supported");
+    }
+    else {
+        prog.module("GBL").MEMORYMODEL = "LARGE";
+    }
+
+    /* If the old memory names are used, we call the function that sets up
+     * the old external memory names, while the internal names (and some old 
+     * ones are retained from the CDB file.
+     */
+    if (bios.supportOldMemoryNames) {
+	bios.internal.oldMemoryNames(prog);
+	/* Second Block of SARAM, length = 64K words, default block */
+	prog.module("MEM").instance("SARAM").comment =
+	    "SARAM split into blocks for instruction cycle efficiency";
+	prog.module("MEM").instance("SARAM").base = 0x10000;
+	prog.module("MEM").instance("SARAM").len =  0x08000;
+
+	/* Add instance of SARAM_A */
+	SARAM_A = prog.module("MEM").create("SARAM_A");
+        SARAM_A.createHeap = 0;
+        SARAM_A.comment = " ";
+        SARAM_A.space = "code/data";
+        SARAM_A.base = 0x8000;
+        SARAM_A.len =  0x8000;
+
+	/* Add instance of SARAM_B */
+	SARAM_B = prog.module("MEM").create("SARAM_B");
+        SARAM_B.createHeap =0;
+        SARAM_B.comment = " ";
+        SARAM_B.space = "code/data";
+        SARAM_B.base = 0x18000;
+        SARAM_B.len =  0x08000;
+    }
+    else {
+	/* set the default memory segments for DA255 using new memory names */
+	bios.internal.setupMemoryDA255(prog);
+    }
+
+    /* initialize some memory map registers */
+    bios.internal.initializeRegisterMap(prog);
+}

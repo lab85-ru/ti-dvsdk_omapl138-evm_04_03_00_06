@@ -1,0 +1,24 @@
+diff -Naur audio_soc_example_1_00_00_03_ori/gpp/Makefile audio_soc_example_1_00_00_03_new/gpp/Makefile
+--- audio_soc_example_1_00_00_03_ori/gpp/Makefile	2010-08-07 02:46:17.000000000 +0530
++++ audio_soc_example_1_00_00_03_new/gpp/Makefile	2011-11-28 20:47:12.208224339 +0530
+@@ -48,7 +48,7 @@
+ 
+ # The prefix to be added before the GNU compiler tools if not previously set
+ CSTOOL_DIR_BIN  ?= $(CSTOOL_DIR)/bin
+-CSTOOL_PREFIX   ?= $(CSTOOL_DIR)/bin/arm-none-linux-gnueabi-
++CSTOOL_PREFIX   ?= $(CSTOOL_DIR)/bin/arm-arago-linux-gnueabi-
+ 
+ # Complier, linker and archiver for ARM cross Complier
+ CC	 	:= $(CSTOOL_PREFIX)gcc
+diff -Naur audio_soc_example_1_00_00_03_ori/Makefile audio_soc_example_1_00_00_03_new/Makefile
+--- audio_soc_example_1_00_00_03_ori/Makefile	2010-08-07 02:46:18.000000000 +0530
++++ audio_soc_example_1_00_00_03_new/Makefile	2011-11-28 20:47:24.880224226 +0530
+@@ -36,7 +36,7 @@
+ #==============================================================================
+ # The prefix to be added before the GNU compiler tools
+ #==============================================================================
+-CSTOOL_PREFIX	?= $(CSTOOL_DIR)/bin/arm-none-linux-gnueabi-
++CSTOOL_PREFIX	?= $(CSTOOL_DIR)/bin/arm-arago-linux-gnueabi-
+ 
+ #==============================================================================
+ # Set up platform dependent variables.

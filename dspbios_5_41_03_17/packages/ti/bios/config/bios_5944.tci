@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_5944.tci ========
+ *  This file contains BIOS settings for c5944.tci (Trinity).
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_5948.tci");
+
+/*
+ *  ======== bios.init5944 ========
+ *  BIOS initialization for the 5944 is same as for 5948
+ */
+bios.init5944 = bios.init5948;

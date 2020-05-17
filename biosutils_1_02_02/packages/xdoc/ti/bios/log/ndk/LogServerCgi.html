@@ -1,0 +1,150 @@
+<html>
+<head>
+<title>module ti.bios.log.ndk.LogServerCgi</title>
+<meta name="description" content="LogServerCgi module">
+<link rel="stylesheet" type="text/css" href="../../../../xdoc.css" />
+</head>
+<body><div id="xdocWrapper"><div id="xdocContent">
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">module</span> <span class="xdoc-id">ti.bios.log.ndk.</span><span class="xdoc-id">LogServerCgi</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../../ti/bios/log/ndk/package.html" title="package ti.bios.log.ndk"><img class="xdocHdrArrow" src="../../../../Arrow_up.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../../index.html#ti/bios/log/ndk/LogServerCgi.html">index URL</a></div>
+<p class="xdocHdrSummary">LogServerCgi module</p>
+<ul class="xdocToc">
+<li class="xdocToc"><a class="xdocToc" href="#meta-synop">XDCscript usage</a></li>
+<li class="xdocToc"><a class="xdocToc" href="#spec-synop">XDCspec declarations</a></li>
+<li class="xdocToc"><a class="xdocToc" href="#xdocElems">Individual elements</a></li>
+<li class="xdocToc"><a class="xdocToc" href="#xdoc-desc">Additional documentation</a></li>
+</ul>
+<div class="xdocBrief">
+The LogServerCgi module provides a command interface to the Target DSP using
+  the Common Gateway Interface (CGI).  The commands in this interface may be
+  called by a remote machine when connected to the Target via ethernet cable.
+  These commands must be sent over the internet using the HTTP protocol.
+[&nbsp;<a class="xdocBrief" href="#xdoc-desc">more</a>&nbsp;...&nbsp;]
+</div>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id">XDCspec</span></tt> summary</td>
+<td class="xdocLabelRight">sourced in <span class="xdocLabelFile">ti/bios/log/ndk/LogServerCgi.xdc</span></td>
+</tr></table>
+<div class="xdocSynX">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">module</span> <go><span class="xdoc-id">LogServerCgi</span></go> {<b>&nbsp;&nbsp;...</b>
+</div>
+</div>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynM">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">var</span> LogServerCgi = <span class="xdoc-kw3">xdc.useModule</span>(<span class="xdoc-id">'ti.bios.log.ndk.LogServerCgi'</span>);
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+</div>
+<span id='spec-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id">XDCspec</span></tt> declarations</td>
+<td class="xdocLabelRight">sourced in <span class="xdocLabelFile">ti/bios/log/ndk/LogServerCgi.xdc</span></td>
+</tr></table>
+<div class="xdocSynX">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">package</span> <a class="xdoc-link" href="../../../../ti/bios/log/ndk/package.html" title="ti.bios.log.ndk">ti.bios.log.ndk</a>;
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">module</span> <go><span class="xdoc-id">LogServerCgi</span></go> {
+</div>
+<div class="xdocSynCode">
+<tt></tt>}
+</div>
+</div>
+<span id="xdoc-desc"></span>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">The LogServerCgi module provides a command interface to the Target DSP using
+  the Common Gateway Interface (CGI).  The commands in this interface may be
+  called by a remote machine when connected to the Target via ethernet cable.
+  These commands must be sent over the internet using the HTTP protocol.</div>
+<div class="xdocText">Each command in this interface corresponds to an operation that can be
+  performed by the DSP.  The following CGI commands are supported by the
+  LogServerCgi module:</div>
+<div class="xdocText"><PRE class="Example">  capturelogs.cgi     // capture log data for a set of BIOS logs.
+  disablelogging.cgi  // disable a set of BIOS logs.
+  enablelogging.cgi   // enable a set of BIOS logs.
+  getcpuspeed.cgi     // get the speed of the DSP.
+  logflush.cgi        // flush and discard data for a set of BIOS logs.
+  readword.cgi        // read a word of data from Target memory.
+  settrackaddrs.cgi   // set addresses for which the LogTrack module will
+                      // print values for.
+  stopstream.cgi      // stop streaming of BIOS log data.
+  streamlogs.cgi      // stream log data for a set of BIOS logs.
+  writeword.cgi       // write a word of data to Target memory.
+</PRE></div>
+<div class="xdocText">Each of the above CGIs corresponds to a C function, which is called in its
+  own thread context.  This thread will be started with the default priority
+  of OS_TASKPRINORM, as defined in the NDK.  Each CGI function will run to
+  completion, at which point the thread will terminate.</div>
+<div class="xdocText">If the user desires, some properties of these CGI threads can be configured
+  using the C structure LogServerCgi_Config.  This structure allows
+  the user to change the default CGI thread priority, the size of the log data
+  buffer (the buffer used to copy log data from the target in order to send it
+  to the Host), as well as the memory segment from which to allocate this
+  buffer.  The structure is defined as follows:</div>
+<div class="xdocText"><PRE class="Example">  typedef struct LogServerCgi_Config {
+      Uint32 priority; 
+      Int segId;
+      Uint32 bufSize;
+  } LogServerCgi_Config;
+</PRE></div>
+<div class="xdocText"><UL><LI>  priority - used to change the priority which CGI threads will run at.  The
+            setting of CGI thread priority using this variable will result in
+            all CGI threads in the program running at that priority level.
+            However, the user is limited to the values in the range
+            [0 - OS_TASKPRINORM].
+            The following rules apply when setting the CGI thread priority:
+
+</LI></UL></div>
+<div class="xdocText"><ol>
+           <li>priority set to a number in the range [0 - OS_TASKPRINORM] -
+               All CGI threads in the program will run at the value specified.
+               </li>
+           <li>priority set to a negative number - All CGI threads will run at
+               the default priority of OS_TASKPRINORM.</li>
+           <li>priority  set to a value greater than OS_TASKPRINORM - All CGI
+               threads will run at default priority of OS_TASKPRINORM.</li>
+    </ol></div>
+<div class="xdocText"><UL><LI>  segId     - Used to change the memory segment in which the data buffer used
+              for copying log data is allocated from.
+</LI></UL></div>
+<div class="xdocText"><UL><LI>  bufSize   - Used to change the size of the data buffer used for copying log
+              data. 
+</LI></UL></div>
+<div class="xdocText">If the user wishes to use this structure to configure these settings, then
+  it is necessary to define an instance of this type named LogServerCgi_config
+  in the user's code.</div>
+<div class="xdocText">For example, in order to change the CGI thread priority to 1 (for all CGIs),
+  change the memory segment to allocate the transfer buffer from to segment 0,
+  and to change the size of the transfer buffer to 4096, the following code
+  should be added to the user's program:</div>
+<div class="xdocText"><PRE class="Example">  LogServerCgi_Config  LogServerCgi_config =
+          {1, 
+          0,
+          4096,
+          };
+</PRE></div>
+<div class="xdocText">Important note: Re-defining the above mentioned config structure works by
+  using a linker ordering trick.  Since the user program containing the above
+  redefinition is linked after the logservercgi library, the latest definition
+  will override the one in the logservercgi library.  That being said, it is
+  important that the user's redefined config definition be linked after the
+  logservercgi library, or any other file that may redefine the
+  LogServerCgi_config struct!</div>
+<div id="xdocElems">
+</div>
+<div id="xdocDate">generated on Sat, 23 May 2009 00:29:50 GMT</div>
+</div></div></body>
+</html>

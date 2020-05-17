@@ -1,0 +1,1292 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== hwi.h62 ========
+;  Assembly language HWI macros for C62
+;
+;
+
+        .if ($isdefed("HWI_") = 0)      ; prevent multiple includes of this file
+HWI_    .set    1
+
+HWI_SAT         .set    0200h           ; bit position of SAT in CSR
+
+        .include std.h62
+        .include c6x.h62
+
+        .if (STD_TMS320C6400PLUS | STD_TMS320C6700PLUS)
+        .elseif .TMS320C6400
+            .include c64.h64
+        .elseif (.TMS320C6200 | .TMS320C6700)
+            .include c62.h62
+        .endif
+        
+        .include chk.h62
+        .include swi.h62
+        .include trc.h62
+        
+        .global _HWI_data
+        .global _HWI_D_inhwi
+
+HWI_DataObj     .struct
+spsave          .word   1
+stkBottom       .word   1
+stkTop          .word   1
+inhwi           .word   1
+HWI_DataObjSize .endstruct
+        
+        .if STD_TMS320C6400PLUS
+HWI_CSR .equ    TSR             ; define symbol to have generic code
+HWI_GIE .equ    C6X_TSR_GIE
+HWI_REGS        .set    01800104h       ; interrupt selector register base
+
+        .else
+HWI_CSR .equ    csr
+HWI_GIE .equ    GIE
+HWI_REGS        .set    019c0000h       ; interrupt selector register base
+
+        .endif          ; endif for STD_TMS320C6400PLUS
+
+;
+;# ======== HWI_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    ":HWI_mkStub$regs:", HWI_Obj$regs
+HWI_Obj .macro  cflag, name, id, fxn, monitor, addr, type, operation, client, dispatch, arg, intrmask, ccmask, loadtrack
+        CHK_nargs "HWI_Obj", client
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .mexit
+        .endif
+
+        .global :name:, fxn
+
+        .global :name:$hwi      ; generate symbol for vbd/rta
+:name:$hwi .set 0
+
+        .if (cflag != 0)
+:name:          .set    :id:
+        .endif
+        
+        .var    vector, clientcfg
+
+        .asg hwi:id:, vector            ; default vector = self branch
+
+        ; set clientcfg to 1 (or 0) according to whether the client module 
+        ; is configured (or not).
+        .asg 0, clientcfg
+        .if ($symcmp(client, "USER") != 0) 
+          .if ($symcmp(client, "CSL") == 0)
+            .asg 1, clientcfg
+          .else
+            .if (:client:$ = 1)
+                .asg 1, clientcfg
+            .endif
+          .endif
+        .endif
+
+        ; The following call to .mexit is to avoid generation of HWI objects
+        ; for interrupts greater that INT15.  This allows an HWI_UNUSED object
+        ; to be listed in the configuration.  This exit code was first put at
+        ; the start of the macro but this caused an error saying that USER$
+        ; was undefined.  The exit was put at this point in the macro to avoid
+        ; the build error. 
+        .if (id > 15)
+            .mexit
+        .endif
+
+        .asg    :dispatch:, local_dispatch
+        .asg    :fxn:, local_fxn
+
+        ; if this object is configured *and* is not "HWI_unused"
+        .if ((cflag != 0) & ($symcmp(":local_fxn:", "HWI_unused") != 0))
+
+            ; if client is USER or another configured system module
+            .if (($symcmp(client, "USER") = 0) | (:clientcfg: = 1))
+
+                ; if no monitor, simply branch to user function directly
+                .if ($symcmp(monitor, "Nothing") = 0)
+                    .asg :local_fxn:, vector    ; vector = user specified fxn
+
+                ; else when need to monitor, create a function stub and call it
+                .else
+                    .if ( local_dispatch )
+                        .if ( $symcmp(":local_fxn:", "CLK_F_isr") = 0 )
+                            HWI_mkStub :name:_stub, monitor, addr, operation, :name:_STS, CLK_F_isr
+                        .else
+                            HWI_mkStub :name:_stub, monitor, addr, operation, :name:_STS, HWI_F_dispatch
+                        .endif
+                    .else
+                        HWI_mkStub :name:_stub, monitor, addr, operation, :name:_STS, :local_fxn:
+                    .endif
+                    .asg :name:_stub, vector ; vector = HWI stub
+                .endif
+            .endif
+        .endif
+
+
+        .if ($isdefed("HWI_GENERATE_RESET_VEC") = 0)
+            .asg        0, HWI_GENERATE_RESET_VEC
+        .endif
+
+        .if HWI_GENERATE_RESET_VEC = 1  ; HWI_GENERATE_RESET_VEC is generated
+                                        ; by the config tool
+            .sect ".hwi_reset"
+            .align 32                   ; align for Joule compressor
+            .if STD_TMS320C6400PLUS
+                .nocmp
+            .endif
+
+            .if ((id == 0))
+
+                ; For reset vector do not save/restore register used for 
+                ; branch, because b15 has not been initialized yet, and this 
+                ; causes an access to an indeterminate place in memory.
+
+                mvkl :vector:,b0    ; load destination function address to b0
+                mvkh :vector:,b0
+                b b0            ; start branch to destination function  
+                nop             ; fill delay slot, pad packet
+                nop             ; fill delay slot, pad packet
+                nop             ; fill delay slot, pad packet
+                nop             ; fill delay slot, pad packet
+                nop             ; fill delay slot, pad packet
+            .endif
+        .endif
+
+        ; Now define ISFP.  Use a register for branching so can reach whole 
+        ; address space.
+
+        .sect ".hwi_vec"
+        .align 32                       ; align for Joule compressor
+        .if STD_TMS320C6400PLUS
+            .nocmp
+        .endif
+        .global hwi:id:
+hwi:id::
+        .if ((id == 0))
+
+            ; For reset vector do not save/restore register used for branch,
+            ; because b15 has not been initialized yet, and this causes an 
+            ; access to an indeterminate place in memory.
+
+            mvkl :vector:,b0    ; load destination function address to b0
+            mvkh :vector:,b0
+            b b0                ; start branch to destination function  
+            zero b0             ; disable interrupts by clearing 'IER'
+            mvc b0,ier
+            nop                 ; fill delay slot, pad packet
+            nop                 ; fill delay slot, pad packet
+            nop                 ; fill delay slot, pad packet
+
+        .elseif ((id == 1) & STD_TMS320C6400PLUS)       ; NMI vector
+
+            ; For the NMI vector, one of the sources can be an exception,
+            ; and for exception processing we can't trust B15 to be valid,
+            ; so use other register save/restore techniques.
+
+            mvd b0, b0          ; juggle for 3 cycles
+||          mvkl :vector:, b0
+            mvkh :vector:, b0
+            b b0
+            nop
+            nop                 ; orignal b0 lands here
+            nop 2
+            nop
+
+        .elseif (id == 2)
+            .if (RTDX_USERTEXECUTION)
+
+                .ref RTEMU_exe
+
+                stw b0,*b15--[2]        ; temp save b0 on stack 
+                mvkl RTEMU_exe,b0       ; load destination function address
+                mvkh RTEMU_exe,b0
+                b b0                    ; start branch to destination function  
+                ldw *++b15[2],b0        ; restore b0 register
+                nop 2                   ; fill 2 b0 restore/branch delay slots
+                nop                     ; fill delay slot, pad packet
+                nop                     ; fill delay slot, pad packet
+
+            .else
+
+spin?
+                b spin?         ; nested branches to block interrupts
+                nop 4
+                b spin?
+                nop
+                nop
+                nop
+                nop
+                nop
+
+            .endif
+
+        .elseif (($symcmp(local_fxn, "HWI_unused") == 0) & (!local_dispatch))
+
+            ; plug inifinite loop -- with nested branches to
+            ; disable interrupts -- for all undefined vectors that
+            ; aren't checked to "Use HWI Dispatcher"
+
+spin?
+            b spin?             ; nested branches to block interrupts
+            nop 4
+            b spin?
+            nop
+            nop
+            nop
+            nop
+            nop
+
+        .else
+            .if ( local_dispatch )
+                .global _HWI_dispatchTab
+                .var    dispatch_fxn
+                .var    vec_fxn
+
+                .if ( $symcmp(":local_fxn:", "CLK_F_isr") = 0 )
+
+                    .global     CLK_F_isr
+                    .global     FXN_F_run
+
+                    .if ($symcmp(monitor, "Nothing") = 0)
+                        .asg    CLK_F_isr, vec_fxn
+                    .else
+                        .asg    :name:_stub, vec_fxn
+                    .endif
+                    .asg        FXN_F_run, dispatch_fxn
+
+                .else
+                    .global     HWI_F_dispatch
+                    ;
+                    ; We allow dispatcher to be selected even for HWIs that
+                    ; are HWI_unused.  Call FXN_F_nop in this case.
+                    ; The assumption is that the user will subsequently call
+                    ; IRQ_config to set the function to something real.
+                    ;
+                    .if ($symcmp(local_fxn, "HWI_unused") == 0)
+                        .asg    FXN_F_nop, local_fxn
+                    .endif
+
+                    .if ($symcmp(monitor, "Nothing") = 0)
+                        .asg    HWI_F_dispatch, vec_fxn
+                    .else
+                        ; HWI_F_dispatch will be called by monitor
+                        .asg    :name:_stub, vec_fxn
+                    .endif
+                    .asg        :local_fxn:, dispatch_fxn
+
+                .endif
+                
+                .if ((loadtrack != 0) & (id > 3) & (id < 16))
+ 
+                    ; if load tracking configured for this interrupt, and this
+                    ; is a "normal" application interrupt... generate
+                    ; a load stub that will be called first, and will then
+                    ; chain to the vec_fxn determined above
+
+                    HWI_mkLoadStub :name:_loadStub, :vec_fxn:
+
+                    .sect ".hwi_vec"  ; must restore sect following load macro
+
+                    stw b0, *b15--[2]
+                    mvk :id:, b0
+                    stw b0, *+b15[1]
+                    mvkl :name:_loadStub, b0
+                    mvkh :name:_loadStub, b0
+                    b b0
+                    ldw *+b15[2], b0
+                    nop 4
+
+                .else
+
+                    stw b0, *b15--[2]
+                    mvk :id:, b0
+                    stw b0, *+b15[1]
+                    mvkl :vec_fxn:, b0
+                    mvkh :vec_fxn:, b0
+                    b b0
+                    ldw *+b15[2], b0
+                    nop 4
+
+                .endif
+
+                .sect   ".cinit"
+                .align  8
+                .field  4 * STD_TARGWORDMAUS
+                .field  _HWI_dispatchTab + (4 * :id: * STD_TARGWORDMAUS)
+                .field  :dispatch_fxn:
+                .field  :intrmask:
+                .field  :ccmask:
+                .field  :arg:
+
+            .else
+                ; For all vectors besides reset use a common packet format. This
+                ; packet can be used for self branches as well as branches to
+                ; HWI stubs.
+
+                .if ((loadtrack != 0) & (id > 3) & (id < 16))
+
+                    ; if load tracking configured for this interrupt, and this
+                    ; is a "normal" application interrupt... generate
+                    ; a load stub that will be called first, and will then
+                    ; chain to the vector determined above
+
+                    HWI_mkLoadStub :name:_loadStub, :vector:
+
+                    .sect ".hwi_vec"  ; must restore sect following load macro
+
+                    stw b0,*b15--[2]        ; temp save b0 on stack
+                    mvkl :name:_loadStub,b0 ; load destination address to b0
+                    mvkh :name:_loadStub,b0
+                    b b0                    ; start branch to destination
+                    ldw *++b15[2],b0        ; restore b0 register
+                    nop 2                   ; fill 2 of b0 restore delay slots
+                    nop                     ; fill delay slot, pad packet
+                    nop                     ; fill delay slot, pad packet
+
+                .else
+
+                    stw b0,*b15--[2]        ; temp save b0 on stack
+                    mvkl :vector:,b0        ; load destination address to b0
+                    mvkh :vector:,b0
+                    b b0                    ; start branch to destination
+                    ldw *++b15[2],b0        ; restore b0 register
+                    nop 2                   ; fill 2 of b0 restore delay slots
+                    nop                     ; fill delay slot, pad packet
+                    nop                     ; fill delay slot, pad packet
+
+                .endif
+
+            .endif
+
+        .endif
+        
+        .endm
+
+
+;
+;# ======== HWI_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", HWI_config$regs
+        .if STD_TMS320C6400PLUS
+HWI_config  .macro _zerotab, _generate_reset_vec, _polaritymask, _intrmux1, intrmux2, intrmux3, enable_exc, _dispmask
+            .endm
+        .else
+HWI_config  .macro _zerotab, _generate_reset_vec, _polaritymask, _intrmultlow, intrmulthigh, _dispmask
+            .endm
+        .endif
+
+
+;
+;# ======== HWI_disable ========
+;  Clears the GIE bit, returns the previous
+;  CSR register value.
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      GIE = 0
+;#      a4 = CSR when HWI_disable was invoked.
+;
+;  Note: The modified register list indicates a4.  If another register is 
+;  specified as a parameter to the macro then it will not be listed in the 
+;  modified register list, but a4 will because it is the default.
+;
+        .asg "a4,b0,csr",HWI_disable$regs
+HWI_disable .macro regname 
+        .if ($symlen(regname) = 0)      ; if no register as parameter use a4
+            .asg "a4",regname
+        .endif
+
+        b hwid?
+        mvc HWI_CSR, b0
+        mv b0,:regname:
+        and ~HWI_GIE, b0, b0
+        mvc b0, HWI_CSR 
+        nop 
+hwid?:
+        .endm
+
+
+;
+;# ======== HWI_enable ========
+;  Sets the GIE bit.
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      GIE = 1
+;#
+;
+        .asg "b0,csr",HWI_enable$regs
+HWI_enable .macro dummy
+        b hwie?
+        mvc HWI_CSR, b0
+        or HWI_GIE, b0, b0
+        mvc b0, HWI_CSR 
+        nop 2
+hwie?:
+        .endm
+
+;
+;# ======== HWI_mkLoadStub ========
+;  Emits stub code to determine and accumulate cycles spent in IDLE while 
+;  enroute to dispatcher, ISR, or monitor stub.
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", HWI_mkLoadStub$regs
+HWI_mkLoadStub .macro name, fxn
+
+        .sect   ".hwi"                  ; create load stub in .hwi section
+
+:name::
+        .if ($isdefed("_64P_"))
+
+        .ref    __PWRM_busyStartTs
+        .ref    __PWRM_idleFlag
+
+        subaw   b15,2,b15               ; make room for following double store
+        stdw    b1:b0,*b15--[1]         ; push b1 & b0
+||      mvkl    __PWRM_idleFlag,b1
+        stdw    a1:a0,*b15--[1]         ; push a1 & a0
+||      mvkh    __PWRM_idleFlag,b1
+        ldw     *b1,a0                  ; load _PWRM_idleFlag to a0
+        stdw    b3:b2,*b15--[1]         ; push b3 & b2
+||      mvc     TSCL,b2                 ; read time stamp counter to b2
+
+        mvkl    __PWRM_busyStartTs,a1
+        mvkh    __PWRM_busyStartTs,a1
+        zero    b0
+
+; a0 has landed, a0 != 0 if woke from IDLE
+
+   [a0] stw     b0,*b1                  ; clear _PWRM_idleFlag
+   [a0] stw     b2,*a1                  ; store TSCL (busy start timestamp)
+
+
+        lddw    *++b15[1],b3:b2         ; pop b3 & b2
+||      mvkl    :fxn:,b0                ; address of function to branch to
+        lddw    *++b15[1],a1:a0         ; pop a1 & a0
+||      mvkh    :fxn:,b0                ; address of function to branch to
+        b       b0                      ; branch to next function
+        lddw    *++b15[1],b1:b0         ; pop b1 & b0
+        addaw   b15,2,b15
+        nop     3
+
+        .endif                          ; $isdefed("_64P_")
+
+        .endm
+
+;
+;# ======== HWI_mkStub ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", HWI_mkStub$regs
+HWI_mkStub .macro name, monitor, addr, operation, stsName, fxn
+
+        .sect ".hwi"
+
+        ; first look at passed parameters and figure out what is to be done 
+        .var firstChar, unaryop, stsop, len, monreg
+        .eval 0, monreg         
+
+        ; compute stsop; the STS operation to perform
+        .eval $firstch(operation, '(') - 1, len
+        .asg ":operation(1, len):", stsop
+
+        ; compute unary operation to perform (if any).  
+        .asg "; no unary operation specified", unaryop
+        .if ($symcmp(":operation(len + 2):", "-") = 0)
+            .asg "neg", unaryop
+        .endif
+        .if ($symcmp(":operation(len + 2):", "|") = 0)
+                .asg "abs", unaryop
+        .endif
+
+        ; determine if a register is to be monitored
+        .if ($isreg(monitor) = 1)
+            .eval 1, monreg     ; set flag saying are monitoring a register
+        .elseif ($symcmp("Stack Pointer",monitor) = 0)
+            .eval 1, monreg     ; set flag saying are monitoring a register
+            .asg "b15", monitor
+        .endif
+
+        ; convert addr to a suitable constant 
+        .asg ":addr(1):", firstChar
+        .if ($iscons(firstChar) = 5)
+                                    ; if first char is 0-9, addr's a number
+        .elseif ($isname(addr) & ($isdefed(addr) = 0))
+            .global addr            ; must be external user defined symbol
+        .endif
+
+        ; now generate the stub function
+        .global :stsName:
+:name::
+        ; check if TRC_STSHWI is enabled
+        stw a2,*b15--[2]        ; push registers used by TRC_query
+        stw a4,*b15--[2]        
+
+        TRC_query TRC_STSHWI    ; TRC_query modifies a2 and a4
+        mv a4,a2        
+
+        ; if TRC_STSHWI not enabled simply branch to interrupt function
+ [a2]   mvkl :fxn:,a4           ; form address of function to branch to
+ [a2]   mvkh :fxn:,a4
+ [a2]   b a4                    ; branch to interrupt function
+ ||     ldw *++b15[2],a4        ; pop registers used by TRC_query
+        ldw *++b15[2],a2        
+
+        nop 4                   ; pad delay slots of ldw instruction
+
+        ; Put value to be monitored into a temp register.  If a unary
+        ; operation is specified then do it.
+
+        stw b1,*b15--[2]        ; push registers used as temps
+        stw b0,*b15--[2]
+
+        .if(monreg = 1)                 ; if monitoring register
+
+            ; When monitoring register values and get to this point all
+            ; registers are intact except b15.   
+            ; b15 has been modified for the two registers that were
+            ; pushed on the stack.  
+
+            ; When b15 is to be monitored we adjust the value to correspond
+            ; to the b15 value when the ISR was taken.
+
+            .asg 0,monitor_b15          ; test if monitoring b15
+            .if $symcmp(monitor,"b15") == 0
+                .eval 1,monitor_b15 
+            .elseif $symcmp(monitor,"B15") == 0
+                .eval 1,monitor_b15 
+            .endif  
+
+            .if(monitor_b15 = 1)        ; indeed, monitor b15 ...
+                mvk 16,b1               ; 2 regs * 8 bytes/reg = 16 bytes
+                addu b15,b1,b1:b0       ; set b0 = b15 + 16
+
+            .else                       ; all other registers
+                mv monitor,b0           ; put register value into temp register
+            .endif
+
+            unaryop b0,b0               ; do NEG or ABS on value 
+
+        .else                           ; else if monitoring memory
+            mvkl addr,b1                ; get address of memory value
+            mvkh addr,b1
+            ldw *b1,b0                  ; get memory value to temp register
+            nop 4                       ; wait for value to arrive
+            unaryop b0,b0               ; do NEG or ABS on value 
+        .endif
+
+        ; save registers used for STS operation:
+        ;    STS_add uses: a1, a3, b1, b2, b3
+        ;    STS_delta uses: b1, b3, b4, b5
+        ;    the address of the STS object will be put in a4
+        ;    b1 has already been saved as a temp register
+        ;
+        .eval C6X_A1|C6X_A3|C6X_A4, STSAREGS
+        .eval C6X_B2|C6X_B3|C6X_B4|C6X_B5, STSBREGS
+        C6X_save STSAREGS, STSBREGS, 0
+
+        ; ensure linear addressing for STS operation
+        mvc amr,b4                      ; note: direct AMR save/restore is more
+  ||    zero b1                         ; efficient than C6X_save/C6X_restore
+        stw b4,*b15--[2]                ; save current AMR onto stack
+  ||    mvc b1,amr                      ; set AMR=0
+
+        ; invoke specified STS macro
+        mvkl stsName,a4                 ; put address of STS object in a4
+        mvkh stsName,a4                 ; put address of STS object in a4
+        mv b0,b4                        ; put monitor value (b0) in b4
+        stsop                           ; invoke STS macro 
+
+        ldw *++b15[2],b0                ; get saved AMR into temp reg b0;
+                                        ; C6X_restore takes care of delay slots
+        ; restore registers used for STS operation:
+        C6X_restore STSAREGS, STSBREGS, 0
+        mvc b0,amr                      ; restore saved AMR
+
+        ; branch to interrupt function
+        mvkl :fxn:,b0           ; form address of function to branch to
+        mvkh :fxn:,b0
+        b b0                    ; branch to interrupt function
+ ||     ldw *++b15[2],b0        ; pop b0 register
+        ldw *++b15[2],b1        ; pop b1 register
+        nop 4                   ; pad delay slots
+
+        .endm
+
+;
+;# ======== HWI_restore ========
+;  Conditionally sets the GIE bit.
+;#
+;# Preconditions:
+;#      a4 = mask (GIE will be set to the value of bit 0) 
+;#      GIE = 0
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      This macro must be invoked from an atomic context. i.e., the
+;#      instructions of this macro should not be interrupted.
+;
+        .asg "a1,b0,csr",HWI_restore$regs
+HWI_restore .macro regname 
+        .if ($symlen(regname) = 0)      ; if no register as parameter use a4
+            .asg "a4",regname
+        .endif
+
+        ; NOTE: the following four instructions may not be interrupted.
+        ;       This macro must be invoked from an atomic context.
+        and :regname:,GIE,a1
+ [a1]   mvc HWI_CSR,b0
+ [a1]   or HWI_GIE,b0,b0
+ [a1]   mvc b0,HWI_CSR  
+
+        .endm
+
+
+;
+;#  ======== HWI_end ========
+;  Invoked by confend.s62 at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", HWI_end$regs
+HWI_end .macro
+        .endm
+
+;
+;# ======== HWI_init ========
+;  Runtime initialization for HW ISRs
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#      none
+;#
+;
+        .asg    "a0,b1,icr,ier", HWI_init$regs
+HWI_init        .macro
+
+        .if ($isdefed("_64P_"))
+
+            .if (HWI_ENABLE_EXC == 1)
+                .global _EXC_init
+                MVKL    _EXC_init, B3
+                MVKH    _EXC_init, B3
+                B       B3
+                ADDKPC  excInitRet, B3, 4
+excInitRet:
+            .endif
+
+        .endif  ; $isdefed("_64P_")
+
+        .endm
+
+;
+;# ======== HWI_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      GIE == 1
+;#
+;# Dependencies:
+;#    Must come before SWI_startup, as GIE = 1 is a precondition to
+;#    SWI_startup and interrupts must be enabled before software interrupts
+;#    are allowed to run.
+;#
+;#    Must follow CLK_startup to allow setting of PRD and timer control
+;#    register before interrupts are enabled.
+;#    Must follow PIP_startup to allow pipes to be ready before ISRs are
+;#    taken and I/O starts.
+;#
+        .asg ":HWI_enable$regs:", HWI_startup$regs
+HWI_startup .macro
+
+        ; globally enable interrupts
+        HWI_enable
+
+        .endm
+
+        .global HWI_D_ccmask            ; defined in hwi.s62
+        .global HWI_D_bss               ; defined in hwi.s62
+
+;
+; Offsets into stack frame created by HWI_enter/HWI_exit
+;
+
+        .if STD_TMS320C6400PLUS
+HWI_NUMSTK      .set    18              ; must be even for 8-bye align
+        .else
+HWI_NUMSTK      .set    12              ; must be even for 8-byte align
+        .endif
+
+HWI_STKA0       .set    1
+HWI_STKA1       .set    2
+HWI_STKA2       .set    3
+HWI_STKA3       .set    4
+HWI_STKB0       .set    5
+HWI_STKB1       .set    6
+HWI_STKB2       .set    7
+HWI_STKB3       .set    8
+HWI_STKDP       .set    9
+HWI_STKIRP      .set    10
+HWI_STKCSR      .set    11
+HWI_STKAMR      .set    12
+
+        .if STD_TMS320C6400PLUS
+HWI_STKITSR     .set    13              ; Need to save these additional
+HWI_STKSSR      .set    14              ; registers for 64P
+HWI_STKILC      .set    15
+HWI_STKRILC     .set    16
+HWI_STKGPLYA    .set    17
+HWI_STKGPLYB    .set    18
+        .endif
+
+;
+;#  ======== HWI_enter ========
+;
+;  Hardware ISR prologue
+; 
+;  HWI_enter AMASK, BMASK, CMASK, IEMASK, CCMASK
+;
+;  AMASK - Mask of A registers to save
+;  BMASK - Mask of B registers to save
+;  CMASK  - Mask of control registers to save
+;  IEMASK - Mask of interrupts to disable in IER
+;  CCMASK - Mask of cache control
+;
+; For the C62, we need to maintain 8-byte stack alignment. 
+; Although C62_push does this, it does so at the expense of using twice 
+; as much stack space as necessary.  We instead do a one-time stack
+; adjustment followed by depositing elements into that stack frame.
+;
+;#
+;# Preconditions:
+;#      interrupts are globally disabled, i.e. GIE == 0
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      This macro must be the first operation in an ISR that uses any 
+;#      DSP/BIOS API calls that call the scheduler.
+;#
+;
+
+        .global _HWI_D_spsave
+        .global _HWI_STKTOP
+        .global _HWI_STKBOTTOM
+        .global _HWI_D_isrFramePtr
+
+        .asg "a0,a1,amr,b0,b1,b14,b15,b2,b3,csr,ier", HWI_enter$regs
+        
+HWI_enter .macro AMASK, BMASK, CMASK, IEMASK, CCMASK
+
+        .if ($symlen(CCMASK) = 0)
+            ; using HWI_enter ABMASK, CMASK, IEMASK, CCMASK call        
+            .wmsg "Calling deprecated HWI_enter"
+            .eval AMASK & 0x0000FFFF, AMASKTEMP
+            .eval (AMASK >> 16) & 0x0000FFFF, BMASKTEMP 
+            .eval BMASK, CMASKTEMP
+            .eval CMASK, IEMASKTEMP
+            .eval IEMASK, CCMASKTEMP
+        .else
+            .eval AMASK, AMASKTEMP
+            .eval BMASK, BMASKTEMP
+            .eval CMASK, CMASKTEMP
+            .eval IEMASK, IEMASKTEMP
+            .eval CCMASK, CCMASKTEMP
+        .endif
+
+        HWI_enter_body IEMASKTEMP, CCMASKTEMP
+
+        
+        C6X_save :AMASKTEMP: & ~(C6X_ISRA), :BMASKTEMP: & ~(C6X_ISRB), :CMASKTEMP: & ~(C6X_ISRC)
+
+        stw     b3, *SP--[2]                    ; save old IER
+
+        .endm
+
+;
+;# ======== HWI_enter_body ========
+;# Main body of HWI_enter macro.
+;# The reason it moved here is because HWI_enter is different
+;# for the C6400 but this part of code remains the same
+;
+
+HWI_enter_body .macro IEMASK, CCMASK
+
+        CHK_nargs "HWI_enter", CCMASK
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "HWI_enter CCMASK error"
+        .endif
+
+        ; Note: global interrupts disabled by C62xx on entry into ISR
+
+        ;
+        ; Handle switchover to ISR stack.
+        ;
+        ; WARNING: The following code has a few cases of software
+        ; pipelining, where a register is loaded with 'ldw' but the
+        ; old (pre-ldw) value is still used in the 'ldw' latency
+        ; slots.
+        ;
+        stw     a1, *SP--[4]
+||      mvkl    _HWI_data, a1
+        stw     a0, *+SP[1]
+||      mvkh    _HWI_data, a1
+        ldw     *+a1(HWI_DataObj.stkBottom), a0
+||      stw     b1, *+SP[2]
+        ldw     *+a1(HWI_DataObj.stkTop), b1
+        stw     b0, *+SP[3]
+        nop
+        ldw     *+a1(HWI_DataObj.inhwi), a1     ; load HWI_DataObj.inhwi
+        cmpgt   SP, a0, b0              ; stkBottom is highest addr of stack
+  [!b0] cmplt   SP, b1, b1              ; stkTop is lowest addr of stack
+||[ b0] mvk     1, b1                   ; b0->b1 (1 if not on HWI stack)
+||      addaw   SP, 4, SP               ; restore SP before saving it
+  [ b1] stw     SP, *+a1(HWI_DataObj.spsave)
+||[ b1] mv      a0, SP
+||      mv      SP, b1
+        ldw     *+b1[1 - 4], a0
+||      mv      a1, a0
+        ldw     *+b1[3 - 4], b0
+||      add     a1, 1, a1               ; increment HWI_DataObj.inhwi
+        ldw     *+b1[4 - 4], a1
+        ldw     *+b1[2 - 4], b1
+        stw     a1, *+a0(HWI_DataObj.inhwi)     ; save new HWI_DataObj.inhwi
+
+        ; no delay slots necessary to wait for above ldw's to
+        ; complete since b0, b1 aren't needed below for 2 more
+        ; cycles.
+        ;
+        ; All GP registers are in their pre-interrupt state.
+        ;
+
+        ; Save ISR registers
+        subaw   SP, HWI_NUMSTK, SP
+        stw     a0, *+SP[HWI_STKA0]             ; save A0
+||      mv      SP, a0                          ; setup A-side stack pointer
+        stw     b0, *+SP[HWI_STKB0]
+||      stw     a1, *+a0[HWI_STKA1]
+||      mvc     irp, b0
+        stw     b1, *+a0[HWI_STKB1]
+||      stw     a2, *+SP[HWI_STKA2]
+||      mv      b0, a1
+||      mvc     amr, b0
+        stw     b2, *+SP[HWI_STKB2]
+||      stw     a3, *+a0[HWI_STKA3]
+||      mvkl    :IEMASK:, b0                    ; setup mask
+||      mv      b0, a2
+        stw     b3, *+SP[HWI_STKB3]
+||      stw     a1, *+a0[HWI_STKIRP]            ; actual save of AMR
+||      zero    b2                              ; setup for AMR set
+||      mvkh    :IEMASK:, b0                    ; setup mask
+        stw     DP, *+SP[HWI_STKDP]
+||      stw     a2, *+a0[HWI_STKAMR]            ; actual save of AMR
+||      mvkl    HWI_D_bss, DP
+||      mvkl    _SWI_data, a1
+        mvkh    HWI_D_bss, DP
+||      mvkh    _SWI_data, a1
+        mvc     b2, amr                         ; AMR = 0
+||      ldw     *+a1(SWI_DataObj.lock), a1      ; load SWI_D_lock
+||      ldw     *DP, DP
+
+        .if STD_TMS320C6400PLUS
+        mvc     ITSR, b1
+        stw     b1, *+SP[HWI_STKITSR]           ; push ITSR
+||      mvc     SSR, b2
+        stw     b2, *+SP[HWI_STKSSR]            ; push SSR
+||      mvc     ILC, b1
+        stw     b1, *+SP[HWI_STKILC]            ; push ILC
+||      mvc     RILC, b2
+        stw     b2, *+SP[HWI_STKRILC]           ; push RILC
+||      mvc     GPLYA, b1
+        stw     b1, *+SP[HWI_STKGPLYA]          ; push GPLYA
+||      mvc     GPLYA, b2
+        stw     b2, *+SP[HWI_STKGPLYB]          ; push GPLYB
+        .endif
+
+        ; Disable maskable interrupts (no effect for NMIE)
+
+        .if (:CCMASK: = 0)
+            mvkl        HWI_D_ccmask, b2
+            mvkh        HWI_D_ccmask, b2
+            ldw         *b2, b2                 ; load HWI_D_ccmask
+        .else
+            .var    CCMASKVAL
+            .asg    0, CCMASKVAL
+            .eval   :CCMASK:, CCMASKVAL
+            mvk     :CCMASKVAL:, b2             ; use the CCMASK value
+        .endif
+        
+        mvc     ier, b3                         ; get current IER
+||      xor     -1, b0, b0                      ; flip mask bits
+
+        .if STD_TMS320C6400PLUS
+
+        and     b0, b3, b1                      ; disable IEMASK bits
+||      mvc     CSR, b0
+||      mvkl    _SWI_data, a2
+        mvc     b1, ier                         ; set new IER
+||      stw     b0, *+SP[HWI_STKCSR]            ; save CSR
+||      mvkh    _SWI_data, a2
+
+        mvkl    C6X_L1DCC, a0                  ; a0 = L1DCC addr.
+||      mvkl    C6X_L1PCC, b1                  ; b1 = L1PCC addr.
+||      add     a1, 1, a1                       ; a1 = SWI_D_lock + 1
+        mvkh    C6X_L1DCC, a0
+||      mvkh    C6X_L1PCC, b1
+||      stw     a1, *+a2(SWI_DataObj.lock)      ; SWI_D_lock++
+
+        shr     b2, 1, b0                       ; b0 = L1DCC value
+||      shr     b2, 4, a3                       ; a3 = L2CFG.L2CC value
+||      and     b2, 1, a1                       ; a1 = bit 0 of b2
+
+        mvkl    C6X_L2CFG, b2
+||      and     C6X_L1DCCFIELD, b0, b0         ; b0 = L1DCC
+        mvkh    C6X_L2CFG, b2                  ; b2 = L2CFG addr
+||      and     C6X_L1PCCFIELD, a3, a2         ; a2 = L1PCC
+||      stw     b0, *a0
+
+        stw     a2, *b1
+        ldw     *b2, b0                         ; b0 = L2CFG.L2CC value
+||      mvc     HWI_CSR, b0                     ; actually TSR reg
+        or      HWI_GIE, b0, b0                 ; turn on GIE of TSR
+||      mvc     ITSR, b1
+        and     b1, C6X_TSR_XEN, b1
+        or      b1, b0, b0                      ; ITSR.XEN -> TSR.XEN
+
+        mvc     b0, HWI_CSR                     ; globally enable interrupts
+                                                ; to allow nested interrupts
+        mvk     C6X_L2CCFIELD, a2
+        and     a2, b0, a2
+        xor     a2, b0, b0
+        or      a1, b0, a1
+        stw     a1, *b2
+
+        .else   ; STD_TMS320C6400PLUS
+
+        and     b0, b3, b1                      ; disable IEMASK bits
+||      mvc     HWI_CSR, b0                             ; get CSR
+        mvc     b1, ier                         ; set new IER
+||      stw     b0, *+SP[HWI_STKCSR]            ; save CSR
+||      or      HWI_GIE, b0, b0                 ; turn on GIE of CSR
+||      mvkl    _SWI_data, a2
+        mvk     C6X_CCFIELDS, b1
+||      add     a1, 1, a1                       ; a1 = SWI_D_lock + 1
+||      mvkh    _SWI_data, a2
+        and     b1, b0, b1                      ; extract pcc+dcc fields of csr
+||      stw     a1, *+a2(SWI_DataObj.lock)      ; SWI_D_lock++
+        xor     b1, b0, b0                      ; clear pcc+dcc fields of csr
+        or      b2, b0, b0                      ; change pcc and dcc fields
+
+        mvc     b0, HWI_CSR                     ; globally enable interrupts
+                                                ; to allow nested interrupts
+        .endif  ; STD_TMS320C6400PLUS
+
+        .endm
+
+;
+;# ======== HWI_exit ========
+;  Hardware ISR epilogue
+;
+;  HWI_exit AMASK, BMASK, CMASK, IERRESTOREMASK, CCMASK
+;
+;  AMASK - Mask of A registers to restore
+;  BMASK - Mask of B registers to restore
+;  CMASK  - Mask of control registers to restore
+;  IERRESTOREMASK - Mask of interrupts to restore in IER
+;  CCMASK - Mask of cache control
+;
+; For the C62, we need to maintain 8-byte stack alignment. 
+; Although C62_pop does this, it does so at the expense of using twice 
+; as much stack space as necessary.  We instead do a one-time stack
+; adjustment after loading elements from that stack frame.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      This macro must be the last operation in an ISR that uses any BIOS
+;#      API calls.
+;#
+;
+
+        .asg "a0,a1,a2,a3,amr,b0,b1,b4,b14,b15,b2,b3,csr,ier,irp",HWI_exit$regs
+HWI_exit .macro AMASK, BMASK, CMASK, IERRESTOREMASK, CCMASK
+
+        .if ($symlen(CCMASK) = 0)
+            ; calling HWI_exit ABMASK, CMASK, IERRESTOREMASK, CCMASK
+            .wmsg "Calling deprecated HWI_exit"
+            .eval AMASK & 0x0000FFFF, AMASKTEMP
+            .eval (AMASK >> 16) & 0x0000FFFF, BMASKTEMP
+            .eval BMASK, CMASKTEMP
+            .eval CMASK, IERRESTOREMASKTEMP
+            .eval IERRESTOREMASK, CCMASKTEMP
+        .else
+            .eval AMASK, AMASKTEMP
+            .eval BMASK, BMASKTEMP
+            .eval CMASK, CMASKTEMP
+            .eval IERRESTOREMASK, IERRESTOREMASKTEMP
+            .eval CCMASK, CCMASKTEMP
+        .endif
+
+        mvkl    _SWI_data, a0
+||      mvkl    _HWI_data, b4
+        mvkh    _SWI_data, a0
+||      mvkh    _HWI_data, b4
+        b       disable1?
+||      ldw     *+a0(SWI_DataObj.curmask), b1
+||      ldw     *+b4(HWI_DataObj.inhwi), a3     ; load HWI_DataObj.inhwi
+        ldw     *+a0(SWI_DataObj.curset), b2
+||      mvkl    :IERRESTOREMASKTEMP:, a1
+        ldw     *+a0(SWI_DataObj.lock), b0
+        ldw     *++SP[2], a2
+||      mvkh    :IERRESTOREMASKTEMP:, a1
+||      b       disable2?
+        mvkl    noSwi?, b3
+        mvkh    noSwi?, b3
+||      sub     a3, 1, a3                       ; decrement HWI_DataObj.inhwi
+
+disable1?:
+        cmpgt   b1, b2, b2
+||      stw     a3, *+b4(HWI_DataObj.inhwi)     ; store new HWI_DataObj.inhwi
+        or      b0, b2, b2              ; b2 = 0 if need to run SWI
+
+  [!b2] b       exitISRexec?
+||[!b2] ldw     *+a0(SWI_DataObj.runfxn), b3
+||[ b2] b       b3
+disable2?:
+        and     a1, a2, a2
+||      mvc     ier, b1
+        or      a2, b1, b1
+        mvc     b1, ier
+        nop     2
+
+doswitch?:
+        C6X_save        C6X_ATEMPS & ~(C6X_ISRA | :AMASKTEMP:), C6X_BTEMPS & ~(C6X_ISRB | :BMASKTEMP:), C6X_CTEMPS & ~(C6X_ISRC | :CMASKTEMP:)
+
+        b       b3                      ; call SWI_run()
+        mvc     HWI_CSR, b3
+        or      HWI_GIE, b3, b3
+        mvc     b3, HWI_CSR
+        mvkl    runRet2?, b3
+        mvkh    runRet2?, b3
+runRet2?:
+
+        C6X_restore     C6X_ATEMPS & ~(C6X_ISRA | :AMASKTEMP:), C6X_BTEMPS & ~(C6X_ISRB | :BMASKTEMP:), C6X_CTEMPS & ~(C6X_ISRC | :CMASKTEMP:), 0
+
+        mvkl    _HWI_data, a1
+        mvkh    _HWI_data, a1
+        b       disable4?
+||      ldw     *+a1(HWI_DataObj.stkBottom), a0
+        b       noSwi?
+||      ldw     *+a1(HWI_DataObj.spsave), b0
+        zero    b2
+        nop     2
+        cmpeq   SP, a0, b1
+disable4?:
+  [ b1] stw     b2, *+a1(HWI_DataObj.spsave)
+||[ b1] mv      b0, SP
+
+exitISRexec?:
+        C6X_save        C6X_ATEMPS & ~(C6X_ISRA | :AMASKTEMP:), C6X_BTEMPS & ~(C6X_ISRB | :BMASKTEMP:), C6X_CTEMPS & ~(C6X_ISRC | :CMASKTEMP:)
+
+        b       b3                      ; call SWI_run()
+        mvkl    runRet1?, b3
+        mvkh    runRet1?, b3
+        nop     3
+
+runRet1?:
+        C6X_restore     C6X_ATEMPS & ~(C6X_ISRA | :AMASKTEMP:), C6X_BTEMPS & ~(C6X_ISRB | :BMASKTEMP:), C6X_CTEMPS & ~(C6X_ISRC | :CMASKTEMP:), 0
+
+noSwi?:
+        C6X_restore     :AMASKTEMP: & ~(C6X_ISRA), :BMASKTEMP: & ~(C6X_ISRB), :CMASKTEMP: & ~(C6X_ISRC), NOSP
+
+        mvkl    _SWI_data, a0
+||      mvkl    _HWI_data, b0
+        mvkh    _SWI_data, a0
+||      mvkh    _HWI_data, b0
+        b       disable3?
+||      ldw     *+a0(SWI_DataObj.curmask), b1
+||      ldw     *+b0(HWI_DataObj.stkBottom), a2
+||      mvc     HWI_CSR, b3
+        ldw     *+a0(SWI_DataObj.curset), b2
+||      ldw     *+b0(HWI_DataObj.stkTop), a1
+||      and     ~HWI_GIE, b3, b3
+        ldw     *+a0(SWI_DataObj.lock), a3
+        mvc     b3, HWI_CSR 
+        mvk     C6X_spoffset, b3        ; C6X_spoffset set up by C6X_restore
+        nop     1
+disable3?:
+
+        cmpgt   b1, b2, b2              ; b2 = 0 if need to run SWI
+||      shl     b3, 2, b3
+        or      a3, b2, b2
+||      sub     a3, 1, a3
+  [!b2] b       doswitch?
+||[!b2] cmpgt   SP, a2, b0
+||[ b2] stw     a3, *+a0(SWI_DataObj.lock)
+||[ b2] add     SP, b3, SP              ; do SP restore from above C6X_restore
+||      mvkl    _HWI_data, b3
+  [!b2] cmplt   SP, a1, b1
+||[!b2] ldw     *+a0(SWI_DataObj.runfxn), b3
+||[ b2] zero    b1                      ; force NOP for b1 condition below
+||[ b2] addaw   SP, HWI_NUMSTK, SP
+||[ b2] mv      SP, a0
+  [!b2] or      b0, b1, b1              ; b1 = 1 if we should switch SP
+||[ b2] ldw     *+a0[HWI_STKCSR], a1
+||[ b2] ldw     *+SP[HWI_STKIRP - HWI_NUMSTK], b1
+||[ b2] cmpeq   SP, a2, b0              ; b0 = 1 if we should switch SP
+;
+; at this point: b1 = 1 if not on ISR stack && need to run SWI
+;                b0 = 1 if not running SWI && SP is at HWI_STKBOTTOM
+;
+  [!b2] zero    b0                      ; force NOP for b0 condition below
+||[ b2] mvk     SAT, a3
+||[ b2] ldw     *+a0[HWI_STKAMR], a2
+||      mvkh    _HWI_data, b3
+  [ b0] ldw     *+b3(HWI_DataObj.spsave), b0    ; b3 has _HWI_data
+  [ b1] stw     SP, *+b3(HWI_DataObj.spsave)    ; b3 has _HWI_data
+||[ b1] mv      a2, SP
+;
+; branch to doswitch happens here, b3 now has SWI_DataObj.runfxn
+;
+
+;
+; Note: heavy use of software pipelining here
+;
+        .if STD_TMS320C6400PLUS
+        ldw     *+a0[HWI_STKITSR], a3
+||      ldw     *+SP[HWI_STKGPLYB - HWI_NUMSTK], b3
+||      mvk     4, b3
+
+        ldw     *+a0[HWI_STKILC], a1
+||      ldw     *+SP[HWI_STKRILC - HWI_NUMSTK], b1
+||      mvc     b1, irp                         ; restore IRP from stack
+||      mv      a1, b2                          ; a1 = CSR value from stack
+
+        ldw     *+a0[HWI_STKGPLYA], b2
+||      and     a1, a3, a1
+||      mvc     b2, CSR                         ; restore CSR from stack
+
+        ldw     *+SP[HWI_STKSSR - HWI_NUMSTK], a3
+||      mvc     a2, amr                         ; restore AMR from stack
+||[ a1] sat     b3:b2, b1
+
+        ldw     *+a0[HWI_STKA1], a1             ; restore A1 from stack
+||      ldw     *+SP[HWI_STKB1 - HWI_NUMSTK], b1; restore B1 from stack
+        
+        ldw     *+a0[HWI_STKA3], a3             ; restore A3 from stack
+||      mvc     a3, ITSR                        ; restore ITSR from stack
+
+        mvc     a1, ILC                         ; restore ILC from stack
+
+        ldw     *+SP[HWI_STKB3 - HWI_NUMSTK], b3; restore B3 from stack
+||      mvc     b1, RILC                        ; restore RILC from stack
+
+        ldw     *+a0[HWI_STKB2], b2             ; restore B2 from stack
+||      mvc     a3, SSR                         ; restore SSR from stack
+
+        b       irp
+||      ldw     *+a0[HWI_STKA0], a0             ; restore A0 from stack
+||      ldw     *+SP[HWI_STKB0 - HWI_NUMSTK], b0; restore B0 from stack
+||      mvkl    _HWI_data, a2
+        ldw     *+a0[HWI_STKA2], a2             ; restore A2 from stack
+||      ldw     *+SP[HWI_STKDP - HWI_NUMSTK], DP; restore DP from stack
+||      zero    a0
+||      mvc     b3, GPLYB                       ; restore GPLYB from stack
+||      mvkh    _HWI_data, a2
+  [ b0] mv      b0, SP
+||[ b0] stw     a0, *+a2(HWI_DataObj.spsave)
+        mvc     b2, GPLYA                       ; restore GPLYA from stack
+        nop     2
+        
+        .else
+
+        ldw     *+a0[HWI_STKA3], a3
+||      ldw     *+SP[HWI_STKB3 - HWI_NUMSTK], b3
+||      mvk     4, b3
+
+        ldw     *+a0[HWI_STKA1], a1
+||      ldw     *+SP[HWI_STKB1 - HWI_NUMSTK], b1
+||      mvc     b1, irp
+||      mv      a1, b2
+
+        ldw     *+a0[HWI_STKB2], b2
+||      and     a1, a3, a1
+||      mvc     b2, HWI_CSR
+
+        b       irp
+||      ldw     *+a0[HWI_STKA0], a0
+||      ldw     *+SP[HWI_STKB0 - HWI_NUMSTK], b0
+||[ a1] sat     b3:b2, b1
+        ldw     *+a0[HWI_STKA2], a2
+||      ldw     *+SP[HWI_STKDP - HWI_NUMSTK], DP
+||      mv      a2, b2
+||      zero    a0
+||      mvkl    _HWI_data, a2
+        mvkh    _HWI_data, a2
+  [ b0] mv      b0, SP
+||[ b0] stw     a0, *+a2(HWI_DataObj.spsave)
+||      mvc     b2, amr
+        nop     2
+
+        .endif
+        .endm
+                                
+        .endif  ; HWI_ not defined

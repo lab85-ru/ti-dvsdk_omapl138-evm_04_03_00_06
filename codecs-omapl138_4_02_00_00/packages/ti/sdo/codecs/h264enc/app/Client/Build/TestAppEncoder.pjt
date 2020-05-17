@@ -1,0 +1,30 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="D:\SnapShot\a0876526_view6\VIP_Video\h264\encoder\Releases\100_V_H264AVC_E_1_10_00\OMAP2430_BP_001\Client\Build\"
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Debug"
+
+[Source Files]
+Source="..\Test\Src\alg_control.c"
+Source="..\Test\Src\alg_create.c"
+Source="..\Test\Src\alg_malloc.c"
+Source="..\Test\Src\bios_rts.c"
+Source="..\Test\Src\TestAppConfigParser.c"
+Source="..\Test\Src\TestAppEncoder.c"
+Source="H264VEncApp.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-g -q -s -fr"$(Proj_dir)\Obj" -fs"$(Proj_dir)\Obj" -ft"$(Proj_dir)\Obj" -i"$(Proj_dir)\..\Test\Inc" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\dman3" -i"$(Install_dir)\framework_components_2_20_00_15\fctools\packages" -i"$(Install_dir)\bios_5_32_02\packages" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\utils\api" -i"..\Inc" -i"..\..\..\Inc" -d"C6000" -d"_RTS_MODE" -mo -mt -mw -mh256 -ml3 -mv6400+
+
+["Linker" Settings: "Debug"]
+Options=-q -a -c -m"$(Proj_dir)\Map\H264VEncApp.map" -o"$(Proj_dir)\Out\H264VEncApp.out" -w -x -i"$(Proj_dir)\..\..\..\Lib" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\dman3\lib" -i"$(Install_dir)\bios_5_32_02\packages\ti\bios\lib" -i"$(Install_dir)\C6000\cgtools\lib" -l"h264venc_ti.l64P" -l"dman3d.a64P" -l"biosDM420.a64P" -l"rts64plus.lib" --args250
+
+["H264VEncApp.cmd" Settings: "Debug"]
+LinkOrder=1
+

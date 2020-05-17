@@ -1,0 +1,46 @@
+
+/* Add I2c driver to DEV table */
+bios.UDEV.create("i2c0");
+bios.UDEV.instance("i2c0").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("i2c0").initFxn = prog.extern("audioUserI2cInit");
+bios.UDEV.instance("i2c0").params = prog.extern("audioI2cParams");
+bios.UDEV.instance("i2c0").fxnTable = prog.extern("I2c_IOMFXNS");
+bios.UDEV.instance("i2c0").deviceId = 0;
+
+
+/* Add Aic31 driver to DEV table */
+bios.UDEV.create("aic310");
+bios.UDEV.instance("aic310").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("aic310").initFxn = prog.extern("audioUserAic31Init");
+bios.UDEV.instance("aic310").params = prog.extern("audioAic31Params");
+bios.UDEV.instance("aic310").fxnTable = prog.extern("Aic31_IOMFXNS");
+bios.UDEV.instance("aic310").deviceId = 0;
+
+/* Add Mcasp driver to DEV table */
+bios.UDEV.create("mcasp0");
+bios.UDEV.instance("mcasp0").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("mcasp0").initFxn = prog.extern("audioUserMcaspInit");
+bios.UDEV.instance("mcasp0").params = prog.extern("audioMcaspParams");
+bios.UDEV.instance("mcasp0").fxnTable = prog.extern("Mcasp_IOMFXNS");
+bios.UDEV.instance("mcasp0").deviceId = 0;
+
+/* Add Audio driver to DEV table */
+bios.UDEV.create("audio0");
+bios.UDEV.instance("audio0").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("audio0").initFxn = prog.extern("audioUserAudioInit");
+bios.UDEV.instance("audio0").params = prog.extern("audioParams");
+bios.UDEV.instance("audio0").fxnTable = prog.extern("Audio_IOMFXNS");
+
+/*
+ *  Add instance of DIO object to use the configured codec. This is the device
+ *  SIO streams use.
+ */
+var dioCodec = bios.DIO.create("dioAudioIN");
+dioCodec.deviceName = prog.get("audio0");
+dioCodec.useCallBackFxn = false;
+dioCodec.chanParams = prog.extern("audioChanParamsIN");
+
+var dioCodec = bios.DIO.create("dioAudioOUT");
+dioCodec.deviceName = prog.get("audio0");
+dioCodec.useCallBackFxn = false;
+dioCodec.chanParams = prog.extern("audioChanParamsOUT");

@@ -1,0 +1,44 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Library
+CPUFamily=TMS320C67XX
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Config="Debug"
+Config="Release"
+Config="iDebug"
+Config="iRelease"
+
+[Source Files]
+Source="..\..\..\src\I2c.c"
+Source="..\..\..\src\I2c_edma.c"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"..\..\..\lib\OMAPL137\Debug\ti.pspiom.i2c.a674"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"..\..\..\lib\OMAPL137\Release\ti.pspiom.i2c.a674"
+
+["Archiver" Settings: "iDebug"]
+Options=-r -o"..\..\..\lib\OMAPL137\iDebug\ti.pspiom.i2c.a674"
+
+["Archiver" Settings: "iRelease"]
+Options=-r -o"..\..\..\lib\OMAPL137\iRelease\ti.pspiom.i2c.a674"
+
+["Compiler" Settings: "Debug"]
+Options=-g -mo -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"CHIP_OMAPL137" -d"I2c_EDMA_ENABLE" -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-o2 -mo -pdr -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"CHIP_OMAPL137" -d"I2c_EDMA_ENABLE"  -d"PSP_DISABLE_INPUT_PARAMETER_CHECK" -d"NDEBUG" -mv6740
+
+["Compiler" Settings: "iDebug"]
+Options=-g -mo -pdr -fr"$(Proj_dir)\iDebug" -i"$(Proj_dir)\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"CHIP_OMAPL137" -d"I2c_EDMA_ENABLE" -d"I2c_DEBUGPRINT_ENABLE" -mv6740
+
+["Compiler" Settings: "iRelease"]
+Options=-o2 -mo -pdr -fr"$(Proj_dir)\iRelease" -i"$(Proj_dir)\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"CHIP_OMAPL137" -d"I2c_EDMA_ENABLE" -d"I2c_DEBUGPRINT_ENABLE"  -d"PSP_DISABLE_INPUT_PARAMETER_CHECK" -d"NDEBUG" -mv6740
+
+

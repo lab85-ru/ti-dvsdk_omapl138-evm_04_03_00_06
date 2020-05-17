@@ -1,0 +1,75 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== std.h62 ========
+;
+;  This header file provides a means of defining assembler or
+;  processor-specific values.
+;
+
+        .if ($isdefed("STD_") = 0)    ; prevent multiple includes of this file
+STD_    .set    1
+
+STD_TARGWORDBITS        .set 32
+STD_TARGWORDMAUS        .set 4 
+STD_TARGCHARMAUS        .set 1 
+STD_TARGALIGN           .set 8
+STD_DSPFAMILY           .set 62
+
+            .if .TMS320C6200 
+_62_    .set 1
+STD_FLOATDSP            .set 0          ; does this DSP support float?
+            .elseif .TMS320C6400
+_64_    .set 1
+                .if $isdefed(".TMS320C6740")
+                    .if .TMS320C6740
+STD_FLOATDSP            .set 1          ; does this DSP support float?
+                    .else
+STD_FLOATDSP            .set 0          ; does this DSP support float?
+                    .endif
+                .else
+STD_FLOATDSP            .set 0          ; does this DSP support float?
+                .endif
+            .elseif .TMS320C6700
+_67_    .set 1
+STD_FLOATDSP            .set 1          ; does this DSP support float?
+            .else
+                .emsg "Unknown DSP family"
+            .endif
+
+            .if $isdefed(".TMS320C6400_PLUS")
+                .if .TMS320C6400_PLUS
+STD_TMS320C6400PLUS     .set 1
+_64P_   .set 1
+                .else
+STD_TMS320C6400PLUS     .set 0
+                .endif
+           .else
+STD_TMS320C6400PLUS     .set 0
+           .endif
+
+            .if $isdefed(".TMS320C6700_PLUS")
+                .if .TMS320C6700_PLUS
+STD_TMS320C6700PLUS     .set 1
+_67P_   .set 1
+                .else
+STD_TMS320C6700PLUS     .set 0
+                .endif
+           .else
+STD_TMS320C6700PLUS     .set 0
+           .endif
+
+            .if $isdefed(".TMS320C6740")
+                .if .TMS320C6740
+_674_           .set 1
+STD_TMS320C6740 .set 1
+                .else
+STD_TMS320C6740 .set 0
+                .endif
+           .else
+STD_TMS320C6740 .set 0
+           .endif
+
+        .endif                          ; .if $isdefed("STD_") = 0)

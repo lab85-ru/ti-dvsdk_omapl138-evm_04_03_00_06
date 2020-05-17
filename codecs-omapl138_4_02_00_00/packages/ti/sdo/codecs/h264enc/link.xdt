@@ -1,0 +1,12 @@
+SECTIONS
+{
+% if (this.H264ENC.dataSection) { 
+  .const:H264VENC_TI_dSect1 > `this.H264ENC.dataSection`, align = 8  
+%}
+% if (this.H264ENC.udataSection) { 
+  .far:H264VENC_TI_uSect1   > `this.H264ENC.udataSection`, align = 8  
+%}
+% if (this.H264ENC.codeSection) { 
+  .text:H264VENC_TI_cSect1  > `this.H264ENC.codeSection`, align = 0x10000
+%}
+}

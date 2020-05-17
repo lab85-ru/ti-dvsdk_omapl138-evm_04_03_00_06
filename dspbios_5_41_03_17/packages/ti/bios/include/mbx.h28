@@ -1,0 +1,287 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== mbx.h28 ========
+;
+;
+
+        .if ($isdefed("MBX_") = 0)  ; prevent multiple includes of this file
+MBX_    .set    1
+
+        .include std.h28
+        .include obj.h28
+        .include que.h28
+        .include sem.h28
+
+isMbxAligned    .set    2
+MBX_Obj         .struct
+dataQue         .tag    QUE_Obj         ; message queue
+pad0            .align  isQueAligned
+freeQue         .tag    QUE_Obj         ; free queue
+pad1            .align  isSemAligned
+dataSem         .tag    SEM_Obj         ; count = number of messages
+pad2            .align  isSemAligned
+freeSem         .tag    SEM_Obj         ; count = number of free slots
+segid           Int     1               ; elements are allocated here 
+siz             size_t  1               ; size of mailbox elements 
+len             Int     1               ; number of elements in mailbox
+name            DataPtr 1       ; name
+endPad          .align   isMbxAligned
+MBX_A_OBJSIZE   .endstruct
+
+MBX_CORESIZE    .set    MBX_A_OBJSIZE   
+
+MBX_BASE        .set    MBX_Obj.dataQue         
+MBX_O_FREEQ     .set    MBX_Obj.freeQue - MBX_BASE
+MBX_O_DATASEM   .set    MBX_Obj.dataSem - MBX_BASE
+MBX_O_FREESEM   .set    MBX_Obj.freeSem - MBX_BASE
+MBX_O_SEGID     .set    MBX_Obj.segid - MBX_BASE
+MBX_O_SIZE      .set    MBX_Obj.siz - MBX_BASE
+MBX_O_LENGTH    .set    MBX_Obj.len - MBX_BASE
+
+
+MBX_FREEQOFFSET .set    MBX_O_FREEQ
+MBX_DATASEMOFFSET       .set MBX_O_DATASEM
+
+        .eval   OBJ_HDRSIZE+MBX_CORESIZE, MBX_OBJSIZE
+
+;
+;# ======== MBX_config ========
+;  Static configuration of the MBX module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", MBX_config$regs
+MBX_config      .macro
+        .endm
+
+
+;
+;# ======== MBX_init ========
+;  Runtime initialization of the MBX module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", MBX_init$regs
+MBX_init        .macro
+
+        ; only expand if the MBX module is configured
+        .if (MBX$ = 1)
+        .endif
+
+        .endm
+
+;
+;# ======== MBX_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", MBX_startup$regs
+MBX_startup        .macro
+
+        .if     MBX$NUMOF != 0
+        .endif
+        .endm
+
+;
+;# ======== MBX_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", MBX_end$regs
+MBX_end .macro
+        .endm
+
+;
+;# ======== MBX_Obj ========
+;
+;  Parameters:  _size   - size of message in bytes (Must be bytes because of
+;                         memcpy in MBX_pend and MBX_post).
+;               _length - maximum number of messages that can be queued up.
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", MBX_Obj$regs
+MBX_Obj .macro cflag, name, id, _size, _length, _elemSeg
+
+        .global :name:$queElems
+        .global :name:
+        .global :name:$data
+        .global :name:$free
+
+        .var alignedSize                        ; if the passed message size
+                                                ; is odd, we take the next
+                                                ; higher even value to calculate
+                                                ; "SIZE". SIZE is the minimum
+                                                ; number of words needed to
+                                                ; contain the mbx message.
+        .eval :_size:, alignedSize
+
+        .if :_size: = 0
+            .emsg "MBX :name:: size must be greater than 0"
+        .endif
+
+        .if (:_size: & 0x1)                     ;check if passed msg size is odd
+            .eval alignedSize + 1, alignedSize  
+        .endif
+
+        .if :_length: = 0
+            .emsg "MBX :name:: length must be greater than 0"
+        .endif
+
+        ; SIZE is the minimum number of words needed to contain the mbx message
+        .eval (:alignedSize: + STD_TARGWORDMAUS - 1) / STD_TARGWORDMAUS, SIZE
+
+        C28_allocateObject  isMbxAligned , :name:$obj, MBX_OBJSIZE, .mbx, 0     
+:name:                  .set  :name:$obj + OBJ_HDRSIZE
+:name:$data             .set  :name: +  MBX_O_DATASEM
+:name:$free             .set  :name: +  MBX_O_FREESEM
+
+        C28_cinitHeader  CINITALIGN, isMbxAligned, :name:$obj, MBX_OBJSIZE
+        C28_cinitBegin          isMbxAligned
+        OBJ_cinitObj            :name:, OBJ_MBX, MBX_CORESIZE
+        QUE_cinitObj            :name:          ; dataQue, initially 
+                                                ; empty
+        QUE_cinitObj            :name:$queElems, :name:$queElems+(:_length:-1)*(QUE_ELEMSIZE + SIZE) 
+                                                ; freeQue initally
+                                                ; points to the
+                                                ; last QUE_elem
+
+        SEM_cinitObj            :name:$data, 0
+        SEM_cinitObj            :name:$free, :_length:
+
+        
+        ;
+        ; segid is set to -1 here for static MBX objects. This will
+        ; allow KOV to distinguish between static and dynamic 
+        ; MBX objects.
+        ;
+
+        C28_cinitInt            -1                      ; segid
+        C28_cinitsize_t         :_size:
+        C28_cinitInt            :_length:
+        C28_cinitDataPtr        0                       ; name
+        C28_cinitEnd            isMbxAligned
+
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;  Now we need to create a group of MBX elements, each consisting of a
+;  QUE_Elem followed by a block of memory, the size of which is defined by
+;  the :_size: parameter.  The number of elements created is defined by the
+;  :_length: parameter.  In order to initialize the QUE_Elem's such that
+;  a doubly linked list is formed, we will set the "prev" field of the first
+;  element, and the "next" field of the last element separately, since these
+;  two fields both point to the queue head.  Then in a loop, we will set
+;  the "next" field of the current element, and the "prev" field of the
+;  following element, since these two fields essentially point to each other.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;
+;  Memory space is reserved by the linker command file in a .MBX$que
+;  section, and initialized with the following .cinit section.
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        .eval   0, THIS
+        .eval   (QUE_ELEMSIZE + SIZE) ,FOLLOWING
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;  Set "prev" field of first element
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        C28_cinitHeader CINITALIGN, isDataPtrAligned, :name:$queElems + DATAPTRSIZE , DATAPTRSIZE
+        C28_cinitBegin  isDataPtrAligned
+        C28_cinitDataPtr        :name:+MBX_FREEQOFFSET * STD_TARGWORDMAUS
+                                                ; first element points
+                                                ; back to head
+        C28_cinitEnd     isDataPtrAligned
+
+
+
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;  Set up a loop to set the "next" field of the current element
+        ;  and the "prev" field of the following element.Since the first
+        ;  "prev" field and the last "next" field are handled separately
+        ;  ,   the loop is followed :_length: -1 times.
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        .eval   :_length:, lpcnt
+        .loop :_length:
+            .eval       lpcnt-1, lpcnt
+            .break      lpcnt = 0
+
+                                ; The current  element's "next" field
+        C28_cinitHeader CINITALIGN, isDataPtrAligned, :name:$queElems + THIS, DATAPTRSIZE
+        C28_cinitBegin          isDataPtrAligned
+        C28_cinitDataPtr        :name:$queElems+FOLLOWING
+        C28_cinitEnd            isDataPtrAligned
+
+                                                ; The following element'
+                                                ; s "prev  " field
+        C28_cinitHeader CINITALIGN, isDataPtrAligned, :name:$queElems + FOLLOWING + DATAPTRSIZE, DATAPTRSIZE
+        C28_cinitBegin          isDataPtrAligned
+        C28_cinitDataPtr        :name:$queElems+THIS
+        C28_cinitEnd            isDataPtrAligned
+
+                                                ; advance to next pair
+                                                ;of QUE elements
+            .eval       FOLLOWING, THIS
+            .eval       THIS + ( QUE_ELEMSIZE + SIZE) , FOLLOWING
+
+        .endloop
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;  Finally, set "next" field of last element
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        C28_cinitHeader CINITALIGN, isDataPtrAligned, :name:$queElems + THIS , DATAPTRSIZE
+                                                ; last element points
+                                                ; ahead to head
+        C28_cinitBegin          isDataPtrAligned
+        C28_cinitDataPtr        :name:+MBX_FREEQOFFSET * STD_TARGWORDMAUS
+        C28_cinitEnd            isDataPtrAligned
+
+        .endm
+
+        .endif          ; if MBX_ is not defined

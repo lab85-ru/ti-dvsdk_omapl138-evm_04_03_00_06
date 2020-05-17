@@ -1,0 +1,15 @@
+Compiling user sources for DSP.
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/bin/cl6x -mv6740 -c -q --gcc --display_error_number -g -d_DEBUG  -I/opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include -I/opt/ti-dvsdk_omapl138-evm_04_03_00_06/c6run_0_98_03_03/bin/../include -I/opt/ti-dvsdk_omapl138-evm_04_03_00_06/c6run_0_98_03_03/bin/../include/c6run -I/opt/ti-dvsdk_omapl138-evm_04_03_00_06/c6run_0_98_03_03/bin/../include/c6run/dsp -eo=temp.o -ea=s -el=sa --obj_directory=. test14_extra.c test14_main.c 
+Linking DSP side executable.
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/bin/cl6x --run_linker -c -q -w --priority --display_error_number --diag_suppress=10063 --diag_suppress=10247 --search_path=/opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/lib --output_file=./test14_main.exe.dsp_image.out --map_file=./test14_main.exe.dsp_image.map ./test14_main.temp.o ./test14_extra.temp.o   --library=/opt/ti-dvsdk_omapl138-evm_04_03_00_06/c6run_0_98_03_03/bin/../lib/c6run_dsp/libc6rund.a --library=/opt/ti-dvsdk_omapl138-evm_04_03_00_06/c6run_0_98_03_03/bin/../lib/c6run_dsp/libipcd.a --library=/opt/ti-dvsdk_omapl138-evm_04_03_00_06/c6run_0_98_03_03/bin/../lib/c6run_dsp/libosd.a /opt/ti-dvsdk_omapl138-evm_04_03_00_06/c6run_0_98_03_03/bin/../lib/c6run_dsp/c6run.cmd --library=libc.a
+<Linking>
+Converting DSP executable to C array...
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/bin/strip6x ./test14_main.exe.dsp
+  Using od and sed to generate C file of DSP image data.
+Converting DSP executable data array to ARM object file...
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit//bin/arm-arago-linux-gnueabi-gcc -mcpu=arm926ej-s -mlittle-endian -mfloat-abi=soft -c -o _dsp_program_data_.o _dsp_program_data_.c
+Compiling and linking ARM loader components.
+Generating final ARM executable.
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit//bin/arm-arago-linux-gnueabi-gcc -mcpu=arm926ej-s -mlittle-endian -mfloat-abi=soft -lpthread -ldl -o ./test14_main.exe /opt/ti-dvsdk_omapl138-evm_04_03_00_06/c6run_0_98_03_03/bin/../lib/c6run_gpp/libc6run_maind.a  _dsp_program_data_.o /opt/ti-dvsdk_omapl138-evm_04_03_00_06/c6run_0_98_03_03/bin/../lib/c6run_gpp/libc6rund.a 
+Removing intermediate object files generated from source.
+rm -f ./test14_main.temp.o ./test14_extra.temp.o 

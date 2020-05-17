@@ -1,0 +1,14 @@
+Package: libgcrypt-dev
+Version: 1.4.1-r0.6
+Description: A general purpose cryptographic library based on the code from GnuPG
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPL LGPL FDL
+Architecture: armv5te
+OE: libgcrypt
+Homepage: unknown
+Build: install/d0bd439
+Depends: libgcrypt11 (= 1.4.1-r0.6), libgcrypt11
+Recommends: libgpg-error-dev, libc6-dev, libgcrypt-dev
+Source: ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.4.1.tar.gz file://add-pkgconfig-support.patch file://mips-h-constraint.patch

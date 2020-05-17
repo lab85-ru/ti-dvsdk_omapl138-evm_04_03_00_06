@@ -1,0 +1,646 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== tsk.h28 ========
+;
+
+        .if ($isdefed("TSK_") = 0)  ; prevent multiple includes of this file
+TSK_    .set    1
+
+        .include cinit.h28 
+        .include std.h28
+        .include obj.h28
+        .include knl.h28
+        .include sts.h28
+        .include gbl.h28
+        .include que.h28
+
+isTskusrstackAligned    .set  1
+isTskAligned            .set  2
+
+TSK_Obj  .struct
+kobj            .tag            KNL_Obj ; kernel object 
+stack           Int             1       ; used in TSK_delete()
+stacksize       size_t          1       ; size of stack
+stackseg        Int             1       ; segment of stack
+name            DataPtr         1       ; printable name
+environ         DataPtr         1       ; environment pointer
+errno           Int             1       ; TSK_seterr()/TSK_geterr() 
+exitflag        Int             1       ; FALSE for server tasks 
+endPad          .align          isTskAligned  
+TSK_A_OBJSIZE   .endstruct
+
+TSK_BASE        .set            TSK_Obj.kobj
+TSK_O_KOBJ      .set            TSK_Obj.kobj - TSK_BASE
+TSK_O_STACK     .set            TSK_Obj.stack - TSK_BASE
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; The TSK_user_stack_image  structure reflects the
+        ;,DATAPAGE image of TSK's user stack ;during  start up.
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+TSK_stack_Obj   .struct
+fxn_TSK_exit            CodePtr         1
+arg7                    Int             ARGSIZE  
+arg6                    Int             ARGSIZE 
+arg5                    Int             ARGSIZE  
+arg4                    Int             ARGSIZE 
+arg3                    Int             ARGSIZE   
+arg2                    Int             ARGSIZE ; the rest of them land on stack
+arg1                    Int             ARGSIZE ; in XAR4 and XAR5 respectively.
+arg0                    Int             ARGSIZE ; arg0 and arg1 lands up        
+tsk_fxn                 CodePtr         1       
+fxn_KNL_exit            CodePtr         1       ; space for address of KNL_exit
+fxn_KNL_glue            CodePtr         1       ; space for address of KNL_glue
+reg_xar3_l              Int             1       ; space for storing ar3_l
+reg_xar3_h              Int             1       ; space for storing ar3_h
+reg_xar2_l              Int             1       ; space for storing ar2_l
+reg_xar2_h              Int             1       ; space for storing ar2_h
+reg_xar1_l              Int             1       ; space for storing ar1_l
+reg_xar1_h              Int             1       ; space for storing ar1_h
+    .if (STD_TMS320C2800FPU)
+reg_r4h_l       Int     1   ;
+reg_r4h_h       Int     1   ;
+reg_r5h_l       Int     1   ;
+reg_r5h_h       Int     1   ;
+reg_r6h_l       Int     1   ;
+reg_r6h_h       Int     1   ;
+reg_r7h_l       Int     1   ;
+reg_r7h_h       Int     1   ;
+    .endif
+rpc_KNL_glue_l          Int             1       ; space for RPC value
+rpc_KNL_glue_h          Int             1       ; space for RPC value
+TSK_A_STACKIMAGE_SIZE           .endstruct
+
+
+
+
+
+TSK_STACK_BASE          .set    TSK_stack_Obj.fxn_TSK_exit 
+TSK_STACK_O_RPC_FXN_KNL_GLUE_H  .set    TSK_stack_Obj.rpc_KNL_glue_h  - TSK_STACK_BASE
+TSK_STACK_O_RPC_FXN_KNL_GLUE_L  .set    TSK_stack_Obj.rpc_KNL_glue_l  - TSK_STACK_BASE
+    .if (STD_TMS320C2800FPU)
+TSK_STACK_O_REG_R7H_H   .set    TSK_stack_Obj.reg_r7h_h - TSK_STACK_BASE
+TSK_STACK_O_REG_R7H_L   .set    TSK_stack_Obj.reg_r7h_l - TSK_STACK_BASE
+TSK_STACK_O_REG_R6H_H   .set    TSK_stack_Obj.reg_r7h_h - TSK_STACK_BASE
+TSK_STACK_O_REG_R6H_L   .set    TSK_stack_Obj.reg_r7h_l - TSK_STACK_BASE
+TSK_STACK_O_REG_R5H_H   .set    TSK_stack_Obj.reg_r7h_h - TSK_STACK_BASE
+TSK_STACK_O_REG_R5H_L   .set    TSK_stack_Obj.reg_r7h_l - TSK_STACK_BASE
+TSK_STACK_O_REG_R4H_H   .set    TSK_stack_Obj.reg_r7h_h - TSK_STACK_BASE
+TSK_STACK_O_REG_R4H_L   .set    TSK_stack_Obj.reg_r7h_l - TSK_STACK_BASE
+    .endif
+TSK_STACK_O_REG_XAR1_H  .set    TSK_stack_Obj.reg_xar1_h - TSK_STACK_BASE
+TSK_STACK_O_REG_XAR1_L  .set    TSK_stack_Obj.reg_xar1_l - TSK_STACK_BASE
+TSK_STACK_O_REG_XAR2_H  .set    TSK_stack_Obj.reg_xar2_h - TSK_STACK_BASE
+TSK_STACK_O_REG_XAR2_L  .set    TSK_stack_Obj.reg_xar2_l - TSK_STACK_BASE
+TSK_STACK_O_REG_XAR3_H  .set    TSK_stack_Obj.reg_xar3_h - TSK_STACK_BASE
+TSK_STACK_O_REG_XAR3_L  .set    TSK_stack_Obj.reg_xar3_l - TSK_STACK_BASE
+TSK_STACK_O_FXN_KNL_GLUE        .set    TSK_stack_Obj.fxn_KNL_glue - TSK_STACK_BASE
+TSK_STACK_O_FXN_KNL_EXIT        .set    TSK_stack_Obj.fxn_KNL_exit  - TSK_STACK_BASE
+TSK_STACK_O_TSK_FXN    .set     TSK_stack_Obj.tsk_fxn - TSK_STACK_BASE
+TSK_STACK_O_ARG1                .set    TSK_stack_Obj.arg1 - TSK_STACK_BASE
+TSK_STACK_O_ARG2                .set    TSK_stack_Obj.arg2 - TSK_STACK_BASE
+TSK_STACK_O_ARG3                .set    TSK_stack_Obj.arg3 - TSK_STACK_BASE
+TSK_STACK_O_ARG4                .set    TSK_stack_Obj.arg4 - TSK_STACK_BASE
+TSK_STACK_O_ARG5                .set    TSK_stack_Obj.arg5 - TSK_STACK_BASE
+TSK_STACK_O_ARG6                .set    TSK_stack_Obj.arg6 - TSK_STACK_BASE
+TSK_STACK_O_ARG7                .set    TSK_stack_Obj.arg7 - TSK_STACK_BASE
+TSK_STACK_O_FXN_TSK_EXIT        .set  TSK_stack_Obj.fxn_TSK_exit - TSK_STACK_BASE
+
+        .eval TSK_A_OBJSIZE, TSK_CORESIZE
+        .eval TSK_CORESIZE+OBJ_HDRSIZE, TSK_OBJSIZE
+        .eval TSK_A_STACKIMAGE_SIZE, TSK_USEDSTACK                        
+;
+;# ======== TSK_config ========
+;  Static configuration of the TSK module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", TSK_config$regs
+TSK_config      .macro _stacksize, _stackseg, _priority, _createfxn, _deletefxn, _exitfxn, _switchfxn, _readyfxn, _num_hooks
+     .if (TSK$ !=0 )
+        ;; If MEM_gNumHeap then put in an err value in for TSK$stackseg
+        .if (MEM_gNumHeap == 0)
+                .asg    "-1", TSK$stackseg
+        .else 
+            .if ($symcmp(":_stackseg:", "MEM_NULL") == 0)
+                .asg    "-1", TSK$stackseg
+            .else
+                .asg    ":_stackseg:$idx", TSK$stackseg
+            .endif
+        .endif
+
+        .ref :_createfxn:, :_deletefxn: 
+        .ref :_exitfxn:
+
+        .if $isname(":_switchfxn:")
+            .ref        :_switchfxn:
+        .endif
+
+        .if $isname(":_readyfxn:")
+            .ref :_readyfxn:
+        .endif
+
+        .global _TSK_exit, _KNL_exit, KNL_glue
+
+        ;
+        ; Initialize counter for use in TSK_Obj
+        ;
+        .eval 0, TSK$strCount
+
+        .eval   :_num_hooks:, TSK$num_hooks
+    .endif
+
+        .endm
+
+
+;
+;# ======== TSK_end ========
+;  Invoked at the end of all other configuration
+;  declarations.  This needs to come after MEM_Obj macro calls.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", TSK_end$regs
+TSK_end .macro
+
+        ; expand only if TSK is enabled
+        .if (TSK$ == 1)
+
+        .global _TSK                    ; Pointer to configuration parameters
+        .global TSK_config
+
+;
+; The following two .ebss/.cinit sets make configured values readable
+; in the established SPOX manner, e.g., TSK->STACKSIZE.
+;
+;
+
+
+
+isTskconfigAligned      .set    2
+TSK_ConfigObj .struct
+
+tskSeg          Int     1;      Task;s segment
+tskPri          Int     1;      Tasks priority
+tskStacksize    size_t  1;      Tasks stacksize
+tskCreateFxn    CodePtr 1;      Create function
+tskDelFxn       CodePtr 1;      Delete function
+tskExitFxn      CodePtr 1;      Exit function
+tskSwitchFxn    CodePtr 1;      Switch function
+tskReadyFxn     CodePtr 1;      Ready function
+TSK_configPtr   DataPtr 1;      Pointer to this structure
+endPad          .align          isTskconfigAligned
+
+TSK_CONFIG_A_SIZE       .endstruct
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Allocate space for TSK_config object. Note that  ;
+        ; _TSK is made as the last element of this         ;
+        ; structure                                        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        ; Set blocking bit as 1 here, for SDSsq31971
+        C28_allocateObject   isTskconfigAligned, TSK_config, TSK_CONFIG_A_SIZE , .ebss, 0
+_TSK    .set  TSK_config + TSK_ConfigObj.TSK_configPtr
+
+        C28_cinitHeader  CINITALIGN, isTskconfigAligned,TSK_config, TSK_CONFIG_A_SIZE
+        C28_cinitBegin          isTskconfigAligned
+        C28_cinitInt            TSK$stackseg
+        C28_cinitInt            TSK_PRIORITY
+        C28_cinitsize_t         TSK_STACKSIZE
+        C28_cinitCodePtr        TSK_VCREATEFXN
+        C28_cinitCodePtr        TSK_VDELETEFXN
+        C28_cinitCodePtr        TSK_VEXITFXN
+        C28_cinitCodePtr        TSK_SWITCHFXN
+        C28_cinitCodePtr        TSK_READYFXN
+        C28_cinitDataPtr        TSK_config     ; _TSK = TSK_config              
+        C28_cinitEnd            isTskconfigAligned
+
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; The startup stack will be borrowed from the idle task's
+        ; stack.  The  startup stack must begin beyond the portion 
+        ; of the stack that is  statically initialized, so the
+        ; __STACK_SIZE will be decremented by  that amount.
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        .endif          ; if (TSK$ == 1)
+
+        .endm
+
+;
+;# ======== TSK_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", TSK_Obj$regs
+TSK_Obj .macro cflag, name, id, fxn, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, autostack, manstack, stacksize, stackseg, priority, envp, exitflag, tskname, statReg, order, filter, maxformat, sumformat, avgformat, filtmaxmult, filtsummult, unittype
+
+        .global :fxn:
+        .global :name:
+        .global :manstack: ; needed to define $stkptr, $sysstkptr via .asg
+        .ref    ___bss__
+        .var usr_stackSize
+
+        .global :name:$tsk      ; generate symbol for vbd/rta
+:name:$tsk .set 0
+        .global :name:$pri      ; generate priority symbol for vbd/rta
+:name:$pri .set :priority:
+        .global :name:$ord      ; generate order symbol for vbd/rta
+:name:$ord .set :order:
+
+        .if (stacksize & 0x1)
+          .eval (stacksize + 1), usr_stackSize ; Even user stack
+        .else
+          .eval (stacksize), usr_stackSize     ; user stack, already even
+        .endif
+
+        .eval usr_stackSize, :name:$stklen      ; TSK's user stack length
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Reserve space for  automatically  allocation. In 1*32
+        ; mode, allocate equal  space for stack and  system stack.
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        .if     :autostack:                     
+          .global :name:$stack, :name:$stackname
+        ; Set blocking bit as 0 here, $stack only access from assembly,
+        ; it is safe for SDSsq31971
+        C28_allocateObject   2, :name:$stack, :usr_stackSize:, .:name:$stk, 0 
+             
+          .asg   "(:name:$stack)", :name:$stackname     ; point to end of stack
+        .else                                   ; if user allocates
+                                                ; stack
+           .if ($symcmp(":manstack:", "null") == 0)
+             .emsg "TSK :name: manually allocated stack cannot be null"
+           .else
+             .asg "(:manstack: + (:manstack: & 0x1))", :name:$stackname 
+             .asg   ":name:$stackname + :usr_stackSize:", :name:$stackend
+           .endif ; manstack endif
+         .endif   ; autostack endif
+          .asg   ":usr_stackSize: - TSK_USEDSTACK", :name:$freelen
+          .asg   ":name:$stackname + TSK_USEDSTACK", :name:$freestack
+        .global :name:$stkptr
+        .if :autostack:
+:name:$stkptr     .set :name:$stackname 
+        .else
+          .asg  "(:name:$stackname)", :name:$stkptr
+        .endif ; autostack endif
+
+        .if :tskname:                           ; if task has a name
+                .sect   ".econst"
+TSK$:name:      .string ":name:",0              ; null-terminated name
+        .endif                                  ; string
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;               create the task   object
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+        
+        .global  :name:$obj             ; Global defined for debug
+                                        ; purposes.
+
+                                        ; Allocate space starting from
+                                        ; the header associated with
+                                        ; the task
+
+        ; Set blocking bit as 1 here, TSK_Obj allocated here, for SDSsq31971
+        C28_allocateObject   isTskAligned, :name:$obj, TSK_OBJSIZE, ".tsk", 1
+        .if     TSK$num_hooks > 0
+            .eval       TSK$num_hooks * DATAPTRSIZE, env_size
+            C28_allocateObject  isDataPtrAligned, :name:$env,env_size, ".tsk", 0
+        .endif
+        C28_cinitHeader  CINITALIGN, isTskAligned, :name:$obj, TSK_OBJSIZE
+:name:  .set    :name:$obj +  OBJ_HDRSIZE       
+                                        ; This is where  the
+                                        ; SEM object begins
+
+:name:$kobj     .set    :name:          ; Same as :name: above
+:name:$tskobj   .set    :name:$obj      + OBJ_HDRSIZE  +  KNL_A_OBJSIZE
+
+                                
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;                  FILL  the obj header structure
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        OBJ_cinitObj :name:, OBJ_TSK, (TSK_A_OBJSIZE + (DATAPTRSIZE * TSK$num_hooks)) ; allocates 4 words
+        C28_cinitBegin  isTskAligned
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;                  FILL KNL_Obj  structure
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+        KNL_cinitObj  :name:$kobj, :name:$kobj + QUE_A_OBJSIZE, :name:$kobj + ( 2 * QUE_A_OBJSIZE ),  :priority:, :name:$stkptr + TSK_USEDSTACK, :name:$sts 
+
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;               Fill the rest of TSK_Obj structure
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        C28_cinitDataPtr        :name:$stackname  ; stack - This field
+                                                ; is only used by 
+                                                ; TSK_checkstacks to
+                                                ; verify that the
+                                                ; task stack is still
+                                                ; valid. It always
+                                                ;  points to the start
+                                                ; (lowest address) of
+                                                ; the task's stack.
+
+        C28_cinitsize_t usr_stackSize           ; stacksize represents
+                                                ; size of usr_stack
+                                                ; 
+        ;
+        ; The stackseg field is used  an indication as to where the
+        ; stack was created. ( To be used in delete later).  A
+        ; dynamically created tasks has a stackseg specified, say
+        ; DATA.
+        ; stack seg field has no utility for statically created tasks
+        ; as the stack space cannot be reclaimed. Hence tit is made
+        ; -1.
+        ;
+
+
+        C28_cinitInt    -1              
+        .if     :tskname:                       ; if task has a name
+                C28_cinitDataPtr        TSK$:name:      ; assign it
+        .else
+                C28_cinitDataPtr        0
+        .endif
+        .if     TSK$num_hooks == 0
+            C28_cinitDataPtr    :envp:                  ; environ
+        .else
+            C28_cinitDataPtr    :name:$env              ; environ
+        .endif
+        C28_cinitInt            0                       ; errno
+        C28_cinitInt            :exitflag:
+        C28_cinitEnd            isTskAligned
+
+        ;
+      ; Check if TSK obj linked list next field is correct in OBJ_TABLE
+        ;
+        OBJ_cinitBlockPatch :name:, OBJ_TSK 
+
+        .if GBL_ENABLEINST
+            .global :name:$sts$filtsummult      ; generate symbol for sum mult
+:name:$sts$filtsummult .set     :filtsummult:
+            .global :name:$sts$filtmaxmult      ; generate symbol for max mult
+:name:$sts$filtmaxmult .set     :filtmaxmult:
+
+            STS_Obj 1, :name:$sts, 0, :filter:, ":maxformat:", ":sumformat:", ":avgformat:", -1, :unittype:, -1, -1, -1, 0, 0
+        .endif
+
+        .if $symcmp(":fxn:", "_SYS_nop") = 0
+            .wmsg "Task :name: is being created to run :fxn:"
+        .endif
+
+        .if     TSK$num_hooks > 0
+            .asg        0, h$index
+
+            C28_cinitHeader     CINITALIGN, isDataPtrAligned, :name:$env, DATAPTRSIZE * TSK$num_hooks
+            ;
+            ; Create cinit entry for all HOOKS (SDSsq37326).
+            ; Previously just the KNL hook was getting cinited with
+            ; a configuration paramter.  Now all user-level hooks
+            ; get cinited to 0, so a HOOK_getenv before a HOOK_setenv
+            ; will return a known value.
+            ;
+            .loop
+                .if (h$index == HOOK$knl_index)
+                    C28_cinitDataPtr    :envp:
+                .else
+                    C28_cinitDataPtr    0
+                .endif
+
+                .eval   h$index + 1, h$index
+                .if (h$index == TSK$num_hooks)
+                    .break
+                .endif
+            .endloop
+        .endif
+
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;               CREATE USER STACK IMAGE                 ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        C28_cinitHeader  CINITALIGN, isTskusrstackAligned, :name:$stkptr, TSK_A_STACKIMAGE_SIZE
+
+        C28_cinitCodePtr _TSK_exit
+
+        .eval $symlen(":arg7:"),arglen
+        .if $symcmp(":arg7(1):","'") = 0 & $symcmp(":arg7(arglen):","'") = 0
+            .xlong      TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .xlong :arg7:
+        .endif
+
+        .eval $symlen(":arg6:"),arglen
+        .if $symcmp(":arg6(1):","'") = 0 & $symcmp(":arg6(arglen):","'") = 0
+            .xlong      TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .xlong :arg6:
+        .endif
+
+        .eval $symlen(":arg5:"),arglen
+        .if $symcmp(":arg5(1):","'") = 0 & $symcmp(":arg5(arglen):","'") = 0
+            .xlong      TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .xlong :arg5:
+        .endif
+        
+        
+        .eval $symlen(":arg4:"),arglen
+        .if $symcmp(":arg4(1):","'") = 0 & $symcmp(":arg4(arglen):","'") = 0
+            .xlong      TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .xlong :arg4:
+        .endif
+        
+        .eval $symlen(":arg3:"),arglen
+        .if $symcmp(":arg3(1):","'") = 0 & $symcmp(":arg3(arglen):","'") = 0
+            .xlong      TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .xlong :arg3:
+        .endif
+        
+        .eval $symlen(":arg2:"),arglen
+        .if $symcmp(":arg2(1):","'") = 0 & $symcmp(":arg2(arglen):","'") = 0
+                .xlong  TSK$string:TSK$strCount:
+                .eval   TSK$strCount+1, TSK$strCount
+        .else
+                 .xlong   :arg2:
+        .endif
+        
+        .eval $symlen(":arg1:"),arglen
+        .if $symcmp(":arg1(1):","'") = 0 & $symcmp(":arg1(arglen):","'") = 0
+                .xlong  TSK$string:TSK$strCount:
+                .eval   TSK$strCount+1, TSK$strCount
+        .else
+                .xlong    :arg1:
+        .endif
+
+        .eval $symlen(":arg0:"),arglen
+        .if $symcmp(":arg0(1):","'") = 0 & $symcmp(":arg0(arglen):","'") = 0
+                .xlong  TSK$string:TSK$strCount:
+                .eval   TSK$strCount+1, TSK$strCount
+        .else
+                .xlong    :arg0:
+        .endif
+
+
+        C28_cinitCodePtr :fxn:
+        C28_cinitCodePtr _KNL_exit
+        C28_cinitCodePtr KNL_glue
+        C28_cinitInt    0                       ;  xar3
+        C28_cinitInt    0                       ;  
+        C28_cinitInt    0                       ;  xar2
+        C28_cinitInt    0                       ;  
+        C28_cinitInt    0                       ;  xar1
+        C28_cinitInt    0                       ;
+    .if (STD_TMS320C2800FPU)
+        C28_cinitInt    0                       ;  r4h
+        C28_cinitInt    0                       ;  
+        C28_cinitInt    0                       ;  r5h
+        C28_cinitInt    0                       ;  
+        C28_cinitInt    0                       ;  r6h
+        C28_cinitInt    0                       ;  
+        C28_cinitInt    0                       ;  r7h
+        C28_cinitInt    0                       ;  
+    .endif
+        C28_cinitInt KNL_glue & 0xffff          ; reserve space for
+                                                ; KNL_glue
+        C28_cinitInt KNL_glue >> 16             ; reserve space for
+                                                ; KNL_glue this is
+                                                ; the RETA value
+
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Create a record to fill unused portion of user stack with
+        ; stackstamp  Format: sequence of 3 words
+        ; <count, address, fill-value>
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        .sect ".gblinit"
+
+                .word (:name:$freelen) / STD_TARGWORDMAUS       ; count
+                .xlong  :name:$freestack
+                .word 0xbeef
+
+        .endm
+
+
+;
+
+
+;
+;# ======== TSK_init ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", TSK_init$regs
+TSK_init        .macro
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; only expand if the TSK  is configured by the user
+        ; Common code across mnemonic algebriac
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+        .if (TSK$ = 1)          ; if TSK$ = 1
+                .global _TSK_init, _TSK_setup
+                        lcr _TSK_init
+                .if TSK$NUMOF != 0      ; if TSK$NUMOF !- 0
+                        lcr _TSK_setup
+                .endif                  ; endif TSK$NUMOF
+        .endif                          ; endif TSK$
+
+        .endm
+
+;# ======== TSK_startup ========
+;  Runtime initialization of the TSK module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", TSK_startup$regs
+TSK_startup     .macro
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Common code across algebriac/menmonic assembler
+        ; only expand if the TSK module is configured
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        .if (TSK$ = 1)                  ; if TSK$ = 1
+                .global _TSK_startup
+                .if TSK$NUMOF != 0
+                        lcr _TSK_startup
+                .else
+                        .emsg "There must be at least one task defined under TSK."
+                .endif                  ; endif TSK$NUMOF
+        .else
+
+        .global TSK_idle$stkptr
+
+TSK_idle$stkptr         .set 0
+
+        .endif                          ; endif TSK$
+
+        .endm
+        .endif          ; if TSK_ is not defined

@@ -1,0 +1,35 @@
+/*
+*  Copyright 2006 by Texas Instruments Incorporated.
+*
+*  All rights reserved. Property of Texas Instruments Incorporated.
+*  Restricted rights to use, duplicate or disclose this code are
+*  granted through contract.
+*
+*/
+
+Pkg.otherFiles=[
+        'build',
+        'docs',
+        'lib/Debug/edma3_drv_bios.lib',
+        'lib/Debug/edma3_drv_bios_c674.lib',
+        'lib/Debug/edma3_drv_bios_c674_i.lib',
+        'lib/Debug/edma3_drv_bios_i.lib',
+        'lib/Release/edma3_drv_bios_i.lib',
+        'lib/Release/edma3_drv_bios_c674.lib',
+        'lib/Release/edma3_drv_bios_c674_i.lib',
+        'lib/Release/edma3_drv_bios.lib',
+        'src',
+        'edma3_drv.h',
+        'package.bld',
+        'package.xs',
+];
+
+
+
+
+
+
+
+
+
+

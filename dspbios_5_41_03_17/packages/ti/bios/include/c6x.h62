@@ -1,0 +1,1313 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== c6x.h62 ========
+;  Assembly language c6x macros
+;
+;
+        
+        .include std.h62
+
+        .if ($isdefed("C6X_") = 0)      ; prevent multiple includes
+C6X_    .set    1
+
+;
+; Common for all 6x targets
+;
+C6X_ramr        .set    0
+C6X_rcsr        .set    1
+C6X_rier        .set    2
+C6X_rist        .set    3
+C6X_rirp        .set    4
+C6X_rnrp        .set    5
+C6X_ritsr       .set    6
+C6X_rssr        .set    7
+C6X_rilc        .set    8
+C6X_rrilc       .set    9
+C6X_rgplya      .set    10      
+C6X_rgplyb      .set    11      
+
+C6X_AMR         .set    1 << C6X_ramr   ; Addressing mode register
+C6X_CSR         .set    1 << C6X_rcsr   ; Control status register
+C6X_IER         .set    1 << C6X_rier   ; Interrupt enable register
+C6X_IST         .set    1 << C6X_rist   ; Interrupt service table pointer
+C6X_IRP         .set    1 << C6X_rirp   ; Interrupt return pointer
+C6X_NRP         .set    1 << C6X_rnrp   ; Non-maskable int. return pointer
+
+;
+; Interrupt Enable Register (and Interrupt Flag Register) bit definitions
+;
+C6X_NMIE        .set    1 << 1          ; Non-maskable Interrupt Enable bit
+C6X_IE2         .set    1 << 2          ; Reserved Interrupt 2 Enable
+C6X_IE3         .set    1 << 3          ; Reserved Interrupt 3 Enable
+C6X_IE4         .set    1 << 4          ; Interrupt Enable 4
+C6X_IE5         .set    1 << 5          ; Interrupt Enable 5
+C6X_IE6         .set    1 << 6          ; Interrupt Enable 6
+C6X_IE7         .set    1 << 7          ; Interrupt Enable 7
+C6X_IE8         .set    1 << 8          ; Interrupt Enable 8
+C6X_IE9         .set    1 << 9          ; Interrupt Enable 9
+C6X_IE10        .set    1 << 10         ; Interrupt Enable 10
+C6X_IE11        .set    1 << 11         ; Interrupt Enable 11
+C6X_IE12        .set    1 << 12         ; Interrupt Enable 12
+C6X_IE13        .set    1 << 13         ; Interrupt Enable 13
+C6X_IE14        .set    1 << 14         ; Interrupt Enable 14
+C6X_IE15        .set    1 << 15         ; Interrupt Enable 15
+
+;
+; Register bitmap position definitions for 6x used below
+;
+C6X_ra0     .set    0
+C6X_ra1     .set    1
+C6X_ra2     .set    2
+C6X_ra3     .set    3
+C6X_ra4     .set    4
+C6X_ra5     .set    5
+C6X_ra6     .set    6
+C6X_ra7     .set    7
+C6X_ra8     .set    8
+C6X_ra9     .set    9
+C6X_ra10    .set    10
+C6X_ra11    .set    11
+C6X_ra12    .set    12
+C6X_ra13    .set    13
+C6X_ra14    .set    14
+C6X_ra15    .set    15
+C6X_ra16    .set    16
+C6X_ra17    .set    17
+C6X_ra18    .set    18
+C6X_ra19    .set    19
+C6X_ra20    .set    20
+C6X_ra21    .set    21
+C6X_ra22    .set    22
+C6X_ra23    .set    23
+C6X_ra24    .set    24
+C6X_ra25    .set    25
+C6X_ra26    .set    26
+C6X_ra27    .set    27
+C6X_ra28    .set    28
+C6X_ra29    .set    29
+C6X_ra30    .set    30
+C6X_ra31    .set    31
+
+C6X_rb0     .set    0
+C6X_rb1     .set    1
+C6X_rb2     .set    2
+C6X_rb3     .set    3
+C6X_rb4     .set    4
+C6X_rb5     .set    5
+C6X_rb6     .set    6
+C6X_rb7     .set    7
+C6X_rb8     .set    8
+C6X_rb9     .set    9
+C6X_rb10    .set    10
+C6X_rb11    .set    11
+C6X_rb12    .set    12
+C6X_rb13    .set    13
+C6X_rb14    .set    14
+C6X_rb15    .set    15
+C6X_rb16    .set    16
+C6X_rb17    .set    17
+C6X_rb18    .set    18
+C6X_rb19    .set    19
+C6X_rb20    .set    20
+C6X_rb21    .set    21
+C6X_rb22    .set    22
+C6X_rb23    .set    23
+C6X_rb24    .set    24
+C6X_rb25    .set    25
+C6X_rb26    .set    26
+C6X_rb27    .set    27
+C6X_rb28    .set    28
+C6X_rb29    .set    29
+C6X_rb30    .set    30
+C6X_rb31    .set    31
+
+;
+; Definitions for C6X_xTEMPS
+;
+C6X_A0  .set    1 << C6X_ra0
+C6X_A1  .set    1 << C6X_ra1
+C6X_A2  .set    1 << C6X_ra2
+C6X_A3  .set    1 << C6X_ra3
+C6X_A4  .set    1 << C6X_ra4
+C6X_A5  .set    1 << C6X_ra5
+C6X_A6  .set    1 << C6X_ra6
+C6X_A7  .set    1 << C6X_ra7
+C6X_A8  .set    1 << C6X_ra8
+C6X_A9  .set    1 << C6X_ra9
+C6X_A10 .set    1 << C6X_ra10
+C6X_A11 .set    1 << C6X_ra11
+C6X_A12 .set    1 << C6X_ra12
+C6X_A13 .set    1 << C6X_ra13
+C6X_A14 .set    1 << C6X_ra14
+C6X_A15 .set    1 << C6X_ra15
+C6X_A16 .set    1 << C6X_ra16
+C6X_A17 .set    1 << C6X_ra17
+C6X_A18 .set    1 << C6X_ra18
+C6X_A19 .set    1 << C6X_ra19
+C6X_A20 .set    1 << C6X_ra20
+C6X_A21 .set    1 << C6X_ra21
+C6X_A22 .set    1 << C6X_ra22
+C6X_A23 .set    1 << C6X_ra23
+C6X_A24 .set    1 << C6X_ra24
+C6X_A25 .set    1 << C6X_ra25
+C6X_A26 .set    1 << C6X_ra26
+C6X_A27 .set    1 << C6X_ra27
+C6X_A28 .set    1 << C6X_ra28
+C6X_A29 .set    1 << C6X_ra29
+C6X_A30 .set    1 << C6X_ra30
+C6X_A31 .set    1 << C6X_ra31
+
+C6X_B0  .set    1 << C6X_rb0
+C6X_B1  .set    1 << C6X_rb1
+C6X_B2  .set    1 << C6X_rb2
+C6X_B3  .set    1 << C6X_rb3
+C6X_B4  .set    1 << C6X_rb4
+C6X_B5  .set    1 << C6X_rb5
+C6X_B6  .set    1 << C6X_rb6
+C6X_B7  .set    1 << C6X_rb7
+C6X_B8  .set    1 << C6X_rb8
+C6X_B9  .set    1 << C6X_rb9
+C6X_B10 .set    1 << C6X_rb10
+C6X_B11 .set    1 << C6X_rb11
+C6X_B12 .set    1 << C6X_rb12
+C6X_B13 .set    1 << C6X_rb13
+C6X_B14 .set    1 << C6X_rb14
+C6X_B15 .set    1 << C6X_rb15
+C6X_B16 .set    1 << C6X_rb16
+C6X_B17 .set    1 << C6X_rb17
+C6X_B18 .set    1 << C6X_rb18
+C6X_B19 .set    1 << C6X_rb19
+C6X_B20 .set    1 << C6X_rb20
+C6X_B21 .set    1 << C6X_rb21
+C6X_B22 .set    1 << C6X_rb22
+C6X_B23 .set    1 << C6X_rb23
+C6X_B24 .set    1 << C6X_rb24
+C6X_B25 .set    1 << C6X_rb25
+C6X_B26 .set    1 << C6X_rb26
+C6X_B27 .set    1 << C6X_rb27
+C6X_B28 .set    1 << C6X_rb28
+C6X_B29 .set    1 << C6X_rb29
+C6X_B30 .set    1 << C6X_rb30
+C6X_B31 .set    1 << C6X_rb31
+
+
+GIE     .set    0x0001  ; Global Interrupt Enable bit in CSR
+SAT     .set    0x0200  ; SAT bit in CSR
+
+        .asg    a15, FP
+        .asg    b14, DP
+        .asg    b15, SP
+        
+        .if STD_TMS320C6400PLUS
+;
+; Symbol and constant definitions
+;
+C6X_TSR_GIE     .set    0x0001  ; Global Interrupt Enable bit in TSR
+C6X_TSR_XEN     .set    0x0008  ; eXternal exception ENable bit in TSR
+
+;
+; Values used for CCMASK in HWI_enter/HWI_exit.
+;
+C6X_L1PCC       .set    0x01840024      ; Program Cache Control Address
+C6X_L1DCC       .set    0x01840044      ; Data Cache Control Address
+C6X_L2CFG       .set    0x01840000      ; L2 Cache Control Address
+
+C6X_L1PCCFIELD  .set    0x00000007      ; L1 Program Cache Control field mask
+C6X_L1DCCFIELD  .set    0x00000007      ; L1 Data Cache Control field mask
+C6X_L2CCFIELD   .set    0x00000018      ; L2 Cache Control field mask
+
+C6X_ITSR        .set    1 << C6X_ritsr  ; Interrupt task state register
+C6X_SSR         .set    1 << C6X_rssr   ; Saturation status register
+C6X_ILC         .set    1 << C6X_rilc   ; Inner loop SPL buffer count
+C6X_RILC        .set    1 << C6X_rrilc  ; Reload inner loop SPL buffer count
+C6X_GPLYA       .set    1 << C6X_rgplya ; GMPY polynomial for A side
+C6X_GPLYB       .set    1 << C6X_rgplyb ; GMPY polynomial for B side
+
+;
+; Masks for ISR registers saved and restored internally 
+;
+C6X_ISRA .set   C6X_A0 | C6X_A1 | C6X_A2 | C6X_A3
+C6X_ISRB .set   C6X_B0 | C6X_B1 | C6X_B2 | C6X_B3 | C6X_B14
+C6X_ISRC  .set  C6X_AMR | C6X_IRP | C6X_IER | C6X_ITSR | C6X_SSR | C6X_ILC | C6X_RILC | C6X_GPLYA | C6X_GPLYB
+
+;
+; Register combinations 
+;
+C6X_ATEMPSLO    .set    C6X_A0 | C6X_A1 | C6X_A2 | C6X_A3 | C6X_A4 
+C6X_ATEMPSHI    .set    C6X_A5 | C6X_A6 | C6X_A7 | C6X_A8 | C6X_A9
+C6X_ATEMPSUP1   .set    C6X_A16 | C6X_A17 | C6X_A18 | C6X_A19 | C6X_A20 
+C6X_ATEMPSUP2   .set    C6X_A21 | C6X_A22 | C6X_A23 | C6X_A24 | C6X_A25
+C6X_ATEMPSUP3   .set    C6X_A26 | C6X_A27 | C6X_A28 | C6X_A29 | C6X_A30 |C6X_A31
+C6X_ATEMPSUP    .set    C6X_ATEMPSUP1 | C6X_ATEMPSUP2 | C6X_ATEMPSUP3
+C6X_ATEMPS      .set    C6X_ATEMPSLO | C6X_ATEMPSHI | C6X_ATEMPSUP
+
+C6X_BTEMPSLO    .set    C6X_B0 | C6X_B1 | C6X_B2 | C6X_B3 | C6X_B4
+C6X_BTEMPSHI    .set    C6X_B5 | C6X_B6 | C6X_B7 | C6X_B8 | C6X_B9
+C6X_BTEMPSUP1   .set    C6X_B16 | C6X_B17 | C6X_B18 | C6X_B19 | C6X_B20 
+C6X_BTEMPSUP2   .set    C6X_B21 | C6X_B22 | C6X_B23 | C6X_B24 | C6X_B25
+C6X_BTEMPSUP3   .set    C6X_B26 | C6X_B27 | C6X_B28 | C6X_B29 | C6X_B30 |C6X_B31
+C6X_BTEMPSUP    .set    C6X_BTEMPSUP1 | C6X_BTEMPSUP2 | C6X_BTEMPSUP3
+C6X_BTEMPS      .set    C6X_BTEMPSLO | C6X_BTEMPSHI | C6X_BTEMPSUP
+
+C6X_CTEMPS      .set    C6X_AMR
+
+        .elseif STD_TMS320C6700PLUS
+;
+; Symbol and constant definitions
+; Values used for CCMASK in HWI_enter/HWI_exit.
+;
+C6X_PCC_DISABLE .set    0x0000  ; Program Cache Control code
+C6X_PCC_ENABLE  .set    0x0040  ; Program Cache Control code
+C6X_PCC_FREEZE  .set    0x0060  ; Program Cache Control code
+C6X_PCC_BYPASS  .set    0x0080  ; Program Cache Control code
+
+C6X_CCFIELDS    .set    0x00fc  ; Cache Control field mask
+
+;
+; Masks for ISR registers saved and restored internally 
+;
+C6X_ISRA .set   C6X_A0 | C6X_A1 | C6X_A2 | C6X_A3
+C6X_ISRB .set   C6X_B0 | C6X_B1 | C6X_B2 | C6X_B3 | C6X_B14
+C6X_ISRC  .set  C6X_AMR | C6X_IRP | C6X_IER
+
+;
+; Register combinations 
+;
+C6X_ATEMPSLO    .set    C6X_A0 | C6X_A1 | C6X_A2 | C6X_A3 | C6X_A4 
+C6X_ATEMPSHI    .set    C6X_A5 | C6X_A6 | C6X_A7 | C6X_A8 | C6X_A9
+C6X_ATEMPSUP1   .set    C6X_A16 | C6X_A17 | C6X_A18 | C6X_A19 | C6X_A20 
+C6X_ATEMPSUP2   .set    C6X_A21 | C6X_A22 | C6X_A23 | C6X_A24 | C6X_A25
+C6X_ATEMPSUP3   .set    C6X_A26 | C6X_A27 | C6X_A28 | C6X_A29 | C6X_A30 |C6X_A31
+C6X_ATEMPSUP    .set    C6X_ATEMPSUP1 | C6X_ATEMPSUP2 | C6X_ATEMPSUP3
+C6X_ATEMPS      .set    C6X_ATEMPSLO | C6X_ATEMPSHI | C6X_ATEMPSUP
+
+C6X_BTEMPSLO    .set    C6X_B0 | C6X_B1 | C6X_B2 | C6X_B3 | C6X_B4
+C6X_BTEMPSHI    .set    C6X_B5 | C6X_B6 | C6X_B7 | C6X_B8 | C6X_B9
+C6X_BTEMPSUP1   .set    C6X_B16 | C6X_B17 | C6X_B18 | C6X_B19 | C6X_B20 
+C6X_BTEMPSUP2   .set    C6X_B21 | C6X_B22 | C6X_B23 | C6X_B24 | C6X_B25
+C6X_BTEMPSUP3   .set    C6X_B26 | C6X_B27 | C6X_B28 | C6X_B29 | C6X_B30 |C6X_B31
+C6X_BTEMPSUP    .set    C6X_BTEMPSUP1 | C6X_BTEMPSUP2 | C6X_BTEMPSUP3
+C6X_BTEMPS      .set    C6X_BTEMPSLO | C6X_BTEMPSHI | C6X_BTEMPSUP
+
+C6X_CTEMPS      .set    C6X_AMR
+
+        .elseif (.TMS320C6200 | .TMS320C6700)
+;
+; CSR bits
+;
+C6X_PCC_DISABLE .set    0x0000  ; Program Cache Control code
+C6X_PCC_ENABLE  .set    0x0040  ; Program Cache Control code
+C6X_PCC_FREEZE  .set    0x0060  ; Program Cache Control code
+C6X_PCC_BYPASS  .set    0x0080  ; Program Cache Control code
+
+C6X_CCFIELDS    .set    0x00fc  ; Cache Control field mask
+
+;
+; Masks for ISR registers saved and restored internally 
+;
+C6X_ISRA .set   C6X_A0 | C6X_A1 | C6X_A2 | C6X_A3
+C6X_ISRB .set   C6X_B0 | C6X_B1 | C6X_B2 | C6X_B3 | C6X_B14
+
+C6X_ISRC  .set  C6X_AMR | C6X_IRP | C6X_IER
+
+;
+; Register combinations 
+;
+C6X_ATEMPSLO    .set    C6X_A0 | C6X_A1 | C6X_A2 | C6X_A3 | C6X_A4 
+C6X_ATEMPSHI    .set    C6X_A5 | C6X_A6 | C6X_A7 | C6X_A8 | C6X_A9
+C6X_ATEMPS      .set    C6X_ATEMPSLO | C6X_ATEMPSHI
+
+C6X_BTEMPSLO    .set    C6X_B0 | C6X_B1 | C6X_B2 | C6X_B3 | C6X_B4
+C6X_BTEMPSHI    .set    C6X_B5 | C6X_B6 | C6X_B7 | C6X_B8 | C6X_B9
+C6X_BTEMPS      .set    C6X_BTEMPSLO | C6X_BTEMPSHI
+
+C6X_CTEMPS      .set    C6X_AMR
+
+        .elseif .TMS320C6400
+;
+; Symbol and constant definitions
+; Values used for CCMASK in HWI_enter/HWI_exit.
+;
+C6X_PCC_DISABLE .set    0x0000  ; Program Cache Control code
+C6X_PCC_ENABLE  .set    0x0040  ; Program Cache Control code
+C6X_PCC_FREEZE  .set    0x0060  ; Program Cache Control code
+C6X_PCC_BYPASS  .set    0x0080  ; Program Cache Control code
+
+C6X_CCFIELDS    .set    0x00fc  ; Cache Control field mask
+
+;
+; Masks for ISR registers saved and restored internally 
+;
+C6X_ISRA .set   C6X_A0 | C6X_A1 | C6X_A2 | C6X_A3
+C6X_ISRB .set   C6X_B0 | C6X_B1 | C6X_B2 | C6X_B3 | C6X_B14
+C6X_ISRC .set   C6X_AMR | C6X_IRP | C6X_IER
+
+;
+; Register combinations 
+;
+C6X_ATEMPSLO    .set    C6X_A0 | C6X_A1 | C6X_A2 | C6X_A3 | C6X_A4 
+C6X_ATEMPSHI    .set    C6X_A5 | C6X_A6 | C6X_A7 | C6X_A8 | C6X_A9
+C6X_ATEMPSUP1   .set    C6X_A16 | C6X_A17 | C6X_A18 | C6X_A19 | C6X_A20 
+C6X_ATEMPSUP2   .set    C6X_A21 | C6X_A22 | C6X_A23 | C6X_A24 | C6X_A25
+C6X_ATEMPSUP3   .set    C6X_A26 | C6X_A27 | C6X_A28 | C6X_A29 | C6X_A30 |C6X_A31
+C6X_ATEMPSUP    .set    C6X_ATEMPSUP1 | C6X_ATEMPSUP2 | C6X_ATEMPSUP3
+C6X_ATEMPS      .set    C6X_ATEMPSLO | C6X_ATEMPSHI | C6X_ATEMPSUP
+
+C6X_BTEMPSLO    .set    C6X_B0 | C6X_B1 | C6X_B2 | C6X_B3 | C6X_B4
+C6X_BTEMPSHI    .set    C6X_B5 | C6X_B6 | C6X_B7 | C6X_B8 | C6X_B9
+C6X_BTEMPSUP1   .set    C6X_B16 | C6X_B17 | C6X_B18 | C6X_B19 | C6X_B20 
+C6X_BTEMPSUP2   .set    C6X_B21 | C6X_B22 | C6X_B23 | C6X_B24 | C6X_B25
+C6X_BTEMPSUP3   .set    C6X_B26 | C6X_B27 | C6X_B28 | C6X_B29 | C6X_B30 |C6X_B31
+C6X_BTEMPSUP    .set    C6X_BTEMPSUP1 | C6X_BTEMPSUP2 | C6X_BTEMPSUP3
+C6X_BTEMPS      .set    C6X_BTEMPSLO | C6X_BTEMPSHI | C6X_BTEMPSUP
+
+C6X_CTEMPS      .set    C6X_AMR
+
+        .endif
+
+;
+;# ======== C6X_disableIER ========
+;
+;  Disable interrupts using mask
+;  IEMASK       - Interrupt Enable mask
+;  REG0, REG1   - temporary registers used to set IER
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+C6X_disableIER  .macro  IEMASK, REG0, REG1
+        .if ($symlen(":IEMASK:") == 0)
+            .emsg  "C6X_disableIER: IEMASK, REG0, and REG1 operands missing."
+        .elseif ($symlen(":REG0:") == 0)
+            .emsg  "C6X_disableIER: REG0 and REG1 operands missing."
+        .elseif ($symlen(":REG1:") == 0)
+            .emsg  "C6X_disableIER: REG1 operand missing."
+        .else
+            b       disableIER_label?           ; Protect IER from interrupt
+||          mvkl    :IEMASK:, :REG1:
+            mvc     ier, :REG0:
+            mvkh    :IEMASK:, :REG1:
+            xor     -1, :REG1:, :REG1:
+            and     :REG1:, :REG0:, :REG0:
+            mvc     :REG0:, ier         
+disableIER_label?:
+        .endif
+        .endm
+
+;
+;# ======== C6X_enableIER ========
+;
+;  Enable interrupts using mask
+;  IEMASK       - Interrupt Enable mask
+;  REG0, REG1   - temporary registers used to set IER
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+C6X_enableIER   .macro  IEMASK, REG0, REG1
+        .if ($symlen(":IEMASK:") == 0)
+            .emsg  "C6X_enableIER: IEMASK, REG0, and REG1 operands missing."
+        .elseif ($symlen(":REG0:") == 0)
+            .emsg  "C6X_enableIER: REG0 and REG1 operands missing."
+        .elseif ($symlen(":REG1:") == 0)
+            .emsg  "C6X_enableIER: REG1 operand missing."
+        .else
+            b       enableIER_label?            ; Protect IER from interrupt
+            mvc     ier, :REG0:
+            mvkl    :IEMASK:, :REG1:
+            mvkh    :IEMASK:, :REG1:
+            or      :REG1:, :REG0:, :REG0:
+            mvc     :REG0:, ier         
+enableIER_label?:
+        .endif
+        .endm
+
+;
+;# ======== FIRST_BIT_NUM ========
+;  Returns the bit number of the lowest 1 bit in 32-bit register.
+;  Returns 32 if none set.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+FIRST_BIT_NUM   .macro  MASK, BITNUM
+        .asg    0, BITNUM
+        .eval   MASK, regmask
+        .loop   32
+            .if (regmask & 1)
+                .break
+            .endif
+            .eval       regmask >> 1, regmask
+            .eval       BITNUM + 1, BITNUM
+        .endloop
+        .endm
+
+;
+;# ======== ZERO_BIT_N ========
+;  Zeroes out the bitn of the mask.
+;  This is for working around a bug in taking the compliment of
+;  0x80000000;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+ZERO_BIT_N      .macro  mask, bitn
+        .if (mask == 0x80000000)
+            .eval 0, mask
+        .else
+            .eval mask & ~(1 << bitn), mask
+        .endif
+        .endm
+
+;
+;# ======== NUM_BITS ========
+;  Returns the number of 1 bits in a 32-bit register.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+NUM_BITS        .macro  MASK, BITCOUNT
+        .asg    0, BITCOUNT
+        .eval   MASK, regmask
+        .loop   32
+            .if (regmask & 1)
+                .eval   BITCOUNT + 1, BITCOUNT
+            .endif
+            .eval       regmask >> 1, regmask
+        .endloop
+        .endm
+
+;
+;# ======== BIT_NUM_2_CREG ========
+;  Maps the control register bitmask assignments to names.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+BIT_NUM_2_CREG  .macro  BITNUM, CREG
+        .if ((1 << BITNUM) = C6X_AMR)
+            .asg        amr, CREG
+        .elseif ((1 << BITNUM) = C6X_CSR)
+            .asg        csr, CREG
+        .elseif ((1 << BITNUM) = C6X_IER)
+            .asg        ier, CREG
+        .elseif ((1 << BITNUM) = C6X_IST)
+            .asg        istp, CREG
+        .elseif ((1 << BITNUM) = C6X_IRP)
+            .asg        irp, CREG
+        .elseif ((1 << BITNUM) = C6X_NRP)
+            .asg        nrp, CREG
+        .else
+            .emsg       "Bad bit in C6X_CMASK"
+            .break
+        .endif
+        .endm
+
+;
+;# ======== C6X_restore ========
+;
+;  This macro conditionally restores registers from the stack, depending
+;  on AMASK, BMASK and CMASK. Typically, use of this macro balances use of the 
+;  C6X_save macro with the same mask values.
+;
+;  C6X_restore AMASK, BMASK, CMASK
+;
+;  AMASK - Mask of A registers to restore
+;  BMASK - Mask of B registers to restore
+;  CMASK - Mask of control registers to restore
+;
+; Currently, this macro is largely complicated by the fact that you
+; can't have an assembly construct like the following:
+;       .if     (bitcount > 1)
+; ||    mv      A4, B0
+;       .endif
+; The assembler complains about an illegal mnemonic.  Without the
+; ability to generate code as above, many places in this macro are
+; greatly more complicated since they must now look ahead.
+;
+; We need to maintain 8-byte stack alignment.
+; The method chosen is to count the number of bits in the masks,
+; thereby giving you the number of registers to restore.  This is
+; then rounded up to the nearest even number, and the SP is
+; adjusted once at the end, with all previous "loads" being
+; offset into that frame.  Since the pre-processor is doing all
+; the counting, this turns out to be equally efficient to the
+; C6x method involving "pops".
+;
+; Uses two lowest numbered A registers in AMASK for an A-side stack
+; frame pointer and a temporary A register.  If no A registers specified
+; in AMASK, registers A0 & A1 are used.  If only register A0 is specified,
+; register A1 is also used.  If a register other than A0 is specified,
+; register A0 and that one are used.
+;
+; For the B-side, the lowest numbered B register in BMASK is used as a
+; temporary B register, and if no B register is specified, register B0
+; is used.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+C6X_restore .macro AMASK, BMASK, CMASK, SPFLAG
+        .sslist
+        .asg    0, mask
+        .asg    0, bitn_a
+        .asg    0, bitn_b
+        .asg    -1, bitn_c
+        .asg    0, bitn_0
+        .asg    0, bitn_1
+        .asg    0, bitn_next
+        .asg    0, bitcount
+        .asg    0, a_bitcount
+        .asg    0, b_bitcount
+        .asg    0, c_bitcount
+        .asg    0, creg0
+        .asg    0, creg1
+        .asg    -1, cr0_offset
+        .asg    -1, cr1_offset
+        .asg    0, nop_count
+
+        .eval   AMASK, amask
+        .eval   BMASK, bmask
+        .eval   bmask & ~(C6X_B15), bmask               ; don't restore B15
+        .eval   CMASK, cmask
+
+        .eval   0, C6X_spoffset
+
+        ;
+        ; .mexit was causing errors since the rest of the macro
+        ; was getting expanded even though it wasn't used.  Instead
+        ; of .mexit, turn the 'if' test around to control inclusion
+        ; of the rest of the macro.
+        ;
+        .if     !((amask = 0) & (bmask = 0) & (cmask = 0))
+
+        ;
+        ; Count 1 bits in masks
+        ;
+        NUM_BITS        amask, a_bitcount
+        NUM_BITS        bmask, b_bitcount
+        NUM_BITS        cmask, c_bitcount
+        
+        ; make sure at least two A registers are specified
+        .if (a_bitcount = 0)
+            .eval       C6X_A0 | C6X_A1, amask
+            .eval       a_bitcount + 2, a_bitcount
+        .elseif (a_bitcount = 1)
+            .if (amask & C6X_A0)
+                .eval   amask | C6X_A1, amask
+            .eval       a_bitcount + 1, a_bitcount
+            .else
+                .eval   amask | C6X_A0, amask
+            .eval       a_bitcount + 1, a_bitcount
+            .endif
+        .endif
+
+        ; make sure at least one B register is specified
+        .if (bmask = 0)
+            .eval       (C6X_B0) , bmask
+            .eval       b_bitcount + 1, b_bitcount
+        .endif
+
+        .eval   a_bitcount + b_bitcount + c_bitcount, ones
+        .eval   ones + 1, tmp_ones                      ; align to even
+        .eval   tmp_ones & 0xfffffffe, even_ones        ;   number of words
+        .eval   even_ones * 4, words
+        .eval   even_ones / 2, half             ; split the frames in half
+        .eval   half, boffset                   ; use as B frame Offset
+        .eval   boffset - 1, aoffset            ; use as A frame Offset
+                                                ; -1 for SPA
+
+        ; assign A-side stack frame pointer and temp A register
+        FIRST_BIT_NUM   amask, bitn_a
+        ZERO_BIT_N      amask, bitn_a
+        .asg    a:bitn_a:, SPA
+        FIRST_BIT_NUM   amask, bitn_a
+        ZERO_BIT_N      amask, bitn_a
+        .asg    a:bitn_a:, TMPA
+        .eval   a_bitcount - 2, a_bitcount
+
+        ; assign B-side stack frame pointer and temp B register
+        FIRST_BIT_NUM   bmask, bitn_b
+        ZERO_BIT_N      bmask, bitn_b
+        .asg    b:bitn_b:, TMPB
+        .asg    SP, SPB
+        .eval   b_bitcount - 1, b_bitcount
+
+        ; C6X_save saves the B temp register before the A temp register
+        .eval   boffset, tmpb_offset
+        .eval   boffset -1, boffset
+        .eval   aoffset, tmpa_offset
+        .eval   aoffset -1, aoffset
+
+        mv      SP, SPA                                         ; CODE
+        addaw   SPA, half, SPA          ; move SP into SPA then add half to SPA
+
+        ;
+        ; Try to set up some advanced loads for control registers
+        ; to reduce load latency.
+        ;
+        ; The number of NOP's needed can be calculated with the
+        ; formula below.  NOP's are only needed if we don't have
+        ; additional have enough A or B registers to fill the delay
+        ; slots.
+        ;
+        .eval   (a_bitcount + b_bitcount + 1) / 2, bitcount
+        .eval   4 - bitcount, nop_count
+        .if (c_bitcount > 1)
+            .if (a_bitcount + 1 < b_bitcount)
+                ;
+                ; In this case there are more B-regs than A-regs.
+                ; Some B-regs may end up on A side. We compensate for that
+                ; by taking (b_count - a_count) / 2 and adding that to the
+                ; B-offset and subtracting it from the A-offset.
+                ;
+                .eval   boffset - b_bitcount + ((b_bitcount - a_bitcount) / 2), cr0_offset
+                .eval   aoffset - a_bitcount - ((b_bitcount - a_bitcount) / 2), cr1_offset
+            .elseif (a_bitcount + 1 = b_bitcount)
+                ;
+                ; In this case the boffset calculation and aoffset
+                ; calculation are correct as they are.
+                ;
+                .eval   boffset - b_bitcount, cr0_offset
+                .eval   aoffset - a_bitcount, cr1_offset
+            .else
+                ;
+                ; In this case there are more A-regs than B-regs.
+                ; Some A-regs may end up on B side. We compensate for that
+                ; by taking (a_count - b_count + 1) / 2 and subtracting that
+                ; from the B-offset and adding it to the A-offset.
+                ;
+                .eval boffset - b_bitcount - ((a_bitcount - b_bitcount + 1) / 2), cr0_offset
+                .eval aoffset - a_bitcount + ((a_bitcount - b_bitcount + 1) / 2), cr1_offset
+            .endif
+            ldw *+SPB[cr0_offset], TMPA         ; CODE
+||          ldw *+SPA[cr1_offset], TMPB         ; CODE
+        .elseif (c_bitcount = 1)
+            .if (a_bitcount + 1 < b_bitcount)
+                ;
+                ; In this case there are more B-regs than A-regs.
+                ; Some B-regs may end up on A side. We compensate for that
+                ; by taking (b_count - a_count) / 2 and adding that to the
+                ; B-offset
+                ;
+                .eval   boffset - b_bitcount + ((b_bitcount - a_bitcount) / 2), cr0_offset
+            .elseif (a_bitcount + 1  = b_bitcount)
+                ;
+                ; in this case the boffset calculation is correct
+                ;
+                .eval   boffset - b_bitcount, cr0_offset
+            .else
+                ;
+                ; In this case there are more A-regs than B-regs.
+                ; Some A-regs may end up on B side. We compensate for that
+                ; by taking (a_count - b_count + 1) / 2 and subtracting that
+                ; from the B-offset.
+                ;
+                .eval boffset - b_bitcount - ((a_bitcount - b_bitcount + 1) / 2), cr0_offset
+            .endif
+            .eval 4 - bitcount, nop_count
+            ldw *+SPB[cr0_offset], TMPB                         ; CODE
+        .endif
+
+        ;
+        ; This loop handles when both A and B registers need restoring
+        ;
+        .loop
+            .if (a_bitcount > 0) & (b_bitcount > 0)
+                FIRST_BIT_NUM   amask, bitn_a
+                ZERO_BIT_N      amask, bitn_a
+                FIRST_BIT_NUM   bmask, bitn_b
+                ZERO_BIT_N      bmask, bitn_b
+
+                ldw     *+SPB[boffset], b:bitn_b:               ; CODE
+||              ldw     *+SPA[aoffset], a:bitn_a:               ; CODE
+
+                .eval   boffset - 1, boffset
+                .eval   aoffset - 1, aoffset
+                .eval   a_bitcount - 1, a_bitcount
+                .eval   b_bitcount - 1, b_bitcount
+            .else
+                .break
+            .endif
+        .endloop
+
+        .if (a_bitcount > 0)
+            .asg        amask, mask
+            .asg        A, reg
+        .elseif (b_bitcount > 0)
+            .asg        bmask, mask
+            .asg        B, reg
+        .endif
+
+        ;
+        ; we enter this loop when there are only registers from either
+        ; A or B remaining (but not both).
+        ;
+        NUM_BITS        mask, bitcount
+        .loop
+            .if (bitcount > 0)
+                FIRST_BIT_NUM   mask, bitn_next
+                ZERO_BIT_N      mask, bitn_next
+                .eval   bitcount - 1, bitcount
+
+                .if (aoffset >= boffset)
+                    ldw *+SP[aoffset+half], :reg::bitn_next:    ; CODE
+                    .eval       aoffset - 1, aoffset
+                .else
+                    ldw *+SP[boffset], :reg::bitn_next:         ; CODE
+                    .eval       boffset - 1, boffset
+                .endif
+            .else
+                .break
+            .endif
+        .endloop
+
+        ;
+        ; Restore the control registers
+        ;
+        .if (cr0_offset != -1)
+            FIRST_BIT_NUM       cmask, bitn_0
+            ZERO_BIT_N          cmask, bitn_0
+            BIT_NUM_2_CREG      bitn_0, creg0
+
+            .if (nop_count > 0)
+                nop     :nop_count:                             ; CODE
+
+            .endif
+            .if (cr1_offset = -1)
+
+                mvc     TMPB, creg0                             ; CODE
+
+                .eval   c_bitcount - 1, c_bitcount
+
+                ;
+                ; In this case, we always place register in B-side
+                ;
+                .eval   boffset - 1, boffset
+            .else
+                ; already set up first register immediately above
+                FIRST_BIT_NUM   cmask, bitn_1
+                ZERO_BIT_N      cmask, bitn_1
+                BIT_NUM_2_CREG  bitn_1, creg1
+
+                mvc     TMPB, creg0                             ; CODE
+||              mv      TMPA, TMPB                              ; CODE
+                mvc     TMPB, creg1                             ; CODE
+
+                .eval   c_bitcount - 2, c_bitcount
+                .eval   aoffset - 1, aoffset
+                .eval   boffset - 1, boffset
+            .endif
+        .endif
+
+        .loop
+            .if (c_bitcount > 1)
+                FIRST_BIT_NUM   cmask, bitn_0
+                ZERO_BIT_N      cmask, bitn_0
+                BIT_NUM_2_CREG  bitn_0, creg0
+                FIRST_BIT_NUM   cmask, bitn_1
+                ZERO_BIT_N      cmask, bitn_1
+                BIT_NUM_2_CREG  bitn_1, creg1
+                .eval   c_bitcount - 2, c_bitcount
+
+                ldw     *+SPB[boffset], TMPA            ; CODE
+||              ldw     *+SPA[aoffset], TMPB            ; CODE
+                nop     4                               ; CODE
+                mvc     TMPB, creg0                     ; CODE
+||              mv      TMPA, TMPB                      ; CODE
+                mvc     TMPB, creg1                     ; CODE
+
+                .eval   aoffset - 1, aoffset
+                .eval   boffset - 1, boffset
+            .elseif     (c_bitcount = 1)
+                FIRST_BIT_NUM   cmask, bitn_c
+                ZERO_BIT_N      cmask, bitn_c
+                BIT_NUM_2_CREG  bitn_c, creg0
+                .eval   c_bitcount - 1, c_bitcount
+
+                ldw     *+SPB[boffset], TMPB            ; CODE
+                .eval   boffset - 1, boffset
+                nop     4                               ; CODE
+                mvc     TMPB, creg0                     ; CODE
+            .else
+                .break
+            .endif
+        .endloop
+
+        ldw     *+SPA[tmpa_offset], TMPA                ; CODE
+||      ldw     *+SPB[tmpb_offset], TMPB                ; CODE
+
+        .if ($symcmp(SPFLAG, "NOSP") == 0) 
+            ldw *+SP[even_ones], SPA                    ; CODE
+            .eval       even_ones, C6X_spoffset 
+        .else
+            ldw *+SP[even_ones], SPA                    ; CODE
+||          addk words, SP
+        .endif
+
+        nop 4                                           ; CODE
+
+        .endif                  ; if !(amask = bmask = cmask = 0)
+
+        .endm
+
+;
+;# ======== C6X_restoresp ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+C6X_restoresp .macro    offset, tempreg
+        .eval   offset * STD_TARGWORDMAUS, num
+        mvkl    num, :tempreg:
+        mvkh    num, :tempreg:
+        add     SP, :tempreg:, SP
+        .endm
+
+;
+;# ======== C6X_save ========
+;
+;  This macro conditionally saves registers onto the stack, depending
+;  on AMASK, BMASK and CMASK. Typically, use of this macro is balanced with 
+;  use of the C6X_restore macro with the same mask values.
+;
+;  C6X_save AMASK, BMASK, CMASK
+;
+;  AMASK - Mask of A registers to save
+;  BMASK - Mask of B registers to save
+;  CMASK - Mask of control registers to save
+;
+; Currently, this macro is largely complicated by the fact that you
+; can't have an assembly construct like the following:
+;       .if     (bitcount > 1)
+; ||    mv      A4, B0
+;       .endif
+; The assembler complains about an illegal mnemonic.  Without the
+; ability to generate code as above, many places in this macro are
+; greatly more complicated since they must now look ahead.
+;
+; We need to maintain 8-byte stack alignment.
+; The method chosen is to count the number of bits in the masks,
+; thereby giving you the number of registers to save.  This is
+; then rounded up to the nearest even number, and the SP is
+; adjusted once up front, with all subsequent "stores" being
+; offset into that frame.  Since the pre-processor is doing all
+; the counting, this turns out to be equally efficient to the
+; C6x method involving "pushes".
+;
+; Uses two lowest numbered A registers in ABMASK for an A-side stack
+; frame pointer and a temporary A register.  If no A registers specified
+; in ABMASK, registers A0 & A1 are saved and used.  If only register A0
+; is specified, register A1 is also saved and used.  If a register other
+; than A0 is specified, register A0 and that one are saved and used.
+;
+; For the B-side, the lowest numbered B register in ABMASK is used, and
+; if no B register is specified, register B0 is saved and used.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+C6X_save .macro AMASK, BMASK, CMASK
+        .asg    0, mask
+        .asg    0, bitn_a
+        .asg    0, bitn_b
+        .asg    -1, bitn_c
+        .asg    0, bitn_0
+        .asg    0, bitn_1
+        .asg    0, bitn_next
+        .asg    0, bitcount
+        .asg    0, a_bitcount
+        .asg    0, b_bitcount
+        .asg    0, c_bitcount
+        .asg    0, creg0
+        .asg    0, creg1
+        .asg    0, creg_next
+
+        .eval   AMASK , amask
+        .eval   BMASK , bmask
+        .eval   bmask & ~(C6X_B15) , bmask              ; don't save B15
+        .eval   CMASK, cmask
+
+        ;
+        ; .mexit was causing errors since the rest of the macro
+        ; was getting expanded even though it wasn't used.  Instead
+        ; of .mexit, turn the 'if' test around to control inclusion
+        ; of the rest of the macro.
+        ;
+        .if     !((amask = 0) & (bmask = 0) & (cmask = 0))
+
+        ;
+        ; Count 1 bits in masks
+        ;
+        NUM_BITS        amask, a_bitcount
+        NUM_BITS        bmask, b_bitcount
+        NUM_BITS        cmask, c_bitcount
+
+        ; make sure at least two A registers are specified
+        .if (a_bitcount = 0)
+            .eval       C6X_A0 | C6X_A1, amask
+            .eval       a_bitcount + 2, a_bitcount
+        .elseif (a_bitcount = 1)
+            .if (amask & C6X_A0)
+                .eval   amask | C6X_A1, amask
+            .eval       a_bitcount + 1, a_bitcount
+            .else
+                .eval   amask | C6X_A0, amask
+            .eval       a_bitcount + 1, a_bitcount
+            .endif
+        .endif
+
+        ; make sure at least one B register is specified
+        .if (bmask = 0)
+            .eval       C6X_B0 , bmask
+            .eval       b_bitcount + 1, b_bitcount
+        .endif
+
+        .eval   a_bitcount + b_bitcount + c_bitcount, ones
+
+        .eval   ones + 1, tmp_ones                      ; align to even
+        .eval   tmp_ones & 0xfffffffe, even_ones        ;   number of words
+        .eval   even_ones * 4, words
+        .eval   even_ones / 2, half                     ; split the fram in half
+        .eval   half, boffset                           ; B-frame offset
+        .eval   boffset - 1, aoffset                    ; A-frame offset
+
+        ; assign A-side stack frame pointer and temp A register
+        FIRST_BIT_NUM   amask, bitn_a
+        ZERO_BIT_N      amask, bitn_a
+        .asg    a:bitn_a:, SPA
+        FIRST_BIT_NUM   amask, bitn_a
+        ZERO_BIT_N      amask, bitn_a
+        .asg    a:bitn_a:, TMPA
+        .eval   a_bitcount - 2, a_bitcount
+
+        ; assign B-side stack frame pointer and temp B register
+        FIRST_BIT_NUM   bmask, bitn_b
+        ZERO_BIT_N      bmask, bitn_b
+        .asg    b:bitn_b:, TMPB
+        .asg    SP, SPB
+        .eval   b_bitcount - 1, b_bitcount
+
+        .if (amask = 0) | (bmask = 0)
+            .if (a_bitcount > 0)
+                .asg    amask, mask
+                .asg    A, reg
+                .asg    TMPB, tmpreg
+            .elseif     (b_bitcount > 0)
+                .asg    bmask, mask
+                .asg    B, reg
+                .asg    TMPA, tmpreg
+            .elseif     (cmask > 0)
+                ; both amask and bmask = 0
+                FIRST_BIT_NUM   cmask, bitn_c
+                BIT_NUM_2_CREG  bitn_c, creg0
+            .endif
+        .endif
+                                                ; CODE
+        addk    -(words), SP                    ; allocate frame
+        stw     SPA, *SP[even_ones]             ; save contents of SPA unto SP
+||      mv      SP, SPA                         ; SP is B-stack frame pointer
+        addaw   SPA, half, SPA                  ; SPA is A-stack frame pointer
+
+        .if     (mask = 0)
+            .if (bitn_c = -1)
+                ; both amask and bmask non-zero
+
+                stw     TMPB, *+SPB[boffset]                    ; CODE
+||              stw     TMPA, *+SPA[aoffset]                    ; CODE
+            .else
+                ; both amask and bmask = 0
+
+                stw     TMPB, *+SPB[boffset]                    ; CODE
+||              stw     TMPA, *+SPA[aoffset]                    ; CODE
+||              mvc     creg0, TMPB                             ; CODE
+            .endif
+        .else
+            ; one of amask or bmask is 0, but not both
+            FIRST_BIT_NUM       mask, bitn_next
+
+            stw TMPB, *+SPB[boffset]                            ; CODE
+||          stw TMPA, *+SPA[aoffset]                            ; CODE
+||          mv  :reg::bitn_next:, tmpreg                        ; CODE
+
+            .asg        0, mask
+        .endif
+
+        .eval   aoffset - 1, aoffset
+        .eval   boffset - 1, boffset
+
+        ;
+        ; This loop handles when both A and B registers need saving
+        ;
+        .loop
+            .if (a_bitcount > 0) & (b_bitcount > 0)
+                FIRST_BIT_NUM   amask, bitn_a
+                ZERO_BIT_N      amask, bitn_a
+                FIRST_BIT_NUM   bmask, bitn_b
+                ZERO_BIT_N      bmask, bitn_b
+
+                .if     !(((a_bitcount = 1) & (b_bitcount > 2)) | ((b_bitcount = 1) & (a_bitcount > 2)))
+                    ;
+                    ; At this point, one of the following is true:
+                    ;   1. a_bitcount & b_bitcount > 1
+                    ;   2. a_bitcount & b_bitcount = 1
+                    ;   3. a_bitcount = 1 & b_bitcount = 2
+                    ;   4. a_bitcount = 2 & b_bitcount = 1
+                    ; In cases 2-4 this is the last iteration of the loop
+                    ;
+
+                    stw b:bitn_b:, *+SPB[boffset]               ; CODE
+||                  stw a:bitn_a:, *+SPA[aoffset]               ; CODE
+
+                    .eval       aoffset - 1, aoffset
+                    .eval       boffset - 1, boffset
+                    .eval       a_bitcount - 1, a_bitcount
+                    .eval       b_bitcount - 1, b_bitcount
+                .else
+                    ;
+                    ; Either a_bitcount or b_bitcount equals 1, but not both.
+                    ; The one != 1 is > 2.
+                    ; We're going to exit the loop after this, knowing we'll
+                    ; also be doing the next loop at least twice.
+                    ;
+                    .if (b_bitcount = 1)
+                        .asg    amask, mask
+                        .asg    A, reg
+                        .asg    TMPB, tmpreg
+                    .elseif     (a_bitcount = 1)
+                        .asg    bmask, mask
+                        .asg    B, reg
+                        .asg    TMPA, tmpreg
+                    .else
+                        .emsg   "Bad macro logic"
+                        .break
+                    .endif
+
+                    FIRST_BIT_NUM       mask, bitn_next
+
+                    stw b:bitn_b:, *+SPB[boffset]               ; CODE
+||                  stw a:bitn_a:, *+SPA[aoffset]               ; CODE
+||                  mv  :reg::bitn_next:, tmpreg                ; CODE
+
+                    .eval       aoffset - 1, aoffset
+                    .eval       boffset - 1, boffset
+                    .eval       a_bitcount - 1, a_bitcount
+                    .eval       b_bitcount - 1, b_bitcount
+
+                    .break
+                .endif
+            .else
+                .break
+            .endif
+        .endloop
+
+        .if (a_bitcount > 0)
+            .asg        amask, mask
+            .asg        A, reg
+            .asg        TMPB, tmpreg
+        .elseif (b_bitcount > 0)
+            .asg        bmask, mask
+            .asg        B, reg
+            .asg        TMPA, tmpreg
+        .endif
+
+        ;
+        ; we enter this loop when there are only registers from either
+        ; A or B remaining (but not both).
+        ;
+        NUM_BITS mask, bitcount
+        .loop
+            .if (mask != 0)
+                .if (bitcount > 1)
+                    FIRST_BIT_NUM       mask, bitn_0
+                    ZERO_BIT_N          mask, bitn_0
+                    FIRST_BIT_NUM       mask, bitn_1
+                    ZERO_BIT_N          mask, bitn_1
+                    .eval       bitcount - 2, bitcount
+
+                    .if (bitcount > 1)
+                        FIRST_BIT_NUM   mask, bitn_next
+
+;;;;;;;; already done by previous iteration of this loop or previous loop
+;;;;;;;;                mv      :reg::bitn_0:, tmpreg                   ; CODE
+                        stw     tmpreg, *+SPB[boffset]                  ; CODE
+||                      stw     :reg::bitn_1:, *+SPA[aoffset]           ; CODE
+||                      mv      :reg::bitn_next:, tmpreg                ; CODE
+
+                    .else
+                        .if (bitcount = 0) & (c_bitcount > 0)
+                            FIRST_BIT_NUM       cmask, bitn_c
+                            BIT_NUM_2_CREG      bitn_c, creg0
+
+;;;;;;;; already done by previous iteration of this loop or previous loop
+;;;;;;;;                    mv  :reg::bitn_0:, tmpreg                   ; CODE
+                            stw tmpreg, *+SPB[boffset]                  ; CODE
+||                          stw :reg::bitn_1:, *+SPA[aoffset]           ; CODE
+||                          mvc creg0, TMPB                             ; CODE
+
+                        .else
+
+;;;;;;;; already done by previous iteration of this loop or previous loop
+;;;;;;;;                    mv  :reg::bitn_0:, tmpreg                   ; CODE
+                            stw tmpreg, *+SPB[boffset]                  ; CODE
+||                          stw :reg::bitn_1:, *+SPA[aoffset]           ; CODE
+
+                        .endif
+                    .endif
+
+                    .eval       aoffset - 1, aoffset
+                    .eval       boffset - 1, boffset
+                .elseif (bitcount = 1)
+                    ; last iteration of this loop
+                    FIRST_BIT_NUM       mask, bitn_0
+                    ZERO_BIT_N          mask, bitn_0
+
+                    .if (c_bitcount > 0)
+                        FIRST_BIT_NUM   cmask, bitn_c
+                        BIT_NUM_2_CREG  bitn_c, creg0
+
+                        .if (aoffset > boffset)
+                            stw :reg::bitn_0:, *+SP[aoffset+half]       ; CODE
+||                          mvc creg0, TMPB                             ; CODE
+                            .eval       aoffset - 1, aoffset
+                        .else
+                            stw :reg::bitn_0:, *+SP[boffset]            ; CODE
+||                          mvc creg0, TMPB                             ; CODE
+                            .eval       boffset - 1, boffset
+                        .endif
+                    .else
+
+                        .if (aoffset > boffset)
+                            stw :reg::bitn_0:, *+SP[aoffset+half]       ; CODE
+                            .eval       aoffset - 1, aoffset
+                        .else
+                            stw :reg::bitn_0:, *+SP[boffset]            ; CODE
+                            .eval       boffset - 1, boffset
+                        .endif  
+
+                    .endif
+
+                    .break
+                .else
+                    .break      ; case bitcount=0 then break out of loop
+                .endif
+            .endif
+        .endloop
+
+        .if (c_bitcount > 0) & (bitn_c = -1)
+            FIRST_BIT_NUM       cmask, bitn_c
+            BIT_NUM_2_CREG      bitn_c, creg0
+
+            mvc creg0, TMPB                     ; CODE
+        .endif
+
+        ;
+        ; This loop handles the control registers
+        ;
+        .loop
+            .if (c_bitcount > 1)
+                FIRST_BIT_NUM   cmask, bitn_c
+                ZERO_BIT_N      cmask, bitn_c
+                BIT_NUM_2_CREG  bitn_c, creg0
+                FIRST_BIT_NUM   cmask, bitn_c
+                ZERO_BIT_N      cmask, bitn_c
+                BIT_NUM_2_CREG  bitn_c, creg1
+                .eval   c_bitcount - 2, c_bitcount
+
+                .if     (c_bitcount > 0)
+                    FIRST_BIT_NUM       cmask, bitn_next
+                    BIT_NUM_2_CREG      bitn_next, creg_next
+
+;;;;;;;; already done by previous iteration of this loop or previous loop
+;;;;;;;;            mvc creg0, TMPB                             ; CODE
+                    mvc creg1, TMPB                             ; CODE
+||                  mv  TMPB, TMPA                              ; CODE
+                    stw TMPA, *+SPA[aoffset]                    ; CODE
+||                  stw TMPB, *+SPB[boffset]                    ; CODE
+||                  mvc creg_next, TMPB                         ; CODE
+                .else
+
+;;;;;;;; already done by previous iteration of this loop or previous loop
+;;;;;;;;            mvc creg0, TMPB                             ; CODE
+                    mvc creg1, TMPB                             ; CODE
+||                  mv  TMPB, TMPA                              ; CODE
+                    stw TMPA, *+SPA[aoffset]                    ; CODE
+||                  stw TMPB, *+SPB[boffset]                    ; CODE
+                .endif
+
+                .eval   aoffset - 1, aoffset
+                .eval   boffset - 1, boffset
+            .elseif     (c_bitcount = 1)
+                FIRST_BIT_NUM   cmask, bitn_c
+                ZERO_BIT_N      cmask, bitn_c
+                BIT_NUM_2_CREG  bitn_c, creg0
+                .eval   c_bitcount - 1, c_bitcount
+
+;;;;;;;; already done by previous iteration of this loop or previous loop
+;;;;;;;;        mvc     creg0, TMPB                             ; CODE
+                .if (aoffset > boffset)
+                    stw TMPB, *+SPB[aoffset+half]               ; CODE
+                    .eval       aoffset - 1, aoffset
+                .else
+                    stw TMPB, *+SPB[boffset]            ; CODE
+                    .eval       boffset - 1, boffset
+                .endif
+                .break
+            .else
+                .break
+            .endif
+        .endloop
+
+        .endif                  ; if !(amask = bmask = cmask = 0)
+
+        .endm
+
+        .endif                  ; if C6X_ is not defined
+

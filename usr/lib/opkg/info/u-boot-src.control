@@ -1,0 +1,9 @@
+Package: u-boot-src
+Version: 2010.12-psp03.21.00.04.sdk-r0
+Description: Patched sources for u-boot
+Section: bootloaders
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: da850-omapl138-evm
+Source: git://arago-project.org/git/projects/u-boot-davinci.git;protocol=git;branch=03.21.00.03          file://0001-da850evm-change-default-memory-to-not-limit-at-32MB.patch 

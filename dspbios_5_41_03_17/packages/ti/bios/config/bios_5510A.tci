@@ -1,0 +1,26 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_5510A.tci ========
+ *  This file contains BIOS settings for c5510A.
+ *  Note: all memory addresses in this file are defined in words.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_5510.tci");
+
+/*
+ *  ======== bios.init5510A ========
+ *  BIOS initialization for the 5510A is same as for 5510
+ */
+bios.init5510A = function(prog, baseseed)
+{
+    /* This is done only to set DSPSUBTYPE to 5510. CHIPTYPE will also be set to
+     * deviceName, but CHIPTYPE is not used anymore.
+     */ 
+    prog.cpu.deviceName = "5510PG2_2";
+
+    bios.init5510(prog, baseseed);
+}

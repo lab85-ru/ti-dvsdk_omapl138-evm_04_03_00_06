@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_DM648.tci ========
+ *  This file contains BIOS settings for DM648.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_6452.tci");
+
+/*
+ *  ======== bios.initDM648 ========
+ *  BIOS initialization for the DM648 is same as for 6452
+ */
+bios.initDM648 = bios.init6452;

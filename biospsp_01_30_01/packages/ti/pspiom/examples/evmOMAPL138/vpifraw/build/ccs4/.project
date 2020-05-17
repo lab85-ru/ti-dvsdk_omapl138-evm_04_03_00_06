@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>vpifSample</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.rtsc.xdctools.buildDefinitions.XDC.xdcNature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>vpifSample_main.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/vpifraw/src/vpifSample_main.c</locationURI>
+		</link>
+		<link>
+			<name>vpifSample_io.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/vpifraw/src/vpifSample_io.c</locationURI>
+		</link>
+		<link>
+			<name>vpifSample_conversion.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/vpifraw/src/vpifSample_conversion.c</locationURI>
+		</link>
+		<link>
+			<name>vpifSample.tcf</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/vpifraw/build/vpifSample.tcf</locationURI>
+		</link>
+		<link>
+			<name>vpifSample.tci</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/vpifraw/build/vpifSample.tci</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

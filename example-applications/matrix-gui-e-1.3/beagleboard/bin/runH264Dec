@@ -1,0 +1,11 @@
+#!/bin/sh
+filename="/usr/share/ti/video/HistoryOfTI-VGA.264"
+if [ ! -f $filename ]; then
+        echo "Video clip not found"
+        exit 1
+fi
+echo ""
+echo "Launch GStreamer pipeline"
+echo ""
+echo "Length of video clip: 18 seconds"
+gst-launch-0.10 -v filesrc location=$filename ! h264parse ! ffdec_h264 ! ffmpegcolorspace ! fbdevsink device=/dev/fb0

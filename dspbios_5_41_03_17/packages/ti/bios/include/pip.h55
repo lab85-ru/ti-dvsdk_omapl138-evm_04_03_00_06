@@ -1,0 +1,742 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== pip.h55 ========
+;  Pipe Manager.
+;
+;  Pipes allow two clients (a producer (writer) and a consumer (reader)) to 
+;  transfer frames of data without copying the data.
+;
+;  The consumer (reader) does the following:
+;    PIP_get &pipe 
+;    use pipe.readerSize words of data from the frame at pipe.readerAddr
+;    PIP_free &pipe
+;
+;  The producer (writer) does the following:
+;    PIP_alloc &pipe
+;    fill the frame at pipe.writerAddr with up to pipe.writerSize words
+;    set pipe.writerSize to the actual number of words in frame
+;    PIP_put &pip
+;
+;  The fields  readerNumFrames and writerNumFrames of PIP object
+;  represent the   number of full and empty frames respectively.
+;
+;  The pipe manager allows for probing of data transfered through each
+;  pipe.  This probing is accomplished using the PIP_<read|write>probeSET and
+;  PIP_<read|write>probeCLR operations which attach a separate PIP probe to the
+;  specified pipe.
+;
+;
+
+    .if ($isdefed("PIP_") = 0)    ; prevent multiple includes of this file
+PIP_    .set    1
+
+    .include chk.h55
+    .include fxn.h55
+    .include cinit.h55
+    .include gbl.h55
+    .include sts.h55
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Define alignment constraints for structure in PIP_Obj
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+isPipsockAligned        .set    LONGALIGN
+isPipAligned            .set    LONGALIGN
+isPipdescAligned        .set    isDataPtrAligned
+
+;
+; ======== PIP_Sock ========
+;
+
+PIP_Sock        .struct
+tprobe          DataPtr   1
+frameAddr       DataPtr   1             ; Address of the frame
+frameSize       size_t    1             ; Size of the frame
+curDesc         DataPtr   1             ; Current descriptor
+pFxnObj         DataPtr   1             ; pointer to function Obj
+numFrames       Int       1             ; number of frames
+gprobe          DataPtr   1             ; grobe. not yet used
+pNumFrames      DataPtr   1             ; ptr to numFrames
+pad2            .align   isFxnAligned
+fxnObj          .tag    FXN_Obj         ; function object
+stsHdl          DataPtr   1             ; Handle to STS object
+endPad          .align  isPipsockAligned
+PIP_A_SOCKSIZE  .endstruct
+
+
+;
+; ======== PIP_Obj ========
+;
+
+PIP_Obj                 .struct
+threshold                Int     1 ; (Uns) max size of frames in pip
+pad0                     .align  isPipsockAligned
+readerSock              .tag    PIP_Sock        ; Reader Socket
+pad1                     .align  isPipsockAligned
+writerSock              .tag    PIP_Sock        ; Writer Socket
+endPad                  .align  isPipAligned
+PIP_A_OBJSIZE           .endstruct 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; readerSock has the following members
+; preaderTakeProbe,  readerAddr  readerSize, readerCurdesc ,
+; pnotifyReader, readerNumFrames  preaderGiveProbe ,pwriterNumFrames  
+; notifyWriter , preaderSts
+;
+; writerSock has the following members
+; pwriterTakeProbe, writerAddr, writerSize ,writerCurdesc
+; pnotifyWriter, writerNumFrames, pwriterGiveProbe
+; preaderNumFrames ,notifyReader, pwriterSts
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+PIPDESC_Obj     .struct
+addr                    DataPtr 1
+size                    size_t  1
+next                    DataPtr 1
+endpad          .align  isPipdescAligned
+PIPDESC_A_OBJSIZE  .endstruct
+
+PIPDESC_BASE        .set    PIPDESC_Obj.addr
+PIPDESC_O_SIZE      .set    PIPDESC_Obj.size-PIPDESC_BASE
+PIPDESC_O_NEXT      .set    PIPDESC_Obj.next-PIPDESC_BASE
+PIPDESC_SIZE    .set  PIPDESC_A_OBJSIZE
+
+;
+;  ======== PIP OFFSETS ========
+;
+
+PIP_O_BASE              .set    PIP_Obj.threshold
+PIP_O_TPROBE            .set    PIP_Sock.tprobe
+PIP_O_FADDR             .set    PIP_Sock.frameAddr
+PIP_O_FSIZE             .set    PIP_Sock.frameSize
+PIP_O_CURDESC           .set    PIP_Sock.curDesc
+PIP_O_PFXNOBJ           .set    PIP_Sock.pFxnObj
+PIP_O_NUMFRAMES         .set    PIP_Sock.numFrames
+PIP_O_GPROBE            .set    PIP_Sock.gprobe
+PIP_O_PNUMFRAMES        .set    PIP_Sock.pNumFrames
+PIP_O_FXNOBJ            .set    PIP_Sock.fxnObj
+PIP_O_STSHDL            .set    PIP_Sock.stsHdl
+
+PIP_O_HDBASE            .set    PIP_Obj.readerSock - PIP_O_BASE
+PIP_O_TLBASE            .set    PIP_Obj.writerSock - PIP_O_BASE
+
+PIP_READPTR             .set    PIP_O_HDBASE+PIP_O_FADDR
+PIP_READCNT             .set    PIP_O_HDBASE+PIP_O_FSIZE
+PIP_READCURDESC         .set    PIP_O_HDBASE+PIP_O_CURDESC
+PIP_READSTSHDL          .set    PIP_O_HDBASE+PIP_O_STSHDL
+PIP_READFXNOBJ          .set    PIP_O_HDBASE+PIP_O_FXNOBJ
+
+PIP_WRITEPTR            .set    PIP_O_TLBASE+PIP_O_FADDR
+PIP_WRITECNT            .set    PIP_O_TLBASE+PIP_O_FSIZE
+PIP_WRITECURDESC        .set    PIP_O_TLBASE+PIP_O_CURDESC
+PIP_WRITESTSHDL         .set    PIP_O_TLBASE+PIP_O_STSHDL
+PIP_WRITEFXNOBJ         .set    PIP_O_TLBASE+PIP_O_FXNOBJ
+
+PIP_FULLBUFS            .set    PIP_O_HDBASE+PIP_O_NUMFRAMES
+PIP_EMPTYBUFS           .set    PIP_O_TLBASE+PIP_O_NUMFRAMES
+PIP_SIZE                .set    PIP_A_OBJSIZE
+
+        .mmregs
+
+        .global PIP_F_give, PIP_F_take, PIP_F_probe, PIP_F_start
+        .global PIP_D_tabbeg, PIP_D_tablen
+        .global PIP_A_TABBEG, PIP_A_TABEND, PIP_A_TABLEN
+
+
+
+;
+;# ======== PIP_Obj ========
+;  Create a pipe object.
+;
+;  name         - name of pipe object
+;  id           - pipe id
+;  buf          - preallocated buffer (or <NULL> if PIP_Obj should create)
+;  framesize    - size of each frame in pipe (in words)
+;  numframes    - number of frames in pipe
+;  stsend       - which end STS stats are accumulated
+;  notifyWriter - function to call whenever PIP_free is called
+;  nwarg*       - arguments to notifyWriter function
+;  notifyReader - function to call whenever PIP_put is called
+;  nrarg*       - arguments to notifyReader function
+;
+;  Note: PIP probe functionality is *not* implemented for this target
+;
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    ":GBL_Obj$regs:,:FXN_Obj$regs:,:STS_Obj$regs:", PIP_Obj$regs
+
+PIP_Obj .macro cflag, name, id, buf, framesize, numframes, stsend, notifyWriter, nwarg0, nwarg1, notifyReader, nrarg0, nrarg1, align
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; These globals are only for debug purposes. They are
+        ; not used by host tool.
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        .global :name:, :name:$rd, :name:$wr, :name:$dtab, :name:$buf
+        .global :name:$rdstshdl, :name:$wrstshdl
+        .global :name:$rdcurdesc, :name:$rdaddr, :name:$rdsize
+        .global :name:$wrcurdesc, :name:$wraddr, :name:$wrsize
+        .asg   0,bufAlloc
+        .eval framesize, newframesize
+
+        ; words inside this macro.
+        .if (_55Pb_)
+            .eval ((:newframesize: * 2)+ (:align: - 1)) & ( ~(:align: - 1)), newframesize
+        .else
+            .eval (:align: >> 1) , align
+            ; align is converted into bytes in the .cdb so that it can be
+            ; emitted from the .cmd file. Convert back align value into words,
+            ; since all the comparison as well as allocation happens in the 
+            .eval (:newframesize: + (:align: - 1)) & ( ~(:align: - 1)), newframesize
+        .endif
+
+        ; :newframesize: is equal to multiple of :align:. This is needed
+        ; for all the frames to start at 'align'ed boundary from the start
+        ; of pip frames section. Note that pip frames section will also
+        ; start from 'align'ed boundary.
+
+        .if (:cflag: = 0)
+            .mexit
+        .endif
+
+        .if ($symcmp(":buf:", "<NULL>") = 0)
+            .eval       0, kount
+            .asg        :name:$buf:kount:, buf
+            .loop
+                .break (kount == :numframes: - 1)
+                .global :name:$buf:kount:
+                C55_allocateObject   1, :name:$buf:kount:, :newframesize: , ".pip:id:"
+                .asg    :name:$buf:kount:, buf:kount:
+                .eval   kount + 1, kount
+            .endloop
+                
+            ; Last frame in the PIP buffers should start at align boundary
+            ; but the size of last PIP buffer need not be multiple of
+            ; :align: because there are no more frames to start at align
+            ; boundary. Hence last frame is usect'd with the default
+            ; framesize.
+            .global     :name:$buf:kount:
+            C55_allocateObject   1, :name:$buf:kount:, :newframesize: , ".pip:id:"
+            .asg    :name:$buf:kount:, buf:kount:
+
+            .eval       1, bufAlloc
+        .endif
+
+        C55_allocateObject   isPipAligned, :name:, PIP_SIZE , ".pip"
+                                                ; Allocate space
+                                                ; for the PIP Object
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; allocate space for threshold/framesize & cinit the same  ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        C55_cinitHeader  CINITALIGN, isPipAligned, :name:, PIP_SIZE,DATAPAGE
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Define various ptr  values, that would  serve to fill the;
+        ; the cinit records.                                       ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+:name:$rd: .set   :name: + PIP_O_HDBASE ; assign the reader
+                                                ; ptr. :name:$rd is
+                                                ; the reader side of
+                                                ; socket.
+:name:$rdstshdl  .set   :name: + PIP_READSTSHDL ; sts handle value.
+:name:$rdcurdesc  .set   :name: + PIP_READCURDESC; .reader curdesc
+:name:$rdaddr  .set   :name: + PIP_READPTR      ; reader addr
+:name:$rdsize  .set   :name: + PIP_READCNT      ; reader size
+
+:name:$wr  .set   :name: + PIP_O_TLBASE         ; assign writer ptr
+                                                ; is the writer size of
+                                                ; socket.
+:name:$wrstshdl  .set   :name: + PIP_WRITESTSHDL        ; This is the writer
+:name:$wrcurdesc  .set   :name: + PIP_WRITECURDESC; .reader curdesc
+:name:$wraddr  .set   :name: + PIP_WRITEPTR     ; reader addr
+:name:$wrsize  .set   :name: + PIP_WRITECNT     ; reader size
+                                                ; sts handle value.
+:name:$rdfxn  .set :name: + PIP_READFXNOBJ      ; This is the rdrxn
+:name:$wrfxn  .set :name: + PIP_WRITEFXNOBJ     ; This is the wrtrfxn
+
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Start the cinit       recrod                             ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        C55_cinitBegin  isPipAligned
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; cinit reader-side (excluding FXN_Obj &        ;
+        ; StsPtr) & cinit the    same                   ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        C55_cinitInt    :framesize:             ; threshold allocation
+
+        PIPSOCK_cinitObj  framesize, :name:$dtab, :name:$wr + PIP_O_FXNOBJ,0, :name:$wr + PIP_O_NUMFRAMES,  :notifyWriter:, :nwarg0:, :nwarg1:, :stsend:, "reader",  :name:$sts
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; cinit writer-side (excluding FXN_Obj &        ;
+        ; StsPtr) & cinit the    same                   ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        PIPSOCK_cinitObj  framesize, :name:$dtab, :name:$rd + PIP_O_FXNOBJ, numframes,:name:$rd + PIP_O_NUMFRAMES,  :notifyReader:, :nrarg0:, :nrarg1:, :stsend:, "writer",   :name:$sts
+
+        C55_cinitEnd  isPipAligned
+
+
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+        ; put PIP descriptors into .bss section
+        ;
+        ;   addr[i]
+        ;   size[i]
+        ;   next[i]
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+        .global :name:$dtab
+
+        .bss :name:$dtab, (PIPDESC_SIZE  * :numframes:), STD_TARGWORDMAUS, isPipdescAligned
+
+        .sect ".cinit"
+
+        .var    temp0, temp1, boff
+        .eval   0, temp0
+        .eval   0, temp1
+        .eval   0, boff
+        .eval   :numframes: * (PIPDESC_SIZE) , temp0
+        .eval   PIPDESC_A_OBJSIZE , temp1
+
+        C55_cinitHeader  1, isPipdescAligned, :name:$dtab, :temp0:, DATAPAGE
+                                ; offset to start of next desc.
+
+        .eval   0, kount
+        .loop   :numframes:-1
+                C55_cinitBegin    isPipdescAligned
+                C55_cinitDataPtr  :buf:+:boff:          ; addr[i]
+                C55_cinitsize_t   :framesize:           ; size[i]
+                C55_cinitDataPtr  :name:$dtab + :temp1: ; next[i]
+                C55_cinitEnd      isPipdescAligned
+                
+                .if bufAlloc
+                    .eval       kount + 1, kount
+                    .asg        buf:kount:, buf
+                .else
+                    .eval :boff:+(:framesize: * (STD_TARGWORDMAUS)), boff
+                .endif
+                .eval :temp1: + PIPDESC_SIZE, temp1
+        .endloop
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; cinit data for the very last descreptor triplet
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        C55_cinitBegin  isPipdescAligned
+        C55_cinitDataPtr        :buf:+:boff:            ; addr[n]
+        C55_cinitsize_t         :framesize:             ; size[n]
+        C55_cinitDataPtr        :name:$dtab             ; next[n]
+                                                        ; circularly,
+                                                        ; points 1st
+                                                        ; desc.
+        C55_cinitEnd  isPipdescAligned                  ; End the
+                                                        ; cinit record
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; allocate/cinit (via STS_Obj macro) Statistics obj for this PIP
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        .if ($symcmp(":stsend:", "reader") = 0)
+                STS_Obj 1, :name:$sts, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        .endif
+        .if ($symcmp(":stsend:", "writer") = 0)
+                STS_Obj 1, :name:$sts, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        .endif
+        .eval PIP$pipCount + 1, PIP$pipCount    ; increment the number
+                                                ; of PIP objects.
+
+        .endm
+
+;# ======== PIPSOCK_cinitOBj ========
+; Create  cinit record for PIP sockets
+;
+;  Parameters
+;  framesize:   Size of the frame
+;  curdesc:     The value of curdesc    
+;  pFxnObj:     Pointer to FXN_Obj
+;  pNumFrames:  Pointer to numFrames
+;  notifyFunc:  The PIP notify function
+;  notifyFuncArg0:  First argument of notify function
+;  notifyFuncArg1:  Second argument of notify function
+;  stsEnd       : The end at which  sts obj is attached to PIP
+;                 This comes from gconf
+;  endType      : Reader/Writer 
+;  stsAddr      : Address of sts object
+; 
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#
+;# Constraints and Calling Environment:
+;#
+
+PIPSOCK_cinitObj        .macro frameSize,  curDesc, pFxnObj, numFrames, pNumFrames, notifyFunc , notifyFuncArg0, notifyFuncArg1, stsEnd, endType,  stsAddr
+
+        ;CHK_nargs "PIPSOCK", stsAddr
+        C55_cinitBegin   isPipsockAligned
+        C55_cinitDataPtr  0                     ; take-probe
+        C55_cinitDataPtr  0                     ; addr
+        C55_cinitsize_t   frameSize             ;  size
+        C55_cinitDataPtr  curDesc               ; curdesc
+        C55_cinitDataPtr  pFxnObj               ; pFxnOBj
+        C55_cinitInt      numFrames             ; reader numframes
+        C55_cinitDataPtr  0                     ; reader give-probe
+        C55_cinitDataPtr  pNumFrames            ; writer pnumframes
+                                                ; (=&writerNumFrames)
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Generate value section for the FXN_object     ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        FXN_cinitObj  notifyFunc, notifyFuncArg0,  notifyFuncArg1
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Continue Filling the rest of the object       ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        .if ($symcmp(":stsEnd:", ":endType:") = 0)
+            C55_cinitDataPtr  stsAddr
+        .else
+           C55_cinitDataPtr  0 
+        .endif
+        C55_cinitEnd     isPipsockAligned
+        .endm
+;
+;# ======== PIP_config ========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+;
+    .asg    "", PIP_config$regs
+PIP_config    .macro _gNumEmbed, _gNextId
+        .asg    0, PIP$pipCount                 ; This indicate the
+                                                ; the number  of
+                                                ; PIP objects.
+
+    .endm
+
+;
+;# ======== PIP_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#    none
+;# Postconditions:
+;#    none
+;#
+;
+    .asg    "", PIP_end$regs
+PIP_end    .macro
+    .endm
+
+;
+;# ======== PIP_init ========
+;
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+;
+    .asg    "", PIP_init$regs
+PIP_init    .macro
+    .endm
+
+;
+;# ======== PIP_alloc ========
+;
+;#
+;# Preconditions:
+;#    xar0 = address of the pipe object
+;#    pipe.writerNumFrames > 0
+;#
+;# Postconditions:
+;#    none
+;#
+;# Constraints and Calling Environment:
+;#    Before calling PIP_alloc, a function should check the
+;#    writerNumFrames member of the PIP_Obj structure to make
+;#    sure it is greater than 0   (at least one empty frame is 
+;#    available)
+;#
+;# Note:
+;#    registers used by 'notifyWriter' functions might be modified
+;#    too. Since such a function can be "C", it'd imply all registers
+;#    considered as trashable by C compiler
+;#
+;
+    .asg        "xar0,:PIP_F_take$regs:", PIP_alloc$regs
+PIP_alloc       .macro dummy
+    CHK_void    PIP_alloc, dummy
+        .noremark 5573                          ; Safe wrt CPU_43
+                                                ; Switch remark off.
+        .if (.MNEMONIC)                         ;if MNEMONIC assembler
+                aadd #PIP_EMPTYBUFS, ar0        ; ar0 = &writerNumFrames
+        .else                                   ; if  ALGEBRAIC
+                mar(ar0 + #PIP_EMPTYBUFS)       ; ar0 = &writerNumFrames
+        .endif                                  ; endif MNEMONIC        
+        .remark 5573                            ; Switch remark on.
+
+    call PIP_F_take                             ; call PIP_F_take
+
+    .endm
+
+;
+;# ======== PIP_put ========
+;
+;#
+;# Preconditions for large model:
+;#    xar0 = address of the pipe object
+;#
+;# Postconditions:
+;#    none
+;#
+;# Note:
+;#    registers used by 'notifyReader' functions might be modified too.
+;#    Since such a function can be "C", it'd imply all registers
+;#    considered as trashable by C compiler
+;#
+;
+    .asg        "xar0,:PIP_F_give$regs:", PIP_put$regs
+PIP_put         .macro dummy
+    CHK_void    PIP_put, dummy
+        .noremark 5573                          ; Safe wrt CPU_43
+                                                ; Switch remark off.
+        .if (.MNEMONIC)                         ;if MNEMONIC assembler
+                aadd #(PIP_O_TLBASE + PIP_O_CURDESC),ar0
+                                                ; ar0 = &writerCurdesc
+        .else                                   ; if  ALGEBRAIC
+                mar(ar0 + #(PIP_O_TLBASE + PIP_O_CURDESC))  ; ar0 = &writerCurdesc
+        .endif                                  ; endif MNEMONIC
+        .remark 5573                            ; Switch remark on.
+
+    call PIP_F_give                             ; call PIP_F_give
+
+    .endm
+
+;
+;# ======== PIP_get ========
+;
+;#
+;# Preconditions for large:
+;#    xar0 = address of the pipe object
+;#    pipe.readerNumFrames > 0
+;#
+;# Postconditions:
+;#    none
+;#
+;# Constraints and Calling Environment:
+;#    Before calling PIP_get, a function should check the
+;#    readerNumFrames  member of the PIP_Obj structure to make sure it
+;#    is greater than 0    (at least one full frame is available)
+;#
+;# Note:
+;#    registers used by 'notifyReader' functions might be 
+;#    modified too. Since such a function can be "C", it'd imply 
+;#    all registers considered as trashable by C compiler
+;#
+;
+    .asg    "xar0,:PIP_F_take$regs:", PIP_get$regs
+PIP_get         .macro dummy
+    CHK_void    PIP_get, dummy
+        .noremark 5573                          ; Safe wrt CPU_43
+                                                ; Switch remark off.
+        .if (.MNEMONIC)                         ;if MNEMONIC assembler
+                aadd #PIP_FULLBUFS ,ar0         ; ar0 = &readerNumFrames
+        .else                                   ; if  ALGEBRAIC
+                mar(ar0 + #PIP_FULLBUFS)        ; ar0 = &readerNumFrames
+        .endif
+        .remark 5573                            ; Switch remark on.
+    call    PIP_F_take                          ; call PIP_F_take 
+
+    .endm
+
+;
+;# ======== PIP_free ========
+;
+;#
+;# Preconditions:
+;#    xar0 = address of the pipe object
+;#
+;# Postconditions:
+;#    none
+;#
+;# Note:
+;#    registers used by 'notifyWriter' functions might be
+;#    modified too. Since such a function can be "C", it'd imply 
+;#    all registers considered as trashable by C compiler
+;#
+;
+    .asg    "xar0,:PIP_F_give$regs:", PIP_free$regs
+PIP_free    .macro dummy
+    CHK_void PIP_free, dummy
+        .noremark 5573                          ; Safe wrt CPU_43
+                                                ; Switch remark off.
+        .if (.MNEMONIC)                         ;if MNEMONIC assembler
+                aadd #(PIP_O_HDBASE + PIP_O_CURDESC),ar0        
+                                                ; ar0 = &readerCurdesc
+        .else
+                mar(ar0 + #(PIP_O_HDBASE + PIP_O_CURDESC))
+                                                ; ar0 = &readerCurdesc
+        .endif
+        .remark 5573                            ; Switch remark on.
+                
+    call    PIP_F_give                          ; call PIP_F_give
+
+    .endm
+
+;
+;# ======== PIP_startup ========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+;# Dependencies:
+;#    Must come before HWI_startup to allow pipes to be ready
+;#    before ISRs are taken and I/O starts.
+;#    Note: SWI scheduler is not yet enabled as we walk thru'
+;#          each of the configured PIP objects and call
+;#          their respective notifyWriter(nwarg0, nwarg1)
+;#          functions.
+;
+                .asg "xar0,:PIP_F_start$regs:", PIP_startup$regs
+PIP_startup     .macro dummy
+    CHK_void    PIP_startup, dummy
+
+    ; expand only if some PIP objects are configured
+        .var    pipcount
+        .eval   PIP$pipCount , pipcount
+        .asg    "#:pipcount:", pipcount
+        .if (.MNEMONIC)                         ;if MNEMONIC assembler
+                .if((PIP$ + PIP_gNumEmbed) != 0); if PIP objects exits
+                        .if  (_55L_) | (_55H_)  
+                                mov  pipcount, *(#PIP_D_tablen)
+                                mov dbl(*(#PIP_D_tabbeg)),xar0
+                                                ; load xar0 with
+                                                ; address of 
+                                                ; 1st PIP_Obj
+                        .else                   ; if small model
+                                mov  pipcount, *abs16(#PIP_D_tablen)
+                                mov *abs16(#PIP_D_tabbeg), ar0
+                                                ; load ar0 with address
+                                                ; of ; 1st PIP_Obj
+                        .endif                  ; endif  large model
+                call    PIP_F_start             ; walk thru' table of
+                                                ; PIPs & start'em up
+                .endif                          ; endif PIP$
+        .else                                   ; if ALGREBRAIC
+
+                .if((PIP$ + PIP_gNumEmbed) != 0); if PIP objects exits
+                        .if  (_55L_) | (_55H_)  
+                                *(#PIP_D_tablen) = pipcount
+                                xar0 =dbl(*(#PIP_D_tabbeg))     
+                                                ; load xar0 with
+                                                ; address of 
+                                                ; 1st PIP_Obj
+                        .else                           ; if small model
+                                *abs16(#PIP_D_tablen) = pipcount
+                                ar0 = *abs16(#PIP_D_tabbeg)
+                                                ; load ar0 with address
+                                                ; of ; 1st PIP_Obj
+                        .endif                  ; endif  large model
+                call    PIP_F_start             ; walk thru' table of
+                                                ; PIPs & start'em up
+                .endif                          ; endif PIP$
+    .endif                                      ; endif MNEMONIC
+
+    .endm
+
+;
+;# ======== PIP_readprobeSET ========
+;  Attach named probe to the named pipe's reader
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "", PIP_readprobeSET$regs
+PIP_readprobeSET .macro dummy
+                 .wmsg "PIP_readprobeSET not implemented for c55x"
+                 .endm
+
+;
+;# ======== PIP_readprobeCLR ========
+;  disable probing on a pipe's reader 
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "", PIP_readprobeCLR$regs
+PIP_readprobeCLR .macro dummy
+                 .wmsg "PIP_readprobeCLR not implemented for c55x"
+                 .endm
+
+;
+;# ======== PIP_writeprobeSET ========
+;  Attach named probe to the named pipe's writer 
+;
+;# Preconditions:
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "", PIP_writeprobeSET$regs
+PIP_writeprobeSET .macro dummy
+                  .wmsg "PIP_writeprobeSET not implemented for c55x"
+                  .endm
+
+;
+;# ======== PIP_writeprobeCLR ========
+;  disable probing on a pipe's writer
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#    none
+;#
+ 
+    .asg    "", PIP_writeprobeCLR$regs
+PIP_writeprobeCLR .macro dummy
+                  .wmsg "PIP_writeprobeCLR not implemented for c55x"
+                  .endm
+
+    .endif        ; if PIP_ is not defined

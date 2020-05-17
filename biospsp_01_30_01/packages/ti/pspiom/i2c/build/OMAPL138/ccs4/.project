@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>i2c</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.rtsc.xdctools.buildDefinitions.XDC.xdcNature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>I2c.h</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/i2c/I2c.h</locationURI>
+		</link>
+		<link>
+			<name>I2cLocal.h</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/i2c/src/I2cLocal.h</locationURI>
+		</link>
+		<link>
+			<name>I2c_edma.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/i2c/src/I2c_edma.c</locationURI>
+		</link>
+		<link>
+			<name>I2c.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/i2c/src/I2c.c</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

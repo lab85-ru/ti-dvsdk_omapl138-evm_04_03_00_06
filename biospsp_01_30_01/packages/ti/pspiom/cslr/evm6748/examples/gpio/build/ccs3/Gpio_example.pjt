@@ -1,0 +1,34 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C67XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="Linker"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\Gpio_example.c"
+Source="..\..\src\intvecs.asm"
+Source="..\C6748.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-g -fr"..\obj\debug" -i"$(Proj_dir)" -i"..\..\build" -i"..\..\..\..\..\..\..\"  -mo -ml3 -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-o3 -fr"..\obj\release"  -i"$(Proj_dir)" -i"..\..\build" -i"..\..\..\..\..\..\..\" -mo -ml3 -mv6740
+
+["Linker" Settings: "Debug"]
+Options=-c -m"..\..\obj\debug\Gpio_example.map" -o"..\..\obj\debug\Gpio_example.out" -w -x
+
+["Linker" Settings: "Release"]
+Options=-c -m"..\..\obj\release\Gpio_example.map" -o"..\..\obj\release\Gpio_example.out" -w -x
+
+["C6748.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["C6748.cmd" Settings: "Release"]
+LinkOrder=1

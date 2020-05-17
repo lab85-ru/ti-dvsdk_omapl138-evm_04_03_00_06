@@ -1,0 +1,128 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== gio.h62 ========
+;
+;
+
+        .if ($isdefed("GIO_") = 0)  ; prevent multiple includes of this file
+GIO_    .set    1
+
+        .include std.h62
+
+;
+;# ======== GIO_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", GIO_Obj$regs
+GIO_Obj .macro
+        .endm
+
+;
+;# ======== GIO_config ========
+;  Static configuration of the GIO module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GIO_config$regs
+GIO_config      .macro _createfxn, _deletefxn, _pendfxn, _postfxn
+        .if (GIO$ = 1)
+
+            .global _GIO
+            .global GIO$config
+
+GIO$config:     .usect  ".gio", 4 * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       4 * STD_TARGWORDMAUS
+            .word       GIO$config
+            .word   :_createfxn:
+            .word   :_deletefxn:
+            .word   :_pendfxn:
+            .word   :_postfxn:
+
+;
+;  Set up pointer to GIO configuration parameters
+;
+        .bss    _GIO, 1 * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+            .sect   ".cinit"
+            .align  STD_TARGALIGN
+            .word   1 * STD_TARGWORDMAUS
+            .word   _GIO
+            .word   GIO$config
+
+        .endif
+        .endm
+
+;
+;# ======== GIO_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GIO_end$regs
+GIO_end .macro
+        .endm
+
+;
+;# ======== GIO_init ========
+;  Runtime initialization of the GIO module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GIO_init$regs
+GIO_init        .macro
+
+        ; only expand if the GIO module is configured
+        .if (GIO$ = 1)
+        .endif
+
+        .endm
+
+;
+;# ======== GIO_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", GIO_startup$regs
+GIO_startup        .macro
+        .endm
+
+        .endif          ; if GIO_ is not defined
+    

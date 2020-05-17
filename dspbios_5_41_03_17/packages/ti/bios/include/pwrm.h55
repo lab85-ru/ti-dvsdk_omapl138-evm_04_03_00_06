@@ -1,0 +1,197 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== pwrm.h55 ========
+;
+;
+
+        .if ($isdefed("PWRM_") = 0)    ; prevent multiple includes of this file
+PWRM_   .set    1
+
+        .include cinit.h55
+        .include gbl.h55
+        .include obj.h55
+        .include std.h55
+
+    .global PWRM_PWRM_ENABLE
+
+;
+;# ======== PWRM_config ========
+;  Static configuration of the PWRM module.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PWRM_config$regs
+PWRM_config     .macro _enablePWRM, _bootfxn, _adaptclk, _idlmask, _capsmask, _vfscale,  _initspf, _initv, _dsdomains, _ie0, _ie1
+
+    .if ((PWRM$ = 1) & (PWRM_PWRM_ENABLE = 1))
+
+    .global __PWRM_BOOTHOOKFXN
+    .global __PWRM_ADAPTCLK, __PWRM_IDLEMASK, __PWRM_CAPSMASK, __PWRM_INITSPF
+    .global __PWRM_INITV, __PWRM_DSMASK, __PWRM_IER0, __PWRM_IER1
+
+    ; user boot hook fxn pointer
+    C55_cinitHeader CINITALIGN, 2, __PWRM_BOOTHOOKFXN, CODEPTRSIZE, DATAPAGE
+    C55_cinitCodePtr _bootfxn
+    C55_cinitEnd 2
+
+    ; flag if BIOS CLK should be reprogrammed on freq scaling event
+    C55_cinitHeader CINITALIGN, 1, __PWRM_ADAPTCLK, INTSIZE, DATAPAGE
+    C55_cinitInt _adaptclk
+    C55_cinitEnd 1
+
+    ; if should adapt clock on F scale then set pointer for CLK registration
+    .if (PWRM_PWRM_ADAPTCLK = 1)
+        .ref __PWRM_CLKREGHOOKFXN, _CLK_registerWithPWRM
+        .asg _CLK_registerWithPWRM, _clkregfxn
+        C55_cinitHeader CINITALIGN, 2, __PWRM_CLKREGHOOKFXN, CODEPTRSIZE, DATAPAGE
+        C55_cinitCodePtr _clkregfxn
+        C55_cinitEnd 2
+    ; else, set CLK registration pointer to NULL to avoid CLK reg code import
+    .else
+        .ref __PWRM_CLKREGHOOKFXN
+        C55_cinitHeader CINITALIGN, 2, __PWRM_CLKREGHOOKFXN, CODEPTRSIZE, DATAPAGE
+        C55_cinitCodePtr 0
+        C55_cinitEnd 2
+    .endif
+
+    ; initialize clock domaing mask for IDL loop
+    C55_cinitHeader CINITALIGN, 1, __PWRM_IDLEMASK, INTSIZE, DATAPAGE
+    C55_cinitInt _idlmask
+    C55_cinitEnd 1
+
+    ; initialize PWRM capabilities mask
+    C55_cinitHeader CINITALIGN, 1, __PWRM_CAPSMASK, INTSIZE, DATAPAGE
+    C55_cinitInt _capsmask
+    C55_cinitEnd 1
+
+    ; setup initial SP frequency index
+    C55_cinitHeader CINITALIGN, 1, __PWRM_INITSPF, INTSIZE, DATAPAGE
+    C55_cinitInt _initspf
+    C55_cinitEnd 1
+
+    ; setup initial voltage (in floating point format!)
+    C55_cinitHeader CINITALIGN, 2, __PWRM_INITV, FLOATSIZE, DATAPAGE
+        .if (offset & 0x1)              ; if at odd offset
+          .word 0xdead                  ; fill in the hole
+          .eval offset +1, offset       ; increase the offset for hole filled
+        .endif
+        .xfloat :_initv:                ; fill in the float value
+        .eval  offset + 2, offset       ; increase the offset by size
+    C55_cinitEnd 2
+
+    ; initialize global clock domain bitmask for deep sleep 
+    C55_cinitHeader CINITALIGN, 1, __PWRM_DSMASK, INTSIZE, DATAPAGE
+    C55_cinitInt _dsdomains
+    C55_cinitEnd 1
+
+    ; initialize global IER0 for deep sleep 
+    C55_cinitHeader CINITALIGN, 1, __PWRM_IER0, INTSIZE, DATAPAGE
+    C55_cinitInt _ie0
+    C55_cinitEnd 1
+
+    ; initialize global IER1 for deep sleep 
+    C55_cinitHeader CINITALIGN, 1, __PWRM_IER1, INTSIZE, DATAPAGE
+    C55_cinitInt _ie1
+    C55_cinitEnd 1
+
+    .endif
+
+        .endm
+
+
+;
+;# ======== PWRM_init ========
+;  Runtime initialization of the PWRM module.
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PWRM_init$regs
+PWRM_init       .macro
+
+        ; only expand if the PWRM module is configured and enabled
+        .if ((PWRM$ = 1) & (PWRM_PWRM_ENABLE = 1))
+
+            .ref __PWRM_initialize
+            call __PWRM_initialize
+
+            .if ((CLK$=1) & (CLK_USETIMER=1))
+
+                .ref __PWRM_setCLKDependency
+
+                .if (.MNEMONIC)
+                    .if _55Pb_
+                        mov #CLK_TIMERNUM, ac0.l 
+                    .else
+                        mov #CLK_TIMERNUM, t0
+                    .endif
+                .else
+                    .if _55Pb_
+                        ac0.l = #CLK_TIMERNUM
+                    .else
+                        t0 = #CLK_TIMERNUM
+                    .endif
+                .endif
+            
+                call __PWRM_setCLKDependency
+
+            .endif
+
+        .endif
+
+        .endm
+
+
+;
+;# ======== PWRM_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", PWRM_startup$regs
+PWRM_startup        .macro
+
+        ; only expand if the PWRM module is configured and enabled
+        .if ((PWRM$ = 1) & (PWRM_PWRM_ENABLE = 1))
+        .endif
+
+        .endm
+
+;
+;# ======== PWRM_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PWRM_end$regs
+PWRM_end .macro
+        .endm
+
+
+        .endif          ; if PWRM_ is not defined
+

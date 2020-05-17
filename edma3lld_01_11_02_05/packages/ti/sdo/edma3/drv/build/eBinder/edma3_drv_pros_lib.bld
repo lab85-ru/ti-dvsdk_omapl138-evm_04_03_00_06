@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE project PUBLIC '-//ESOL//DTD eBinder v1.00 BuildSet//EN' 'project.dtd'>
+
+<project cl="ARM_ARMADS11" add="true" nickName="edma3_drv">
+  <variant id="0" name="DEBUG">
+    <node id="1" name="x:\DEBUG\edma3_drv_pros_lib.a" type=".armads.armads-static-library" />
+    <node id="2" name="..\..\src\edma3.c" type=".std.c-source" />
+    <node id="3" name="DEBUG\edma3.o" type=".armads.armads-object">
+      <autodep ref="4" />
+      <autodep ref="7" />
+      <autodep ref="5" />
+      <autodep ref="8" />
+      <autodep ref="10" />
+      <autodep ref="6" />
+      <autodep ref="9" />
+    </node>
+    <node id="4" name="..\..\src\edma3.h" type=".std.c-header" />
+    <node id="5" name="..\..\edma3_drv.h" type=".std.c-header" />
+    <node id="6" name="..\..\..\rm\edma3_rm.h" type=".std.c-header" />
+    <node id="7" name="..\..\..\rm\edma3_common.h" type=".std.c-header" />
+    <node id="8" name="..\..\..\rm\src\edma3_rl_cc.h" type=".std.c-header" />
+    <node id="9" name="..\..\..\rm\src\edma3resmgr.h" type=".std.c-header" />
+    <node id="10" name="..\..\..\rm\src\edma3_rl_tc.h" type=".std.c-header" />
+    <defaults>
+      <command template=".armads.build-armasm-object">
+        <value name=".armads.armasm-settings.asm-gen-opt.asm-gen-debug">
+          <item value="true" />
+        </value>
+      </command>
+      <command template=".armads.build-armcc-object">
+        <value name=".armads.ccgen-settings.cc-prep-opt.cc-prep-def">
+          <item>
+            <item value="__DEBUG_BUILD__" />
+          </item>
+        </value>
+        <value name=".armads.ccgen-settings.cc-debug-opt.cc-debug-gen">
+          <item value="true" />
+        </value>
+        <value name=".armads.ccgen-settings.cc-debug-opt.cc-debug-inline">
+          <item value="true" />
+        </value>
+      </command>
+      <command template=".armads.build-armcpp-object">
+        <value name=".armads.ccgen-settings.cc-prep-opt.cc-prep-def">
+          <item>
+            <item value="__DEBUG_BUILD__" />
+          </item>
+        </value>
+        <value name=".armads.ccgen-settings.cc-debug-opt.cc-debug-gen">
+          <item value="true" />
+        </value>
+        <value name=".armads.ccgen-settings.cc-debug-opt.cc-debug-inline">
+          <item value="true" />
+        </value>
+      </command>
+    </defaults>
+    <settings>
+      <command template=".armads.build-armar-lib">
+        <command template=".armads.build-armar-lib" target="1">
+          <value name=".armads.build-armar-lib.io.output">
+            <item value="1" />
+          </value>
+          <value name=".armads.build-armar-lib.io.obj">
+            <item>
+              <item value="3" />
+            </item>
+          </value>
+        </command>
+      </command>
+      <command template=".armads.build-armcc-object">
+        <value name=".armads.armcc-settings.cc-target-opt.cc-target-proc">
+          <item value="11" />
+        </value>
+        <value name=".armads.ccgen-settings.cc-prep-opt.cc-prep-path.cc-prep-inc">
+          <item>
+            <item value="..\..\..\..\..\..\" />
+          </item>
+        </value>
+        <value name=".armads.ccgen-settings.cc-prep-opt.cc-prep-def">
+          <item>
+            <item value="__DEBUG_BUILD__" />
+          </item>
+        </value>
+        <value name=".armads.ccgen-settings.cc-debug-opt.cc-debug-gen">
+          <item value="true" />
+        </value>
+        <value name=".armads.ccgen-settings.cc-debug-opt.cc-debug-inline">
+          <item value="true" />
+        </value>
+        <command template=".armads.build-armcc-object" target="3">
+          <value name=".armads.build-armcc-object.io.output">
+            <item value="3" />
+          </value>
+          <value name=".armads.build-armcc-object.io.input">
+            <item value="2" />
+          </value>
+        </command>
+      </command>
+    </settings>
+  </variant>
+  <variant id="0" name="RELEASE">
+    <node id="1" name="x:\RELEASE\edma3_drv_pros_lib.a" type=".armads.armads-static-library" />
+    <node id="2" name="..\..\src\edma3.c" type=".std.c-source" />
+    <node id="3" name="RELEASE\edma3.o" type=".armads.armads-object">
+      <autodep ref="4" />
+      <autodep ref="7" />
+      <autodep ref="5" />
+      <autodep ref="8" />
+      <autodep ref="10" />
+      <autodep ref="6" />
+      <autodep ref="9" />
+    </node>
+    <node id="4" name="..\..\src\edma3.h" type=".std.c-header" />
+    <node id="5" name="..\..\edma3_drv.h" type=".std.c-header" />
+    <node id="6" name="..\..\..\rm\edma3_rm.h" type=".std.c-header" />
+    <node id="7" name="..\..\..\rm\edma3_common.h" type=".std.c-header" />
+    <node id="8" name="..\..\..\rm\src\edma3_rl_cc.h" type=".std.c-header" />
+    <node id="9" name="..\..\..\rm\src\edma3resmgr.h" type=".std.c-header" />
+    <node id="10" name="..\..\..\rm\src\edma3_rl_tc.h" type=".std.c-header" />
+    <defaults>
+      <command template=".armads.build-armcc-object">
+        <value name=".armads.ccgen-settings.cc-prep-opt.cc-prep-def">
+          <item>
+            <item value="__RELEASE_BUILD__" />
+          </item>
+        </value>
+        <value name=".armads.ccgen-settings.cc-debug-opt.cc-debug-oplev">
+          <item value="3" />
+        </value>
+      </command>
+      <command template=".armads.build-armcpp-object">
+        <value name=".armads.ccgen-settings.cc-prep-opt.cc-prep-def">
+          <item>
+            <item value="__RELEASE_BUILD__" />
+          </item>
+        </value>
+        <value name=".armads.ccgen-settings.cc-debug-opt.cc-debug-oplev">
+          <item value="3" />
+        </value>
+      </command>
+    </defaults>
+    <settings>
+      <command template=".armads.build-armar-lib">
+        <command template=".armads.build-armar-lib" target="1">
+          <value name=".armads.build-armar-lib.io.output">
+            <item value="1" />
+          </value>
+          <value name=".armads.build-armar-lib.io.obj">
+            <item>
+              <item value="3" />
+            </item>
+          </value>
+        </command>
+      </command>
+      <command template=".armads.build-armcc-object">
+        <value name=".armads.armcc-settings.cc-target-opt.cc-target-proc">
+          <item value="11" />
+        </value>
+        <value name=".armads.ccgen-settings.cc-prep-opt.cc-prep-path.cc-prep-inc">
+          <item>
+            <item value="..\..\..\..\..\..\" />
+          </item>
+        </value>
+        <value name=".armads.ccgen-settings.cc-prep-opt.cc-prep-def">
+          <item>
+            <item value="__RELEASE_BUILD__" />
+          </item>
+        </value>
+        <value name=".armads.ccgen-settings.cc-debug-opt.cc-debug-oplev">
+          <item value="3" />
+        </value>
+        <command template=".armads.build-armcc-object" target="3">
+          <value name=".armads.build-armcc-object.io.output">
+            <item value="3" />
+          </value>
+          <value name=".armads.build-armcc-object.io.input">
+            <item value="2" />
+          </value>
+        </command>
+      </command>
+    </settings>
+  </variant>
+</project>
+

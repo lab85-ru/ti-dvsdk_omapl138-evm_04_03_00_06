@@ -1,0 +1,6 @@
+/lib/libnss_nisplus.so.2
+/lib/libnss_nisplus-2.9.so
+/lib/libnss_nis-2.9.so
+/lib/libnss_nis.so.2
+/lib/libnss_hesiod.so.2
+/lib/libnss_hesiod-2.9.so

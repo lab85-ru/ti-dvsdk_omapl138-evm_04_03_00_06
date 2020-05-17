@@ -1,0 +1,188 @@
+#   ============================================================================
+#   @file   COMPONENT
+#
+#   @path   $(DSPLINK)/gpp/src/ldrv/Linux/
+#
+#   @desc   This file contains information to build a component.
+#
+#   @ver    1.65.01.05_eng
+#   ============================================================================
+#   Copyright (C) 2002-2009, Texas Instruments Incorporated - http://www.ti.com/
+#
+#   This program is free software; you can redistribute it and/or modify it
+#   under the terms of the GNU General Public License as published by the
+#   Free Software Foundation version 2.
+#   
+#   This program is distributed "as is" WITHOUT ANY WARRANTY of any kind,
+#   whether express or implied; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+#   General Public License for more details.
+#   ============================================================================
+
+
+
+#   ============================================================================
+#   Generic information about the component
+#   ============================================================================
+
+COMP_NAME       := LDRV
+COMP_PATH       := $(TI_DSPLINK_GPPROOT)$(DIRSEP)src$(DIRSEP)ldrv
+COMP_TYPE       := LIB
+COMP_TARGET     := ldrv.o
+COMP_MEMSPACE   := KRNL
+
+
+#   ============================================================================
+#   Header file(s) exported from this component
+#   ============================================================================
+
+#   ----------------------------------------------------------------------------
+#   Check if either CHNL or MSGQ have ZCPY link included.
+#   ----------------------------------------------------------------------------
+PHYS    := $(TI_DSPLINK_DM6446GEM_PHYINTERFACE)
+PHYS    += $(TI_DSPLINK_DA8XXGEM_PHYINTERFACE)
+PHYS    += $(TI_DSPLINK_DM6467GEM_PHYINTERFACE)
+PHYS    += $(TI_DSPLINK_DM6437_PHYINTERFACE)
+PHYS    += $(TI_DSPLINK_DM648_PHYINTERFACE)
+PHYS    += $(TI_DSPLINK_DM642_PHYINTERFACE)
+PHYS    += $(TI_DSPLINK_DRA44XGEM_PHYINTERFACE)
+PHYS    += $(TI_DSPLINK_DRX416GEM_PHYINTERFACE)
+PHYS    += $(TI_DSPLINK_OMAP2530_PHYINTERFACE)
+PHYS    += $(TI_DSPLINK_OMAP3530_PHYINTERFACE)
+PHYS    += $(TI_DSPLINK_TNETV107XGEM_PHYINTERFACE)
+
+export USE_ZCPY_LINK := 0
+ifeq ($(TI_DSPLINK_USE_CHNL_ZCPY_LINK), 1)
+    USE_ZCPY_LINK := 1
+endif
+ifeq ($(TI_DSPLINK_USE_MSGQ_ZCPY_LINK), 1)
+    USE_ZCPY_LINK := 1
+endif
+
+#   ----------------------------------------------------------------------------
+#   Check if either CHNL or MSGQ have PCPY link included.
+#   ----------------------------------------------------------------------------
+export USE_PCPY_LINK := 0
+ifeq ($(TI_DSPLINK_USE_CHNL_PCPY_LINK), 1)
+    USE_PCPY_LINK := 1
+endif
+ifeq ($(TI_DSPLINK_USE_MSGQ_PCPY_LINK), 1)
+    USE_PCPY_LINK := 1
+endif
+
+EXP_HEADERS     :=  ldrv.h                                                     \
+                    ldrv_os.h                                                  \
+                    cfgmap.h                                                   \
+                    ldrv_utils.h
+
+ifneq ($(TI_DSPLINK_ONLY_PROC_COMPONENT), 1)
+EXP_HEADERS     +=  DRV$(DIRSEP)ldrv_drv.h                                     \
+                    DRV$(DIRSEP)shm_drv.h                                      \
+                    SMM$(DIRSEP)ldrv_smm.h                                     \
+                    IPS$(DIRSEP)ldrv_ips.h                                     \
+                    IPS$(DIRSEP)ips.h
+
+# POOL included
+ifeq ($(TI_DSPLINK_USE_POOL), 1)
+    EXP_HEADERS     +=  POOLS$(DIRSEP)ldrv_pool.h
+    ifneq ("$(findstring SHMEM, $(PHYS))", "")
+        EXP_HEADERS     +=  POOLS$(DIRSEP)sma_pool.h
+    endif
+    ifneq ("$(findstring PCI, $(PHYS))", "")
+        EXP_HEADERS     +=  POOLS$(DIRSEP)dma_pool.h
+    endif
+    ifneq ("$(findstring VLYNQ, $(PHYS))", "")
+        EXP_HEADERS     +=  POOLS$(DIRSEP)dma_pool.h
+    endif
+endif
+
+# CHNL included
+ifeq ($(TI_DSPLINK_USE_CHNL), 1)
+    EXP_HEADERS     +=  ldrv_chnl.h                                            \
+                        ldrv_chirps.h                                          \
+                        DATA$(DIRSEP)ldrv_data.h
+    ifneq ("$(findstring SHMEM, $(PHYS))", "")
+        EXP_HEADERS     +=  DATA$(DIRSEP)zcpy_data.h
+    endif
+    ifneq ("$(findstring PCI, $(PHYS))", "")
+        EXP_HEADERS     +=  DATA$(DIRSEP)dcpy_data.h
+    endif
+    ifneq ("$(findstring VLYNQ, $(PHYS))", "")
+        EXP_HEADERS     +=  DATA$(DIRSEP)dcpy_data.h
+    endif
+endif
+
+# MSGQ included
+ifeq ($(TI_DSPLINK_USE_MSGQ), 1)
+    EXP_HEADERS     +=  ldrv_msgq.h                                            \
+                        MQT$(DIRSEP)ldrv_mqt.h
+    ifneq ("$(findstring SHMEM, $(PHYS))", "")
+        EXP_HEADERS     +=  MQT$(DIRSEP)zcpy_mqt.h
+    endif
+    ifneq ("$(findstring PCI, $(PHYS))", "")
+        EXP_HEADERS     +=  MQT$(DIRSEP)dcpy_mqt.h
+    endif
+    ifneq ("$(findstring VLYNQ, $(PHYS))", "")
+        EXP_HEADERS     +=  MQT$(DIRSEP)dcpy_mqt.h
+    endif
+endif
+
+# RINGIO included
+ifeq ($(TI_DSPLINK_USE_RINGIO), 1)
+    EXP_HEADERS     +=  RINGIO$(DIRSEP)ldrv_ringio.h
+endif
+
+# MPCS included
+ifeq ($(TI_DSPLINK_USE_MPCS), 1)
+    EXP_HEADERS     +=  MPCS$(DIRSEP)ldrv_mpcs.h
+    EXP_HEADERS     +=  MPCS$(DIRSEP)ldrv_mpcs_os.h
+endif
+
+# MPLIST included
+ifeq ($(TI_DSPLINK_USE_MPLIST), 1)
+    EXP_HEADERS     +=  MPLIST$(DIRSEP)ldrv_mplist.h
+endif
+endif # only proc component
+
+# PROC included
+ifeq ($(TI_DSPLINK_USE_PROC), 1)
+    EXP_HEADERS     +=  ldrv_proc.h
+endif
+
+
+
+#   ============================================================================
+#   User specified additional command line options for the compiler
+#   ============================================================================
+
+USR_CC_FLAGS    :=
+
+USR_CC_DEFNS    := -D__KERNEL__ -DMODULE -DTRACE_KERNEL
+
+
+#   ============================================================================
+#   User specified additional command line options for the linker
+#   ============================================================================
+
+USR_LD_FLAGS    :=
+
+
+#   ============================================================================
+#   Standard libraries of GPP OS required during linking
+#   ============================================================================
+
+STD_LIBS        :=
+
+
+#   ============================================================================
+#   User specified libraries required during linking
+#   ============================================================================
+
+USR_LIBS        :=
+
+
+#   ============================================================================
+#   Target file(s) exported from this module
+#   ============================================================================
+
+EXP_TARGETS     :=

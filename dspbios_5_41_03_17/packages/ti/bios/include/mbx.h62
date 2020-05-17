@@ -1,0 +1,240 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== mbx.h62 ========
+;
+;
+
+        .if ($isdefed("MBX_") = 0)  ; prevent multiple includes of this file
+MBX_    .set    1
+
+        .include std.h62
+        .include obj.h62
+        .include que.h62
+        .include sem.h62
+
+        .eval   0,      MBX_DATAQOFFSET
+        .eval   2,      MBX_FREEQOFFSET
+        .eval   4,      MBX_DATASEMOFFSET
+        .eval   4 + SEM_CORESIZE,  MBX_FREESEMOFFSET
+        .eval   4,      MBX_OTHERFIELDSSIZE   ;segid, size, length, name
+        .eval   (2*QUE_ELEMSIZE)+(2*SEM_CORESIZE)+MBX_OTHERFIELDSSIZE, MBX_CORESIZE
+
+        .eval   OBJ_HDRSIZE+MBX_CORESIZE, MBX_OBJSIZE
+
+;
+;# ======== MBX_config ========
+;  Static configuration of the MBX module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", MBX_config$regs
+MBX_config      .macro
+        .endm
+
+
+;
+;# ======== MBX_init ========
+;  Runtime initialization of the MBX module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", MBX_init$regs
+MBX_init        .macro
+
+        ; only expand if the MBX module is configured
+        .if (MBX$ = 1)
+        .endif
+
+        .endm
+
+;
+;# ======== MBX_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", MBX_startup$regs
+MBX_startup        .macro
+
+        .if     MBX$NUMOF != 0
+        .endif
+        .endm
+
+;
+;# ======== MBX_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", MBX_end$regs
+MBX_end .macro
+        .endm
+
+;
+;# ======== MBX_Obj ========
+;
+;  Parameters:  _size   - size of message in bytes (Must be bytes because of
+;                         memcpy in MBX_pend and MBX_post).
+;               _length - maximum number of messages that can be queued up.
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", MBX_Obj$regs
+MBX_Obj .macro cflag, name, id, _size, _length, _elemSeg
+
+        .global :name:$queElems
+        .global :name:
+        .global :name:$data
+        .global :name:$free
+
+        .if :_size: = 0
+            .emsg "MBX :name:: size must be greater than 0"
+        .endif
+
+        .if :_length: = 0
+            .emsg "MBX :name:: length must be greater than 0"
+        .endif
+
+        ; SIZE is the minimum number of words needed to contain the mbx message
+        .eval (:_size: + STD_TARGWORDMAUS - 1) / STD_TARGWORDMAUS, SIZE
+
+
+:name:$obj      .usect ".mbx", OBJ_HDRSIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+:name:          .usect ".mbx", MBX_DATASEMOFFSET * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+:name:$data     .usect ".mbx", SEM_CORESIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+:name:$free     .usect ".mbx", (SEM_CORESIZE + MBX_OTHERFIELDSSIZE) * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   MBX_OBJSIZE * STD_TARGWORDMAUS
+        .word   :name:$obj
+
+        ; A label for this object, ":name:", will be set in OBJ_Obj
+        OBJ_Obj :name:, OBJ_MBX, MBX_CORESIZE
+
+        .word   :name: + MBX_DATAQOFFSET        ; dataQue, initially empty
+        .word   :name: + MBX_DATAQOFFSET
+
+        .word   :name:$queElems                 ; freeQue, initially not empty
+        .word   :name:$queElems+(:_length:-1)*(SIZE + QUE_ELEMSIZE) * STD_TARGWORDMAUS
+
+        SEM_core :name:$data, 0
+        SEM_core :name:$free, :_length:
+
+        ;
+        ; segid is set to -1 here for static MBX objects. This will
+        ; allow KOV to distinguish between static and dynamic 
+        ; MBX objects.
+        ;
+
+        .word   -1                      ; segid
+        .word   :_size:
+        .word   :_length:
+        .word   0                       ; name
+
+
+;
+;  Now we need to create a group of MBX elements, each consisting of a
+;  QUE_Elem followed by a block of memory, the size of which is defined by
+;  the :_size: parameter.  The number of elements created is defined by the
+;  :_length: parameter.  In order to initialize the QUE_Elem's such that
+;  a doubly linked list is formed, we will set the "prev" field of the first
+;  element, and the "next" field of the last element separately, since these
+;  two fields both point to the queue head.  Then in a loop, we will set
+;  the "next" field of the current element, and the "prev" field of the
+;  following element, since these two fields essentially point to each other.
+;
+
+        ;
+        ;  Memory space is reserved by the linker command file in a .MBX$que
+        ;  section, and initialized with the following .cinit section.
+        ;
+
+        .eval   0, THIS
+        .eval   (SIZE+QUE_ELEMSIZE) * STD_TARGWORDMAUS, FOLLOWING
+
+        ;
+        ;  Set "prev" field of first element
+        ;
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   1 * STD_TARGWORDMAUS
+        .word   :name:$queElems + STD_TARGWORDMAUS
+        .word   :name:+MBX_FREEQOFFSET*STD_TARGWORDMAUS  ; first element points back to head
+
+        ;
+        ;  Set up a loop to set the "next" field of the current element
+        ;  and the "prev" field of the following element.  Since the first
+        ;  "prev" field and the last "next" field are handled separately,
+        ;  the loop is followed :_length: -1 times.
+        ;
+
+        .eval   :_length:, lpcnt
+        .loop :_length:
+            .eval       lpcnt-1, lpcnt
+            .break      lpcnt = 0
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       1 * STD_TARGWORDMAUS
+            .word       :name:$queElems+THIS            ; Current "next" field
+            .word       :name:$queElems+FOLLOWING
+
+            .sect       ".cinit"        ; The following element's "prev" field
+            .align      STD_TARGALIGN
+            .word       1 * STD_TARGWORDMAUS
+            .word       :name:$queElems+FOLLOWING + STD_TARGWORDMAUS
+            .word       :name:$queElems+THIS
+
+            .eval       FOLLOWING, THIS  ; advance to next pair of QUE elements
+            .eval       THIS + (SIZE + QUE_ELEMSIZE) * STD_TARGWORDMAUS, FOLLOWING
+
+        .endloop
+
+        ;
+        ;  Finally, set "next" field of last element
+        ;
+
+        .sect   ".cinit"                ; last element points ahead to head
+        .align  STD_TARGALIGN
+        .word   1 * STD_TARGWORDMAUS
+        .word   :name:$queElems+THIS
+        .word   :name:+MBX_FREEQOFFSET * STD_TARGWORDMAUS
+
+        .endm
+
+
+        .endif          ; if MBX_ is not defined

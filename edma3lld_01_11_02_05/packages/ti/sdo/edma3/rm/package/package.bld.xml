@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.sdo.edma3.rm" version="01, 03, 09" producerId="undefined">
+    <units>
+        <module name="RM"/>
+    </units>
+    <sources>
+    </sources>
+    <configurations>
+    </configurations>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="package/rel/ti_sdo_edma3_rm.tar.dep" src="package/rel/ti_sdo_edma3_rm.xdc.inc"/>
+    </makefiles>
+    <targets>
+    </targets>
+    <libraries>
+    </libraries>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_sdo_edma3_rm"
+        pname="ti_sdo_edma3_rm.tar"
+        label="default"
+    >
+        <file name="lib/da830/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/tci6488/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/dm6437/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/c6455/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/c6455/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/c6472/Release/edma3_rm_bios.lib"/>
+        <file name="lib/tci6488/Debug/edma3_rm_bios.lib"/>
+        <file name="RM.xdc"/>
+        <file name="lib/omap2430/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/omap3430/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/dm6467/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/dm6446/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/c6424/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/omapl138/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/omap25xx/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/dm6467/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/omapl137/Debug/edma3_rm_bios_i.lib"/>
+        <file name="RM.xdt"/>
+        <file name="lib/omapl137/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/c6474/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/tci6486/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/dm6467/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/omapl138/Release/edma3_rm_bios.lib"/>
+        <file name="lib/dm6446/Debug/edma3_rm_bios_i.lib"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="lib/c6424/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/da830/Debug/edma3_rm_bios.lib"/>
+        <file name="package/package.ext.xml"/>
+        <file name="lib/dm648/Release/edma3_rm_bios.lib"/>
+        <file name="lib/omap2430/Release/edma3_rm_bios.lib"/>
+        <file name="lib/c6748/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/omap25xx/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/c6747/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/omap3430/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/c6472/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/c6747/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/c6474/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/c6748/Release/edma3_rm_bios.lib"/>
+        <file name="package.bld"/>
+        <file name="lib/c6424/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/tci6488/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/dm648/Release/edma3_rm_bios_i.lib"/>
+        <file name="package.xs"/>
+        <file name="edma3_common.h"/>
+        <file name="lib/c6747/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/da830/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/c6472/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/tci6486/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/omap3430/Debug/edma3_rm_bios.lib"/>
+        <file name="edma3_rm.h"/>
+        <file name="lib/omapl138/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/dm6437/Release/edma3_rm_bios.lib"/>
+        <file name="lib/dm648/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/omap2430/Debug/edma3_rm_bios_i.lib"/>
+        <file name="docs"/>
+        <file name="lib/c6452/Release/edma3_rm_bios.lib"/>
+        <file name="lib/omap35xx/Release/edma3_rm_bios.lib"/>
+        <file name="package/package.bld.xml"/>
+        <file name="lib/c6472/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/c6748/Debug/edma3_rm_bios.lib"/>
+        <file name="src"/>
+        <file name="lib/omap2430/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/da830/Release/edma3_rm_bios.lib"/>
+        <file name="lib/c6748/Debug/edma3_rm_bios_i.lib"/>
+        <file name="package/package.rel.dot"/>
+        <file name="lib/tci6488/Release/edma3_rm_bios.lib"/>
+        <file name="lib/c6455/Release/edma3_rm_bios.lib"/>
+        <file name="build"/>
+        <file name="package/build.cfg"/>
+        <file name="lib/dm648/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/dm6437/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/omap25xx/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/omap35xx/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/c6474/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/omapl137/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/c6452/Release/edma3_rm_bios_i.lib"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="lib/c6452/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/omap25xx/Release/edma3_rm_bios.lib"/>
+        <file name="lib/omap35xx/Debug/edma3_rm_bios_i.lib"/>
+        <file name="lib/omapl137/Release/edma3_rm_bios.lib"/>
+        <file name="lib/dm6437/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/c6452/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/tci6486/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/c6455/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/c6474/Release/edma3_rm_bios.lib"/>
+        <file name="lib/tci6486/Release/edma3_rm_bios.lib"/>
+        <file name="lib/dm6446/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/dm6467/Release/edma3_rm_bios.lib"/>
+        <file name="lib/omap35xx/Debug/edma3_rm_bios.lib"/>
+        <file name="lib/dm6446/Release/edma3_rm_bios.lib"/>
+        <file name="lib/c6424/Release/edma3_rm_bios.lib"/>
+        <file name="lib/c6747/Release/edma3_rm_bios.lib"/>
+        <file name="lib/omapl138/Release/edma3_rm_bios_i.lib"/>
+        <file name="lib/omap3430/Release/edma3_rm_bios.lib"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

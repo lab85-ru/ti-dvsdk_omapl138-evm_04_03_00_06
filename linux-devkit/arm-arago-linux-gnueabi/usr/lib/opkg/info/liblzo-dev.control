@@ -1,0 +1,14 @@
+Package: liblzo-dev
+Version: 1.08-r15.6
+Description: Lossless data compression library
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: armv5te
+OE: lzo
+Homepage: http://www.oberhumer.com/opensource/lzo/
+Build: install/d0bd439
+Depends: liblzo1 (= 1.08-r15.6), liblzo1
+Recommends: libc6-dev, liblzo-dev
+Source: http://www.oberhumer.com/opensource/lzo/download/lzo-1.08.tar.gz

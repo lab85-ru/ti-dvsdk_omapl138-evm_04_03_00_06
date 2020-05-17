@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/beagleboard_syslink
+END
+loadmodules.sh
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/beagleboard_syslink/loadmodules.sh
+END
+platform.bld
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/beagleboard_syslink/platform.bld
+END
+unloadmodules.sh
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/beagleboard_syslink/unloadmodules.sh
+END
+sysbios6.xs
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/beagleboard_syslink/sysbios6.xs
+END
+platform.mak
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/beagleboard_syslink/platform.mak
+END

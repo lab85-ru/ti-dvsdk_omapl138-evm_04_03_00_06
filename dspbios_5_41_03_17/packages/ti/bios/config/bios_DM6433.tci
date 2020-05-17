@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_DM6433.tci ========
+ *  This file contains BIOS settings for DM6433.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_6424.tci");
+
+/*
+ *  ======== bios.initDM6433 ========
+ *  BIOS initialization for the DM6433 is same as for 6424 
+ */
+bios.initDM6433 = bios.init6424;

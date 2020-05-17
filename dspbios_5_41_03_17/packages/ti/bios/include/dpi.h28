@@ -1,0 +1,119 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== dpi.h28 ========
+;
+;
+
+        .if ($isdefed("DPI_H28") = 0)  ; prevent multiple includes of this file
+DPI_H28 .set    1
+
+        .include dev.h28
+
+;
+;# ======== DPI_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", DPI_Obj$regs
+DPI_Obj .macro cflag, name, id, devid, isVirtual
+
+        .global _DPI_FXNS
+
+; This label matches SIO_:_device:$params in sio.h28
+;
+SIO_:name:$params       .set 0
+
+        .sect   ".econst"
+DPI_:name:      .byte   "/:name:", 0    ; Set up string "/<devName>"
+
+;
+; This adds an entry to the device table, DEV_devtab, and init table DEV_devinit
+;
+
+        .if (isVirtual)
+            .asg -1, newdevid
+        .else
+            .asg :devid:, newdevid
+        .endif
+
+        DEV_addDevice DPI_:name:, _DPI_FXNS, newdevid, 0, _DPI_init, DEV_SIOTYPE, 0
+
+        .endm
+
+;
+;# ======== DPI_config ========
+;  Static configuration of the DPI module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DPI_config$regs
+DPI_config      .macro _enabled
+        .asg    0, DPI$devid
+        .endm
+
+;
+;# ======== DPI_end ========
+;  Invoked at the end of all other configuration
+;  declarations.  
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DPI_end$regs
+DPI_end .macro
+        .endm
+
+;
+;# ======== DPI_init ========
+;  Runtime initialization of the DPI module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DPI_init$regs
+DPI_init        .macro
+        .endm
+
+;
+;# ======== DPI_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", DPI_startup$regs
+DPI_startup        .macro
+        .if     DPI$NUMOF != 0
+        .endif
+        .endm
+
+        .endif          ; if DPI_H28 is not defined

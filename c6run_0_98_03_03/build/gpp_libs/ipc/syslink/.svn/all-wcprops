@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/ipc/syslink
+END
+rpc_ipc.c
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/ipc/syslink/rpc_ipc.c
+END
+cio_ipc.c
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/ipc/syslink/cio_ipc.c
+END
+C6Run_ipc.c
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/ipc/syslink/C6Run_ipc.c
+END
+control_ipc.c
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/ipc/syslink/control_ipc.c
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/ipc/syslink/Makefile
+END

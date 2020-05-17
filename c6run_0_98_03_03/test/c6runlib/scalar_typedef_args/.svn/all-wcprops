@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/scalar_typedef_args
+END
+scalar_typedef_args.c
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/scalar_typedef_args/scalar_typedef_args.c
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/scalar_typedef_args/main.c
+END
+scalar_typedef_args.h
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/scalar_typedef_args/scalar_typedef_args.h
+END
+test.sh
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/scalar_typedef_args/test.sh
+END
+readme.txt
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/scalar_typedef_args/readme.txt
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/scalar_typedef_args/Makefile
+END

@@ -1,0 +1,13 @@
+SECTIONS
+{
+% if (this.H264DEC.dataSection) { 
+     .const:H264VDEC_TI_dSect1  > `this.H264DEC.dataSection`, align=0x80
+%}
+% if (this.H264DEC.udataSection) { 
+     .far:H264VDEC_TI_uSect1  > `this.H264DEC.dataSection`, align=0x80
+%}
+% if (this.H264DEC.codeSection) {
+     .text:H264VDEC_TI_cSect1  > `this.H264DEC.codeSection`, align=0x10000 
+%}
+
+}

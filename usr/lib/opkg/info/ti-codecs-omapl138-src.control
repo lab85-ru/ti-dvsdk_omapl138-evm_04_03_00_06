@@ -1,0 +1,9 @@
+Package: ti-codecs-omapl138-src
+Version: 4_02_00_00-r57d
+Description: Patched sources for ti-codecs-omapl138
+Section: multimedia
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI
+Architecture: all
+Source: git://arago-project.org/git/projects/codec-servers.git;protocol=git     http://install.dir.local.com/c64xplus_jpegenc_02_00_01_00_production.tar.gz;name=jpegenc     http://install.dir.local.com/c64xplus_jpegdec_02_00_01_01_production.tar.gz;name=jpegdec     http://install.dir.local.com/c64xplus_mpeg2dec_02_00_02_00_production.tar.gz;name=mpeg2dec     http://install.dir.local.com/c64xplus_mpeg4dec_02_01_00_00_production.tar.gz;name=mpeg4dec     http://install.dir.local.com/c64xplus_mpeg4enc_02_02_04_production.tar.gz;name=mpeg4enc     http://install.dir.local.com/dm6446_h264enc_02_02_00_02_production.tar.gz;name=h264enc     http://install.dir.local.com/dm6446_h264dec_2_00_002_production.tar.gz;name=h264dec     http://install.dir.local.com/dm6446_aachedec_01_30_03_00_production.tar.gz;name=aachedec     http://install.dir.local.com/dm6446_g711dec_1_12_00_000_production.tar.gz;name=g711dec     http://install.dir.local.com/dm6446_g711enc_1_12_00_000_production.tar.gz;name=g711enc 

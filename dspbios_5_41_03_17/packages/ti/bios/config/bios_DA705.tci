@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_DA705.tci ========
+ *  This file contains BIOS settings for DA705 (Antara).
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_DA710.tci");
+
+/*
+ *  ======== bios.initDA705 ========
+ *  BIOS initialization for the DA705 is same as for DA710
+ */
+bios.initDA705 = bios.initDA710;

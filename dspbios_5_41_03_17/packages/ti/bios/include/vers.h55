@@ -1,0 +1,32 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== vers.h55 ========
+;
+;
+        .if ($isdefed("VERS_") = 0)  ; prevent multiple includes of this file
+VERS_   .set    1
+
+        .include chk.h55
+
+VERS_create     .macro date, cdb, tree, cdbpath
+        CHK_nargs "VERS_create", tree
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .mexit
+        .endif
+
+        .sect ".vers"
+        .byte ":date:"
+        .byte 0
+        .byte ":cdb:"
+        .byte 0
+        .byte ":tree:"
+        .byte 0
+        .byte ":cdbpath:"
+        .byte 0
+        .text
+        .endm
+
+        .endif          ; if VERS_ is not defined

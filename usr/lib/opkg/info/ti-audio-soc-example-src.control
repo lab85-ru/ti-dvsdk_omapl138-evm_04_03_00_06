@@ -1,0 +1,9 @@
+Package: ti-audio-soc-example-src
+Version: 1_00_00_03-r6
+Description: Patched sources for ti-audio-soc-example
+Section: devel
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI BSD
+Architecture: all
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/apps_processors/Audio_soc_example/1_00/exports/audio_soc_example_1_00_00_03.tar.gz;name=audiosoctarball   file://0000_switch_to_arago_tool_chain.patch 

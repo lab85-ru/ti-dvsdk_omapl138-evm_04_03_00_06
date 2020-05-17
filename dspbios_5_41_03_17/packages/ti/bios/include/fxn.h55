@@ -1,0 +1,281 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+
+;  ======== fxn.h55 ========
+;
+;
+
+    .if ($isdefed("FXN_") = 0)    ; prevent multiple includes of this file
+FXN_    .set    1
+
+    .include cinit.h55  
+    .include chk.h55
+    .include gbl.h55
+    .include std.h55
+    .include c55.h55
+
+isFxnAligned   .set     LONGALIGN
+
+;
+;  ======== FXN_Obj ========
+;
+FXN_Obj         .struct
+fxn             CodePtr 1
+arg1            Args    1
+arg0            Args    1
+endPad          .align  isFxnAligned
+FXN_A_OBJSIZE   .endstruct
+
+FXN_BASE        .set    FXN_Obj.fxn
+
+FXN_O_FXN       .set    FXN_Obj.fxn - FXN_BASE
+FXN_O_ARG1      .set    FXN_Obj.arg1 - FXN_BASE
+FXN_O_ARG0      .set    FXN_Obj.arg0 - FXN_BASE
+
+    .mmregs
+
+    .global  FXN_F_run, FXN_F_nop, FXN_F_zero
+
+;
+;# ======== FXN_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", FXN_Obj$regs
+FXN_Obj .macro  name, fxn, arg0, arg1, section
+    CHK_nargs "FXN_Obj", section
+    .if ($symcmp(":CHK_status:", "error") = 0)
+        .emsg "FXN_Obj parameter error"
+    .endif
+
+:name:  .tag    FXN_Obj
+
+        C55_allocateObject isFxnAligned, :name:, FXN_A_OBJSIZE, :section:
+        C55_cinitHeader CINITALIGN, isFxnAligned, :name:, FXN_A_OBJSIZE, 0
+        FXN_cinitObj :fxn:, :arg0:, :arg1: 
+        .endm
+
+;
+;# ======== FXN_cinitObj ========
+; Create the value section for fxn records
+;
+;  Parameters
+;  fxn:         The value to which the fxn field  has to initialized
+;  arg1:        The value to which the arg1 field  has to initialized
+;  arg0:        The value to which the arg0 field  has to initialized
+;#
+; 
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+FXN_cinitObj  .macro  fxnName, arg0, arg1
+    CHK_nargs "FXN_Obj", arg1
+    .if ($symcmp(":CHK_status:", "error") = 0)
+        .emsg "FXN_Obj parameter error"
+    .endif
+        C55_cinitBegin          isFxnAligned
+        C55_cinitCodePtr        :fxnName: 
+        C55_cinitArg            :arg1:                          
+        C55_cinitArg            :arg0:                          
+        C55_cinitEnd            isFxnAligned
+ .endm
+
+;
+;# ======== FXN_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+    .asg    "", FXN_config$regs
+FXN_config    .macro
+    .endm
+
+;
+;# ======== FXN_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+    .asg    "", FXN_end$regs
+FXN_end .macro
+    .endm
+
+;
+;# ======== FXN_init ========
+;  Runtime initialization for FXN
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+    .asg    "", FXN_init$regs
+FXN_init    .macro
+    .endm
+
+;
+;# ======== FXN_execute ========
+;
+;#
+;# Preconditions:
+;#    ar0 = address of an FXN_Obj structure
+;#
+;# Postconditions:
+;#      none
+;#
+;  Modifies:
+;    Since FXN_execute can call an arbitrary C function, we list the
+;    entire set of registers that are not preserved by C.
+;
+    .asg    "ac0_g,ac0_h,ac0_l,ac1_g,ac1_h,ac1_l,ac2_g,ac2_h,ac2_l,ac3_g,ac3_h,ac3_l, ar0,ar1,ar2,ar3,ar4,t0,t1,trn1, brc1,brs1,csr,rsa0_h,rsa0_l,rea0_h,rea0_l,rsa1_h,rsa1_l,rea1_h,rea1_l, rptc", FXN_execute$regs 
+FXN_execute    .macro    opcode
+        .if (.MNEMONIC)                 ; if MNEMONIC assembler
+                mov xsp ,xar2           ; ar2 stores value of SP
+                mov xssp, xar3          ; ar3 stores value SSP
+                mov dbl(*ar0+),ac0      ; ac0 = fxn address
+                and #STD_TARGSTKALIGNMASK, SP_MMR       ; Take SP/SSP to next
+                                        ; even boundary. Note that
+                and #STD_TARGSTKALIGNMASK, SSP_MMR    ; SSP is taken to even 
+                                        ; boundary, as 1*32 mode
+                                        ; SP and SSP should always
+                                        ; be operated in synch as
+                                        ; we dont know what mode
+                                        ; of  stack operation we are in
+
+                mov xar0, xar4          ; save xar0 as it would
+                                        ; be used to
+                                        ; pass parameters to 
+                                        ; the function
+        
+                and #STD_TARGALIGN,ar2, ar2             ; Store  bit1 of xsp and xssp
+                and #STD_TARGALIGN,ar3, ar3             ; which holds the alignment info
+
+                pshboth xar2            ; save old SP/SSP in stack
+                pshboth xar3
+
+                .if  (_55L_) | (_55H_)  
+                        mov dbl(*ar4+), xar1    ; xar1 = second  param
+                        mov dbl(*ar4+), xar0    ; xar0 =  first param
+                .else
+                        mov *ar4+,ar1           ; ar1 =  second param
+                        mov *ar4+,ar0           ; ar0 = first  param
+                .endif
+                call ac0                        ; call the fxn with SP  even
+               ; Note: at this point, right after the called function returns
+               ; the stack may have been switched. For instance if the called
+               ; function were KNL_run(KNL_RUNASYNC) and FXN_execute were
+               ; called from SWI_F_run, then the sp and ssp might have been 
+               ; switched from HWI stack to task stack
+                
+                popboth xar3            ; restore stack and
+                popboth xar2            ; system stack.
+
+                ; If alignment is done before calling the function advance
+                ; the stack pointer by one for both data stack and system stack
+                ; pointers.
+                
+                bcc next?, ar3 == #0
+                mov SSP_MMR, ar3
+                add #STD_TARGALIGN, ar3
+                mov ar3, ssp
+
+next?:          bcc end?, ar2 == #0
+                mov sp, ar2
+                add #STD_TARGALIGN, ar2         ; Note that sp=sp+#1 is dependent on
+                                        ; stack models, to make it independent
+                                        ; ar2 is used for incrementing
+                mov ar2 , sp
+end?:
+
+        .else                           ; if ALGEBRAIC  
+                pshboth(xar5)
+                xar5 = xsp              ; ar2 stores value of SP  
+                ac0 = dbl(*ar0+)        ; ac0 = fxn address
+                SP_MMR = SP_MMR & #STD_TARGSTKALIGNMASK ||mmap()        ; Take SP/SSP to next even
+
+                xar4 = xar0             ; save xar0 it would be used to
+                                        ; pass parameters to  fxn
+                
+                ar5 = ar5 & #STD_TARGALIGN ; upper half of xar2 is left
+                                        ; out but this is fine since we
+                                        ; need just bit1 for checking alignment
+
+                .if  (_55L_) | (_55H_)  
+                        xar1 = dbl(*ar4+)       ; xar1 = second  param
+                        xar0 = dbl(*ar4+)       ; xar0 =  first param
+                .else
+                        ar1 = *ar4+     ; ar1 =  second param
+                        ar0 = *ar4+     ; ar0 = first  param
+                .endif
+                call ac0                ; call the fxn with SP  even
+        
+                ; Note: at this point, right after the called function returns
+                ; the stack may have been switched. For instance if the called
+                ; function were KNL_run(KNL_RUNASYNC) and FXN_execute were
+                ; called from SWI_F_run, then the sp and ssp might have been 
+                ; switched from HWI stack to task stack
+
+
+                ; If alignment is done before calling the function advance
+                ; the stack pointer by one for both data stack and system stack
+                ; pointers.
+
+next?:          if( ar5 == #0) goto end?
+                ar2  = sp 
+                ar2 = ar2 + #STD_TARGALIGN ; Note that sp=sp+#1 is dependent on
+                                        ; stack models, to make it independent
+                                        ; ar2 is used for incrementing
+                sp = ar2
+end?:
+                xar5 = popboth()
+        .endif                          ; endif MNEMONIC
+
+    .endm
+
+;
+;# ======== FXN_glue ========
+FXN_glue .macro name,fxn
+    .endm
+
+;
+;# ======== FXN_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+    .asg    "", FXN_startup$regs
+FXN_startup        .macro
+    .endm
+
+    .endif        ; if FXN_ is not defined

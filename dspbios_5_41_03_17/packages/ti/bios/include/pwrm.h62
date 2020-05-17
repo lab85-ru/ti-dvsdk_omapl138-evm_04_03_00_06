@@ -1,0 +1,306 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== pwrm.h62 ========
+;
+;
+
+        .if ($isdefed("PWRM_") = 0)    ; prevent multiple includes of this file
+PWRM_   .set    1
+
+        .include gbl.h62
+        .include obj.h62
+        .include std.h62
+
+        .if ((GBL_CLKTYPE == 2430) | (GBL_CLKTYPE == 3430))
+        .include clk2430.h64P
+        .endif
+
+        .global PWRM_PWRM_ENABLE
+        .global PWRM_PWRM_LOADENABLE
+        .global PWRM_PWRM_USETIMER
+        .global PWRM_PWRM_TIMERWUGENMASK
+        .global PWRM_PWRM_TIMERINTRMASK
+        .global PWRM_PWRM_TIMERIDNUM
+        .global PWRM_PWRM_RESOURCETRACKING
+        .global PWRM_PWRM_SCALING
+        .global PDCCMD_GEMPDMASK
+
+        .if (PWRM_PWRM_USETIMER = 1)
+PDCCMD_GEMPDMASK:       .set 0x00015555
+        .endif
+; .else
+;   PDCCMD_GEMPDMASK    .set ~0x0010000
+
+;
+;# ======== PWRM_config ========
+;  Static configuration of the PWRM module.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PWRM_config$regs
+PWRM_config     .macro _enablePWRM, _loadEnable, _numSlots, _ticksPerSlot, _useTimer, _timerWugenMask, _timerIntrMask, _timerIdNum, _slotHookFxn, _resTrackEnable, _numUserResources, _calloutFxn, _scalingEnable, _capsmask, _initSPCPU, _initSPPER
+
+    .if ((PWRM$ = 1) & (PWRM_PWRM_ENABLE = 1))
+
+        .ref __PWRM_CAPSMASK
+
+        .if (PWRM_PWRM_LOADENABLE = 1)
+
+            .ref __PWRM_numSlots
+            .ref __PWRM_ticksPerSlot
+            .ref __PWRM_initializeSlots
+            .ref __PWRM_SLOTHOOKFXN
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       1 * STD_TARGWORDMAUS
+            .word       __PWRM_numSlots
+            .word       _numSlots
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       1 * STD_TARGWORDMAUS
+            .word       __PWRM_ticksPerSlot
+            .word       _ticksPerSlot
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       1 * STD_TARGWORDMAUS
+            .word       __PWRM_SLOTHOOKFXN
+            .word       _slotHookFxn
+
+        .endif
+
+        .if ((PWRM_PWRM_RESOURCETRACKING = 1) & (GBL_DSPSUBTYPE != 6748))
+            .ref __PWRM_numUserRsrcs
+            .ref __PWRM_RTCALLOUTFXN
+            .ref __PWRM_DATABASE
+            .ref __PWRM_database
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       1 * STD_TARGWORDMAUS
+            .word       __PWRM_numUserRsrcs
+            .word       _numUserResources
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       1 * STD_TARGWORDMAUS
+            .word       __PWRM_RTCALLOUTFXN
+            .word       _calloutFxn
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       1 * STD_TARGWORDMAUS
+            .word       __PWRM_DATABASE
+            .word       __PWRM_database
+
+        .endif
+
+        .sect       ".cinit"
+        .align      STD_TARGALIGN
+        .word       1 * STD_TARGWORDMAUS
+        .word       __PWRM_CAPSMASK
+        .word       _capsmask
+
+        .if (GBL_DSPSUBTYPE == 6748)
+            .ref __PWRM_initSPCPU
+            .ref __PWRM_initSPPER
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       1 * STD_TARGWORDMAUS
+            .word       __PWRM_initSPCPU
+            .word       _initSPCPU
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       1 * STD_TARGWORDMAUS
+            .word       __PWRM_initSPPER
+            .word       _initSPPER
+
+        .endif
+
+
+    .endif
+
+    .endm
+
+
+;
+;# ======== PWRM_init ========
+;  Runtime initialization of the PWRM module.
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PWRM_init$regs
+PWRM_init       .macro
+
+    ; only expand if the PWRM module is configured and enabled
+    .if ((PWRM$ = 1) & (PWRM_PWRM_ENABLE = 1))
+
+        .ref    __PWRM_initialize
+        mvkl    __PWRM_initialize, a4
+        mvkh    __PWRM_initialize, a4
+        b       a4
+        mvkl    pwrm_init_ret, b3
+        mvkh    pwrm_init_ret, b3
+        nop     3
+pwrm_init_ret:
+
+        ; if load tracking enabled... initialize the load history slots 
+        .if (PWRM_PWRM_LOADENABLE = 1)
+            .ref    __PWRM_initializeSlots
+            mvkl    __PWRM_initializeSlots, a4
+            mvkh    __PWRM_initializeSlots, a4
+            b       a4
+            mvkl    pwrm_isinit_ret, b3
+            mvkh    pwrm_isinit_ret, b3
+            nop     3
+pwrm_isinit_ret:
+
+            ; if using timer for slot finalization
+            .if (PWRM_PWRM_USETIMER = 1)
+                .ref    __PWRM_initDependencyTimer
+                mvkl    __PWRM_initDependencyTimer, b4
+             || mvkl    PWRM_PWRM_TIMERIDNUM, a4
+                mvkh    __PWRM_initDependencyTimer, b4
+             || mvkh    PWRM_PWRM_TIMERIDNUM, a4
+                b       b4
+                mvkl    pwrm_initTimer_ret, b3
+                mvkh    pwrm_initTimer_ret, b3
+                nop     3
+pwrm_initTimer_ret:
+
+                mvkl    PWRM_PWRM_TIMERINTRMASK, b2     ; clear IFR
+                mvkh    PWRM_PWRM_TIMERINTRMASK, b2
+                mvc     b2, ICR
+                mvc     IER, b1                         ; set IER
+                or      b1, b2, b1
+                mvc     b1, IER
+                mvkl    CLK2430_WUGEN_MEVTCLR0, b1      ; enable intr in WUGEN
+||              mvkl    PWRM_PWRM_TIMERWUGENMASK, a4
+                mvkh    CLK2430_WUGEN_MEVTCLR0, b1
+||              mvkh    PWRM_PWRM_TIMERWUGENMASK, a4
+                stw     a4, *b1
+                .ref    __PWRM_initializeTimer          ; init & start timer
+                mvkl    __PWRM_initializeTimer, a4
+                mvkh    __PWRM_initializeTimer, a4
+                b       a4
+                mvkl    pwrm_timerinit_ret, b3
+                mvkh    pwrm_timerinit_ret, b3
+                nop     3
+pwrm_timerinit_ret:
+            .endif
+        .endif
+
+        ; if user defined resources... call function to alloc/init them 
+        .if ((PWRM_PWRM_RESOURCETRACKING = 1) & (PWRM_PWRM_USERRESOURCES != 0) & (GBL_DSPSUBTYPE != 6748))
+            .ref    __PWRM_initUserRsrcs
+            mvkl    __PWRM_initUserRsrcs, a4
+            mvkh    __PWRM_initUserRsrcs, a4
+            b       a4
+            mvkl    pwrm_urinit_ret, b3
+            mvkh    pwrm_urinit_ret, b3
+            nop     3
+pwrm_urinit_ret:
+        .endif
+
+        ; if both RT and CLK enabled... set CLK's dependency 
+        .if ((PWRM_PWRM_RESOURCETRACKING = 1) & (CLK$ = 1) & (CLK_USETIMER = 1) & (GBL_DSPSUBTYPE != 6748))
+            .ref    __PWRM_initDependencyCLK
+            mvkl    __PWRM_initDependencyCLK, b4
+         || mvkl    CLK_TIMERNUM, a4
+            mvkh    __PWRM_initDependencyCLK, b4
+         || mvkh    CLK_TIMERNUM, a4
+            b       b4
+            mvkl    pwrm_initCLK_ret, b3
+            mvkh    pwrm_initCLK_ret, b3
+            nop     3
+pwrm_initCLK_ret:
+        .endif
+
+        ; initialize resource reference counts
+        .if ((PWRM_PWRM_RESOURCETRACKING = 1) & (GBL_DSPSUBTYPE == 6748))
+            .ref    __PWRM_initRefCounts
+            mvkl    __PWRM_initRefCounts, a4
+            mvkh    __PWRM_initRefCounts, a4
+            b       a4
+            mvkl    pwrm_rcinit_ret, b3
+            mvkh    pwrm_rcinit_ret, b3
+            nop     3
+pwrm_rcinit_ret:
+        .endif
+          
+        ; if V/F scaling support enabled... auto-register self notification 
+        .if ((PWRM_PWRM_SCALING = 1) & (GBL_DSPSUBTYPE != 6748))
+            .ref    __PWRM_regScaleDone
+            mvkl    __PWRM_regScaleDone, a4
+            mvkh    __PWRM_regScaleDone, a4
+            b       a4
+            mvkl    pwrm_regscale_ret, b3
+            mvkh    pwrm_regscale_ret, b3
+            nop     3
+pwrm_regscale_ret:
+        .endif
+          
+    .endif
+
+    .endm
+
+
+;
+;# ======== PWRM_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", PWRM_startup$regs
+PWRM_startup        .macro
+
+   ; only expand if the PWRM module is configured and enabled
+   .if ((PWRM$ = 1) & (PWRM_PWRM_ENABLE = 1))
+   ; NOTE: if put something here make sure macro preceeds TSK_startup!
+   .endif
+
+   .endm
+
+;
+;# ======== PWRM_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PWRM_end$regs
+PWRM_end .macro
+        .endm
+
+
+        .endif          ; if PWRM_ is not defined
+

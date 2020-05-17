@@ -1,0 +1,32 @@
+%%{
+/*
+ *  Copyright 2008 by Texas Instruments Incorporated.
+ *
+ *  All rights reserved. Property of Texas Instruments Incorporated.
+ *  Restricted rights to use, duplicate or disclose this code are
+ *  granted through contract.
+ * 
+ */
+
+%%}
+%%{
+    var subDir = "c6000";
+    var isa = prog.build.target.isa;
+
+    if (isa[0] == "2") {
+        subDir = "c2000";
+    } else if (isa[0] != "6") {
+        subDir = "c" + isa + "00";
+    }
+
+    var rtdxLib = (new java.io.File(this.packageBase + '/lib')).getCanonicalPath() + "/";
+%%}
+
+/* define the library search paths */
+-i"`rtdxLib + subDir`"
+%%{
+/*
+ * @(#) ti.rtdx; 2, 0, 0, 5,110; 12-16-2008 11:08:37; /db/vtree/library/trees/rtdxtc/rtdxtc-e06x/src/
+ */
+
+%%}

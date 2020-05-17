@@ -1,0 +1,200 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+
+;  ======== fxn.h28 ========
+;
+;
+
+    .if ($isdefed("FXN_") = 0)    ; prevent multiple includes of this file
+FXN_    .set    1
+
+    .include cinit.h28  
+    .include chk.h28
+    .include gbl.h28
+    .include std.h28
+    .include c28.h28
+
+isFxnAligned   .set     2
+BIT_SPA        .set     4
+;
+;  ======== FXN_Obj ========
+;
+FXN_Obj         .struct
+fxn             CodePtr 1
+arg1            Args    1
+arg0            Args    1
+endPad          .align  isFxnAligned
+FXN_A_OBJSIZE   .endstruct
+
+FXN_BASE        .set    FXN_Obj.fxn
+
+FXN_O_FXN       .set    FXN_Obj.fxn - FXN_BASE
+FXN_O_ARG1      .set    FXN_Obj.arg1 - FXN_BASE
+FXN_O_ARG0      .set    FXN_Obj.arg0 - FXN_BASE
+
+
+    .global  FXN_F_run, FXN_F_nop, FXN_F_zero
+
+;
+;# ======== FXN_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", FXN_Obj$regs
+FXN_Obj .macro  name, fxn, arg0, arg1, section
+    CHK_nargs "FXN_Obj", section
+    .if ($symcmp(":CHK_status:", "error") = 0)
+        .emsg "FXN_Obj parameter error"
+    .endif
+
+:name:  .tag    FXN_Obj
+
+        C28_allocateObject isFxnAligned, :name:, FXN_A_OBJSIZE, :section:, 0
+        C28_cinitHeader CINITALIGN, isFxnAligned, :name:, FXN_A_OBJSIZE, 0
+        FXN_cinitObj :fxn:, :arg0:, :arg1: 
+        .endm
+
+;
+;# ======== FXN_cinitObj ========
+; Create the value section for fxn records
+;
+;  Parameters
+;  fxn:         The value to which the fxn field  has to initialized
+;  arg1:        The value to which the arg1 field  has to initialized
+;  arg0:        The value to which the arg0 field  has to initialized
+;#
+; 
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+FXN_cinitObj  .macro  fxnName, arg0, arg1
+    CHK_nargs "FXN_Obj", arg1
+    .if ($symcmp(":CHK_status:", "error") = 0)
+        .emsg "FXN_Obj parameter error"
+    .endif
+        C28_cinitBegin          isFxnAligned
+        C28_cinitCodePtr        :fxnName: 
+        C28_cinitArg            :arg1:                          
+        C28_cinitArg            :arg0:                          
+        C28_cinitEnd            isFxnAligned
+ .endm
+
+;
+;# ======== FXN_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+    .asg    "", FXN_config$regs
+FXN_config    .macro
+    .endm
+
+;
+;# ======== FXN_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+    .asg    "", FXN_end$regs
+FXN_end .macro
+    .endm
+
+;
+;# ======== FXN_init ========
+;  Runtime initialization for FXN
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+    .asg    "", FXN_init$regs
+FXN_init    .macro
+    .endm
+
+;
+;# ======== FXN_execute ========
+;
+;#
+;# Preconditions:
+;#    xar0 = address of an FXN_Obj structure
+;#
+;# Postconditions:
+;#      none
+;#
+;  Modifies:
+;    Since FXN_execute can call an arbitrary C function, we list the
+;    entire set of registers that are not preserved by C on entry.
+;
+    .asg    "al,ah,xar0,xar4,xar5,xar6,xar7,t,tl,pl,ph,ier,ifr,rpc,st0,st1", FXN_execute$regs 
+FXN_execute    .macro    opcode
+                                        ; Save stack in ah
+                asp                     ; Align stack pointer
+                push dp:st1             ; Save SP in ah on stack
+                                        ; Pushing the acc to align it 
+                                        ; to next even boundary
+                movl xar7, *xar0++      ; Load function address in xar7
+                movl xar5, *xar0++      ; Load second Arg in xar4
+                movl xar4, *xar0++      ; Load 1st Arg in xar5
+                lcr *xar7               ; call the fxn with SP  even
+        
+               ; Note: at this point, right after the called function returns
+               ; the stack may have been switched. For instance if the called
+               ; function were KNL_run(KNL_RUNASYNC) and FXN_execute were
+               ; called from SWI_F_run, then the sp and ssp might have been 
+               ; switched from HWI stack to task stack
+                pop acc                 ; Restore the ST1 by popping the value 
+                                        ; from stack
+                tbit @al, #BIT_SPA      ; Check if Stack was aligned or not.
+                sb end?, NTC
+                dec sp
+end?:
+    .endm
+
+;
+;# ======== FXN_glue ========
+FXN_glue .macro name,fxn
+    .endm
+
+;
+;# ======== FXN_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+    .asg    "", FXN_startup$regs
+FXN_startup        .macro
+    .endm
+
+    .endif        ; if FXN_ is not defined

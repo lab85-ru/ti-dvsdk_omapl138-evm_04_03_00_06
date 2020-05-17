@@ -1,0 +1,97 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_2320.tci ========
+ *  This file contains BIOS settings for omap2320.
+ *  Note:  all memory addresses in this file are defined in words.
+ *
+ */
+
+/*
+ *  ======== bios.setupMemory2320 ========
+ *  This function is the top-level function that will remove all MEM segments
+ *  from the cdb file.  It will take your physical memory map from calling
+ *  getMemoryMap() and create MEM instances in cdb. 
+ *  It will then set sections to the default segment specified and fix up
+ *  the length and/or base of MEM segments if needed.
+ */
+bios.internal.setupMemory2320 = function (prog)
+{
+    /*
+     *  BIOS MEM segments will be created from object model memory definitions.
+     *  Place default code and data sections into specified memory segments.
+     */
+    bios.initializeMemory(prog, "SARAM", "DARAM");
+    
+    /*
+     *  The base and len of DARAM and base of SARAM are initialized
+     *  to values from the object model. See C1510.tci for details.
+     *  The interrupt vectors are placed at the end of physical SARAM.
+     *  The remaining length of memory in SARAM is calulated below.
+     */
+    var vect = prog.module("MEM").instance("VECT");
+    vect.base = 0x1ff80;
+
+    var saram = prog.module("MEM").instance("SARAM");
+    saram.len = vect.base - saram.base;
+
+    /*  
+     *  trcinit, pinit, cinit, gblinit, switch in DARAM
+     *  This is required as in small model these data sections
+     *  cannot be placed in SARAM, as it spans
+     *  two different 64kW page boundaries, which should not be allowed.
+     */
+    prog.module("MEM").SWITCHSEG =  prog.get("DARAM");
+    prog.module("MEM").CINITSEG =   prog.get("DARAM");
+    prog.module("MEM").PINITSEG =   prog.get("DARAM");
+    prog.module("MEM").TRCDATASEG = prog.get("DARAM");
+    prog.module("MEM").GBLINITSEG = prog.get("DARAM");
+}
+
+/*
+ *  ======== bios.init2320 ========
+ *  BIOS initialization for the omap2320.
+ */
+bios.init2320 = function (prog, baseseed)
+{
+    /*
+     *  Find configuration seed files to load
+     */
+    if (baseseed == null) {
+        baseseed = "ti/bios/config/cdb/c55omap2320.cdb";
+    }
+
+    var seed = utils.findSeed(baseseed);
+    if (seed != null) {
+        try {
+            prog.load(seed);
+        }
+        catch (e) {
+            throw new Error ("Can't load configuration seed '" + seed + "' : "
+                + e);
+        }
+    }
+    else {
+        throw new Error ("Can't find configuration seed: " + baseseed);
+    }
+    
+    /* set CHIPTYPE to "other".  No CSL library for this device yet */
+    prog.module("GBL").CHIPTYPE = "other";
+
+    /* set CLKOUT to be the value of cpu.clockRate. */
+    bios.internal.setClkout(prog);
+
+    if (prog.build.target.model.dataModel == "huge") {
+        prog.module("GBL").MEMORYMODEL = "HUGE";
+    }
+    else {
+        prog.module("GBL").MEMORYMODEL = "LARGE";
+    }
+
+    bios.internal.setupMemory2320(prog);
+
+    /* initialize some memory map registers */
+    bios.internal.initializeRegisterMap(prog);
+}

@@ -1,0 +1,928 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/TR/REC-html40">
+<head>
+
+  <meta http-equiv="Content-Type" content="text/html">
+  <title>EDMA3 LLD 01.11 Release Notes</title>
+
+
+  <style type="text/css">
+body
+{
+color: #000 ;
+background-color: #fff ;
+margin : 5px 20px 5px 20px;
+font-family: Tahoma, Arial, Helvetica, sans-serif;
+font-size: 12pt ;
+}
+a,
+a:link,
+a:visited,
+{
+color : #1a41a8 ;
+}
+a:hover
+{
+color : #2a3798 ;
+}
+img
+{
+text-decoration : none ;
+}
+p
+{
+color: #000 ;
+}
+table.tagline
+{
+width: 100%;
+}
+li
+{
+color : black ;
+}
+.title
+{
+text-align : center ;
+}
+th
+{
+text-align : left ;
+}
+  </style>
+</head>
+
+
+<body>
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+  <tbody>
+
+    <tr>
+
+      <td style="background: black none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;" width="222"> <a href="http://www.ti.com/"><img id="_x0000_i1025" src="docs/html/tilogo.gif" alt="Texas Instruments" border="0" height="54" width="222"> </a></td>
+
+      <td style="background: red none repeat scroll 0% 50%; -moz-background-clip: initial; -moz-background-origin: initial; -moz-background-inline-policy: initial;">
+      <img id="_x0000_i1026" src="docs/html/titagline.gif" alt="Technology for Innovators(tm)" border="0" height="26" width="314"> </td>
+
+    </tr>
+
+  </tbody>
+</table>
+
+<h1 class="title">EDMA3 LLD 01.11.02 Release Notes</h1>
+
+<h2 class="title">March 19, 2011</h2>
+
+<p>
+This EDMA3 Low Level Driver Release is targeted to the users (device
+drivers
+and applications) for submitting and synchronizing with EDMA3 based DMA
+transfers.
+This release supports multiple platforms (see list below), DSP/BIOS and
+PrOS
+side. Porting instructions are also provided to use the package for
+different
+platforms and Operating Systems.
+</p>
+
+<p>
+<a href="#Introduction">Introduction</a>,
+<a href="#Documentation">Documentation</a>,
+<a href="#Whats_New">What's New</a>,
+<a href="#Upgrade_Info">Upgrade Info</a>,
+<a href="#Device_Support">Device Support</a>,
+<a href="#Compatibility">Compatibility Information</a>,
+<a href="#Validation">Validation Info</a>,
+<a href="#Known_Issues">Known Issues</a>,
+<a href="#Examples">Examples</a>,
+<a href="#Version">Version Information</a>,
+<a href="#Support">Technical Support</a>
+</p>
+
+<hr>
+<a name="Introduction"></a>
+<h2><a name="Introduction">Introduction</a></h2>
+
+<p>
+<a name="Introduction">EDMA3 LLD is a single product
+package containing the following stand-alone
+software components:
+</a></p>
+
+<ul type="disc">
+
+  <a name="Introduction"> <li> <b>EDMA3
+Resource Manager</b> - TI mandated library for all EDMA3
+peripheral users to acquire and configure EDMA3 hardware resources
+(DMA/QDMA channels, PaRAM Sets, TCCs etc.) and DMA Interrupt Service
+Routines. </li>
+
+  <li> <b>EDMA3 Driver</b> - Functional library
+providing APIs for programming, scheduling and synchronizing with EDMA
+transfers and many more. </li>
+
+  </a>
+</ul>
+
+<p>
+<a name="Introduction">EDMA3 Resource Manager can be used
+independently whereas the EDMA3 Driver requires
+the Resource Manager services internally.
+</a></p>
+
+<p>
+<a name="Introduction">EDMA3 LLD (both Resource Manager
+and the Driver) is a platform independent package.
+Hence it can be used across multiple platforms. Porting instructions
+are provided for both the components to do the same.
+</a></p>
+
+<p>
+<a name="Introduction">It is also an OS-agnostic package
+and thus can be used across multiple operating
+systems. OS-adaptation layer needs to be provided by the user (in case
+it is needed)
+for OS customization. Instructions to do the same are also provided
+along with
+the package.
+</a></p>
+
+<p>
+<a name="Introduction">The Low Level Driver has already
+been ported (DSP/BIOS and PrOS Operating Systems)
+and tested on various platforms mentioned below. Sample initialization
+libraries,
+both for Resource Manager and Driver, are also a part of the package
+(excluding
+DRx4xx and DM360 platforms). These could be used for proper
+initialization of
+the software component(s) along with the OS adaptation layer for the
+same.
+</a></p>
+
+<p>
+<a name="Introduction">The Low Level Driver consists of
+the following packages:
+</a></p>
+
+<ul type="disc">
+
+  <a name="Introduction"> <li> <tt><b>ti.sdo.edma3.rm</b></tt>
+- EDMA3 Resource Manager. </li>
+
+  <li> <tt><b>ti.sdo.edma3.rm.sample</b></tt>
+- Sample initialization library / OS abstraction layer for the Resource
+Manager. </li>
+
+  <li> <tt><b>ti.sdo.edma3.drv</b></tt>
+- EDMA3 Driver. </li>
+
+  <li> <tt><b>ti.sdo.edma3.drv.sample</b></tt>
+- Sample initialization library / OS abstraction layer for the Driver. </li>
+
+  </a>
+</ul>
+
+<a name="Documentation">
+</a>
+<h2><a name="Documentation">Documentation</a></h2>
+
+<p><a name="Documentation">The following
+documentation is available:</a></p>
+
+<ul type="disc">
+
+  <a name="Documentation"> 
+
+  </a>
+  <li> <a href="docs/EDMA3_RM_Release_Notes.pdf">EDMA3
+Resource Manager Release Notes</a> </li>
+
+  <li> <a href="packages/ti/sdo/edma3/rm/docs/EDMA3_RM_User_Guide.pdf">EDMA3
+Resource Manager User's Guide</a> </li>
+
+  <li> <a href="docs/EDMA3_Driver_Release_Notes.pdf">EDMA3
+Driver Release Notes</a> </li>
+
+  <li> <a href="packages/ti/sdo/edma3/drv/docs/EDMA3_Driver_User_Guide.pdf">EDMA3
+Driver User's Guide</a> </li>
+
+  <li> EDMA3 Resource Manager Application Programming Interface
+(API) Reference Guide (<a href="packages/ti/sdo/edma3/rm/docs/html/index.html">HTML</a>
+| <a href="packages/ti/sdo/edma3/rm/docs/EDMA3_Resource_Manager.chm">CHM</a>)
+  </li>
+
+  <li> EDMA3 Driver Application Programming Interface Reference
+Guide (<a href="packages/ti/sdo/edma3/drv/docs/html/index.html">HTML</a>
+| <a href="packages/ti/sdo/edma3/drv/docs/EDMA3_Driver.chm">CHM</a>)
+  </li>
+
+  <li> <a href="examples/CSL2_DAT_DEMO/docs/CSL_DAT_Adapter.ppt">CSL
+2.x DAT Reference Implementation on EDMA3 Hardware using EDMA3 LLD</a>
+  </li>
+
+</ul>
+
+<hr>
+<a name="Whats_New"></a>
+<h2><a name="Whats_New">What's New</a></h2>
+
+<p>
+<a name="Whats_New">The following significant changes have
+been made since 01.11.01.04:
+</a></p>
+
+<p><a name="Whats_New">01.11.02.05 - This release
+</a></p>
+
+<p>
+<a name="Whats_New">The following IRs are closed:
+</a></p>
+
+<table width="100%">
+  <tbody>
+    <tr>
+      <th> ID </th>
+      <th> Headline </th>
+    </tr>
+
+    <tr>
+      <td width="200"> SDOCM00050846 </td>
+      <td> Intermitant hang observed on one of the dsp core when data transfers are triggered on  all the 3 cores
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+<hr>
+<a name="Upgrade_Info"></a>
+<h2><a name="Upgrade_Info">Upgrade Information</a></h2>
+
+<p>
+<a name="Upgrade_Info">The EDMA3 LLD packages are
+available in the "packages/" subdirectory of the product.
+If you have a previous release of the EDMA3 LLD product, you can
+install this
+release next to it, and modify your application and/or server builds to
+use this
+newer release.
+</a></p>
+
+<hr>
+<a name="Device_Support"></a>
+<h2><a name="Device_Support">Device Support</a></h2>
+
+<p>
+<a name="Device_Support">This release supports and has
+been tested on the following devices:
+</a></p>
+
+<ul type="disc">
+
+  <a name="Device_Support"> <li> DM6446 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DM6467 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DM6437 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DM648 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6424 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6452 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6455 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> OMAP 2430 SDP:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> OMAP 3430 SDP:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> OMAP 25xx EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> OMAP 35xx EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DRx40x EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+    <ul type="circle">
+
+      <li>ARM9 PrOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DM360 EVM: Tested on pre-silicon DM350 platform
+    <ul type="circle">
+
+      <li>ARM9 PrOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DA830 EVM:
+    <ul type="circle">
+
+      <li>C67x DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6747 EVM:
+    <ul type="circle">
+      <li>C67x DSP/BIOS</li>
+    </ul>
+  </li>
+
+  <li> OMAPL137 EVM:
+    <ul type="circle">
+
+      <li>C67x DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6474 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> TCI6488 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6748 EVM:
+    <ul type="circle">
+      <li>C67x DSP/BIOS</li>
+    </ul>
+  </li>
+
+  <li> OMAPL138 EVM:
+    <ul type="circle">
+      <li>C67x DSP/BIOS</li>
+    </ul>
+  </li>
+
+  <li> DRA44X EVM:
+    <ul type="circle">
+      <li>C64X+ DSP/BIOS</li>
+    </ul>
+  </li>
+
+  <li> DRX45x EVM:
+    <ul type="circle">
+      <li>C64X+ DSP/BIOS</li>
+    </ul>
+  </li>
+
+  <li> C6472 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> TCI6486 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+
+  </a>
+</ul>
+
+<hr>
+<a name="Compatibility"></a>
+<h2><a name="Compatibility">Compatibility Information</a></h2>
+
+<h3><a name="Compatibility">Compatibility Key
+Definitions</a></h3>
+
+<p>
+<a name="Compatibility">Compatibility keys are
+intentionally independent of Marketing product numbers
+and are intended to:
+</a></p>
+
+<ol start="1" type="1">
+
+  <a name="Compatibility"> <li> Enable tooling to
+identify incompatibilities between components, and </li>
+
+  <li> Convey a level of compatibility between different releases
+to set end user expectations. </li>
+
+  </a>
+</ol>
+
+<p>
+<a name="Compatibility">Compatibility keys are composed of
+3 comma-delimited numbers - M, S, R - where:
+</a></p>
+
+<ul type="disc">
+
+  <a name="Compatibility"> <li> <b>M = Major</b>.
+A difference in M indicates a break in compatibility. </li>
+
+  <li> <b>S = Source</b>. A difference in S
+indicates source compatibility. That is, the user's source doesn't
+require change, but <i>does</i> require rebuilding. </li>
+
+  <li> <b>R = Radix</b>. A difference in R indicates
+an introduction of new features, but compatibility with previous
+interfaces has not broken. If libraries are provided by the package, an
+application must re-link with the new libraries, but not rebuild from
+source. </li>
+
+  </a>
+</ul>
+
+<hr>
+<a name="Validation"></a>
+<h2><a name="Validation">Validation</a></h2>
+
+<p>
+<a name="Validation">This release was built and validated
+against using the following components:
+</a></p>
+
+<ul type="disc">
+
+  <a name="Validation"> <li>CCS 3.3.80.11</li>
+
+  <li>C6x Code Generation Tools version 6.1.12</li>
+
+  <li>DSP/BIOS 5.41.03.17</li>
+
+  <li>XDC Tools 3.16.03.36 (if required)</li>
+
+  <li>eBinder IDE - 1.7</li>
+
+  <li>PrKernel version 4</li>
+
+  <li>BSPs (if required)</li>
+
+  </a>
+</ul>
+
+<p>
+<a name="Validation">This release was validated in the
+following configurations:
+</a></p>
+
+<ul type="disc">
+
+  <a name="Validation"> <li> DM6446 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DM6467 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DM6437 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DM648 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6424 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6452 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6455 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> OMAP 2430 SDP:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> OMAP 3430 SDP:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> OMAP 25xx EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> OMAP 35xx EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DRx40x EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+    <ul type="circle">
+
+      <li>ARM9 PrOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DM360 EVM: Tested on pre-silicon DM350 platform
+    <ul type="circle">
+
+      <li>ARM9 PrOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DA830 EVM:
+    <ul type="circle">
+
+      <li>C67x DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6747 EVM:
+    <ul type="circle">
+
+      <li>C67x DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> OMAPL137 EVM:
+    <ul type="circle">
+
+      <li>C67x DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6474 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> TCI6488 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6748 EVM:
+    <ul type="circle">
+
+      <li>C67x DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> OMAPL138 EVM:
+    <ul type="circle">
+
+      <li>C67x DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DRA44X EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> DRX45X EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> C6472 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  <li> TCI6486 EVM:
+    <ul type="circle">
+
+      <li>C64X+ DSP/BIOS</li>
+
+    </ul>
+
+  </li>
+
+  </a>
+</ul>
+
+<hr>
+<a name="Known_Issues"></a>
+<h2><a name="Known_Issues">Known Issues</a></h2>
+
+<p>
+<a name="Known_Issues">The following are known issues with
+the current EDMA3 LLD release:
+</a></p>
+
+<h4><a name="Known_Issues">Sample application on
+DM350 PrOS (Pre-Silicon DM360) platform fails.</a></h4>
+
+<p><a name="Known_Issues">Linking test case in the
+EDMA3 Driver sample application is not working properly,
+for DM350 PrOS (Pre-Silicon DM360) platform. The issue needs further
+analysis
+and will be fixed in the next release.
+</a></p>
+
+<h4><a name="Known_Issues">EDMA3 hardware
+doesn&rsquo;t works properly in FIFO mode with all the controllers.</a></h4>
+
+<p><a name="Known_Issues">Very few peripherals
+support EDMA3 FIFO mode. EMIF controller doesn't support
+the same. So EDMA3 CANNOT be used in FIFO mode for doing a
+memory-to-memory data
+transfers, EDMA3 being configured in the FIFO mode. Applications trying
+to use
+EDMA3 in FIFO mode should first check their respective
+peripheral-controller
+document for this mode support.
+</a></p>
+
+<h4><a name="Known_Issues">Prebuilt RM and DRV libs are not provided for platforms DRX40X, DRX45X and DRA44X </a></h4>
+
+<p><a name="Known_Issues">Before building the examples for platforms DRX40X, DRX45X and DRA44X, user should build the corrosponding RM and DRV libs. This issue will be fixed in future release.
+</a></p>
+
+<hr>
+<a name="Examples"></a>
+<h2><a name="Examples">Examples</a></h2>
+
+<p>
+<a name="Examples">EDMA3 LLD sample initialization
+libraries / OS abstraction layers (for different
+platforms) are located in:
+</a></p>
+
+<ul type="disc">
+
+  <a name="Examples"> <li> For Resource Manager:
+They could be located in <tt>edma3_lld_01_11_01_XX\packages\ti\sdo\edma3\rm\sample\lib</tt>
+folder. </li>
+
+  <li> For EDMA3 Driver: They could be located in <tt>edma3_lld_01_11_01_XX\packages\ti\sdo\edma3\drv\sample\lib</tt>
+folder. </li>
+
+  </a>
+</ul>
+
+<p>
+<a name="Examples">EDMA3 LLD stand-alone applications (for
+different platforms) are located in:
+</a></p>
+
+<ul type="disc">
+
+  <a name="Examples"> <li> EDMA3 Driver: They could
+be located in <tt>edma3_lld_01_11_01_XX\examples\edma3_driver\</tt>
+folder. </li>
+
+  </a>
+</ul>
+
+<ul type="disc">
+
+  <a name="Examples"> <li> CSL2.x DAT Reference
+Implementation: It could be located in <tt>edma3_lld_01_11_01_XX\examples\CSL2_DAT_DEMO\</tt>
+folder. </li>
+
+  </a>
+</ul>
+
+<hr>
+<a name="Version"></a>
+<h2><a name="Version">Version Information</a></h2>
+
+<p>
+<a name="Version">This product's version follows a version
+format, <b>M.mm.pp.bb</b>, where
+<b>M</b> is a 2 digit major number,
+<b>mm</b> is 2 digit minor number,
+<b>pp</b> is a 2 digit patch number, and
+<b>b</b> is an unrestricted set of digits used as an
+incrementing build counter.
+</a></p>
+
+<p>
+<a name="Version">To support multiple side-by-side
+installations of the product, the product
+version is encoded in the top level directory, ex. <b>edma3_lld_01_11_01_XX</b>.
+</a></p>
+
+<p><a name="Version">Subsequent releases of patch
+upgrades will be identified by the patch number,
+ex. EDMA3 LLD 01.11.02 with directory <b>edma3_lld_01_11_02_YY</b>.
+Typically, these
+patches only include critical bug fixes.
+</a></p>
+
+<hr>
+<a name="Support"></a>
+<h2><a name="Support">Technical Support</a></h2>
+
+<p>
+<a name="Support">To submit questions about issues with EDMA3 LLD package, please go to the external forums
+ at </a><a href="http://community.ti.com/" target="_blank">http://community.ti.com</a>
+or to <a href="http://support.ti.com/" target="_blank">http://support.ti.com</a>.
+</p>
+
+<hr>
+<p><a name="Support">Last updated: March 1, 2011
+</a></p>
+
+</body>
+</html>

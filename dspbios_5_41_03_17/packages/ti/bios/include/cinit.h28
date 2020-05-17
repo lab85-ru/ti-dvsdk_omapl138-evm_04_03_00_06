@@ -1,0 +1,442 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;  ======== cinit.h28 ========
+;
+
+
+    .if ($isdefed("CINIT_") = 0)    ; prevent multiple includes of this file
+CINIT_    .set    1
+ .include  "chk.h28"
+; Define DataPtr, CodePtr, Int
+                .asg  .long,  DataPtr
+                .asg  .long,  CodePtr
+                .asg  .word,  Int
+                .asg  .long,  Long
+                .asg   DataPtr, Arg
+                .asg   DataPtr, Args
+                .eval  2, DATAPTRSIZE
+                .eval  1, INTSIZE
+                .eval  2, CODEPTRSIZE
+                .eval  2, ARGSIZE
+                .eval  2, FLOATSIZE
+                .asg   2, isCodePtrAligned
+                .asg   2, isDataPtrAligned
+                .asg   1, isIntAligned
+                .asg   .long, size_t
+                .asg   .long, sizep
+
+CINITALIGN      .set    1
+
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;  isObjectAligned is used for two purposes                     ;       
+;  1.  Making structure that require aligment end at even       ;
+;      boundary by using the statement                          ;
+;     .align  isLogAligned                                      ;
+;     as the last statement in a .struct declaration            ;
+;      A value of 2 would make the structure have length        ;
+;      divisible by 2.  A value of 1 will not do any alignment  ;
+;      alignment   ie their will be no end padding added, and   ;
+;      this will not force records to have even length. A value ;
+;       of two is needed for records to have even length, and   ;
+;       value of 1  for no constraint. With a value of 0 .align ;
+;       statement gives error. 
+; 2.   It is used in usect directive to create aligned          ;
+;      structures  at even boundary as following                ;
+;objAddr        .usect ":section:", objSize,  0,  isLogAligned  ;
+;      Here, isLogAligned acts as a flag, ie any non zero value ; 
+;       would create the record at even boundary.               ;
+;                                                               ;
+;       To satisfy both criterion a value of 2 would be         ;
+;       required for isLogAligned  to  make the record of even  ;
+;       length and create the record at even boundary.          ;       
+;       A value of  1 has to be interpreted by C28_allocateObj  ;
+;       t                               ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+                
+;# ======== C28_cinitHeader ========
+; Create the header section of cinit records.
+
+;  Parameters
+;  cinitAlign:  Alignment constraints for cinit record
+;  isObjectAligned: Alignment constraint for the object. This indicates
+;               if objects members or any of its sub objects have
+;               members that have alignment constraints.
+;  objAddr:     Is the addr of the object
+;  objSize:     It is the size of the object
+;  page:        Is the page where the object exists.
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#   offset = 0
+;#
+;# Constraints and Calling Environment:
+;# The macro must be called for creating cinit records only.
+
+    .asg    "", C28_cinitHeader$regs
+
+C28_cinitHeader .macro  cinitAlign, isObjectAligned, objAddr, objSize
+        CHK_nargs "CINIT", objSize
+        .var cinitSize                  ; Explicitly decalate a variable
+                                        ; so that it limits the scope
+                                        ; to the macro
+        .eval   :objSize:, cinitSize    ; This is the size of
+                                        ; cinit records.
+        .if (isObjectAligned = 2)               ; Does the Obj require alignment
+                .if (:objSize: & 0x1)   ; if the cinit size is odd
+                        .eval  cinitSize + 1, cinitSize ; Make it even
+                .endif
+        .endif
+
+        .eval 0 - cinitSize, cinitSize
+
+        .sect  ".cinit"
+        .align  cinitAlign              ; Create the cinit header
+        .field cinitSize                ; size
+        .field objAddr, 22              ; data address for large model
+        .eval  0, offset                ; initialize the offset to 0
+  .endm
+
+
+
+
+;# ======== C28_alignIfRequired  ========
+; This macro  checks if the offset is odd, and  creates a hole
+; with a value of dead .
+
+; Parameters
+;  isObjectAligned: Alignment constraint for the object. This indicates
+;               if objects members or any of its sub objects have
+;               members that have alignment constraints.
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#  
+;#
+;# Constraints and Calling Environment:
+;# The macro must be called for creating cinit records only.
+C28_alignIfRequired  .macro      isObjectAligned
+        CHK_nargs "CINIT", isObjectAligned
+
+        .if (isObjectAligned = 2)                       ; Does the obj requir
+                                                ; alignment
+                .if (offset & 0x1)              ; if the object is at
+                                                ; odd offset
+                         .word 0xdead           ; create a dead  word
+                         .eval  offset + 1, offset
+                                                ; increase the offset
+                .endif
+        .endif
+  .endm
+
+
+;# ======== C28_cinitBegin  ========
+; This macro  checks if the offset is odd, and  creates a hole
+; with a value of dead .
+
+; Parameters
+;  isObjectAligned: Alignment constraint for the object. This indicates
+;               if objects members or any of its sub objects have
+;               members that have alignment constraints.
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#  
+;#
+;# Constraints and Calling Environment:
+;# The macro must be called before initalising any value field
+;# of a cinit record.
+
+C28_cinitBegin .macro    isObjectAligned
+        CHK_nargs "CINIT", isObjectAligned
+        C28_alignIfRequired    isObjectAligned
+  .endm
+
+
+;# ======== C28_cinitEnd  ========
+; This macro  checks if the offset is odd, and  creates a hole
+; with a value of dead .
+
+; Parameters
+;  isObjectAligned: Alignment constraint for the object. This indicates
+;               if objects members or any of its sub objects have
+;               members that have alignment constraints.
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#  
+;#
+;# Constraints and Calling Environment:
+;# The macro must be called at the end of ciniting  a structure
+
+C28_cinitEnd .macro     isObjectAligned
+        CHK_nargs "CINIT", isObjectAligned
+        C28_alignIfRequired    isObjectAligned
+  .endm
+
+
+;# ======== C28_cinitDataPtr  ========
+; Initialize a data ptr in  a cinit record.
+
+; Parameters
+;  value:       value to which the record must be  initialized
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#  
+;#
+
+C28_cinitDataPtr .macro  value
+        CHK_nargs "CINIT",  value
+                                                ; compilaton
+                .if (offset  & 0x1)             ; if at odd offset
+                        .word  0xdead           ; fill in the hole
+                        .eval  offset + 1, offset
+                                                ; increase the offset
+                                                ; for  hole filled.
+                .endif
+                .xlong :value:                  ; Fill in the value 
+                .eval  offset + 2, offset       ; Increase the offset
+                                                ; corrresponding size
+                                                ; of dataPtr.
+  .endm
+        
+
+;# ======== C28_cinitsize_t  ========
+; Initialize a size_t in  a cinit record.
+
+; Parameters
+;  value:       value to which the record must be  initialized
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#  
+;#
+
+C28_cinitsize_t .macro  value
+        CHK_nargs "CINIT",  value
+                                                ; compilaton
+                .if (offset  & 0x1)             ; if at odd offset
+                        .word  0xdead           ; fill in the hole
+                        .eval  offset + 1, offset
+                                                ; increase the offset
+                                                ; for  hole filled.
+                .endif
+                .xlong :value:                  ; Fill in the value 
+                .eval  offset + 2, offset       ; Increase the offset
+                                                ; corrresponding size
+                                                ; of size_t.
+  .endm
+
+;# ======== C28_cinitsizep  ========
+; Initialize a data ptr in  a cinit record.
+
+; Parameters
+;  value:       value to which the record must be  initialized
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#  
+;#
+
+C28_cinitsizep .macro  value
+        CHK_nargs "CINIT",  value
+                                                ; compilaton
+                .if (offset  & 0x1)             ; if at odd offset
+                        .word  0xdead           ; fill in the hole
+                        .eval  offset + 1, offset
+                                                ; increase the offset
+                                                ; for  hole filled.
+                .endif
+                .xlong :value:                  ; Fill in the value 
+                .eval  offset + 2, offset       ; Increase the offset
+                                                ; corrresponding size
+                                                ; of sizep.
+  .endm
+
+;# ======== C28_cinitCodePtr  ========
+; Initialize a code  ptr in  a cinit record.
+
+; Parameters
+;  value:       value to which the record must be  initialized
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#  
+;#
+
+C28_cinitCodePtr .macro  value
+        CHK_nargs "CINIT",  value
+        .if (offset  & 0x1)             ; if at odd offset
+                .word  0xdead           ; fill in the hole
+                .eval offset  +1, offset 
+                                        ; increase the offset
+                                        ; for  hole filled.
+        .endif
+        .xlong :value:                  ; Fill in the value 
+        .eval  offset + 2, offset       ; Increase the offset
+                                        ; corrresponding size
+                                        ; of dataPtr.
+  .endm
+
+;# ======== C28_cinitLong  ========
+; Initialize a  long in  a cinit record.
+
+; Parameters
+;  value:       value to which the record must be  initialized
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#  
+;#
+
+C28_cinitLong .macro  value
+        CHK_nargs "CINIT",  value
+        .if (offset & 0x1)              ; if at odd offset
+                .word  0xdead           ; fill in the hole
+                .eval offset  +1, offset 
+                                        ; increase the offset
+                                        ; for  hole filled.
+        .endif
+        .xlong :value:                  ; Fill in the value 
+        .eval  offset + 2, offset       ; Increase the offset
+                                        ; corrresponding size
+                                        ; of dataPtr.
+  .endm
+
+;# ======== C28_cinitInt  ========
+; Initialize a  long in  a cinit record.
+
+; Parameters
+;  value:       value to which the record must be  initialized
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#  
+;#
+
+C28_cinitInt .macro  value
+        CHK_nargs "CINIT",  value
+        .word  :value:                  ; Fill in the value 
+        .eval offset + 1,  offset       ; Increase the offset
+                                        ; corrresponding size
+                                        ; of dataPtr.
+  .endm
+
+;# ======== C28_cinitArg  ========
+; Initialize a  long in  a cinit record.
+
+; Parameters
+;  value:       value to which the record must be  initialized
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#  
+;#
+
+C28_cinitArg .macro  value
+        CHK_nargs "CINIT",  value
+        C28_cinitDataPtr  value
+  .endm
+
+;
+;# ======== C28_cinitFloat  ========
+;  Initialize a float in a cinit record.
+;
+; Note : .xfloat does not accept a relocatable expression ( like .xlong/.int etc )
+;        has to be a floating point constant/symbol equated to floating point 
+;        constant.
+;
+;  Parameters:
+;    value - value to which the record must be initialized
+;#
+;# Preconditions:
+;#   none
+;#
+;# Postconditions:
+;#  
+;#
+
+C28_cinitFloat .macro value
+        CHK_nargs "CINIT", value
+        .if (offset & 0x1)              ; if at odd offset
+          .word 0xdead                  ; fill in the hole
+          .eval offset +1, offset       ; increase the offset for hole filled.
+        .endif
+        .xfloat :value:                 ; Fill in the value 
+        .eval offset + 2, offset        ; Increase the offset by corresponding 
+                                        ; size of Long.
+        .endm
+
+;# ======== C28_allocateObject  ========
+; Allocates  space in an uninitialized section for the object.
+
+;  Parameters
+;  cinitAlign:  Alignment constraints for cinit record
+;  isObjectAligned: Alignment constraint for the object. This indicates
+;               if objects members or any of its sub objects have
+;               members that have alignment constraints. A value  of
+;               two indicates the object has alignemnt constraint,
+;               a value of 1 indicates no aligment constraint.
+;  objAddr:     Is the addr of the object
+;  size:        It is the size of the object
+;  section:     The section where the object should exists.
+;  isBlocking:  block flag status, 1 as set blocking bit, 0 as not set. 
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#  
+;#
+C28_allocateObject .macro    isObjectAligned, objAddr, size, section, isBlocking
+        CHK_nargs "CINIT",  section
+
+        .var objSize                    ; Explicitly decalate a variable
+                                        ; so that it limits the scope
+                                        ; to the macro
+        .eval  size, objSize            ; This is the size of
+                                        ; .object
+        .if (isObjectAligned = 2)               ; Does the Obj require alignment
+                .if (objSize & 0x1)     ; if the cinit size is odd
+                        .eval  objSize + 1, objSize ; Make it even
+                 .endif
+objAddr .usect ":section:", objSize,  isBlocking,  1 ; allocate  object at
+                                        ; even boundary
+        .else
+objAddr .usect ":section:", objSize,  isBlocking,  0
+                                        ; allocate  object at any
+                                        ; boundary.
+                                        ; Note that the last parameter
+                                        ; is  a flag that represents
+                                        ; if the object has alignment
+                                        ; requirment or not.
+        .endif
+
+ .endm
+  .endif                                ; endif for CINIT  inclusion

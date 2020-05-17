@@ -1,0 +1,204 @@
+
+
+
+
+         DSP/BIOS Graphical Config Package 5,3,1 Release Notes
+
+
+Last updated: 27 Jul 2006
+
+
+The DSP/BIOS Graphical Config Package release notes are divided into four
+sections, "General Info", "Fixed In This Release", "Known Issues", and
+"Validation Info".
+
+---------------------------------------------------------------------------
+                        General Information
+---------------------------------------------------------------------------
+
+The DSP/BIOS Graphical Configuration tool (Gconf) runs both standalone and
+integrated in Code Composer Studio (CCS).   The Configuration Tool is activated
+in CCS by using the BIOS Selector in Component Manager.
+
+
+
+What's new:
+
+
+Limitations:
+
+Documentation is not available in the Help system or Tconf User's Guide that
+covers some of the operational details of Gconf.   This info is included here:
+
+GTConf release notes
+
+- Menu operations
+File->Open:  Inside CCS (3.1 and newer), only tcf files can be opened with
+BIOS 5.20 selected.   Running Gconf outside of CCS, Gconf is able to open both
+tcf and cdb files.
+
+When a tcf file is opened, the required tconf search path can be provided one of
+three ways in the following priority order: 1) on the command line to Gconf.exe
+for example by creating a shortcut, 2) through a file named tcfopts.dat which
+contains the 'Tconf' commandline, 3) if no search path is specified then a
+dialog will prompt the user.
+
+Gconf will by default supply the search path to the bios 'packages' directory
+from which Gconf.exe is launched unless another bios packages directory is
+specified explicitly.
+
+
+File->New:   Path information to the selected platform (configuration starting
+point) is exported in a file, <tcffilename>.tco, in the same directory when the tcf
+file is saved.
+
+
+File->Save  Saves tcf files only, no bios generated files (cdb, c, asm, or
+header files) are created.   This 'save' behavior is different than the previous
+BIOS 4.90 cdb Gconf whose 'save' operation performed a save and generate.
+
+
+File->SaveAs  In the same directory will save the tcf file with the specified
+new name.  If the destination directory is different, Gconf copies all tci
+files located in the original tcf directory to the destination directory,
+copies tcfopts.dat file to the destination directory and resolves all relative
+paths to absolute paths.   These steps are necessary to move the tconf script
+context.   Even with these measures, there are cases where SaveAs will fail
+such as when a script contains an import with a relative path, eg.
+util.importFile("../../mytcifile")
+
+
+- Gconf.ini file
+The following information is saved in the directory next to gconf.exe, in
+<bios install dir>\packages\ti\bios\config\gconf\bin\gconf.ini and is updated
+when Gconf exits.
+
+
+Hierarchy Pane, Object Pane and Script Pane positions when gconf exits.
+
+Current seed path.   This setting can only be entered into gconf.ini manually.
+The default is <bios install dir>\packages\ti\bios\config\cdb
+
+Platform search directory.  When creating a new TCF file, you can use the
+"Browse" button in the File->New dialog to point to a platform search directory
+other than the default. The default is
+<bios install dir>\packages.
+
+Old seed path.  When opening a legacy CDB file, a dialog box will prompt for
+the seed path of the legacy cdb being open. This is usually
+<CCS install dir>\<ISA>\bios\include.  This dialog will always be displayed
+when opening a legacy CDB file and will default to the most recent Old seed
+path that was used.
+
+Sample gconf.ini:
+
+[Settings]
+HierarchyPanePosition=0000000000000000FD0000008A01000088
+ObjectPanePosition=0000000000000000B50000009F01000055
+ScriptPanePosition=0000000000000000340100008A010000C0
+
+[Old seed path]
+TMS320C62XX=C:\CCStudio_v3.1\C6000\bios\include
+
+[Current seed path]
+TMS320C62XX=C:\bios_5_31\packages\ti\bios\config\cdb
+
+[Platforms]
+Search Directory=C:\bios_5_31\packages
+
+- Command line options
+Tconf -D<name>=<value> options can be specified on the command line when
+starting gconf by using the "-tcfopts" flag:
+
+-tcfopts="-Dconfig.importPath=.;..;../../../common; C:/bios_5_31/packages; -Dfoo=bar"
+
+Relative paths are based on the location of the TCF file being opened.
+
+If used inside of a Windows shortcut, quotes(") must be preceded with a
+backslash(\):
+
+-tcfopts=\"-Dconfig.importPath=.;..;../../../common; C:/bios_5_31/packages;\"
+
+Example command line invoked in a Windows cmd shell:
+
+gconf.exe C:\bios_5_31\packages\ti\bios\examples\basic\bigtime\dsk6713\ bigtime.tcf -tcfopts=\"-Dconfig.importPath=.;..;../../../common; C:/bios_5_31/packages;"
+
+
+-Dconfig.import path usage precedence
+
+1. Command line
+2. Local tcfopts.dat
+3. If none of the above are found, a dialog box will prompt for the import path
+
+
+-prog.gen() rules
+1. No parameter
+2. Parameter allowed if not running inside of CCS
+3. Parameter allowed if it matches name of current files without the ".tcf"
+extension, i.e., file being opened is bigtime.tcf and prog.gen() statement is
+"prog.gen(bigtime)"
+
+
+- Insertion marker rules
+
+A TCF script must have the insertion marker shown below in order for GConf to successfully
+insert script statements. If a marker is not present, GConf will place one
+above the "prog.gen()" statement upon the first edit operation performed.
+
+    Insertion marker:
+       // !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+
+
+---------------------------------------------------------------------------
+                       Fixed In This Release
+---------------------------------------------------------------------------
+
+SDSCM00010426 GConf uses latest DspBiosBuilder options when more than one
+              project is opened and the projects are in the same directory 
+    -GConf uses the latest DspBiosBuilder options when more than one
+     project is opened and the projects are in the same directory.
+     The DspBiosBuilder options are written to a file named tcfopts.dat
+     when a project is opened, modified and closed. If more than one project
+     reside in the same directory, then tcfopts.dat will contain the settings
+     for the last project opened, which will be incorrect for any tcf file opened
+     in GConf other than the one in the last project that was opened.
+
+---------------------------------------------------------------------------
+                           Known Issues
+---------------------------------------------------------------------------
+
+SDSCM00003834 gconf uses wrong parameters when more than one pjt is opened and
+              they share the same .tcf file
+    -When more than one CCS project (.pjt file) share the same .tcf file, and
+     two or more of the projects are opened in CCS, opening a .tcf from one of
+     the projects will launch GConf using the DspBiosBuilder builder parameters
+     defined for the most recently opened project. This may result in incorrect 
+     base seed properties and import file paths in the .tcf file being edited. 
+     To workaround, do not share .tcf files between projects.
+
+SDSsq42752 GCONF TSK rename causes all other task's order inserted into tcf file
+    -When a rename of a TSK in GCONF is performed, it actually destroys 
+     the task and re-creates it with a new name.  This causes all the   
+     other task's order to be inserted as well into the tcf file.
+
+SDSsq43104 Dirty flag is cleared when a save error occurs on tcf file in CCS 3.1
+    -If a script error occurs when saving a tcf file in gconf, the tcf 
+     file is saved and the dirty flag is cleared. If gconf is then 
+     exited in this state, the tcf file cannot be opened again without 
+     resolving the error first in a text editor.  This behavior is 
+     intentional to assist in debugging the resulting tcf script.
+
+SDSsq43198 Deleting an inserted commment in script pane sometimes doesn't work
+    -After inserting a comment in a tcf file using the text pane in 
+     gconf, if the user right-clicks on the comment and selects edit, 
+     the subsequent pop-up shows an extra space before the comment. If 
+     the user then tries to delete the extra space, it has no effect on 
+     the tcf file.
+
+---------------------------------------------------------------------------
+                          Validation Info
+---------------------------------------------------------------------------
+
+
+Validated with Windows XP SP2
+Not supported on Linux or Solaris.

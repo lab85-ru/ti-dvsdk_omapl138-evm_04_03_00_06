@@ -1,0 +1,581 @@
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		<meta name="generator" content="MediaWiki 1.15.1" />
+		<meta name="keywords" content="BeagleBoard/GSoC/2010 Projects/C6Run/Documentation" />
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="search" type="application/opensearchdescription+xml" href="/opensearch_desc.php" title="eLinux.org (en)" />
+		<link title="Creative Commons" type="application/rdf+xml" href="/index.php?title=BeagleBoard/GSoC/2010_Projects/C6Run/Documentation&amp;action=creativecommons" rel="meta" />
+		<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html" />
+		<link rel="alternate" type="application/rss+xml" title="eLinux.org RSS Feed" href="/index.php?title=Special:RecentChanges&amp;feed=rss" />
+		<link rel="alternate" type="application/atom+xml" title="eLinux.org Atom Feed" href="/index.php?title=Special:RecentChanges&amp;feed=atom" />
+		<title>BeagleBoard/GSoC/2010 Projects/C6Run/Documentation - eLinux.org</title>
+		<link rel="stylesheet" href="/skins/common/shared.css?207" type="text/css" media="screen" />
+		<link rel="stylesheet" href="/skins/common/commonPrint.css?207" type="text/css" media="print" />
+		<link rel="stylesheet" href="/skins/monobook/main.css?207" type="text/css" media="screen" />
+		<!--[if lt IE 5.5000]><link rel="stylesheet" href="/skins/monobook/IE50Fixes.css?207" type="text/css" media="screen" /><![endif]-->
+		<!--[if IE 5.5000]><link rel="stylesheet" href="/skins/monobook/IE55Fixes.css?207" type="text/css" media="screen" /><![endif]-->
+		<!--[if IE 6]><link rel="stylesheet" href="/skins/monobook/IE60Fixes.css?207" type="text/css" media="screen" /><![endif]-->
+		<!--[if IE 7]><link rel="stylesheet" href="/skins/monobook/IE70Fixes.css?207" type="text/css" media="screen" /><![endif]-->
+		<link rel="stylesheet" href="/index.php?title=MediaWiki:Common.css&amp;usemsgcache=yes&amp;ctype=text%2Fcss&amp;smaxage=18000&amp;action=raw&amp;maxage=18000" type="text/css" />
+		<link rel="stylesheet" href="/index.php?title=MediaWiki:Print.css&amp;usemsgcache=yes&amp;ctype=text%2Fcss&amp;smaxage=18000&amp;action=raw&amp;maxage=18000" type="text/css" media="print" />
+		<link rel="stylesheet" href="/index.php?title=MediaWiki:Monobook.css&amp;usemsgcache=yes&amp;ctype=text%2Fcss&amp;smaxage=18000&amp;action=raw&amp;maxage=18000" type="text/css" />
+		<link rel="stylesheet" href="/index.php?title=-&amp;action=raw&amp;maxage=18000&amp;gen=css" type="text/css" />
+		<!--[if lt IE 7]><script type="text/javascript" src="/skins/common/IEFixes.js?207"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+
+		<script type= "text/javascript">/*<![CDATA[*/
+		var skin = "monobook";
+		var stylepath = "/skins";
+		var wgArticlePath = "/$1";
+		var wgScriptPath = "";
+		var wgScript = "/index.php";
+		var wgVariantArticlePath = false;
+		var wgActionPaths = {};
+		var wgServer = "http://elinux.org";
+		var wgCanonicalNamespace = "";
+		var wgCanonicalSpecialPageName = false;
+		var wgNamespaceNumber = 0;
+		var wgPageName = "BeagleBoard/GSoC/2010_Projects/C6Run/Documentation";
+		var wgTitle = "BeagleBoard/GSoC/2010 Projects/C6Run/Documentation";
+		var wgAction = "view";
+		var wgArticleId = "5439";
+		var wgIsArticle = true;
+		var wgUserName = null;
+		var wgUserGroups = null;
+		var wgUserLanguage = "en";
+		var wgContentLanguage = "en";
+		var wgBreakFrames = false;
+		var wgCurRevisionId = 22749;
+		var wgVersion = "1.15.1";
+		var wgEnableAPI = true;
+		var wgEnableWriteAPI = true;
+		var wgSeparatorTransformTable = ["", ""];
+		var wgDigitTransformTable = ["", ""];
+		var wgRestrictionEdit = [];
+		var wgRestrictionMove = [];
+		/*]]>*/</script>
+
+		<script type="text/javascript" src="/skins/common/wikibits.js?207"><!-- wikibits js --></script>
+		<!-- Head Scripts -->
+		<script type="text/javascript" src="/skins/common/ajax.js?207"></script>
+		<script type="text/javascript" src="/index.php?title=-&amp;action=raw&amp;gen=js&amp;useskin=monobook"><!-- site js --></script>
+	</head>
+<body class="mediawiki ltr ns-0 ns-subject page-BeagleBoard_GSoC_2010_Projects_C6Run_Documentation skin-monobook">
+	<div id="globalWrapper">
+		<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+		<div id="siteNotice"><p>eLinux.org - Embedded Linux Wiki
+</p></div>		<h1 id="firstHeading" class="firstHeading">BeagleBoard/GSoC/2010 Projects/C6Run/Documentation</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From eLinux.org</h3>
+			<div id="contentSub"></div>
+									<div id="jump-to-nav">Jump to: <a href="#column-one">navigation</a>, <a href="#searchInput">search</a></div>			<!-- start content -->
+			<table id="toc" class="toc" summary="Contents"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Project_Overview"><span class="tocnumber">1</span> <span class="toctext">Project Overview</span></a></li>
+<li class="toclevel-1"><a href="#Usage"><span class="tocnumber">2</span> <span class="toctext">Usage</span></a>
+<ul>
+<li class="toclevel-2"><a href="#IMPORTANT_NOTICE_REGARDING_POINTER_PARAMETERS"><span class="tocnumber">2.1</span> <span class="toctext">IMPORTANT NOTICE REGARDING POINTER PARAMETERS</span></a></li>
+<li class="toclevel-2"><a href="#Targeting_your_own_functions_with_RPC"><span class="tocnumber">2.2</span> <span class="toctext">Targeting your own functions with RPC</span></a></li>
+<li class="toclevel-2"><a href="#Removing_functions_from_the_RPC_system"><span class="tocnumber">2.3</span> <span class="toctext">Removing functions from the RPC system</span></a></li>
+<li class="toclevel-2"><a href="#Troubleshooting"><span class="tocnumber">2.4</span> <span class="toctext">Troubleshooting</span></a></li>
+<li class="toclevel-2"><a href="#Note_on_stdio.h_variadic_functions"><span class="tocnumber">2.5</span> <span class="toctext">Note on stdio.h variadic functions</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1"><a href="#Architectural_Documentatin"><span class="tocnumber">3</span> <span class="toctext">Architectural Documentatin</span></a>
+<ul>
+<li class="toclevel-2"><a href="#RPC_Overview"><span class="tocnumber">3.1</span> <span class="toctext">RPC Overview</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Step-by-step_RPC_Events"><span class="tocnumber">3.1.1</span> <span class="toctext">Step-by-step RPC Events</span></a></li>
+<li class="toclevel-3"><a href="#Structure_of_the_RPC_Package"><span class="tocnumber">3.1.2</span> <span class="toctext">Structure of the RPC Package</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#GPP_Side_Architecture"><span class="tocnumber">3.2</span> <span class="toctext">GPP Side Architecture</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Overview"><span class="tocnumber">3.2.1</span> <span class="toctext">Overview</span></a></li>
+<li class="toclevel-3"><a href="#The_GPP_Stubs_Library"><span class="tocnumber">3.2.2</span> <span class="toctext">The GPP Stubs Library</span></a></li>
+<li class="toclevel-3"><a href="#Receiving_and_Responding_to_RPC_Requests"><span class="tocnumber">3.2.3</span> <span class="toctext">Receiving and Responding to RPC Requests</span></a></li>
+<li class="toclevel-3"><a href="#Address_Translations_and_RPC_Memory"><span class="tocnumber">3.2.4</span> <span class="toctext">Address Translations and RPC Memory</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#DSP_Side_Architecture"><span class="tocnumber">3.3</span> <span class="toctext">DSP Side Architecture</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Overview_2"><span class="tocnumber">3.3.1</span> <span class="toctext">Overview</span></a></li>
+<li class="toclevel-3"><a href="#Message_identifiers"><span class="tocnumber">3.3.2</span> <span class="toctext">Message identifiers</span></a></li>
+<li class="toclevel-3"><a href="#Transport"><span class="tocnumber">3.3.3</span> <span class="toctext">Transport</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Function_Signatures"><span class="tocnumber">3.4</span> <span class="toctext">Function Signatures</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Table_of_Function_Signature_Characters"><span class="tocnumber">3.4.1</span> <span class="toctext">Table of Function Signature Characters</span></a></li>
+<li class="toclevel-3"><a href="#Pointers_and_Shared_Memory"><span class="tocnumber">3.4.2</span> <span class="toctext">Pointers and Shared Memory</span></a></li>
+<li class="toclevel-3"><a href="#Returning_Non-Shared_Buffers"><span class="tocnumber">3.4.3</span> <span class="toctext">Returning Non-Shared Buffers</span></a></li>
+<li class="toclevel-3"><a href="#Returning_Structures"><span class="tocnumber">3.4.4</span> <span class="toctext">Returning Structures</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2"><a href="#Cache_Issues"><span class="tocnumber">3.5</span> <span class="toctext">Cache Issues</span></a>
+<ul>
+<li class="toclevel-3"><a href="#Enabling_or_Disabling_DSP_Cache"><span class="tocnumber">3.5.1</span> <span class="toctext">Enabling or Disabling DSP Cache</span></a></li>
+<li class="toclevel-3"><a href="#Enabling_or_Disabling_ARM_CMEM_Cache"><span class="tocnumber">3.5.2</span> <span class="toctext">Enabling or Disabling ARM CMEM Cache</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</td></tr></table><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<a name="Project_Overview" id="Project_Overview"></a><h1> <span class="mw-headline"> Project Overview </span></h1>
+<p>DSP-RPC-POSIX is a component of the C6Run project which allows you to do DSP-&gt;GPP remote procedure calls - that is, you can invoke functions/code residing somewhere on the GPP side directly from the DSP as if you were accessing a local function (there are, of course, certain requirements and restrictions).
+</p><p>"What functions are available on the GPP side, then?" one might ask. The answer is pretty much "everything that the hardware can do" or "everything you can do in your regular operating system" or something along the lines of that. From basic tasks like accessing the file system to more sophisticated things like sending a file over FTP, there's a myriad of possibilities.
+</p><p>Two reasons as to why DSP-&gt;GPP RPC is desireable would be: access to otherwise (directly) inaccessible features and being able to reuse existing code. The reason why C6RunApp exists is because it's messy to write and run code for the DSP, especially if all you want to do is try out or experiment with things (prototyping). C6RunApp makes your life easier as a DSP-side developer by offering you easy compilation/running and access to console I/O (which is actually a limited form of RPC); DSP-RPC-POSIX expands this by granting you access to virtually any existing functionality you have on the GPP side.
+</p>
+<a name="Usage" id="Usage"></a><h1> <span class="mw-headline"> Usage </span></h1>
+<p>Building DSP-RPC-POSIX is no different than building C6Run itself. For example, to build for the BeagleBoard:
+</p><p>1. Checkout the sources from the SVN repository
+</p><p>2. Change into the sources directory and issue <b>make beagleboard_config</b>
+</p><p>3. Set up dependency paths in the top-level Rules.mak and in platforms/beagleboard/Platform.mak
+</p><p>4. Issue <b>make build</b>
+</p><p>5. That's all! You can simply add the <b>bin</b> directory to your path and start doing things like <b>c6runapp-cc hello_world.c -o hello_world</b>
+</p><p>It's highly recommended to read the C6Run wiki at <a href="http://processors.wiki.ti.com/index.php/C6Run_Project" class="external free" title="http://processors.wiki.ti.com/index.php/C6Run_Project" rel="nofollow">http://processors.wiki.ti.com/index.php/C6Run_Project</a> for more insight into C6Run and usage instructions.
+</p><p>Since the RPC layer builds on top of the existing C6Run build system, nothing else is necessary to use DSP -&gt; GPP remote procedure calls. The only thing you need to do to access your GPP side functions from your DSP code is to make sure that your function is "identified" to the RPC system - that is, the stubs for your function(s) must be present. See the section about stubs for more details.
+</p><p>In a general sense, to access RPC functionality using C6RunApp, you must:
+</p>
+<ul><li> include the relevant header file in which the function stubs you want to use are declared (under the rpc/include directory) - the DSP-RPC-POSIX prebuilt stubs (including rpc_malloc and rpc_free) are all contained within rpc_stubs_dsp.h
+</li></ul>
+<ul><li> provide the --rpc command line option to c6runapp-cc when building your sources
+</li></ul>
+<p>And that's it! You can call your GPP-side function from your DSP code as you regularly would (just with a rpc_ prefix to remind you that this is actually a remote procedure call and special rules apply). Most standard C library functions already have stubs that come packaged with DSP-RPC-POSIX - so rpc_printf, rpc_puts, rpc_fopen... are all ready to use. The rpc_example.c file under the examples/rpc_example folder gives a tiny demonstration of how this can be done.
+</p>
+<a name="IMPORTANT_NOTICE_REGARDING_POINTER_PARAMETERS" id="IMPORTANT_NOTICE_REGARDING_POINTER_PARAMETERS"></a><h2> <span class="mw-headline"> IMPORTANT NOTICE REGARDING POINTER PARAMETERS </span></h2>
+<p>Any pointer/buffer parameters to be passed to RPC calls should ideally be allocated with rpc_malloc, which is identical to the RTS malloc in its calling convention, but allocates memory from the shared CMEM region instead. Similarly, memory allocated with rpc_malloc should be freed with rpc_free. RTS functions that work via C6Run? C I/O can still be used with DSP stack or heap variables, as well as rpc_malloc'd variables.
+</p><p>For the developer's convenience while working with read-only string parameters, DSP-RPC-POSIX has the ability to copy a fixed number of bytes from the DSP memory space (stack or heap) into a GPP-side buffer using PROC_read. This means that as long as the sent buffer is relatively small (defined as RPC_PROCREAD_MAXPARAM in build/gpp_libs/rpc_server.h) and is expected to be read only (ie, not modified on the GPP side) it's safe to pass them from the DSP stack or heap. So rpc_puts("hello world!") or rpc_printf("String:&nbsp;%s \n", "test") is indeed possible.
+</p>
+<a name="Targeting_your_own_functions_with_RPC" id="Targeting_your_own_functions_with_RPC"></a><h2> <span class="mw-headline"> Targeting your own functions with RPC </span></h2>
+<p>To be able to access your own functions using RPC, you need to declare them to DSP-RPC-POSIX. This "declaration" is done via what's called a RPC stub. These stubs are small functions (also written in C) that do the necessary steps to call your functions via RPC. For every function to be accessed via RPC, there are three stubs (and so, three files) involved:
+</p>
+<ul><li> The DSP side stub, residing inside a C file in the dsp-rpc-posix/rpc/dsp directory
+</li><li> The GPP side stub, residing inside a C file in the dsp-rpc-posix/rpc/gpp directory
+</li><li> The declaration for the DSP stub (which is actually the function you're calling), residing inside a header file in the dsp-rpc-posix/rpc/include directory
+</li></ul>
+<p><i>Stubs are quite straightforward to write by hand, as you can see by studying the standard C library stubs already present inside dsp-rpc-posix, and it is highly recommended that you at least examine them to understand what they look like.</i> 
+</p><p>DSP-RPC-POSIX contains a stub generator utility (dsp-rpc-posix/bin/c6runapp-rpcgen) to easily generate stubs for any given function. For example, given a C file test.c that contains the function test_fxn, you can invoke
+</p><p><tt>
+</p>
+<pre>c6runapp-rpcgen test.c
+</pre>
+<p></tt>
+</p><p>and the utility will create three files in the same directory for you: 
+</p>
+<ul><li> test.dsp_stub.c (containing the DSP stubs)
+</li><li> test.gpp_stub.c (containing the GPP stubs) 
+</li><li> test.include.h (containing the declarations).
+</li></ul>
+<p>For DSP-RPC-POSIX to detect these stub files, they must be present in predetermined directories. You can simply use the --autocopy switch while calling c6runapp-rpcgen to have the files automatically copied into the respective locations, as in:
+</p><p><tt>
+</p>
+<pre>c6runapp-rpcgen --autocopy test.c
+</pre>
+<p></tt>
+</p><p>If you would like to manually manage your stub files instead of using --autocopy:
+</p>
+<ul><li> copy test.dsp_stub.c into dsp-rpc-posix/rpc/dsp
+</li><li> copy test.gpp_stub.c into dsp-rpc-posix/rpc/gpp
+</li><li> copy test.include.h into dsp-rpc-posix/rpc/include
+</li><li> copy test.c (the original source file) into dsp-rpc-posix/rpc/gpp_sources
+</li></ul>
+<a name="Removing_functions_from_the_RPC_system" id="Removing_functions_from_the_RPC_system"></a><h2> <span class="mw-headline"> Removing functions from the RPC system </span></h2>
+<p>You can use the --remove switch if you no longer need a group of stubs that you generated using c6runapp-rpcgen:
+</p><p><tt>
+</p>
+<pre>c6runapp-rpcgen --remove test.c
+</pre>
+<p></tt>
+</p><p>and all the four files will be removed from DSP-RPC-POSIX directories, or you can remove the files manually.
+</p>
+<a name="Troubleshooting" id="Troubleshooting"></a><h2> <span class="mw-headline"> Troubleshooting </span></h2>
+<p>In case you run into problems with your application (such as unexpected termination or error messages), you can provide the --C6Run:debug switch while compiling to use the debug libraries for the build, and obtain C6Run/RPC/CMEM debug output when the application is ran.
+</p><p><tt>
+</p>
+<pre>c6runapp-cc --rpc --C6Run:debug hello_world.c -o hello_world_dsp
+</pre>
+<p></tt>
+</p>
+<a name="Note_on_stdio.h_variadic_functions" id="Note_on_stdio.h_variadic_functions"></a><h2> <span class="mw-headline"> Note on stdio.h variadic functions </span></h2>
+<p>There are two issues that you need to be aware of while using the stdio.h I/O variadics (printf, scanf, fprintf...):
+</p>
+<ul><li> the number of variadic parameters supported by RPC is currently limited to 80 bytes (ie 20 integers/pointers or 10 doubles)
+</li><li> <b>avoid using doubles/floats in rpc_*printf functions! there are known alignment mismatch problems between the DSP and the GPP</b>
+</li></ul>
+<a name="Architectural_Documentatin" id="Architectural_Documentatin"></a><h1> <span class="mw-headline"> Architectural Documentatin </span></h1>
+<a name="RPC_Overview" id="RPC_Overview"></a><h2> <span class="mw-headline"> RPC Overview </span></h2>
+<a name="Step-by-step_RPC_Events" id="Step-by-step_RPC_Events"></a><h3> <span class="mw-headline"> Step-by-step RPC Events </span></h3>
+<p>Let's start by some definitions:
+</p>
+<ul><li> <b>DSP-side application</b> - this is what you're assumed to be currently working on, which you compile with the C6Run script and will work on the DSP.
+</li><li> <b>GPP-side application</b> - sets up the DSP app and starts running it, and then "answers" the RPC requests. C6Run actually generates this for you, so you don't have to worry about anything here.
+</li><li> <b>RPC target</b> - a function which resides somewhere in the GPP side (could be a library, a shared library, your own code, etc.)
+</li><li> <b>DSP-side stub</b> - a little wrapper function which looks identical to the RPC target. it causes the RPC target to be executed with the parameters you passed to it, and returns you the same value it returns. this is what you actually call from the DSP-side. can be produced by the c6runapp-rpcgen tool, or written manually.
+</li><li> <b>GPP-side stub</b> - another little wrapper function on the GPP side, this is what the GPP side application actually calls. this function "knows" how to call the RPC target itself, so it executes that call and gets the result. can be produced by the c6runapp-rpcgen tool, or written manually.
+</li></ul>
+<p>The run of events that occur when you want to do a remote procedure call are as follows:
+</p>
+<ol><li> From inside the DSP-side application, the DSP-side stub is called (which looks identical to the RPC target)
+</li><li> The DSP-side stub is executed. It initializes the RPC request, and copies all the parameters into the request package (called "marshalling"), and signals for the RPC to be performed.
+</li><li> The request package is sent to the GPP-side application using the RPC transport.
+</li><li> The GPP-side application receives the package, unpacks it and extracts the parameters into a buffer (called "unmarshalling"). Some extra processing such as address translation for buffer/pointer parameters may be carried out at this step.
+</li><li> The GPP-side application locates the relevant GPP-side stub and executes it.
+</li><li> The GPP-side stub executes the RPC target, using the provided parameters, then stores the return value into another buffer. Some extra processing regarding structures or non-shared buffer return types may be carried out at this step.
+</li><li> The GPP-side application sends back the result to the DSP-side.
+</li><li> The DSP-side stub receives the result in the buffer, extracts and returns it to the user code.
+</li></ol>
+<a name="Structure_of_the_RPC_Package" id="Structure_of_the_RPC_Package"></a><h3> <span class="mw-headline"> Structure of the RPC Package </span></h3>
+<p>The buffer carrying a RPC request is structured as follows:
+<code>
+</p>
+<pre>    4      NameLen         4          SignatureLen    ...      1
++----------+--------+----------------+-------------+----------+---+
+
+|  NameLen |  Name  |  SignatureLen  |  Signature  |  Params  | 0 |
+
++----------+--------+----------------+-------------+----------+---+
+</pre>
+<p></code>
+</p>
+<ul><li> <b>NameLen:</b> length of the function name
+</li><li> <b>Name:</b> function name of the GPP-side stub to be executed (observe: NOT the name of the RPC target)
+</li><li> <b>SignatureLen:</b> length of the function signature
+</li><li> <b>Signature:</b> function signature describing how the parameters section will be unpacked
+</li><li> <b>Params:</b> the function parameters, packed without any size promotions or alignment
+</li><li> <b>0:</b> the null-terminating zero signalling the end of the package
+</li></ul>
+<a name="GPP_Side_Architecture" id="GPP_Side_Architecture"></a><h2> <span class="mw-headline"> GPP Side Architecture </span></h2>
+<p>Relevant source code files: build/gpp_libs/rpc_server.c build/gpp_libs/rpc_server.h build/gpp_libs/cio_ipc.c rpc/gpp/*.c
+</p>
+<a name="Overview" id="Overview"></a><h3> <span class="mw-headline"> Overview </span></h3>
+<p>DSP-RPC-POSIX's GPP-side is "heavier" compared to its DSP-side and almost completely integrated into the C6Run GPP-side library. Aside from C6Run's regular GPP-side duties such as setting up the DSP and serving C I/O requests, it is also responsible for these tasks:
+</p>
+<ul><li> extracting/cleaning up the GPP stubs library
+</li><li> receiving and responding to RPC requests
+</li><li> unmarshalling received packages
+</li><li> postprocessing stubs' returned data
+</li><li> locating and executing stubs
+</li><li> managing RPC memory
+</li></ul>
+<a name="The_GPP_Stubs_Library" id="The_GPP_Stubs_Library"></a><h3> <span class="mw-headline"> The GPP Stubs Library </span></h3>
+<p>All GPP stubs located inside the rpc/gpp directory are compiled into a dynamic link library (librpcstubs.so), which allows the usage of dlfcn.h functions dlsym to dynamically locate them by their names. This dynamic link library is rebuilt, converted into a C header file and included in the compilation of the final executable. Upon launch, the library is temporarily extracted into the same directory as the executable, used for locating and executing the stubs, then removed upon termination.
+</p>
+<a name="Receiving_and_Responding_to_RPC_Requests" id="Receiving_and_Responding_to_RPC_Requests"></a><h3> <span class="mw-headline"> Receiving and Responding to RPC Requests </span></h3>
+<p>The important task of servicing RPC requests - that is, carrying out the recieve-unmarshal-locate-execute-return steps, is currently done inside the C I/O service routines (since the RPC transport is carried out via the C I/O transport), located inside build/gpp_libs/cio_ipc.c.
+</p>
+<a name="Address_Translations_and_RPC_Memory" id="Address_Translations_and_RPC_Memory"></a><h3> <span class="mw-headline"> Address Translations and RPC Memory </span></h3>
+<p>The GPP side server application is responsible for managing the shared memory regions used in RPC. Central to its workings is the CMEM kernel module which allocates contiguous memory regions and provides both physical and virtual addresses for accessing these. Since the CMEM module offers only physical-from-virtual address translation with base addresses, DSP-RPC-POSIX maintains an internal list of allocated buffers and their sizes to facilitate bidirectional address translation for any memory region lying within the allocated areas (ie, not just the allocated base addresses but incremented pointers referring to somewhere within that allocated block are also translateable). The list is kept as a doubly-linked list, which grows with rpc_malloc calls and shrinks with rpc_free calls. Using rpc_translate_address (which is also exposed through RPC on the DSP-side), the list can be searched to perform virtual-&gt;physical or physical-&gt;virtual translations. If any address translation goes unsuccessful (no corresponding allocation entries are found) the input address is returned unchanged, which can be used to detect if something has gone wrong. 
+</p>
+<a name="DSP_Side_Architecture" id="DSP_Side_Architecture"></a><h2> <span class="mw-headline"> DSP Side Architecture </span></h2>
+<p>Relevant source code files: rpc/core/dsp_core.c rpc/core/dsp_stubs_base.h rpc/dsp/*.c
+</p>
+<a name="Overview_2" id="Overview_2"></a><h3> <span class="mw-headline"> Overview </span></h3>
+<p>DSP-RPC-POSIX's DSP-side is very small and rather simple - in fact, none of it currently resides in the C6Run DSP-side libraries but are compiled alongside the user sources every time (thus, modifications to the DSP-side code never need a re-build of the C6Run libraries - just the re-execution of c6runapp-cc script). This is mainly because there isn't all that much to do on the DSP-side: we have a buffer of a certain size (see RPC_BUFSZ in dsp_stubs_base.h) into which every DSP-side stub is responsible for copying its function name, function signature and parameters ("marshaling"), which is then sent to the GPP side using the transport, then the reply obtained and passed back to the DSP stub.
+</p><p><br />
+</p>
+<a name="Message_identifiers" id="Message_identifiers"></a><h3> <span class="mw-headline"> Message identifiers </span></h3>
+<p>Aside from the information transmitted in the RPC request, there is one more piece of information given to the GPP side which is vital to the servicing of the RPC call - the message identifier, which describes the nature of the RPC message and defined as follows:
+</p><p><br />
+</p>
+<ul><li> <b>RPC_MSG_REQUEST</b>     generic RPC function call request
+</li><li> <b>RPC_MSG_RESPONSE</b>    sent by the GPP side as a reply to every RPC request, both generic and specialized
+</li><li> <b>RPC_MSG_MALLOC</b>      specialized RPC function call request, for memory allocation
+</li><li> <b>RPC_MSG_FREE</b>        specialized RPC function call request, for memory dellocation
+</li><li> <b>RPC_MSG_TRANSLATE</b>   specialized RPC function call request, for address translation
+</li></ul>
+<p><br />
+The reason why specialized call requests exist is because these particular functions should not be called from inside the GPP stubs library, but be handled directly inside the RPC server. Since all regular stubs would automatically use RPC_MSG_REQUEST, the specialized functions are defined manually in dsp_core.c - they also don't obey the structural conventions defining the RPC packages (no function name, signature or null terminator is given).
+</p><p>Observe that these identifiers are NOT used as the MSGQ MSG identifier - since the RPC transport is carried out via C6Run's existing C I/O transport, those are always CIO_TRANSFER. These RPC identifiers are carried on the command byte during writemsg for requests and the first byte of parm[] for responses.
+</p>
+<a name="Transport" id="Transport"></a><h3> <span class="mw-headline"> Transport </span></h3>
+<p>Currently, the RPC transport is completely carried out via C6Run's existing C I/O transport system - that is, the functions writemsg and readmsg. 
+</p><p>The definitions of writemsg and readmsg, and the usage conventions for parameters are as follows:
+</p><p><br />
+<code>void writemsg(unsigned char  command, const unsigned char *parm, const char *data,unsigned int length)</code>
+</p>
+<ul><li> command - the RPC message identifier
+</li><li> parm    - unused, any 8-element char array
+</li><li> data    - the RPC buffer
+</li><li> length  - length of the RPC buffer                               
+</li></ul>
+<p><br />
+<code>void readmsg(register unsigned char *parm, register char *data)</code>
+</p>
+<ul><li> parm    - char array whose first element should contain RPC_MSG_RESPONSE
+</li><li> data    - buffer that contains the RPC response
+</li></ul>
+<a name="Function_Signatures" id="Function_Signatures"></a><h2> <span class="mw-headline"> Function Signatures </span></h2>
+<p>The function signature is a string of characters describing the data type of a function's return value and parameters. The reason why this data is needed is threefold:
+</p>
+<ul><li> the unmarshaller needs to know how many bytes each parameter takes while extracting them from the buffer
+</li></ul>
+<ul><li> GPP and DSP address spaces aren't the same, and in order to know when to perform address translation the unmarshaller needs to know which parameters are pointers (should be translated) and which parameters are regular values (should be left untouched)
+</li></ul>
+<ul><li> special treatment (such as copying into a shared buffer) may be needed for some functions' return values
+</li></ul>
+<p><br /> 
+</p><p>The signature is composed of ASCII characters, starting with the character representing the return type and continuing with characters representing each parameter in order. Its length always has to be nonzero (the return type is always needed).
+</p>
+<a name="Table_of_Function_Signature_Characters" id="Table_of_Function_Signature_Characters"></a><h3> <span class="mw-headline"> Table of Function Signature Characters </span></h3>
+<table border="1">
+<tr>
+<th> Signature
+</th><th> Data Type
+</th><th> Size (bytes)
+</th><th> Allowed Positions
+</th><th> Description
+</th></tr>
+<tr>
+<td>v
+</td><td>void
+</td><td>0
+</td><td>all
+</td><td>void data - can be omitted for parameters but always needs to be explicitly specified for return types!
+</td></tr>
+<tr>
+<td>c
+</td><td>char
+</td><td>1
+</td><td>all
+</td><td>char data, or any other 1-byte data
+</td></tr>
+<tr>
+<td>s
+</td><td>short int
+</td><td>2
+</td><td>all
+</td><td>short int data, or any other 2-byte data
+</td></tr>
+<tr>
+<td>i
+</td><td>int
+</td><td>4
+</td><td>all
+</td><td>int data, or any other 4-byte data
+</td></tr>
+<tr>
+<td>f
+</td><td>float
+</td><td>4
+</td><td>all
+</td><td>float data, i can also be used instead, provided for convenience
+</td></tr>
+<tr>
+<td>d
+</td><td>double
+</td><td>8
+</td><td>all
+</td><td>double data, or any other 8-byte data
+</td></tr>
+<tr>
+<td>@
+</td><td>pointer
+</td><td>4
+</td><td>all
+</td><td>pointer that needs address translation - see "Pointers and Shared Memory" section for details
+</td></tr>
+<tr>
+<td>a
+</td><td>pointer
+</td><td>4
+</td><td>all
+</td><td>pointer which won't be dereferenced and doesn't need address translation - see "Pointers and Shared Memory" section for details
+</td></tr>
+<tr>
+<td>$
+</td><td>pointer
+</td><td>4
+</td><td>return
+</td><td>manually copy a number of bytes from the returned pointer into a shared buffer and return the shared buffer - see "Returning Non-Shared Buffers" section
+</td></tr>
+<tr>
+<td>#
+</td><td>struct
+</td><td>*
+</td><td>return
+</td><td>manually copy a number of bytes from the returned pointer into the result buffer and return the result normally - see "Returning structures" section
+</td></tr>
+<tr>
+<td>&gt;
+</td><td>*
+</td><td>*
+</td><td>param
+</td><td>variadic parameter block: previous parameter is assumed to be containing a printf-style format string, all variadic pointer parameters are address translated using the info from the format string
+</td></tr>
+<tr>
+<td>&lt;
+</td><td>*
+</td><td>*
+</td><td>param
+</td><td>variadic parameter block: previous parameter is assumed to be containing a scanf-style format string, all variadic parameters are pointers and are subjected to address translation using the info from the format string (i.e, how many variadic parameters there are)
+</td></tr></table>
+<p><i>Observe that indirect pointers (double/triple pointers such as char**, void**) are not fully supported - the contained direct pointers won't be translated, and neither will be pointers hidden inside struct's</i>
+</p>
+<a name="Pointers_and_Shared_Memory" id="Pointers_and_Shared_Memory"></a><h3> <span class="mw-headline"> Pointers and Shared Memory </span></h3>
+<p>There are two important issues that need to be kept in mind while working with buffers/pointers in RPC:
+</p>
+<ol><li> The GPP and the DSP don't use the same address space: the GPP works with virtual addresses, while the DSP works with physical addresses
+</li><li> Due to memory protection issues, a buffer which will be accessed by both the DSP and the GPP must be allocated from a shared memory area (that is, CMEM) 
+</li></ol>
+<p>To save you from the troubles of having to work manually with allocating CMEM buffers and translating addresses back and forth, DSP-RPC-POSIX offers you easy allocation of shared buffers via rpc_malloc and automatic translation of memory addresses using the @ character in function signatures. Thus, any rpc_malloc'd buffer you pass as an '@' parameter will be automatically converted to its virtual equivalent which can be used by and GPP side function, and any '@' return type lying inside rpc_malloc'd areas will be translated to its physical equivalent which is accessible by the DSP. It is important to keep in mind that address translations (which are absolutely necessary for accessing pointers from both sides) are performed automatically only in case if the parameter is specified as @ in the function signature. This means that double/triple pointers, pointers inside structs or pointers hidden inside buffers won't be automatically translated.
+</p><p>For the developer's convenience while working with read-only string parameters, DSP-RPC-POSIX has the ability to copy a fixed number of bytes from the DSP memory space (stack or heap) into a GPP-side buffer using PROC_read. This means that as long as the sent buffer is relatively small (defined as RPC_PROCREAD_MAXPARAM in build/gpp_libs/rpc_server.h) and is expected to be read only (ie, not modified on the GPP side) it's safe to pass them from the DSP stack or heap. So rpc_puts("hello world!") or rpc_printf("String:&nbsp;%s \n", "test") is indeed possible.
+</p><p>In case you won't be accessing the contents of a pointer from the DSP-side, it is safe to use the 'a' signature character instead of '@'. In this case the system won't perform any address translation at all, pointers will be passed back and forth as regular values. For example, FILE pointers used by fopen/fread/etc. calls are never meant to be dereferenced at all, but merely passed as arguments to other members of the same function family, and thus are good candidates for being 'a' parameters.
+</p>
+<a name="Returning_Non-Shared_Buffers" id="Returning_Non-Shared_Buffers"></a><h3> <span class="mw-headline"> Returning Non-Shared Buffers </span></h3>
+<p>In case the GPP-side function is going to return a pointer to a GPP-side allocated memory buffer (ie, anything that wasn't allocated by rpc_malloc), the function signature return type should be defined as '$' which has this special meaning: the GPP stub needs to use the RPC_LOAD_RESULT_BUFLEN(result_buffer, length) macro to set the size of the returned buffer. The RPC system will copy this many bytes into a shared memory region from the returned buffer, and return the physical address of the shared memory region instead. Observe that this shared buffer is only synchronized once (upon the completion of the GPP side call) and its later contents will not be kept in sync with the nonshared GPP buffer.
+</p>
+<a name="Returning_Structures" id="Returning_Structures"></a><h3> <span class="mw-headline"> Returning Structures </span></h3>
+<p>In case the GPP-side function is going to return a structure (the structure itself and not a pointer to it), the function signature return type will be defined as '#' which has this special meaning: the GPP stub needs to allocate sufficient memory with malloc(), place the returned structure into this buffer, use the RPC_LOAD_RESULT_BUFLEN macro to set the length of the returned structure, and then return this buffer without freeing the memory. The GPP side server will copy the specified number of bytes into the return buffer and free the allocated memory. Observe that the size of the RPC return buffer is limited (defined as RPC_RESPSZ)
+</p>
+<a name="Cache_Issues" id="Cache_Issues"></a><h2> <span class="mw-headline"> Cache Issues </span></h2>
+<p>As with any modern processor, the C64x+ megamodule possesses an amount of cache (L1P, L1D and L2) for higher performance. The presence and usage of ARM and DSP side caches poses a cache coherency problem when we want to access a shared area by both processors. Let's consider the following scenario:
+</p>
+<ol><li> A CMEM buffer is allocated for shared usage by the GPP side and its physical pointer is passed to the DSP.
+</li><li> The DSP wants to read and then write some data into this buffer. Let's say that there are free entry slots in the DSP L2 cache - so the data actually gets written to the DSP cache, instead of making it to the DDR shared region. The DSP then signals the GPP that it's done with the buffer for the time being.
+</li><li> The GPP attempts to read the buffer, but what it reads is just the garbage values present in the buffer after initialization since the DSP-written data is in the DSP cache. This buffer also gets cached in the ARM-side now, so when the GPP tries to write some new data into it, it stays into the ARM cache and doesn't make it to the main memory either.
+</li><li> If the DSP tries to read the cache now, it won't get what the ARM has written into it most recently since it'll be reading from its own cache, and vice-versa for the ARM side. 
+</li></ol>
+<p>We can see that the "same" buffer actually exists in three different locations (main memory, DSP cache, ARM cache), all of which can contain totally different data - in this case it is said that they are not coherent, and that we have a cache coherency problem.
+</p><p>In most cached systems, there are cache coherency protocols which prevent these situations from occuring. The TMS320C64x+ DSP Cache User's Guide states:
+</p><p>In the following cases, it is your responsibility to maintain cache coherence:
+</p>
+<ul><li> DMA or other external entity writes data or code to external memory that is then read by the CPU
+</li><li> CPU writes data to external memory that is then read by DMA or another external entity 
+</li></ul>
+<p>thus we have to manually maintain cache coherence for mutual access to CMEM regions by the DSP and the GPP. Studying the scenario above, we can observe that there are two underlying problems:
+</p>
+<ol><li> If the memory block to be read already exists in the local cache, there's a risk that the local cache is outdated: we need to discard the local cache entries and fill them up with information from the main memory. This process is called cache invalidation.
+</li><li> When the memory block is to be written into, there's a risk that the info remains in the local cache and doesn't make it to the main memory: we have to make sure that the new info gets written to the main memory as well. This process is called cache writeback. 
+</li></ol>
+<p>Therefore, from a RPC perspective, for a call that involves transferring buffers, the steps we have to take are as follows:
+</p>
+<ol><li> Before passing the marshalled info via DSP/Link, the DSP must do a cache writeback
+</li><li> Before passing the params to the GPP side stub, the GPP must do a cache invalidate
+</li><li> After the GPP side stub is finished, the GPP must do a cache writeback
+</li><li> The DSP side stub must do a cache invalidate before terminating 
+</li></ol>
+<p>This is assuming that both processor caches will be active - in case the DSP cache is disabled, the steps 1 and 4 will not be necessary, and likewise with steps 2 and 3 for a disabled GPP cache.
+</p>
+<a name="Enabling_or_Disabling_DSP_Cache" id="Enabling_or_Disabling_DSP_Cache"></a><h3> <span class="mw-headline"> Enabling or Disabling DSP Cache </span></h3>
+<p>DSP caches are enabled by default, and coherency issues are handled inside the RPC layer. To adjust the DSP-side cache, you can edit the platforms/{platform_name}/platform.tci configuration file. To disable all DSP-side caching, you can set the MAR bits to 0, as in:
+</p><p><code>
+</p>
+<pre>prog.module("GBL").C64PLUSMAR128to159  === 0x00000000;
+</pre>
+<p></code>
+</p>
+<a name="Enabling_or_Disabling_ARM_CMEM_Cache" id="Enabling_or_Disabling_ARM_CMEM_Cache"></a><h3> <span class="mw-headline"> Enabling or Disabling ARM CMEM Cache </span></h3>
+<p>The ARM-side CMEM caching is disabled by default, since there were coherency handling issues inside the RPC layer at the time of writing. If you want to enable ARM-side caching and handle coherency issues on your own, set
+</p><p><code>
+</p>
+<pre>#define USE_ARM_CACHE (1)
+</pre>
+<p></code>
+</p><p>in build/gpp_libs/C6Run.h
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 29/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key wikidb:pcache:idhash:5439-0!1!0!!en!2!edit=0 and timestamp 20100812142911 -->
+<div class="printfooter">
+Retrieved from "<a href="http://elinux.org/BeagleBoard/GSoC/2010_Projects/C6Run/Documentation">http://elinux.org/BeagleBoard/GSoC/2010_Projects/C6Run/Documentation</a>"</div>
+						<!-- end content -->
+						<div class="visualClear"></div>
+		</div>
+	</div>
+		</div>
+		<div id="column-one">
+	<div id="p-cactions" class="portlet">
+		<h5>Views</h5>
+		<div class="pBody">
+			<ul>
+	
+				 <li id="ca-nstab-main" class="selected"><a href="/BeagleBoard/GSoC/2010_Projects/C6Run/Documentation" title="View the content page [c]" accesskey="c">Page</a></li>
+				 <li id="ca-talk" class="new"><a href="/index.php?title=Talk:BeagleBoard/GSoC/2010_Projects/C6Run/Documentation&amp;action=edit&amp;redlink=1" title="Discussion about the content page [t]" accesskey="t">Discussion</a></li>
+				 <li id="ca-viewsource"><a href="/index.php?title=BeagleBoard/GSoC/2010_Projects/C6Run/Documentation&amp;action=edit" title="This page is protected.&#10;You can view its source [e]" accesskey="e">View source</a></li>
+				 <li id="ca-history"><a href="/index.php?title=BeagleBoard/GSoC/2010_Projects/C6Run/Documentation&amp;action=history" title="Past revisions of this page [h]" accesskey="h">History</a></li>			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-personal">
+		<h5>Personal tools</h5>
+		<div class="pBody">
+			<ul>
+				<li id="pt-login"><a href="/index.php?title=Special:UserLogin&amp;returnto=BeagleBoard/GSoC/2010_Projects/C6Run/Documentation" title="You are encouraged to log in; however, it is not mandatory [o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="portlet" id="p-logo">
+		<a style="background-image: url(/images/3/34/Final_penguin_only_color.jpg);" href="/Main_Page" title="Visit the main page [z]" accesskey="z"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+	<div class='generated-sidebar portlet' id='p-navigation'>
+		<h5>Navigation</h5>
+		<div class='pBody'>
+			<ul>
+				<li id="n-mainpage"><a href="/Main_Page" title="Visit the main page">Main Page</a></li>
+				<li id="n-portal"><a href="/eLinux.org:Community_Portal" title="About the project, what you can do, where to find things">Community portal</a></li>
+				<li id="n-currentevents"><a href="/eLinux.org:Current_events" title="Find background information on current events">Current events</a></li>
+				<li id="n-recentchanges"><a href="/Special:RecentChanges" title="The list of recent changes in the wiki [r]" accesskey="r">Recent changes</a></li>
+				<li id="n-help"><a href="/Help:Contents" title="The place to find out">Help</a></li>
+				<li id="n-Volunteering"><a href="/Sitesupport-url">Volunteering</a></li>
+				<li id="n-Popular-Pages"><a href="/Special:PopularPages">Popular Pages</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="p-search" class="portlet">
+		<h5><label for="searchInput">Search</label></h5>
+		<div id="searchBody" class="pBody">
+			<form action="/index.php" id="searchform"><div>
+				<input type='hidden' name="title" value="Special:Search"/>
+				<input id="searchInput" name="search" type="text" title="Search eLinux.org [f]" accesskey="f" value="" />
+				<input type='submit' name="go" class="searchButton" id="searchGoButton"	value="Go" title="Go to a page with this exact name if exists" />&nbsp;
+				<input type='submit' name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text" />
+			</div></form>
+		</div>
+	</div>
+	<div class="portlet" id="p-tb">
+		<h5>Toolbox</h5>
+		<div class="pBody">
+			<ul>
+				<li id="t-whatlinkshere"><a href="/Special:WhatLinksHere/BeagleBoard/GSoC/2010_Projects/C6Run/Documentation" title="List of all wiki pages that link here [j]" accesskey="j">What links here</a></li>
+				<li id="t-recentchangeslinked"><a href="/Special:RecentChangesLinked/BeagleBoard/GSoC/2010_Projects/C6Run/Documentation" title="Recent changes in pages linked from this page [k]" accesskey="k">Related changes</a></li>
+<li id="t-specialpages"><a href="/Special:SpecialPages" title="List of all special pages [q]" accesskey="q">Special pages</a></li>
+				<li id="t-print"><a href="/index.php?title=BeagleBoard/GSoC/2010_Projects/C6Run/Documentation&amp;printable=yes" rel="alternate" title="Printable version of this page [p]" accesskey="p">Printable version</a></li>				<li id="t-permalink"><a href="/index.php?title=BeagleBoard/GSoC/2010_Projects/C6Run/Documentation&amp;oldid=22749" title="Permanent link to this revision of the page">Permanent link</a></li>			</ul>
+		</div>
+	</div>
+		</div><!-- end of the left (by default at least) column -->
+			<div class="visualClear"></div>
+			<div id="footer">
+				<div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="/skins/common/images/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" /></a></div>
+				<div id="f-copyrightico"><a href="http://www.gnu.org/copyleft/fdl.html"><img src="/skins/common/images/gnu-fdl.png" alt='GNU Free Documentation License 1.2' /></a></div>
+			<ul id="f-list">
+					<li id="lastmod"> This page was last modified on 12 August 2010, at 14:27.</li>
+					<li id="viewcount">This page has been accessed 76 times.</li>
+					<li id="copyright">Content is available under <a href="http://www.gnu.org/copyleft/fdl.html" class="external " title="http://www.gnu.org/copyleft/fdl.html">GNU Free Documentation License 1.2</a>.</li>
+					<li id="privacy"><a href="/eLinux.org:Privacy_policy" title="eLinux.org:Privacy policy">Privacy policy</a></li>
+					<li id="about"><a href="/eLinux.org:About" title="eLinux.org:About">About eLinux.org</a></li>
+					<li id="disclaimer"><a href="/eLinux.org:General_disclaimer" title="eLinux.org:General disclaimer">Disclaimers</a></li>
+			</ul>
+		</div>
+</div>
+
+		<script type="text/javascript">if (window.runOnloadHook) runOnloadHook();</script>
+<!-- Served in 0.757 secs. --></body></html>

@@ -1,0 +1,9 @@
+Package: ti-c6accel-src
+Version: 1_01_00_07-r12
+Description: Patched sources for ti-c6accel
+Section: devel
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI TSPA
+Architecture: all
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/c6000/web/c6accel/latest/exports//c6accel_1_01_00_07_Linux-x86_Setup.bin;name=c6accelbin 

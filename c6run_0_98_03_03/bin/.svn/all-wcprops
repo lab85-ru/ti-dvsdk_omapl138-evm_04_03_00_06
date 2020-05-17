@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/bin
+END
+c6runapp-cc
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/bin/c6runapp-cc
+END
+c6runlib-ar
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/bin/c6runlib-ar
+END
+c6runlib-cc
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/bin/c6runlib-cc
+END
+c6runapp-rpcgen
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/bin/c6runapp-rpcgen
+END

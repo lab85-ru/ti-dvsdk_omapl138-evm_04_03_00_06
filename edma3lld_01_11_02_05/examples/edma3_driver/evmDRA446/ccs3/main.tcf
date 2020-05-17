@@ -1,0 +1,95 @@
+/* Note: Using the EVM DRA446 */
+utils.loadPlatform("ti.platforms.evmDRA446");
+
+/* The following DSP/BIOS Features are enabled.  */
+bios.enableTskManager(prog);
+bios.enableRtdx(prog);
+bios.enableMemoryHeaps(prog);
+
+bios.MEM.instance("EMIFB").createHeap = 1;
+bios.MEM.instance("EMIFB").heapSize = 0x03000000;
+
+
+bios.LOG.create("trace");
+bios.LOG.instance("LOG_system").bufLen = 1024;
+bios.LOG.instance("trace").bufLen = 1024;
+
+/*Decide on sections*/
+bios.SIO.OBJMEMSEG = prog.get("EMIFB");
+bios.DIO.OBJMEMSEG = prog.get("EMIFB");
+bios.SEM.OBJMEMSEG = prog.get("EMIFB");
+bios.MBX.OBJMEMSEG = prog.get("EMIFB");
+bios.QUE.OBJMEMSEG = prog.get("EMIFB");
+bios.LCK.OBJMEMSEG = prog.get("EMIFB");
+bios.SWI.OBJMEMSEG = prog.get("EMIFB");
+bios.TSK.OBJMEMSEG = prog.get("EMIFB");
+bios.TSK.STACKSEG = prog.get("EMIFB");
+bios.PRD.OBJMEMSEG = prog.get("EMIFB");
+bios.MEM.BIOSOBJSEG = prog.get("EMIFB");
+bios.MEM.MALLOCSEG = prog.get("EMIFB");
+bios.MEM.ARGSSEG = prog.get("EMIFB");
+bios.MEM.STACKSEG = prog.get("EMIFB");
+bios.MEM.GBLINITSEG = prog.get("EMIFB");
+bios.MEM.TRCDATASEG = prog.get("EMIFB");
+bios.MEM.OBJSEG = prog.get("EMIFB");
+bios.MEM.SYSDATASEG = prog.get("EMIFB");
+bios.MEM.TEXTSEG = prog.get("EMIFB");
+bios.MEM.SWITCHSEG = prog.get("EMIFB");
+bios.MEM.BSSSEG = prog.get("EMIFB");
+bios.MEM.CINITSEG = prog.get("EMIFB");
+bios.MEM.FARSEG = prog.get("EMIFB");
+bios.MEM.PINITSEG = prog.get("EMIFB");
+bios.MEM.CONSTSEG = prog.get("EMIFB");
+bios.MEM.DATASEG = prog.get("EMIFB");
+bios.MEM.CIOSEG = prog.get("EMIFB");
+bios.MEM.BIOSSEG = prog.get("EMIFB");
+bios.MEM.SYSINITSEG = prog.get("EMIFB");
+bios.MEM.HWISEG = prog.get("EMIFB");
+bios.MEM.HWIVECSEG = prog.get("EMIFB");
+bios.MEM.RTDXTEXTSEG = prog.get("EMIFB");
+bios.LOG.instance("LOG_system").bufLen = 64;
+bios.MEM.MALLOCSEG = prog.get("EMIFB");
+bios.BUF.OBJMEMSEG = prog.get("EMIFB");
+bios.LOG.OBJMEMSEG = prog.get("EMIFB");
+bios.STS.OBJMEMSEG = prog.get("EMIFB");
+bios.IDL.OBJMEMSEG = prog.get("EMIFB");
+bios.DHL.OBJMEMSEG = prog.get("EMIFB");
+bios.RTDX.RTDXDATASEG = prog.get("EMIFB");
+bios.TSK.instance("TSK_idle").stackMemSeg = prog.get("EMIFB");
+bios.LOG.instance("LOG_system").bufSeg = prog.get("EMIFB");
+bios.HST.OBJMEMSEG = prog.get("EMIFB");
+bios.HST.instance("RTA_fromHost").bufSeg = prog.get("EMIFB");
+bios.HST.instance("RTA_toHost").bufSeg = prog.get("EMIFB");
+bios.SYS.TRACESEG = prog.get("EMIFB");
+bios.PIP.OBJMEMSEG = prog.get("EMIFB");
+bios.CLK.OBJMEMSEG = prog.get("EMIFB");
+bios.ECM.ENABLE = 1;
+
+/*ECM configuration*/
+bios.HWI.instance("HWI_INT6").interruptSelectNumber = 0;
+bios.HWI.instance("HWI_INT7").interruptSelectNumber = 1;
+bios.HWI.instance("HWI_INT8").interruptSelectNumber = 2;
+bios.HWI.instance("HWI_INT9").interruptSelectNumber = 3;
+
+bios.CLK.RESETTIMER = 1;
+
+bios.TSK.instance("TSK_idle").order = 1;
+
+/*task configuration*/
+bios.TSK.create("echoTask");
+bios.TSK.instance("echoTask").stackSize = 32768;
+bios.TSK.instance("echoTask").fxn = prog.extern("echo");
+bios.TSK.instance("echoTask").comment = "Echo Task";
+bios.TSK.instance("TSK_idle").order = 1;
+bios.TSK.instance("echoTask").order = 2;
+
+/* EMIFB size is 128MB, Heap is 48MB, Stack is 32K */
+bios.MEM.STACKSIZE = 0x8000;
+bios.MEM.instance("EMIFB").len = 0x08000000;
+
+bios.CLK.TIMERSELECT = "RTI2 Timer0";
+bios.HWI.instance("HWI_INT15").interruptSelectNumber = 15;
+// !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+
+prog.gen();
+

@@ -1,0 +1,333 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== clkDM420.h62 ========
+;
+; 
+
+        .if ($isdefed("CLKDM420_") = 0) ; prevent multiple includes
+CLKDM420_       .set    1
+
+        .global CLK_INTBIT, CLK_REGS, CLK_PRD, CLK_TDDR
+        .global CLK_TIMMODE
+
+
+; timer control register masks
+CLK_CLKSRC      .set    010h            ; set PWID=1
+CLK_CLEARTCR12  .set    0ffff0000h      ; clear out TCR12
+CLK_HOLD        .set    0ffffff3fh      ; set ENAMODE=00
+        .if (GBL_CLKTYPE == 6747)
+CLK_ENABLEEMU   .set    00h             ; set EMU bits to 0 
+SUSPSRC_REG     .set    001c14170h      ; SUSPSRC register
+CLK_T0_SUSPSRC_BIT .set 008000000h      ; TIMER64P_0SRC bit
+CLK_T1_SUSPSRC_BIT .set 010000000h      ; TIMER64P_1SRC bit
+CLK_T2_SUSPSRC_BIT .set 020000000h      ; TIMER64P_2SRC bit
+        .else
+CLK_ENABLEEMU   .set    01h             ; set EMU bits to 1
+        .endif
+CLK_MAXPER      .set    0ffffffffh      ; Maximum clock period (for loop
+                                        ; overhead calculation)
+CLK_CLEARTIMMODE .set   0fff3h          ; clear out TIMMODE of TGCR1 register
+CLK_UNCHAINED   .set    05h             ; set TIMMOD=01, TIM34RS=0, TIM12RS=1
+CLK_CHAINED     .set    0fh             ; set TIMMOD=11, TIM34RS=1, TIM12RS=1
+CLK_START       .set    080h            ; set ENAMODE=10
+CLK_TSTATBIT    .set    01h             ; timer control reg mask, TSTAT=1
+
+CLK_O_TCR       .set    08h             ; offset for timer control reg
+        .if .BIG_ENDIAN
+CLK_O_TCRHALF   .set    011h            ; halfword offset for timer control reg
+        .else
+CLK_O_TCRHALF   .set    010h            ; halfword offset for timer control reg
+        .endif
+CLK_O_PRD       .set    06h             ; offset for timer period reg 12
+CLK_O_PRD34     .set    07h             ; offset for timer period reg 34
+CLK_O_CNT       .set    04h             ; offset for timer counter reg 12
+CLK_O_CNT34     .set    05h             ; offset for timer counter reg 34
+CLK_O_GTCR      .set    09h             ; offset for global timer control reg
+CLK_O_EMUMGT    .set    01h             ; offset for emulation management reg
+        .if .BIG_ENDIAN
+CLK_O_GTCRHALF  .set    013h            ; halfword offset for global tcr
+        .else
+CLK_O_GTCRHALF  .set    012h            ; halfword offset for global tcr
+        .endif
+
+
+CLK_PWRSAVE_LOCKVAL     .set 0x0F0A0B00 ; Unlock the PowerSave hardware
+CLK_PWRSAVE_LOCKREG     .set 0x02AC0004 ; address of PowerSave Lock register
+CLK_PWRSAVE_ENABLE_TIMER0 .set 0x40     ; enable Timer0
+
+        .if (GBL_CLKTYPE == 6486)               ; Tomahawk start of shared
+CLK_SHAREDTIMERBASE     .set    0x02640000      ; timer base addresses
+CLK_SHAREDTIMERNUM      .set    6               ; Shared timers are num 6-11.
+        .endif
+
+;
+;# ======== CLK_ackIsr ========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+        .asg    "", CLK_ackIsr$regs
+CLK_ackIsr      .macro
+        .endm
+
+;
+;# ======== CLK_startup ========
+;  The Timer is put into dual 32-bit chained mode.  TIM12 is configured as
+;  a general purpose timer using TIM1/TIM2 register pair and controls the
+;  interrupt and timer output.  TIM34 is configured as a 32-bit pre-scalar
+;  to the TIM12 using its TIM3/TIM4 register pair.  When both TIM12 and TIM34
+;  match PRD12 and PRD34, a timer interrupt is generated on the next cycle of
+;  the timer clock.
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      Timer Period register = CLK_PRD.
+;#      Timer Prescalar register = CLK_TDDR.
+;#      Timer is started.
+;#      Timer interrupt enable is set in IER.
+;#
+;# Dependencies:
+;#      This routine must be called after any other routines that use the
+;#      timer and before interrupts are globally enabled.
+;
+        .asg "a0,b0,a1,b1,b2,ier", CLK_startup$regs
+CLK_startup     .macro
+
+        .ref _CLK_D_prd
+        .ref _CLK_D_tddr
+
+        ; only expand if the CLK module is configured by the user and he/she
+        ; asks to use the timer
+        .if ((CLK$ = 1) & (CLK_USETIMER = 1))
+
+            ; if we are using himalaya timer, then must enable it first
+            .if (GBL_CLKTYPE == 6482)
+                .global _CLK_enableTimer
+
+                mvkl _CLK_enableTimer, a0
+                mvkh _CLK_enableTimer, a0
+                b a0
+                mvkl fxnret?, b3
+                mvkh fxnret?, b3
+                nop 3
+fxnret?:
+            .endif
+
+            ; if on 64LC parts then enable power to timer first
+            .if (GBL_CLKTYPE == 6424)
+                .global CLK_TIMERNUM, _CLK_enableTimer
+
+                mvk  CLK_TIMERNUM, a4
+                mvkl _CLK_enableTimer, a0
+                mvkh _CLK_enableTimer, a0
+                b a0
+                mvkl fxn1ret?, b3
+                mvkh fxn1ret?, b3
+                nop 3
+fxn1ret?:
+            .endif
+
+
+            ;
+            ; if using a shared timer, only initialize timer if we are on
+            ; the right GEM specified in the configuration to do initialization.
+            ; if using a local timer then always initialize the timer.
+            ;
+            .if (GBL_CLKTYPE == 6486)
+                mvc DNUM, b0                    ; b0 gets core number
+
+                .if (CLK_TIMERNUM >= CLK_SHAREDTIMERNUM)
+                    mvkl CLK_INITCORENUM, a0    ; if using shared timer and not
+                    mvkh CLK_INITCORENUM, a0    ; on right GEM, skip init code
+                    cmpeq b0, a0, b1
+                [!b1] bnop endclkstartup?, 5
+                .endif
+            .endif
+            
+            ;
+            ; Initialize timer only if matches core on Faraday.
+            ;
+            .if (GBL_CLKTYPE == 6488)
+                mvkl CLK_INITCORENUM, a0
+                mvkh CLK_INITCORENUM, a0
+                mvc DNUM, b0                    ; get core number
+                cmpeq b0, a0, b1
+
+                    ; if not on right GEM, skip timer initialization
+               [!b1] bnop endclkstartup?, 5
+            .endif
+
+            ;
+            ; On C674x, if OK'd to reset the timer, then also set the 
+            ; appropriate emulation suspend source bit to assign emulation
+            ; halt control to the DSP
+            ;
+            .if ((GBL_CLKTYPE == 6747) & (CLK_RESETTIMER))
+                mvkl SUSPSRC_REG, b0
+                mvkh SUSPSRC_REG, b0
+                ldw *b0, a1                     ; load current SUSPSRC
+                .if (CLK_TIMERNUM == 0)
+                    mvkl CLK_T0_SUSPSRC_BIT, a0
+                    mvkh CLK_T0_SUSPSRC_BIT, a0
+                .endif
+                .if (CLK_TIMERNUM == 1)
+                    mvkl CLK_T1_SUSPSRC_BIT, a0
+                    mvkh CLK_T1_SUSPSRC_BIT, a0
+                .endif
+                .if (CLK_TIMERNUM == 2)
+                    mvkl CLK_T2_SUSPSRC_BIT, a0
+                    mvkh CLK_T2_SUSPSRC_BIT, a0
+                .endif
+                nop 2
+                or a0, a1, a1                   ; assert DSP is source bit
+                stw a1, *b0                     ; store back to SUSPSRC
+            .endif
+
+            .if ((CLK_TIMMODE == CLK_CHAINED) | (CLK_TIMMODE == CLK_UNCHAINED))
+                .if ((CLK_TIMMODE == CLK_UNCHAINED))
+                    mvkl CLK_REGS, a0           ; get TCR address
+||                  mvkl CLK_CLEARTCR12, b2
+                    mvkh CLK_REGS, a0
+||                  mvkh CLK_CLEARTCR12, b2
+
+                    .if (GBL_CLKTYPE == 6486)
+                        .if (CLK_TIMERNUM < CLK_SHAREDTIMERNUM)
+                            shl b0, 16, b0      ; Add offset to base for local
+                            add b0, a0, a0      ; timers on Tomahawk
+                        .endif
+                    .endif
+
+                    ldw *+a0[CLK_O_TCR], b1
+                    mvkl _CLK_D_prd, a1
+                    mvkl CLK_CLKSRC, b0
+                    mvkh _CLK_D_prd, a1
+                    mvkh CLK_CLKSRC, b0
+            
+                    ldw *a1, a1                 ; get period value
+||                  and b1, b2, b2
+                    or b2, b0, b2
+                    sth b2, *+a0[CLK_O_TCRHALF] ; PWID=1, ENAMODE=00, CLKSRC=0
+||                  zero b0
+                    stw b0, *+a0[CLK_O_CNT]
+            
+                    mvkl CLK_INTBIT, b2
+                    mvkh CLK_INTBIT, b2
+                    mvc b2, icr
+            
+                    ; set the period value
+                    stw a1, *+a0[CLK_O_PRD]
+            
+                    .if (CLK_RESETTIMER)
+                        ldw *+a0[CLK_O_GTCR], a1        ; load GTCR into a1
+                        mvkl CLK_CLEARTIMMODE, b1
+                        mvkh CLK_CLEARTIMMODE, b1
+
+                        ; set the emulation free bit
+                        mvkl CLK_ENABLEEMU, b2
+                        mvkh CLK_ENABLEEMU, b2
+                        stw b2, *+a0[CLK_O_EMUMGT]
+
+                        ; set the global control register
+                        mvkl CLK_UNCHAINED, b2
+                        mvkh CLK_UNCHAINED, b2
+                        and a1, b1, b1
+                        or b1, b2, b2
+                        sth b2, *+a0[CLK_O_GTCRHALF] ; set to dual 32-bit
+                                                     ; unchained mode
+                    .endif
+
+                    ; start timer
+                    ldw *+a0[CLK_O_TCR], a1
+                    mvkl CLK_START, b1          ; get start mask
+                    mvkh CLK_START, b1          ; get start mask
+                    nop 2
+                    or b1, a1, a1               ; set GO=1 and /HLD=1 for TCR12
+                    sth a1, *+a0[CLK_O_TCRHALF] ; write to Timer Control to
+                                                ; start timer
+
+                .else
+                    mvkl CLK_REGS,a0    ; get address to Timer Control register
+||                  mvkl CLK_CLKSRC,b2
+                    mvkh CLK_REGS,a0
+||                  mvkh CLK_CLKSRC,b2
+                    
+                    .if (GBL_CLKTYPE == 6486)
+                        .if (CLK_TIMERNUM < CLK_SHAREDTIMERNUM)
+                            shl b0, 16, b0      ; Add offset to base for local
+                            add b0, a0, a0      ; timers on Tomahawk
+                        .endif
+                    .endif
+                    
+                    stw b2, *+a0[CLK_O_TCR]     ; PWID=1, ENAMODE=00, CLKSRC=0
+||                  zero b0
+
+                    stw b0, *+a0[CLK_O_CNT]
+||                  mvkl _CLK_D_prd, a1
+||                  mvkl _CLK_D_tddr, b1
+                    stw b0, *+a0[CLK_O_CNT34]
+||                  mvkh _CLK_D_prd, a1
+||                  mvkh _CLK_D_tddr, b1
+
+                    ldw *a1, a1                 ; get period value
+                    ldw *b1, b1                 ; get pre-scalar value
+                    mvkl CLK_INTBIT, b2
+                    mvkh CLK_INTBIT, b2
+                    mvc b2, icr
+
+                    ; set the period value
+                    stw a1, *+a0[CLK_O_PRD]
+                    stw b1, *+a0[CLK_O_PRD34]
+
+                    .if (CLK_RESETTIMER)
+                        ldw *+a0[CLK_O_GTCR], a1        ; load GTCR into a1
+                        mvkl CLK_CLEARTIMMODE, b1
+                        mvkh CLK_CLEARTIMMODE, b1
+
+                        ; set the emulation free bit
+                        mvkl CLK_ENABLEEMU, b2
+                        mvkh CLK_ENABLEEMU, b2
+                        stw b2, *+a0[CLK_O_EMUMGT]
+
+                        ; set the global control register
+                        mvkl CLK_CHAINED, b2
+                        mvkh CLK_CHAINED, b2
+                        and a1, b1, b1
+                        or b1, b2, b2
+                        sth b2, *+a0[CLK_O_GTCRHALF]    ; set to dual 32-bit
+                                                        ; chained mode
+                    .endif
+        
+                    ; start timer
+                    ldw *+a0[CLK_O_TCR], a1
+                    mvkl CLK_START, b1          ; get start mask
+                    mvkh CLK_START, b1
+                    nop 2
+                    or b1, a1, a1               ; set GO=1 and /HLD=1
+                    stw a1, *+a0[CLK_O_TCR]     ; write to Timer Control
+                                                ; to start timer
+                .endif  ; .if (CLK_TIMMODE == CLK_UNCHAINED)
+            .endif
+
+endclkstartup?:
+
+            ; enable Timer interrupt in IER
+            mvkl CLK_INTBIT, a0
+            mvkh CLK_INTBIT, a0
+            mvc ier, b1
+            or a0, b1, b1       ; set CLK_INTBIT
+            mvc b1, ier
+
+        .endif  ; .if ((CLK$ = 1) & (CLK_USETIMER = 1))
+
+        .endm
+
+        .endif          ; if CLKDM420_ is not defined

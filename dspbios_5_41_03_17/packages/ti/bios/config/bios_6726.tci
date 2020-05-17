@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_6726.tci ========
+ *  This file contains BIOS settings for 6726 (Antara).
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_6727.tci");
+
+/*
+ *  ======== bios.init6726 ========
+ *  BIOS initialization for the 6726 is same as for 6727 
+ */
+bios.init6726 = bios.init6727;

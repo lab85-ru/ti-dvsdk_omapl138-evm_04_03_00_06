@@ -1,0 +1,82 @@
+diff --git a/soc/app/test_files/benchmarking.txt b/soc/app/test_files/benchmarking.txt
+deleted file mode 100755
+index d4fac62..0000000
+--- a/soc/app/test_files/benchmarking.txt
++++ /dev/null
+@@ -1,76 +0,0 @@
+-IMGLib Functions
+-640x480 8bit/pixel b/w Test Image 
+-C6ACCEL_IMG_histogram_8(),3387us,IMG_histogram_8_cmodel(),3296us
+-C6ACCEL_IMG_histogram_16(),8423us,IMG_histogram_16_cmodel(),7386us
+-C6ACCEL_IMG_median_3x3_8(),6592us,IMG_median_3x3_8_cmodel(),30914us
+-C6ACCEL_IMG_median_3x3_16(),11718us,IMG_median_3x3_16_cmodel(),28778us
+-C6ACCEL_IMG_median_3x3_16s(),11383us,IMG_median_3x3_16s_cmodel(),43183us
+-C6ACCEL_IMG_conv_3x3_i8_c8s(),6318us,IMG_conv_3x3_i8_c8s_cmodel(),48889us
+-C6ACCEL_IMG_conv_3x3_i16s_c16s(),11932us,IMG_IMG_conv_3x3_i16s_c16s_cmodel(),39215us
+-C6ACCEL_IMG_corr_3x3_i8_c8(),15381us,IMG_corr_3x3_i8_c8_cmodel(),29083us
+-C6ACCEL_IMG_corr_3x3_i16s_c16s(),17395us,IMG_corr_3x3_i16s_c16s_cmodel(),34180us
+-C6ACCEL_IMG_sobel_3x3_8(),6408us,IMG_sobel_3x3_8s_cmodel(),18341us
+-C6ACCEL_IMG_sobel_3x3_16(),12177us,IMG_sobel_3x3_16_cmodel(),13336us
+-C6ACCEL_IMG_muls_8(),16510us,IMG_muls_8_cmodel(),3662us
+-C6ACCEL_IMG_muls_16(),27893us,IMG_muls_16_cmodel(),5310us
+-C6ACCEL_IMG_adds_8(),10803us,IMG_adds_8_cmodel(),10925us
+-C6ACCEL_IMG_adds_16(),21149us,IMG_adds_16_cmodel(),4852us
+-C6ACCEL_IMG_subs_8(),10772us,IMG_subs_8_cmodel(),10956us
+-C6ACCEL_IMG_subs_16s(),21057us,IMG_subs_16_cmodel(),4425us
+-800x600 YUYV Test Image 
+-C6ACCEL_IMG_yc_demux_le8_c(),36682us,IMG_yc_demux_le8_cmodel(),30213us
+-C6ACCEL_IMG_yuv422pl_to_rgb565(),16754us,IMG_yuv422pl_to_rgb565_cmodel(),21148us
+-C6ACCEL_IMG_yuv420pl_to_rgb565(),16083us,IMG_yuv420pl_to_rgb565_cmodel(),20477us
+-C6ACCEL_IMG_yc_demux_le16_16(),32501us,IMG_yc_demux_le16_cmodel(),31097us
+-C6ACCEL_IMG_yuv422pl16_to_rgb565(),169708us,IMG_yuv422pl_to_rgb565_cmodel(),29174us
+-C6ACCEL_IMG_yuv420pl16_to_rgb565(),167419us,IMG_yuv420pl_to_rgb565_cmodel(),27526us
+-DSPLib Functions
+-64k sample FFT 
+-C6ACCEL_DSP_fft16x16(),41595us,DSP_fft16x16_cmodel(),55542us
+-C6ACCEL_DSP_fft32x32(),82214us,DSP_fft32x32_cmodel(),93170us
+-C6ACCEL_DSP_ifft16x16(),41687us,DSP_ifft16x16_cmodel(),57495us
+-C6ACCEL_DSP_ifft32x32(),82245us,DSP_ifft32x32_cmodel(),94177us
+-C6ACCEL_DSP_autocor(),732us,DSP_autocor_cmodel(),793us
+-C6ACCEL_DSP_dotprod(),610us
+-C6ACCEL_DSP_DSP_dotp_sqr(),549us
+-C6ACCEL_DSP_mat_mul(),550us
+-C6ACCEL_DSP_fir_gen(),549us
+-C6ACCEL_DSP_fir_r4(),519us
+-C6ACCEL_DSP_fir_r4(),519us
+-C6ACCEL_DSP_iir(),550us
+-C6ACCEL_MATH_addsp(),702us
+-C6ACCEL_MATH_subsp(),702us
+-C6ACCEL_MATH_mpysp(),641us
+-C6ACCEL_MATH_divsp(),1007us
+-C6ACCEL_MATH_recipsp(),946us
+-C6ACCEL_MATH_sqrtsp(),3815us
+-C6ACCEL_MATH_intsp(),580us
+-C6ACCEL_MATH_uintsp(),580us
+-C6ACCEL_MATH_spint(),579us
+-C6ACCEL_MATH_spuint(),580us
+-C6ACCEL_MATH_FTOIQ(),519us
+-C6ACCEL_MATH_IQN(),732us
+-C6ACCEL_MATH_IQNTOF(),610us
+-C6ACCEL_MATH_IQNint(),519us
+-C6ACCEL_MATH_IQNfrac(),518us
+-C6ACCEL_MATH_IQXtoIQY(),519us
+-C6ACCEL_MATH_IQNlog(),610us
+-C6ACCEL_MATH_IQNabs(),519us
+-C6ACCEL_MATH_IQNsqrt(),611us
+-C6ACCEL_MATH_IQNisqrt(),549us
+-C6ACCEL_MATH_IQNexp(),702us
+-C6ACCEL_MATH_IQNpow(),855us
+-C6ACCEL_MATH_IQNmag(),549us
+-C6ACCEL_MATH_IQNmpy(),550us
+-C6ACCEL_MATH_IQNmpyIQX(),549us
+-C6ACCEL_MATH_IQNrmpy(),549us
+-C6ACCEL_MATH_IQNrsmpy(),550us
+-C6ACCEL_MATH_IQNmpyI32int(),550us
+-C6ACCEL_MATH_IQNmpyI32frac(),518us
+-C6ACCEL_MATH_IQNdiv(),580us
+-C6ACCEL_MATH_IQNsin(),549us
+-C6ACCEL_MATH_IQNcos(),519us
+-C6ACCEL_MATH_IQNsinPU(),518us
+-C6ACCEL_MATH_IQNcosPU(),550us
+-C6ACCEL_MATH_IQNatan2(),610us
+-C6ACCEL_MATH_IQNatan2PU(),580us

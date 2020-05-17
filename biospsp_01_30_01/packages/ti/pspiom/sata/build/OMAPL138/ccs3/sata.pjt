@@ -1,0 +1,34 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="M:\ravibabu_ravibabu_psp_bios_1_30_dev_dev\pspdrivers\pspdrivers_\packages\ti\pspiom\sata\build\OMAPL138\ccs3\"
+ProjectType=Library
+CPUFamily=TMS320C67XX
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\..\src\Ahci.c"
+Source="..\..\..\src\Ata.c"
+Source="..\..\..\src\Ata_remmed.c"
+Source="..\..\..\src\Atadrv.c"
+Source="..\..\..\src\Atapi.c"
+Source="..\..\..\src\Sata_intf.c"
+Source="..\..\..\src\Sata_pm.c"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"..\..\..\lib\OMAPL138\Debug\ti.pspiom.sata.a674"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"..\..\..\lib\OMAPL138\Release\ti.pspiom.sata.a674"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -fr"$(Proj_dir)\Debug" -i"..\" -i"..\..\..\..\" -d"CHIP_OMAPL138" -d"BIOS_PWRM_ENABLE" -d"_DEBUG" -mo -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-o3 -pdr -fr"$(Proj_dir)\Release" -i"..\" -i"..\..\..\..\" -d"CHIP_OMAPL138" -d"BIOS_PWRM_ENABLE" -mo -mv6740
+

@@ -1,0 +1,29 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Library
+CPUFamily=TMS470R2X
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\..\src\configs\edma3_dm360_cfg.c"
+Source="..\..\..\src\edma3_rm_gbl_data.c"
+Source="..\..\..\src\edma3resmgr.c"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\dm360\Debug\edma3_rm_pros.lib"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\dm360\Release\edma3_rm_pros.lib"
+
+["Compiler" Settings: "Debug"]
+Options=-g -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -d"_DEBUG" -d"__DEBUG_BUILD__" -d"USE_TI_TOOLS" -mc -me -mv5e --abi=ti_arm9_abi
+
+["Compiler" Settings: "Release"]
+Options=-o2 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -d"_RELEASE" -d"__RELEASE_BUILD__" -d"USE_TI_TOOLS" -mc -me -mv5e --abi=ti_arm9_abi
+

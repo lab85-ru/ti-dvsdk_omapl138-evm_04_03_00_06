@@ -1,0 +1,160 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== c62.h62 ========
+;  Assembly language c62 macros
+;
+;
+        
+        .if ($isdefed("C62_") = 0)      ; prevent multiple includes
+C62_    .set    1
+
+        .include std.h62
+        .include c6x.h62
+
+;
+; Symbol and constant definitions
+;
+
+;
+; Values used for CCMASK in HWI_enter/HWI_exit.
+;
+C62_PCC_DISABLE .set    0x0000  ; Program Cache Control code
+C62_PCC_ENABLE  .set    0x0040  ; Program Cache Control code
+C62_PCC_FREEZE  .set    0x0060  ; Program Cache Control code
+C62_PCC_BYPASS  .set    0x0080  ; Program Cache Control code
+
+C62_CCFIELDS    .set    0x00fc  ; Cache Control field mask
+
+;
+; Register bitmap position definitions used below
+;
+C62_ra0     .set    C6X_ra0
+C62_ra1     .set    C6X_ra1
+C62_ra2     .set    C6X_ra2
+C62_ra3     .set    C6X_ra3
+C62_ra4     .set    C6X_ra4
+C62_ra5     .set    C6X_ra5
+C62_ra6     .set    C6X_ra6
+C62_ra7     .set    C6X_ra7
+C62_ra8     .set    C6X_ra8
+C62_ra9     .set    C6X_ra9
+C62_ra10    .set    C6X_ra10
+C62_ra11    .set    C6X_ra11
+C62_ra12    .set    C6X_ra12
+C62_ra13    .set    C6X_ra13
+C62_ra14    .set    C6X_ra14
+C62_ra15    .set    C6X_ra15
+
+C62_rb0     .set    C6X_rb0 + 16
+C62_rb1     .set    C6X_rb1 + 16 
+C62_rb2     .set    C6X_rb2 + 16
+C62_rb3     .set    C6X_rb3 + 16
+C62_rb4     .set    C6X_rb4 + 16
+C62_rb5     .set    C6X_rb5 + 16
+C62_rb6     .set    C6X_rb6 + 16
+C62_rb7     .set    C6X_rb7 + 16
+C62_rb8     .set    C6X_rb8 + 16
+C62_rb9     .set    C6X_rb9 + 16
+C62_rb10    .set    C6X_rb10 + 16
+C62_rb11    .set    C6X_rb11 + 16
+C62_rb12    .set    C6X_rb12 + 16
+C62_rb13    .set    C6X_rb13 + 16
+C62_rb14    .set    C6X_rb14 + 16
+C62_rb15    .set    C6X_rb15 + 16
+
+C62_ramr    .set    C6X_ramr
+C62_rcsr    .set    C6X_rcsr
+C62_rier    .set    C6X_rier
+C62_rist    .set    C6X_rist
+C62_rirp    .set    C6X_rirp
+C62_rnrp    .set    C6X_rnrp
+
+;
+; Definitions for C62_xTEMPS
+;
+C62_A0  .set    1 << C62_ra0
+C62_A1  .set    1 << C62_ra1
+C62_A2  .set    1 << C62_ra2
+C62_A3  .set    1 << C62_ra3
+C62_A4  .set    1 << C62_ra4
+C62_A5  .set    1 << C62_ra5
+C62_A6  .set    1 << C62_ra6
+C62_A7  .set    1 << C62_ra7
+C62_A8  .set    1 << C62_ra8
+C62_A9  .set    1 << C62_ra9
+C62_A10 .set    1 << C62_ra10
+C62_A11 .set    1 << C62_ra11
+C62_A12 .set    1 << C62_ra12
+C62_A13 .set    1 << C62_ra13
+C62_A14 .set    1 << C62_ra14
+C62_A15 .set    1 << C62_ra15
+
+C62_B0  .set    1 << C62_rb0
+C62_B1  .set    1 << C62_rb1
+C62_B2  .set    1 << C62_rb2
+C62_B3  .set    1 << C62_rb3
+C62_B4  .set    1 << C62_rb4
+C62_B5  .set    1 << C62_rb5
+C62_B6  .set    1 << C62_rb6
+C62_B7  .set    1 << C62_rb7
+C62_B8  .set    1 << C62_rb8
+C62_B9  .set    1 << C62_rb9
+C62_B10 .set    1 << C62_rb10
+C62_B11 .set    1 << C62_rb11
+C62_B12 .set    1 << C62_rb12
+C62_B13 .set    1 << C62_rb13
+C62_B14 .set    1 << C62_rb14
+C62_B15 .set    1 << C62_rb15
+
+
+C62_AMR .set    1 << C62_ramr           ; Addressing mode register
+C62_CSR .set    1 << C62_rcsr           ; Control status register
+C62_IER .set    1 << C62_rier           ; Interrupt enable register
+C62_IST .set    1 << C62_rist           ; Interrupt service table pointer
+C62_IRP .set    1 << C62_rirp           ; Interrupt return pointer
+C62_NRP .set    1 << C62_rnrp           ; Non-maskable int. return pointer
+
+;
+; Masks for ISR registers saved and restored internally 
+;
+C62_ISRA .set   C62_A0 | C62_A1 | C62_A2 | C62_A3 
+C62_ISRB .set   C62_B0 | C62_B1 | C62_B2 | C62_B3 | C62_B14
+C62_ISRAB .set  C62_ISRA | C62_ISRB
+C62_ISRC  .set  C62_AMR | C62_IRP | C62_IER
+
+;
+; Register combinations 
+;
+C62_ATEMPSLO    .set    C62_A0 | C62_A1 | C62_A2 | C62_A3 | C62_A4 
+C62_ATEMPSHI    .set    C62_A5 | C62_A6 | C62_A7 | C62_A8 | C62_A9
+C62_ATEMPS      .set    C62_ATEMPSLO | C62_ATEMPSHI
+
+C62_BTEMPSLO    .set    C62_B0 | C62_B1 | C62_B2 | C62_B3 | C62_B4
+C62_BTEMPSHI    .set    C62_B5 | C62_B6 | C62_B7 | C62_B8 | C62_B9
+C62_BTEMPS      .set    C62_BTEMPSLO | C62_BTEMPSHI
+
+C62_CTEMPS      .set    C62_AMR
+
+C62_ABTEMPS     .set    C62_ATEMPS | C62_BTEMPS
+
+;
+;# ======== C62_disableIER ========
+;  Backward compatibility
+;
+C62_disableIER  .macro  IEMASK, REG0, REG1
+        C6X_disableIER IEMASK, REG0, REG1
+        .endm
+
+;
+;# ======== C62_enableIER ========
+;  Backward compatibility
+;
+C62_enableIER   .macro  IEMASK, REG0, REG1
+        C6X_enableIER IEMASK, REG0, REG1
+        .endm
+
+        .endif                  ; if C62_ is not defined
+

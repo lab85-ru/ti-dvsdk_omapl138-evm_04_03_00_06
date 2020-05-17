@@ -1,0 +1,228 @@
+<?xml version="1.0"?><codec_engine_genserver_wizard>
+  <version>2.26.00</version>
+  <serverName>ti.sdo.server.cs</serverName>
+  <outputRepository>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codecs-omapl138_4_00_00_00_test/packages</outputRepository>
+  <platform>ti.platforms.evmOMAPL138</platform>
+  <cgTools>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/cgt6x_6_1_14</cgTools>
+  <xdaisInstall>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codec-engine_2_26_01_09/cetools</xdaisInstall>
+  <fcInstall>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/framework-components_2_25_03_07</fcInstall>
+  <biosInstall/>
+  <dsplinkInstall/>
+  <genCCSProj>false</genCCSProj>
+  <useRulesMake>true</useRulesMake>
+  <useDMAN3>true</useDMAN3>
+  <platformSupportsEdma>true</platformSupportsEdma>
+  <configuresEdma3>false</configuresEdma3>
+  <enablePwr>false</enablePwr>
+  <codecSearchPath>
+    <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codec-engine_2_26_01_09/packages</repo>
+    <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codecs-omapl138_4_00_00_00_test/packages</repo>
+    <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codec-engine_2_26_01_09/cetools/packages</repo>
+    <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/xdctools_3_16_03_36/packages</repo>
+    <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/c6accel_1_01_00_01/soc/packages</repo>
+  </codecSearchPath>
+  <codecs>
+    <module name="ti.c6accel.ce.C6ACCEL">
+      <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/c6accel_1_01_00_01/soc/packages</repo>
+      <inherits>
+        <name>ti.sdo.ce.universal.IUNIVERSAL</name>
+      </inherits>
+      <alg>
+        <name>c6accel</name>
+        <pri>3</pri>
+        <stackMemId>0</stackMemId>
+        <stackSize>&lt;use codec defaults></stackSize>
+        <groupId>2</groupId>
+        <useDefaults>true</useDefaults>
+      </alg>
+    </module>
+    <module name="ti.sdo.codecs.aachedec.ce.AACHEDEC">
+      <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codecs-omapl138_4_00_00_00_test/packages</repo>
+      <inherits>
+        <name>ti.sdo.ce.audio1.IAUDDEC1</name>
+      </inherits>
+      <alg>
+        <name>aachedec</name>
+        <pri>3</pri>
+        <stackMemId>0</stackMemId>
+        <stackSize>&lt;use codec defaults></stackSize>
+        <groupId>2</groupId>
+        <useDefaults>true</useDefaults>
+      </alg>
+    </module>
+    <module name="ti.sdo.codecs.g711dec.ce.G711DEC">
+      <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codecs-omapl138_4_00_00_00_test/packages</repo>
+      <inherits>
+        <name>ti.sdo.ce.speech1.ISPHDEC1</name>
+      </inherits>
+      <alg>
+        <name>g711dec</name>
+        <pri>3</pri>
+        <stackMemId>0</stackMemId>
+        <stackSize>&lt;use codec defaults></stackSize>
+        <groupId>2</groupId>
+        <useDefaults>true</useDefaults>
+      </alg>
+    </module>
+    <module name="ti.sdo.codecs.g711enc.ce.G711ENC">
+      <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codecs-omapl138_4_00_00_00_test/packages</repo>
+      <inherits>
+        <name>ti.sdo.ce.speech1.ISPHENC1</name>
+      </inherits>
+      <alg>
+        <name>g711enc</name>
+        <pri>3</pri>
+        <stackMemId>0</stackMemId>
+        <stackSize>&lt;use codec defaults></stackSize>
+        <groupId>2</groupId>
+        <useDefaults>true</useDefaults>
+      </alg>
+    </module>
+    <module name="ti.sdo.codecs.h264dec.ce.H264DEC">
+      <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codecs-omapl138_4_00_00_00_test/packages</repo>
+      <inherits>
+        <name>ti.sdo.ce.video2.IVIDDEC2</name>
+      </inherits>
+      <alg>
+        <name>h264dec</name>
+        <pri>1</pri>
+        <stackMemId>0</stackMemId>
+        <stackSize>&lt;use codec defaults></stackSize>
+        <groupId>0</groupId>
+        <useDefaults>true</useDefaults>
+      </alg>
+    </module>
+    <module name="ti.sdo.codecs.h264enc.ce.H264ENC">
+      <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codecs-omapl138_4_00_00_00_test/packages</repo>
+      <inherits>
+        <name>ti.sdo.ce.video1.IVIDENC1</name>
+      </inherits>
+      <alg>
+        <name>h264enc</name>
+        <pri>1</pri>
+        <stackMemId>0</stackMemId>
+        <stackSize>&lt;use codec defaults></stackSize>
+        <groupId>0</groupId>
+        <useDefaults>true</useDefaults>
+      </alg>
+    </module>
+    <module name="ti.sdo.codecs.jpegdec.ce.JPEGDEC">
+      <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codecs-omapl138_4_00_00_00_test/packages</repo>
+      <inherits>
+        <name>ti.sdo.ce.image1.IIMGDEC1</name>
+      </inherits>
+      <alg>
+        <name>jpegdec</name>
+        <pri>2</pri>
+        <stackMemId>0</stackMemId>
+        <stackSize>&lt;use codec defaults></stackSize>
+        <groupId>1</groupId>
+        <useDefaults>true</useDefaults>
+      </alg>
+    </module>
+    <module name="ti.sdo.codecs.jpegenc.ce.JPEGENC">
+      <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codecs-omapl138_4_00_00_00_test/packages</repo>
+      <inherits>
+        <name>ti.sdo.ce.image1.IIMGENC1</name>
+      </inherits>
+      <alg>
+        <name>jpegenc</name>
+        <pri>2</pri>
+        <stackMemId>0</stackMemId>
+        <stackSize>&lt;use codec defaults></stackSize>
+        <groupId>1</groupId>
+        <useDefaults>true</useDefaults>
+      </alg>
+    </module>
+    <module name="ti.sdo.codecs.mpeg2dec.ce.MPEG2DEC">
+      <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codecs-omapl138_4_00_00_00_test/packages</repo>
+      <inherits>
+        <name>ti.sdo.ce.video2.IVIDDEC2</name>
+      </inherits>
+      <alg>
+        <name>mpeg2dec</name>
+        <pri>1</pri>
+        <stackMemId>0</stackMemId>
+        <stackSize>&lt;use codec defaults></stackSize>
+        <groupId>0</groupId>
+        <useDefaults>true</useDefaults>
+      </alg>
+    </module>
+    <module name="ti.sdo.codecs.mpeg4dec.ce.MPEG4DEC">
+      <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codecs-omapl138_4_00_00_00_test/packages</repo>
+      <inherits>
+        <name>ti.sdo.ce.video2.IVIDDEC2</name>
+      </inherits>
+      <alg>
+        <name>mpeg4dec</name>
+        <pri>1</pri>
+        <stackMemId>0</stackMemId>
+        <stackSize>&lt;use codec defaults></stackSize>
+        <groupId>0</groupId>
+        <useDefaults>true</useDefaults>
+      </alg>
+    </module>
+    <module name="ti.sdo.codecs.mpeg4enc.ce.MPEG4ENC">
+      <repo>/home/icesar/ti-dvsdk_omapl138-evm_4_00_09192010/codecs-omapl138_4_00_00_00_test/packages</repo>
+      <inherits>
+        <name>ti.sdo.ce.video1.IVIDENC1</name>
+      </inherits>
+      <alg>
+        <name>mpeg4enc</name>
+        <pri>1</pri>
+        <stackMemId>0</stackMemId>
+        <stackSize>&lt;use codec defaults></stackSize>
+        <groupId>0</groupId>
+        <useDefaults>true</useDefaults>
+      </alg>
+    </module>
+  </codecs>
+  <groups>
+    <group id="0" implsIdma3Fxns="true" implsIresFxns="false" cfgDman3="true" cfgEdma3="false">
+      <dskt2>
+        <saram>0x8000</saram>
+        <daram>0x8000</daram>
+      </dskt2>
+      <dman3>
+        <numPaRam>48</numPaRam>
+        <numTccGroup>16</numTccGroup>
+      </dman3>
+    </group>
+    <group id="1" implsIdma3Fxns="false" implsIresFxns="false" cfgDman3="false" cfgEdma3="false">
+      <dskt2>
+        <saram>0x2000</saram>
+        <daram>0x2000</daram>
+      </dskt2>
+    </group>
+    <group id="2" implsIdma3Fxns="false" implsIresFxns="false" cfgDman3="false" cfgEdma3="false">
+      <dskt2>
+        <saram>0x0000</saram>
+        <daram>0x0000</daram>
+      </dskt2>
+    </group>
+  </groups>
+  <memory>
+    <section>
+      <name>DDR2</name>
+      <base>0xc3200000</base>
+      <length>0x00300000</length>
+    </section>
+    <section>
+      <name>RESET_VECTOR</name>
+      <base>0xc3500000</base>
+      <length>0x00001000</length>
+    </section>
+    <section>
+      <name>DSPLINKMEM</name>
+      <base>0xc3501000</base>
+      <length>0x000FF000</length>
+    </section>
+    <section>
+      <name>DDRALGHEAP</name>
+      <base>0xc3600000</base>
+      <length>0x00A00000</length>
+    </section>
+    <align>bottom</align>
+    <useDefault>false</useDefault>
+  </memory>
+</codec_engine_genserver_wizard>

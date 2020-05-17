@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_TNETV2685.tci ========
+ *  This file contains BIOS settings for TNETV2685.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_6452.tci");
+
+/*
+ *  ======== bios.initTNETV2685 ========
+ *  BIOS initialization for the TNETV2685 is same as for 6452
+ */
+bios.initTNETV2685 = bios.init6452;

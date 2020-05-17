@@ -1,0 +1,145 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== ecm.h62 ========
+;  Assembly language ECM macros for C64P
+;
+;
+
+        .if ($isdefed("ECM_") = 0)      ; prevent multiple includes of this file
+ECM_    .set    1
+
+        .include std.h62
+
+        .global ECM_ENABLE
+
+ECM_EVTMASKREG  .set    0x01800080      ; address of event mask register
+
+;
+;# ======== ECM_Obj ========
+;  creates a cinit record for each entry into the ECM dispatch Table.
+;  If no function was specified it is defaulted to UTL_halt and the
+;  argument the event id, otherwise it will use the specified function
+;  and argument.
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+ECM_Obj .macro  cflag, name, id, fxn, arg
+        
+        .global :name:
+
+        .if (cflag != 0)
+:name:  .set    :id:            ; required because symbols defined in 
+        .endif                  ; the generated *.cmd file.
+
+        .if ECM_ENABLE
+            .global :fxn:
+            .global _ECM_dispatchTab
+
+            .sect ".cinit"
+            .align 8
+            .field 2 * STD_TARGWORDMAUS
+            .field _ECM_dispatchTab + (2 * :id: * STD_TARGWORDMAUS)
+            .field :fxn:
+            .if ($symcmp(":fxn:", "_UTL_halt") != 0)
+                .field :arg:
+            .else
+                .field :id:
+            .endif
+
+        .endif
+
+        .endm
+
+
+;
+;# ======== ECM_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+ECM_config .macro enable, evtmask0, evtmask1, evtmask2, evtmask3
+
+        .if ECM_ENABLE
+            .global _ECM_dispatchTab
+            .bss _ECM_dispatchTab, 128 * 2 * STD_TARGWORDMAUS, 4
+        .endif
+        .endm
+
+
+;
+;#  ======== ECM_end ========
+;  Invoked by confend.s62 at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+ECM_end .macro
+        .endm
+
+;
+;# ======== ECM_init ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#      none
+;#
+;
+ECM_init .macro
+        .if ECM_ENABLE
+            .global ECM_EVTMASK0, ECM_EVTMASK1, ECM_EVTMASK2, ECM_EVTMASK3
+
+            mvkl ECM_EVTMASKREG, a0     ; mask out events that are not
+||          mvkl ECM_EVTMASK0, b0       ; configured in static config file.
+            mvkh ECM_EVTMASKREG, a0
+||          mvkh ECM_EVTMASK0, b0
+            stw b0, *a0++
+||          mvkl ECM_EVTMASK1, a1
+||          mvkl ECM_EVTMASK2, b1
+            mvkh ECM_EVTMASK1, a1
+||          mvkh ECM_EVTMASK2, b1
+            stw a1, *a0++
+||          mvkl ECM_EVTMASK3, b2
+            mvkh ECM_EVTMASK3, b2
+||          stw b1, *a0++
+            stw b2, *a0++
+
+        .endif
+
+        .endm
+
+;
+;# ======== ECM_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#
+ECM_startup .macro
+        .endm
+
+        .endif  ; ECM_ not defined

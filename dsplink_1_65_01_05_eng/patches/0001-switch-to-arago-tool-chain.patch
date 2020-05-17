@@ -1,0 +1,92 @@
+diff -Naur dsplink_linux_1_65_01_05_eng_ori/dsplink/make/Linux/omap3530_2.6.mk dsplink_linux_1_65_01_05_eng_new/dsplink/make/Linux/omap3530_2.6.mk
+--- dsplink_linux_1_65_01_05_eng_ori/dsplink/make/Linux/omap3530_2.6.mk	2011-10-27 09:41:49.000000000 +0530
++++ dsplink_linux_1_65_01_05_eng_new/dsplink/make/Linux/omap3530_2.6.mk	2011-12-12 19:01:48.881148651 +0530
+@@ -78,8 +78,8 @@
+ BASE_OSINC      := $(BASE_BUILDOS)/include
+ 
+ OSINC_GENERIC   := $(BASE_OSINC)
+-OSINC_PLATFORM  := $(BASE_TOOLCHAIN)/lib/gcc/arm-none-linux-gnueabi/4.2.3/include
+-OSINC_TARGET    := $(BASE_TOOLCHAIN)/arm-none-linux-gnueabi/libc/usr/include
++OSINC_PLATFORM  := $(BASE_TOOLCHAIN)/lib/gcc/arm-arago-linux-gnueabi/4.2.3/include
++OSINC_TARGET    := $(BASE_TOOLCHAIN)/arm-arago-linux-gnueabi/libc/usr/include
+ 
+ ifneq ("$(VARIANT)", "")
+ OSINC_VARIANT   := $(BASE_OSINC)
+@@ -107,10 +107,10 @@
+ #   ----------------------------------------------------------------------------
+ #   Name of the compiler
+ #   ----------------------------------------------------------------------------
+-COMPILER        := $(BASE_CGTOOLS)/arm-none-linux-gnueabi-gcc
+-LD              := $(BASE_CGTOOLS)/arm-none-linux-gnueabi-ld
++COMPILER        := $(BASE_CGTOOLS)/arm-arago-linux-gnueabi-gcc
++LD              := $(BASE_CGTOOLS)/arm-arago-linux-gnueabi-ld
+ 
+-CROSS_COMPILE   := arm-none-linux-gnueabi-
++CROSS_COMPILE   := arm-arago-linux-gnueabi-
+ export CROSS_COMPILE
+ 
+ #   ----------------------------------------------------------------------------
+@@ -154,7 +154,7 @@
+ #   ============================================================================
+ #   ARCHIVER2 - This denotes the archiver.
+ #   ============================================================================
+-ARCHIVER        := $(BASE_CGTOOLS)/arm-none-linux-gnueabi-ar
++ARCHIVER        := $(BASE_CGTOOLS)/arm-arago-linux-gnueabi-ar
+ 
+ #   ----------------------------------------------------------------------------
+ #   Standard flags for the archiver
+@@ -165,7 +165,7 @@
+ #   ============================================================================
+ #   LINKER - The compiler is used for linking purpose as well.
+ #   ============================================================================
+-LINKER      := $(BASE_CGTOOLS)/arm-none-linux-gnueabi-gcc
++LINKER      := $(BASE_CGTOOLS)/arm-arago-linux-gnueabi-gcc
+ 
+ #   ----------------------------------------------------------------------------
+ #   Command line switches used by the linker
+diff -Naur dsplink_linux_1_65_01_05_eng_ori/dsplink/make/Linux/omapl138_arm.mk dsplink_linux_1_65_01_05_eng_new/dsplink/make/Linux/omapl138_arm.mk
+--- dsplink_linux_1_65_01_05_eng_ori/dsplink/make/Linux/omapl138_arm.mk	2011-10-27 09:41:49.000000000 +0530
++++ dsplink_linux_1_65_01_05_eng_new/dsplink/make/Linux/omapl138_arm.mk	2011-12-12 19:00:28.133148636 +0530
+@@ -77,8 +77,8 @@
+ BASE_OSINC      := $(BASE_BUILDOS)/include
+ 
+ OSINC_GENERIC   := $(BASE_OSINC)
+-OSINC_PLATFORM  := $(BASE_TOOLCHAIN)/lib/gcc/arm-none-linux-gnueabi/4.3.2/include
+-OSINC_TARGET    := $(BASE_TOOLCHAIN)/arm-none-linux-gnueabi/libc/usr/include
++OSINC_PLATFORM  := $(BASE_TOOLCHAIN)/lib/gcc/arm-arago-linux-gnueabi/4.3.2/include
++OSINC_TARGET    := $(BASE_TOOLCHAIN)/arm-arago-linux-gnueabi/libc/usr/include
+ 
+ ifneq ("$(VARIANT)", "")
+ OSINC_VARIANT   := $(BASE_OSINC)
+@@ -106,10 +106,10 @@
+ #   ----------------------------------------------------------------------------
+ #   Name of the compiler
+ #   ----------------------------------------------------------------------------
+-COMPILER        := $(BASE_CGTOOLS)/arm-none-linux-gnueabi-gcc
+-LD              := $(BASE_CGTOOLS)/arm-none-linux-gnueabi-ld
++COMPILER        := $(BASE_CGTOOLS)/arm-arago-linux-gnueabi-gcc
++LD              := $(BASE_CGTOOLS)/arm-arago-linux-gnueabi-ld
+ 
+-CROSS_COMPILE   := arm-none-linux-gnueabi-
++CROSS_COMPILE   := arm-arago-linux-gnueabi-
+ export CROSS_COMPILE
+ 
+ #   ----------------------------------------------------------------------------
+@@ -153,7 +153,7 @@
+ #   ============================================================================
+ #   ARCHIVER2 - This denotes the archiver.
+ #   ============================================================================
+-ARCHIVER        := $(BASE_CGTOOLS)/arm-none-linux-gnueabi-ar
++ARCHIVER        := $(BASE_CGTOOLS)/arm-arago-linux-gnueabi-ar
+ 
+ #   ----------------------------------------------------------------------------
+ #   Standard flags for the archiver
+@@ -164,7 +164,7 @@
+ #   ============================================================================
+ #   LINKER - The compiler is used for linking purpose as well.
+ #   ============================================================================
+-LINKER      := $(BASE_CGTOOLS)/arm-none-linux-gnueabi-gcc
++LINKER      := $(BASE_CGTOOLS)/arm-arago-linux-gnueabi-gcc
+ 
+ #   ----------------------------------------------------------------------------
+ #   Command line switches used by the linker

@@ -1,0 +1,116 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== lck.h62 ========
+;
+;
+
+        .if ($isdefed("LCK_") = 0)  ; prevent multiple includes of this file
+LCK_    .set    1
+
+        .include std.h62
+        .include sem.h62
+
+        .eval   SEM_CORESIZE+2, LCK_OBJSIZE
+
+;
+;# ======== LCK_config ========
+;  Static configuration of the LCK module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", LCK_config$regs
+LCK_config      .macro
+        .endm
+
+;
+;# ======== LCK_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", LCK_Obj$regs
+LCK_Obj .macro cflag, name, id
+
+:name:  .usect ".lck", LCK_OBJSIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   LCK_OBJSIZE * STD_TARGWORDMAUS
+        .word   :name:
+        SEM_core :name:, 1                      ; lock->sem, STS object is null
+        .word   0                               ; lock->value
+        .word   0                               ; lock->owner
+
+        .endm
+
+;
+;# ======== LCK_init ========
+;  Runtime initialization of the LCK module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", LCK_init$regs
+LCK_init        .macro
+
+        ; only expand if the LCK module is configured
+        .if (LCK$ = 1)
+        .endif
+
+        .endm
+
+;
+;# ======== LCK_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LCK_startup$regs
+LCK_startup        .macro
+
+        .if     LCK$NUMOF != 0
+        .endif
+        .endm
+
+;
+;# ======== LCK_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", LCK_end$regs
+LCK_end .macro
+        .endm
+
+        .endif          ; if LCK_ is not defined

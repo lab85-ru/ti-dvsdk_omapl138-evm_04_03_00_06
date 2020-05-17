@@ -1,0 +1,396 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== prd.h62 ========
+;
+;
+
+        .if ($isdefed("PRD_") = 0)   ; prevent multiple includes of this file
+PRD_    .set    1
+
+        .include std.h62
+        .include chk.h62
+        .include fxn.h62
+        .include sts.h62
+        .include swi.h62
+
+;
+;  ======== PRD_Obj ========
+;
+PRD_Obj         .struct
+status  .word   1               ; PRD On/Off status 
+kount   .word   1               ; 0 < kount <= period
+period  .word   1               ; number of ticks before triggering fxn
+nticks  .word   1               ; total number of elapsed ticks
+fxnobj  .tag    FXN_Obj         ; User defined call back func Ptr & 2 args
+sts     .word   1               ; pointer to Stastics accumulator object
+PRD_A_OBJSIZE   .endstruct
+
+;
+;  ======== PRD_Obj offsets ========
+;
+PRD_BASE        .set    PRD_Obj.status
+PRD_O_STATUS    .set    PRD_Obj.status-PRD_BASE
+PRD_O_COUNT     .set    PRD_Obj.kount-PRD_BASE
+PRD_O_PERIOD    .set    PRD_Obj.period-PRD_BASE
+PRD_O_NTICKS    .set    PRD_Obj.nticks-PRD_BASE
+PRD_O_FXNOBJ    .set    PRD_Obj.fxnobj-PRD_BASE
+PRD_O_STS       .set    PRD_Obj.sts-PRD_BASE
+
+PRD_STARTPRD    .set    0x80000000
+PRD_STOPPRD     .set    0x7fffffff
+
+        .global PRD_F_swi, PRD_F_tick 
+        .global PRD_D_cur, PRD_D_elapsed
+        .global PRD_D_tick, PRD_D_thook
+        .global PRD_D_swihandle, PRD_D_scalar, PRD_D_tabbeg, PRD_D_tablen
+        .global PRD_SCALAR, PRD_SWIHANDLE
+        .global PRD_A_TABBEG, PRD_A_TABLEN
+
+        .global PRD_THOOKFXN            ; defined in the Configuration Tool.
+
+        ; symbols that need to be accessed from C
+        .global _PRD_D_tick
+
+;
+;# ======== PRD_Obj ========
+;  Allocate a PRD object and initialize all fields.
+;
+;  Note that all PRD objects are allocated in a distinguished
+;  section named ".prd"; this insures that all objs are contiguous
+;  (this is required by the implementation of PRD_F_swi() which must
+;  decrement the count field of each PRD object).
+;
+;  Parameters:
+;       cflag   - configuration flag
+;       name    - name of PRD object
+;       id      - id of PRD object
+;       prd     - 16-bit unsigned PRD period (in PRD ticks / prescaler)
+;       mode    - "continuous" or "one-shot"
+;       fxn     - function to call when count reaches 0
+;       arg0,1  - arguments for fxn
+;
+;  fxn is called at SWI level. 
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    ":FXN_Obj$regs:,:STS_Obj$regs:", PRD_Obj$regs
+PRD_Obj         .macro cflag, name, id, prd, mode, fxn, arg0, arg1, order, filter, maxformat, sumformat, avgformat, unittype
+        .if (:cflag: = 0)
+            .mexit
+        .endif
+        CHK_nargs "PRD_Obj", arg1
+        .var    cont
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .mexit
+        .endif
+
+        CHK_domain PRD_Obj, mode, "continuous,one-shot"
+        .asg ":CHK_status:", mode
+        .if ($symcmp(":mode:", "error") = 0)
+            .mexit
+        .endif
+
+        .global :name:$prd      ; generate symbol for vbd/rta
+:name:$prd .set 0
+        .global :name:$period   ; generate period symbol for vbd/rta
+:name:$period .set      :prd:
+        .global :name:$mode     ; generate mode symbol for vbd/rta
+        .if ($symcmp(":mode:", "continuous") = 0)
+:name:$mode .set        0
+             .asg   1, cont     ; continuous
+        .else
+:name:$mode .set        1
+             .asg   0, cont     ; one-shot
+        .endif
+        .global :name:$ord      ; generate order symbol for vbd/rta
+:name:$ord .set :order:
+
+        .global :name:, :name:$aaa, :fxn:
+
+:name:  .tag    PRD_Obj         ; declare name as having type PRD_Obj
+
+
+:name:  .usect ".prd", STD_TARGWORDMAUS * 4, STD_TARGWORDMAUS
+
+        .sect ".cinit"
+
+        .align 8
+
+        .field  STD_TARGWORDMAUS * 4
+        .field  :name:
+        .field :cont: << 31 | (1-:cont:) << 30 ; status
+        .field  :prd:           ; kount
+        .field  :prd:           ; period
+        .field  0               ; nticks
+
+        FXN_Obj :name:$fxn, :fxn:, :arg0:, :arg1:, ".prd"
+
+:name:$aaa .usect ".prd", STD_TARGWORDMAUS * 1, STD_TARGWORDMAUS
+
+        .sect ".cinit"
+
+        .align 8
+
+        .field STD_TARGWORDMAUS * 1
+        .field :name:$aaa
+        .field :name:$sts      ; pointer to STS_Obj
+
+        STS_Obj 1, :name:$sts, 0, 0, :filter:, ":maxformat:", ":sumformat:", ":avgformat:", -1, :unittype:, -1, -1, -1, 0
+
+        .endm
+
+;
+;# ======== PRD_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", PRD_config$regs
+PRD_config      .macro _scalar, _thook
+        ; only expand if the PRD module is configured by the user
+        .asg 0, PRD_swihandle
+        .if (PRD$ = 1)
+            .if (PRD$NUMOF > 0)
+                .if (SWI$ != 1)
+                    .emsg "PRD objects require the configuration of SWI"
+                    .mexit
+                .endif
+                .asg "PRD_swi", PRD_swihandle
+            .endif
+        .endif
+        
+        .endm
+
+;
+;# ======== PRD_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PRD_end$regs
+PRD_end .macro
+PRD_SWIHANDLE .set :PRD_swihandle:
+        .endm
+
+;
+;# ======== PRD_init ========
+;  Runtime initialization for PRD
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PRD_init$regs
+PRD_init        .macro
+
+        ; only expand if the PRD module is configured by the user 
+        .if (PRD$ = 1) 
+        .endif
+
+        .endm
+
+;
+;# ======== PRD_start ========
+;  (Re)start "one-shot" timer
+;
+;#
+;# Preconditions:
+;#      a4 = address of the PRD object
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "a0,a1,a2,b0,b1,b2", PRD_start$regs
+PRD_start       .macro dummy
+        CHK_void PRD_start, dummy
+                                        ; Load all the needed variables
+
+        ldw     *+a4[2], b2
+        mvkl    PRD_D_elapsed, b7
+||      mvkl    PRD_D_cur, a1
+        mvkh    PRD_D_elapsed, b7
+||      mvkh    PRD_D_cur, a1
+        ldw     *+a4[0], b0             ; b0 = status
+||      ldw     *b7, a0                 ; a0 = PRD_D_elapsed
+||      mvkl    PRD_STARTPRD, a2
+||      mv      a1, b8
+        nop
+
+        ;-----------------------------------------------------------------
+        ; Fix for SDSsq20709 - kount for one-shot should be reset when
+        ; PRD_start gets called.
+        ;-----------------------------------------------------------------
+        stw     b2, *+a4[1]
+
+        ldw     *+a4[1], b1             ; b1 = count
+||      ldw     *b8, a1                 ; a1 = PRD_D_cur
+||      mvkh    PRD_STARTPRD, a2        ;
+
+
+        nop     3                       ; wait for the status value to arrive
+
+        or      a2, b0, b0              ; Change status by OR'ing it
+                                        ; with PRD_STARTPRD.  One-shot and
+                                        ; continuous PRD's will now be ready
+                                        ; to run; however, only the status
+                                        ; of one-shot PRD's will be affected
+                                        ; by this action because the bits
+                                        ; being OR'd are already set for
+                                        ; continuous PRD's.
+
+        stw     b0, *+a4[0]             ; Save the status change
+        ;-----------------------------------------------------------------
+        ; Fix for SDSsq20709 - kount for one-shot should be reset when
+        ; PRD_start gets called.
+        ;-----------------------------------------------------------------
+        ldw     *+a4[2], b2
+        nop 4
+        stw     b2, *+a4[1]
+
+||      cmplt   a1, a4, a1              ; This compare checks whether or
+                                        ; not we are in the context of a
+                                        ; PRD that comes before the current
+                                        ; PRD being started in the PRD list.
+                                        ; If we are not in a PRD context at
+                                        ; all, the PRD_D_cur pointer should
+                                        ; point to the last PRD in the list,
+                                        ; and this condition will not occur.
+
+                                        ; If the above condition holds, then
+                                        ; we know that we are in the context
+                                        ; of PRD_F_swi and that this PRD has
+                                        ; not been reached yet.  This is a 
+                                        ; problem because the count should
+                                        ; not start being decremented until
+                                        ; the next time PRD_F_swi runs.  
+                                        ; Instead of doing the check in 
+                                        ; PRD_F_swi, which runs every 
+                                        ; PRD_D_elapsed ticks, we do a one
+                                        ; time check and compensate.
+                                        ; The last two instructions simply
+                                        ; add an extra PRD_D_elapsed to
+                                        ; compensate for the early count
+                                        ; decrement.
+
+                                        ; if (PRD_D_cur < (addr current PRD)) {
+ [a1]   add     b1, a0, b1              ;     count = count + PRD_D_elapsed;
+ [a1]   stw     b1, *+a4[1]             ; }
+                                        
+        .endm
+
+;
+;# ======== PRD_stop ========
+;  stop "one-shot" timer
+;
+;#
+;# Preconditions:
+;#      a4 = address of the PRD object
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "a1,b1", PRD_stop$regs
+PRD_stop        .macro dummy
+        CHK_void PRD_stop, dummy
+        ldw     *a4, a1
+        mvkl    7fffffffh, b1
+        mvkh    7fffffffh, b1
+        nop     2                       ; wait for the status value to arrive
+        and     a1, b1, a1              
+        stw     a1, *a4
+        .endm
+
+;
+;# ======== PRD_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", PRD_startup$regs
+PRD_startup        .macro
+        .endm
+
+;
+;# ======== PRD_tick ========
+;
+;  Advance prd timer counter and, if necessary, post PRD_F_swi.  This 
+;  function is designed to be called from interrupt service routines. 
+;
+;#
+;# Preconditions:
+;#      GIE = 0 (interrupts are disabled)
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      This API should be invoked from interrupt service routines.
+;#      All the registers that are modified by this API should be 
+;#      saved and restored before and after the API is invoked 
+;#      respectively.
+;#
+;
+        .asg    "b3,:PRD_F_tick$regs:", PRD_tick$regs
+PRD_tick        .macro 
+        mvkl    PRD_F_tick, b3  ; change to FAR call
+        mvkh    PRD_F_tick, b3
+        b       b3              ; start branch to PRD_F_tick
+        mvkl    prdt?, b3       ; setup b3 pointer to come back from PRD_F_tick
+        mvkh    prdt?, b3
+        nop     3
+prdt?:
+
+        .endm
+
+;
+;# ======== PRD_getticks ========
+;  Return the current time in PRD ticks.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      a4 = PRD_D_tick
+;#
+;
+        .asg    "a4", PRD_getticks$regs
+PRD_getticks    .macro dummy
+        CHK_void PRD_getticks, dummy
+
+        mvkl PRD_D_tick, a4
+        mvkh PRD_D_tick, a4
+        ldw *a4, a4                     ; load PRD_D_tick
+        nop 4
+        .endm
+
+        .endif          ; if PRD_ is not defined

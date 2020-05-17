@@ -1,0 +1,2512 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  <title>DSP/BIOS Release Notes</title><!-- For now, we use the doxygen style sheet --><link href="" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <style type="text/css">
+  </style>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <style type="text/css">
+  </style></head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table width="100%">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <td bgcolor="black" width="1"><a href="http://www.ti.com"> <img src="docs/tilogo.gif" border="0" height="54" width="222"></a></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <td bgcolor="red"><img src="docs/titagline.gif" height="26" width="314"></td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1><a name="BIOS_TOP">DSP/BIOS 5.32
+Release Notes</a></h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+This release note is divided into the following sections:
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p class="sections">
+<a href="#Introduction">Introduction</a>,
+<a href="#Documentation_Links">Documentation</a>,
+<a href="#Whats_New">What's New</a>,
+<a href="#Upgrading_And_Compatibility_Info">Upgrading And
+Compatibility Information</a>,
+<a href="#Host_Support">Host Support</a>,
+<a href="#Dependencies">Dependencies</a>,
+<a href="#Device_Support">Device Support</a>,
+<a href="#Validation">Validation Information</a>,
+<a href="#Known_Issues">Known Issues</a>,
+<a href="#Benchmarks">Benchmarks</a>,
+<a href="#Versioning">Versioning</a>,
+<a href="#Tech_Support_And_Prod_Updates">Technical Support
+And Product Updates</a>,
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<hr>
+<h2><a name="Introduction">Introduction</a></h2><p>DSP/BIOS 5.32 is a point release of DSP/BIOS. DSP/BIOS 5.32 highlights
+include:</p>
+
+<ul type="disc"><li class="MsoNormal" style="">TMS320F283xx device support</li><li class="MsoNormal" style="">RTDX 2.0 support</li><li class="MsoNormal" style="">Removal of TMS320C54xx
+     support </li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+Please read the Setup Guide for help installing and setting
+up your environment to use DSP/BIOS 5.32.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Documentation_Links">Documentation</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+The following documentation is provided with this release: </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="docs/SetupGuide.html">DSP/BIOS Setup Guide</a></li>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <li><a href="packages/ti/bios/doc/spru423f.pdf">DSP/BIOS User's
+Guide</a></li>
+
+
+
+
+  <li><a href="xdctools/docs/Bios_Tconf_User_Guide.pdf">DSP/BIOS TConf User's
+Guide</a></li>
+
+
+
+
+  <li><a href="packages/ti/bios/doc/spru625i.pdf">DSP/BIOS C28x API Reference</a></li>
+
+
+
+
+  <li><a href="packages/ti/bios/doc/spru404n.pdf">DSP/BIOS C55x API Reference</a></li>
+
+
+
+
+  <li><a href="packages/ti/bios/doc/spru403o.pdf">DSP/BIOS C6x API Reference</a></li>
+
+
+
+
+  
+
+
+
+  <li><a href="packages/ti/bios/help/doc/cc_c28xat.hlp">DSP/BIOS C28x Tutorial</a></li>
+
+
+
+
+  <li><a href="packages/ti/bios/help/doc/cc_c55xat.hlp">DSP/BIOS C55x Tutorial</a></li>
+
+
+
+
+  <li><a href="packages/ti/bios/help/doc/cc_c6xat.hlp">DSP/BIOS C6x Tutorial</a></li>
+
+
+
+
+  <li><a href="http://www-k.ext.ti.com/sc/technical-support/knowledgebase/dsp/dsp_help.htm">DSP KnowledgeBase</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+</ul>Additional release note documentation:<br><ul><li><a href="packages/ti/bios/doc/release_notes">DSP/BIOS Kernel Package</a></li><li><a href="xdctools/release_notes.html">XDC Tools (Tconf) Package</a></li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>Release notes from previous releases are also available in the
+<a href="docs/relnotes_archive">release notes archive</a>
+directory. </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Whats_New">What's New</a></h2><p><b>5.32.00.01 Release (this release)</b></p>
+
+<ul type="disc"><li class="MsoNormal" style="">Highlights of Changes: </li></ul><ul type="circle"><ul><li class="MsoNormal" style="color: rgb(0, 0, 3);">TMS320F283xx device
+      support: DSP/BIOS now supports the floating point 283xx family<o:p></o:p></li></ul><ul><li class="MsoNormal" style="color: rgb(0, 0, 3);">RTDX 2.0 support:
+      DSP/BIOS is compatible with the new RTDX 2.0 release that includes
+      features such as enabling CIO to be used over RTDX and a host scripting
+      interface to use RTDX for automated product testing. Although the RTDX
+      2.0 target libraries are included in DSP/BIOS 5.32, to obtain the updated
+      host-side libraries, documentation, and examples, you must download RTDX
+      2.0 from: <a href="https://www-a.ti.com/downloads/sds_support/targetcontent/index.html">https://www-a.ti.com/downloads/sds_support/targetcontent/index.html</a><o:p></o:p></li></ul><ul><li class="MsoNormal" style="color: rgb(0, 0, 3);">TMS320C54xx devices
+      are not supported in this release</li></ul></ul><ul type="disc"><li class="MsoNormal" style="">Defects Fixed:&nbsp;</li><ul><li class="MsoNormal" style="">Id &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Headline<br></li><li class="MsoNormal" style="">SDSCM00001295&nbsp;&nbsp;&nbsp; Placing .sysdata at address &gt; 0xffff causes CLK initialization/start problem for 28x<br></li><li class="MsoNormal" style="">SDSCM00003686&nbsp;&nbsp;&nbsp; MEM Module API is needed to get starting address of memory segment<br></li><li class="MsoNormal" style="">SDSCM00003738&nbsp;&nbsp;&nbsp; document restrictions about NMI interrupts for 55x BIOS<br></li><li class="MsoNormal" style="">SDSCM00003782&nbsp;&nbsp;&nbsp; Calling TSK_create twice causes causes crash if KOV is open<br></li><li class="MsoNormal" style="">SDSCM00009870&nbsp;&nbsp;&nbsp; psl does not create complete RTSC package<br></li><li class="MsoNormal" style="">SDSCM00010183&nbsp;&nbsp;&nbsp; Document that apps can use, but not return from, NMI with 28x BIOS<br></li><li class="MsoNormal" style="">SDSCM00011270&nbsp;&nbsp;&nbsp; Make LOG timestamp "TS" visible and document "TS" so users can control for LC and Davinci<br></li><li class="MsoNormal" style="">SDSCM00012471&nbsp;&nbsp;&nbsp; RTA (VBD) crash after lots of disconnects and connects<br></li><li class="MsoNormal" style="">SDSCM00013497&nbsp;&nbsp;&nbsp; CLK_start() uses incorrect mask to enable CLK interrupt<br></li><li class="MsoNormal" style="">SDSCM00014096&nbsp;&nbsp;&nbsp; Add BASEADDR config params to documentation (AppNote SPRAA98)<br></li><li class="MsoNormal" style="">SDSCM00014100&nbsp;&nbsp;&nbsp; Incorrect code example for setting wakeup event in SPRAA98<br></li><li class="MsoNormal" style="">SDSCM00014120&nbsp;&nbsp;&nbsp; gconf/tconf do not generate correct files if .tcf file has '+' character (e.g. c64x+test.tcf)<br></li><li class="MsoNormal" style="">SDSCM00014176&nbsp;&nbsp;&nbsp; Memory leak in Project Manager<br></li><li class="MsoNormal" style="">SDSCM00015238&nbsp;&nbsp;&nbsp; Need clarifications to BCACHE API descriptions<br></li><li class="MsoNormal" style="">SDSCM00015608&nbsp;&nbsp;&nbsp; Generated asm file fails to build when the TSK Stack Memory Segment is set to MEM_NULL<br></li><li class="MsoNormal" style="">SDSCM00015714&nbsp;&nbsp;&nbsp;
+Calling context appendix in BIOS API guide should state that
+LCK_pend()/LCKpost() cannot be called from main()<br></li><li class="MsoNormal" style="">SDSCM00015944&nbsp;&nbsp;&nbsp; KOV should check if MSGQ has been initialized before reading MSGQ data structures<br></li><li class="MsoNormal" style="">SDSCM00016107&nbsp;&nbsp;&nbsp; New HWI/WUGEN APIs for 2430/3430 should to be included in API Guide<br></li><li class="MsoNormal" style="">SDSCM00016272&nbsp;&nbsp;&nbsp; Error 1722.&nbsp; There is a problem with this windows installer package<br></li><li class="MsoNormal" style="">SDSCM00016821&nbsp;&nbsp;&nbsp; GIO_new() API description is missing from the BIOS API Manual<br></li><li class="MsoNormal" style="">SDSCM00017560&nbsp;&nbsp;&nbsp; KOV shows incorrect value for stack peak when stackSize &gt; 0x7fff<br></li><li class="MsoNormal" style="">SDSCM00017622&nbsp;&nbsp;&nbsp; remove sectti, nmti, etc. from BIOS documentation (supported by codegen now)<br></li><li class="MsoNormal" style="">SDSCM00018091&nbsp;&nbsp;&nbsp; BIOS 4.90 docs state there is a 28xx Audio example when there is not<br></li><li class="MsoNormal" style="">SDSCM00018342&nbsp;&nbsp;&nbsp; Documentation error in GBL_getFrequency().<br></li><li class="MsoNormal" style="">SDSCM00018557&nbsp;&nbsp;&nbsp; Constraint contradiction with DEV_CreateDevice API and MEM_alloc<br></li><li class="MsoNormal" style="">SDSCM00018594&nbsp;&nbsp;&nbsp; SPRAA98 needs updating with pwrm changes for BIOS 5.31.08 release<br></li><li class="MsoNormal" style="">SDSCM00018608&nbsp;&nbsp;&nbsp; BIOS 5 omap2320 "SELF" interrupt masking option doesn't work for L2 interrupts greater than 31.<br></li><li class="MsoNormal" style="">SDSCM00018615&nbsp;&nbsp;&nbsp; GIO_create() should have constraint warning against sharing handle by multiple threads<br></li><li class="MsoNormal" style="">SDSCM00018678&nbsp;&nbsp;&nbsp; Cannot build BIOS HST with HS-RTDX<br></li><li class="MsoNormal" style="">SDSCM00018707&nbsp;&nbsp;&nbsp; BIOS overwriting pre-scalar value for TIM34 on evm6437<br></li><li class="MsoNormal" style="">SDSCM00018808&nbsp;&nbsp;&nbsp; TSK_getpri() macro should cast the priority field to be volatile<br></li><li class="MsoNormal" style="">SDSCM00018913&nbsp;&nbsp;&nbsp;
+STS_delta jumps into STS_add (instead of function call) which confuses
+function profiler (need hack for trace analyzer)<br></li><li class="MsoNormal" style="">SDSCM00019001&nbsp;&nbsp;&nbsp;
+RTA objects do not deallocate from the memory segment even if Enable
+Real Time Analysis is disabled<br></li><li class="MsoNormal" style="">SDSCM00019108&nbsp;&nbsp;&nbsp; HWI_isHwi() returns "TRUE" when within SWI_disable/enable block<br></li><li class="MsoNormal" style="">SDSCM00019333&nbsp;&nbsp;&nbsp;&nbsp;Add 28FP to BIOS 5<br></li><li class="MsoNormal" style="">SDSCM00019360&nbsp;&nbsp;&nbsp; Remove C55x support from HS-RTDX<br></li><li class="MsoNormal" style="">SDSCM00019364&nbsp;&nbsp;&nbsp; RTDX must support the 283xx<br></li><li class="MsoNormal" style="">SDSCM00019365&nbsp;&nbsp;&nbsp; RTDX libraries must include an RTDX_write callback API<br></li><li class="MsoNormal" style="">SDSCM00019366&nbsp;&nbsp;&nbsp; need catalog files and bios_*.tci files for 283xx parts (335, 334 and 332)<br></li><li class="MsoNormal" style="">SDSCM00019400&nbsp;&nbsp;&nbsp; update codegen to 6.0.14 (or latest 6.0.x) for 6x targets<br></li><li class="MsoNormal" style="">SDSCM00019535&nbsp;&nbsp;&nbsp; BCACHE_setMode needs to be separately placeable for Cache freezing<br></li><li class="MsoNormal" style="">SDSCM00019639&nbsp;&nbsp;&nbsp; GBl_getVersion returns incorrect version number.<br></li><li class="MsoNormal" style="">SDSCM00019663&nbsp;&nbsp;&nbsp; DSP/BIOS clock startup writing to read-only counter registers causes a bus error<br></li><li class="MsoNormal" style="">SDSCM00019678&nbsp;&nbsp;&nbsp; MEM_increaseTableSize documentation has wrong return type<br></li><li class="MsoNormal" style="">SDSCM00019860&nbsp;&nbsp;&nbsp; DSP/BIOS release_notes.html refers to 5.20.00<br></li><li class="MsoNormal" style="">SDSCM00019864&nbsp;&nbsp;&nbsp; need platform file for ezdsp28335<br></li><li class="MsoNormal" style="">SDSCM00019996&nbsp;&nbsp;&nbsp; Edit constraint section of DEV_CreateDevice in API Guide<br></li><li class="MsoNormal" style="">SDSCM00020065&nbsp;&nbsp;&nbsp; Need to document new BIOS API's and config parameter<br></li><li class="MsoNormal" style="">SDSCM00020066&nbsp;&nbsp;&nbsp; TSK_isTSK() API description needs to be updated with BIOS 5.32<br></li><li class="MsoNormal" style="">SDSCM00020070&nbsp;&nbsp;&nbsp; CPU Load Graph is out of synch with MessageLog window on OSK5912<br></li><li class="MsoNormal" style="">SDSCM00020217&nbsp;&nbsp;&nbsp; Description for eZdsp2812 configuration seed file needs correction<br></li><li class="MsoNormal" style="">SDSCM00003180&nbsp;&nbsp;&nbsp; Flash plugin error: BIOS version is not compatible with RTA</li></ul></ul><a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Upgrading_And_Compatibility_Info">Upgrading
+And Compatibility Information</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>Solaris host is no longer supported in this release. Customer-critical bug
+fixes to earlier releases will be available to Solaris users if required.</p>
+
+<p>DSP/BIOS 5.32 does not support TMS320C54xx devices. Users of such devices
+should continue use DSP/BIOS 5.31.xx earlier releases. For customer-critical
+54xx-related issues, TI will continue to provide fixes to earlier versions when
+needed.</p>
+
+<p>DSP/BIOS 5.32&nbsp;no longer contains RTDX examples. DSP/BIOS 5.32 does
+continue to provide the RTDX libraries so existing applications using RTDX will
+continue to build and execute without any issues. To obtain RTDX examples,
+users should download the RTDX 2.0 release from:</p>
+
+<p><a href="https://www-a.ti.com/downloads/sds_support/targetcontent/index.html">https://www-a.ti.com/downloads/sds_support/targetcontent/index.html</a></p>
+
+<h3>Compatibility Key Definitions<o:p></o:p></h3>
+
+<p>Compatibility keys are intentionally independent of Marketing product
+numbers and are intended to: <o:p></o:p></p>
+
+<ol start="1" type="1"><li class="MsoNormal" style="">Enable tooling to identify
+     incompatibilities between components, and <o:p></o:p></li><li class="MsoNormal" style="">Convey a level of
+     compatibility between different releases to set end user expectations. <o:p></o:p></li></ol>
+
+<p>Compatibility keys are composed of 3 comma-delimited numbers - M,S,R -
+where: <o:p></o:p></p>
+
+<ul type="disc"><li class="MsoNormal" style=""><b>M = Major</b>. A
+     difference in M indicates a break in compatibility. <o:p></o:p></li><li class="MsoNormal" style=""><b>S = Source</b>. A
+     difference in S indicates source <span class="SpellE">compability</span>.
+     That is, the user's source doesn't require change, but <i>does</i> require
+     rebuilding. <o:p></o:p></li><li class="MsoNormal" style=""><b>R = Radix</b>. A
+     difference in R indicates an introduction of new features, but
+     compatibility with previous interfaces has not broken. If libraries are
+     provided by the package, an application must re-link with the new
+     libraries, but not rebuild from source. </li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Host_Support">Host Support</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul type="">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Supported Operating Systems</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <ul type="circle">
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li>Windows XP, Windows Vista</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li>Linux [RH3 and RH4]</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Dependencies">Dependencies</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Required Software</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <ul type="circle">
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li>Code Composer Studio Version 3.3 or higher</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Required Hardware</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <ul type="circle">
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <li>See Device Support Section below.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Device_Support">Device Support</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>This release supports the following devices: </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table style="font-family: Times New Roman,Times,serif; width: 619px; height: 900px;" border="0" cellpadding="5" cellspacing="5">
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <td>&nbsp;</td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <th style="text-align: left;">Device</th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+
+
+
+
+
+      <th style="text-align: left;">Runtime Model</th>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <tr>
+
+
+
+
+
+
+
+
+      <td class="" style="text-align: center;" valign="middle"><b><br>
+
+
+
+
+
+
+      </b></td>
+
+
+
+
+
+
+
+
+      <td class="" align="left" valign="middle"><br>
+
+
+
+
+
+
+
+
+      </td>
+
+
+
+
+
+
+
+
+      
+
+      <td class="" align="left" valign="middle"><br>
+
+
+
+
+
+
+      </td>
+
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <tr>
+
+
+
+
+
+
+      <td style="text-align: center; height: 35px;" valign="middle"><b>28x</b></td>
+
+
+
+
+
+
+      <td style="height: 35px;" align="left" valign="middle">F2801, F2806,&nbsp;F2808,&nbsp;F2810, F2811,&nbsp;F2812,&nbsp;F28335</td>
+
+
+
+
+
+
+      <td style="height: 35px;" align="left" valign="middle">Large model</td>
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+    <tr>
+
+
+
+
+
+
+
+
+      <td class="" align="left" valign="middle"></td>
+
+
+
+
+
+
+
+
+      <td class="" style="vertical-align: middle; text-align: left;"><br>
+
+
+
+
+
+
+      </td>
+
+
+
+
+
+
+
+
+      
+
+      <td class="" align="left" valign="middle"></td>
+
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+
+    <tr>
+
+
+
+
+
+
+
+      <td style="text-align: center; height: 217px;" valign="middle"><b>55x</b></td>
+
+
+
+
+
+
+
+      <td style="vertical-align: middle; text-align: left; font-family: Times New Roman,Times,serif; height: 217px;">5501,
+5502,&nbsp;5503,&nbsp;5507, 5509A, DA255,&nbsp; DA295, DA300, 5510,
+5510A, 5561,&nbsp;OMAP5903, OMAP5905, OMAP5910, OMAP5912, OMAP5944,
+OMAP5946, OMAP5948, OMAP1035, OMAP1510, OMAP1610, OMAP1710
+(OMAP), OMAP2320, OMAP2420, TNETV1055</td>
+
+
+
+
+
+
+
+      
+      <td style="height: 217px;" align="left" valign="middle">Large model on Laijin 2.x core devices</td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+    
+
+
+
+
+
+
+    
+
+
+
+
+
+
+    
+
+
+
+
+
+
+    
+    
+    
+    
+    
+
+
+
+
+
+
+    
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    <tr>
+
+
+
+
+
+
+
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+      
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    <tr>
+
+
+
+
+
+
+
+      <td style="text-align: center;" valign="middle"><b>62x</b></td>
+
+
+
+
+
+
+
+      <td align="left" valign="middle">6202, 6203, 6204, 6205, 6211
+      </td>
+
+
+
+
+
+
+
+      
+      <td align="left" valign="middle">Big and Little Endian</td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    
+    
+    
+    <tr>
+
+
+
+
+
+
+
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+      
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    <tr>
+
+
+
+
+
+
+
+      <th>64x</th>
+
+
+
+
+
+
+
+      <td> 6410, 6411, 6412, 6413, 6414, 6415, 6416, 6418, DRI300,&nbsp;&nbsp;DM420, DM640, DM641, DM642<br>
+
+
+
+
+
+
+
+      </td>
+
+
+
+
+
+
+
+      
+      <td>Big and Little Endian</td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+
+
+
+
+
+
+
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+      
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    <tr>
+
+
+
+
+
+
+
+      <td style="text-align: center; font-weight: bold;" valign="middle">64x+</td>
+
+
+
+
+
+
+
+      <td align="left" valign="middle">
+      DM420, DM415, DM425,
+DM426, DM647, DM648, DM6431, DM6433, DM6435, DM6437, DM6443, DM6446,
+6421, 6424, 6452, 6454, 6455, TCI6482, TCI6486, TCI6487, TCI6488,
+DRA442, DRA446, OMAP2430, OMAP3430, TNETV2685<br>
+
+
+
+
+
+
+
+      
+
+
+      </td>
+
+
+
+
+
+
+
+      
+      <td align="left" valign="middle">Big and Little Endian</td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+
+
+
+
+
+
+
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+      <td align="left" valign="middle"><br>
+
+
+
+
+
+
+      </td>
+
+
+
+
+
+
+
+      
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    <tr>
+
+
+
+
+
+
+
+      <td style="text-align: center;" valign="middle"><b>67x</b></td>
+
+
+
+
+
+
+
+      <td align="left" valign="middle">6701, 6711, 6711 - 250, 6712, 6713, 6713 - 300<br>
+
+
+
+
+
+
+
+      </td>
+
+
+
+
+
+
+
+      
+      <td align="left" valign="middle">Big and Little Endian</td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    
+    
+    
+    
+    <tr>
+
+
+
+
+
+
+
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+      
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    <tr>
+
+
+
+
+
+
+
+      <th>67x+</th>
+
+
+
+
+
+
+
+      <td>6727, DA705, DA707, DA710</td>
+
+
+
+
+
+
+
+      
+      <td>Little Endian</td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    
+    
+    <tr>
+
+
+
+
+
+
+
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+      <td align="left" valign="middle"><br>
+
+
+
+
+
+
+      </td>
+
+
+
+
+
+
+
+      
+      <td align="left" valign="middle"></td>
+
+
+
+
+
+
+
+    </tr>
+
+
+
+
+
+
+
+    
+
+    
+    
+    
+    
+    
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+&nbsp;<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Validation">Validation Information</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>This release was built using the following components: </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>C28x &nbsp;Code Generation Tools version 5.0.0B2</li>
+
+
+
+
+
+
+
+  <li>C55x Code Genereation Tools version 3.3.2</li>
+
+
+
+
+
+
+
+  <li>C6x Code Generation Tools version 6.0.14</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>This release was validated using the following components: </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>CCS 3.3</li>
+
+
+
+
+
+
+
+  <li>C28x &nbsp;Code Generation Tools version 5.0.0B1</li>
+
+
+
+
+
+
+
+  <li>C55x Code Genereation Tools version 3.3.2</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>C6x Code Generation Tools version 6.0.8</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Known_Issues">Known Issues</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>The following issues are known to affect this release: </h3>&nbsp;<font face="Verdana" size="2"><b>Please check the following link for additional information when
+upgrading from 4.90 to 5.x --
+<a href="http://www-k.ext.ti.com/SRVS/CGI-BIN/WEBCGI.EXE/,/?St=27,E=0000000000006654954,K=7392,Sxi=8,Case=obj%2852425%29">Knowledge
+base with known 4.90 to 5.x upgrade issues</a></b></font>&nbsp;
+<ul><li><font face="Verdana" size="2"><b>Davinci 1.x IDMA0 problem workaround --</b> A custom version of
+the HWI dispatcher was created to&nbsp; work around an IDMA0/MMR
+problem in rev 1.x DM644x devices (see SPRZ241 - "TMS320DM6446 Digital
+Media System-on-chip Silicon Errata" for more information about this
+errata).&nbsp; This errata is only present in Rev 1.x DM644x
+devices and is not present on other 64x+ devices. </font>
+
+
+
+<div> <font face="Verdana" size="2">&nbsp;The
+HWI dispatcher has been updated to poll the IDMA0 status register and
+wait for IDMA0 transfer to complete before calling the actual
+ISR.&nbsp; This will ensure that the ISR will not reference an MMR
+register while the IDMA0 is active.&nbsp; This will also ensure
+that an asynchronous task switch will not occur while the IDMA0 is
+active.&nbsp; This may affect interrupt response time, but should
+not be a problem in most applications since IDMA0 jobs are usually
+fairly short.&nbsp; This workaround is only supported by the HWI
+dispatcher&nbsp;<span class="078521418-14062006">(</span>the
+HWI_enter/exit macros do not contain the workaround).</font></div>
+
+
+<div> <font face="Verdana" size="2">&nbsp;A
+hidden configuration parameter (bios.GBL.USEIDMA0DISPATCHER)&nbsp;<span class="078521418-14062006">is </span>used to select
+this alternate version of the dispatcher.&nbsp; This parameter has
+default value 'true' for DM644x and DM42x configurations.&nbsp;
+This parameter has default value 'false' for all other 64x+
+configurations.&nbsp; The user can set this parameter to 'false' if
+they do not want this workaround used in their Davinci applications
+(e.g., if their application is not using IDMA0 and/or they know that
+that their ISRs do not reference MMR registers).</font></div><span style="font-family: Verdana;"></span>
+</li><li><p style="text-align: left;" align="center"><font face="Verdana" size="2"><b>Memory
+heap issue when updating&nbsp; existing configuration files </b>--
+Prior versions of the configuration tool allowed for an inconsistent
+memory heap configuration.&nbsp;&nbsp; The tool allowed users
+to enable heaps when no heaps were actually configured and the default
+for bios.MEM.MALLOCSEG and bios.MEM.SEGZERO were still set to
+'MEM_NULL'.&nbsp; This was causing problems in applications since
+malloc() and MEM_alloc() were failing even when user thought they had
+configured BIOS for dynamic memory allocation.&nbsp; The
+configuration tool is now checking to make sure that configurations
+that have heaps also have bios.MEM.MALLOCSEG and bios.MEM.SEGZERO set
+to a valid heap.&nbsp; Update from existing projects might yield an
+error message.&nbsp; The work around is to either remove the
+'bios.enableMemoryHeaps(prog);' line from your configuration, or to add
+a heap and set bios.MEM.MALLOCSEG and bios.MEM.SEGZERO
+accordingly.&nbsp; See the
+ti/bios/examples/common/evmDM6446_common.tci file (or others) for an
+example of how to do this.</font></p></li><li><font face="Verdana" size="2"><b>G</b><span style="font-size: 10pt;"><b>conf
+uses wrong parameters when more than one pjt is opened and they share
+the same .tcf file</b></span></font><font face="Courier New" size="2"><span style="font-size: 10pt; font-family: 'Courier New';">
+</span></font><font face="Verdana" size="2"><span style="font-size: 10pt;">-- When more than one CCS project
+(.pjt file) share the same .tcf file, and two or more of the projects
+are opened in CCS, opening a .tcf from one of the projects will launch
+GConf using the DspBiosBuilder builder parameters defined for the most
+recently opened project. This may result in incorrect base seed
+properties and import file paths in the .tcf file being edited. To
+workaround, do not share .tcf files between projects. This is tracked
+by SDSCM00003834</span></font>
+
+
+</li><li><p style="text-align: left;" align="center"><font face="Verdana" size="2"><span style="font-size: 10pt;"><b>BIOS RTA has problems
+reading data in stop mode for some 64x+ devices </b></span></font>
+<font face="Courier New" size="2"><span style="font-size: 10pt; font-family: Verdana;">-- Currently,
+stop mode reads will only work for DaVinci. This is tracked by
+SDSCM00010400 </span>
+</font></p>
+
+
+</li><li>
+
+
+<p style="text-align: left;" align="center"><font face="Verdana" size="2"><b>DSP/BIOS examples that are using RTA halt when run every other time on
+DSK5510/DSK5509A via XDS560</b>. This is tracked by
+SDSCM00005820.</font><br></p></li><li><p style="text-align: left;" align="center"><font face="Verdana" size="2"><b>CCS window closes on refreshing KOV Window when it receives illegal
+values</b> -- KOV will crash if Module Objects have illegal
+values. For e.g if a dynamic task has a bad name, KOV will try to print
+the illegal name and crash. This is tracked by
+SDSCM00006694.&nbsp;&nbsp;&nbsp; </font></p></li><li>
+
+
+<p style="text-align: left;" align="center"><span class="743060900-07062006"><b>
+<font face="Verdana" size="2">KOV window shows wrong names for dynamic objects -- </font></b><font face="Verdana" size="2">This is tracked by
+SDSCM00007151.</font></span></p>
+
+
+</li><li><p style="text-align: left;" align="center"><span class="743060900-07062006"><font face="Verdana" size="2"><b>KOV
+displays wrong names for memory sections --
+</b>This is tracked by SDSCM00004917.</font></span></p>
+
+
+</li><li><p style="text-align: left;" align="center"><span class="743060900-07062006"><b><font face="Verdana" size="2">Incorrect platform name in Tconf User's Guide in "Create New Platform"
+section -- </font></b>
+<font face="Verdana" size="2">The spru0007h.pdf
+document contains the correct instructions for creating a new platform
+using the Tconf's User's Guide, the help files were not updated to
+reflect the same naming convention. This is tracked by SDSCM00003471.</font></span></p>
+
+
+</li><li><p style="text-align: left;" align="center"><span class="743060900-07062006"><b><font face="Verdana" size="2">RTDX tutorial examples do not all execute as expected&nbsp; when
+run on TCI6482 simulator little endian -- </font></b><font face="Verdana" size="2">
+This is tracked by SDSSCM00010736.</font></span></p>
+
+
+</li><li><p style="text-align: left;" align="center"><span class="743060900-07062006"><b><font face="Verdana" size="2">RTDX Hot-Connect does not work for C64P -- </font></b><font face="Verdana" size="2">This is tracked by
+SDSSCM00011954.</font></span></p>
+
+
+</li><li><p style="text-align: left;" align="center"><font face="Verdana"><font color="#000080"><font size="2"><strong><span style="color: rgb(0, 0, 3);">D</span></strong><span style="color: rgb(0, 0, 3);" class="037423200-10072007"><strong>SP/BIOS RTA Control Panel does not update 
+values correctly when using comma decimal separator in Windows -- </strong>The 
+RTA Control Panel does not work&nbsp;as expected when&nbsp;using Windows Regional Settings 
+where ',' is used instead of '.' for the decimal separator.&nbsp; Only workaround is 
+to use Regional Settings where '.' is the decimal separator, or use default 1 
+second update rate.&nbsp; This is tracked by 
+SDSCM00017755.</span></font></font></font></p></li><li><p><font face="Verdana"><font color="#000080"><font size="2"><span style="color: rgb(0, 0, 3);" class="037423200-10072007"><span style="font-weight: bold;">HWI_isHwi() documentation has contradictory statement</span> -- </span></font></font></font><font face="Verdana"><font color="#000080"><font size="2"><span style="color: rgb(0, 0, 3);" class="037423200-10072007">In
+previous versions of DSP/BIOS, " calling HWI_isHWI() from main()
+resulted in TRUE. This is no longer the case;"&nbsp; main() is
+identified as part of the TSK context. This is tracked by&nbsp;</span></font></font></font><font face="Verdana"><font color="#000080"><font size="2"><span style="color: rgb(0, 0, 3);" class="037423200-10072007">SDSCM00020436</span></font></font></font><font face="Verdana"><font color="#000080"><font size="2"><span style="color: rgb(0, 0, 3);" class="037423200-10072007"></span></font></font></font></p></li></ul><ul><li><p><font face="Verdana"><font color="#000080"><font size="2"><span style="color: rgb(0, 0, 3);" class="037423200-10072007"><span style="font-weight: bold;">Some of the help files in BIOS 5.32 refers to BIOS 5.31</span> --&nbsp;</span></font></font></font><font face="Verdana"><font color="#000080"><font size="2"><span style="color: rgb(0, 0, 3);" class="037423200-10072007">This is tracked by&nbsp;</span></font></font></font><font face="Verdana"><font color="#000080"><font size="2"><span style="color: rgb(0, 0, 3);" class="037423200-10072007">SDSCM00020437</span></font></font></font></p></li></ul><ul><li><p><font style="font-weight: bold;" face="Verdana"><font color="#000080"><font size="2"><span style="color: rgb(0, 0, 3);" class="037423200-10072007">Mem_management.c examples requires type casting -- &nbsp;</span></font></font></font><font face="Verdana"><font color="#000080"><font size="2"><span style="color: rgb(0, 0, 3);" class="037423200-10072007">This is tracked by </span></font></font></font><font face="Verdana"><font color="#000080"><font size="2"><span style="color: rgb(0, 0, 3);" class="037423200-10072007">SDSCM00020462</span></font></font></font></p></li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Benchmarks">Benchmarks</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+  <li><a href="packages/ti/bios/benchmarks/html/Results.html">DSP/BIOS Benchmarks</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p> </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Versioning">Versioning</a></h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>This product's version follows a version format, <b>M.mm.pp.bb</b>,
+where <b>M</b> is a single digit Major number, <b>mm</b>
+is 2 digit minor number, <b>pp</b> is a 2 digit patch
+number, and <b>b</b> is an unrestricted set of digits used
+as an incrementing build counter. </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>To support multiple side-by-side installations of the
+product,
+the product version is encoded in the top level directory, ex. <b>bios_5_32</b>.
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>Subsequent releases of patch upgrades will be identified by
+the patch number, ex. BIOS 5.32.01 with directory <b>bios_5_32_01</b>.
+Typically, these patches only include critical bug fixes. </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>Please note that version numbers and compatibility keys are
+NOT the same. For an explanation of compatibility keys, please refer to
+the 'Upgrade and Compatibility Information' section. </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Tech_Support_And_Prod_Updates"></a>Technical
+Support And Product Updates</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Please contact softwaresupport@ti.com for technical
+support.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<p>Last updated: Oct 02, 2007 </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

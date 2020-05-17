@@ -1,0 +1,162 @@
+<html>
+
+<head>
+<meta http-equiv="Author" content="Thom Maughan">
+<meta http-equiv="Content-Language" content="en-us">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>DSP/BIOS™ Product v5.00.00 Release Notes </title>
+<style>
+<!--
+p
+	{margin-right:0in;
+	margin-left:0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	}
+h2
+	{margin-right:0in;
+	margin-left:0in;
+	font-size:18.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold}
+ li.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	margin-left:0in; margin-right:0in; margin-top:0in}
+ p.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	margin-left:0in; margin-right:0in; margin-top:0in}
+ div.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	margin-left:0in; margin-right:0in; margin-top:0in}
+-->
+</style>
+</head>
+
+<body>
+
+<p align="center" style="text-align: center"><b>
+<span style="font-size: 18.0pt; font-family: Verdana">Power Scaling Library (PSL) </span></b></p>
+
+<p align="center" style="text-align: center"><b>
+<span style="font-size: 18.0pt; font-family: Verdana">&nbsp;Package 5,1,0 
+Release Notes </span></b></p>
+<p style="margin-left: 0in; margin-right: -.75in; margin-top: 5.0pt; margin-bottom: 12.0pt">
+<span style="font-size: 10.0pt; font-family: Verdana">Last updated: 10 Nov 2004</span></p>
+<p style="margin-bottom: 12.0pt">
+<span style="font-size: 10.0pt; font-family: Verdana">This release note covers general product level issues 
+ 
+and is divided into four sections, &quot;<a style="color: blue; text-decoration: underline; text-underline: single" href="#General_Info_5_00_00">General 
+Info</a>&quot;, &quot;<a style="color: blue; text-decoration: underline; text-underline: single" href="#Fixed_In_This_Release_5_00_00">Fixed 
+In This Release</a>&quot;, &quot;<a style="color: blue; text-decoration: underline; text-underline: single" href="#Known_Issues_5_00_00">Known 
+Issues</a>&quot;, and &quot;<a style="color: blue; text-decoration: underline; text-underline: single" href="#Validation_Info_5_00_00">Validation 
+Info</a>&quot;.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></p>
+<p style="margin-bottom: 12.0pt">
+<span style="font-family: Verdana">&nbsp;</span></p>
+<h2><span style="font-size: 12.0pt; font-family: Verdana">
+<a name="General_Info_5_00_00"></a>General Information</span></h2>
+<font FACE="Arial" SIZE="3">
+<p ALIGN="LEFT"><font face="Verdana" size="2">The Power Scaling Library (PSL) is 
+a software library that allows embedded systems programmers to manage both 
+frequency and voltage scaling through an easy to use API. The PSL provides 
+hardware abstraction, portability, and a standard API that can be used among 
+different TI devices. The result is shortened development time for the end user.&nbsp; 
+Included in the API are routines that initiate scaling operations, and various 
+query routines that provide information on current settings and available 
+frequency/voltage settings.&nbsp; Frequency changes are initiated directly by 
+the user. Voltage changes are performed indirectly by the PSL when a frequency 
+change occurs.&nbsp; Specifically, the PSL will automatically scale the voltage 
+to the minimum level required by a frequency.&nbsp; Since voltage changes are 
+only initiated indirectly, the PSL can ensure a legal frequency/voltage setting 
+at all times.</font></p>
+</font>
+<h2><span style="font-size: 13.5pt; font-family: Verdana; font-weight: normal">
+What's New</span></h2>
+<ul type="disc" style="margin-bottom: 0in">
+  <li class="MsoNormal" style="line-height: 150%">
+  <font size="2"><span style="font-family: Verdana">PSL now provides libraries 
+  for c5503, c5507, c5509a, evm5509a, c5510, dsk5510, .</span></font></li>
+  <li class="MsoNormal" style="line-height: 150%">
+  <font size="2"><span style="font-family: Verdana">PSL now provides frequency 
+  only scaling.</span></font></li>
+  <li class="MsoNormal" style="line-height: 150%">
+  <font size="2"><span style="font-family: Verdana">PSL provides a &quot;debug&quot; 
+  library that validates user input.&nbsp; This is currently not the default 
+  library that BIOS includes.&nbsp; The default libraries do not validate user 
+  input.</span></font></li>
+</ul>
+<h2><span style="font-size: 13.5pt; font-family: Verdana; font-weight: normal">
+Limitations:</span></h2>
+<ul type="disc" style="margin-bottom: 0in">
+  <li class="MsoNormal" style="line-height: 150%">
+  <span style="font-size: 10.0pt; line-height: 150%; font-family: Verdana">
+  Limited device support: c5510, c5509a</span></li>
+  <li class="MsoNormal" style="line-height: 150%">
+  <font FACE="Arial" SIZE="3">
+  <p ALIGN="LEFT"><font face="Verdana" size="2">Voltage scaling cannot be done 
+  unless a voltage regulator is present.&nbsp; Note that frequency scaling can 
+  still be done without voltage scaling.</font></p>
+  </font>
+  <p>&nbsp;</li>
+</ul>
+<div class="MsoNormal" align="center" style="text-align: center">
+  <hr size="2" width="100%" align="center">
+</div>
+<h2 style="margin-bottom: .25in">
+<span style="font-size: 12.0pt; font-family: Verdana">
+<a name="Fixed_In_This_Release_5_00_00"></a>Fixed In This Release</span></h2>
+<p><span style="font-size: 10.0pt; font-family: Verdana">This is the first 
+release, ie, no top level install or packaging issues from previous release.</span></p>
+<p>&nbsp;</p>
+<div class="MsoNormal" align="center" style="text-align: center">
+  <hr size="2" width="100%" align="center">
+</div>
+<h2><span style="font-size: 12.0pt; font-family: Verdana">
+<a name="Known_Issues_5_00_00"></a>Known Issues</span></h2>
+<p class="MsoNormal">&nbsp;</p>
+<p class="MsoNormal">&nbsp;</p>
+<div class="MsoNormal" align="center" style="text-align: center">
+  <hr size="2" width="100%" align="center">
+</div>
+<h2><span style="font-size: 12.0pt; font-family: Verdana">
+<a name="Validation_Info_5_00_00"></a>Validation Info</span></h2>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">This 
+release of PSL was validated against the PSL test suite and examples.</span></p>
+<p class="MsoNormal"><font size="2"><span style="font-family: Verdana">&nbsp;&nbsp;&nbsp; 
+Codegen versions:&nbsp; c5500 v2.56 (Solaris)</span></font></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">&nbsp;</span></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">
+Installation and Host Development tools (build and config) validated on:</span></p>
+<p class="MsoNormal">&nbsp;</p>
+<ul style="margin-top: 0in; margin-bottom: 0in" type="disc">
+  <li class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">
+  Windows XP Pro</span></li>
+</ul>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">&nbsp;</span></p>
+<p class="MsoNormal"><span style="font-size: 10.0pt; font-family: Verdana">DSP 
+hardware and simulation platforms used in validating the content of this 
+release:</span></p>
+<p class="MsoNormal">&nbsp;</p>
+<ul style="margin-top: 0in; margin-bottom: 0in" type="disc">
+  <li class="MsoNormal"><font size="2"><span style="font-family: Verdana">
+  DSK5510</span></font></li>
+  <li class="MsoNormal"><font size="2"><span style="font-family: Verdana">
+  EVM5509A</span></font></li>
+</ul>
+<div class="MsoNormal" align="center" style="text-align: center">
+  <hr size="2" width="100%" align="center">
+</div>
+
+</body>
+
+</html>

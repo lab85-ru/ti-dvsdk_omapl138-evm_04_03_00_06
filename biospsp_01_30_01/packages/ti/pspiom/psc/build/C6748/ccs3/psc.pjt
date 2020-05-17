@@ -1,0 +1,30 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Library
+CPUFamily=TMS320C67XX
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\..\src\Psc.c"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"..\..\..\lib\C6748\Debug\ti.pspiom.psc.a674"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"..\..\..\lib\C6748\Release\ti.pspiom.psc.a674"
+
+
+["Compiler" Settings: "Debug"]
+Options=-g -mo -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\" -mv6740 -d"CHIP_C6748"
+
+["Compiler" Settings: "Release"]
+Options=-o2 -mo -pdr -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\"  -d"NDEBUG" -mv6740 -d"CHIP_C6748"
+
+

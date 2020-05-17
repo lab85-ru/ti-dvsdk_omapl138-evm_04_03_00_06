@@ -1,0 +1,109 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_5910.tci ========
+ *  This file contains BIOS settings for omap5910.
+ *  The chip configuration settings are based on document SPRS197B.
+ *
+ */
+
+/*
+ *  ======== bios.internal.setupMemory5910 ========
+ *  This function is the top-level function that will remove all MEM segments
+ *  from the cdb file.  It will take your physical memory map from calling
+ *  getMemoryMap() and create MEM instances in cdb.
+ *  It will then set sections to the default segment specified and fix up
+ *  the length and/or base of MEM segments if needed.
+ */
+bios.internal.setupMemory5910 = function (prog)
+{
+    /*
+     *  BIOS MEM segments will be created from object model memory definitions.
+     *  Place default code and data sections into specified memory segments.
+     */
+    bios.initializeMemory(prog, "SARAM", "DARAM");
+
+    /*
+     *  The base and len of DARAM and base of SARAM are initialized
+     *  to values from the object model. See C5910.tci for details.
+     *  The interrupt vectors are placed at the end of physical SARAM.
+     *  The remaining length of memory in SARAM is calculated below.
+     */
+    var vect  = prog.module("MEM").instance("VECT");
+    vect.base = 0x00013f80;
+
+    var saram  = prog.module("MEM").instance("SARAM");
+    saram.len  = vect.base - saram.base;
+}
+
+/*
+ *  ======== bios.init5910 ========
+ *  BIOS initialization for the omap5910.
+ */
+bios.init5910 = function (prog, baseseed)
+{
+    /*
+     *  Find configuration seed files to load
+     */
+    if (baseseed == null) {
+	baseseed = "ti/bios/config/cdb/c55omap1510.cdb";
+    }
+
+    var seed = utils.findSeed(baseseed);
+    if (seed != null) {
+	try {
+	    prog.load(seed);
+	}
+	catch (e) {
+	    throw new Error ("Can't load configuration seed '" 
+                             + seed + "' : " + e);
+	}
+    }
+    else {
+	throw new Error ("Can't find configuration seed :"
+                         + baseseed);
+    }
+
+    /* set CHIPTYPE to "other".  No CSL library for this device yet */
+    prog.module("GBL").CHIPTYPE = "other";
+    prog.module("GBL").DSPSUBTYPE = 5910;
+
+    /* set CLKOUT to be the value of cpu.clockRate. */
+    bios.internal.setClkout(prog);
+
+    /* set the memory model in GBL based on build options */
+    if (prog.build.target.model.dataModel == "huge") {
+        throw new Error ("Huge model not supported");
+    }
+    else {
+        prog.module("GBL").MEMORYMODEL = "LARGE";
+    }
+
+    /* If the old memory names are used, we call the function that sets up
+     * the old external memory names, while the internal names (and some old 
+     * ones are retained from the CDB file.
+     */
+    if (bios.supportOldMemoryNames) {
+	bios.internal.oldMemoryNames(prog);
+	/*  
+	 *  trcinit, pinit, cinit, gblinit, switch in DARAM
+	 *  This is required as in small model these data sections
+	 *  cannot be placed in SARAM, as it spans
+	 *  two different 64kW page boundaries, which should not be allowed.
+	 */
+	prog.module("MEM").SWITCHSEG =  prog.get("DARAM");
+	prog.module("MEM").CINITSEG =   prog.get("DARAM");
+	prog.module("MEM").PINITSEG =   prog.get("DARAM");
+	prog.module("MEM").TRCDATASEG = prog.get("DARAM");
+	prog.module("MEM").GBLINITSEG = prog.get("DARAM");
+    }
+    else {
+	/* set the default memory segments for 5910 using new memory names */
+	bios.internal.setupMemory5910(prog);
+    }
+
+    /* initialize some memory map registers */
+    bios.internal.initializeRegisterMap(prog);
+}

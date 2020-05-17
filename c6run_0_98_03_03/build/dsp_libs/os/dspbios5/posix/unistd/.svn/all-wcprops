@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/os/dspbios5/posix/unistd
+END
+getopt_long.c
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/os/dspbios5/posix/unistd/getopt_long.c
+END
+getopt.h
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/os/dspbios5/posix/unistd/getopt.h
+END
+sleep.c
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/os/dspbios5/posix/unistd/sleep.c
+END
+usleep.c
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/os/dspbios5/posix/unistd/usleep.c
+END

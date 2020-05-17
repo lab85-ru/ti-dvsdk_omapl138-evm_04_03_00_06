@@ -1,0 +1,7 @@
+package/lib/lib/scale/package/package_ti.sdo.ce.examples.extensions.scale.o674: package/package_ti.sdo.ce.examples.extensions.scale.c /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/xdc/std.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stdarg.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stddef.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/ti/targets/std.h /opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stdint.h 
+package/package_ti.sdo.ce.examples.extensions.scale.c:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/xdc/std.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stdarg.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stddef.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/ti/targets/std.h:
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/cgt6x_6_1_14/include/stdint.h:

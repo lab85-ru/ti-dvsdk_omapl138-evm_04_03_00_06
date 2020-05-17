@@ -1,0 +1,97 @@
+/* Load platform file for evm6747 */
+utils.loadPlatform("ti.platforms.evm6747");
+
+/* Enable Time Stamp Logging */
+bios.LOG.TS = true;
+
+/* Enable common BIOS features used by all examples */
+bios.enableRealTimeAnalysis(prog);
+bios.enableMemoryHeaps(prog);
+bios.enableRtdx(prog);
+bios.enableTskManager(prog);
+bios.setMemCodeSections(prog, prog.get("SDRAM"));
+
+/* Enable ECM Handler */
+bios.ECM.ENABLE = 1;
+
+/* Import driver TCI files */
+utils.importFile("spiSample.tci");
+
+/*
+ * Enable heap usage.
+ */
+bios.MEM.instance("SDRAM").createHeap = 1;
+bios.MEM.instance("SDRAM").heapSize = 0x0001000;
+bios.MEM.BIOSOBJSEG = prog.get("SDRAM");
+bios.MEM.MALLOCSEG = prog.get("SDRAM");
+
+/* setup LOGs */
+bios.LOG_system.bufSeg = prog.get("IRAM");
+bios.LOG_system.bufLen = 1024;
+bios.LOG_system.logType = "circular";
+
+bios.LOG.create("trace");
+bios.LOG.instance("trace").bufLen = 1024;
+bios.LOG.instance("trace").bufSeg = prog.get("IRAM");
+
+bios.LOG.create("DVTEvent_Log");
+bios.LOG.instance("DVTEvent_Log").bufSeg = prog.get("IRAM");
+bios.LOG.instance("DVTEvent_Log").bufLen = 128;
+bios.LOG.instance("DVTEvent_Log").comment = "DVT";
+
+/* Allow DSP to reset timer */
+bios.CLK.RESETTIMER = 1;
+
+/* Use instrumented bios libraries */
+bios.GBL.ENABLEINST = 1;
+
+/* MAR bits config */
+bios.GBL.C64PLUSMAR128to159 = 0x0000ffff;
+//bios.GBL.C64PLUSL2CFG = "256k";
+
+/* ECM configuration */
+bios.HWI.instance("HWI_INT7").interruptSelectNumber = 0;
+bios.HWI.instance("HWI_INT8").interruptSelectNumber = 1;
+bios.HWI.instance("HWI_INT9").interruptSelectNumber = 2;
+bios.HWI.instance("HWI_INT10").interruptSelectNumber = 3;
+
+/*task configuration*/
+bios.TSK.create("echoTask");
+bios.TSK.instance("echoTask").stackSize = 16384;
+bios.TSK.instance("echoTask").order = 3;
+bios.TSK.instance("echoTask").fxn = prog.extern("echo");
+bios.TSK.instance("echoTask").comment = "Sample Application";
+bios.TSK.instance("TSK_idle").order = 1;
+bios.TSK.instance("echoTask").order = 2;
+
+/* system stack size */
+bios.MEM.STACKSIZE = 0x4000;
+
+
+bios.MEM.ARGSSEG = prog.get("SDRAM");
+bios.MEM.STACKSEG = prog.get("SDRAM");
+bios.MEM.GBLINITSEG = prog.get("SDRAM");
+bios.MEM.TRCDATASEG = prog.get("SDRAM");
+bios.MEM.SYSDATASEG = prog.get("SDRAM");
+bios.MEM.OBJSEG = prog.get("SDRAM");
+bios.MEM.BIOSSEG = prog.get("SDRAM");
+bios.MEM.SYSINITSEG = prog.get("SDRAM");
+bios.MEM.HWISEG = prog.get("SDRAM");
+bios.MEM.HWIVECSEG = prog.get("SDRAM");
+bios.MEM.RTDXTEXTSEG = prog.get("SDRAM");
+bios.MEM.TEXTSEG = prog.get("SDRAM");
+bios.MEM.SWITCHSEG = prog.get("SDRAM");
+bios.MEM.BSSSEG = prog.get("SDRAM");
+bios.MEM.FARSEG = prog.get("SDRAM");
+bios.MEM.CINITSEG = prog.get("SDRAM");
+bios.MEM.PINITSEG = prog.get("SDRAM");
+bios.MEM.CONSTSEG = prog.get("SDRAM");
+bios.MEM.DATASEG = prog.get("SDRAM");
+bios.MEM.CIOSEG = prog.get("SDRAM");
+// !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+
+bios.GBL.CALLUSERINITFXN = 1;
+bios.GBL.USERINITFXN = prog.extern("commonInit");
+
+prog.gen();
+

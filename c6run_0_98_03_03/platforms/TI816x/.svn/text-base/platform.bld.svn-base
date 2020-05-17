@@ -1,0 +1,59 @@
+/*  ============================================================================
+ *  Memory map variables (must be filled in at config time)
+ *  ============================================================================
+ */
+var DSP_REGION_BASE_ADDR = 0x00000000;
+var DSP_REGION_CMEM_SIZE = 0x00000000;
+var DSP_REGION_CODE_SIZE = 0x00000000;
+
+// Create arrays of named, mapped memory regions
+var memory = [];
+memory[0] = ["DSPMEM",
+  {
+    name      : "DSPMEM",
+    base      : 0x00000000,
+    len       : 0x00000000,
+    space     : "code/data",
+  }];
+
+memory[1] = ["SR0",
+  {
+    name      : "SR0",
+    base      : 0x9F700000,
+    len       : 0x00200000,
+    space     : "data"
+  }];
+
+memory[2] = ["SR1",
+  {
+    name      : "SR1",
+    base      : 0x9A100000,
+    len       : 0x00100000,
+    space     : "data"
+  }];
+
+//  Adjust memory regions to sit at the proper location
+var DSPMEM    = memory[0][1];
+DSPMEM.base   = DSP_REGION_BASE_ADDR + DSP_REGION_CMEM_SIZE;
+DSPMEM.len    = DSP_REGION_CODE_SIZE;
+
+Build.platformTable["ti.platforms.evmTI816X:dsp"] =
+{
+  externalMemoryMap:  memory,
+  l1DMode:            "32k",
+  l1PMode:            "32k",
+  l2Mode:             "256k",
+  dataMemory:         "DSPMEM",
+  codeMemory:         "DSPMEM",
+  stackMemory:        "DSPMEM",  
+};
+
+
+// Setup for C674 COFF target, to build generic platform only
+var C674 = xdc.useModule('ti.targets.elf.C674');
+C674.rootDir = java.lang.System.getenv("CODEGEN_INSTALL_DIR");
+C674.ccOpts.suffix += " -mi10 -mo --gcc -DSYSLINK_BUILD_RTOS ";
+C674.platform = "ti.platforms.evmTI816X:dsp";
+
+// Set C64P COFF as only target to build
+Build.targets = [  C674,  ];

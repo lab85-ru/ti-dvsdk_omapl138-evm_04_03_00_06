@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.pscl" version="1, 0, 0, 0">
+    <units>
+    </units>
+    <sources>
+        <srcFile name="package/package_ti.pscl.c"/>
+        <srcFile name="src/pscl/pscl_config_evm6748_456.c"/>
+        <srcFile name="src/pscl/pscl_config_null.c"/>
+        <srcFile name=".ident.c"/>
+        <srcFile name="src/pscl/pscl_config_evm6748_408.c"/>
+        <srcFile name="src/pscl/pscl_config_evm6748.c"/>
+        <srcFile name="src/pscl/pscl_config_evm6748_372.c"/>
+        <srcFile name="src/pscl/pscl.c"/>
+    </sources>
+    <configurations>
+    </configurations>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="lib/pscl_cfg_evm6748_456.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/pscl_cfg_evm6748_456/.ident.o674.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/pscl_cfg_evm6748_456/package/package_ti.pscl.o674.dep" src="package/package_ti.pscl.c"/>
+        <srcFile name="package/lib/lib/pscl_cfg_evm6748_456/src/pscl/pscl_config_evm6748_456.o674.dep" src="src/pscl/pscl_config_evm6748_456.c"/>
+        <srcFile name="lib/pscl_cfg_evm6748_372.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/pscl_cfg_evm6748_372/src/pscl/pscl_config_evm6748_372.o674.dep" src="src/pscl/pscl_config_evm6748_372.c"/>
+        <srcFile name="package/lib/lib/pscl_cfg_evm6748_372/.ident.o674.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/pscl_cfg_evm6748_372/package/package_ti.pscl.o674.dep" src="package/package_ti.pscl.c"/>
+        <srcFile name="lib/pscl.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/pscl/.ident.o674.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/pscl/package/package_ti.pscl.o674.dep" src="package/package_ti.pscl.c"/>
+        <srcFile name="package/lib/lib/pscl/src/pscl/pscl.o674.dep" src="src/pscl/pscl.c"/>
+        <srcFile name="lib/pscl_cfg_null.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/pscl_cfg_null/.ident.o674.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/pscl_cfg_null/package/package_ti.pscl.o674.dep" src="package/package_ti.pscl.c"/>
+        <srcFile name="package/lib/lib/pscl_cfg_null/src/pscl/pscl_config_null.o674.dep" src="src/pscl/pscl_config_null.c"/>
+        <srcFile name="lib/pscl_cfg_evm6748_408.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/pscl_cfg_evm6748_408/src/pscl/pscl_config_evm6748_408.o674.dep" src="src/pscl/pscl_config_evm6748_408.c"/>
+        <srcFile name="package/lib/lib/pscl_cfg_evm6748_408/.ident.o674.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/pscl_cfg_evm6748_408/package/package_ti.pscl.o674.dep" src="package/package_ti.pscl.c"/>
+        <srcFile name="lib/pscl_cfg_evm6748.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/pscl_cfg_evm6748/.ident.o674.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/pscl_cfg_evm6748/package/package_ti.pscl.o674.dep" src="package/package_ti.pscl.c"/>
+        <srcFile name="package/lib/lib/pscl_cfg_evm6748/src/pscl/pscl_config_evm6748.o674.dep" src="src/pscl/pscl_config_evm6748.c"/>
+        <srcFile name="package/rel/ti_pscl.tar.dep" src="package/rel/ti_pscl.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.C674"
+            version="ti.targets.C674{1,0,6.1,5"
+            platform="ti.platforms.evmDA830"
+            isa="674"
+            suffix="674"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.1.5/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    <library name="lib/pscl_cfg_evm6748_456"
+        pname="lib/pscl_cfg_evm6748_456.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    <library name="lib/pscl_cfg_evm6748_372"
+        pname="lib/pscl_cfg_evm6748_372.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    <library name="lib/pscl"
+        pname="lib/pscl.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    <library name="lib/pscl_cfg_null"
+        pname="lib/pscl_cfg_null.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    <library name="lib/pscl_cfg_evm6748_408"
+        pname="lib/pscl_cfg_evm6748_408.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    <library name="lib/pscl_cfg_evm6748"
+        pname="lib/pscl_cfg_evm6748.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    </libraries>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_pscl"
+        pname="ti_pscl.tar"
+        label="default"
+    >
+        <file name="lib/pscl_cfg_evm6748_408.a674"/>
+        <file name="lib/pscl_cfg_null.a674"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package/package.rel.dot"/>
+        <file name="package/package.bld.xml"/>
+        <file name="package/package.ext.xml"/>
+        <file name="lib/pscl_cfg_evm6748_372.a674"/>
+        <file name="package/build.cfg"/>
+        <file name="lib/pscl_cfg_evm6748_456.a674"/>
+        <file name="lib/pscl.a674"/>
+        <file name="lib/pscl_cfg_evm6748.a674"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

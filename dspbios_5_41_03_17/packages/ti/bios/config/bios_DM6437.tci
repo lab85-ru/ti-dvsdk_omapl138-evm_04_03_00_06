@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_DM6437.tci ========
+ *  This file contains BIOS settings for DM6437.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_6424.tci");
+
+/*
+ *  ======== bios.initDM6437 ========
+ *  BIOS initialization for the DM6437 is same as for 6424 
+ */
+bios.initDM6437 = bios.init6424;

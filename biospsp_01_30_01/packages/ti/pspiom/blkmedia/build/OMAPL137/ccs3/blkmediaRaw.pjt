@@ -1,0 +1,43 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Library
+CPUFamily=TMS320C67XX
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Config="Debug"
+Config="Release"
+Config="iDebug"
+Config="iRelease"
+
+[Source Files]
+Source="..\..\..\src\blkmedia.c"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"..\..\..\lib\OMAPL137\Debug\ti.pspiom.blkmedia.raw.a674"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"..\..\..\lib\OMAPL137\Release\ti.pspiom.blkmedia.raw.a674"
+
+["Archiver" Settings: "iDebug"]
+Options=-r -o"..\..\..\lib\OMAPL137\iDebug\ti.pspiom.blkmedia.raw.a674"
+
+["Archiver" Settings: "iRelease"]
+Options=-r -o"..\..\..\lib\OMAPL137\iRelease\ti.pspiom.blkmedia.raw.a674"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -mo -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"CHIP_OMAPL137" -d"PSP_FILE_SYSTEM=0" -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-pdr -o2 -mo -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"CHIP_OMAPL137" -d"PSP_DISABLE_INPUT_PARAMETER_CHECK" -d"NDEBUG" -d"PSP_FILE_SYSTEM=0" -mv6740
+
+["Compiler" Settings: "iDebug"]
+Options=-g -pdr -mo -fr"$(Proj_dir)\iDebug" -i"$(Proj_dir)\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"CHIP_OMAPL137" -d"PSP_FILE_SYSTEM=0" -mv6740
+
+["Compiler" Settings: "iRelease"]
+Options=-pdr -o2 -mo -fr"$(Proj_dir)\iRelease" -i"$(Proj_dir)\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"CHIP_OMAPL137" -d"PSP_DISABLE_INPUT_PARAMETER_CHECK" -d"NDEBUG" -d"PSP_FILE_SYSTEM=0" -mv6740
+
+

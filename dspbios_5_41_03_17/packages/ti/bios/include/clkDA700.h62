@@ -1,0 +1,242 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== clkDA700.h62 ========
+;
+; 
+
+        .if ($isdefed("CLKDA700_") = 0)   
+                ; prevent multiple includes of this file
+CLKDA700_       .set    1
+
+        .include chk.h62
+        .include std.h62
+
+
+; timer register base 
+        .if (GBL_CLKTYPE == 442)        ; jacinto RTI2 base address
+        .global CLK_REGS
+
+CLK_RTIBASE     .set    CLK_REGS
+        .else
+CLK_RTIBASE     .set    042000000h
+        .endif
+; offsets
+CLK_RTIGCTRL    .set    00h     ; GLOBAL Control
+CLK_RTITBCTRL   .set    04h/4   ; Timebase Control
+CLK_RTICAPCTRL  .set    08h/4   ; Capture Control
+CLK_RTICOMPCTRL .set    0Ch/4   ; Compare Control
+
+CLK_RTIFRC0     .set    010h/4  ; Free Running Counter 0 
+CLK_RTIUC0      .set    014h/4  ; Up Counter 0 
+CLK_RTICPUC0    .set    018h/4  ; Compare Up Counter 0 
+CLK_RTICAFRC0   .set    020h/4  ; Capture Free Running Counter0 
+CLK_RTICAUC0    .set    024h/4  ; Capture Up Counter 0 
+
+CLK_RTIFRC1     .set    030h/4  ; Free Running Counter 1 
+CLK_RTIUC1      .set    034h/4  ; Up Counter 1 
+CLK_RTICPUC1    .set    038h/4  ; Compare Up Counter 1 
+CLK_RTICAFRC1   .set    040h/4  ; Capture Free Running Counter1 
+CLK_RTICAUC1    .set    044h/4  ; Capture Up Counter 1 
+
+CLK_RTICOMP0    .set    050h/4  ; Compare 0 
+CLK_RTIUDCP0    .set    054h/4  ; Update Compare 0 
+CLK_RTICOMP1    .set    058h/4  ; Compare 1 
+CLK_RTIUDCP1    .set    05Ch/4  ; Update Compare 1 
+CLK_RTICOMP2    .set    060h/4  ; Compare 2 
+CLK_RTIUDCP2    .set    064h/4  ; Update Compare 2 
+CLK_RTICOMP3    .set    068h/4  ; Compare 3 
+CLK_RTIUDCP3    .set    06Ch/4  ; Update Compare 3 
+
+CLK_RTISETINT   .set    080h/4  ; Set Interrupt Enable 
+CLK_RTICLEARINT .set    084h/4  ; Clear Interrupt Enable 
+CLK_RTIINTFLAG  .set    088h/4  ; Interrupt  Flag 
+
+        .if (GBL_CLKTYPE == 442)        ; jacinto RTI2 
+CLK_RTIINTFLAGADDR      .set    CLK_RTIBASE + 0x88; Interrupt Flag REg Address 
+        .else
+CLK_RTIINTFLAGADDR      .set    042000088h; Interrupt Flag REg Address 
+        .endif
+
+; timer global control register masks
+CLK_CNT0ENBIT   .set    01h     ; CNT0EN=1 to start timer 0 
+CLK_CNT1ENBIT   .set    02h     ; CNT1EN=1 to start timer 1 
+CLK_COSBIT      .set    08000h  ; COS=1 continue counting 
+                                ; in debug mode
+CLK_INTFLAGBIT  .set    03h     ; INT0, INT1=1  clear interrupt flag to allow 
+                                ; another interrupt happens
+CLK_INT0FLAGBIT .set    01h     ; INT0=1  
+CLK_INT1FLAGBIT .set    02h     ; INT1=1  
+
+; timebase control register masks
+CLK_TBEXTBIT    .set    0FFFFFFFEh      ; TBEXT=0 internal UC0 clocks FRC 0
+
+; compare control regsiter masks
+CLK_COMPSEL0BIT .set    0FFFFFFFEh      ; COMPSEL0=0 enable compare0 with FRC 0 
+CLK_COMPSEL1BIT .set    010h            ; COMPSEL1=1 enable compare1 with FRC 1 
+
+; set interrupt register masks
+CLK_SETINT0BIT  .set    01h             ; SETINT0=1 to enable compare0 intr(0)
+CLK_SETINT1BIT  .set    02h             ; SETINT1=1 to enable compare1 intr(1)
+
+CLK_MAXPER      .set    0FFFFFFFFh      ; Maximum clock period (for loop 
+                                        ; overhead)
+CLK_MINPER      .set    01h             ; Minimum clock period (for bypass UC) 
+        .if (GBL_CLKTYPE == 442)        ; jacinto RTI2 
+CLK_INT0BIT     .set    04000h          ; Timer 0 interrupt 14 
+        .else
+CLK_INT0BIT     .set    010h            ; Timer 0 interrupt 4
+CLK_INT1BIT     .set    020h            ; Timer 1 interrupt 5
+        .endif
+
+                .asg    b14, DP
+                .asg    b15, SP 
+                .asg    a0, GC_a0
+                .asg    b1, CPC_b1 
+                .asg    b1, SI_b1 
+                .asg    b2, PRD_b2 
+                .asg    b2, IER_b2 
+
+
+;
+;# ======== CLK_ackIsr ========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+        .asg    "", CLK_ackIsr$regs
+CLK_ackIsr      .macro
+        mvk     CLK_INT0FLAGBIT, a1
+||      mvkl    CLK_RTIINTFLAGADDR, b3
+        mvkh    CLK_RTIINTFLAGADDR, b3
+        stw     a1, *b3        ; clear Antara timer 0 intr flag
+        .endm
+
+;
+;# ======== CLK_startup ========
+;  Start the DA700 timer
+;  BIOS uses Timer 0    
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      Timer Period register (Compare 0) = CLK_PRD.
+;#      Timer is started.
+;#      Timer interrupt enable is set in IER.
+;#
+;# Dependencies:
+;#      This routine must be called after any other routines that use the
+;#      timer and before interrupts are globally enabled.
+;
+        .asg "a0,a1,a2,a3,b1,b2,b3,b4,b14,ier", CLK_startup$regs
+CLK_startup     .macro
+        .ref _CLK_D_prd
+        ; asks to use the timer
+        .if ((CLK$ = 1) & (CLK_USETIMER = 1))
+        .if (GBL_CLKTYPE == 442)        ; jacinto RTI2
+
+            .global     __CLK_startupDRA442
+            mvkl        __CLK_startupDRA442, a0
+            mvkh        __CLK_startupDRA442, a0
+            b           a0
+            addkpc      startupDRA442Ret, b3, 4
+startupDRA442Ret:
+
+        .else
+
+            ; Timer 0 & Timer 1 setting
+            stw DP, *SP--[2]                    ; save DP 
+||          mvkl CLK_RTIBASE, DP 
+            stw b3, *SP--[2]                    ; save b3 
+||          mvkh CLK_RTIBASE, DP                ; Timer base address in DP
+
+            ldw *+DP[CLK_RTICOMPCTRL], CPC_b1   ; address compare control reg
+||          zero a2
+||          mvkl _CLK_D_prd, a3
+
+            stw a2, *+DP[CLK_RTIGCTRL]          ; init GCTRL, stop Timer0 & 1 
+||          mvkh _CLK_D_prd, a3
+            stw a2, *+DP[CLK_RTIFRC1]           ; set Timer 1 FRC counter to 0
+||          mvk CLK_MINPER, a1
+            stw a2, *+DP[CLK_RTIUC0]            ; set Timer 0 UC counter to 0
+||          mvkl :POSTINITFXN:, b4               
+            stw a2, *+DP[CLK_RTIUC1]            ; set Timer 1 UC counter to 0
+||          mvkh :POSTINITFXN:, b4
+
+            and CLK_COMPSEL0BIT, CPC_b1, CPC_b1
+||          ldw *a3, PRD_b2
+            stw CPC_b1, *+DP[CLK_RTICOMPCTRL]   ; select FRC0 counter
+
+            stw a2, *+DP[CLK_RTIFRC0]           ; set Timer 0 FRC counter to 0
+
+            mvk CLK_INTFLAGBIT, a2
+            stw a2, *+DP[CLK_RTIINTFLAG]        ; clear timer 0 & 1 intr flag  
+
+            stw PRD_b2, *+DP[CLK_RTIUDCP0]
+            stw PRD_b2, *+DP[CLK_RTICOMP0]
+            stw PRD_b2, *+DP[CLK_RTICOMP1]      ; set UDCP0, COMP0, COMP1 to 
+                                                ; period value
+            stw a1, *+DP[CLK_RTICPUC0]          ; CPUC0, CPUC1 to CLK_MINPER 
+            stw a1, *+DP[CLK_RTICPUC1]          ; for bypass
+
+            ; run user Timer 1 init function (FXN_F_nop for default) 
+            b b4
+            ldw *+SP[4], DP                     ; get old DP before calling fxn
+            mvkl start?, b3
+            mvkh start?, b3
+            nop 2
+start?:
+            mvkl CLK_RTIBASE, DP 
+            mvkh CLK_RTIBASE, DP                ; Timer base address in DP
+
+            ldw *+DP[CLK_RTIGCTRL], GC_a0       ; address global control reg
+
+            ldw *+DP[CLK_RTISETINT], SI_b1      ; address set intr enable reg
+
+            ; clear Timer0 interrupt in IFR 
+            mvk CLK_INT0BIT, a1
+            mvc a1,icr                          ; icr: interrupt clear register
+            nop
+
+            ; set Timer interrupt in IER
+            mvc ier, IER_b2
+            or a1, IER_b2, IER_b2               ; set CLK_INT0BIT
+
+            ; if user select to start both timers 
+            .if :STARTBOTH:
+                mvk CLK_INT1BIT, a3
+||              or CLK_CNT1ENBIT, GC_a0, GC_a0  ; Timer 1 start bit 
+                or a3, IER_b2, IER_b2           ; set CLK_INT1BIT
+            .endif
+
+
+            ; if user select timer continue counting in debug mode
+            .if :CONONDEBUG:
+                mvkl CLK_COSBIT, a3
+                mvkh CLK_COSBIT, a3
+                or a3, GC_a0, GC_a0             ; timer continue on debug 
+            .endif
+
+            ldw *++SP[2], b3                    ; restore b3 
+            ; ready to start timer
+            or CLK_SETINT0BIT, SI_b1, SI_b1
+            stw SI_b1, *+DP[CLK_RTISETINT]      ; enable compare intr0 bit
+            or CLK_CNT0ENBIT, GC_a0, GC_a0              
+            stw GC_a0, *+DP[CLK_RTIGCTRL]       ; start timer
+
+            ldw *++SP[2], DP                    ; restore DP
+            mvc b2,ier                          ; enable intr in IER
+            nop 3
+        .endif
+        .endif
+
+        .endm
+
+        .endif          ; if CLKDA700_ is not defined

@@ -1,0 +1,65 @@
+%%{
+/*
+ *  Copyright 2008 by Texas Instruments Incorporated.
+ *
+ *  All rights reserved. Property of Texas Instruments Incorporated.
+ *  Restricted rights to use, duplicate or disclose this code are
+ *  granted through contract.
+ * 
+ */
+
+%%}
+    %var isa = Program.build.target.isa;
+
+    %if (isa == "64" || isa == "67P" || isa == "64P" || isa == "674") {
+#include <ti/rtdx/include/c6000/rtdx.h>
+    %}
+    %if (isa == "62" || isa == "67") {
+#include <ti/rtdx/include/c6000/rtdx.h>
+    %}
+    %else if (isa == "55") {
+#include <ti/rtdx/include/c5500/rtdx.h>
+    %}
+    %else if (isa == "28" || isa == "28FP") {
+#include <ti/rtdx/include/c2000/rtdx.h>
+    %}
+    %else if (isa == "470" || isa == "v5T" || isa == "v7M") {
+#include <ti/rtdx/include/tms470/rtdx.h>
+    %}
+
+    %if (isa == "64P" || isa == "674") {
+/*
+ * force a cache-line sized (128) empty block of data in front of the
+ * RTDX_Buffer to work around cache problem when code is placed right
+ * before this buffer.
+ */
+#pragma DATA_SECTION(RTDX_cachePad, ".rtdx_data")
+#pragma DATA_ALIGN(RTDX_cachePad, 128)
+char RTDX_cachePad[128];
+    %}
+
+    %var rtdxModule = xdc.module("ti.rtdx.RtdxModule");
+    %bufferSizeInWords = rtdxModule.bufferSizeInWords;
+#pragma DATA_SECTION(RTDX_Buffer,".rtdx_data")
+#pragma DATA_SECTION(RTDX_Buffer_Start,".rtdx_data")
+#pragma DATA_SECTION(RTDX_Buffer_End,".rtdx_data")
+
+/* DMAs used by RTDX will require alignment on word boundaries...       */
+#pragma DATA_ALIGN(RTDX_Buffer,4)
+int RTDX_DATA RTDX_Buffer[`bufferSizeInWords`];
+
+/*
+ * The buffer used by RTDX is defined by 2 symbols: RTDX_Buffer_Start
+ * and RTDX_Buffer_End.  We use the following declarations in order to
+ * export these names
+*/
+
+const void RTDX_DATA *RTDX_Buffer_Start = &RTDX_Buffer[0];
+const void RTDX_DATA *RTDX_Buffer_End   = &RTDX_Buffer[`bufferSizeInWords`-1];
+
+%%{
+/*
+ * @(#) ti.rtdx; 2, 0, 0, 5,110; 12-16-2008 11:08:36; /db/vtree/library/trees/rtdxtc/rtdxtc-e06x/src/
+ */
+
+%%}

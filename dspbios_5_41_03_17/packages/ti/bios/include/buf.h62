@@ -1,0 +1,163 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== buf.h62 ========
+;
+;
+
+        .if ($isdefed("BUF_") = 0)  ; prevent multiple includes of this file
+BUF_    .set    1
+
+        .include std.h62
+        .include obj.h62
+
+BUF_Obj        .struct
+startaddr      .word    1  ; Starting address of buffer pool
+size           .word    1  ; Original size of buffer before alignment
+postalignsize  .word    1  ; Size of buffer after alignment
+nextfree       .word    1  ; Pointer to next free buffer
+totalbuffers   .word    1  ; Total number of buffers in pool
+freebuffers    .word    1  ; Number of free buffers in pool
+segid          .word    1  ; Memory segment for buffer pool
+BUF_A_OBJSIZE  .endstruct
+
+        .eval   BUF_A_OBJSIZE / STD_TARGWORDMAUS, BUF_CORESIZE  ; 7 words
+
+        .eval   OBJ_HDRSIZE + BUF_CORESIZE, BUF_OBJSIZE
+
+;
+;# ======== BUF_config ========
+;  Static configuration of the BUF module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", BUF_config$regs
+BUF_config      .macro _enabled
+        .endm
+
+
+;
+;# ======== BUF_init ========
+;  Runtime initialization of the BUF module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", BUF_init$regs
+BUF_init        .macro
+
+        ; only expand if the BUF module is configured
+        .if (BUF$ = 1)
+           .ref _BUF_init
+ 
+           mvkl   _BUF_init,a4
+           mvkh   _BUF_init,a4
+           b      a4
+           mvkl   bufstart?, b3
+           mvkh   bufstart?, b3
+           nop 3
+bufstart?:
+
+        .endif
+
+        .endm
+
+;
+;# ======== BUF_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", BUF_startup$regs
+BUF_startup        .macro
+
+        .if     BUF$NUMOF != 0
+        .endif
+        .endm
+
+;
+;# ======== BUF_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", BUF_end$regs
+BUF_end .macro
+        .endm
+
+;
+;# ======== BUF_Obj ========
+;
+;  Parameters:
+;             name       -  name of buffer pool object
+;             size      -  size of each buffer
+;             numbuff   -  number of buffers in the pool
+;             align     -  alignment required for bufferpool
+;             bseg      -  segment in which buffer pool has to be allocated
+;             postalignsize   -  size of each buffer after alignment
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", BUF_Obj$regs
+BUF_Obj .macro cflag, name, id, bseg, numbuff, size, align, postalignsize
+
+        .global :name:
+        .global :name:$databeg
+
+
+:name:$obj      .usect ".buf", OBJ_HDRSIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+:name:          .usect ".buf", BUF_CORESIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   BUF_OBJSIZE * STD_TARGWORDMAUS
+        .word   :name:$obj
+
+        ; A label for this object, ":name:", will be set in OBJ_Obj
+        OBJ_Obj :name:, OBJ_BUF, BUF_CORESIZE
+
+        .word   :name:$databeg  ; This filed is defined in linker command file
+        .word   :size:          ; original buffer size before alignment
+        .word   :postalignsize: ; size after alignment
+        .word   :name:$databeg  ; Address of first free buffer
+        .word   :numbuff:       ; Total number of buffers in pool
+        .word   :numbuff:       ; Number of free buffers in pool
+        .word   :bseg:          ; Memory segment of buffer pool
+
+
+        .endm
+
+
+        .endif          ; if BUF_ is not defined

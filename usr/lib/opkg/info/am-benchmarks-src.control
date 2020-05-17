@@ -1,0 +1,9 @@
+Package: am-benchmarks-src
+Version: 1.3-r2+svnr66
+Description: Patched sources for am-benchmarks
+Section: system
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: all
+Source: svn://gforge.ti.com/svn/am_benchmarks/;module=trunk;proto=https;user=anonymous;pswd=''

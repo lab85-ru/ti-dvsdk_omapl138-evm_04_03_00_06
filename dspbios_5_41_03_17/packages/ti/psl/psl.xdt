@@ -1,0 +1,6 @@
+%%{
+    var pslLib = (new java.io.File(this.packageBase + '/lib')).getCanonicalPath() + "/";
+%%}
+
+/* define the library search paths */
+-i"`pslLib`"

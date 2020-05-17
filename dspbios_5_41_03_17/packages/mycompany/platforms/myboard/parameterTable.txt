@@ -1,0 +1,56 @@
+CDB				params				devices
+
+c28xx		pllcr				2801, 2806, 2808, 2810, 2811,
+						2812
+
+c54xx		pmst, swwsr, swcr, bscr, clkmd	5401, 5402, 5402A, 5404, 5405,
+						5407, 5409, 5409A, 5410, 5410A,
+						5416, 5420, 5470, 5471, 54CST,
+						DM270, DM310, DM320
+
+c5502		st3_55, clkmd, pllm, plldiv0	5501, 5502
+
+c55xx		st3_55, clkmd			5503, 5507, 5509, 5509A, 5510,
+						5510A, DA255
+						
+c55Pxx		st3_55, clkmd			RYUJIN
+
+c5561		st3_55				5561, TNETV1050, TNETV1055
+
+c55omap1510	st3_55				1510, 1610, 1710, 5903, 5905,
+						5910, 5912, 5944, 5946, 5948
+
+c55omap2420	st3_55				2420
+
+da300		st3_55				DA295, DA300
+
+c6x1x		l2Mode (SRAM, 1-way cache, ...)	6211, 6211B, 6711, 6711B, 6712,
+						6713
+
+c64xx		l2Mode (4-way cache (0k), ...)	6410, 6411, 6412, 6413, 6414,
+						6415, 6416, 6418, DM640, DM641,
+						DM642, DRI300
+
+c64xxplus	l1PMode (0k, 4k, 8k, 16k, 32k)	TCI6482, 6455
+		l1DMode (0k, 4k, 8k, 16k, 32k)
+		l2Mode (0k, 32k, 64k, 128k, 256k)
+
+cdm420		l1PMode (0k, 4k, 8k, 16k, 32k)	DM415, DM420, DM421, DM425,
+		l1DMode (0k, 4k, 8k, 16k, 32k)	DM426, DM6443, DM6446
+		l2Mode (0k, 32k, 64k)
+
+c64Pomap2430	l1PMode (0k, 4k, 8k, 16k, 32k)	2430
+		l1DMode (0k, 4k, 8k, 16k, 32k)
+		l2Mode (0k, 32k, 64k)
+
+comap3430	l1PMode (0k, 4k, 8k, 16k, 32k)	3430
+		l1DMode (0k, 4k, 8k, 16k, 32k)
+		l2Mode (0k, 32k, 64k)
+
+c6xxx		none				6201, 6202, 6203, 6203B, 6204,
+						6205, 6701
+
+da700		none				6722, 6726, 6727, DA700, DA705,
+						DA707, DA710
+
+da700sim	none				DA700SIM

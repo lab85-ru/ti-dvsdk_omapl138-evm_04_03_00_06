@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/core
+END
+dsp_core.c
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/core/dsp_core.c
+END
+dsp_stubs_base.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/core/dsp_stubs_base.h
+END
+gpp_stubs_base.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/rpc/core/gpp_stubs_base.h
+END

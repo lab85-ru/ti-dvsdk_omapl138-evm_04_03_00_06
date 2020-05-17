@@ -1,0 +1,13 @@
+Package: libgpg-error0
+Version: 1.4-r7.1.6
+Description: GPG-Error library
+Section: libs
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPL LGPL FDL
+Architecture: armv5te
+OE: libgpg-error
+Homepage: unknown
+Build: install/d0bd439
+Depends: libc6 (>= 2.9)
+Source: ftp://ftp.gnupg.org/gcrypt/libgpg-error/libgpg-error-1.4.tar.gz file://pkgconfig.patch

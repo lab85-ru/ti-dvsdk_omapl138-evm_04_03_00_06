@@ -1,0 +1,131 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== rta.h28 ========
+;
+;
+
+        .if ($isdefed("RTA_") = 0)    ; prevent multiple includes of this file
+RTA_    .set    1
+
+        .include chk.h28
+        .include cinit.h28
+
+        .global RTA_F_getlog
+        .global RTA_F_getsts
+        .global RTA_F_readblk
+        .global RTA_F_writeword
+        .global RTA_F_resetmem
+        .global RTA_F_dispatch
+        .global RTA_F_andn
+        .global RTA_F_or
+        .global iRTA_F_or       ; used only by RTA Pipe startup's notify
+
+        .global RTA_D_fromHost 
+        .global RTA_D_toHost 
+        .global RTA_D_logval 
+        .global RTA_D_stsval 
+
+RTA_NUMLOGWORDS .set    8 ; #of words transfered to Host for get_log
+RTA_NUMSTSWORDS .set    6 ; #of words transfered to Host for get_sts
+
+; ---- RTA Command Packet sent by Host
+RTA_Cmd         .struct
+respFlag        Int     1       ; =1 if response reqd., else =0
+fxnPtr          CodePtr 1       ; address of RTA fxn to be dispatched
+arg1            DataPtr 1       ; arbitrary argument (void*)
+arg0            DataPtr 1       ; arbitrary argument (void*)
+RTA_A_CMDSIZE   .endstruct
+
+; ---- RTA Command Packet utility offsets
+RTA_CMDBASE             .set RTA_Cmd.respFlag
+RTA_O_RESPFLAG          .set (RTA_Cmd.respFlag - RTA_CMDBASE)
+RTA_O_FXNPTR            .set (RTA_Cmd.fxnPtr - RTA_CMDBASE)
+RTA_O_ARG1              .set (RTA_Cmd.arg1 - RTA_CMDBASE)
+RTA_O_ARG0              .set (RTA_Cmd.arg0 - RTA_CMDBASE)
+
+; ---- RTA .sysdata entries ----
+isRtaSysdataAligned     .set    2
+RTA_SYSDATA          .struct
+d_fromHost  DataPtr  1  ; host->target PIP_Handle for RTA
+d_toHost    DataPtr  1  ; target->host PIP_Handle for RTA
+d_logval    DataPtr  1  ; pointer to RTA's log event
+logval      Args     4  ; log event record 
+d_stsval    DataPtr  1  ; pointer to RTA's sts record
+stsval      Int      6  ; RTA's sts record (excluding the previous value)
+dummy       .align   isRtaSysdataAligned
+RTA_A_SYSDATASIZE    .endstruct
+
+
+; ---- Utility offsets to reach RTA .sysdata entries ----
+RTA_SYSDATABASE         .set    RTA_SYSDATA.d_fromHost
+RTA_O_D_FROMHOST        .set    (RTA_SYSDATA.d_fromHost - RTA_SYSDATABASE)
+RTA_O_D_TOHOST          .set    (RTA_SYSDATA.d_toHost - RTA_SYSDATABASE)
+RTA_O_D_LOGVAL          .set    (RTA_SYSDATA.d_logval - RTA_SYSDATABASE)
+RTA_O_LOGVAL            .set    (RTA_SYSDATA.logval - RTA_SYSDATABASE)
+RTA_O_D_STSVAL          .set    (RTA_SYSDATA.d_stsval - RTA_SYSDATABASE)
+RTA_O_STSVAL            .set    (RTA_SYSDATA.stsval - RTA_SYSDATABASE)
+
+;
+;# ======== RTA_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", RTA_config$regs
+RTA_config      .macro
+        .endm
+ 
+;
+;# ======== RTA_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", RTA_end$regs
+RTA_end .macro
+        .endm
+ 
+;
+;# ======== RTA_init ========
+;  Runtime initialization for RTA 
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", RTA_init$regs
+RTA_init .macro
+        .endm
+
+;
+;# ======== RTA_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg "", RTA_startup$regs
+RTA_startup .macro 
+        .endm
+
+        .endif          ; if RTA_ is not defined

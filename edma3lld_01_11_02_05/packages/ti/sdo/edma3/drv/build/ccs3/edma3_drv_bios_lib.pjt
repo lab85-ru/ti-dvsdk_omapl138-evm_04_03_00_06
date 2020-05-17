@@ -1,0 +1,45 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="D:\EDMA3\Primus_Release\edma3_drv_bios5\edma3_lld_01_06_00\packages\ti\sdo\edma3\drv\build\"
+ProjectType=Library
+CPUFamily=TMS320C64XX
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="XDC"
+Config="Debug"
+Config="iDebug"
+Config="iRelease"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\edma3_drv_adv.c"
+Source="..\..\src\edma3_drv_basic.c"
+Source="..\..\src\edma3_drv_init.c"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"$(Proj_dir)\..\..\lib\Debug\edma3_drv_bios.lib"
+
+["Archiver" Settings: "iDebug"]
+Options=-r -o"$(Proj_dir)\..\..\lib\Debug\edma3_drv_bios_i.lib"
+
+["Archiver" Settings: "iRelease"]
+Options=-r -o"$(Proj_dir)\..\..\lib\Release\edma3_drv_bios_i.lib"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"$(Proj_dir)\..\..\lib\Release\edma3_drv_bios.lib"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "iDebug"]
+Options=-g -pdr -fr"$(Proj_dir)\iDebug" -i"$(Proj_dir)\..\..\..\..\..\..\" -d"_DEBUG" -d"EDMA3_INSTRUMENTATION_ENABLED" -mv6400+
+
+["Compiler" Settings: "iRelease"]
+Options=-pdr -o2 -fr"$(Proj_dir)\iRelease" -i"$(Proj_dir)\..\..\..\..\..\..\" -d"_RELEASE" -d"EDMA3_INSTRUMENTATION_ENABLED" -mv6400+
+
+["Compiler" Settings: "Release"]
+Options=-pdr -o2 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\" -d"_RELEASE" -mv6400+
+

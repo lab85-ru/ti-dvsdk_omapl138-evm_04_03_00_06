@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_1035.tci ========
+ *  This file contains BIOS settings for OMAP 1035 (eCosto).
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_2320.tci");
+
+/*
+ *  ======== bios.init1035 ========
+ *  BIOS initialization for the 1035 is same as for 2320
+ */
+bios.init1035 = bios.init2320;

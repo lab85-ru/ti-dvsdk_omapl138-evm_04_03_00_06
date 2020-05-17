@@ -1,0 +1,29 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Library
+CPUFamily=TMS470R2X
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\edma3_drv_adv.c"
+Source="..\..\src\edma3_drv_basic.c"
+Source="..\..\src\edma3_drv_init.c"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"$(Proj_dir)\..\lib\Debug\edma3_drv_pros.lib"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"$(Proj_dir)\..\lib\Release\edma3_drv_pros.lib"
+
+["Compiler" Settings: "Debug"]
+Options=-g -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\" -d"_DEBUG" -d"__DEBUG_BUILD__" -d"USE_TI_TOOLS" -mc -me -mv5e --abi=ti_arm9_abi
+
+["Compiler" Settings: "Release"]
+Options=-o2 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\" -d"_RELEASE" -d"__RELEASE_BUILD__" -d"USE_TI_TOOLS" -mc -me -mv5e --abi=ti_arm9_abi
+

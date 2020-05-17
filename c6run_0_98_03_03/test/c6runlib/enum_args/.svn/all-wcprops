@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/enum_args
+END
+enum_args.c
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/enum_args/enum_args.c
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/enum_args/main.c
+END
+enum_args.h
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/enum_args/enum_args.h
+END
+test.sh
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/enum_args/test.sh
+END
+readme.txt
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/enum_args/readme.txt
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/enum_args/Makefile
+END

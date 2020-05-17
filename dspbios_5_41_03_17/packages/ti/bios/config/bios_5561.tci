@@ -1,0 +1,127 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_5561.tci ========
+ *  This file contains BIOS settings for c5561.
+ *  Note:  all memory addresses in this file are defined in words.
+ *
+ */
+
+/*
+ *  ======== bios.internal.setupMemory5561 ========
+ *  This function is the top-level function that will remove all MEM segments
+ *  from the cdb file.  It will take your physical memory map from calling
+ *  getMemoryMap() and create MEM instances in cdb.
+ *  It will then set sections to the default segment specified and fix up
+ *  the length and/or base of MEM segments if needed.
+ */
+bios.internal.setupMemory5561 = function (prog)
+{
+    /*
+     *  BIOS MEM segments will be created from object model memory definitions.
+     *  Place default code and data sections into specified memory segments.
+     */
+    bios.initializeMemory(prog, "SARAM", "DARAM");
+
+    /*
+     *  The base and length of DARAM and base of SARAM are initialized
+     *  to values from the object model.  See C5561.tci for details.
+     *  The interrupt vectors are placed at the end of physical SARAM.
+     *  The remaining length of memory in SARAM is calulated below.
+     */
+    var vect =  prog.module("MEM").instance("VECT");
+    vect.base = 0xff80;
+
+    var saram = prog.module("MEM").instance("SARAM");
+    saram.len =  vect.base - saram.base;
+    
+    /*
+     *  SARAM1 is split up for better efficiency and also
+     *  so that sections placed do no cross a page boundry.
+     */
+    var saram1 = prog.module("MEM").instance("SARAM1");
+    saram1.base = 0x10000;
+    saram1.len =  0x10000;
+
+    var saram2 = prog.module("MEM").create("SARAM2");
+    saram2.base = 0x20000;
+    saram2.len =  0x10000;
+    saram2.space = "data";
+    
+    /*
+     *  Place these sections into Shared Memory.
+     *  This enables execution of single shared image in all six cores.
+     *  For faster access, memory sections should be placed in local memory.
+     */
+    var shram = prog.module("MEM").instance("SHRAM");
+
+    prog.module("MEM").BIOSSEG = shram;
+    prog.module("MEM").SYSINITSEG = shram;
+    prog.module("MEM").RTDXTEXTSEG = shram;
+    prog.module("MEM").TEXTSEG = shram;
+}
+
+/*
+ *  ======== bios.init5561 ========
+ *  BIOS initialization for the c5561.
+ */
+bios.init5561 = function (prog, baseseed)
+{
+    /*
+     *  Find configuration seed files to load
+     */
+    if (baseseed == null) {
+	baseseed = "ti/bios/config/cdb/c5561.cdb";
+    }
+
+    var seed = utils.findSeed(baseseed);
+    if (seed != null) {
+	try {
+	    prog.load(seed);
+	}
+	catch (e) {
+	    throw new Error ("Can't load configuration seed '" + seed + "' : "
+		+ e);
+	}
+    }
+    else {
+	throw new Error ("Can't find configuration seed: " + baseseed);
+    }
+
+    /* Set CHIPTYPE to "other".  No CSL library for this device yet */
+    prog.module("GBL").CHIPTYPE = "other";
+
+    /* set CLKOUT to be the value of cpu.clockRate. */
+    bios.internal.setClkout(prog);
+
+    /* set the memory model in GBL based on build options */
+    if (prog.build.target.model.dataModel == "huge") {
+        throw new Error ("Huge model not supported");
+    }
+    else {
+        prog.module("GBL").MEMORYMODEL = "LARGE";
+    }
+
+    /* set the default memory segments for 5561 */
+    bios.internal.setupMemory5561(prog);
+
+    if (bios.supportOldMemoryNames) {
+	/* The difference between the old and the new configuration is only
+	 * in the sizes of the certain memory segment. So, the solution for
+	 * support of the old memory names and configuration is different here.
+	 * Instead of calling the function bios.internal.oldMemoryNames(), the
+	 * function bios.internal.setupMemory5561() is called and then, if the
+	 * support for the old memory names is required, the sizes and bases of
+	 * some memory segments are changed.
+	 */
+	prog.module("MEM").instance("DARAM").base = 0x0100;
+	prog.module("MEM").instance("DARAM").len =  0x7f00;
+	prog.module("MEM").instance("SARAM").len =  0x7f80;
+	prog.module("MEM").instance("VECT").base =  0x0080;
+    }
+
+    /* initialize some memory map registers */
+    bios.internal.initializeRegisterMap(prog);
+}

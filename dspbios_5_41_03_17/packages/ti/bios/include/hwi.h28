@@ -1,0 +1,1439 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;  ======== hwi.h28 ========
+;
+
+
+    .if ($isdefed("HWI_") = 0)    ; prevent multiple includes of this file
+HWI_    .set    1
+ABSOPERATION .set  1
+NEGOPERATION .set  2
+STBIT_INTM   .set  0 
+STBIT_DBGM   .set  1 
+
+    .include c28.h28
+    .include chk.h28
+    .include clk.h28
+    .include gbl.h28
+    .include swi.h28
+    .include trc.h28
+    .include sts.h28
+    .include pie.h28
+    
+    .ref _HWI_STKTOP, _HWI_STKBOTTOM 
+    .ref HWI_D_spsave
+    .global HWI_D_stktopaddr, HWI_D_stkbottomaddr
+    .global HWI_D_inhwi
+
+    .global  FXN_F_selfLoop             ; ISR for self looping. ivec
+                                        ; has issues with self looping
+                                        ; hence had to introduce this
+                                        ; psedo ISR that does self
+                                        ; looping.
+        .global HWI_PIESELECT
+        ;
+        ; This structure reflects the context for each HWI ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+        ;               |----------------|         
+        ;               |    AR1H:AR0H   |     
+        ; Bios ctxt---> |----------------|         
+        ;               |      RETH      |     
+        ;               |----------------|         
+        ;               |      RETL      |
+        ;               |----------------|         
+        ;               |      DBSTAT    |     
+        ;               |----------------|         
+        ;               |       IER      |     
+        ;               |----------------|         
+        ;               |       DP       |     
+        ;               |----------------|         
+        ;               |       ST1      |     
+        ;               |----------------|         
+        ;               |       AR1      |       
+        ;               |----------------|         
+        ;               |       AR0      | 
+        ;               |----------------|         
+        ;               |       PH       |       
+        ;               |----------------|      
+        ;               |       PL       |
+        ;               |----------------|         
+        ;               |       AH       |        
+        ;               |----------------|       
+        ;               |       AL       |       
+        ;               |----------------|         
+        ;               |       T        |     
+        ;               |----------------|         
+        ;               |      ST0       |       
+        ; H/w ctxt ---->|----------------|       
+        ;  
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+HWICTXT_Obj         .struct
+pad0            Int     1
+    .if (STD_TMS320C2800FPU)
+reg_rbL     Int 1 ; rb is 32-bits
+reg_rbH     Int 1 ; 
+reg_stfL    Int 1 ; stf is 32-bits
+reg_stfH    Int 1
+    .endif
+reg_ar1h        Int     1
+reg_ar0h        Int     1
+reg_retH        Int     1
+reg_retL        Int 1
+reg_dbstat      Int     1
+reg_ier         Int     1
+reg_dp          Int     1
+reg_st1         Int     1
+reg_ar1         Int     1
+reg_ar0         Int     1
+reg_ph          Int     1
+reg_pl          Int     1
+reg_ah          Int     1
+reg_al          Int     1
+reg_t           Int     1
+reg_st0         Int     1
+HWICTXT_A_OBJSIZE   .endstruct
+
+HWICTXT_BASE            .set    HWICTXT_Obj.pad0
+    .if (STD_TMS320C2800FPU)
+HWICTXT_O_REG_RBL    .set    HWICTXT_Obj.reg_rbL  - HWICTXT_BASE
+HWICTXT_O_REG_RBH    .set    HWICTXT_Obj.reg_rbH  - HWICTXT_BASE
+HWICTXT_O_REG_STFL   .set    HWICTXT_Obj.reg_stfL - HWICTXT_BASE
+HWICTXT_O_REG_STFH   .set    HWICTXT_Obj.reg_stfH - HWICTXT_BASE
+    .endif
+HWICTXT_O_REG_AR1H      .set    HWICTXT_Obj.reg_ar1h - HWICTXT_BASE
+HWICTXT_O_REG_AR0H      .set    HWICTXT_Obj.reg_ar0h - HWICTXT_BASE
+HWICTXT_O_REG_RETH      .set    HWICTXT_Obj.reg_retH  - HWICTXT_BASE
+HWICTXT_O_REG_RETL      .set    HWICTXT_Obj.reg_retL  - HWICTXT_BASE
+HWICTXT_O_REG_DBSTAT    .set    HWICTXT_Obj.reg_dbstat- HWICTXT_BASE
+HWICTXT_O_REG_IER       .set    HWICTXT_Obj.reg_ier   - HWICTXT_BASE
+HWICTXT_O_REG_DP        .set    HWICTXT_Obj.reg_dp    - HWICTXT_BASE
+HWICTXT_O_REG_ST1       .set    HWICTXT_Obj.reg_st1   - HWICTXT_BASE
+HWICTXT_O_REG_AR1       .set    HWICTXT_Obj.reg_ar1   - HWICTXT_BASE
+HWICTXT_O_REG_AR0       .set    HWICTXT_Obj.reg_ar0   - HWICTXT_BASE
+HWICTXT_O_REG_PH        .set    HWICTXT_Obj.reg_ph    - HWICTXT_BASE
+HWICTXT_O_REG_PL        .set    HWICTXT_Obj.reg_pl    - HWICTXT_BASE
+HWICTXT_O_REG_AH        .set    HWICTXT_Obj.reg_ah    - HWICTXT_BASE
+HWICTXT_O_REG_AL        .set    HWICTXT_Obj.reg_al    - HWICTXT_BASE
+HWICTXT_O_REG_T         .set    HWICTXT_Obj.reg_t     - HWICTXT_BASE
+HWICTXT_O_REG_ST0       .set    HWICTXT_Obj.reg_st0   - HWICTXT_BASE
+
+isHWIdispAligned .set 2                 ; This structure has code
+                                        ; pointer and hence always
+                                        ; requires alignment
+
+;  ======== HWIdisp_Obj ========        ;Structure for HWI dispatcher
+;
+HWIdisp_Obj     .struct
+DFxn          CodePtr 1                 ;The address of the ISR
+imask         Int     1                 ;IER1 mask when in dispatcher
+arg           Args    1                 ;Argument for the ISR if any
+pad0           .align  isHWIdispAligned ;pad in the structure.  
+endPad         .align  isHWIdispAligned
+HWIdisp_A_OBJSIZE   .endstruct
+   
+;Offsets for the elements of the structure
+
+HWIdisp_BASE      .set    HWIdisp_Obj.DFxn
+HWIdisp_O_DFXN    .set    HWIdisp_Obj.DFxn   - HWIdisp_BASE
+HWIdisp_O_IMASK   .set    HWIdisp_Obj.imask  - HWIdisp_BASE
+HWIdisp_O_ARG     .set    HWIdisp_Obj.arg    - HWIdisp_BASE 
+
+; The code size of a interrupt dispatch function
+; WARNING!  If you change the value, do not forget to update
+; the same definition in hwi.c file.
+
+_HWI_F_DISPISR_SIZE .set 4
+
+;# ======== HWI_Obj ========
+
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    ":HWI_mkStub$regs", HWI_Obj$regs
+HWI_Obj .macro  cflag, name, id, fxn, monitor, addr, type, operation, client, dispatcher, arg, iermask
+        CHK_nargs "HWI_Obj", iermask
+        .if ($symcmp(":CHK_status:", "error") = 0)
+                .mexit
+        .endif
+
+        .if ($symcmp(":fxn:", "<nil>") = 0)
+                .mexit
+        .endif
+
+        .global :name:$hwi      ; generate symbol for vbd/rta
+:name:$hwi .set 0
+
+    .if (":cflag:" != 0)
+:name:  .set :id:
+    .endif
+
+        .var  vector, clientcfg
+
+
+        .asg :dispatcher:, local_dispatch                                       
+
+       
+        ;                                                                       
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; if this object is configured *and* is not "HWI_unused" or "";
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;                                                             
+
+        .if (:cflag: != 0)
+            .if  ($symcmp(":fxn:", "HWI_unused") != 0)
+
+              .asg :fxn:, vector                 ; ISR  
+                                                 ; if client is USER or
+                                                 ; another  configured  
+                                                 ; system module
+
+
+                .if ($symcmp(":monitor:", "Nothing") = 0)
+                                                ; if monitor is disabled
+                  .if ( local_dispatch )        ; if dispatcher is
+                      .if (:id: < 2)                 ; INT0 and INT1 have defined labels
+                          .ref _HWI_F_dispIsr:id:
+                          .asg _HWI_F_dispIsr:id:, vector
+                      .else
+                          .if (:id: < 32)            ; The entry point address for INT[2-31]
+                              .ref _HWI_F_dispIsr1   ; will be calculated
+                              .asg (_HWI_F_dispIsr1 + (:id: - 1) * _HWI_F_DISPISR_SIZE), vector
+                          .else                      ; The PIE interrupts share the same
+                              .ref _HWI_F_dispIsrPie ; dispatcher function.
+                              .asg _HWI_F_dispIsrPie, vector
+                          .endif
+                      .endif
+                  .else                         ; else if disaptcher is
+                                                ; disabled
+                    .asg :fxn:, vector          ; ISR = :fxn:
+                  .endif
+                                                 
+                .else                           ; else when monitor is
+                                                ; enabled
+                  .if ( local_dispatch )        ; dispatcher is  enabled
+
+                      .if (:id: < 2)                 ; INT0 and INT1 have defined labels
+                          .ref _HWI_F_dispIsr:id:
+                          .asg _HWI_F_dispIsr:id:, vector
+                      .else
+                          .if (:id: < 32)            ; The entry point address for INT[2-31]
+                              .ref _HWI_F_dispIsr1   ; will be calculated
+                              .asg (_HWI_F_dispIsr1 + :id: * _HWI_F_DISPISR_SIZE), vector
+                          .else                      ; The PIE interrupts share the same
+                              .ref _HWI_F_dispIsrPie ; dispatcher function.
+                              .asg _HWI_F_dispIsrPie, vector
+                          .endif
+                      .endif
+
+                      ;
+                      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      ; HWI_mkstub used with HWI_F_dispIsr:id: as the
+                      ; function
+                      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      ;
+
+                      HWI_mkStub ":name:_stub", monitor, addr, operation, :name:_STS, vector, ":type:"
+                   
+                  .else
+                      ;
+                      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      ; When dispatcher is disabled then HWI_mkstub
+                      ; used with user function  as the function
+                      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                      ;
+
+                      HWI_mkStub ":name:_stub", monitor, addr, operation, :name:_STS, :fxn:, ":type:"
+                  .endif
+                    .asg ":name:_stub", vector  ; vector = HWI stub
+                .endif
+            .else
+                  .asg "FXN_F_selfLoop", vector
+            .endif
+        .endif
+
+    .sect ".hwi_vec"
+
+    .global hwi:id:
+
+
+   .if  ($symcmp(":fxn:", "HWI_unused") = 0)
+hwi:id::   .xlong  FXN_F_selfLoop               ;For HWI_unused its the
+                                                ; same as the label
+   .else
+hwi:id::   .xlong :vector:              
+   .endif
+
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;Creating a cinit record for the HWIdisp Object
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+    .if ( local_dispatch )
+
+        ; if fxn is HWI_unused and dispatcher is used
+        ; then make fxn as FXN_F_selfLoop 
+
+        .if  ($symcmp(":fxn:", "HWI_unused") = 0)
+                .asg    "FXN_F_selfLoop", fxn
+        .endif
+        .ref  _HWI_dispatchTab
+        C28_cinitHeader   CINITALIGN, isHWIdispAligned, _HWI_dispatchTab + :id:*HWIdisp_A_OBJSIZE,  HWIdisp_A_OBJSIZE
+        C28_cinitBegin    isHWIdispAligned
+        C28_cinitCodePtr  :fxn:
+        C28_cinitInt      :iermask:
+        C28_cinitArg      :arg: 
+        C28_cinitEnd      isHWIdispAligned
+    .endif
+
+    .endm
+
+
+
+;# ======== HWI_config ========
+
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "", HWI_config$regs
+HWI_config    .macro  Vmapmode, Pieselect
+        .asg :Vmapmode:, modevmap   ; this is used in HWI_init macro to deter
+                                    ; mine if vmap bit has to be 1
+
+
+    .endm
+
+
+;# ======== HWI_disable ========
+;  Either 
+;    A. Disable interrupts 
+;  or 
+;    B. Push the current ST1 onto the stack
+;       then disable interrupts
+;       then pop the contents of the aforementioned ST1 
+;       to the designated key ( a memory location 
+;       or a register)
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;
+;#    intm = 1, dbgm = 1
+;#    Interrupts are disabled
+;#    key (if specified) = st1 when HWI_disable was invoked
+;#
+
+;  Note: If key is specified, the modified register list should include 
+;        the register that is used for the key. 
+    .asg    "intm,dbgm", HWI_disable$regs
+HWI_disable    .macro key
+        .if ($symlen(":key:") = 0)      ; if no arguement is
+                setc intm,dbgm          ; ##interrupt Disable Interrupt
+        .else
+                CHK_nargs HWI_disable,  key
+                push st1                ;Push the Status Reg
+                setc intm,dbgm          ; ##interrupt Disable Interrupt
+                pop @:key:              ;
+        .endif
+    .endm
+
+
+;# ======== HWI_enable ========
+;        Enable interrupts 
+;        
+
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#      intm = 0, dbgm = 0 
+;#
+
+    .asg   "intm,dbgm", HWI_enable$regs
+HWI_enable  .macro dummy
+        clrc intm,dbgm                  ; ##interrupt Enable interrupts
+    .endm
+
+
+
+;# ======== HWI_mkStub ========
+;# Beware if push and pop are changed in this macro. the value of different
+;# registers are stored from stack depending upon the pushes and pops. If order
+;# of pushes and pops are changed, check macro for corrosponding changes for
+;# restoring values of registers.
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "tc", HWI_mkStub$regs
+    .global HWI_F_dispatch
+HWI_mkStub .macro name, monitor, addr, operation, stsName, fxn, type
+        .sect ".hwi" 
+                                                        
+        .var firstChar, unaryop, stsop, len, monreg
+        .eval 0, monreg       
+        .eval $firstch(operation, '(') - 1, len         ; compute stsop
+        .asg ":operation(1, len):", stsop               ; the STS 
+                                                        ; operation to
+                                                        ; perform
+
+        .asg 0 , unaryop
+
+                                                ; find the kind of
+                                                ; operation  to be done
+        .if ($symcmp(":operation(len + 2):", "-") = 0)
+                .eval  NEGOPERATION, unaryop    ; Do the neg operation
+        .endif
+        .if ($symcmp(":operation(len + 2):", "|") = 0)
+                .eval  ABSOPERATION,   unaryop  ; Do the abs operation
+        .endif
+
+        .if ($isreg(":monitor:") = 1)           ; determine if the monitor
+                .eval 1, monreg                 ; set flag  indicating
+                                                ; that a register  is
+                                                ; being  monitored
+        .elseif ($symcmp("Stack Pointer", monitor) = 0)
+                .eval 1, monreg                 ; set flag  indicating 
+                .asg "sp", monitor              ; that sp is monitored
+        .endif                  
+
+
+        .asg 0, monitor_sp 
+        .asg 0, monitor_acc
+        .asg 0, xreg 
+
+        .if  ($symcmp("sp", ":monitor:")== 0)
+                .eval 1, monitor_sp
+        .endif 
+
+        .if  ($symcmp("acc", ":monitor:")== 0)
+                .eval 1, monitor_acc
+        .endif 
+
+        .if ($firstch(":monitor:", 'x') = 1)   ; if of type XAR0-XAR7
+                .eval  1, xreg                  
+        .endif
+
+        .global :stsName:
+        
+
+
+                     ;now generate the stub  function
+
+:name::
+
+
+        push al                                 ; save al and ah seperately as
+                                                ; it is not know whether
+        push ah                                 ; or not stack is even aligned
+        HWI_evenStackPtr                        ; even aligned the stack ptr
+        push xar0                               ; save xar0 xar5 xar4 and t as
+        push xar4                               ; these registers are used in 
+        push xar5                               ; TRC_query & sts_Operations
+        push t                                  ; to be  saved as 
+                                                ; TRC_query  would
+                                                ; modify 
+                                                        
+        TRC_query TRC_STSHWI                    ; check if TRC_STSHWI 
+                                                ; is enabled 
+                                                ;(al != 0<=>TRC_STSHWI
+                                                ; is disabled)
+                                                ; if TRC_STSHWI not
+                                                ; enabled simply 
+                                                ; branch to interrupt 
+                                                ; function
+        b exit1?, neq                           ; goto interrupt fxn
+        push ST0
+        .if ($symcmp(":type:", "signed") == 0)
+                setc sxm
+        .else
+                clrc sxm
+        .endif
+        .if (:monreg: == 1)            
+             .if (!(monitor_acc))
+                .if (:xreg: == 1)         ; if register is of extended
+                                          ; register type
+                        .if ($symcmp("xar0", ":monitor:") == 0)
+                                movl acc, *-sp[8]       ; retrive value of
+                                                        ; xar0 from stack as
+                                                        ; it has been modified
+                                                        ; by TRC_query
+                        .else                           ; all other xar? can 
+                                                        ; be taken directly.
+                                movl acc, :monitor:     ; into acc
+                        .endif
+                .else
+                        .if ($symcmp("tl", ":monitor:") == 0)
+                                push xt                 ; push xt on stack.
+                                                        ; stack is even aligned
+                                                        ; till now and so xt
+                                                        ; can be pushed directly
+                                mov     al, *-sp[2]     ; take value of tl in al
+                                sub sp, #0x02           ; dec sp by 2
+                                
+                        .elseif ($symcmp("st0", ":monitor:") == 0)
+                                mov al, *-sp[1]         ; last word  pushed
+                                                        ; on stack was st0
+                                                        ; it has been taken from
+                                                        ; stack because sxm bit
+                                                        ; has been changed till
+                                                        ; now
+                        .elseif ($symcmp("t", ":monitor:") == 0)
+                                mov al, *-sp[2]         ; second last word 
+                                                        ; pushed on stack was t
+                                                        ; it has been taken from
+                                                        ; stack because t has
+                                                        ; been changed till now
+                                                        ; in TRC_query
+                        .else
+                                push    :monitor:       ; push register on stack
+                                pop     al              ; take value of register
+                                                        ; in al
+                                .if (monitor_sp)           
+                                        sub acc, #(HWICTXT_O_REG_ST0 + 10)
+                                .endif
+                        .endif
+                        mov   ah, #0x0    ; make ah 0. 
+                                          ; in case of sp value of acc is 
+                                          ; decremented by 12 + number of pushes
+                                          ; during hardware context. value of
+                                          ; HWICTXT_O_REG_ST0 is 2 more than no.
+                                          ; of pushes asa hardware context.
+                .endif                    ; after that following are pushed  
+                                          ; ah, al, xar0, xar4, xar5, t and ST0
+                                          ; and one double push in
+                                          ;  HWI_evenStackPtr
+                                          ; these pushes increment
+                                          ; the value of   stack 
+                                          ; pointer. Since STS
+                                          ; operation requires the
+                                          ; value of stack pointer
+                                          ; when   the ISR was 
+                                          ; entered, we  will have
+                                          ; to offset  these pushes.
+                                          ; please note that this value of sp is
+                                          ; corrected with +-1 as asp 
+                                          ; instruction may have added one to sp
+                .else                     ; for acc
+                                          ; the original value of acc is saved 
+                                          ; in the stack. retrive it from there
+                   movz ar0, @sp          ; save the value of current sp in ar0
+                   nasp                   ; till now the interrupts are disabled
+                                          ; globaly and so we can perform the 
+                                          ; nasp safely to undo alignment done
+                                          ; by HWI_evenStackPtr
+                   mov  ah, *-sp[11]      ; restore value of ah from stack
+                   mov  al, *-sp[12]      ; restore value of al from stack
+                   mov  sp, ar0           ; restore sp
+ 
+             .endif
+        .else                             ; If monitoring an addr
+                movl xar0, #:addr:        ; take address in xar0
+                mov acc, *xar0            ; take value at that address in acc
+        .endif
+                                     
+        tbit *-sp[1], #0 
+        dec @sp
+        sb cond?, tc
+        clrc SXM
+cond?:
+       .if (:unaryop: == ABSOPERATION)    ; if it  is absolute
+                                          ; value
+                        abs acc
+       .else
+            .if (:unaryop: == NEGOPERATION)     ; if its negation
+                        neg acc
+            .endif
+       .endif    
+
+       movl xar4, #:stsName:               ; ar0 =  &StsObj     
+       stsop call                          ; Do STS operation
+
+exit1?:
+        pop t                   ; rollback start restore t
+        pop xar5                ; xar5, xar4 and xar0
+        pop xar4                ; which were saved at the start
+        pop xar0
+        HWI_restoreStackPtr     ; resotre the sp
+        pop ah                  ; restore ah 
+        pop al                  ; resotre al
+
+       b  :fxn:, UNC            ; now go to actual isr
+   .endm
+
+
+
+;# ======== HWI_restore ========
+;  Conditionally resets the intm , dbgm bit.
+;#
+;# Preconditions:
+;#    intm = 1
+;#    dbgm = 1
+;#      
+;#
+;# Postconditions:
+;# NONE     
+;#
+;# Constraints and Calling Environment:
+;#      This macro must be invoked from an atomic context. i.e., the
+;#    instructions of this macro should not be interrupted.
+
+    .asg "intm,dbgm",HWI_restore$regs
+HWI_restore .macro   key
+    .if ($symlen(key) = 0)                 ; if no param is passed
+        .asg "al", key                     ; use al
+    .endif
+        
+        mov     ah, key
+        push    ah
+        pop     st1                        ; ##interrupt Possible enable        
+     
+  .endm 
+
+
+;# ======== HWI_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "", HWI_end$regs
+HWI_end .macro
+        .endm
+
+
+;# ======== HWI_init ========
+;  Runtime initialization for HW ISRs
+
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+;# Dependencies:
+;#      none
+;#
+
+    .asg    "ifr", HWI_init$regs
+HWI_init    .macro
+              .if (modevmap)
+                SETC VMAP
+              .else
+                CLRC VMAP
+              .endif
+                and ifr,#0x0000
+;               .if GBL_SUPPORTCSL
+;                   .ref _GBL_cslInit
+;                   lcr _GBL_cslInit
+;                   .if GBL_CALLCSLCFGINIT
+;                       .ref    _CSL_cfgInit
+;                       lcr     _CSL_cfgInit
+;                   .endif
+;               .endif
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; HWI_init used to clear of ier. However say if               ;
+        ; the user_init function  or a static C++ constructor         ;
+        ; writes  a particular value to ier0 or ier1                  ; 
+        ; HWI_init would clear it back, as user_init is called        ;
+        ; before HWI_init. Hence HWI_init would nullify user_init     ;
+        ; codes effect. Hence the clearing of ier0 is done in _cinit00;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+    .endm
+
+
+;# ======== HWI_startup ========
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      intm == 0
+;#      dbgm == 0
+;#
+;# Dependencies:
+;#    Must come before SWI_startup, as intm = 0 and dbgm = 0 is a precondition 
+;#    to SWI_startup and interrupts must be enabled before software interrupts
+;#    are allowed to run.
+;#
+;#    Must follow CLK_startup to allow setting of PRD and timer control
+;#    register before interrupts are enabled.
+;#    Must follow PIP_startup to allow pipes to be ready before ISRs are
+;#    taken and I/O starts.
+;#
+    .asg ":HWI_enable$regs:", HWI_startup$regs
+HWI_startup .macro
+        .if (modevmap)
+            .if (HWI_PIESELECT == 1)
+                movl    xar0, #PIECTRL_ADDR       ; xar0 = address of 
+                                                  ; PIECTRL register
+                or      *xar0, #(1 << PIECTRL_ENPIE_BIT ) 
+                                                  ; set ENPIE bit
+            .endif
+        .endif
+        HWI_enable                      ; ##interrupt globally enable interrupts
+    .endm
+
+
+;# ======== HWI_saveRegForOperation ========
+;  Saves the register that are needed for doing HWI prologue operation
+;
+;#
+;# Preconditions:
+;#    intm=1, dbgm =1
+;#
+;# Postconditions:
+;#    None
+;# Constraints and Calling Environment:
+;#     This macro can be called only from  HWI_enter.
+;#
+
+
+        .asg   "", HWI_saveRegForOperation$regs
+HWI_saveRegForOperation .macro
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;  The BIOS  context of  xar0 is also pushed
+        ;  into the  stack of operation.  This is to simplify stack
+        ; unrolling as it can work of  one stack. 
+        ; accessible at a constant offset.
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+        push ar1h:ar0h
+  .endm
+
+;# ======== HWI_checkAndChangeStack ========
+;  Checks for task/HWI stack and changes the stack to HWI stack.
+; Algorithm
+;       if( HWI_STKTOP <= XSP < HWI_STKBOTTOM )
+;       {
+;           Working On HWI stack
+;       }
+;       else
+;       {
+;               HWI_D_spsave = sp
+;               sp = HWI_STKBOTTOM
+;       }
+;
+;               +---------------+       
+;               | HWI_STKBOTTOM |       STACK
+;               |               |       GROWS
+;               |       |       |       DOWN
+;               |       v       |
+;               |               |
+;               |  HWI_STKTOP   |
+;               +---------------+
+;
+;# Preconditions:
+;#    intm = 1, dbgm =1
+;#
+;# Postconditions:
+;#  
+;# Constraints and Calling Environment:
+;#     This macro can be called only from  HWI_enter and dispatcher
+;#
+
+        .asg   "acc,xar0,sp", HWI_checkAndChangeStack$regs
+HWI_checkAndChangeStack .macro
+        mov     al, @sp                 ; Store Current SP in AL to be used in
+                                        ; HWI_restoreIer
+        movl    xar0, #HWI_D_stkbottomaddr ;xar0 = HWI_STKBOTTOM
+        cmp     al, *xar0               ;if HWI_STKBOTTOM > sp then not on HWI
+        b       notOnHWIstack?, LO ; Comparison must treat as unsigned
+                                                ; SDSCM00022432
+        movl    xar0, #HWI_D_stktopaddr ;xar0 = HWI_STKTOP
+        cmp     al, *xar0               ;if HWI_STKTOP > xsp then on HWI stack
+        b       OnHWIstack?, LO ; Comparison must treat as unsigned
+                                                ; SDSCM00022432
+notOnHWIstack?:
+        movl    xar0, #HWI_D_spsave     ;Save the sp of task stack
+        mov     ah, @sp
+        mov     *xar0, ah               
+        movl    xar0, #HWI_D_stkbottomaddr      ;Note STKBOT addrs is 
+                                                ;lesser than STKTOP
+        mov     ah, *xar0                       ;Point sp to HWI stack
+        mov     @sp, ah
+OnHWIstack?:
+        push    @al
+        .endm   
+
+
+;# ======== HWI_setIer ========
+; HWI_setIer mask
+; Mask specifies bit mask for ierbits to be turned off.
+; in the corresponding bit in the mask.
+; Algorithm
+;    ier0 = ier0 & ~mask0        // modify ier bits based on
+;                                // This will prevent some 
+;                                // interrupts from
+;                                // happening and allow other
+;                                // interrupts to happen in the
+;                                // ISR context after the global
+;                                // interrupt flag (intm, dbgm) get
+;                                // turned on (=0)
+;#
+;# Preconditions:
+;#    intm = 1 dbgm =1
+;#
+;# Postconditions:
+;#  
+;# Constraints and Calling Environment:
+;#     This macro can be called only from HWI_enter and dispatcher
+;#
+
+  .asg  "ier", HWI_setIer$regs
+HWI_setIer  .macro ierMask  
+                
+        .asg  "~ierMask",mask   ; These are asg as eval
+                                ; does not work with
+                                ; external reference 
+                                ; symbols. 
+                                ; CLK_F_isr has ierMask
+                                ; as external symbols
+                                ; supplied by *cfg.h28
+
+        and     ier, #(mask & 0xffff)
+                                ; Mask the specified
+                                ; bits.
+                                ; HWI_exit to
+                                ; compute  the  value of
+                                ; IMR  on entry to
+                                ; interrupt
+         .endm
+
+
+;# ======== HWI_evenStackPtr ========
+; Align the stack pointer to make a  C call.
+
+; Algorithm
+; Save old SP
+; Take SP to next even boundary
+;
+;#
+;# Preconditions:
+;#    intm = 0 dbgm = 1
+;#
+;# Postconditions:
+;#  SP is in even boundary.
+;#
+;# Constraints and Calling Environment:
+;#     This macro can be called only HWI_enter and the dispatcher.
+;#
+   .asg  "sp,ah", HWI_evenStackPtr$regs
+HWI_evenStackPtr .macro
+        mov     ah, @sp        ; Storing sp to ah as we want to align the
+                               ; Stack pointer to the even boundary. We
+                               ; will push here the acc so that while poping
+                               ; to sp the value in ah will go to sp.
+        asp                    ; allign to even boundary
+        push    acc            ; ah will be on top of stack here. in other
+                               ; words the value of sp is there on top of
+                               ; stack
+
+        .endm
+
+;# ======== HWI_enter ========
+;  Hardware ISR prologue
+;
+;  HWI_enter AR_MASK, ACC_MASK, MISC_MASK,IERDISABLEMASK
+;
+;  The mask specified below specify the registers that  would be
+;  pushed into the stack as a part of interrupt context.
+;  AR_MASK    - Masks of registers  belonging to xar0-7
+;  ACC_MASK   - Masks of register which belong to acc,p,t
+;  MISC_MASK  - Masks of registers ier,ifr,dbier, st0, st1 and dp.
+;  IERDISABLEMASK - Mask of ier bits to turn off
+;
+;  On the 283xx devices, the masks also include:
+;  AR_MASK    - registers r0h-r7h
+;  MISC_MASK  - stf, rb
+;
+; Algorithm:
+;    HWI_saveRegForOperation
+;    Begin
+;       Save ar1h, ar0h         
+;    End
+;    HWI_checkAndChangeStack 
+;    Begin
+;       if( HWI_STKTOP <= XSP < HWI_STKBOTTOM )
+;       {
+;           Working On HWI stack
+;       }
+;       else
+;       {
+;               HWI_D_spsave = xsp
+;               xsp = HWI_STKBOTTOM
+;       }
+;    End
+;    SWI_D_lock++        // need to increment SWI_D_lock to support 
+;                        // nested ISRs.
+;                        // Keep a nested interrupts from
+;                        // context switching to a SWI.
+;                        // When SWI_D_lock >= 0 (SWI locked), SWI_F_exec
+;                        // can not be entered.
+;    HWI_setIer
+;    Begin
+;       ier = ier & ~IMR0DISABLEMASK     // modify ier bits based on
+;                                        // This will prevent some 
+;                                        // interrupts from
+;                                        // happening and allow other
+;                                        // interrupts to happen in the
+;                                        // ISR context after the global
+;                                        // interrupt flag (intm,dbgm) get
+;                                        // turned on (=0)
+;                                        // in the ISR context
+;    End
+;    intm =     0; dbgm = 0;             // turn on the global interrupt
+;                                        // flag to allow
+;                                        // nested interrupts
+;   C28_save ar_mask,acc_mask,misc_mask
+;               Save(MASK)save registers specified in the MASK
+;                                        // except those already saved
+; HWI_eventStackPtr  
+; Begin
+;       Save old XSP
+;       Take SP to next even boundary
+; End
+;
+;#
+;# Preconditions:
+;#    intm = 1 dbgm = 1
+;#
+;# Postconditions:
+;#   pm = 1    [Product shift mode is 1]        
+;#  ovm = 0    [Oveflow Mode is Normal] 
+;#  AMODE are to be set for 28x.
+;# page0 = 0   [Stack addressing mode]  
+;# SP is aligned to even address boundry. 
+;#
+;# Constraints and Calling Environment:
+;#    This macro must be the first operation in an ISR that uses any 
+;#    BIOS  API calls, which involves the scheduler. Basically, this 
+;#    macro must  be called at the beginning of a 
+;#    function used to process a hardware interrupt. Such functions must
+;#    be written in assembly language.
+;#
+
+    .asg    ":HWI_setIer$regs:,:HWI_saveRegForOperation$regs:,:HWI_evenStackPtr$regs:,:C28_save$regs:", HWI_enter$regs
+HWI_enter .macro AR_MASK, ACC_MASK, MISC_MASK, IERDISABLEMASK   
+        
+    .if (STD_TMS320C2800FPU)
+    push    rb              ; Save rptb status/control register
+    mov32   *sp++, stf      ; Save FPU status reg
+    .endif
+    
+    C28_setBiosSTbits           ; Moved to here for ddts35508
+                                        ; This macro
+                                        ; would set the 
+                                        ; status registers
+                                        ; as expected by
+                                        ; C compiler and other
+                                        ; bios requirements.
+
+        HWI_saveRegForOperation         ; save the register that is needed 
+                                        ; for doing HWI prologue/epilogue 
+                                        ; operation. These registers will be 
+                                        ; popped back by 
+                                        ; HWI_restoreRegFromOperation
+                                        ; called in HWI_exit
+        ; C28x hardware masks the interrupt bit in IER also along 
+        ; with disabling the global interrupts. We have to apply IERMASK 
+        ; supplied by user to the original value of the IER and not to the IER  
+        ; which has been changed by the hardware. We can obtain the value 
+        ; of IER from the stack where hardware has pushed the IER. We will 
+        ; restore the IER to original value here. It will not have any 
+        ; implications as still global interrupts are disabled.
+ 
+        movz    ar0, sp                 ; obtain ier value from stack
+        and     ar0, #0xfffe            ; when interrupt happened, hardware 
+                                        ; added one to sp to take care of sp 
+                                        ; being at odd address. to nullify that
+                                        ; effect we make it even align before
+                                        ; going below in stack and obtain ier
+                                        ; value
+        subb    xar0, #HWICTXT_O_REG_IER        ; xar0 = address where ier was
+                                        ; stored  by the hardware
+        mov     ier, *xar0              ; restore original value of ier 
+                                        ; we will mask it with user 
+                                        ; supplied mask before opening the 
+                                        ; global interrupts. 
+        
+
+        HWI_evenStackPtr                ; even the stack pointer
+                                        ; and fall thru the code.
+        HWI_checkAndChangeStack         ; Check for the  stack 
+                                        ; on which  operation
+                                        ; operation is performed and
+                                        ; switch over to common
+                                        ; stack if required.
+        HWI_setIer  IERDISABLEMASK
+                                        ; set the IER as dictated by the mask
+        movl    xar0, #SWI_D_lock       ; Lock the scheduler
+        inc     *xar0
+    movl    xar0, #HWI_D_inhwi
+    inc     *xar0
+
+
+        HWI_enable                      ; ##interrupt globally enable 
+                                        ; interrupts 
+
+        .if ( (:AR_MASK: ==  C28_AR_CALLER_MASK)  & (:ACC_MASK:  ==  C28_AC_CALLER_MASK)  & (:MISC_MASK: ==  C28_MISC_CALLER_MASK))
+               C28_saveCContext         ; if the register mask
+                                        ; specfifies C context
+                                        ; register use the
+                                        ; C28_saveCContext
+                                        ; macro
+        .elseif ( (:AR_MASK: ==  C28_AR_BIOS_CONTEXT)  & (:ACC_MASK:  ==  C28_AC_BIOS_CONTEXT)  & (:MISC_MASK: ==  C28_MISC_BIOS_CONTEXT))
+
+               C28_saveBiosContext      ; if the register mask
+                                        ; specifies BIOS context
+                                        ; register use the
+                                        ; C28_saveBiosContext
+                                        ; macro
+
+        .else
+         C28_save   (:AR_MASK:),(:ACC_MASK:),(:MISC_MASK:)
+        .endif
+        HWI_evenStackPtr                ; even the stack pointer
+                                        ; and fall thru the code.
+    .endm
+
+;# ======== HWI_restoreStackPtr ========
+; Restores the value of stack before  it was evened
+
+;#
+;# Preconditions:
+;#    intm = 0 dbgm = 1
+;#
+;# Postconditions:
+;#  
+;# Constraints and Calling Environment:
+;#     This macro can be called only from HWI_exit and dispatcher
+;#     This macro will restore the value of SP from that stored in
+;#     in the stack by HWI_evenStackPtr
+;#
+
+  .asg  "sp", HWI_restoreStackPtr$regs
+HWI_restoreStackPtr     .macro
+        pop     @sp             ; restore SP
+  .endm
+
+
+
+;# ======== HWI_restoreIer ========
+; Restore those bits of ier which have 1 in the value
+; that is pushed in stack, and in the mask.
+;
+;
+;# Preconditions:
+;#    intm = 1 dbgm = 1
+;#
+;# Postconditions:
+;#  
+;# Constraints and Calling Environment:
+;#     This macro can be called only by HWI_exit and dispatcher
+;#     The macro will read the value of ier from stack strored by HWI_setIer 
+;#      called in HWI_enter. and make ier bits one after masking with user 
+;#      supplied mask which were 1 on the entry to HWI_enter.
+
+  .asg  "acc,ier" ,HWI_restoreIer$regs
+HWI_restoreIer .macro   mask
+
+        pop     @al                     ; To know whether the Interrupt happened
+                                        ; in Task stack or HWI stack.
+        movz    ar0, al                 ; xar0 has old sp pointer 
+                                        ; that is the previous stack 
+                                        ; before stack change
+        movz    ar1, *--xar0            ; xar1= sp pointer of hwi context 
+        and     ar1, #0xfffe
+        subb    xar1, #HWICTXT_O_REG_IER; xar1 = address where ier stored by
+        mov     al, *xar1               ; cpu. take value stored in stack to al
+                                        ; now we have retrive the value of old
+        and     al, #mask               ; mask bits in al with supplied mask
+        mov     ah, ier                 ; store current value of ier in ah
+        or      ah, al                  ; enable ier bits that were 1 on entry 
+        mov     ier, ah                 ; to HWI_enter. 
+                                        ; We will not store this
+                                        ; new value on to the stack right now as
+                                        ; anyway we will be modifying ier value
+                                        ; stored in stack later in HWI_exit 
+                                        ; before executing iret instruction. 
+
+        .endm
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;  Note: WHen the Interrupt context is put on the stack the SP points to a    ;
+;  location depending on whether the saving of Interrupt context starts at Odd; 
+;  or even boundary. So the current SP is pushed in stack after even'ing the  ;
+;  stack                                                                      ; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+;# ======== HWI_checkAndCallScheduler ========
+; Jump to scheduler if any SWI requires service
+;
+; Algorithm:
+;
+;    if (--SWI_D_lock >= 0) {
+;        rete (Enable interrupts and return)
+;    }
+;    if (SWI_D_curmask > SWI_D_curset) {
+;        rete (Enable interrupts and return)
+;    }
+;    SWI_F_exec (go to SWI_F_exec without enabling the interrupt)
+;    
+;#
+;# Preconditions:
+;#    intm = 1 dbgm = 1
+;#
+;# Postconditions:
+;#  
+;# Constraints and Calling Environment:
+;#     This macro can be called only  from HWI_exit
+;#
+
+  .asg "xar0,acc", HWI_checkAndCallScheduler$regs
+HWI_checkAndCallScheduler .macro
+        movl    xar0, #SWI_D_lock
+        cmp     *xar0, #-1
+        b       end?, NEQ                       ; If not in the BOTTOM 
+                                                ; ISR ,exit
+        movl    xar0, #SWI_D_curmask
+        mov     al, *xar0
+        movl    xar0, #SWI_D_curset
+        cmp     al, *xar0                       ; if (curmask > curset)  
+        b       end?, HI                        ; if no higher priority 
+                                                ; swi pending, goto exit
+
+                                                ; set the status 
+                                                ; registers to 
+                                                ; appropriate value
+
+                                                ; NOTE, these 
+                                                ; registers can
+                                                ; be  set in SWI_F_exec
+                                                ; but SWI_F_exec can
+                                                ; be entered 
+                                                ; synchronusly too
+                                                ; wherein the status
+                                                ; registers would have
+                                                ; the pre-requisite
+                                                ; value. We need not
+                                                ; set the values when
+                                                ; the scheduler is
+                                                ; entered synchronusly.
+                                                ; Moreover if the 
+                                                ; values are set, we
+                                                ; need to save and
+                                                ; restore these 
+                                                ; register in scheduler
+                                                ; costing more cycles.
+        movl    xar0, #SWI_D_lock
+        mov     *xar0, #0                       ; lock the scheduler   
+        movl    xar0, #SWI_D_execaddr
+        movl    xar0, *xar0
+
+        lcr *xar0                               ; call scheduler
+end?:   
+   .endm
+
+;# ======== HWI_checkAndRestoreStack ========
+; Restore the stack pointer to the TSK/HWI stack.
+
+; Algorithm:    
+;       if( HWI_D_spsave != 0)
+;       {
+;           if( sp == HWI_STKBOTTOM )
+;           {
+;               sp = *(HWI_D_spsave )
+;               *(HWI_D_spsave) = 0
+;           }
+;       }
+;    
+;#
+;# Preconditions:
+;#    intm = 1 dbgm = 1
+;#
+;# Postconditions:
+;#  
+;# Constraints and Calling Environment:
+;#     This macro can be called only  from HWI_exit
+;#
+   .asg  "xar0,acc,sp", HWI_checkAndRestoreStack$regs
+HWI_checkAndRestoreStack  .macro
+        movl    xar0, #HWI_D_spsave
+        mov     al, *xar0
+        cmp     al, #0
+        sb      NoSwitchRqud?, EQ
+                                        ; if HWI_D_spsave is 0 stack
+                                        ; switching didnt  happen
+        movl    xar0, #HWI_D_stkbottomaddr
+        mov     ah, *xar0
+        cmp     ah, @sp
+        sb      BottomNotRchd?, NEQ     ; If xsp != HWI_STKBOTTOM then 
+                                        ; stack bottom not reached
+        mov     @sp, al
+        movl    xar0, #HWI_D_spsave     ;Clear HWI_D_spsave
+        mov     *xar0, #0
+BottomNotRchd?:
+NoSwitchRqud?:
+        .endm
+
+;# ======== HWI_restoreRegAfterOperation =========
+; Restore the  registers that were saved in HWI_enter
+
+;#
+;# Preconditions:
+;#    intm = 1 dbgm = 1
+;#
+;# Postconditions:
+;#  
+;# Constraints and Calling Environment:
+;#     This macro can be called only  from HWI_exit and dispatcher
+;#     This macro will restore register that were saved in
+;#     HWI_saveRegForOperation          
+;#
+
+     .asg  "", HWI_restoreRegAfterOperation$regs
+HWI_restoreRegAfterOperation    .macro
+        pop     ar1h:ar0h
+        .endm
+
+;# ======== HWI_exit ========
+;  Hardware ISR epiloge
+;
+;  HWI_exit .macro AR_MASK, ACC_MASK, MISC_MASK,IERDISABLEMASK  
+;
+;  The mask specified below specify the registers that  would be
+;  pushed into the stack as a part of interrupt context.
+;  AR_MASK    - Masks of registers  belonging to xar0-7
+;  ACC_MASK   - Masks of register which belong to acc,p,t
+;  MISC_MASK  - Masks of registers ier,ifr,dbier, st0, st1 and dp.
+;
+;  On the 283xx devices, the masks also include:
+;  AR_MASK    - registers r0h-r7h
+;  MISC_MASK  - stf, rb
+;
+; Algorithm:
+;        
+;    Restore XSP
+;    --SWI_D__lock
+;    Disable interrupt
+;    HWI_restoreIer IERRESTOREMASK                      
+;    Begin
+;       Restore ier
+;    End
+;    HWI_checkAndCallScheduler          
+;    Begin
+;       if (--SWI_D_lock >= 0) {
+;         return_int
+;       }
+;       if (SWI_D_curmask > SWI_D_curset) {
+;         return_int
+;       }
+;       call SWI_F_exec (goto SWI_F_exec without enabling the interrupt)
+;    End
+;   HWI_checkAndRestoreStack            
+;   Begin
+;       if( HWI_D_spsave != 0)
+;       {
+;           if( sp == HWI_STKBOTTOM )
+;           {
+;               sp = *(HWI_D_spsave )
+;               *(HWI_D_spsave) = 0
+;           }
+;       }
+;   End 
+;   HWI_restoreRegAfterOperation
+;   Begin
+;       pop ac1,acc,xar0,xar1,st3
+;   End
+;       return_int
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#    intm = 0, dbgm = 0 all status bit set to value expected by C compiler
+;#
+;# Constraints and Calling Environment:
+;#    This macro must be the last operation in an ISR that uses any BIOS 
+;#    API calls. Basically, this macro must be called at the end of a 
+;#    function used to process a hardware interrupt. Such functions must be 
+;#    written in assembly language.
+;#
+
+        .asg    ":C28_restore$regs:,:SWI_F_exec$regs:,:HWI_restoreStackPtr:,:HWI_restoreIer$regs:,:HWI_checkAndCallScheduler$regs:,:HWI_preserveGlobalBits$regs:,:HWI_checkAndRestoreStack$regs:", HWI_exit$regs
+HWI_exit .macro AR_MASK, ACC_MASK, MISC_MASK,IERRESTOREMASK     
+        C28_setBiosSTbits                       ; Moved to here for ddts35508
+                                                ; This macro
+                                                ; would set the 
+                                                ; status registers
+                                                ; as expected by
+                                                ; C compiler and other
+                                                ; BIOS constraints
+
+                                                ; Note that C28_setBiosTbits
+                                                ; must be interrupt protected
+                                                ; The
+                                                ; enclosing macro should always
+                                                ; called with interrupt
+                                                ; off.
+                                                
+        HWI_restoreStackPtr
+        .if ((:AR_MASK: ==  C28_AR_CALLER_MASK) & (:ACC_MASK:  ==  C28_AC_CALLER_MASK) & (:MISC_MASK: ==  C28_MISC_CALLER_MASK))
+               C28_restoreCContext      ; if the register mask
+                                        ; specfifies C context
+                                        ; register use the
+                                        ; C28_saveCContext
+                                        ; macro
+        .elseif ( (:AR_MASK: ==  C28_AR_BIOS_CONTEXT)  & (:ACC_MASK:  ==  C28_AC_BIOS_CONTEXT)  & (:MISC_MASK: ==  C28_MISC_BIOS_CONTEXT))
+
+               C28_restoreBiosContext   ; if the register mask
+                                        ; specifies BIOS context
+                                        ; register use the
+                                        ; C28_saveBiosContext
+                                        ; macro
+
+        .else
+               C28_restore   (:AR_MASK:),(:ACC_MASK:),(:MISC_MASK:)
+        .endif
+    
+                                                ;  Note the ordering of
+                                                ;  C28_restore and
+                                                ; clearing of IMR has
+                                                ; to be   preserved.
+                                                ; Before clearing  of
+                                                ; the IMR,  we will
+                                                ; have to restore all
+                                                ; the registers. As on
+                                                ; clearing  the ier  we
+                                                ; are enabling nested
+                                                ; recursive  interrupts.
+                                                ; Say for  example this
+                                                ; is  the HWI_exit  of
+                                                ; interrupt 3.Now IMR(3)
+                                                ; would have been set
+                                                ; to 0. If we set it
+                                                ; back  to 1,
+                                                ; then we are enabling 
+                                                ; interrupt 3  to occur
+                                                ; again.This way we will
+                                                ; be enabling  same
+                                                ; interrupts to  occur
+                                                ; again and again, and
+                                                ; without  clearing the 
+                                                ; stack, we may
+                                                ; cause  stack  blow up.
+                                                ; To avoid this we
+                                                ; restore  the  context
+                                                ; first.
+                                                ; Note that, an 
+                                                ; interrupt   may occur
+                                                ; again, but at
+                                                ; the  most we can have 
+                                                ; 31  interrupts  at max
+                                                ; Intr(3) may occur,
+                                                ; but not recognized 
+                                                ; because  ier(3) is
+                                                ; still zero. So the
+                                                ; stack  cannot grow 
+                                                ; infinitely
+
+        HWI_disable                             ; ##interrupt Begin Atomic
+                                                ; -- SWI_D_lock
+        movl    xar0, #SWI_D_lock
+        dec     *xar0
+    movl    xar0, #HWI_D_inhwi
+    dec     *xar0
+
+        HWI_restoreIer   :IERRESTOREMASK:
+                                                ; restore IER  value
+                                                ; as specified by mask
+        HWI_checkAndCallScheduler               ; Check if scheduler
+                                                ; is open, and any
+                                                ; higher priority 
+                                                ; SWI needs service
+        HWI_checkAndRestoreStack                ; Check   if HWI
+                                                ; was entered from
+                                                ; TSK and restore it
+                                                ; if required.
+
+
+        HWI_restoreStackPtr
+
+        HWI_correctIerInStack                   ; correct the value of IER in 
+                                                ; the stack to reflect the 
+                                                ; current value.
+        HWI_restoreRegAfterOperation            ; Restore ACC,
+                                                ; and XAR0
+
+    .if (STD_TMS320C2800FPU)
+    mov32   stf, *--sp      ; restore stf
+    pop     rb              ; restore rb register
+    .endif
+        
+        iret                                    ; enable the intm dbgm as
+                                                ; needed
+    .endm
+
+;# ======== HWI_correctIerInStack ========
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    None
+;#
+
+    .asg   "ah", HWI_correctIerInStack$regs
+HWI_correctIerInStack  .macro 
+
+        movz    ar0, @sp                        ; 
+        and     ar0, #0xfffe                    ; taking care of alignment
+                                                ; which has been done through
+                                                ; hardware by adding one to
+                                                ; save the hardware context
+        subb    xar0, #HWICTXT_O_REG_IER
+        mov     *xar0, ier                      ; IER value may have changed by
+                                                ; the user till this time while
+                                                ; in checkAndCallSchedular
+                                                ; this need to be corrected in
+                                                ; the stack where value of IER
+                                                ; have been saved as hardware
+                                                ; context and will be restored
+                                                ; as a part of iret instruction
+                                                ;  at the last of HWI_exit.
+    .endm
+
+    .endif    ; HWI_ not defined

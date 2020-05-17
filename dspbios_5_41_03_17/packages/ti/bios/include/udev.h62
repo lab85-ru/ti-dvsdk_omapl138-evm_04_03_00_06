@@ -1,0 +1,106 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== udev.h62 ========
+;
+;
+
+        .if ($isdefed("UDEV_") = 0) ; prevent multiple includes of this file
+UDEV_   .set    1
+
+        .include dev.h62
+
+;
+;# ======== UDEV_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", UDEV_Obj$regs
+UDEV_Obj        .macro cflag, name, id, _fxns, _type, _params, _devId, _fxninit, _hdev
+
+        .sect   ".const"
+UDEV_:name:     .string "/:name:",0     ; Set up string "/<devName>"
+
+        ; This matches SIO_:_device:$params in sio.hti
+        .asg ":_params:", SIO_:name:$params
+
+        ;
+        ; This adds an entry to the device table, DEV_devtab, and the init
+        ; table, DEV_devinit.
+        ;
+        DEV_addDevice UDEV_:name:, :_fxns:, :_devId:, :_params:, :_fxninit:, :_type:, :_hdev:
+
+        .endm
+
+;
+;# ======== UDEV_config ========
+;  Static configuration of the UDEV module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", UDEV_config$regs
+UDEV_config     .macro
+        .endm
+
+;
+;# ======== UDEV_end ========
+;  Invoked at the end of all other configuration declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", UDEV_end$regs
+UDEV_end .macro
+        .endm
+
+;
+;# ======== UDEV_init ========
+;  Runtime initialization of the UDEV module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", UDEV_init$regs
+UDEV_init       .macro
+        .endm
+
+;
+;# ======== UDEV_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", UDEV_startup$regs
+UDEV_startup        .macro
+        .endm
+
+        .endif          ; if UDEV_ is not defined

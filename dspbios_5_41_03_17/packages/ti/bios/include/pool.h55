@@ -1,0 +1,102 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== pool.h55 ========
+;
+;
+
+        .if ($isdefed("POOL_") = 0)  ; prevent multiple includes of this file
+POOL_   .set    1
+
+        .include cinit.h55
+        .include std.h55
+
+;
+;# ======== POOL_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", POOL_Obj$regs
+POOL_Obj        .macro
+        .endm
+
+;
+;# ======== POOL_config ========
+;  Static configuration of the POOL module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", POOL_config$regs
+POOL_config     .macro _usePOOL
+        .endm
+ 
+;
+;# ======== POOL_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", POOL_end$regs
+POOL_end .macro
+        .endm
+
+;
+;# ======== POOL_init ========
+;  Runtime initialization of the POOL module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", POOL_init$regs
+POOL_init       .macro
+
+        ; only expand if the POOL module is configured
+        .if (POOL_USEPOOL)
+                .ref _POOL_init
+            call _POOL_init
+        .endif
+
+        .endm
+
+;
+;# ======== POOL_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", POOL_startup$regs
+POOL_startup        .macro
+        .endm
+
+        .endif          ; if POOL_ is not defined

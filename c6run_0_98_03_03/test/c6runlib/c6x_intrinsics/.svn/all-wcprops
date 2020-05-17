@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/c6x_intrinsics
+END
+DSP_iir.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/c6x_intrinsics/DSP_iir.h
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/c6x_intrinsics/main.c
+END
+test.sh
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/c6x_intrinsics/test.sh
+END
+DSP_iir.c
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/c6x_intrinsics/DSP_iir.c
+END
+readme.txt
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/c6x_intrinsics/readme.txt
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/c6x_intrinsics/Makefile
+END

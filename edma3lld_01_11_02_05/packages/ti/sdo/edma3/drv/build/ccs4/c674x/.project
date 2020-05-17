@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>edma3_drv_bios_lib_c674</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>edma3_drv_init.c</name>
+			<type>1</type>
+			<locationURI>EXT_ROOT__edma3_drv_bios_lib_c674/src/edma3_drv_init.c</locationURI>
+		</link>
+		<link>
+			<name>edma3_drv_basic.c</name>
+			<type>1</type>
+			<locationURI>EXT_ROOT__edma3_drv_bios_lib_c674/src/edma3_drv_basic.c</locationURI>
+		</link>
+		<link>
+			<name>edma3_drv_adv.c</name>
+			<type>1</type>
+			<locationURI>EXT_ROOT__edma3_drv_bios_lib_c674/src/edma3_drv_adv.c</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

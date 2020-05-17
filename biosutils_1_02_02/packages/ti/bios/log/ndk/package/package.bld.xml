@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.bios.log.ndk" version="1, 0, 2, 02">
+    <units>
+        <module name="LogServerCgi"/>
+    </units>
+    <sources>
+        <srcFile name="package/package_ti.bios.log.ndk.c"/>
+        <srcFile name="LogServerCgi.c"/>
+        <srcFile name="LogServerCgi_config.c"/>
+    </sources>
+    <configurations>
+    </configurations>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="lib/logservercgi.a64.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/logservercgi/package/package_ti.bios.log.ndk.o64.dep" src="package/package_ti.bios.log.ndk.c"/>
+        <srcFile name="package/lib/lib/logservercgi/LogServerCgi.o64.dep" src="LogServerCgi.c"/>
+        <srcFile name="package/lib/lib/logservercgi/LogServerCgi_config.o64.dep" src="LogServerCgi_config.c"/>
+        <srcFile name="lib/logservercgi.a64P.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/logservercgi/package/package_ti.bios.log.ndk.o64P.dep" src="package/package_ti.bios.log.ndk.c"/>
+        <srcFile name="package/lib/lib/logservercgi/LogServerCgi.o64P.dep" src="LogServerCgi.c"/>
+        <srcFile name="package/lib/lib/logservercgi/LogServerCgi_config.o64P.dep" src="LogServerCgi_config.c"/>
+        <srcFile name="lib/logservercgi.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/logservercgi/package/package_ti.bios.log.ndk.o674.dep" src="package/package_ti.bios.log.ndk.c"/>
+        <srcFile name="package/lib/lib/logservercgi/LogServerCgi.o674.dep" src="LogServerCgi.c"/>
+        <srcFile name="package/lib/lib/logservercgi/LogServerCgi_config.o674.dep" src="LogServerCgi_config.c"/>
+        <srcFile name="package/rel/ti_bios_log_ndk.tar.dep" src="package/rel/ti_bios_log_ndk.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.C64P"
+            version="ti.targets.C64P{1,0,6.0,14"
+            platform="ti.platforms.sim6xxx:TMS320CDM420"
+            isa="64P"
+            suffix="64P"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.0.14/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+        <target name="ti.targets.C64"
+            version="ti.targets.C64{1,0,6.0,14"
+            platform="ti.platforms.sim6xxx:TMS320C6416"
+            isa="64"
+            suffix="64"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.0.14/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+        <target name="ti.targets.C674"
+            version="ti.targets.C674{1,0,6.1,5"
+            platform="ti.platforms.evmOMAPL137"
+            isa="674"
+            suffix="674"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.1.5/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    <library name="lib/logservercgi"
+        pname="lib/logservercgi.a64"
+        profile="release"
+        target="ti.targets.C64"/>
+    <library name="lib/logservercgi"
+        pname="lib/logservercgi.a64P"
+        profile="release"
+        target="ti.targets.C64P"/>
+    <library name="lib/logservercgi"
+        pname="lib/logservercgi.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    </libraries>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_bios_log_ndk"
+        pname="../../../../../exports/ti_bios_log_ndk.tar"
+        label="default"
+        relScript="/db/toolsrc/library/toolsC51/packages/tisb/release/filters/copyright.rel">
+        <file name="package.bld"/>
+        <file name="LogServerCgi.xdc"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package/package.rel.dot"/>
+        <file name="LogServerCgi.c"/>
+        <file name="package.xdc"/>
+        <file name="lib/logservercgi.a674"/>
+        <file name="lib/logservercgi.a64"/>
+        <file name="lib/logservercgi.a64P"/>
+        <file name="package/package.bld.xml"/>
+        <file name="LogServerCgi.h"/>
+        <file name="LogServerCgi_config.c"/>
+        <file name="package/package.ext.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="package.xs"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

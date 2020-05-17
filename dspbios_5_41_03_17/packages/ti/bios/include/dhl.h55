@@ -1,0 +1,211 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== dhl.h55 ========
+;
+;
+
+        .if ($isdefed("DHL_H55") = 0)  ; prevent multiple includes of this file
+DHL_H55 .set    1
+
+        .include std.h55
+        .include cinit.h55
+
+        .include dev.h55
+        .include gbl.h55
+        .include hst.h55
+        .include sem.h55
+        .include sio.h55
+
+isDhlAligned    .set    LONGALIGN
+DHL_Obj         .struct
+pad0            .align  isSemAligned ; ensure SEM alignment is satisfied
+done            .tag    SEM_Obj ; Count = # of buffers on fromdevice queue
+nested          Int     1       ; Reentrancy lock
+hst             DataPtr 1       ; Handle to underlying HST object 
+ready           DataPtr 1       ; Handle to semaphore used by DHL_ready() 
+device          DataPtr 1       ; Device handle - to get at queues 
+curptrBuf       DataPtr 1       ; Position in buffer to copy to pip frame 
+countBuf        Int     1       ; Number left in buffer to copy to pip 
+curptrFrm       DataPtr 1       ; Position in frame to copy to device buffer 
+countFrm        Int     1       ; Number left in pip frame to copy to buffer
+started         Int     1       ; Set to TRUE when input is started 
+devid           Int     1       ; Set to the device id.
+mode            Int     1       ; SIO_INPUT or SIO_OUTPUT
+dummy           .align  isDhlAligned
+DHL_A_OBJSIZE   .endstruct
+
+        .eval DHL_A_OBJSIZE, DHL_OBJSIZE
+
+;
+;# ======== DHL_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", DHL_Obj$regs
+DHL_Obj .macro cflag, name, id, hstchannel, mode, devid
+
+                .global  _DHL_FXNS
+
+  ;
+  ; This label matches SIO_:_device:$params in sio.h55
+  ;
+SIO_:name:$params .set  0 ; No DHL_Params (needed for SIO)
+
+  ;
+  ;  Set up string "/<devName>"
+  ;
+                .sect   ".const"
+DHL_:name:      .byte   "/:name:", 0
+
+;
+; cinit this device's entries in the global DEV_devtab & DEV_devinit
+;
+  DEV_addDevice DHL_:name:, _DHL_FXNS, :devid:, 0, FXN_F_nop, DEV_SIOTYPE, 0
+
+;
+;  Create a DHL object and cinit the same
+;
+        .global :name:
+
+  C55_allocateObject isDhlAligned, :name:, DHL_OBJSIZE, ".dhl"
+
+  C55_cinitHeader CINITALIGN, isDhlAligned, :name:, DHL_OBJSIZE, DATAPAGE
+  C55_cinitBegin        isDhlAligned
+
+  SEM_cinitObj          :name:, 0       ; done semaphore object
+  C55_cinitInt          0               ; nested
+  C55_cinitDataPtr      :hstchannel:    ; hst channel
+  C55_cinitDataPtr      0               ; ready
+  C55_cinitDataPtr      0               ; device
+  C55_cinitDataPtr      0               ; curptrBuf
+  C55_cinitInt          0               ; countBuf
+  C55_cinitDataPtr      0               ; curptrFrm
+  C55_cinitInt          0               ; countFrm
+  C55_cinitInt          0               ; started
+  C55_cinitInt          :devid:         ; devid
+
+  .if $symcmp("input", ":mode:") = 0
+    C55_cinitInt        SIO_INPUT       ; device opened for input
+  .else
+    C55_cinitInt        SIO_OUTPUT      ; device opened for output
+  .endif
+
+  C55_cinitEnd          isDhlAligned
+
+  ;
+  ; cinit entry corresponding to this device in the __DHL_tab. This
+  ; table of pointers to configured DHL objects is defined in DHL_end macro
+
+  C55_cinitHeader CINITALIGN, isDataPtrAligned, __DHL_tab + DHL$count * DATAPTRSIZE, DATAPTRSIZE, DATAPAGE
+  C55_cinitBegin        isDataPtrAligned
+  C55_cinitDataPtr      :name:
+  C55_cinitEnd          isDataPtrAligned
+
+  ;
+  ;  Increment DHL$count form next call of this macro
+  ;
+  .eval DHL$count + 1, DHL$count
+
+        .endm
+
+;
+;# ======== DHL_config ========
+;  Static configuration of the DHL module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DHL_config$regs
+DHL_config      .macro _enabled
+
+        .global _DHL_notify
+
+        .asg    0, DHL$count
+
+        .endm
+
+;
+;# ======== DHL_end ========
+;  Invoked at the end of all other configuration declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DHL_end$regs
+DHL_end .macro
+
+  ; expand only if there are configured DHL devices
+  .if (DHL$count > 0)
+
+    .global  __DHL_tab
+    .bss  __DHL_tab, DHL$count * DATAPTRSIZE, 0, STD_TARGWORDMAUS
+    ;
+    ; We'll cinit the entries of above __DHL_tab in DHL_Obj macro instances
+    ;
+
+    .global  __DHL_numof
+    .bss  __DHL_numof, 1 * STD_TARGWORDMAUS, 0, STD_TARGWORDMAUS
+
+    C55_cinitHeader CINITALIGN, isIntAligned, __DHL_numof, 1 * STD_TARGWORDMAUS, DATAPAGE
+    C55_cinitBegin      isIntAligned
+    C55_cinitInt        DHL$count
+    C55_cinitEnd        isIntAligned    
+
+  .endif
+
+        .endm
+;
+;# ======== DHL_init ========
+;  Runtime initialization of the DHL module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DHL_init$regs
+DHL_init        .macro
+        .endm
+
+;
+;# ======== DHL_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", DHL_startup$regs
+DHL_startup        .macro
+        .if     DHL$NUMOF != 0
+
+        .endif
+        .endm
+
+        .endif          ; if DHL_H55 is not defined
+

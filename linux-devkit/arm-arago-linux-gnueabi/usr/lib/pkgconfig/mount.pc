@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=/usr
+libdir=${exec_prefix}/lib
+includedir=/usr/include
+
+Name: mount
+Description: mount library
+Version: 2.18.0
+Requires.private: blkid
+Cflags: -I${includedir}/mount
+Libs: -L${libdir} -lmount

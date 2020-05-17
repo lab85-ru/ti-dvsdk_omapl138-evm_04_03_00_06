@@ -1,0 +1,9 @@
+Package: ti-dsp-benchmark-src
+Version: 1_00_00_02-r1
+Description: Patched sources for ti-dsp-benchmark
+Section: devel
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI TSPA
+Architecture: da850-omapl138-evm
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/c6000/web/c6accel/latest/exports//dsp_benchmark_demo_1_00_00_02_Linux-x86_Setup.bin;name=dspbenchmarksbin

@@ -1,0 +1,9 @@
+Package: ti-c6run-src
+Version: 0_98_03_03-r3
+Description: Patched sources for ti-c6run
+Section: devel
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: all
+Source: svn://gforge.ti.com/svn/dspeasy/;module=tags/0_98_03_03;proto=https;user=anonymous;pswd='' 

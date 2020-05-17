@@ -1,0 +1,1043 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== tsk.h55 ========
+;
+
+        .if ($isdefed("TSK_") = 0)  ; prevent multiple includes of this file
+TSK_    .set    1
+
+        .include cinit.h55 
+        .include std.h55
+        .include obj.h55
+        .include knl.h55
+        .include sts.h55
+        .include gbl.h55
+        .include que.h55
+
+isTskusrstackAligned    .set  1
+
+isTskAligned    .set  isDataPtrAligned
+
+TSK_Obj  .struct
+kobj            .tag            KNL_Obj ; kernel object 
+stack           DataPtr         1       ; address of data stack (top)
+sysstack        DataPtr         1       ; address of system stack (top)
+stacksize       size_t          1       ; size of data stack
+sysstacksize    size_t          1       ; size of system stack
+stackseg        Int             1       ; segment where stacks reside
+name            DataPtr         1       ; printable name
+environ         DataPtr         1       ; environment pointer
+errno           Int             1       ; TSK_seterr()/TSK_geterr() 
+exitflag        Int             1       ; FALSE for server tasks 
+endPad          .align          isTskAligned  
+TSK_A_OBJSIZE   .endstruct
+
+TSK_BASE        .set            TSK_Obj.kobj
+TSK_O_KOBJ      .set            TSK_Obj.kobj - TSK_BASE
+TSK_O_STACK     .set            TSK_Obj.stack - TSK_BASE
+
+    .if  (_55Pb_)
+TSK_user_stack_Obj      .struct
+reg_t3                  Int     1 ; t3
+reg_t2                  Int     1 ; t2
+reg_xdp                 DataPtr 1 ; xdp
+reg_xar5                DataPtr 1 ; xar5
+reg_xar6                DataPtr 1 ; xar6
+reg_xar7                DataPtr 1 ; xar7
+reg_st1                 Int     1 ; st1
+reg_ac5g                Int     1 ; ac5g
+reg_ac6g                Int     1 ; ac6g
+reg_ac7g                Int     1 ; ac7g
+reg_ac5                 DataPtr 1 ; ac5
+reg_ac6                 DataPtr 1 ; ac6
+reg_ac7                 DataPtr 1 ; ac7
+fxn_reta_KNL_glue       DataPtr 1 ; reta_KNL_glue
+fxn_KNL_glue            DataPtr 1 ; KNL_glue
+fxn_KNL_exit            DataPtr 1 ; KNL_exit
+fxn_fxn                 DataPtr 1 ; task_function
+arg0                    DataPtr 1 ; arg0-arg4 land up in xar0-xar4
+arg1                    DataPtr 1
+arg2                    DataPtr 1
+arg3                    DataPtr 1
+arg4                    DataPtr 1
+arg5                    DataPtr 1 ; arg5-arg7 land on stack
+arg6                    DataPtr 1
+arg7                    DataPtr 1
+fxn_TSK_exit            DataPtr 1 ; TSK_exit.
+TSK_A_USER_STACKIMAGE_SIZE      .endstruct
+TSK_USER_STACK_BASE .set TSK_user_stack_Obj.reg_t3
+TSK_USER_STACK_O_REG_T3 .set TSK_user_stack_Obj.reg_t3 - TSK_USER_STACK_BASE
+    .else ; /* (_55Pb_) */
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; The TSK_user_stack_image structure reflects the
+        ; image of TSK's data stack during start up.
+        ; st0, st2, st3 status registers do not form part of TSK
+        ; context and hence space for these registers is removed 
+        ; from the TSK_user_stack_image. (Fixed SDSsq22996)
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+TSK_user_stack_Obj      .struct
+reg_ssp                 Int     1 ; space for storing ssp
+reg_st1                 Int     1 ; space for storing st1
+reg_t2                  Int     1 ; space for storing t2
+reg_xdp_l               Int     1 ; space for storing xdp_l
+reg_xar7_l              Int     1 ; space for storing ar7_l
+reg_xar6_l              Int     1 ; space for storing ar6_l
+reg_xar5_l              Int     1 ; space for storing ar5_l
+reta_fxn_KNL_glue_l     Int     1 ; [23:16] of KNL_glue
+fxn_KNL_glue_l          Int     1 ; [15:0] of KNL_glue
+fxn_KNL_exit_l          Int     1       
+fxn_fxn_l               Int     1       
+    .if  (_55L_) | (_55H_)  
+hole1                   Int     1 ; This is just to make the sp even, after
+                                  ; KNL_exit is called during the startup time
+    .endif
+arg0                    Int     ARGSIZE ; arg0-arg4 land up in xar0-xar4
+arg1                    Int     ARGSIZE
+arg2                    Int     ARGSIZE
+arg3                    Int     ARGSIZE
+arg4                    Int     ARGSIZE 
+arg5                    Int     ARGSIZE ; arg5-arg7 land on stack
+arg6                    Int     ARGSIZE 
+arg7                    Int     ARGSIZE  
+        .if  (_55L_) | (_55H_)  
+hole2                   Int     1       
+        .endif
+fxn_TSK_exit_l          Int     1 ; lower 16 bits of TSK_exit.
+TSK_A_USER_STACKIMAGE_SIZE      .endstruct
+
+TSK_USER_STACK_BASE .set TSK_user_stack_Obj.reg_ssp 
+TSK_USER_STACK_O_REG_XSSP .set TSK_user_stack_Obj.reg_ssp - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_REG_ST1 .set TSK_user_stack_Obj.reg_st1 - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_REG_T2 .set TSK_user_stack_Obj.reg_t2 - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_REG_XDP_L .set TSK_user_stack_Obj.reg_xdp_l - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_REG_XAR7_L .set TSK_user_stack_Obj.reg_xar7_l - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_REG_XAR6_L .set TSK_user_stack_Obj.reg_xar6_l - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_REG_XAR5_L .set TSK_user_stack_Obj.reg_xar5_l - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_RETA_FXN_KNL_GLUE_L .set TSK_user_stack_Obj.reta_fxn_KNL_glue_l - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_FXN_KNL_GLUE_L .set TSK_user_stack_Obj.fxn_KNL_glue_l - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_FXN_KNL_EXIT_L .set TSK_user_stack_Obj.fxn_KNL_exit_l - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_FXN_FXN_L .set TSK_user_stack_Obj.fxn_fxn_l - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_ARG0 .set TSK_user_stack_Obj.arg0 - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_ARG1 .set TSK_user_stack_Obj.arg1 - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_ARG2 .set TSK_user_stack_Obj.arg2 - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_ARG3 .set TSK_user_stack_Obj.arg3 - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_ARG4 .set TSK_user_stack_Obj.arg4 - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_ARG5 .set TSK_user_stack_Obj.arg5 - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_ARG6 .set TSK_user_stack_Obj.arg6 - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_ARG7 .set TSK_user_stack_Obj.arg7 - TSK_USER_STACK_BASE
+TSK_USER_STACK_O_FXN_TSK_EXIT_L .set TSK_user_stack_Obj.fxn_TSK_exit_l - TSK_USER_STACK_BASE
+    .endif ; /* _55Pb_ */
+
+    .if  (_55Pb_)
+TSK_A_SYS_STACKIMAGE_SIZE .set 0
+    .else
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; The TSK_sys_stack_image structure reflects the
+        ; image of TSK's system stack during start up.
+        ; st0, st2, st3 status registers do not form part of TSK
+        ; context and hence space for these registers is removed 
+        ; from the TSK_sys_stack_image. (Fixed SDSsq22996)
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+TSK_sys_stack_image     .struct
+space_reg_ssp           Int     1 ; space for reg ssp
+space_st1               Int     1 ; Empty Space for st1
+reg_t3                  Int     1 ; storage space for t3
+reg_xdp_h               Int     1 ; space for storing xdph
+reg_xar7_h              Int     1 ; storage space for xar7h
+reg_xar6_h              Int     1 ; storage space for xar6h
+reg_xar5_h              Int     1 ; storage space for xar5h
+
+reta_fxn_KNL_glue_h     Int     1 ; RETA value.
+fxn_KNL_glue_h          Int     1 ; KNL_glue fxn upper 8 bits
+fxn_KNL_exit_h          Int     1 ; KNL_exit upper 8 bits
+fxn_fxn_h               Int     1 ; task function upper 8 bits  
+        .if  (_55L_) | (_55H_)  
+hole1                   Int     1 ; This is just to make the sp even, after 
+                                  ; KNL_exit is called during the startup time
+                .endif
+space_arg0h             Int     ARGSIZE ; Hole corresponding to arg0h
+space_arg1h             Int     ARGSIZE ; Hole corresponding to arg1h
+space_arg2h             Int     ARGSIZE ; Hole corresponding to arg2h
+space_arg3h             Int     ARGSIZE ; Hole corresponding to arg3h
+space_arg4h             Int     ARGSIZE ; Hole corresponding to arg4h
+space_arg5h             Int     ARGSIZE ; Hole corresponding to arg5h
+space_arg6h             Int     ARGSIZE ; Hole corresponding to arg6h
+space_arg7h             Int     ARGSIZE ; Hole corresponding to arg7h
+        .if  (_55L_) | (_55H_)  
+hole2                   Int     1       
+        .endif
+fxn_TSK_exit_h          Int     1 ; upper 8 bits of TSK_exit
+TSK_A_SYS_STACKIMAGE_SIZE               .endstruct
+    .endif ; /* _55Pb_ */
+
+        .eval TSK_A_OBJSIZE, TSK_CORESIZE         
+        .eval TSK_CORESIZE+OBJ_HDRSIZE, TSK_OBJSIZE
+        .eval TSK_A_USER_STACKIMAGE_SIZE, TSK_USEDSTACK 
+        .eval TSK_A_SYS_STACKIMAGE_SIZE, TSK_USEDSYSSTACK       
+
+;
+;# ======== TSK_config ========
+;  Static configuration of the TSK module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", TSK_config$regs
+TSK_config .macro _stacksize, _systacksize, _stackseg, _priority, _createfxn, _deletefxn, _exitfxn, _switchfxn, _readyfxn, _num_hooks
+
+        ; If MEM_gNumHeap == 0 then put in an err value in for TSK$stackseg
+        .if (MEM_gNumHeap == 0)
+                .asg    "-1", TSK$stackseg
+        .else 
+            .if ($symcmp(":_stackseg:", "MEM_NULL") == 0)
+                .asg    "-1", TSK$stackseg
+            .else
+                .asg    ":_stackseg:$idx", TSK$stackseg
+            .endif
+        .endif
+
+        .ref :_createfxn:, :_deletefxn:, :_exitfxn:
+
+        .if $isname(":_switchfxn:")
+            .ref :_switchfxn:
+        .endif
+
+        .if $isname(":_readyfxn:")
+            .ref :_readyfxn:
+        .endif
+
+        .global _TSK_exit
+
+        ;
+        ; Initialize counter for use in TSK_Obj
+        ;
+        .eval 0, TSK$strCount
+
+        .eval   :_num_hooks:, TSK$num_hooks
+
+        .endm
+
+
+;
+;# ======== TSK_end ========
+;  Invoked at the end of all other configuration declarations.  
+;  This needs to come after MEM_Obj macro calls.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", TSK_end$regs
+TSK_end .macro
+
+    ; expand only if TSK is enabled
+    .if (TSK$ == 1)
+      .global _TSK      ; Pointer to configuration parameters
+      .global _TSK_config
+
+isTskconfigAligned      .set    LONGALIGN
+
+TSK_ConfigObj .struct
+tskSeg          Int     1;      Task's segment
+tskPri          Int     1;      Task's priority
+tskStacksize    size_t  1;      Task's stacksize
+tsksyStacksize  size_t  1;      Task's systacksize
+tskCreateFxn    CodePtr 1;      Create function
+tskDelFxn       CodePtr 1;      Delete function
+tskExitFxn      CodePtr 1;      Exit function
+tskSwitchFxn    CodePtr 1;      Switch function
+tskReadyFxn     CodePtr 1;      Ready function
+TSK_configPtr   DataPtr 1;      Pointer to this structure
+endPad          .align          isTskconfigAligned
+TSK_CONFIG_A_SIZE       .endstruct
+
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ; Allocate space for TSK_config object. Note that    ;
+      ; _TSK is made as the last element of this structure ;
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ; Moved TSK_config data allocation to tsk.c (see ELVIS design doc).
+
+      C55_cinitHeader CINITALIGN, isTskconfigAligned, _TSK_config, TSK_CONFIG_A_SIZE, DATAPAGE
+      C55_cinitBegin    isTskconfigAligned
+      C55_cinitInt      TSK$stackseg
+      C55_cinitInt      TSK_PRIORITY
+      C55_cinitsize_t   TSK_STACKSIZE
+      C55_cinitsize_t   TSK_SYSTACKSIZE
+      C55_cinitCodePtr  TSK_VCREATEFXN
+      C55_cinitCodePtr  TSK_VDELETEFXN
+      C55_cinitCodePtr  TSK_VEXITFXN
+      C55_cinitCodePtr  TSK_SWITCHFXN
+      C55_cinitCodePtr  TSK_READYFXN
+      C55_cinitDataPtr  _TSK_config     ; _TSK = TSK_config             
+      C55_cinitEnd      isTskconfigAligned
+
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+      ; The startup stack will be borrowed from the idle task's
+      ; stack. The startup stack must begin beyond the portion 
+      ; of the stack that is statically initialized, so the
+      ; __STACK_SIZE will be decremented by that amount.
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    .endif      ; if (TSK$ == 1)
+
+        .endm
+
+;
+;# ======== TSK_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg "", TSK_Obj$regs
+TSK_Obj .macro cflag, name, id, fxn, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, autostack, manstack, stacksize, systacksize, stackseg, priority, envp, exitflag, tskname, statReg, order, filter, maxformat, sumformat, avgformat, filtmaxmult, filtsummult, unittype
+
+        .global :fxn:
+        .global :name:
+        .global :manstack: ; needed to define $stkptr, $sysstkptr via .asg
+        .ref ___bss__
+        .var usr_stackSize, usr_systackSize
+
+        .global :name:$tsk      ; generate symbol for vbd/rta
+:name:$tsk .set 0
+        .global :name:$pri      ; generate priority symbol for vbd/rta
+:name:$pri .set :priority:
+        .global :name:$ord      ; generate order symbol for vbd/rta
+:name:$ord .set :order:
+
+        .if (stacksize & 0x1)
+          .eval (stacksize + 1), usr_stackSize ; even data stack
+        .else
+          .eval (stacksize), usr_stackSize     ; data stack already even
+        .endif
+
+        .if (systacksize & 0x1)
+          .eval (systacksize + 1), usr_systackSize ; even system stack
+        .else
+          .eval (systacksize), usr_systackSize     ; system stack already even
+        .endif
+
+        .eval usr_stackSize, :name:$stklen      ; TSK's data stack length
+        .eval usr_systackSize, :name:$sysstklen ; TSK's system stack length
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Reserve space for automatically allocation. In 1*32
+        ; mode, allocate equal space for data stack and system stack.
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        .if :autostack:                 
+          .global :name:$stack, :name:$sysstack 
+          .global :name:$stackname, :name:$sysstackname
+
+          C55_allocateObject 2, :name:$stack, :usr_stackSize:, .:name:$stk 
+          C55_allocateObject 2, :name:$sysstack, :usr_systackSize:, .:name:$stk 
+             
+          .asg "(:name:$stack)", :name:$stackname ; point to stack top
+          .asg "(:name:$sysstack)", :name:$sysstackname ; point to sysstack top
+        .else   ; if user allocates stack
+           .if ($symcmp(":manstack:", "null") == 0)
+             .emsg "TSK :name: manually allocated stack cannot be null"
+           .else
+             .asg "(:manstack: + (:manstack: & 0x1))", :name:$stackname 
+             .asg "(:manstack: + :usr_stackSize: + (:manstack: & 0x1))", :name:$sysstackname 
+           .endif ; manstack endif
+         .endif   ; autostack endif
+
+        .global :name:$stkptr, :name:$sysstkptr 
+        .if :autostack:
+:name:$stkptr     .set (:name:$stackname + usr_stackSize - (TSK_USEDSTACK))
+:name:$sysstkptr  .set (:name:$sysstackname + usr_systackSize - (TSK_USEDSYSSTACK))
+        .else
+          .asg "(:name:$stackname + :usr_stackSize: - (TSK_USEDSTACK))", :name:$stkptr
+        ; comment out the following line for work around SDSsq32291
+         ; .var keep_masm55_happy
+          .asg "(:name:$sysstackname + :usr_systackSize: - (TSK_USEDSYSSTACK))", :name:$sysstkptr
+        .endif ; autostack endif
+
+        ; comment out the following line for work around SDSsq32291
+        ; .eval "", keep_masm55_happy
+
+        .if :tskname:                   ; if task has a name
+          .sect ".const"
+TSK$:name:      .string ":name:",0      ; null-terminated name string
+        .endif
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; create the task object
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        
+        .global :name:$tskobj           ; Global defined for debug purposes.
+
+                                        ; Allocate space starting from
+                                        ; the header associated with the task
+        C55_allocateObject isTskAligned, :name:$obj, TSK_OBJSIZE, ".tsk"
+
+        .eval   TSK$num_hooks * DATAPTRSIZE, env_size
+        .if TSK$num_hooks > 0
+            C55_allocateObject isDataPtrAligned, :name:$env, env_size, ".tsk"
+        .endif
+        C55_cinitHeader CINITALIGN, isTskAligned, :name:$obj, TSK_OBJSIZE, DATAPAGE
+:name:  .set    :name:$obj +  OBJ_HDRSIZE ; This is where the tsk object begins
+
+:name:$kobj     .set    :name:          ; same as :name: above
+:name:$tskobj   .set    :name:$obj + OBJ_HDRSIZE + KNL_A_OBJSIZE
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; fill the obj header structure
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        OBJ_cinitObj :name:, OBJ_TSK, (TSK_A_OBJSIZE + env_size)
+
+        C55_cinitBegin  isTskAligned
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; fill KNL_Obj structure
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        KNL_cinitObj :name:$kobj, :name:$kobj + QUE_A_OBJSIZE, :name:$kobj + (2 * QUE_A_OBJSIZE), :priority:, :name:$stkptr, :name:$sts 
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; fill the rest of TSK_Obj structure
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        C55_cinitDataPtr :name:$stackname ; stack - This field is only used by 
+                                          ; TSK_checkstacks to verify that the
+                                          ; task's data stack is still valid. 
+                                          ; It always points to the top (lowest
+                                          ; address) of the task's stack.
+        C55_cinitDataPtr :name:$sysstackname
+                                          ; sysstack field is used by 
+                                          ; TSK_checkstacks to verify that the
+                                          ; task's system stack is still valid.
+                                          ; It is the top of task's system stack
+
+        C55_cinitsize_t usr_stackSize   ; stacksize represents data stack size
+
+        C55_cinitsize_t usr_systackSize ; size of system stack
+
+        ; The stackseg field is used as an indication as to where the stack was 
+        ; created. (To be used in delete later). A dynamically created tasks has
+        ; a stackseg specified, say DATA. stackseg field has no utility for 
+        ; statically created tasks as the stack space cannot be reclaimed. 
+        ; Hence it is made -1.
+
+        C55_cinitInt    -1              
+
+        .if :tskname:                   ; if task has a name
+          C55_cinitDataPtr TSK$:name:   ; assign it
+        .else
+          C55_cinitDataPtr 0
+        .endif
+
+        .if TSK$num_hooks == 0
+          C55_cinitDataPtr :envp:       ; environ
+        .else
+          C55_cinitDataPtr :name:$env   ; environ
+        .endif
+
+        C55_cinitInt    0               ; errno
+        C55_cinitInt    :exitflag:
+
+        C55_cinitEnd    isTskAligned
+
+
+        .if GBL_ENABLEINST
+            .global :name:$sts$filtsummult      ; generate symbol for sum mult
+:name:$sts$filtsummult .set     :filtsummult:
+            .global :name:$sts$filtmaxmult      ; generate symbol for max mult
+:name:$sts$filtmaxmult .set     :filtmaxmult:
+
+            STS_Obj 1, :name:$sts, 0, :filter:, ":maxformat:", ":sumformat:", ":avgformat:", -1, :unittype:, -1, -1, -1, 0, 0
+        .endif
+
+        .if $symcmp(":fxn:", "_SYS_nop") = 0
+          .wmsg "Task :name: is being created to run :fxn:"
+        .endif
+
+        .if     TSK$num_hooks > 0
+            .asg        0, h$index
+
+            C55_cinitHeader     CINITALIGN, isDataPtrAligned, :name:$env, DATAPTRSIZE * TSK$num_hooks, DATAPAGE
+            ;
+            ; Create cinit entry for all HOOKS (SDSsq37326).
+            ; Previously just the KNL hook was getting cinited with
+            ; a configuration paramter.  Now all user-level hooks
+            ; get cinited to 0, so a HOOK_getenv before a HOOK_setenv
+            ; will return a known value.
+            ;
+            .loop
+                .if (h$index == HOOK$knl_index)
+                    C55_cinitDataPtr    :envp:
+                .else
+                    C55_cinitDataPtr    0
+                .endif
+
+                .eval   h$index + 1, h$index
+                .if (h$index == TSK$num_hooks)
+                    .break
+                .endif
+            .endloop
+        .endif
+
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; create data stack image                               ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    .if  (_55Pb_)
+
+        C55_cinitHeader CINITALIGN, isTskusrstackAligned, :name:$stkptr, TSK_A_USER_STACKIMAGE_SIZE, DATAPAGE
+        C55_cinitInt 0          ; t3
+        C55_cinitInt 0          ; t2 
+        C55_cinitDataPtr 0      ; xdp
+        C55_cinitDataPtr 0      ; xar5
+        C55_cinitDataPtr 0      ; xar6
+        C55_cinitDataPtr 0      ; xar7
+        C55_cinitInt 4100h      ; st1
+                                ; KNL_switch() only updates the INTM bit (11)
+                                ; in ST1. All other bits are universal.
+        C55_cinitInt 0          ; ac5g
+        C55_cinitInt 0          ; ac6g
+        C55_cinitInt 0          ; ac7g
+        C55_cinitLong 0         ; ac5
+        C55_cinitLong 0         ; ac6
+        C55_cinitLong 0         ; ac7
+        C55_cinitDataPtr (KNL_glue | 0x10000000); KNL_glue reta
+        C55_cinitDataPtr KNL_glue               ; KNL_glue
+        C55_cinitDataPtr _KNL_exit              ; KNL_exit
+        C55_cinitDataPtr :fxn:  ; task function
+        .eval TSK$strCount, strCount$save
+        .eval $symlen(":arg0:"), arglen
+        .if $symcmp(":arg0(1):","'") = 0 & $symcmp(":arg0(arglen):","'") = 0
+          .xlong TSK$string:TSK$strCount:
+          .eval TSK$strCount+1, TSK$strCount
+        .else
+          .xlong :arg0:
+        .endif
+
+        .eval $symlen(":arg1:"), arglen
+        .if $symcmp(":arg1(1):","'") = 0 & $symcmp(":arg1(arglen):","'") = 0
+          .xlong TSK$string:TSK$strCount:
+          .eval TSK$strCount+1, TSK$strCount
+        .else
+          .xlong :arg1:
+        .endif
+
+        .eval $symlen(":arg2:"), arglen
+        .if $symcmp(":arg2(1):","'") = 0 & $symcmp(":arg2(arglen):","'") = 0
+          .xlong TSK$string:TSK$strCount:
+          .eval TSK$strCount+1, TSK$strCount
+        .else
+          .xlong :arg2:
+        .endif
+        
+        .eval $symlen(":arg3:"), arglen
+        .if $symcmp(":arg3(1):","'") = 0 & $symcmp(":arg3(arglen):","'") = 0
+          .xlong TSK$string:TSK$strCount:
+          .eval TSK$strCount+1, TSK$strCount
+        .else
+          .xlong :arg3:
+        .endif
+        
+        .eval $symlen(":arg4:"), arglen
+        .if $symcmp(":arg4(1):","'") = 0 & $symcmp(":arg4(arglen):","'") = 0
+          .xlong TSK$string:TSK$strCount:
+          .eval TSK$strCount+1, TSK$strCount
+        .else
+          .xlong :arg4:
+        .endif
+        
+        .eval $symlen(":arg5:"), arglen
+        .if $symcmp(":arg5(1):","'") = 0 & $symcmp(":arg5(arglen):","'") = 0
+          .xlong TSK$string:TSK$strCount:
+          .eval TSK$strCount+1, TSK$strCount
+        .else
+          .xlong :arg5:
+        .endif
+        
+        .eval $symlen(":arg6:"), arglen
+        .if $symcmp(":arg6(1):","'") = 0 & $symcmp(":arg6(arglen):","'") = 0
+          .xlong TSK$string:TSK$strCount:
+          .eval TSK$strCount+1, TSK$strCount
+        .else
+          .xlong :arg6:
+        .endif
+        
+        .eval $symlen(":arg7:"), arglen
+        .if $symcmp(":arg7(1):","'") = 0 & $symcmp(":arg7(arglen):","'") = 0
+          .xlong TSK$string:TSK$strCount:
+          .eval TSK$strCount+1, TSK$strCount
+        .else
+          .xlong :arg7:
+        .endif
+
+        C55_cinitDataPtr _TSK_exit              ; TSK_exit
+    .else ; /* (_55Pb_) */
+
+        C55_cinitHeader CINITALIGN, isTskusrstackAligned, :name:$stkptr, TSK_A_USER_STACKIMAGE_SIZE, DATAPAGE
+
+        C55_cinitInt (:name:$sysstkptr + TSK_USER_STACK_O_REG_ST1) & 0xffff                              
+                                ; store the lower 16 bits of SSP value. 
+                                ; the upper 7 bits are common.
+                                ; add 1 to skip the ssp field in system stack. 
+                                ; the first field in the initial image of data 
+                                ; stack must point to start of system stack. 
+                                ; ie. an address where st1 exists so that
+                                ; subsequent pops can decrement sp/ssp 
+                                ; identically. because :name:$sysstkptr points 
+                                ; to ssp field, add 1 to it and we get st1 
+                                ; field of SSP initial stack image.
+
+        C55_cinitInt 4100h      ; set st1 to 0100000100000000b:
+                                ; BRAF=XF=HM=INTM=M40=SATD=C16=FRCT=C54CM=ASM=0
+                                ; CPL=SXMD=1
+
+        C55_cinitInt 0          ; for 16-bit register t2 
+
+        C55_cinitInt 0          ; for 16-bit register dp
+
+        C55_cinitInt 0          ; for 16-bit register ar7
+
+        C55_cinitInt 0          ; for 16-bit register ar6
+
+        C55_cinitInt 0          ; for 16-bit register ar5,
+
+        C55_cinitInt KNL_glue >> 16     ; reserve space for KNL_glue this is
+                                        ; the RETA value
+
+        C55_cinitInt KNL_glue & 0xffff  ; reserve space for KNL_glue 
+
+        C55_cinitInt _KNL_exit & 0xffff ; KNL entry function
+
+        C55_cinitInt :fxn: & 0xffff     ; task function
+
+                                        ; now initialize task function arguments
+
+        .eval TSK$strCount, strCount$save
+
+        .if  (_55L_) | (_55H_)  
+
+          C55_cinitInt 0xdead           ; fill a hole
+
+          .eval $symlen(":arg0:"), arglen
+          .if $symcmp(":arg0(1):","'") = 0 & $symcmp(":arg0(arglen):","'") = 0
+            .xlong TSK$string:TSK$strCount:
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .xlong :arg0:
+          .endif
+
+          .eval $symlen(":arg1:"), arglen
+          .if $symcmp(":arg1(1):","'") = 0 & $symcmp(":arg1(arglen):","'") = 0
+            .xlong TSK$string:TSK$strCount:
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .xlong :arg1:
+          .endif
+
+          .eval $symlen(":arg2:"), arglen
+          .if $symcmp(":arg2(1):","'") = 0 & $symcmp(":arg2(arglen):","'") = 0
+            .xlong TSK$string:TSK$strCount:
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .xlong :arg2:
+          .endif
+        
+          .eval $symlen(":arg3:"), arglen
+          .if $symcmp(":arg3(1):","'") = 0 & $symcmp(":arg3(arglen):","'") = 0
+            .xlong TSK$string:TSK$strCount:
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .xlong :arg3:
+          .endif
+        
+          .eval $symlen(":arg4:"), arglen
+          .if $symcmp(":arg4(1):","'") = 0 & $symcmp(":arg4(arglen):","'") = 0
+            .xlong TSK$string:TSK$strCount:
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .xlong :arg4:
+          .endif
+        
+          .eval $symlen(":arg5:"), arglen
+          .if $symcmp(":arg5(1):","'") = 0 & $symcmp(":arg5(arglen):","'") = 0
+            .xlong TSK$string:TSK$strCount:
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .xlong :arg5:
+          .endif
+        
+          .eval $symlen(":arg6:"), arglen
+          .if $symcmp(":arg6(1):","'") = 0 & $symcmp(":arg6(arglen):","'") = 0
+            .xlong TSK$string:TSK$strCount:
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .xlong :arg6:
+          .endif
+        
+          .eval $symlen(":arg7:"), arglen
+          .if $symcmp(":arg7(1):","'") = 0 & $symcmp(":arg7(arglen):","'") = 0
+            .xlong TSK$string:TSK$strCount:
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .xlong :arg7:
+          .endif
+
+          C55_cinitInt 0xdead           ; Initialize the hole so that DataPtr in
+                                        ; large mode start at even address.
+        .else
+
+          .eval $symlen(":arg0:"), arglen
+          .if $symcmp(":arg0(1):","'") = 0 & $symcmp(":arg0(arglen):","'") = 0
+            .word TSK$string:TSK$strCount: & 0xffff
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .word :arg0: & 0xffff
+          .endif
+
+          .eval $symlen(":arg1:"), arglen
+          .if $symcmp(":arg1(1):","'") = 0 & $symcmp(":arg1(arglen):","'") = 0
+            .word TSK$string:TSK$strCount: & 0xffff
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .word :arg1: & 0xffff
+          .endif
+
+          .eval $symlen(":arg2:"), arglen
+          .if $symcmp(":arg2(1):","'") = 0 & $symcmp(":arg2(arglen):","'") = 0
+            .word TSK$string:TSK$strCount: & 0xffff
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .word :arg2: & 0xffff
+          .endif
+        
+          .eval $symlen(":arg3:"), arglen
+          .if $symcmp(":arg3(1):","'") = 0 & $symcmp(":arg3(arglen):","'") = 0
+            .word TSK$string:TSK$strCount: & 0xffff
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .word :arg3: & 0xffff
+          .endif
+        
+          .eval $symlen(":arg4:"), arglen
+          .if $symcmp(":arg4(1):","'") = 0 & $symcmp(":arg4(arglen):","'") = 0
+            .word TSK$string:TSK$strCount: & 0xffff
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .word :arg4: & 0xffff
+          .endif
+        
+          .eval $symlen(":arg5:"), arglen
+          .if $symcmp(":arg5(1):","'") = 0 & $symcmp(":arg5(arglen):","'") = 0
+            .word TSK$string:TSK$strCount: & 0xffff
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .word :arg5: & 0xffff
+          .endif
+        
+          .eval $symlen(":arg6:"), arglen
+          .if $symcmp(":arg6(1):","'") = 0 & $symcmp(":arg6(arglen):","'") = 0
+            .word TSK$string:TSK$strCount: & 0xffff
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .word :arg6: & 0xffff
+          .endif
+        
+          .eval $symlen(":arg7:"), arglen
+          .if $symcmp(":arg7(1):","'") = 0 & $symcmp(":arg7(arglen):","'") = 0
+            .word TSK$string:TSK$strCount: & 0xffff
+            .eval TSK$strCount+1, TSK$strCount
+          .else
+            .word :arg7: & 0xffff
+          .endif
+
+        .endif
+
+        .field _TSK_exit & 0xffff       ; TSK_exit
+
+    .endif ; /* _55Pb_ */
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; create system stack image                             ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    .if  (_55Pb_)
+    .else ; /* (_55Pb_) */
+
+        C55_cinitHeader CINITALIGN, isTskusrstackAligned, :name:$sysstkptr, TSK_A_USER_STACKIMAGE_SIZE, DATAPAGE
+
+        C55_cinitInt     0                      ; space for ssp
+
+
+
+                                                ; Below field is
+                                                ; for ST1 register
+        C55_cinitInt            0x0             ; dummy space to create
+                                                ; consistent image
+                                                ; between sp and ssp.
+        C55_cinitInt            0x0             ; storage space  for t3
+        C55_cinitInt            (___bss__ >> 16)& 0xffff        ; xdph
+
+        C55_cinitInt            (___bss__ >> 16)& 0xffff        ; xar7h
+        C55_cinitInt            (___bss__ >> 16)& 0xffff        ; xar6h
+        C55_cinitInt            (___bss__ >> 16)& 0xffff        ; xar5h
+
+        C55_cinitInt KNL_glue & 0xffff          ; reserve space for reta
+                                                ; upper 8 bits of KNL_glue 
+        C55_cinitInt KNL_glue >> 16             ; reserve space for
+                                                ; upper 8 bits of KNL_glue 
+        C55_cinitInt    _KNL_exit >>  16        ; KNL_exit address
+        C55_cinitInt    :fxn:   >> 16           ; user fxn
+        .if  (_55L_) | (_55H_)  
+                C55_cinitInt    0xdead          ; hole
+        .endif
+
+        .if  (_55L_) | (_55H_)  
+                .xlong  0x0                     ; :arg0:
+                .xlong  0x0                     ; :arg1:
+                .xlong  0x0                     ; :arg2:
+                .xlong  0x0                     ; :arg3:
+                .xlong  0x0                     ; :arg4:
+                .xlong  0x0                     ; :arg5:
+                .xlong  0x0                     ; :arg6:
+                .xlong  0x0                     ; :arg7:
+                C55_cinitInt    0xdead          ; Initialize the hole
+                                                ; so that DataPtr in
+                                                ; large mode start
+                                                ; at even address.
+        .else                                   ; if small mode
+                .word   0x0                     ; :arg0:
+                .word   0x0                     ; :arg1:
+                .word   0x0                     ; :arg2:
+                .word   0x0                     ; :arg3:
+                .word   0x0                     ; :arg4:
+                .word   0x0                     ; :arg5:
+                .word   0x0                     ; :arg6:
+                .word   0x0                     ; :arg7:
+        .endif          
+        .field  _TSK_exit >> 16
+
+    .endif ; /* _55Pb_ */
+
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Create a record to fill unused portion of user stack with
+        ; stackstamp  Format: sequence of 3 words
+        ; <count, address, fill-value>
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        .sect ".gblinit"
+
+        .if  (_55L_) | (_55H_)  
+                .word (:name:$stkptr - :name:$stackname) / STD_TARGWORDMAUS     ; count
+                .xlong  :name:$stackname
+                .word 0xbeef
+        .else
+                .word (:name:$stkptr - :name:$stackname) / STD_TARGWORDMAUS     ; count
+                .word :name:$stackname & 0xffff
+                .word 0xbeef
+        .endif
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Create a record to fill unused portion of system stack with
+        ; stackstamp  Format: sequence of 3 words
+        ; <count, address, fill-value>
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+        .sect ".gblinit"
+        .if _55Pb_
+        .elseif  (_55L_) | (_55H_)  
+                .word (:name:$sysstkptr - :name:$sysstackname) / STD_TARGWORDMAUS       ; count
+                .xlong :name:$sysstackname
+                .word 0xfeeb
+        .else
+                .word (:name:$sysstkptr - :name:$sysstackname) / STD_TARGWORDMAUS       ; count
+                .word  :name:$sysstackname & 0xffff
+                .word 0xfeeb
+        .endif
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Finally, let :name: point to the right location
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; 
+
+        ;.asg ":name:$base + OBJ_HDRSIZE * STD_TARGWORDMAUS", :name:
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Conditionally set up strings for arguments
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        .eval   strCount$save, TSK$strCount
+
+        .eval $symlen(":arg0:"),arglen
+        .if $symcmp(":arg0(1):","'") = 0 & $symcmp(":arg0(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg0(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg1:"),arglen
+        .if $symcmp(":arg1(1):","'") = 0 & $symcmp(":arg1(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg1(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg2:"),arglen
+        .if $symcmp(":arg2(1):","'") = 0 & $symcmp(":arg2(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg2(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg3:"),arglen
+        .if $symcmp(":arg3(1):","'") = 0 & $symcmp(":arg3(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg3(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg4:"),arglen
+        .if $symcmp(":arg4(1):","'") = 0 & $symcmp(":arg4(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg4(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg5:"),arglen
+        .if $symcmp(":arg5(1):","'") = 0 & $symcmp(":arg5(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg5(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg6:"),arglen
+        .if $symcmp(":arg6(1):","'") = 0 & $symcmp(":arg6(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg6(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg7:"),arglen
+        .if $symcmp(":arg7(1):","'") = 0 & $symcmp(":arg7(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg7(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .endm
+
+
+;
+
+
+;
+;# ======== TSK_init ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg "xar0,xar1", TSK_init$regs
+TSK_init        .macro
+
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    ; only expand if TSK is configured by the user
+    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    .if (TSK$ = 1)      ; if TSK$ = 1
+      .global _TSK_init, _TSK_setup
+      call _TSK_init
+      .if TSK$NUMOF != 0        ; if TSK$NUMOF != 0
+        call _TSK_setup
+      .endif                    ; endif TSK$NUMOF
+    .endif              ; endif TSK$
+
+        .endm
+
+;# ======== TSK_startup ========
+;  Runtime initialization of the TSK module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "xar0,xar1", TSK_startup$regs
+TSK_startup     .macro
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Common code across algebriac/menmonic assembler
+        ; only expand if the TSK module is configured
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+        .if (TSK$ = 1)                  ; if TSK$ = 1
+          .global _TSK_startup
+          .if (SWI$ != 1)               ; If no user SWIs exist
+                                        ; Tasks are enabled, we need 
+                                        ; to unlock the SWI scheduler here
+                                        ; since SWI_startup will be empty
+            .if(.MNEMONIC)
+              .if (_55L_) | (_55H_)
+                mov #-1, *(#SWI_D_lock)
+              .else
+                mov #-1, *abs16(#SWI_D_lock)
+              .endif
+            .else                       ; Algebraic assmebler
+              .if (_55L_) | (_55H_)
+                *(#SWI_D_lock) = #-1
+              .else
+                *abs16(#SWI_D_lock) = #-1
+              .endif
+            .endif
+          .endif
+          .if TSK$NUMOF != 0
+                call _TSK_startup
+          .else
+                .emsg "There must be at least one task defined under TSK."
+          .endif                        ; endif TSK$NUMOF
+        .else
+
+          .global TSK_idle$stkptr
+          .global TSK_idle$sysstkptr
+
+TSK_idle$stkptr         .set 0
+TSK_idle$sysstkptr      .set 0
+
+        .endif                          ; endif TSK$
+
+        .endm
+        .endif          ; if TSK_ is not defined

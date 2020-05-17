@@ -1,0 +1,108 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== que.h62 ========
+;
+;
+
+        .if ($isdefed("QUE_") = 0)  ; prevent multiple includes of this file
+QUE_    .set    1
+
+        .include std.h62
+
+        .asg    2,      QUE_ELEMSIZE
+
+;
+;# ======== QUE_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", QUE_Obj$regs
+QUE_Obj .macro cflag, name, id
+
+        .global :name:
+
+:name:  .usect  ".que",2 * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   2 * STD_TARGWORDMAUS
+        .word   :name:
+
+        .word   :name:, :name:          ; QUE_Elem:  prev & next
+
+        .endm
+
+;
+;# ======== QUE_config ========
+;  Static configuration of the QUE module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", QUE_config$regs
+QUE_config      .macro
+        .endm
+
+;
+;# ======== QUE_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", QUE_end$regs
+QUE_end .macro
+        .endm
+
+;
+;# ======== QUE_init ========
+;  Runtime initialization of the QUE module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", QUE_init$regs
+QUE_init        .macro
+        .endm
+
+;
+;# ======== QUE_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", QUE_startup$regs
+QUE_startup        .macro
+        .endm
+
+        .endif          ; if QUE_ is not defined

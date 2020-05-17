@@ -1,0 +1,15 @@
+Package: libpng12-dev
+Version: 1.2.44-r3.0.6
+Description: PNG Library
+Section: libs
+Priority: required
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: libpng
+Architecture: armv5te
+OE: libpng
+Homepage: http://www.libpng.org/
+Build: install/d0bd439
+Depends: libpng12-0
+Recommends: libz-dev, libc6-dev
+Provides: libpng3
+Source: ftp://ftp.simplesystems.org/pub/png/src/libpng-1.2.44.tar.bz2;name=libpng file://makefile_fix.patch

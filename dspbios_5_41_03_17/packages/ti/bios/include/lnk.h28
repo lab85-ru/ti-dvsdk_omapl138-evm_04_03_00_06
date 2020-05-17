@@ -1,0 +1,85 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== lnk.h28 ========
+;
+;
+
+        .if ($isdefed("LNK_") = 0)  ; prevent multiple includes of this file
+LNK_    .set    1
+
+        .include  std.h28
+
+        .asg    "", LNK_Obj$regs
+
+        .global LNK_F_init, LNK_F_dataPump
+
+;
+;# ======== LNK_config ========
+;  Invoked by configuration file prior to creating any objects via
+;  LNK_Obj.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LNK_config$regs
+LNK_config      .macro _dsm, _dsmbufseg, _dsmmemsize
+
+        .endm
+
+;
+;# ======== LNK_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LNK_end$regs
+LNK_end .macro
+        .endm
+
+;
+;# ======== LNK_init ========
+;  Runtime initialization for LNK
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LNK_init$regs
+LNK_init        .macro
+        ;
+        ; no need to call LNK_F_init when it's an empty function
+        ;
+        .endm
+
+;
+;# ======== LNK_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg "", LNK_startup$regs
+LNK_startup  .macro
+        .endm
+
+        .endif          ; if LNK_ is not defined
+

@@ -1,0 +1,32 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_6203.tci ========
+ *  This file contains BIOS settings for 6203.
+ *  The chip configuration settings are based on document SGUS033.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_6203B.tci");
+
+/*
+ *  ======== bios.init6203 ========
+ *  BIOS initialization for the 6203
+ */
+bios.init6203 = function (prog, baseseed)
+{
+
+    bios.init6203B(prog, baseseed);
+    
+    /* Since there is no CSL for 6203B, its init() function sets CHIPTYPE to
+     * "other". The 6203 device has a CSL, so its CHIPTYPE is set to deviceName
+     * and the CSL is linked into the program.
+     */
+    /* There are function calls to bios.initializeRegisterMap and
+     * bios.initializeMemory that occur prior to the instruction below. However,
+     * those functions don't do anything related to CHIPTYPE, for 6x0x devices.
+     */
+    prog.module("GBL").CHIPTYPE = prog.cpu.deviceName;
+}

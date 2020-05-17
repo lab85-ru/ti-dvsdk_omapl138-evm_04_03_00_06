@@ -1,0 +1,17 @@
+/psp/board-utilities/src/boot-strap/armubl-03.20.00.14.tar.gz
+/psp/board-utilities/src/boot-strap/dspubl-03.20.00.14.tar.gz
+/psp/board-utilities/src/utils/norflash-writer-03.20.00.14.tar.gz
+/psp/board-utilities/images/boot-strap/arm-mmcsd-ais.bin
+/psp/board-utilities/images/utils/spiflash-writer.out
+/psp/board-utilities/images/boot-strap/arm-nor-ais.bin
+/psp/board-utilities/images/utils/norflash-writer.out
+/psp/board-utilities/images/boot-strap/arm-nand-ais.bin
+/psp/board-utilities/images/utils/nand-writer.out
+/psp/board-utilities/src/utils/spiflash-writer-03.20.00.14.tar.gz
+/psp/board-utilities/src/utils/mmcsd-writer-03.20.00.14.tar.gz
+/psp/board-utilities/serialflasher/slh_OMAP-L138.exe
+/psp/board-utilities/images/boot-strap/arm-spi-ais.bin
+/psp/board-utilities/src/utils/nand-writer-03.20.00.14.tar.gz
+/psp/board-utilities/serialflasher/sfh_OMAP-L138.exe
+/psp/board-utilities/images/utils/uflash
+/psp/board-utilities/serialflasher/genecc_OMAP-L138.exe

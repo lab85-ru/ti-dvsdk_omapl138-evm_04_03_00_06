@@ -1,0 +1,43 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Library
+CPUFamily=TMS320C67XX
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Config="Debug"
+Config="Release"
+Config="iDebug"
+Config="iRelease"
+
+[Source Files]
+Source="..\..\..\src\Lidd.c"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"..\..\..\lib\OMAPL138\Debug\ti.pspiom.lcdclidd.a674"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"..\..\..\lib\OMAPL138\Release\ti.pspiom.lcdclidd.a674"
+
+["Archiver" Settings: "iDebug"]
+Options=-r -o"..\..\..\lib\OMAPL138\iDebug\ti.pspiom.lcdclidd.a674"
+
+["Archiver" Settings: "iRelease"]
+Options=-r -o"..\..\..\lib\OMAPL138\iRelease\ti.pspiom.lcdclidd.a674"
+
+["Compiler" Settings: "Debug"]
+Options=-g -mo -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\" -d"CHIP_OMAPL138" -d"BIOS_PWRM_ENABLE" -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-o2 -mo -pdr -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\" -d"CHIP_OMAPL138" -d"BIOS_PWRM_ENABLE"  -d"PSP_DISABLE_INPUT_PARAMETER_CHECK" -d"NDEBUG" -mv6740
+
+["Compiler" Settings: "iDebug"]
+Options=-g -mo -pdr -fr"$(Proj_dir)\iDebug" -i"$(Proj_dir)\..\..\..\..\..\..\" -d"CHIP_OMAPL138" -d"BIOS_PWRM_ENABLE" -d"Lcdc_DEBUGPRINT_ENABLE" -mv6740
+
+["Compiler" Settings: "iRelease"]
+Options=-o2 -mo -pdr -fr"$(Proj_dir)\iRelease" -i"$(Proj_dir)\..\..\..\..\..\..\" -d"CHIP_OMAPL138" -d"BIOS_PWRM_ENABLE" -d"Lcdc_DEBUGPRINT_ENABLE"  -d"PSP_DISABLE_INPUT_PARAMETER_CHECK" -d"NDEBUG" -mv6740
+
+

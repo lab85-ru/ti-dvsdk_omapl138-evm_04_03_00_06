@@ -1,0 +1,35 @@
+;
+;  ======== pmi_idle.s64P ========
+;
+
+        .global __PMI_doIdle
+
+        .sect ".pmonchip:slp"
+
+;
+;# ======== _PMI_doIdle ========
+;
+;  Void _PWRM_doIdle(Void);
+;
+;
+__PMI_doIdle:
+        .asmfunc
+
+        mvc csr,b0                      ; set the GIE bit in b0
+        or 1,b0,b0
+
+        mvc b0,csr                      ; re-enable interrupts as invoke IDLE
+     || idle
+
+        nop                             ; pad the fetch packet with nops
+        nop
+        nop
+        nop
+        nop
+        nop
+        
+        b b3                            ; return 
+        nop 5
+
+        .endasmfunc
+

@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/dm6446
+END
+loadmodules.sh
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/dm6446/loadmodules.sh
+END
+platform.tci
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/dm6446/platform.tci
+END
+unloadmodules.sh
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/dm6446/unloadmodules.sh
+END
+DSPLINK_CFG_update.c
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/dm6446/DSPLINK_CFG_update.c
+END
+platform.mak
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/dm6446/platform.mak
+END

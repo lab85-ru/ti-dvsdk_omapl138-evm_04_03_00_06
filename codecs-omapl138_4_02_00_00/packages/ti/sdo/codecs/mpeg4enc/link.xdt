@@ -1,0 +1,23 @@
+SECTIONS
+{
+% if (this.MPEG4ENC.dataSection) { 
+    .const:MP4VENC_TI_dSect1  > `this.MPEG4ENC.dataSection`
+%}
+% if (this.MPEG4ENC.udataSection) { 
+    .far:MP4VENC_TI_uSect1  > `this.MPEG4ENC.udataSection`
+%}
+% if (this.MPEG4ENC.codeSection) { 
+    .text:MP4VENC_TI_cSect1  > `this.MPEG4ENC.codeSection`, align = 0x10000
+    .text:_MP4VENC_TI_activate  > `this.MPEG4ENC.codeSection`
+    .text:_MP4VENC_TI_alloc  > `this.MPEG4ENC.codeSection`
+    .text:_MP4VENC_TI_deactivate  > `this.MPEG4ENC.codeSection`
+    .text:_MP4VENC_TI_free  > `this.MPEG4ENC.codeSection`
+    .text:_MP4VENC_TI_initObj  > `this.MPEG4ENC.codeSection`
+    .text:_MP4VENC_TI_numAlloc  > `this.MPEG4ENC.codeSection`
+    .text:_MP4VENC_TI_encode  > `this.MPEG4ENC.codeSection`
+    .text:_MP4VENC_TI_control  > `this.MPEG4ENC.codeSection`
+    .text:_MP4VENC_TI_exit  > `this.MPEG4ENC.codeSection`
+    .text:_MP4VENC_TI_init  > `this.MPEG4ENC.codeSection`
+%}
+}
+

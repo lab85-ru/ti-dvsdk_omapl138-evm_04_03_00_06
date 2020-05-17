@@ -1,0 +1,14 @@
+SECTIONS
+{
+% if (this.MPEG2DEC.dataSection) { 
+      .const:MPEG2VDEC_TI_dSect1 > `this.MPEG2DEC.dataSection`, align=0x80 
+%}
+% if (this.MPEG2DEC.udataSection) { 
+      .far:MPEG2VDEC_TI_uSect1 > `this.MPEG2DEC.udataSection`, align=0x80      
+%}
+% if (this.MPEG2DEC.codeSection) { 
+      .text:MPEG2VDEC_TI_cSect1> `this.MPEG2DEC.codeSection`, align=0x10000
+%}
+
+
+}

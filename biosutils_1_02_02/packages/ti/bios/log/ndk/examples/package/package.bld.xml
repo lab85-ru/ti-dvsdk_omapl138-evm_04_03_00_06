@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.bios.log.ndk.examples" version="1, 0, 2, 02">
+    <units>
+    </units>
+    <sources>
+        <srcFile name="package/cfg/evmdm642/logserverexample_x64cfg.s62"/>
+        <srcFile name="common/logserverstacksetup.c"/>
+        <srcFile name="package/cfg/evmdm6437/logserverexample_x64Pcfg_c.c"/>
+        <srcFile name="evmdm6437/evmdm6437init.c"/>
+        <srcFile name="package/cfg/evmdm642/logserverexample_x64cfg_c.c"/>
+        <srcFile name="common/logserverexample.c"/>
+        <srcFile name="package/cfg/evmdm642/logserverexample_x64.c"/>
+        <srcFile name="package/cfg/evmdm6437/logserverexample_x64Pcfg.s62"/>
+        <srcFile name="package/cfg/evmdm6437/logserverexample_x64P.c"/>
+        <srcFile name="evmdm642/dm642init.c"/>
+    </sources>
+    <configurations>
+        <srcFile name="evmdm6437/logserverexample.tcf"/>
+        <srcFile name="evmdm642/logserverexample.tcf"/>
+    </configurations>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/cfg/evmdm642/logserverexample_x64.mak" src="package.bld"/>
+        <srcFile name="package/cfg/evmdm642/logserverexample_x64cfg_c.o64.dep" src="package/cfg/evmdm642/logserverexample_x64cfg_c.c"/>
+        <srcFile name="package/cfg/evmdm642/logserverexample_x64cfg.o64.dep" src="package/cfg/evmdm642/logserverexample_x64cfg.s62"/>
+        <srcFile name="package/cfg/evmdm642/logserverexample/common/logserverstacksetup.o64.dep" src="common/logserverstacksetup.c"/>
+        <srcFile name="package/cfg/evmdm642/logserverexample/evmdm642/dm642init.o64.dep" src="evmdm642/dm642init.c"/>
+        <srcFile name="package/cfg/evmdm642/logserverexample_x64.o64.dep" src="package/cfg/evmdm642/logserverexample_x64.c"/>
+        <srcFile name="package/cfg/evmdm642/logserverexample/common/logserverexample.o64.dep" src="common/logserverexample.c"/>
+        <srcFile name="package/cfg/evmdm642/logserverexample_x64.dep" src="package/cfg/evmdm642/logserverexample_x64.cfg"/>
+        <srcFile name="package/cfg/evmdm6437/logserverexample_x64P.mak" src="package.bld"/>
+        <srcFile name="package/cfg/evmdm6437/logserverexample_x64Pcfg_c.o64P.dep" src="package/cfg/evmdm6437/logserverexample_x64Pcfg_c.c"/>
+        <srcFile name="package/cfg/evmdm6437/logserverexample/common/logserverstacksetup.o64P.dep" src="common/logserverstacksetup.c"/>
+        <srcFile name="package/cfg/evmdm6437/logserverexample/evmdm6437/evmdm6437init.o64P.dep" src="evmdm6437/evmdm6437init.c"/>
+        <srcFile name="package/cfg/evmdm6437/logserverexample_x64P.o64P.dep" src="package/cfg/evmdm6437/logserverexample_x64P.c"/>
+        <srcFile name="package/cfg/evmdm6437/logserverexample/common/logserverexample.o64P.dep" src="common/logserverexample.c"/>
+        <srcFile name="package/cfg/evmdm6437/logserverexample_x64Pcfg.o64P.dep" src="package/cfg/evmdm6437/logserverexample_x64Pcfg.s62"/>
+        <srcFile name="package/cfg/evmdm6437/logserverexample_x64P.dep" src="package/cfg/evmdm6437/logserverexample_x64P.cfg"/>
+        <srcFile name="package/rel/ti_bios_log_ndk_examples.tar.dep" src="package/rel/ti_bios_log_ndk_examples.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.C64P"
+            version="ti.targets.C64P{1,0,6.0,14"
+            platform="ti.platforms.sim6xxx:TMS320CDM420"
+            isa="64P"
+            suffix="64P"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.0.14/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+        <target name="ti.targets.C64"
+            version="ti.targets.C64{1,0,6.0,14"
+            platform="ti.platforms.sim6xxx:TMS320C6416"
+            isa="64"
+            suffix="64"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.0.14/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    </libraries>
+    <executables>
+    <executable name="evmdm642/logserverexample"
+        pname="evmdm642/logserverexample.x64"
+        target="ti.targets.C64"
+        platform="ti.platforms.sim6xxx:TMS320C6416"
+        profile="release"
+        xCfgScript="package/cfg/evmdm642/logserverexample_x64.cfg"
+        xCfgPrefix="package/cfg/evmdm642/logserverexample_x64"
+        cfgScript="evmdm642/logserverexample.tcf"
+        />
+    <executable name="evmdm6437/logserverexample"
+        pname="evmdm6437/logserverexample.x64P"
+        target="ti.targets.C64P"
+        platform="ti.platforms.sim6xxx:TMS320CDM420"
+        profile="release"
+        xCfgScript="package/cfg/evmdm6437/logserverexample_x64P.cfg"
+        xCfgPrefix="package/cfg/evmdm6437/logserverexample_x64P"
+        cfgScript="evmdm6437/logserverexample.tcf"
+        />
+    </executables>
+    <tests>
+    <test exeName="evmdm642/logserverexample.x64"
+        args=""
+        groupName="evmdm642/logserverexample.x64"
+        refOutput="undefined"
+        refExitCode="0"
+        execArgs=""
+        />
+    <test exeName="evmdm6437/logserverexample.x64P"
+        args=""
+        groupName="evmdm6437/logserverexample.x64P"
+        refOutput="undefined"
+        refExitCode="0"
+        execArgs=""
+        />
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_bios_log_ndk_examples"
+        pname="../../../../../../exports/ti_bios_log_ndk_examples.tar"
+        label="default"
+        relScript="/db/toolsrc/library/toolsC51/packages/tisb/release/filters/copyright.rel">
+        <file name="common/logserverstacksetup.c"/>
+        <file name="evmdm6437/logserverexample.x64P"/>
+        <file name="evmdm642/logserverexample.cfg"/>
+        <file name="package/package.ext.xml"/>
+        <file name="evmdm6437/evmdm6437init.c"/>
+        <file name="common/logserverexample.tci"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package.xs"/>
+        <file name="package/package.rel.dot"/>
+        <file name="evmdm642/dm642common.tci"/>
+        <file name="common/logserverexample.c"/>
+        <file name="package.xdc"/>
+        <file name="evmdm6437/logserverexample.tcf"/>
+        <file name="evmdm642/logserverexamplecfg.cmd"/>
+        <file name="evmdm642/logserverexample.tcf"/>
+        <file name="evmdm6437/logserverexample.pjt"/>
+        <file name="evmdm642/logserverexample.x64"/>
+        <file name="evmdm642/dm642init.c"/>
+        <file name="evmdm6437/logserverexamplecfg.cmd"/>
+        <file name="package/build.cfg"/>
+        <file name="evmdm642/logserverexample.pjt"/>
+        <file name="package/package.bld.xml"/>
+        <file name="package.bld"/>
+        <file name="evmdm6437/dm6437common.tci"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

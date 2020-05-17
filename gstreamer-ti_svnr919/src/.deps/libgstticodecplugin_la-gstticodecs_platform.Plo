@@ -1,0 +1,22 @@
+libgstticodecplugin_la-gstticodecs_platform.lo: gstticodecs_platform.c \
+  gstticodecs.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/xdc/std.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.3.3/include/stdarg.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.3.3/include/stddef.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/gnu/targets/arm/std.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/gnu/targets/arm/GCArmv5T.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/gnu/targets/std.h
+
+gstticodecs.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/xdc/std.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.3.3/include/stdarg.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.3.3/include/stddef.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/gnu/targets/arm/std.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/gnu/targets/arm/GCArmv5T.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/gnu/targets/std.h:

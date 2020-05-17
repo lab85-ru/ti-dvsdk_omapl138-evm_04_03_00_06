@@ -1,0 +1,40 @@
+10
+
+dir
+66
+https://gforge.ti.com/svn/am_benchmarks/trunk/armv5te
+https://gforge.ti.com/svn/am_benchmarks
+
+
+
+2011-06-29T16:23:05.721112Z
+66
+jlance
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+92547b11-a484-40c4-9575-ed0f39d6bbd3
+
+dhrystone
+dir
+
+whetstone
+dir
+
+linpack
+dir
+
+scripts
+dir
+

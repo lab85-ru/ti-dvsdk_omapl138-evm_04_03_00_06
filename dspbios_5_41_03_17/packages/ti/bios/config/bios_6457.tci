@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_6457.tci ========
+ *  This file contains BIOS settings for 6457.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_TCI6484.tci");
+
+/*
+ *  ======== bios.init6457 ========
+ *  BIOS initialization for the 6457 is same as for TCI6484
+ */
+bios.init6457 = bios.initTCI6484;

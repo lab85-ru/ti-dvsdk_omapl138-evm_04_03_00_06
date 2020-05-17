@@ -1,0 +1,632 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== pip.h62 ========
+;  Pipe Manager.
+;
+;  Pipes allow two clients (a producer and a consumer) to transfer
+;  frames of data without copying the data.
+;
+;  The consumer does the following:
+;       PIP_get &pip 
+;       `use pip.readcnt words of data from the frame pip.readptr`
+;       PIP_free &pip
+;
+;  The producer does the following:
+;       PIP_alloc &pip
+;       `fill the frame pip.writeptr with up to pip.writecnt words`
+;       `set pip.writecnt to the number of words in frame`
+;       PIP_put &pip
+;
+;  The selectors pip.fullbufs and pip.emptybufs represent the
+;  number of full and empty frames in the pipe
+;
+;  The pipe manager allows for probing of data transfered through each
+;  pipe.  This probing is accomplished using the PIP_<read|write>probeSET and
+;  PIP_<read|write>probeCLR operations which attach a separate PIP probe to the
+;  specified pipe.
+;
+;
+
+        .if ($isdefed("PIP_") = 0)    ; prevent multiple includes of this file
+PIP_    .set    1
+
+        .include fxn.h62
+        .include gbl.h62
+        .include sts.h62
+
+PIP_Sock        .struct
+O_TPROBE        .word   1
+O_FADDR         .word   1
+O_FSIZE         .word   1
+O_CURDESC       .word   1
+O_PFXNOBJ       .word   1
+O_NUMFRAMES     .word   1
+O_GPROBE        .word   1
+O_PNUMFRAMES    .word   1
+O_FXNOBJ        .tag    FXN_Obj
+O_STSHDL        .word   1
+PIP_A_SOCKSIZE  .endstruct
+
+;
+; ======== PIP_Obj ========
+;
+
+PIP_Obj         .struct
+
+threshold               .word   1 ; (Uns) max size of frames in pip
+
+preaderTakeProbe        .word   1 ; (PIP_Obj *) take (get) probe
+readerAddr              .word   1 ; (Ptr) set by PIP_get()
+readerSize              .word   1 ; (Uns) ditto
+readerCurdesc           .word   1 ; (Ptr) pointer to list of pipe descs
+pnotifyReader           .word   1 ; (FXN_Obj *) ptr to notify reader function
+readerNumFrames         .word   1 ; (Uns) number of frames at reader end
+preaderGiveProbe        .word   1 ; (PIP_Obj *) give (free) probe
+pwriterNumFrames        .word   1 ; (Uns *) ptr to numframes on writer end
+notifyWriter            .tag    FXN_Obj ; (FXN_Obj) notify writer function
+preaderSts              .word   1 ; (STS_Obj *) statistics configured for reader
+
+pwriterTakeProbe        .word   1 ; (PIP_Obj *) take (alloc) probe
+writerAddr              .word   1 ; (Ptr) set by PIP_alloc()
+writerSize              .word   1 ; (Uns) ditto
+writerCurdesc           .word   1 ; (Ptr) pointer to list of pipe descs
+pnotifyWriter           .word   1 ; (FXN_Obj *) ptr to notify writer function
+writerNumFrames         .word   1 ; (Uns) number of frames at writer end
+pwriterGiveProbe        .word   1 ; (PIP_Obj *) give (put) probe
+preaderNumFrames        .word   1 ; (Uns *) ptr to numframes at reader end
+notifyReader            .tag    FXN_Obj ; (FXN_Obj) notify reader function
+pwriterSts              .word   1 ; (STS_Obj *) statistics configured for writer
+
+PIP_A_OBJSIZE   .endstruct
+
+;
+;  ======== PIP OFFSETS ========
+;
+
+PIP_O_TPROBE    .set    PIP_Sock.O_TPROBE
+PIP_O_FADDR     .set    PIP_Sock.O_FADDR
+PIP_O_FSIZE     .set    PIP_Sock.O_FSIZE
+PIP_O_CURDESC   .set    PIP_Sock.O_CURDESC
+PIP_O_PFXNOBJ   .set    PIP_Sock.O_PFXNOBJ
+PIP_O_NUMFRAMES .set    PIP_Sock.O_NUMFRAMES
+PIP_O_GPROBE    .set    PIP_Sock.O_GPROBE
+PIP_O_PNUMFRAMES .set    PIP_Sock.O_PNUMFRAMES
+PIP_O_FXNOBJ    .set    PIP_Sock.O_FXNOBJ
+PIP_O_STSHDL    .set    PIP_Sock.O_STSHDL
+
+PIP_O_HDBASE    .set    STD_TARGWORDMAUS 
+PIP_O_TLBASE    .set    PIP_A_SOCKSIZE+(STD_TARGWORDMAUS) 
+
+PIP_READPTR     .set    PIP_O_HDBASE+PIP_O_FADDR
+PIP_READCNT     .set    PIP_O_HDBASE+PIP_O_FSIZE
+PIP_WRITEPTR    .set    PIP_O_TLBASE+PIP_O_FADDR
+PIP_WRITECNT    .set    PIP_O_TLBASE+PIP_O_FSIZE
+PIP_FULLBUFS    .set    PIP_O_HDBASE+PIP_O_NUMFRAMES
+PIP_EMPTYBUFS   .set    PIP_O_TLBASE+PIP_O_NUMFRAMES
+
+        .global PIP_F_give, PIP_F_take, PIP_F_probe, PIP_F_start
+        .global PIP_D_tabbeg, PIP_D_tablen
+        .global PIP_A_TABBEG, PIP_A_TABEND, PIP_A_TABLEN
+
+;
+;# ======== PIP_Obj ========
+;  Create a pipe object.
+;
+;       name    - name of pipe object
+;       id      - pipe id
+;       buf     - preallocated buffer (or <NULL> if PIP_Obj should create)
+;       framesize - size of each frame in pipe (in words)
+;       numframes - number of frames in pipe
+;       stsend  - which end STS stats are accumulated
+;       notifyWriter - function to call whenever PIP_free is called
+;       nwarg* - arguments to notifyWriter function
+;       notifyReader - function to call whenever PIP_put is called
+;       nrarg* - arguments to notifyReader function
+;
+;  Note that initially pipe objects are not probed; the reader.probe
+;  (writer.probe) field must be set to point into the writer of another
+;  PIP object.  In particular, if myprobe is the name of a probe PIP
+;  object, reader.probe (writer.probe) must be set to &myprobe.writerNumFrames.
+;
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    ":GBL_Obj$regs:,:FXN_Obj$regs:,:STS_Obj$regs:", PIP_Obj$regs
+PIP_Obj .macro cflag, name, id, buf, framesize, numframes, stsend, notifyWriter, nwarg0, nwarg1, notifyReader, nrarg0, nrarg1, align
+
+        .global :name:, :name:$rd, :name:$wr, :name:$dtab
+        .global :name:$aaa, :name:$bbb
+        .asg   0,bufAlloc
+        .eval 0, newframesize
+
+        .eval :framesize: * (STD_TARGWORDMAUS/STD_TARGCHARMAUS), newframesize
+        ; Convert framesize to bytes which is needed since align value is
+        ; already in bytes.
+
+        .eval (:newframesize: + (:align: - 1)) & ( ~(:align: - 1)), newframesize
+        ; :newframesize: is equal to multiple of :align:. This is needed
+        ; for all the frames to start at 'align'ed boundary from the start
+        ; of pip frames section. Note that pip frames section will also
+        ; start from 'align'ed boundary.
+
+        .if (:cflag: = 0)
+            .mexit
+        .endif
+
+        .if ($symcmp(":buf:", "<NULL>") = 0)
+            .eval       0, count
+            .asg        :name:$buf:count:, buf
+            .loop
+                .break (count == :numframes: - 1 )
+                .global :name:$buf:count:
+:name:$buf:count:       .usect ".pip:id:", :newframesize: 
+                .asg    :name:$buf:count:, buf:count:
+                .eval   count + 1, count
+            .endloop
+        
+            ; Last frame in the PIP buffers should start at align boundary
+            ; but the size of last PIP buffer need not be multiple of
+            ; :align:. Because there are no more frames left to start at align
+            ; boundary. Hence last frame is usect'd with the default
+            ; framesize.
+            .global     :name:$buf:count:
+:name:$buf:count:       .usect ".pip:id:", :framesize: * (STD_TARGWORDMAUS/STD_TARGCHARMAUS) 
+            .asg        :name:$buf:count:, buf:count:
+
+            .eval       1, bufAlloc
+        .endif
+
+:name:  .usect ".pip", STD_TARGWORDMAUS * 1, STD_TARGWORDMAUS
+
+        .sect ".cinit"
+
+        .align 8
+
+        .field  STD_TARGWORDMAUS * 1
+        .field  :name:
+        .field  :framesize:             ; thresh
+
+:name:$rd .usect ".pip", STD_TARGWORDMAUS * 8, STD_TARGWORDMAUS
+
+        .sect ".cinit"
+
+        .align 8
+
+        .field  STD_TARGWORDMAUS * 8
+        .field :name:$rd
+        .field  0                       ; reader take-probe
+        .field  0                       ; reader addr
+        .field  :framesize:             ; reader size
+        .field  :name:$dtab             ; reader curdesc
+        .field  :name:$wr+PIP_O_FXNOBJ  ; reader pfxnobj
+        .field  0                       ; reader numframes
+        .field  0                       ; reader give-probe
+        .field  :name:$wr+PIP_O_NUMFRAMES       ; reader pnumframes
+
+        FXN_Obj :name:$rdfxn, :notifyWriter:, :nwarg0:, :nwarg1:, ".pip"
+
+:name:$aaa .usect ".pip", STD_TARGWORDMAUS * 1, STD_TARGWORDMAUS
+
+        .sect ".cinit"
+
+        .align 8
+
+        .field  STD_TARGWORDMAUS * 1
+        .field :name:$aaa
+        .if ($symcmp(":stsend:", "reader") = 0)
+            .field :name:$sts
+        .else
+            .field 0
+        .endif
+
+:name:$wr .usect ".pip", STD_TARGWORDMAUS * 8, STD_TARGWORDMAUS
+
+        .sect ".cinit"
+
+        .align 8
+
+        .field  STD_TARGWORDMAUS * 8
+        .field :name:$wr
+        .field  0                       ; writer take-probe
+        .field  0                       ; writer addr
+        .field  :framesize:             ; writer size
+        .field  :name:$dtab             ; writer curdesc
+        .field  :name:$rd+PIP_O_FXNOBJ  ; writer pfxnobj
+        .field  :numframes:             ; writer numframes
+        .field  0                       ; writer give-probe
+        .field  :name:$rd+PIP_O_NUMFRAMES       ; writer pnumframes
+
+        FXN_Obj :name:$wrfxn, :notifyReader:, :nrarg0:, :nrarg1:, ".pip"
+
+:name:$bbb .usect ".pip", STD_TARGWORDMAUS * 1, STD_TARGWORDMAUS
+
+        .sect ".cinit"
+
+        .align 8
+
+        .field  STD_TARGWORDMAUS * 1
+        .field :name:$bbb
+        .if ($symcmp(":stsend:", "writer") = 0)
+            .field      :name:$sts
+        .else
+            .field      0
+        .endif
+
+        ;
+        ; put PIP descriptors into .bss section
+        ;
+        ;   addr[i]
+        ;   size[i]
+        ;   next[i]
+        ;
+        .global :name:$dtab
+
+        .bss    :name:$dtab, (3 * STD_TARGWORDMAUS * :numframes:), STD_TARGWORDMAUS
+
+        .sect ".cinit"
+
+        .var    temp0, temp1, boff
+        .eval   0, temp0
+        .eval   0, temp1
+        .eval   0, boff
+        .eval   :numframes: * (3 * STD_TARGWORDMAUS), temp0
+
+        .align 8
+
+        .field  :temp0:
+
+        .field :name:$dtab
+
+        .eval   3 * STD_TARGWORDMAUS, temp1
+
+        .eval   0, count
+        .loop   :numframes:-1
+            .field :buf:+:boff:                 ; addr[i]
+            .field :framesize:                  ; size[i]
+            .field :name:$dtab + :temp1:        ; next[i]
+
+            .if :bufAlloc:
+                .eval count + 1, count
+                .asg  buf:count:, buf
+            .else
+                .eval :boff:+(:framesize: * (STD_TARGWORDMAUS)), boff
+            .endif
+            .eval :temp1: + (3 * STD_TARGWORDMAUS), temp1
+        .endloop
+            
+        .field :buf:+:boff:     ; addr[n]
+        .field :framesize:      ; size[n]
+        .field :name:$dtab      ; next[n]
+
+        .if ($symcmp(":stsend:", "reader") = 0)
+                STS_Obj 1, :name:$sts, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        .endif
+
+        .if ($symcmp(":stsend:", "writer") = 0)
+                STS_Obj 1, :name:$sts, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        .endif
+
+        .endm
+
+;
+;# ======== PIP_config ========
+;
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PIP_config$regs
+PIP_config      .macro _gNumEmbed, _gNextId
+        .endm
+
+;
+;# ======== PIP_end ========
+;
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PIP_end$regs
+PIP_end .macro
+        .endm
+
+;
+;# ======== PIP_init ========
+;
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#      none
+;#
+;
+        .asg    "", PIP_init$regs
+PIP_init        .macro
+        .endm
+
+;
+;# ======== PIP_alloc ========
+;
+;# Preconditions:
+;#      a4 = address of the pipe object
+;#      pipe.writerNumFrames > 0
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      Before calling PIP_alloc, a function should check the writerNumFrames
+;#      member of the PIP_Obj structure to make sure it is greater than 0
+;#      (i.e., that at least one empty frame is available).
+;#
+;# Note:
+;#      Registers used by 'notifyWriter' functions might be modified too.
+;#
+;
+        .asg "a1,a4,a5,b3,:PIP_F_take$regs:", PIP_alloc$regs
+PIP_alloc       .macro dummy
+        CHK_void PIP_alloc, dummy
+
+        mvkl PIP_F_take,b3
+        mvkh PIP_F_take,b3
+        b  b3                   ; start branch to frame take function
+
+                                ; form offset of writerNumFrames in PIP_Obj
+        mvk (PIP_O_TLBASE + PIP_O_NUMFRAMES),a1 
+
+        addu a4,a1,a5:a4        ; form address of writerNumFrames
+
+        mvkl pipa?,b3           ; set temp return pointer to here
+        mvkh pipa?,b3
+
+        nop
+pipa?:  
+ 
+        .endm
+ 
+
+;
+;# ======== PIP_put ========
+;
+;# Preconditions:
+;#      a4 = address of the pipe object
+;#
+;# Postconditions:
+;#      none
+;#
+;# Note:
+;#      Registers used by 'notifyReader' functions might be modified too.
+;#
+;
+        .asg "a0,a1,a4,a5,b3,b4,:PIP_F_give$regs:", PIP_put$regs
+PIP_put .macro dummy
+        CHK_void PIP_put, dummy
+
+        mvkl PIP_F_give, b3
+        mvkh PIP_F_give, b3
+                                ; form offset of writerSize in PIP_Obj
+        mvk (PIP_O_TLBASE + PIP_O_FSIZE),a1 
+        addu a4,a1,a1:a0        ; form address of writerSize in a0 
+        ldw *a0,b4              ; load writerSize into b4
+
+        b  b3                   ; start branch to frame give function
+
+                                ; form offset of writerCurdesc in PIP_Obj
+        mvk (PIP_O_TLBASE + PIP_O_CURDESC),a1 
+        addu a4,a1,a5:a4        ; form address of writerCurdesc in a4
+        mvkl pipp?,b3           ; set temp return pointer to here
+        mvkh pipp?,b3
+        nop
+pipp?:  
+ 
+        .endm
+
+
+;
+;# ======== PIP_get ========
+;
+;# Preconditions:
+;#      a4 = address of the pipe object
+;#      pipe.readerNumFrames > 0
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      Before calling PIP_get, a function should check the readerNumFrames
+;#      member of the PIP_Obj structure to make sure it is greater than 0
+;#      (i.e., at least one full frame is available).
+;#
+;# Note:
+;#      Registers used by 'notifyReader' functions might be modified too.
+;#
+;
+        .asg "a1,a4,a5,b3,:PIP_F_take$regs:", PIP_get$regs
+PIP_get         .macro dummy
+        CHK_void PIP_get, dummy
+
+        mvkl PIP_F_take, b3
+        mvkh PIP_F_take, b3
+
+        b  b3                   ; start branch to frame take function
+
+                                ; form offset of readerNumFrames in PIP_Obj
+        mvk (PIP_O_HDBASE + PIP_O_NUMFRAMES),a1 
+
+        addu a4,a1,a5:a4        ; form address of readerNumFrames
+
+        mvkl pipg?,b3           ; set temp return pointer to here
+        mvkh pipg?,b3
+        nop
+
+pipg?:
+ 
+        .endm
+
+
+;
+;# ======== PIP_free ========
+;
+;# Preconditions:
+;#      a4 = address of the pipe object
+;#
+;# Postconditions:
+;#      none
+;#
+;# Note:
+;#      Registers used by 'notifyWriter' functions might be modified too.
+;#
+;
+        .asg "a1,a4,a5,b3,b4,:PIP_F_give$regs:", PIP_free$regs
+PIP_free .macro dummy
+        CHK_void PIP_free, dummy
+
+        mvkl PIP_F_give,b3
+        mvkh PIP_F_give,b3
+
+        ldw *a4,b4              ; fetch framesize from 'threshold' in PIP_Obj
+
+        b  b3                   ; start branch to frame give function
+
+                                ; form offset of readerCurdesc in PIP_Obj
+        mvk (PIP_O_HDBASE + PIP_O_CURDESC),a1 
+        addu a4,a1,a5:a4        ; form address of readerCurdesc in a4
+
+        mvkl pipf?,b3           ; set temp return pointer to here
+        mvkh pipf?,b3
+        nop
+
+pipf?:
+ 
+        .endm
+
+
+;
+;# ======== PIP_startup ========
+;
+;# 
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#      Must come before HWI_startup to allow pipes to be ready before ISRs are
+;#      taken and I/O starts.
+;#
+;
+        .asg "a4,b3,b4,:PIP_F_start$regs:", PIP_startup$regs
+PIP_startup     .macro dummy
+        CHK_void PIP_startup, dummy
+
+        ; expand startup code only if some PIP objects are configured
+        .if((PIP$ + PIP_gNumEmbed) !=0 )
+            mvkl PIP_F_start,b4         ; set up for far branch
+            mvkh PIP_F_start,b4
+            b b4                        ; start branch to startup function
+            mvkl PIP_D_tabbeg,a4        ; set a4 for PIP_F_start call
+            mvkh PIP_D_tabbeg,a4
+            nop
+            mvkl pips?,b3               ; set return for here
+            mvkh pips?,b3
+        .endif
+
+pips?:  
+
+        .endm
+
+;
+;# ======== PIP_readprobeSET ========
+;  Attach named probe to the named pipe's reader
+;
+;  Currently not implemented for the C6x.
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg "", PIP_readprobeSET$regs
+PIP_readprobeSET        .macro dummy
+ 
+        .wmsg "PIP_readprobeSET not implemented for C6x."
+
+        .endm
+
+
+;
+;# ======== PIP_readprobeCLR ========
+;  Disable probing on a pipe's reader 
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PIP_readprobeCLR$regs
+PIP_readprobeCLR        .macro dummy
+
+        .wmsg "PIP_readprobeCLR not implemented for C6x."
+
+        .endm
+
+
+;
+;# ======== PIP_writeprobeSET ========
+;  Attach named probe to the named pipe's writer 
+;
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PIP_writeprobeSET$regs
+PIP_writeprobeSET       .macro dummy
+
+        .wmsg "PIP_writeprobeSET not implemented for C6x."
+
+        .endm
+
+;
+;# ======== PIP_writeprobeCLR ========
+;  Disable probing on a pipe's writer
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", PIP_writeprobeCLR$regs
+PIP_writeprobeCLR       .macro dummy
+ 
+        .wmsg "PIP_writeprobeCLR not implemented for C6x."
+
+        .endm
+ 
+        .endif          ; if PIP_ is not defined
+

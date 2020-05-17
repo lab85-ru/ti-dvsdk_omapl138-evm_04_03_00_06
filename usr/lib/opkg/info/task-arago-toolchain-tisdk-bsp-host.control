@@ -1,0 +1,13 @@
+Package: task-arago-toolchain-tisdk-bsp-host
+Version: 1.0-r43.6
+Description: Task to build and install Board Support Package sources (or development header) packages on host
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: task-arago-toolchain-tisdk-bsp-host
+Homepage: unknown
+Build: install/d0bd439
+Recommends: ti-tisdk-licenses-src, u-boot-src, ti-tisdk-setup, ti-tisdk-mksdboot, linux-davinci-src, pinmux-utility, ti-board-utilities-omapl138, ti-linux-driver-examples-omapl-src, ti-tisdk-docs-hardcopy, ti-tisdk-docs-wiki
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-bsp-host.bb

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp
+END
+cpio.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/cpio.h
+END
+time.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/time.h
+END
+semaphore.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/semaphore.h
+END
+sched.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sched.h
+END
+stdbool.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/stdbool.h
+END
+unistd.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/unistd.h
+END
+pthread.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/pthread.h
+END
+aio.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/aio.h
+END

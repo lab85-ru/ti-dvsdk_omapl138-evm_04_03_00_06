@@ -1,0 +1,91 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectName="Jpgdec_c6400"
+ProjectDir="M:\Shekar_Test1\codecs_video\jpeg\Releases\100_I_JPEG_D_2_00\C64XPLUS_PS_001\Client\Build\"
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="DM644X_BASE"
+Config="DM644X_EXTENDED"
+Config="OMAP3530_BASE"
+Config="OMAP3530_EXTENDED"
+
+[Source Files]
+Source="..\Test\Src\alg_create.c"
+Source="..\Test\Src\alg_malloc.c"
+Source="..\Test\Src\ijpegdec.c"
+Source="..\Test\Src\TestAppConfigParser.c"
+Source="..\Test\Src\TestAppDecoder.c"
+Source="..\Test\Src\TestAppDecoder_prof.c"
+Source="..\Test\Src\tsc_h.asm"
+Source="JPEGDecApp_DM6446.cmd"
+Source="JPEGDecApp_OMAP3530.cmd"
+
+["Compiler" Settings: "DM644X_BASE"]
+Options=-g -as -oi256 -fr"$(Proj_dir)\Obj" -ft"$(Proj_dir)\Obj" -fb"$(Proj_dir)\Obj" -i"$(Proj_dir)\..\Test\Inc" -i"$(Proj_dir)\..\..\Inc" -i"$(Install_dir)\framework_components_2_20_01\packages\ti\sdo\fc\utils\api" -i"$(Install_dir)\framework_components_2_20_01\fctools\packages" -i"$(Install_dir)\bios_5_31_02\packages" -d"CHIP_DAVINCI" -d"TIMER" -d"ENABLE_CACHE" -d"NO_L1DRAM" -d"DM644X" -mt -ml3 -mv6400+
+
+["Compiler" Settings: "DM644X_EXTENDED"]
+Options=-g -as -oi256 -fr"$(Proj_dir)\Obj" -ft"$(Proj_dir)\Obj" -fb"$(Proj_dir)\Obj" -i"$(Proj_dir)\..\Test\Inc" -i"$(Proj_dir)\..\..\Inc" -i"$(Install_dir)\framework_components_2_20_01\packages\ti\sdo\fc\utils\api" -i"$(Install_dir)\framework_components_2_20_01\fctools\packages" -i"$(Install_dir)\bios_5_31_02\packages" -d"CHIP_DAVINCI" -d"TIMER" -d"ENABLE_CACHE" -d"NO_L1DRAM" -d"DM644X" -mt -ml3 -mv6400+
+
+["Compiler" Settings: "OMAP3530_BASE"]
+Options=-g -as -oi256 -fr"$(Proj_dir)\Obj" -ft"$(Proj_dir)\Obj" -fb"$(Proj_dir)\Obj" -i"$(Proj_dir)\..\Test\Inc" -i"$(Proj_dir)\..\..\Inc" -i"$(Install_dir)\framework_components_2_20_01\packages\ti\sdo\fc\utils\api" -i"$(Install_dir)\framework_components_2_20_01\fctools\packages" -i"$(Install_dir)\bios_5_31_02\packages" -d"CHIP_DAVINCI" -d"TIMER" -d"ENABLE_CACHE" -d"NO_L1DRAM" -d"OMAP3530" -mt -ml3 -mv6400+
+
+["Compiler" Settings: "OMAP3530_EXTENDED"]
+Options=-g -as -oi256 -fr"$(Proj_dir)\Obj" -ft"$(Proj_dir)\Obj" -fb"$(Proj_dir)\Obj" -i"$(Proj_dir)\..\Test\Inc" -i"$(Proj_dir)\..\..\Inc" -i"$(Install_dir)\framework_components_2_20_01\packages\ti\sdo\fc\utils\api" -i"$(Install_dir)\framework_components_2_20_01\fctools\packages" -i"$(Install_dir)\bios_5_31_02\packages" -d"CHIP_DAVINCI" -d"TIMER" -d"ENABLE_CACHE" -d"NO_L1DRAM" -d"OMAP3530" -mt -ml3 -mv6400+
+
+["Linker" Settings: "DM644X_BASE"]
+Options=-c -m"$(Proj_dir)\Map\TestAppDecoder.map" -o"$(Proj_dir)\Out\TestAppDecoder.out" -x -i"$(Proj_dir)\..\..\..\lib" -i"$(Install_dir)\bios_5_21\packages\ti\bios\lib" -l"jpegdec_ti.l64P" -l"rts64plus.lib" -l"biosDM420.a64P"
+
+["Linker" Settings: "DM644X_EXTENDED"]
+Options=-c -m"$(Proj_dir)\Map\TestAppDecoder.map" -o"$(Proj_dir)\Out\TestAppDecoder.out" -x -i"$(Proj_dir)\..\..\..\lib" -i"$(Install_dir)\bios_5_21\packages\ti\bios\lib" -l"jpegdec_ti.l64P" -l"rts64plus.lib" -l"biosDM420.a64P"
+
+["Linker" Settings: "OMAP3530_BASE"]
+Options=-c -m"$(Proj_dir)\Map\TestAppDecoder.map" -o"$(Proj_dir)\Out\TestAppDecoder.out" -x -i"$(Proj_dir)\..\..\..\lib" -i"$(Install_dir)\bios_5_21\packages\ti\bios\lib" -l"jpegdec_ti.l64P" -l"rts64plus.lib" -l"biosDM420.a64P"
+
+["Linker" Settings: "OMAP3530_EXTENDED"]
+Options=-c -m"$(Proj_dir)\Map\TestAppDecoder.map" -o"$(Proj_dir)\Out\TestAppDecoder.out" -x -i"$(Proj_dir)\..\..\..\lib" -i"$(Install_dir)\bios_5_21\packages\ti\bios\lib" -l"jpegdec_ti.l64P" -l"rts64plus.lib" -l"biosDM420.a64P"
+
+["..\Test\Src\TestAppDecoder.c" Settings: "DM644X_EXTENDED"]
+ExcludeFromBuild=true
+
+["..\Test\Src\TestAppDecoder.c" Settings: "OMAP3530_EXTENDED"]
+ExcludeFromBuild=true
+
+["..\Test\Src\TestAppDecoder_prof.c" Settings: "DM644X_BASE"]
+ExcludeFromBuild=true
+
+["..\Test\Src\TestAppDecoder_prof.c" Settings: "OMAP3530_BASE"]
+ExcludeFromBuild=true
+
+["JPEGDecApp_DM6446.cmd" Settings: "DM644X_BASE"]
+LinkOrder=1
+
+["JPEGDecApp_DM6446.cmd" Settings: "DM644X_EXTENDED"]
+LinkOrder=2
+
+["JPEGDecApp_DM6446.cmd" Settings: "OMAP3530_BASE"]
+ExcludeFromBuild=true
+LinkOrder=1
+
+["JPEGDecApp_DM6446.cmd" Settings: "OMAP3530_EXTENDED"]
+ExcludeFromBuild=true
+LinkOrder=1
+
+["JPEGDecApp_OMAP3530.cmd" Settings: "DM644X_BASE"]
+ExcludeFromBuild=true
+LinkOrder=1
+
+["JPEGDecApp_OMAP3530.cmd" Settings: "DM644X_EXTENDED"]
+ExcludeFromBuild=true
+LinkOrder=3
+
+["JPEGDecApp_OMAP3530.cmd" Settings: "OMAP3530_BASE"]
+LinkOrder=1
+
+["JPEGDecApp_OMAP3530.cmd" Settings: "OMAP3530_EXTENDED"]
+LinkOrder=1
+

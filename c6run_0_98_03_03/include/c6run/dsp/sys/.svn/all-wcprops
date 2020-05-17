@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys
+END
+statvfs.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/statvfs.h
+END
+uio.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/uio.h
+END
+endian.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/endian.h
+END
+time.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/time.h
+END
+timeb.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/timeb.h
+END
+wait.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/wait.h
+END
+types.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/types.h
+END
+cdefs_elf.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/cdefs_elf.h
+END
+ipc.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/ipc.h
+END
+stat.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/stat.h
+END
+utsname.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/utsname.h
+END
+select.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/select.h
+END
+times.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/times.h
+END
+un.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/un.h
+END
+cdefs.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/cdefs.h
+END
+sem.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/sem.h
+END
+msg.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/msg.h
+END
+shm.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/shm.h
+END
+resource.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/resource.h
+END
+socket.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/socket.h
+END
+mman.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/dsp/sys/mman.h
+END

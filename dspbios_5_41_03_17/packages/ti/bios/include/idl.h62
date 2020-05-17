@@ -1,0 +1,282 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== idl.h62 ========
+;
+;
+    .if ($isdefed("IDL_") = 0)  ; prevent multiple includes of this file
+IDL_    .set    1
+
+    .include std.h62
+    .include chk.h62
+    .include fxn.h62
+    .include gbl.h62
+    .include sts.h62
+ 
+    .global IDL_A_TABBEG    ; beginning of table of idle functions
+    .global IDL_D_tabbeg
+    .global IDL_F_busy
+    .global IDL_F_loop
+    .global IDL_D_calibrate      ; pointer to CPU calibration function
+    .global _IDL_loop
+    .global IDL_NULL
+    .global IDL_CALIBRFXN        ; defined by the Configuration Tool.
+    .global IDL_D_busyObj
+
+;
+;
+;  ======== IDL_Obj ========
+;
+IDL_Obj         .struct
+fxn     .word   1       ; function to execute
+IDL_A_OBJSIZE   .endstruct
+
+;
+;# ======== IDL_Obj ========
+;  Allocate an idle fxn object and initialize all fields.
+;
+;  Note that all idle objects are allocated in a distinguished section
+;  named ".idl"; this insures that all objs are contiguous (this is
+;  required by the implementation of FXN_F_run())
+;
+;  Parameters:
+;       cflag   - configuration flag
+;       name    - name of idle object
+;       id      - id of idle object
+;       fxn     - function to call
+;
+;  fxn is called at idle level.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", IDL_Obj$regs
+IDL_Obj         .macro cflag, name, id, fxn, calibration
+        CHK_nargs "IDL_Obj", calibration
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .mexit
+        .endif
+
+    .var fxnlen
+    .eval $symlen(":fxn:"),fxnlen
+
+        .if (:cflag: = 0)   ; if this object is not really to be allocated
+            .mexit      ; exit quietly now
+        .endif
+
+        .global :name:$
+        .global :name:
+
+        .if ($symcmp(":fxn:", "0") != 0)
+    .global :fxn:
+        .endif
+
+:name:$ .tag    IDL_Obj         ; declare name$ as having type IDL_Obj
+
+:name:$ .usect ".idlcal", STD_TARGWORDMAUS * 1, STD_TARGWORDMAUS
+
+        .sect ".cinit"
+
+    .align  8
+    .field  STD_TARGWORDMAUS * 1
+    .field  :name:$    
+        .if (:calibration: != 0) ; if to be included in IDL calibration
+            .field  :fxn:             ; fxn
+    .else
+            .field  FXN_F_nop    ; else use FXN_F_nop
+        .endif
+
+:name:  .tag    IDL_Obj         ; declare name as having type IDL_Obj
+
+:name:  .usect ".idl", STD_TARGWORDMAUS * 1, STD_TARGWORDMAUS
+
+        .sect ".cinit"
+
+    .align  8
+    .field  STD_TARGWORDMAUS * 1
+    .field  :name:    
+    .field  :fxn:           ; fxn
+
+        .endm
+
+;
+;# ======== IDL_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+
+    .asg    "", IDL_config$regs
+IDL_config  .macro _useclkidltime, _calibrfxn, _calibrerror
+    .asg :_useclkidltime:,USECLKIDLTIME    ; used by IDL_init
+    .endm
+
+;
+;# ======== IDL_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+    .asg    ":IDL_Obj$regs:", IDL_end$regs
+IDL_end .macro
+    IDL_Obj 1,IDL_END,-1,0,1     ; NULL terminate idle function table
+
+    .endm
+
+;
+;# ======== IDL_init ========
+;  Runtime initialization for IDL. It runs the IDL_D_calibrate functions
+;  if the auto-caluculate CPU calibration is selected by the configuration
+;  tool.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#  This routine inherits the dependencies of the function configured 
+;#  as IDL_D_calibrate (IDL_F_calibrate is the default).
+;#
+    .asg    "a1,a4,b3", IDL_init$regs
+IDL_init .macro
+
+    ; only expand if the IDL module is configured by the user
+    .if (IDL$ = 1)
+        .if (:USECLKIDLTIME:)         ; defined in IDL_config
+
+            .def BIOS$$CLKON, BIOS$$CLKOFF
+
+BIOS$$CLKON:
+        ; BIOS$$CLKON signals to the C6x fast simulators to switch into 
+        ; cycle-accurate mode.
+        ; This is to make the calibration of the IDL loop accurate, so that
+        ; CPU load, which is based on this calibration, will also be accurate.
+        ; The bookend label to this is BIOS$$CLKOFF.
+
+        ; Perform calibration twice; first time fills cache (6211), and 
+        ; second time yields the accurate calibration value. 
+        mvkl IDL_D_calibrate, a1
+        mvkh IDL_D_calibrate, a1
+        ldw *a1, a1                     ; load IDL_D_calibrate
+        mvkl idlinit1?,b3
+        mvkh idlinit1?,b3
+        nop 2
+        b a1
+        nop 5
+idlinit1?:
+        mvkl IDL_D_calibrate, a1
+        mvkh IDL_D_calibrate, a1
+        ldw *a1, a1                     ; load IDL_D_calibrate
+        mvkl idlinit2?,b3
+        mvkh idlinit2?,b3
+        nop 2
+        b a1
+        nop 5
+
+BIOS$$CLKOFF:
+        ; BIOS$$CLKOFF signals to the C6x fast simulators to switch out of 
+        ; cycle-accurate mode. This is the bookend label to BIOS$$CLKON.
+
+        ; Reset the IDL_busyObj values, and clear the "prev" value so the
+        ; first pass through the real IDL loop won't produce a garbage
+        ; value. The STS_reset API is not being used because the prev
+        ; value is not cleared in STS_reset, so doing it this way uses
+        ; less than half as many instructions as using the APIs. dsg-2/9/01
+idlinit2?:
+        mvkl IDL_D_busyObj, a4
+        mvkh IDL_D_busyObj, a4
+        ldw *a4, a4                     ; load IDL_busyObj address to a4
+        zero a1
+        nop 3
+        stw a1,*-a4(4)                  ; clear prev
+        stw a1,*+a4(0)                  ; clear num
+        stw a1,*+a4(4)                  ; clear acc
+        mvklh 8000h, a1                 ; form largest negative number
+        stw a1,*+a4(8)                  ; set max
+
+        .endif
+    .endif
+
+    .endm
+
+;
+;# ======== IDL_loop ========
+;  Enter a loop executing list of idle functions and never return.
+;
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#      none (never returns!)
+;#
+; 
+    .asg "a4,:IDL_F_loop$regs:", IDL_loop$regs
+IDL_loop .macro
+    mvkl IDL_F_loop,a4  ; form address of IDL_F_loop
+    mvkh IDL_F_loop,a4
+    b a4            ; branch to IDL_F_loop
+    nop 5
+    .endm
+
+
+;
+;# ======== IDL_run ========
+;  Run one-pass through the configured NULL-terminated idle
+;  function list.
+;
+;# Preconditions:
+;#  a4 = address of null terminated table of idle functions to 
+;#       execute
+;# Postconditions:
+;#
+    .asg "b3,:FXN_F_run$regs:", IDL_run$regs
+IDL_run .macro
+    mvkl FXN_F_run,b3   ; changed to be FAR call.
+    mvkh FXN_F_run,b3
+    b b3
+    mvkl idlrun?,b3
+    mvkh idlrun?,b3
+    nop 3
+
+idlrun?:
+
+    .endm
+
+;
+;# ======== IDL_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#  none
+;#
+    .asg    "", IDL_startup$regs
+IDL_startup        .macro
+    .endm
+
+    .endif      ; if IDL_ is not defined

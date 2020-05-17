@@ -1,0 +1,481 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+; ======== c28.h28 ========
+; C28 miscellaneous macros 
+;
+
+        .include chk.h28
+
+C28_AR0_L       .set      01h
+C28_AR1_L       .set      02h
+C28_AR2_L       .set      04h
+C28_AR3_L       .set      08h
+C28_AR4_L       .set      10h
+C28_AR5_L       .set      20h
+C28_AR6_L       .set      40h
+C28_AR7_L       .set      80h
+
+C28FP_R0_H    .set    100h
+C28FP_R1_H    .set    200h
+C28FP_R2_H    .set    400h
+C28FP_R3_H    .set    800h
+C28FP_R4_H    .set    1000h
+C28FP_R5_H    .set    2000h
+C28FP_R6_H    .set    4000h
+C28FP_R7_H    .set    8000h
+
+
+C28_ALL_AR_REGS .set C28_AR0_L|C28_AR1_L|C28_AR2_L|C28_AR3_L|C28_AR4_L|C28_AR5_L|C28_AR6_L|C28_AR7_L|C28FP_R0_H|C28FP_R1_H|C28FP_R2_H|C28FP_R3_H|C28FP_R4_H|C28FP_R5_H|C28FP_R6_H|C28FP_R7_H
+C28_CPRESERVED  .set C28_AR3_L|C28_AR2_L|C28_AR1_L|C28FP_R4_H|C28FP_R5_H|C28FP_R6_H|C28FP_R7_H
+
+C28_ACC_L       .set     01h
+C28_ACC_H       .set     02h
+C28_T_L         .set     04h
+C28_T_H         .set     08h
+C28_P_L         .set     10h
+C28_P_H         .set     20h
+
+C28_ALL_ACC_REGS   .set  C28_ACC_L|C28_ACC_H
+C28_ALL_ATP_REGS   .set  C28_T_L|C28_T_H|C28_P_L|C28_P_H|C28_T_L|C28_T_H|C28_ACC_L|C28_ACC_H
+
+C28_DBGIER_L    .set     01h
+C28_IFR_L       .set     02h
+C28_IER_L       .set     04h
+C28_ST0_L       .set     08h    
+C28_ST1_L       .set     10h
+C28_DP_L        .set     20h
+
+C28FP_RB_L    .set    40h
+C28FP_STF_L   .set    80h
+
+
+C28_ALL_MISC_REGS       .set    C28_DBGIER_L|C28_IFR_L|C28_IER_L|C28_ST0_L|C28_ST1_L|C28_DP_L|C28FP_RB_L|C28FP_STF_L
+    
+C28_AR_CALLER_MASK      .set    C28_AR4_L|C28_AR5_L|C28_AR5_L|C28_AR6_L|C28_AR7_L|C28_AR0_L|C28FP_R0_H|C28FP_R1_H|C28FP_R2_H|C28FP_R3_H
+
+C28_AR_BIOS_CONTEXT     .set    C28_AR_CALLER_MASK
+
+C28_AC_CALLER_MASK      .set    C28_T_H|C28_ACC_L|C28_ACC_H|C28_T_L|C28_T_H|C28_P_L|C28_P_H  
+
+C28_AC_BIOS_CONTEXT     .set    C28_AC_CALLER_MASK
+
+C28_MISC_CALLER_MASK    .set    0
+
+C28_MISC_BIOS_CONTEXT   .set    C28_MISC_CALLER_MASK
+
+C28_ST1LCL_BITMASK      .set 0xf4f7     ; old value: 0xE4F5
+C28_ST0LCL_BITMASK      .set 0xffff
+C28_ST1GBL_BITMASK      .set 0x0b08     ; old value: 0x1B0A
+C28_ST0GBL_BITMASK      .set 0x0000             
+
+;
+;# ======== C28_save ========
+;  Save cpu registers for context switching or other purposes
+;  This macro saves all the necessary registers specified by mask, 
+;  these are the registers that are not saved as a part of 
+;  Automatic context save.
+;
+;#
+;# Preconditions
+;#      none
+;#
+;# Postconditions
+;#
+;
+
+        .asg "sp", C28_save$regs
+C28_save        .macro  ar_mask, ac_mask, misc_mask  
+        add sp, #1      ;reqd to take care of SP being at odd boundry.
+        .if (ar_mask & C28_AR0_L)
+                push xar0 
+        .endif
+        .if (ar_mask & C28_AR1_L)
+                push xar1 
+        .endif
+        .if (ar_mask & C28_AR2_L)
+                push xar2 
+        .endif
+        .if (ar_mask & C28_AR3_L)
+                push xar3 
+        .endif
+        .if (ar_mask & C28_AR4_L)
+                push xar4 
+        .endif
+        .if (ar_mask & C28_AR5_L)
+                push xar5 
+        .endif
+        .if (ar_mask & C28_AR6_L)
+                push xar6 
+        .endif
+        .if (ar_mask & C28_AR7_L)
+                push xar7 
+        .endif
+    
+    .if (STD_TMS320C2800FPU)    
+        .if (ar_mask & C28FP_R0_H)
+            mov32   *sp++, r0h      ; Save floating point regs
+        .endif
+        .if (ar_mask & C28FP_R1_H)
+            mov32   *sp++, r1h
+        .endif
+        .if (ar_mask & C28FP_R2_H)
+            mov32   *sp++, r2h
+        .endif
+        .if (ar_mask & C28FP_R3_H)
+            mov32   *sp++, r3h
+        .endif
+        .if (ar_mask & C28FP_R4_H)
+            mov32   *sp++, r4h
+        .endif
+        .if (ar_mask & C28FP_R5_H)
+            mov32   *sp++, r5h
+        .endif
+        .if (ar_mask & C28FP_R6_H)
+            mov32   *sp++, r6h
+        .endif
+        .if (ar_mask & C28FP_R7_H)
+            mov32   *sp++, r7h
+        .endif
+    .endif
+        .if (ac_mask & C28_ACC_L)
+                push al 
+        .endif
+        .if (ac_mask & C28_ACC_H)
+                push ah 
+        .endif
+        .if (ac_mask & C28_P_L)
+                push pl 
+        .endif
+        .if (ac_mask & C28_P_H)
+                push ph 
+        .endif
+        .if (ac_mask & C28_T_L)
+                push xt 
+        .else
+                .if (ac_mask & C28_T_H)
+                        push t 
+                .endif
+        .endif
+        .if (misc_mask & C28_IFR_L)
+                push ifr 
+        .endif
+        .if (misc_mask & C28_IER_L)
+                push IER 
+        .endif
+        .if (misc_mask & C28_DBGIER_L)
+                push DBGIER 
+        .endif
+        .if (misc_mask & C28_ST0_L)
+                push ST0 
+        .endif
+        .if (misc_mask & C28_ST1_L)
+                push ST1 
+        .endif
+        .if (misc_mask & C28_DP_L)
+                push DP 
+        .endif
+    .if (STD_TMS320C2800FPU)    
+        .if (misc_mask & C28FP_RB_L)
+            push    rb
+        .endif
+        .if (misc_mask & C28FP_STF_L)
+            mov32   *sp++, stf
+        .endif
+    .endif
+ .endm
+
+
+;# ======== C28_restore ========
+;  Restore cpu registers saved by context switching or other purposes
+;  This macro saves all the necessary registers specified by mask.
+;  These are the registers that are not saved as a part of 
+;  Automatic context save.
+;
+;#
+;# Preconditions
+;#      none
+;#
+;# Postconditions
+;#
+        .asg "sp", C28_restore$regs
+C28_restore     .macro  ar_mask, ac_mask, misc_mask  
+    .if (STD_TMS320C2800FPU)    
+        .if (misc_mask & C28FP_STF_L)
+            mov32   stf, *--sp
+        .endif
+        .if (misc_mask & C28FP_RB_L)
+            pop    rb
+        .endif        
+    .endif
+        .if (misc_mask & C28_DP_L)
+                pop DP 
+        .endif
+        .if (misc_mask & C28_ST1_L)
+                pop ST1 
+        .endif
+        .if (misc_mask & C28_ST0_L)
+                pop ST0 
+        .endif
+        .if (misc_mask & C28_DBGIER_L)
+                pop DBGIER 
+        .endif
+        .if (misc_mask & C28_IER_L)
+                pop IER 
+        .endif
+        .if (misc_mask & C28_IFR_L)
+                pop IFR 
+        .endif
+        .if (ac_mask & C28_T_L)
+                pop xt 
+        .else
+                .if (ac_mask & C28_T_H)
+                        pop t 
+                .endif
+        .endif
+        .if (ac_mask & C28_P_H)
+                pop ph 
+        .endif
+        .if (ac_mask & C28_P_L)
+                pop PL 
+        .endif
+        .if (ac_mask & C28_ACC_H)
+                pop ah 
+        .endif
+        .if (ac_mask & C28_ACC_L)
+                pop al 
+        .endif
+    .if (STD_TMS320C2800FPU)    ; restore fpu regs
+        .if (ar_mask & C28FP_R7_H)
+            mov32   r7h, *--sp      
+        .endif
+        .if (ar_mask & C28FP_R6_H)
+            mov32   r6h, *--sp      
+        .endif
+        .if (ar_mask & C28FP_R5_H)
+            mov32   r5h, *--sp      
+        .endif
+        .if (ar_mask & C28FP_R4_H)
+            mov32   r4h, *--sp      
+        .endif
+        .if (ar_mask & C28FP_R3_H)
+            mov32   r3h, *--sp      
+        .endif
+        .if (ar_mask & C28FP_R2_H)
+            mov32   r2h, *--sp      
+        .endif
+        .if (ar_mask & C28FP_R1_H)
+            mov32   r1h, *--sp      
+        .endif
+        .if (ar_mask & C28FP_R0_H)
+            mov32   r0h, *--sp      
+        .endif
+    .endif
+        .if (ar_mask & C28_AR7_L)
+                pop xar7 
+        .endif
+        .if (ar_mask & C28_AR6_L)
+                pop xar6 
+        .endif
+        .if (ar_mask & C28_AR5_L)
+                pop xar5 
+        .endif
+        .if (ar_mask & C28_AR4_L)
+                pop xar4 
+        .endif
+        .if (ar_mask & C28_AR3_L)
+                pop xar3 
+        .endif
+        .if (ar_mask & C28_AR2_L)
+                pop xar2 
+        .endif
+        .if (ar_mask & C28_AR1_L)
+                pop xar1 
+        .endif
+        .if (ar_mask & C28_AR0_L)
+                pop xar0 
+        .endif
+        sub sp, #1      ;reqd to take care of SP being at odd boundry.
+ .endm
+
+;# ======== C28_disableIER ========
+;
+;  Disable interrupts using mask
+;  This macro sets a bit position of IMR register to 0, according 
+;  as the MASK supplied
+;  IEMASK       - Interrupt Enable mask
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "ier", C28_disableIER$regs
+C28_disableIER  .macro  IEMASK
+       .if ($symlen(":IEMASK:") == 0)
+            .emsg  "C28_disableIER IEMASK operand missing."
+       .else
+        and ier, ~(#IEMASK)             ;ier = ier & ~IEMASK
+       .endif
+     .endm
+
+        
+;# ======== C28_enableIER ========
+;
+;  Enable interrupts using mask
+;  This macro sets the bit position of IMR to 1, according as 
+;  the MASK supplied. 
+;  IEMASK0       - Interrupt Enable mask
+;
+;#
+;# Preconditions:
+;#      none    
+;#
+;# Postconditions:
+;#      none    
+;#
+;
+        .asg    "ier", C28_enableIER$regs
+C28_enableIER  .macro  IEMASK
+      .if ($symlen(":IEMASK:") == 0)
+         .emsg  "C28_enableIER IEMASK operand missing."
+      .else   
+        or IER, #IEMASK                 ;or mask with IER
+      .endif
+        .endm
+        
+
+;
+;# ======== C28_setBiosSTbits ========
+; This macro sets st1,st0 to the values expected by
+; compiler or BIOS  environment 
+;#
+;# Preconditions:
+;#  None
+;# Postconditions:
+;#  PM = 0     [Product shift mode is 0 (value=001 No shift)]   
+;#  PAGE0 = 0
+;#  OVM = 0
+;#  AMODE is to be set for 28x.
+
+        .asg "st0,st1",C28_setBiosSTbits$regs
+C28_setBiosSTbits .macro  dummy
+        CHK_void C28_setBiosSTbits, dummy
+        C28ADDR                 ; set AMODE for 28x (value=0)
+        clrc    PAGE0,OVM       ; set PAGE0 as stack mode (value=0)
+                                ; set OVM mode normal (value=0)
+        spm     0               ; set PM mode as 0 (value=001) fix ddts36393
+    
+    .if (STD_TMS320C2800FPU)
+    setflg  rndf32=1        ; Set rounding mode to default value.
+                            ; The dispatcher and enter/exit macros must save
+                            ; stf before calling this macro since stf is not
+                            ; automatically saved like st0 and st1.
+                            
+    .endif
+    
+     .endm
+
+;# ======== C28_saveCContext ========
+; This macro  saves all register that the C compiler expects to
+; be saved by the callee.
+;#
+;# Preconditions:
+;# None
+;# Postconditions:
+;#  The following registers are saved
+;#  al, ah , xar0, xar4, xar5, xar6, xar7, t, tl, ph, pl
+        
+        .asg "sp",C28_saveCContext$regs
+C28_saveCContext .macro 
+        CHK_void C28_saveCContext
+        add sp, #1              ;reqd to take care of SP being at odd boundry.
+        push acc
+        push xar0               ;ACC, P saved by the Interrupt Context
+        push xar4
+        push xar5
+        push xar6
+        push xar7
+        push xt
+    
+    .if (STD_TMS320C2800FPU)    
+    mov32   *sp++, r0h      ; Save floating point regs
+    mov32   *sp++, r1h
+    mov32   *sp++, r2h
+    mov32   *sp++, r3h
+    .endif
+    
+        push P
+   .endm
+
+
+
+;# ======== C28_restoreCContext ========
+; This macro restores all register that were saved C28_saveCContext
+;#
+;# Preconditions:
+;#      C28_saveCContext should have been called.
+;# Postconditions:
+;#  The following registers are retrived from stack.
+;#  al, ah , xar0, xar4, xar5, xar6, xar7, t, tl, ph, pl
+
+        .asg "sp",C28_saveCContext$regs
+C28_restoreCContext .macro 
+        CHK_void C28_saveCContext
+        pop P
+    
+    .if (STD_TMS320C2800FPU)
+    mov32   r3h, *--sp
+    mov32   r2h, *--sp
+    mov32   r1h, *--sp
+    mov32   r0h, *--sp
+    .endif
+    
+        pop xt
+        pop xar7
+        pop xar6
+        pop xar5
+        pop xar4
+        pop xar0                ;ACC, P saved by the Interrupt Context
+        pop acc
+        sub sp, #1              ;reqd to take care of SP being at odd boundry.
+      .endm
+
+
+;# ======== C28_saveBiosContext ========
+; This macro  saves all register that the C compiler expects to
+; be saved by the callee.
+;#
+;# Preconditions:
+;# None
+;# Postconditions:
+;#  The following registers are saved
+;#  al, ah , xar0, xar4, xar5, xar6, xar7, t, tl, ph, pl, dp
+;# There is no extra register to be saved.
+
+        .asg "C28_saveCContext$regs",C28_saveBiosContext$regs
+C28_saveBiosContext .macro 
+        C28_saveCContext
+    .endm
+
+
+;# ======== C28_restoreBiosContext ========
+; This macro restores all register that were saved C28_saveCContext
+;#
+;# Preconditions:
+;#      C28_saveCContext should have been called.
+;# Postconditions:
+;#  The following registers are retrived from stack.
+;#  al, ah , xar0, xar4, xar5, xar6, xar7, t, tl, ph, pl, dp
+;# There is no extra register to be restored.
+
+        .asg "C28_restoreCContext$regs",C28_restoreBiosContext$regs
+C28_restoreBiosContext .macro 
+        C28_restoreCContext
+   .endm
+

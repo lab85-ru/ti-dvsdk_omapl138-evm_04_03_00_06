@@ -1,0 +1,270 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== hst.h62 ========
+;
+;
+
+        .if ($isdefed("HST_") = 0)      ; prevent multiple includes of this file
+HST_    .set    1
+
+        .include std.h62
+        .include chk.h62
+        .include lnk.h62
+        .include rta.h62
+
+        .global HST_D_chanmask
+
+;
+;  ======== HST OFFSETS ========
+;
+
+HST_O_CHANID            .set    0 * STD_TARGWORDMAUS
+HST_O_PIPE              .set    1 * STD_TARGWORDMAUS
+HST_O_RTDXCHAN          .set    2 * STD_TARGWORDMAUS
+HST_O_RTDXENABLED       .set    2 * STD_TARGWORDMAUS
+HST_O_RTDXCOUNT         .set    3 * STD_TARGWORDMAUS
+HST_O_RTDXBUSY          .set    4 * STD_TARGWORDMAUS
+
+HST_RTDXENABLED .set 01010h             ; mask used by RTDX to indicate if an
+                                        ; individual channel is enabled
+
+;
+;# ======== HST_Obj ========
+;  Allocate a host object and initialize all fields.
+;
+;       name    - name of host object
+;       id      - host channel
+;       mode    - mode (input or output)
+;       buf     - preallocated buffer (or <NULL> if HST_Obj should create)
+;       framesize - size of pipe frame (words)
+;       numframes - number of frames in pipe.
+;       stsflg  - currently not used
+;       fxn     - notify function
+;       arg0    - argument to notify function
+;       arg1    - argument to notify function
+;       lnktype - communication link type
+;
+        .asg    ":GBL_Obj$regs:,:PIP_Obj$regs:", HST_Obj$regs
+HST_Obj .macro cflag, name, id, mode, buf, framesize, numframes, stsflg, fxn, arg0, arg1, lnktype, align
+
+        .if (:cflag: = 0)
+            .mexit
+        .endif
+
+        .global :name:$hst      ; create symbol for hst names for vbd/rta
+:name:$hst .set 0
+ 
+        CHK_nargs "HST_Obj", lnktype 
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "HST_Obj lnktype error"
+        .endif
+ 
+        CHK_domain HST_Obj, mode, "output,input", "output"
+        .asg ":CHK_status:", mode
+        .if ($symcmp(":mode:", "error") = 0)
+            .emsg "HST_Obj mode error"
+        .endif
+ 
+        .global :name:, :name:$buf, :name:$rtdx, :name:$framesize
+
+:name:$framesize .set   :framesize:
+
+        .global :name:$mode
+        .if ($symcmp(":mode:", "output") = 0)
+:name:$mode .set        1
+        .else
+:name:$mode .set        0
+        .endif
+        .global :name:$id
+:name:$id .set  :id:
+
+        .if ($symcmp(":buf:", "<NULL>") = 0)
+            .if ($symcmp(":mode:","input") == 0)
+                .if (RTDX_MODE == RTDX_HSRTDXMODE)
+                    .eval (:framesize: * :numframes:) + 1, bufSize
+                    GBL_Obj :name:$buf, bufSize, .hst:id:, "noalign", -1, 1
+                .else
+                    GBL_Obj :name:$buf, :framesize:*:numframes:, .hst:id:, "noalign", -1, 1
+                .endif
+            .else
+                GBL_Obj :name:$buf, :framesize:*:numframes:, .hst:id:, "noalign", -1, 1
+            .endif
+            .asg    :name:$buf, buf
+        .endif
+
+        .if (stsflg == 0)
+            .asg "none",stsType
+        .else
+            .if ($symcmp(":mode:","input") == 0)
+                .asg "reader",stsType
+            .else
+                .asg "writer",stsType
+            .endif
+        .endif
+ 
+        ; set first word of HST_Obj table to size of individual HST objects
+
+        .asg    HST$hstCount, chanId
+
+        .if chanId = 0
+
+:name:$objsize  .usect ".hst", STD_TARGWORDMAUS * 1, STD_TARGWORDMAUS 
+
+            .sect ".cinit"
+
+            .align 8
+
+            .field STD_TARGWORDMAUS * 1
+
+            .field :name:$objsize   
+
+            .if ($symcmp(":lnktype:","RTDX") == 0)
+                .field 7 * STD_TARGWORDMAUS
+            .else
+                .field 2 * STD_TARGWORDMAUS
+            .endif
+
+        .endif
+
+:name:  .usect ".hst", STD_TARGWORDMAUS * 2, STD_TARGWORDMAUS 
+ 
+        .sect ".cinit"
+
+        .align  8
+        .field  STD_TARGWORDMAUS * 2
+        .field  :name:    
+        .field  1<<:chanId:     ; mask 
+        .field  :name:$pipe     ; pipe
+
+        .if ($symcmp(":lnktype:","RTDX") == 0)
+            ; allocate RTDX_channel
+:name:$rtdx .usect ".hst", STD_TARGWORDMAUS * 5, STD_TARGWORDMAUS 
+
+            .sect ".cinit"
+
+            .align 8
+
+            .field STD_TARGWORDMAUS * 5
+            .field :name:$rtdx    
+            .field 01010h               ; enabled = RTDX_CHAN_ENABLED (rtdx.h)
+            .field 0                    ; count = 0
+            .field 0                    ; busy = 0
+            .field 0                    ; pfWhenDone = 0
+            .field 0                    ; next = 0
+        .endif
+
+        .if ($symcmp(":mode:","output") == 0)
+                PIP_Obj 1, :name:$pipe, -1, :name:$buf, framesize, numframes, :stsType:, fxn, arg0, arg1, RTA_F_or, LNK_dspFrameReadyMask, 1<<:chanId:, :align:
+        .endif
+ 
+        .if ($symcmp(":mode:","input") == 0)
+                PIP_Obj 1, :name:$pipe, -1, :name:$buf, framesize, numframes, :stsType:, RTA_F_or, LNK_dspFrameRequestMask, 1<<:chanId:, fxn, arg0, arg1, :align:
+        .endif
+
+        .eval HST$hstCount + 1, HST$hstCount
+
+        .endm
+
+;
+;# ======== HST_config ========
+;  Invoked by configuration file prior to creating any objects via
+;  HST_Obj.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", HST_config$regs
+HST_config .macro _rtdx, _dsm, _none, _maxframeset, _maxframeallowed, _dsmbufseg, _dsmmemsize
+        .asg    0, HST$hstCount
+        .asg    HST$hstCount, chanId
+
+        .if(HST$ != 0)
+            LNK_config _dsm, _dsmbufseg, _dsmmemsize  ; do any reqd LNK config 
+        .endif
+
+        .endm
+
+;
+;# ======== HST_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", HST_end$regs
+HST_end .macro
+        .endm
+
+;
+;# ======== HST_getpipe ========
+;  Get address of PIP associated with HST channel
+;
+;# Preconditions:
+;#      a4 = HST channel object pointer 
+;#
+;# Postconditions:
+;#      a4 = address of PIP object
+;#
+        .asg    "a4", HST_getpipe$regs
+HST_getpipe     .macro dummy
+        CHK_void HST_getpipe, dummy
+
+        ldw *+a4(4),a4
+        nop 4
+
+        .endm
+
+;
+;# ======== HST_init ========
+;  Runtime initialization for HST
+;
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#    they vary with the LNK implementation. For RTDX HST_init must
+;#    follow HWI_init so that the IER bit set by HST_init (needed for
+;#    the RTDX reserved interrupt) is not wiped out by HWI_init.
+;#
+        .asg "LNK_init$regs", HST_init$regs
+HST_init  .macro
+        ; only expand if the HST module is configured by the user
+        .if(HST$ != 0)
+            LNK_init    ; do any required LNK initialization
+        .endif
+        .endm
+
+;
+;# ======== HST_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#      none
+;#
+;
+        .asg "", HST_startup$regs
+HST_startup  .macro
+        .endm
+
+        .endif          ; if HST_ is not defined

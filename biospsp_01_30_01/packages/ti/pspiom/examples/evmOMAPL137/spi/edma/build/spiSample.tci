@@ -1,0 +1,10 @@
+/*
+ * ======== SPI Configuration ========
+ */
+/* Add Spi driver to DEV table */
+bios.UDEV.create("Spi0");
+bios.UDEV.instance("Spi0").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("Spi0").initFxn = prog.extern("SpiUserInit");
+bios.UDEV.instance("Spi0").params = prog.extern("spiParams");
+bios.UDEV.instance("Spi0").fxnTable = prog.extern("Spi_IOMFXNS");
+bios.UDEV.instance("Spi0").deviceId = 0;

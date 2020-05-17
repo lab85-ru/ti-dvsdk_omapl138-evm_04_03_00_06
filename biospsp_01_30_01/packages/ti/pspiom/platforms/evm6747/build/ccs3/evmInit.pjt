@@ -1,0 +1,41 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Library
+CPUFamily=TMS320C67XX
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="XDC"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\audio_evmInit.c"
+Source="..\..\src\i2c_evmInit.c"
+Source="..\..\src\mcaspDit_evmInit.c"
+Source="..\..\src\mmcsd_evmInit.c"
+Source="..\..\src\mmcsd_startup.c"
+Source="..\..\src\nand_evmInit.c"
+Source="..\..\src\nand_startup.c"
+Source="..\..\src\spi_evmInit.c"
+Source="..\..\src\uart_evmInit.c"
+Source="..\..\src\lcdraster_evmInit.c"
+Source="..\..\src\lcdlidd_evmInit.c"
+Source="..\..\src\gpio_evmInit.c"
+Source="..\..\src\common_evmInit.c"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"..\..\lib\Debug\ti.pspiom.platforms.evm6747.evmInit.a674"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"..\..\lib\Release\ti.pspiom.platforms.evm6747.evmInit.a674"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"CHIP_C6747" -mo -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-o2 -pdr -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"CHIP_C6747" -d"PSP_DISABLE_INPUT_PARAMETER_CHECK" -d"NDEBUG" -mo -mv6740
+

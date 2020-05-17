@@ -1,0 +1,82 @@
+/* 
+ * Copyright (c) 2009, Texas Instruments Incorporated
+ * All rights reserved.
+ *
+ * Use of this software is controlled by the terms and conditions found in
+ * the New BSD Software License Agreement, which is reproduced in its
+ * entirity below.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * *  Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * *  Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
+ */
+/*
+ *  ======== dm6437common.tci ========
+ *  EvmDm6437 specific BIOS configuration.
+ */
+
+/* Setup the L2 Cache and MAR bits */
+bios.GBL.C64PLUSL2CFG = "64k";
+bios.GBL.C64PLUSMAR128to159 = 0x0000ffff;
+
+/* Board Specifics */
+
+/* Create a heap in external memory */
+bios.DDR2.len = 0x08000000;
+bios.DDR2.createHeap = true;
+bios.DDR2.heapSize = 0x00020000;
+bios.setMemDataHeapSections(prog, prog.get("DDR2"));
+
+/* Configure Board */
+bios.GBL.CLKOUT = 594.0000;
+bios.GBL.CALLUSERINITFXN = 1;
+bios.GBL.USERINITFXN = prog.extern("dm6437_init");
+
+/* Configure timer */
+bios.CLK.TIMERSELECT = "Timer 0";
+bios.CLK.RESETTIMER = true;
+
+/* Move all sections to DDR2 */
+bios.setMemCodeSections(prog, prog.get("DDR2"));
+bios.setMemDataHeapSections(prog, prog.get("DDR2"));
+bios.setMemDataNoHeapSections(prog, prog.get("DDR2"));                          
+
+/* Create a data section in DDR2 */
+var DDR2_DATA = bios.MEM.create("DDR2_DATA");
+DDR2_DATA.base = 0x88000000;
+DDR2_DATA.len =  0x08000000;
+DDR2_DATA.createHeap = 0;
+
+/* Remove IRAM since we've set L2 to be cache */
+bios.IRAM.destroy();
+
+/*
+ */
+/*
+ *  @(#) ti.bios.log.ndk.examples; 1, 0, 2, 02,34; 5-23-2009 17:29:16; /db/vtree/library/trees/biosutils/biosutils-c02x/src/
+ */
+

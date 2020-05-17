@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin
+      name="BIOS 5.41.03.17 Help"
+      id="com.ti.bios.rtscRegistry_5.41.3.17"
+      version="5.41.3.17"
+      provider-name="Texas Instruments">
+
+   <extension point="org.eclipse.help.toc">
+      <toc file="toc_top.xml" primary="true"/>
+   </extension>
+
+   <extension point="org.eclipse.help.contentProducer">
+      <contentProducer>
+         <producer class="org.eclipse.rtsc.xdctools.ui.help.HelpContentProducer">
+         </producer>
+      </contentProducer>
+   </extension>
+   
+   <extension
+         point="org.eclipse.rtsc.xdctools.ui.productInfo">
+      <repository
+            location="../../../packages">
+      </repository>
+      <docs location="../../../docs"/>
+      <docs location="../../.."/>
+      <info
+            installLocation="../../../"
+            productName="BIOS"
+	    versionNumber="5.41.3.17">
+       </info>
+    </extension>
+
+</plugin>
+

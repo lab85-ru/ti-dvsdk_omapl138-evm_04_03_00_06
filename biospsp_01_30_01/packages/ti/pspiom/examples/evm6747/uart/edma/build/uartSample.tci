@@ -1,0 +1,11 @@
+/*
+ * ======== UART Configuration ========
+ */
+/* Add Uart driver to DEV table */
+bios.UDEV.create("UART0");
+bios.UDEV.instance("UART0").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("UART0").initFxn = prog.extern("user_uart0_init");
+bios.UDEV.instance("UART0").params = prog.extern("uartParams");
+bios.UDEV.instance("UART0").fxnTable = prog.extern("Uart_IOMFXNS");
+bios.UDEV.instance("UART0").deviceId = 2;
+

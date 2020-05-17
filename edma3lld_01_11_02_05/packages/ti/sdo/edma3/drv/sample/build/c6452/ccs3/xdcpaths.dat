@@ -1,0 +1,5 @@
+// DO NOT MOVE OR DELETE THIS LINE [JavaScript xdcpaths]
+// Note: Use /FORWARD/ slashes for all directories!
+
+// include top-level XDC paths definition
+load( "../../../../../common/edma3_xdcpaths_common.dat" );

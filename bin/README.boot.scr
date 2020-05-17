@@ -1,0 +1,9 @@
+
+
+Execute the following command to build boot.scr from boot.cmd
+
+mkimage is an executable that is built with u-boot (./<u-boot>/tools/mkimage)
+
+
+
+mkimage -A arm -O linux -T script -C none -a 0 -e 0 -n 'Execute Boot Script' -d boot.cmd boot.scr

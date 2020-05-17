@@ -1,0 +1,30 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="Z:\pspdrivers\asp-psp\edma3_lld\packages\ti\sdo\edma3\drv\sample\build\dm360\"
+ProjectType=Library
+CPUFamily=TMS470R2X
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\..\src\pros_edma3_drv_sample_cs.c"
+Source="..\..\..\src\configs\pros_edma3_drv_sample_dm360_cfg.c"
+Source="..\..\..\src\pros_edma3_drv_sample_init.c"
+Source="..\..\..\src\pros_edma3ProtectCrit.s"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\dm360\Debug\edma3_drv_pros_sample.lib"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\dm360\Release\edma3_drv_pros_sample.lib"
+
+["Compiler" Settings: "Debug"]
+Options=-g -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\..\..\..\parts_ccs\include" -d"_DEBUG" -d"__DEBUG_BUILD__" -d"USE_TI_TOOLS" -mc -me -mv5e --abi=ti_arm9_abi
+
+["Compiler" Settings: "Release"]
+Options=-o2 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\..\..\..\parts_ccs\include" -d"_RELEASE" -d"__RELEASE_BUILD__" -d"USE_TI_TOOLS" -mc -me -mv5e --abi=ti_arm9_abi
+

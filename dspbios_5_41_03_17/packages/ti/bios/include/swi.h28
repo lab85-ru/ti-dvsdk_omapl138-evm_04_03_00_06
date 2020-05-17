@@ -1,0 +1,687 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+
+;  ======== swi.h28 ========
+;
+;
+
+        .if ($isdefed("SWI_") = 0)  ; prevent multiple includes of this file
+SWI_    .set    1
+
+        .include chk.h28
+        .include cinit.h28
+        .include fxn.h28
+        .include gbl.h28
+        .include hwi.h28
+        .include sts.h28
+
+isSwiAligned  .set  2                   ; SWI object has FXN object. Fxn
+                                        ; object has codePtr which always
+                                        ; requires aligment, hence SWI object
+                                        ; always requires alignment.
+ 
+;
+;  ======== SWI_Obj ========
+;
+SWI_Obj         .struct
+lock            Int             1       ; not posted: -1, posted: 0
+ready           DataPtr         1       ; this points to rdy list
+mask            Int             1       ; priority bit-mask
+link            DataPtr         1       ; to next element in rdy list.
+                                        ; NULL(0) means END
+initkey         Int             1       ; the initial value for the mailbox
+mailbox         Int             1       ; the swi's mailbox
+pad0            .align          isFxnAligned
+fxnobj          .tag         FXN_Obj    ; the function (and its args) to execute
+stslock         Int             1       ; equals 0 <=> STS_set/delta "in progress"
+sts             DataPtr         1       ; pointer to STS_Obj
+endpad          .align          isSwiAligned 
+                                        ; Even the length in case
+                                        ; of large model.
+SWI_A_OBJSIZE   .endstruct
+
+SWI_BASE        .set    SWI_Obj.lock
+
+SWI_O_LOCK      .set    SWI_Obj.lock-SWI_BASE
+SWI_O_READY     .set    SWI_Obj.ready-SWI_BASE
+SWI_O_MASK      .set    SWI_Obj.mask-SWI_BASE
+SWI_O_LINK      .set    SWI_Obj.link-SWI_BASE
+SWI_O_INITKEY   .set    SWI_Obj.initkey-SWI_BASE
+SWI_O_MAILBOX   .set    SWI_Obj.mailbox-SWI_BASE
+SWI_O_FXNOBJ    .set    SWI_Obj.fxnobj-SWI_BASE
+SWI_O_STSLOCK   .set    SWI_Obj.stslock-SWI_BASE
+SWI_O_STS       .set    SWI_Obj.sts-SWI_BASE
+
+
+        .global SWI_D_curmask, SWI_D_curset, SWI_D_curfxn
+        .global SWI_D_lock, SWI_D_execaddr, SWI_D_rdytab, SWI_D_rdybeg
+        .global SWI_D_inswi
+    .global SWI_D_curmbox
+        .global SWI_F_enable, SWI_F_exec, SWI_F_post, SWI_F_run,SWI_F_exec_sync
+        .global _SWI_enable
+        .global SWI_F_restorepri, SWI_D_entrytype
+
+        ; symbols that also need to be accessed from C.
+        .global _SWI_D_curmask, _SWI_D_lock
+        .global _SWI_D_inswi
+        .global _SWI_D_rdytab
+
+
+        ; needs to be .ref to force these symbols to be defined for VBD
+        .ref SWI_A_TABBEG, SWI_A_TABEND, SWI_A_TABLEN
+
+        
+
+;
+;# ======== SWI_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    ":FXN_Obj$regs:,:STS_Obj$regs:", SWI_Obj$regs
+SWI_Obj .macro cflag, name, id, fxn, pri, mailbox, arg0, arg1, dorta, order, filter, maxformat, sumformat, avgformat, filtmaxmult, filtsummult, unittype
+        CHK_nargs "SWI_Obj", fxn
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .mexit
+        .endif
+
+        ;
+        ; pri, mailbox, arg0 and arg1 are optional -- defaults if necessary
+        ;
+        .if ($symlen(":pri:") = 0)
+            .asg        "0", pri
+            .asg        "0", mailbox
+            .asg        "0", arg0
+            .asg        "0", arg1
+            .asg        "0", dorta 
+        .elseif ($symlen(":mailbox:") = 0)
+            .asg        "0", mailbox
+            .asg        "0", arg0
+            .asg        "0", arg1
+            .asg        "0", dorta 
+        .elseif ($symlen(":arg0:") = 0)
+            .asg        "0", arg0
+            .asg        "0", arg1
+            .asg        "0", dorta 
+        .elseif ($symlen(":arg1:") = 0)
+            .asg        "0", arg1
+            .asg        "0", dorta 
+        .elseif ($symlen(":dorta:") = 0)
+            .asg        "0", arg1
+        .else
+            CHK_nargs "SWI_Obj", arg1
+            .if ($symcmp(":CHK_status:", "error") = 0)
+                .mexit
+            .endif
+        .endif
+
+        .if (:cflag: = 0)
+            .mexit
+        .endif
+
+        .global :name:, fxn
+
+        .global :name:$swi      ; generate symbol for vbd/rta
+:name:$swi .set 0
+        .global :name:$dorta    ; generate dorta symbol for vbd/rta
+:name:$dorta .set :dorta:
+        .global :name:$pri      ; generate priority symbol for vbd/rta
+:name:$pri .set :pri:
+        .global :name:$ord      ; generate order symbol for vbd/rta
+:name:$ord .set :order:
+
+:name:  .tag    SWI_Obj
+
+ ; Set blocking bit as 0 here, for SDSsq31971
+        C28_allocateObject isSwiAligned, :name:, SWI_A_OBJSIZE, .swi, 0 
+:name:$fxn      .set  :name: + SWI_O_FXNOBJ
+        C28_cinitHeader CINITALIGN, isSwiAligned, :name: , SWI_A_OBJSIZE
+        C28_cinitBegin isSwiAligned
+        C28_cinitInt  -1                        ; lock (not posted)
+        C28_cinitDataPtr  SWI_D_rdytab+(:pri:*2+1)*DATAPTRSIZE
+                                                ; ready
+        C28_cinitInt     1 << :pri:             ; mask
+        C28_cinitDataPtr  0                     ; link
+        C28_cinitInt    :mailbox:               ; initkey
+        C28_cinitInt    :mailbox:               ; mailbox
+        FXN_cinitObj   :fxn:, :arg0:, :arg1:
+        C28_cinitInt  -1                        ; stslock
+        .if :dorta:
+                C28_cinitDataPtr   :name:$sts
+        .else
+                C28_cinitDataPtr   0
+        .endif
+        C28_cinitEnd isSwiAligned
+
+        ; only allocate STS object if 'Do RTA' is TRUE
+        .if :dorta:
+            .global :name:$sts$filtsummult      ; generate symbol for sum mult
+:name:$sts$filtsummult .set     :filtsummult:
+            .global :name:$sts$filtmaxmult      ; generate symbol for max mult
+:name:$sts$filtmaxmult .set     :filtmaxmult:
+
+            STS_Obj 1, :name:$sts, 0, :filter:, ":maxformat:", ":sumformat:", ":avgformat:", -1, :unittype:, -1, -1, -1, 0, 0
+        .endif
+
+    .endm
+
+;
+;# ======== SWI_andn ========
+;
+;#
+;# Preconditions:
+;#      xar4  = address of the SWI object
+;#      al = mask
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      intm dbgm must be 0, unless this macro is invoked from an 
+;#      interrupt context.
+;#
+;  Algorithm in pseudo-C:
+;  SWI_andn(SWI_Obj *swi, Uns mask)
+;  {
+;       if(swi->mailbox != 0){
+;               {
+;               begin atomic
+;               swi->mailbox = swi->mailbox & ~mask
+;               end atomic  
+;               if(swi->mailbox == 0){
+;                SWI_F_post()
+;           }
+;       }
+;  }
+
+        .asg    "ah,al,xar4:SWI_F_post$regs:", SWI_andn$regs
+SWI_andn        .macro dummy
+        CHK_void SWI_andn, dummy
+        addb    xar4, #SWI_O_MAILBOX    ; xar4 = swi->mailbox
+        mov     ah, *xar4               ; ah = mailbox
+        sb      end?, EQ                ; if mailbox==0 Z=1, exit
+        not     al                      ; mask = ~mask
+                                        ; Start Atomic
+        and     *xar4, al               ; mailbox = mask & mailbox
+                                        ; End Atomic
+        sb      end?, NEQ               ; if (mbox = 0) 
+        subb    xar4, #SWI_O_MAILBOX    ; xar4 = address of swi
+        lcr     SWI_F_post              ; post the SWI.
+
+end?:
+    .endm
+
+;
+;# ======== SWI_busy ========
+;
+;  Atomic test of SWI_D_lock >= 0
+;
+;#
+;#  Preconditions:
+;#
+;#  Postconditions:
+;#      al = 1 if SWI_D_lock >= 0   Scheduler is  locked
+;#      al  = 0 if SWI_D_lock < 0   Scheduler is not locked
+;#
+;
+;  Algorithm in pseudo-C:
+;  start atomic {
+;      if (SWI is locked) {
+;          return (1)
+;      }
+;      else {
+;          return (0)
+;      }
+;  } end atomic
+
+        .asg "al,xar0,tc", SWI_busy$regs
+SWI_busy .macro dummy
+        CHK_void SWI_busy, dummy
+        mov     al, #0                  ; Set up the default
+                                        ; return value to
+                                        ; be returned.
+        movl    xar0, #SWI_D_lock       ; xar0 = SWI_D_lock
+        push    st1
+        setc    intm, dbgm              ;##interrupt Block interrupt
+        mov     al, *xar0               ; al = *(#SWI_D_lock)
+        sb      restoreintm?, LT        ; if lock value < 0
+                                        ; al = 0 
+        mov     al, #1                  ; else al = 1
+restoreintm?
+        pop     st1                     ;##interrupt Restore interrupts
+    .endm
+
+;
+;# ======== SWI_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+; #
+        .asg    "", SWI_config$regs
+SWI_config      .macro _ehook, _ihook
+    .endm
+
+;
+;# ======== SWI_dec ========
+;
+;#
+;# Preconditions:
+;#      xar4 = address of the SWI object
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      intm dbgm must be 0, unless this macro is invoked from an 
+;#      interrupt context.
+;#
+;
+;  Algorithm in pseudo-C:
+;  SWI_dec(SWI_Obj *swi)
+;  {
+;      if(swi->mailbox != 0){
+;          {
+;           swi->mailbox--
+;           if(swi->mailbox == 0)        SWI_F_post()
+;          }
+;
+;  }
+
+        .asg    "al,xar4,:SWI_F_post$regs:", SWI_dec$regs
+SWI_dec         .macro dummy
+        CHK_void SWI_dec, dummy
+        addb    xar4, #SWI_O_MAILBOX    ; xar4 = swi->mailbox
+        mov     al, *xar4               ; al = mailbox
+        sb      end?, EQ                ; if mailbox==0 Z=1, exit
+        dec     *xar4                   ; if not posted decrement
+        sb      end?, NEQ
+        subb    xar4, #SWI_O_MAILBOX    ; xar4 = address of swi
+        lcr     SWI_F_post              ; Call SWI_F_post, xar4=SWI
+end?:
+    .endm
+
+;
+;# ======== SWI_disable ========
+;
+;#
+;# Preconditions:
+;#      intm = 0 (interrupts must be enabled)
+;#      dbgm = 0
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      The calls to HWI_enter and HWI_exit required at the beginning
+;#      and end of a hardware ISR automatically disable and reenable
+;#      swi handling. SWI_disable or SWI_enable should not be called
+;#      within a hardware ISR.
+;#
+;
+;  Algoritm:
+;       atomic {
+;           SWI_D_lock++
+;       }
+
+        .asg    "xar0", SWI_disable$regs
+SWI_disable     .macro dummy
+        CHK_void SWI_disable, dummy
+        movl    xar0, #SWI_D_lock
+        add     *xar0, #1
+    .endm
+
+
+;
+;# ======== SWI_enable ========
+;
+;#
+;# Preconditions:
+;#      SWI_D_lock >= 0 (this means SWI execution is disabled, i.e. "locked")
+;#      intm = 0 (interrupts must be enabled)
+;#      dbgm = 0
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      The calls to HWI_enter and HWI_exit required at the beginning
+;#      and end of a hardware ISR automatically disable and reenable
+;#      swi handling. SWI_disable or SWI_enable should not be called
+;#      within a hardware ISR.
+;#
+
+        .asg    ":SWI_F_enable$regs:", SWI_enable$regs
+SWI_enable      .macro 
+        lcr     SWI_F_enable
+    .endm
+
+
+;
+;# ======== SWI_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", SWI_end$regs
+SWI_end .macro
+    .endm
+
+;
+;# ======== SWI_getpri ========
+;
+;#
+;# Preconditions:
+;#      xar4 = address of the SWI object
+;#
+;# Postconditions:
+;#      al = priority mask of the SWI object
+;#
+        .asg "al", SWI_getpri$regs
+SWI_getpri      .macro dummy
+        CHK_void SWI_getpri, dummy
+        mov     al, *+xar4[#SWI_O_MASK]
+    .endm
+
+;
+;# ======== SWI_inc ========
+;
+;#
+;# Preconditions:
+;#      xar4 = address of the SWI object
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      intm dbgm be 0, unless this macro is invoked from an interrupt context.
+;#
+;  Algorithm in pseudo-C:
+;  SWI_inc(SWI_Obj *swi)
+;  {
+;           swi->mailbox++
+;         SWI_F_post()
+;  }
+
+        .asg    ":SWI_F_post$regs:", SWI_inc$regs
+SWI_inc         .macro dummy
+        CHK_void SWI_inc, dummy
+        addb    xar4, #SWI_O_MAILBOX    ; xar4 = swi->mailbox   
+        inc     *xar4
+        subb    xar4, #SWI_O_MAILBOX    ; xar4 = address of swi
+        lcr     SWI_F_post
+    .endm
+
+;
+;# ======== SWI_init ========
+;  Runtime initialization for SWI
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#      none
+;#
+
+        .asg    "", SWI_init$regs
+SWI_init        .macro
+    .endm
+
+;
+;# ======== SWI_or ========
+;
+;#
+;# Preconditions:
+;#      xar4 = address of the SWI object
+;#      al = mask
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      intm dbgm must be 0, unless this macro is invoked from
+;#       an interrupt context.
+;#
+;  Algorithm in pseudo-C:
+;  SWI_or(SWI_Obj *swi, Uns mask)
+;  {
+;        Begin  atomic {
+;           swi->mailbox = swi->mailbox | mask
+;         }
+;       End  atomic
+;         SWI_F_post()
+;  }
+
+        .asg    ":SWI_F_post$regs:", SWI_or$regs
+SWI_or          .macro dummy
+        CHK_void SWI_or, dummy
+        addb    xar4, #SWI_O_MAILBOX    ; xar4 = swi->mailbox
+                                        ;Start atomic
+        or      *xar4, al
+        subb    xar4, #SWI_O_MAILBOX    ; xar4 = address of swi
+        lcr     SWI_F_post  
+    .endm
+
+;
+;# ======== SWI_post ========
+;
+;#
+;# Preconditions:
+;#      xar4 = address of the SWI object
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      Whenever this Macro (API) is not invoked from the interrupt context
+;#      such as an Interrupt Service Routine, intm = 0 dbgm = 0 must be ensured
+;#      as a precondition too.
+;#
+
+        .asg    ":SWI_F_post$regs:", SWI_post$regs
+SWI_post        .macro  dummy
+        CHK_void SWI_post,  dummy
+        lcr     SWI_F_post 
+    .endm
+
+;
+;# ======== SWI_raisepri ========
+;
+;#
+;# Preconditions:
+;#      al =  mask of desired priority
+;#      sxm = 0
+;#
+;# Postconditions:
+;#      al = old priority mask 
+;#
+;
+
+        .asg    "t,ah,al,xar0", SWI_raisepri$regs
+;  Algorithm in pseudo-C:
+; Int  SWI_raisepri(Int mask)
+;  {
+;       mask = mask << 1 ;
+;       msbThatisOne =  getLeadingMsbThatisOne(mask) ;
+;       newCurMask =  1 << msbThatisOne ; 
+;       oldCurMask = SWI_D_curmask      ;
+;       SWI_D_curmask = max( SWI_D_curmask, newCurMask) ; 
+;       return oldCurMask
+;  }
+
+SWI_raisepri    .macro   mask
+        CHK_void SWI_raisepri, mask
+        movl    xar0, #SWI_D_curmask    ; xar0 = SWI_D_curmask
+        lsl     al, #1                  ; Left shift the mask 
+                                        ; value by 1
+        mov     ah, #0
+                                        ; If user passes mask with multiple
+                                        ; 1s, need to find the leftmost 1
+        csb     acc                     ; find the leftmost 1
+                                        ; result count in t 
+        mov     ah, #30
+        sub     ah, t                   ; ah = 30-t bits to be shifted 
+        mov     t, ah
+
+        mov     al, #1  
+        lsll    acc, t                  ; after shift, al = newmask
+        mov     t, *xar0                ; t = *SWI_D_curmask
+                                        ; This is the return
+                                        ; value
+        mov     ah, al                  ; ah = newmask
+        sub     al, t                   ; if((al-t) < 0)N = 1 
+        sb      end?, LEQ               ; if (t >= al) goto end? 
+        mov     *xar0, ah               ; curmask = max
+end?:   mov     al, t                   ; al = oldmask
+
+    .endm
+
+;
+;# ======== SWI_restorepri ========
+;
+;#
+;# Preconditions:
+;#      al = old priority mask 
+;#      intm = 0 
+;#      dbgm = 0
+;#      SWI_D_lock < 0
+;#      not in an ISR
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      This macro must not be invoked from an ISR
+
+        .asg    ":SWI_F_restorepri$regs:", SWI_restorepri$regs
+SWI_restorepri  .macro
+        lcr     SWI_F_restorepri
+
+    .endm
+
+;
+;# ======== SWI_getmbox ========
+;
+;  SWI_getmbox - get mailbox value for current swi
+;
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#      al = SWI_D_curmbox (current swi's mailbox value)
+;#
+;
+        .asg    "al,xar0", SWI_getmbox$regs
+SWI_getmbox     .macro  dummy
+        CHK_void SWI_getmbox, dummy
+        movl    xar0, #SWI_D_curmbox
+        mov     al, *xar0
+    .endm
+
+;
+;# ======== SWI_self ========
+;
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#      xar4  = address of current swi = SWI_D_curfxn - SWI_O_FXNOBJ 
+;#
+;
+;       This macro should be called only when current swi exists.
+;
+        .asg    "xar0,xar4" , SWI_self$regs
+SWI_self        .macro dummy
+        CHK_void SWI_self, dummy
+        movl    xar0, #SWI_D_curfxn
+        movl    xar4, *xar0
+        addb    xar4, #(SWI_O_LOCK - SWI_O_FXNOBJ); back up xar4 to
+                                        ; point to SWI object
+
+    .endm
+
+;
+;# ======== SWI_startup ========
+;
+;#
+;#  Preconditions:
+;#      SWI_D_lock = 0
+;#
+;#  Postconditions:
+;#      none
+;#
+;#  Dependencies:
+;#      Must follow HWI_startup as intm = 0 and dbgm = 0 is a precondition to
+;#      SWI_startup and interrupts must be enabled before software interrupts
+;#      are allowed to run.
+;
+        .asg    "SWI_enable$regs:", SWI_startup$regs
+SWI_startup       .macro dummy
+        CHK_void SWI_startup, dummy
+        .if (SWI$ = 1)
+            SWI_enable 
+        .endif
+    .endm
+
+;
+;# ======== SWI_unlocked ========
+;
+;  Atomic test of SWI_D_lock < 0
+;
+;#
+;#  Preconditions:
+;#      none
+;#
+;#  Postconditions:
+;#      al  = 1 if SWI_D_lock < 0  SWI is unlocked
+;#      al  = 0 if SWI_D_lock >= 0  SWI is locked
+;#
+;
+;  Algorithm in pseudo-C:
+;  start atomic {
+;      if (SWI is unlocked) {
+;          return (1)
+;      }
+;      else {
+;          return (0)
+;      }
+;  } end atomic
+;
+        .asg "xar0,al,tc", SWI_unlocked$regs
+SWI_unlocked .macro dummy
+        CHK_void SWI_unlocked, dummy
+        mov al, #1                      ; Set up the default
+                                        ; return value to
+                                        ; be returned.
+        movl xar0, #SWI_D_lock          ; xar0 = SWI_D_lock
+        push st1
+        setc intm, dbgm                 ;##interrupt Block interrupt
+        mov al, *xar0                   ; al = *(#SWI_D_lock)
+        sb restoreintm?, LT             ; if lock value < 0
+                                        ; al = 0 
+        mov al, #0                      ; else al = 1
+restoreintm?:
+        pop     st1                     ;##interrupt Restore interrupts
+    .endm
+
+        .endif          ; ($isdefed("SWI_") = 0)

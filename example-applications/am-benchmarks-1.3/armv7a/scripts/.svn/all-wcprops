@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/am_benchmarks/!svn/ver/66/trunk/armv7a/scripts
+END
+runDhrystone
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/am_benchmarks/!svn/ver/66/trunk/armv7a/scripts/runDhrystone
+END
+runWhetstone
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/am_benchmarks/!svn/ver/63/trunk/armv7a/scripts/runWhetstone
+END
+runLinpack
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/am_benchmarks/!svn/ver/63/trunk/armv7a/scripts/runLinpack
+END

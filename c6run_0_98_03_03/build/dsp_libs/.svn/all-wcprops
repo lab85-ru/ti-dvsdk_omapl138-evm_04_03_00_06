@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs
+END
+C6Run_rpc.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/C6Run_rpc.c
+END
+trgmsg.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/trgmsg.c
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/main.c
+END
+C6Run_exit.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/C6Run_exit.c
+END
+C6Run_rpc.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/C6Run_rpc.h
+END
+C6Run_cio.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/C6Run_cio.c
+END
+C6Run_cio.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/C6Run_cio.h
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/Makefile
+END

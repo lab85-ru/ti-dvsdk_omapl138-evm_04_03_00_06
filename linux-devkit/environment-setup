@@ -1,0 +1,59 @@
+if [ -z "$ZSH_NAME" ] && [ "x$0" = "x./environment-setup" ]; then
+    echo "Error: This script needs to be sourced. Please run as \". ./environment-setup\""
+    exit 1
+else
+    if [ -n "$BASH_SOURCE" ]; then
+        SDK_PATH="`dirname $BASH_SOURCE`"
+    else
+        SDK_PATH="`pwd`"
+    fi
+    SDK_PATH=`readlink -f "$SDK_PATH"`
+    export SDK_PATH
+fi
+export TOOLCHAIN_PATH=/datalocal/DVSDK43_HPDL380G7/tools/arago-2011.06/armv5te
+export TARGET_SYS=arm-arago-linux-gnueabi
+export CC=arm-arago-linux-gnueabi-gcc
+export CPP="arm-arago-linux-gnueabi-gcc -E"
+export NM=arm-arago-linux-gnueabi-nm
+export RANLIB=arm-arago-linux-gnueabi-ranlib
+export OBJCOPY=arm-arago-linux-gnueabi-objcopy
+export STRIP=arm-arago-linux-gnueabi-strip
+export AS=arm-arago-linux-gnueabi-as
+export AR=arm-arago-linux-gnueabi-ar
+export OBJDUMP=arm-arago-linux-gnueabi-objdump
+export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
+export PATH=$SDK_PATH/bin:$TOOLCHAIN_PATH/bin:$PATH
+export CPATH=$SDK_PATH/$TARGET_SYS/usr/include:$CPATH
+export LIBTOOL_SYSROOT_PATH=$SDK_PATH/$TARGET_SYS
+export PKG_CONFIG_SYSROOT_DIR=$SDK_PATH/$TARGET_SYS
+export PKG_CONFIG_PATH=$SDK_PATH/$TARGET_SYS/usr/lib/pkgconfig
+export CONFIG_SITE=$SDK_PATH/site-config
+alias opkg="LD_LIBRARY_PATH=$SDK_PATH/lib $SDK_PATH/bin/opkg-cl -f $SDK_PATH/etc/opkg-sdk.conf -o $SDK_PATH"
+alias opkg-target="LD_LIBRARY_PATH=$SDK_PATH/lib $SDK_PATH/bin/opkg-cl -f $SDK_PATH/$TARGET_SYS/etc/opkg.conf -o $SDK_PATH/$TARGET_SYS"
+export CC=arm-arago-linux-gnueabi-gcc
+export CPP="arm-arago-linux-gnueabi-gcc -E"
+export NM=arm-arago-linux-gnueabi-nm
+export RANLIB=arm-arago-linux-gnueabi-ranlib
+export OBJCOPY=arm-arago-linux-gnueabi-objcopy
+export STRIP=arm-arago-linux-gnueabi-strip
+export AS=arm-arago-linux-gnueabi-as
+export AR=arm-arago-linux-gnueabi-ar
+export OBJDUMP=arm-arago-linux-gnueabi-objdump
+export PKG_CONFIG_ALLOW_SYSTEM_LIBS=1
+export OE_QMAKE_CC=${TARGET_SYS}-gcc
+export OE_QMAKE_CXX=${TARGET_SYS}-g++
+export OE_QMAKE_LINK=${TARGET_SYS}-g++
+export OE_QMAKE_AR=${TARGET_SYS}-ar
+export OE_QMAKE_LIBDIR_QT=${SDK_PATH}/${TARGET_SYS}/usr/lib
+export OE_QMAKE_INCDIR_QT=${SDK_PATH}/${TARGET_SYS}/usr/include/qtopia
+export OE_QMAKE_MOC=${SDK_PATH}/bin/moc4
+export OE_QMAKE_UIC=${SDK_PATH}/bin/uic4
+export OE_QMAKE_UIC3=${SDK_PATH}/bin/uic34
+export OE_QMAKE_RCC=${SDK_PATH}/bin/rcc4
+export OE_QMAKE_QDBUSCPP2XML=${SDK_PATH}/bin/qdbuscpp2xml4
+export OE_QMAKE_QDBUSXML2CPP=${SDK_PATH}/bin/qdbusxml2cpp4
+export OE_QMAKE_QT_CONFIG=${SDK_PATH}/${TARGET_SYS}/usr/share/qtopia/mkspecs/qconfig.pri
+export QMAKESPEC=${SDK_PATH}/${TARGET_SYS}/usr/share/qtopia/mkspecs/linux-g++
+export OE_QMAKE_LDFLAGS="-L${SDK_PATH}/${TARGET_SYS}/usr/lib -Wl,-rpath-link,${SDK_PATH}/${TARGET_SYS}/usr/lib -Wl,-O1 -Wl,--hash-style=gnu"
+export OE_QMAKE_STRIP="echo"
+export PS1="\[\e[32;1m\][linux-devkit]\[\e[0m\]:\w> "

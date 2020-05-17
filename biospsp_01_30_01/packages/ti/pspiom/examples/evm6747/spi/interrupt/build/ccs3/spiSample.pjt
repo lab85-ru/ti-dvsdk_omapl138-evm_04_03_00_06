@@ -1,0 +1,62 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C67XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Tool="XDC"
+Config="Debug"
+Config="iDebug"
+Config="iRelease"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\spiSample_io.c"
+Source="..\..\src\spiSample_main.c"
+Source="..\spiSample.tcf"
+Source="..\spiSamplecfg.cmd"
+
+[Generated Files]
+Source="..\spiSamplecfg.s62"
+Source="..\spiSamplecfg_c.c"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -d"CHIP_C6747" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Compiler" Settings: "iDebug"]
+Options=-g -pdr -fr"$(Proj_dir)\iDebug" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -d"CHIP_C6747" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Compiler" Settings: "iRelease"]
+Options=-pdr -o2 -fr"$(Proj_dir)\iRelease" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -d"CHIP_C6747" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-pdr -o2 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -d"CHIP_C6747" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Linker" Settings: "Debug"]
+Options=-c -m"$(Proj_dir)\..\..\bin\Debug\spiSample.map" -o"$(Proj_dir)\..\..\bin\Debug\spiSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -l"..\spiSample_Debug.cmd"
+
+["Linker" Settings: "iDebug"]
+Options=-c -m"$(Proj_dir)\..\..\bin\iDebug\spiSample.map" -o"$(Proj_dir)\..\..\bin\iDebug\spiSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -l"..\spiSample_iDebug.cmd"
+
+["Linker" Settings: "iRelease"]
+Options=-c -m"$(Proj_dir)\..\..\bin\iRelease\spiSample.map" -o"$(Proj_dir)\..\..\bin\iRelease\spiSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -l"..\spiSample_iRelease.cmd"
+
+["Linker" Settings: "Release"]
+Options=-c -m"$(Proj_dir)\..\..\bin\Release\spiSample.map" -o"$(Proj_dir)\..\..\bin\Release\spiSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -l"..\spiSample_Release.cmd"
+
+["spiSamplecfg.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["spiSamplecfg.cmd" Settings: "iDebug"]
+LinkOrder=1
+
+["spiSamplecfg.cmd" Settings: "iRelease"]
+LinkOrder=1
+
+["spiSamplecfg.cmd" Settings: "Release"]
+LinkOrder=1
+

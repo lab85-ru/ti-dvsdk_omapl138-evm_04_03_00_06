@@ -1,0 +1,123 @@
+/*
+*  Copyright 2006 by Texas Instruments Incorporated.
+*
+*  All rights reserved. Property of Texas Instruments Incorporated.
+*  Restricted rights to use, duplicate or disclose this code are
+*  granted through contract.
+*
+*/
+
+
+Pkg.otherFiles=[
+        'build',
+
+        'lib/c6424/Debug/edma3_rm_bios.lib',
+        'lib/c6424/Debug/edma3_rm_bios_i.lib',
+        'lib/c6424/Release/edma3_rm_bios_i.lib',
+        'lib/c6424/Release/edma3_rm_bios.lib',
+
+        'lib/c6452/Debug/edma3_rm_bios.lib',
+        'lib/c6452/Debug/edma3_rm_bios_i.lib',
+        'lib/c6452/Release/edma3_rm_bios_i.lib',
+        'lib/c6452/Release/edma3_rm_bios.lib',
+
+        'lib/c6455/Debug/edma3_rm_bios.lib',
+        'lib/c6455/Debug/edma3_rm_bios_i.lib',
+        'lib/c6455/Release/edma3_rm_bios_i.lib',
+        'lib/c6455/Release/edma3_rm_bios.lib',
+
+        'lib/c6472/Debug/edma3_rm_bios.lib',
+        'lib/c6472/Debug/edma3_rm_bios_i.lib',
+        'lib/c6472/Release/edma3_rm_bios_i.lib',
+        'lib/c6472/Release/edma3_rm_bios.lib',
+
+        'lib/c6474/Debug/edma3_rm_bios.lib',
+        'lib/c6474/Debug/edma3_rm_bios_i.lib',
+        'lib/c6474/Release/edma3_rm_bios_i.lib',
+        'lib/c6474/Release/edma3_rm_bios.lib',
+
+        'lib/c6747/Debug/edma3_rm_bios.lib',
+        'lib/c6747/Debug/edma3_rm_bios_i.lib',
+        'lib/c6747/Release/edma3_rm_bios_i.lib',
+        'lib/c6747/Release/edma3_rm_bios.lib',
+
+        'lib/c6748/Debug/edma3_rm_bios.lib',
+        'lib/c6748/Debug/edma3_rm_bios_i.lib',
+        'lib/c6748/Release/edma3_rm_bios_i.lib',
+        'lib/c6748/Release/edma3_rm_bios.lib',
+
+        'lib/da830/Debug/edma3_rm_bios.lib',
+        'lib/da830/Debug/edma3_rm_bios_i.lib',
+        'lib/da830/Release/edma3_rm_bios_i.lib',
+        'lib/da830/Release/edma3_rm_bios.lib',
+
+        'lib/dm648/Debug/edma3_rm_bios.lib',
+        'lib/dm648/Debug/edma3_rm_bios_i.lib',
+        'lib/dm648/Release/edma3_rm_bios_i.lib',
+        'lib/dm648/Release/edma3_rm_bios.lib',
+
+        'lib/dm6437/Debug/edma3_rm_bios.lib',
+        'lib/dm6437/Debug/edma3_rm_bios_i.lib',
+        'lib/dm6437/Release/edma3_rm_bios_i.lib',
+        'lib/dm6437/Release/edma3_rm_bios.lib',
+
+        'lib/dm6446/Debug/edma3_rm_bios.lib',
+        'lib/dm6446/Debug/edma3_rm_bios_i.lib',
+        'lib/dm6446/Release/edma3_rm_bios_i.lib',
+        'lib/dm6446/Release/edma3_rm_bios.lib',
+
+        'lib/dm6467/Debug/edma3_rm_bios.lib',
+        'lib/dm6467/Debug/edma3_rm_bios_i.lib',
+        'lib/dm6467/Release/edma3_rm_bios_i.lib',
+        'lib/dm6467/Release/edma3_rm_bios.lib',
+
+        'lib/omap25xx/Debug/edma3_rm_bios.lib',
+        'lib/omap25xx/Debug/edma3_rm_bios_i.lib',
+        'lib/omap25xx/Release/edma3_rm_bios_i.lib',
+        'lib/omap25xx/Release/edma3_rm_bios.lib',
+
+        'lib/omap35xx/Debug/edma3_rm_bios.lib',
+        'lib/omap35xx/Debug/edma3_rm_bios_i.lib',
+        'lib/omap35xx/Release/edma3_rm_bios_i.lib',
+        'lib/omap35xx/Release/edma3_rm_bios.lib',
+
+        'lib/omap2430/Debug/edma3_rm_bios.lib',
+        'lib/omap2430/Debug/edma3_rm_bios_i.lib',
+        'lib/omap2430/Release/edma3_rm_bios_i.lib',
+        'lib/omap2430/Release/edma3_rm_bios.lib',
+
+        'lib/omap3430/Debug/edma3_rm_bios.lib',
+        'lib/omap3430/Debug/edma3_rm_bios_i.lib',
+        'lib/omap3430/Release/edma3_rm_bios_i.lib',
+        'lib/omap3430/Release/edma3_rm_bios.lib',
+
+        'lib/omapl137/Debug/edma3_rm_bios.lib',
+        'lib/omapl137/Debug/edma3_rm_bios_i.lib',
+        'lib/omapl137/Release/edma3_rm_bios_i.lib',
+        'lib/omapl137/Release/edma3_rm_bios.lib',
+
+        'lib/omapl138/Debug/edma3_rm_bios.lib',
+        'lib/omapl138/Debug/edma3_rm_bios_i.lib',
+        'lib/omapl138/Release/edma3_rm_bios_i.lib',
+        'lib/omapl138/Release/edma3_rm_bios.lib',
+
+        'lib/tci6486/Debug/edma3_rm_bios.lib',
+        'lib/tci6486/Debug/edma3_rm_bios_i.lib',
+        'lib/tci6486/Release/edma3_rm_bios_i.lib',
+        'lib/tci6486/Release/edma3_rm_bios.lib',
+
+        'lib/tci6488/Debug/edma3_rm_bios.lib',
+        'lib/tci6488/Debug/edma3_rm_bios_i.lib',
+        'lib/tci6488/Release/edma3_rm_bios_i.lib',
+        'lib/tci6488/Release/edma3_rm_bios.lib',
+
+        'docs',
+        'src',
+        'edma3_common.h',
+        'edma3_rm.h',
+        'package.bld',
+        'package.xs',
+        'RM.xdc',
+        'RM.xdt',
+];
+

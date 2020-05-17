@@ -1,0 +1,12 @@
+diff -Naur codec_engine_2_26_02_11_ori/examples/xdcpaths.mak codec_engine_2_26_02_11_new/examples/xdcpaths.mak
+--- codec_engine_2_26_02_11_ori/examples/xdcpaths.mak	2010-12-02 11:00:32.000000000 +0530
++++ codec_engine_2_26_02_11_new/examples/xdcpaths.mak	2011-11-28 21:27:36.140224471 +0530
+@@ -123,7 +123,7 @@
+ # compiler path and name for Montavista Arm 9 toolchain. NOTE: make sure the
+ # directory you specify has a "bin" subdirectory
+ CGTOOLS_V5T := /db/toolsrc/library/tools/vendors/cs/arm/arm-2007q3
+-CC_V5T := bin/arm-none-linux-gnueabi-gcc
++CC_V5T := bin/arm-arago-linux-gnueabi-gcc
+ CGTARGET := gnu.targets.arm.GCArmv5T
+ 
+ # compiler path and name for uClibc toolchain. NOTE: make sure the

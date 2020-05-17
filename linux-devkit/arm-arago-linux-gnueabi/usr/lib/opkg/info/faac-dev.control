@@ -1,0 +1,14 @@
+Package: faac-dev
+Version: 1.24-r1.6
+Description: Library for reading some sort of media format.
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: LGPL
+Architecture: armv5te
+OE: faac
+Homepage: unknown
+Build: install/d0bd439
+Depends: faac (= 1.24-r1.6)
+Recommends: libfaac-dev, libc6-dev
+Source: http://downloads.sourceforge.net/faac/faac-1.24.tar.gz

@@ -1,0 +1,243 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== clk2320.h55 ========
+;
+
+    .if ($isdefed("CLK2320_") = 0)   ; prevent multiple includes of this file
+CLK2320_    .set    1
+
+        .mmregs
+        .include cinit.h55
+        
+;RYUJIN CLK Register struct - WARNING! should match struct in _clkRYUJIN.h
+CLK_RYUJINRegs  .struct
+tctrl0          .int
+tctrl1          .int
+tintv0          .int
+tintv1          .int
+tcnt0           .int
+tcnt1           .int
+    .endstruct
+
+
+;CLK_ENABLE      .set    0x93ff  ; IdleMode = 10, CntMode = 01, EmuFree = 00, Enable = 1, Ints = 1s
+CLK_ENABLE      .set    0x9fff  ; IdleMode = 10, CntMode = 01, EmuFree = 00, Enable = 1, Ints = 1s
+CLK_RESET       .set    0x91ff  ; IdleMode = 10, CntMode = 01, EmuFree = 00, Enable = 0, Ints = 1s
+
+        .global _CLK_start_htimer
+        .global _CLK_timer
+        .global _CLK_timerEnableMask
+        .global _CLK_timerInterruptMask
+        .global CLK_TIMERNUM
+_CLK_timer      .tag    CLK_RYUJINRegs
+
+;
+;# ======== CLK_config ========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+        .asg    "", CLK_config$regs
+CLK_config .macro   _imr0tintmask, _imr1tintmask, _intbit, _timerimrmask, _regs, _timerimr, _timerifr, _timernum, _enablehtime, _usetimer, _microsecs, _tcr, _tddr, _tddrhigh, _prd, _prdhigh, _countspms, _countspmshigh, _timefxn, _hookfxn, _clkdiv, _calibDiv, _calibMult, _htimediv, _htimemult, _ltimediv, _ltimemult, _htimePerLtime
+
+    ; only expand if the CLK module is configured by the user
+    .if (CLK$ = 1)
+        ; Initializing two variables here _CLK_DFLTMICROSECS will always hold
+        ; the default microseconds value as specified in the cdb file
+        ; _CLK_D_microseconds will hold the new microseconds value after the
+        ; the timer is reprogrammed.
+        ; C55_cinitFloat expects floating point constant, we do it here itself
+        ; rather than in biosdata.s55
+        ; These two variables are declared in C file clk_data.c
+
+        .ref _CLK_DFLTMICROSECS
+        .ref _CLK_D_microseconds
+        .ref _CLK_htimePerLtime
+             
+        C55_cinitHeader CINITALIGN,isClkAligned, _CLK_D_microseconds, FLOATSIZE, DATAPAGE
+        C55_cinitBegin  isClkAligned
+        C55_cinitFloat  :_microsecs:
+        C55_cinitEnd    isClkAligned
+
+        C55_cinitHeader CINITALIGN,isClkAligned, _CLK_DFLTMICROSECS, FLOATSIZE, DATAPAGE
+        C55_cinitBegin  isClkAligned
+        C55_cinitFloat  :_microsecs:
+        C55_cinitEnd    isClkAligned
+
+        C55_cinitHeader CINITALIGN,isClkAligned, _CLK_htimePerLtime, LONGSIZE, DATAPAGE
+        C55_cinitBegin  isClkAligned
+        C55_cinitLong   :_htimePerLtime:
+        C55_cinitEnd    isClkAligned
+    .else
+        .wmsg "CLK Clock Services are not available"
+    .endif
+
+_CLK_timer              .equ    _regs
+_CLK_timerEnableMask    .equ    (_imr1tintmask << 16) | (_imr0tintmask)
+_CLK_timerInterruptMask .equ    (_CLK_timerEnableMask >> 2)
+    .endm
+    
+;
+;
+;# ======== CLK_startup ========
+;  Start the RYUJIN timers.
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    Timer Period Register = CLK_PRD.
+;#    Timer prescale Register =  CLK_TDDR
+;#    Timer is started.
+;#    Timer interrupt enable is set in interrupt enable register.
+;#
+;# Dependencies:
+;#    This routine must be called after all other routines that use the
+;#    timer and before interrupts are globally enabled.
+;
+    .asg    "tc1, :_CLK_setup$regs:, :_CLK_stop$regs:, :_CLK_start$regs:, :_CLK_enable$regs:", CLK_startup$regs
+
+CLK_startup       .macro
+    .mmregs
+        .if ((CLK$ = 1) & (CLK_USETIMER = 1))           ; if CLK enabled
+            .ref _CLK_stop
+            .ref _CLK_start
+            call _CLK_stop                              ; stop ltime
+            call _CLK_start                             ; start ltime
+        .else                                           ; only need to start 
+            .if (CLK_ENABLEHTIME = 1) & (CLK_USETIMER = 0)
+                .ref _CLK_start_htimer                  ; htimer if ltimer isn't
+                                                        ; enabled
+                call _CLK_start_htimer                      ; start htime
+            .endif
+        .endif
+    .endm
+
+;
+;# ======== CLK_readCount ========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+        .asg    "ac1,ac0,ar0", CLK_readCount$regs
+CLK_readCount .macro type
+     .noremark 5673                          ; Safe wrt CPU_89
+                                             ; Switch remark off
+    .if ($symcmp(":type:", "signed") == 0)
+        .if (.MNEMONIC)
+            pshboth ac1
+            psh AC1G_MMR
+            mov uns(port(#(_CLK_timer.tcnt0)), ac0
+            mov port(#(_CLK_timer.tcnt1), ac1
+            sfts ac1, #16
+            or ac1, ac0
+            pop AC1G_MMR
+            popboth ac1
+        .else
+            pshboth(ac1)
+            push(AC1G_MMR) || mmap()
+            ac0 = uns(*port(#(_CLK_timer.tcnt0)))
+            ac1 = *port(#(_CLK_timer.tcnt1))
+            ac1 = ac1 << 16
+            ac0 |= ac1
+            AC1G_MMR = pop() || mmap()
+            ac1 = popboth()
+        .endif
+    .else
+        .if (.MNEMONIC)
+            pshboth ac1
+            psh AC1G_MMR
+            mov uns(port(#(_CLK_timer.tcnt0))), ac0
+            mov uns(port(#(_CLK_timer.tcnt1))), ac1
+            sfts ac1, #16
+            or ac1, ac0
+            pop AC1G_MMR
+            popboth ac1
+        .else
+            pshboth(ac1)
+            push(AC1G_MMR) || mmap()
+            ac0 = uns(*port(#(_CLK_timer.tcnt0)))
+            ac1 = uns(*port(#(_CLK_timer.tcnt1)))
+            ac1 = ac1 << 16
+            ac0 |= ac1
+            AC1G_MMR = pop() || mmap()
+            ac1 = popboth()
+        .endif
+    .endif
+    .remark 5673
+    .endm
+
+;
+;# ======== CLK_ackIsr========
+;# Updates compare register. Catches up if interrupts have been missed
+;# Checks for edge condition where count > period after writing out period value
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+        .asg    "ar0", CLK_ackIsr$regs
+CLK_ackIsr .macro
+    pshboth(ac1)
+    push(AC1G_MMR) || mmap()
+    push(ST0_55_MMR) || mmap()
+    push(ar0)
+
+    ar0 = *port(#(_CLK_timer.tintv0))
+    ac0 = uns(*port(#(_CLK_timer.tintv1)))
+    ac0 = ac0 << #16
+    ac0 = ac0 | ar0
+
+CATCHUP:
+    ac0 += dbl(*(_CLK_D_prd))
+
+    ar0 = *port(#(_CLK_timer.tcnt0))
+    ac1 = uns(*port(#(_CLK_timer.tcnt1)))
+    ac1 = ac1 << #16
+    ac1 = ac1 | ar0
+
+    tc1 = ac0 > ac1
+    if (!tc1) goto CATCHUP
+
+    *port(#(_CLK_timer.tintv0)) = ac0
+    ac1 = ac0 << #-16
+    *port(#(_CLK_timer.tintv1))= ac1
+
+    ar0 = *port(#(_CLK_timer.tcnt0))
+    ac1 = uns(*port(#(_CLK_timer.tcnt1)))
+    ac1 = ac1 << #16
+    ac1 = ac1 | ar0
+
+    tc1 = ac0 > ac1
+    if (tc1) goto EXIT
+    ar0 = #CLK_TIMERNUM
+    t0 = @ifr0 || mmap()
+    if (ar0 == #0) goto CHECKIFR
+    t0 = @ifr1 || mmap()
+
+CHECKIFR:
+    t0 = t0 & #CLK_TIMERIMRMASK
+    if (t0 == #0) goto CATCHUP
+
+EXIT:
+    ar0 = pop()
+    ST0_55_MMR = pop() || mmap()
+    AC1G_MMR = pop() || mmap()
+    ac1 = popboth()
+    .endm
+
+    .endif ; ($isdefed("CLK2320_") = 0)

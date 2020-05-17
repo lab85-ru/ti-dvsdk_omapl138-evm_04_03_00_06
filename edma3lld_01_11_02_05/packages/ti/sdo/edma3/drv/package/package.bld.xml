@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.sdo.edma3.drv" version="01, 03, 09" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+    </sources>
+    <configurations>
+    </configurations>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="package/rel/ti_sdo_edma3_drv.tar.dep" src="package/rel/ti_sdo_edma3_drv.xdc.inc"/>
+    </makefiles>
+    <targets>
+    </targets>
+    <libraries>
+    </libraries>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_sdo_edma3_drv"
+        pname="ti_sdo_edma3_drv.tar"
+        label="default"
+    >
+        <file name="lib/Debug/edma3_drv_bios_c674.lib"/>
+        <file name="package/package.ext.xml"/>
+        <file name="lib/Release/edma3_drv_bios_c674.lib"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package.xs"/>
+        <file name="package/package.rel.dot"/>
+        <file name="build"/>
+        <file name="lib/Release/edma3_drv_bios_i.lib"/>
+        <file name="docs"/>
+        <file name="lib/Debug/edma3_drv_bios.lib"/>
+        <file name="edma3_drv.h"/>
+        <file name="lib/Release/edma3_drv_bios_c674_i.lib"/>
+        <file name="src"/>
+        <file name="lib/Debug/edma3_drv_bios_i.lib"/>
+        <file name="package/build.cfg"/>
+        <file name="lib/Debug/edma3_drv_bios_c674_i.lib"/>
+        <file name="package/package.bld.xml"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="lib/Release/edma3_drv_bios.lib"/>
+        <file name="package.bld"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

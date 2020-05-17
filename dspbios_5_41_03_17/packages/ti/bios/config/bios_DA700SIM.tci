@@ -1,0 +1,67 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_DA700SIM.tci ========
+ *  This file contains BIOS settings for DA700 simulator.
+ *
+ */
+
+/*
+ *  ======== bios.internal.setupMemoryDA700SIM ========
+ *  This function is the top-level function that will remove all MEM segments
+ *  from the cdb file.  It will take your physical memory map from calling
+ *  getMemoryMap() and create MEM instances in cdb.
+ *  It will then set sections to the default segment specified and fix up
+ *  the length and/or base of MEM segments if needed.
+ */
+bios.internal.setupMemoryDA700SIM = function (prog)
+{
+    /*
+     *  BIOS MEM segments will be created from object model memory definitions.
+     *  Place default code and data sections into specified memory segments.
+     */
+    bios.initializeMemory(prog, "IRAM", "IRAM");
+}
+
+/*
+ *  ======== bios.initDA700SIM ========
+ *  BIOS initialization for the DA700SIM
+ */
+bios.initDA700SIM = function (prog, baseseed)
+{
+    /*
+     *  Find configuration seed files to load
+     */
+    if (baseseed == null) {
+	baseseed = "ti/bios/config/cdb/da700sim.cdb";
+    }
+
+    var seed = utils.findSeed(baseseed);
+    if (seed != null) {
+	try {
+	    prog.load(seed);
+	}
+	catch (e) {
+	    throw new Error ("Can't load configuration seed '" + seed + "' : "
+		+ e);
+	}
+    }
+    else {
+	throw new Error ("Can't find configuration seed: " + baseseed);
+
+    }
+
+    /* set CLKOUT to be the value of cpu.clockRate. */
+    bios.internal.setClkout(prog);
+
+    /* Set endian mode based on build options */
+    prog.module("GBL").ENDIANMODE = prog.build.target.model.endian;
+
+    /* initialize the default memory segments for DA700SIM */
+    bios.internal.setupMemoryDA700SIM(prog);
+
+    /* initialize some memory map registers */
+    bios.internal.initializeRegisterMap(prog);
+}

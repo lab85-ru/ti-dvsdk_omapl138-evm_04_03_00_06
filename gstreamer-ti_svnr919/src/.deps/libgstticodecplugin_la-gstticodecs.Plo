@@ -1,0 +1,46 @@
+libgstticodecplugin_la-gstticodecs.lo: gstticodecs.c \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/string.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/features.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/sys/cdefs.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/wordsize.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/gnu/stubs.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.3.3/include/stddef.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/string.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/string2.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/stdlib.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/xdc/std.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.3.3/include/stdarg.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/gnu/targets/arm/std.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/gnu/targets/arm/GCArmv5T.h \
+  /opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/gnu/targets/std.h \
+  gstticodecs.h
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/string.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/features.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/sys/cdefs.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/wordsize.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/gnu/stubs.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.3.3/include/stddef.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/string.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/bits/string2.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../arm-arago-linux-gnueabi/usr/include/stdlib.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/xdc/std.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/linux-devkit/bin/../lib/gcc/arm-arago-linux-gnueabi/4.3.3/include/stdarg.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/gnu/targets/arm/std.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/gnu/targets/arm/GCArmv5T.h:
+
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/xdctools_3_16_03_36/packages/gnu/targets/std.h:
+
+gstticodecs.h:

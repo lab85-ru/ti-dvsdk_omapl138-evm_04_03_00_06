@@ -1,0 +1,43 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="D:\sangita\100_V_MPEG4_D_2_00\C64XPLUS_SP_002\Client\Build\"
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="DM644x_Debug"
+Config="OMAP_Debug"
+
+[Source Files]
+Source="..\..\..\lib\m4h3dec_ti.l64P"
+Source="..\Test\Src\alg_control.c"
+Source="..\Test\Src\alg_create.c"
+Source="..\Test\Src\alg_malloc.c"
+Source="..\Test\Src\bios_rts.c"
+Source="..\Test\Src\buffermanager.c"
+Source="..\Test\Src\TestAppConfigParser.c"
+Source="..\Test\Src\TestAppDecoder.c"
+Source="lnk.cmd"
+Source="lnk_3530.cmd"
+
+["Compiler" Settings: "DM644x_Debug"]
+Options=-g -q -eo.o -fr"$(Proj_dir)\Obj" -i"$(Install_dir)\framework_components_2_20_00_15\fctools\packages" -i"$(Proj_dir)\..\Test\Inc" -i"$(Proj_dir)\..\..\Inc" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\acpy3" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\dman3" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti" -i"$(Install_dir)\c6000\xdais\src\api" -i"$(Install_dir)\framework_components_2_20_00_15\fctools\packages\ti\xdais" -i"$(Install_dir)\bios_5_31_02\packages" -d"_TMS320C6400_KERNEL" -d"_DAVINCI" -d"_RTS_MODE" -d"DISABLE_ACPY3_INTERFACE" -d"_WVGA_" -mt -mw -mh -ml3 -mv6400+
+
+["Compiler" Settings: "OMAP_Debug"]
+Options=-g -q -eo.o -fr"$(Proj_dir)\Obj\" -i"$(Install_dir)\framework_components_2_20_00_15\fctools\packages" -i"$(Proj_dir)\..\Test\Inc" -i"$(Proj_dir)\..\..\Inc" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\acpy3" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\dman3" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti" -i"$(Install_dir)\c6000\xdais\src\api" -i"$(Install_dir)\framework_components_2_20_00_15\fctools\packages\ti\xdais" -i"$(Install_dir)\bios_5_31_02\packages" -d"_TMS320C6400_KERNEL" -d"_DAVINCI" -d"_RTS_MODE" -d"DISABLE_ACPY3_INTERFACE" -d"_WVGA_" -mt -mw -mh -ml3 -mv6400+
+
+["Linker" Settings: "DM644x_Debug"]
+Options=-c -m"$(Proj_dir)\Map\testappdecoder.map" -o"$(Proj_dir)\Out\testappdecoder.out" -w -x -i"$(Install_dir)\C6000\cgtools\lib" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\dman3\lib" -i"$(Install_dir)\bios_5_31_02\packages\ti\bios\lib" -l"rts64plus.lib" -l"dman3.a64P" -l"biosDM420.a64P"
+
+["Linker" Settings: "OMAP_Debug"]
+Options=-c -m"$(Proj_dir)\Map\TestAppDecoder.map" -o"$(Proj_dir)\Out\TestAppDecoder.out" -w -x -i"$(Install_dir)\C6000\cgtools\lib" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\dman3\lib" -i"$(Install_dir)\bios_5_31_02\packages\ti\bios\lib" -l"rts64plus.lib" -l"dman3.a64P" -l"biosDM420.a64P"
+
+["lnk.cmd" Settings: "OMAP_Debug"]
+ExcludeFromBuild=true
+
+["lnk_3530.cmd" Settings: "DM644x_Debug"]
+ExcludeFromBuild=true
+

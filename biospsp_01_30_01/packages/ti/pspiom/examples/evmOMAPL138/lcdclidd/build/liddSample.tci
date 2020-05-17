@@ -1,0 +1,12 @@
+/*
+ * ======== Lidd Configuration ========
+ */
+
+/* Add Lidd driver to DEV table */
+bios.UDEV.create("LIDD0");
+bios.UDEV.instance("LIDD0").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("LIDD0").initFxn = prog.extern("userLiddInit");
+bios.UDEV.instance("LIDD0").params = prog.extern("liddParams");
+bios.UDEV.instance("LIDD0").fxnTable = prog.extern("Lidd_IOMFXNS");
+bios.UDEV.instance("LIDD0").deviceId = 0;
+

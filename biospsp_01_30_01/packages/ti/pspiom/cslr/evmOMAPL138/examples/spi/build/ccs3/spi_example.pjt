@@ -1,0 +1,33 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C67XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="Linker"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\Spi_example.c"
+Source="..\OMAPL138.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-g -fr"..\obj\Debug" -i"..\..\..\..\..\..\..\" -d"_DEBUG" -mo -ml3 -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-o3 -fr"..\obj\release" -i"..\..\..\..\..\..\..\"  -mo -ml3 -mv6740
+
+["Linker" Settings: "Debug"]
+Options=-c -m"..\..\obj\debug\Spi_example.map" -o"..\..\obj\debug\Spi_example.out" -w -x -l"rts6740.lib"
+
+["Linker" Settings: "Release"]
+Options=-c -m"..\..\obj\Release\Spi_example.map" -o"..\..\obj\Release\Spi_example.out" -w -x -l"rts6740.lib"
+
+["OMAPL138.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["OMAPL138.cmd" Settings: "Release"]
+LinkOrder=1

@@ -1,0 +1,372 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== sio.h62 ========
+;
+;
+        .if ($isdefed("SIO_") = 0)      ; prevent multiple includes of this file
+SIO_    .set    1
+
+        .include std.h62
+        .include dev.h62
+        .include que.h62
+        .include obj.h62
+
+SIO_INPUT       .set    0
+SIO_OUTPUT      .set    1
+
+SIO_STANDARD    .set    0
+SIO_ISSUERECLAIM .set   1
+
+
+        .eval   25,  SIO_CORESIZE
+        .eval   20,  SIO_FRAMELISTOFFSET
+        .eval   SIO_CORESIZE+OBJ_HDRSIZE, SIO_OBJSIZE
+        .eval   3,  SIO_CHANPARAMSIZE
+
+;
+;# ======== SIO_config ========
+;  Static configuration of the SIO module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SIO_config$regs
+SIO_config      .macro
+        .endm
+
+;
+;# ======== SIO_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SIO_end$regs
+SIO_end .macro
+        .endm
+
+;
+;# ======== SIO_init ========
+;  Runtime initialization of the SIO module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SIO_init$regs
+SIO_init        .macro
+
+        .if SIO$NUMOF != 0
+
+            .global     _SIO_init
+
+            mvkl        _SIO_init, a4
+            mvkh        _SIO_init, a4
+            b           a4
+            mvkl        siostart?, b3
+            mvkh        siostart?, b3
+            nop 3
+siostart?:
+
+        .endif
+
+        .endm
+
+;
+;# ======== SIO_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", SIO_startup$regs
+SIO_startup        .macro
+        .endm
+
+;
+;# ======== SIO_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", SIO_Obj$regs
+SIO_Obj .macro cflag, name, id, _device, _ctrl, _devId, _fxns, _mode, _bufsize, _nbufs, _bufSegid, _align, _flush, _allocBuf, _model, _timeout, _useChanParams, _cbFxn, _arg0, _arg1
+
+        .global :name:
+        .eval 0, newbufsize
+
+        ; used to build framelist list of frames
+        .asg  ":name: + SIO_FRAMELISTOFFSET * STD_TARGWORDMAUS", :name:$frlist$next
+        .asg  ":name: + SIO_FRAMELISTOFFSET * STD_TARGWORDMAUS", :name:$frlist$prev
+
+        .sect   ".const"
+:name:$ctrl     .string ":_ctrl:",0
+
+        ;
+        ; 'allocBuf' allows us to allocate buffers for what would normally
+        ; be empty frames.  These buffer addresses are gathered from
+        ; the stream with the SIO_staticbuf() API.  This allows SIO to be
+        ; used in a completely static world.
+        ;
+
+        .if :_model: = SIO_STANDARD
+            .eval :_nbufs:, nframes
+            .eval :_nbufs:, nbufs
+            .eval :_bufsize:, bufsize
+            .eval :_nbufs: + 1, _nbufs  ; SIO_STANDARD model has n+1 buffers
+        .else
+            .eval :_nbufs:, nframes
+            .if :_allocBuf:
+                .eval :_nbufs:, nbufs   ; allocate issue/reclaim bufs
+                .eval :_bufsize:, bufsize
+            .else
+                .eval 0, nbufs
+                .eval 0, bufsize        ; no buffers allocated for issue/reclaim
+            .endif
+        .endif
+
+        ;
+        ; allocate the storage
+        ;
+
+:name:$obj      .usect ".SIO$bss", OBJ_HDRSIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+:name:          .usect ".SIO$bss", SIO_CORESIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+:name:$todevice .usect ".SIO$obj", QUE_ELEMSIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+:name:$frdevice .usect ".SIO$obj", QUE_ELEMSIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+:name:$framepool .usect ".SIO$obj", DEV_FRAMESIZE * :nframes: * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+        ;
+        ; need to align each indiviual buffer frame
+        ;
+        .eval   0, count
+
+        .eval (:bufsize: + (:_align: - 1)) & ( ~(:_align: - 1)), newbufsize
+
+        ; :newbufsize: is equal to multiple of :align:. This is needed
+        ; for all the buffers to start at 'align'ed boundary from the start
+        ; of .:name:$bufs section. Note that .:name:$bufs section will also
+        ; start from 'align'ed boundary.
+       
+        .loop   :nframes:
+:name:$bufpool:count:   .usect ".:name:$bufs", :newbufsize:
+            .eval       count + 1, count
+        .endloop
+        ;Note that in the above buffer allocation for all the buffers- size is 
+        ;of multiple of align value(newbufsize).This implementation is different 
+        ;from PIP where last buffer size was usect'd with the default size without
+        ;modifying it.  This was okay in PIP case because there were no frames
+        ;to start on align boundary after the last buffer.
+        ;Whereas in SIO buffers, if allocbuf is true, one more buffer may get
+        ;added into .:name:$bufs section hence above loop allocates all the 
+        ;buffers with multiples of 'align' value.
+
+        ;
+        ; allocate and initialize callback parameter in DEV_Obj
+        ;
+        .if (:_useChanParams:)
+:name:$callback .usect ".SIO$obj", SIO_CHANPARAMSIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+            .sect ".cinit"
+            .align      STD_TARGALIGN
+            .word       SIO_CHANPARAMSIZE * STD_TARGWORDMAUS
+            .word       :name:$callback
+            .word       :_cbFxn:
+            .word       :_arg0:
+            .word       :_arg1:
+
+        .endif
+
+        ;
+        ; allocate stream->standardFrame frame for SIO_STANDARD model
+        ; only allocate a buffer for this frame if allocBuf is TRUE
+        ;
+        .if (:_model: = SIO_STANDARD)
+:name:$standardframe .usect ".SIO$obj", DEV_FRAMESIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+            .if :_allocBuf:
+:name:$standardaddr .usect ".:name:$bufs", :bufsize:
+
+        ; If allocBuf is true one more buffer will be allocated in the section
+        ; .:name:$bufs. Since this is the last buffer in the section .:name:$bufs,
+        ; default size - :bufsize: will be used instead of modified :newbufsize:
+            .endif
+        .endif
+
+        ;
+        ; This loop builds up the list of frames for framelist
+        ;
+        .eval   0, count
+        .loop
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       DEV_FRAMESIZE * STD_TARGWORDMAUS
+            .word       :name:$framepool + :count: * DEV_FRAMESIZE * STD_TARGWORDMAUS
+            ; set up "next" field
+            .if :count: = :nframes: - 1         ; if this is last elem
+                .word :name: + SIO_FRAMELISTOFFSET * STD_TARGWORDMAUS   ; point to head
+                .asg ":name:$framepool + DEV_FRAMESIZE * STD_TARGWORDMAUS * :count:", :name:$frlist$prev
+            .else
+                .word :name:$framepool + DEV_FRAMESIZE * STD_TARGWORDMAUS*(:count: + 1)
+            .endif
+                                
+            ; set up "prev" field
+            .if :count: = 0                             ; if this is first elem
+                 .word :name: + SIO_FRAMELISTOFFSET * STD_TARGWORDMAUS  ; point to head
+                 .asg ":name:$framepool", :name:$frlist$next
+            .else
+                 .word :name:$framepool + DEV_FRAMESIZE * STD_TARGWORDMAUS*(:count: - 1)
+            .endif
+
+
+            .word       :name:$bufpool:count:                   ; addr
+            .word       :bufsize:                               ; size (bytes)
+            .word       0                                       ; misc
+            .word       0                                       ; arg
+            .word       0                                       ; cmd
+            .word       0                                       ; status
+
+            .eval       count + 1, count
+            .break      (count == :nframes:)
+        .endloop
+
+        ;
+        ; initialize the extra frame needed for SIO_STANDARD model
+        ;
+        .if :_model: = SIO_STANDARD
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       DEV_FRAMESIZE * STD_TARGWORDMAUS
+            .word       :name:$standardframe
+            .word       0                               ; next
+            .word       0                               ; prev
+            .if :_allocBuf:                     
+                .word   :name:$standardaddr     ; addr
+                .word   :bufsize:               ; size (bytes)
+            .else
+                .word   0                       ; addr
+                .word   0                       ; size (bytes) 
+            .endif
+            .word       0                               ; misc
+            .word       0                               ; misc
+            .word       0                               ; cmd
+            .word       0                               ; status
+        .endif
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   SIO_OBJSIZE * STD_TARGWORDMAUS, :name:$obj
+
+        OBJ_Obj :name:, OBJ_SIO, SIO_CORESIZE
+
+        .word   :name:$todevice
+        .word   :name:$frdevice
+        .word   :_bufsize:
+        .word   :_nbufs:
+        .word   -1                              ; This is the segid filed. This
+                                                ; field is set to -1 for all
+                                                ; statically created SIO objects
+
+        .if     $symcmp("input", ":_mode:") = 0
+            .word SIO_INPUT
+        .else
+            .word SIO_OUTPUT
+        .endif
+
+        .word   :_devId:
+
+        .word   SIO_:_device:$params
+
+        ;
+        ; This is the device->object field.  Static streams use
+        ; this field to hold the 'control' string until SIO_init()
+        ; gets a chance to call Dxx_open().  This field is usually
+        ; overwritten by Dxx_open().
+        ;
+        .word   :name:$ctrl
+
+        ;
+        ; driver function table:
+        ; At this point (assembly time) we don't know the entries in the
+        ; functions table.  The best we can do is to store the address
+        ; of the functions table, then do some run-time initialization.
+        ;
+        .word   0               ; close
+        .word   0               ; ctrl
+        .word   0               ; idle
+        .word   0               ; issue
+        .word   0               ; open
+        .word   0               ; ready
+        .word   0               ; reclaim
+
+        .word   :_timeout:      ; timeout parameter for ISSUE/RECLAIM
+        .word   :_align:        ; align parameter
+
+        .if (:_useChanParams:)
+            .word   :name:$callback ; callback parameter
+        .else
+            .word   0           ; callback
+        .endif
+
+        .word   :_flush:
+
+        .word   :name:$frlist$next      ; framelist
+        .word   :name:$frlist$prev      ; ditto
+
+        .if :_model: = SIO_STANDARD
+            .word :name:$standardframe
+        .else
+            .word 0
+        .endif
+
+        .word   :_model:
+
+        .word   :_fxns:         ; device functions
+
+        ;
+        ; initialize todevice and fromdevice (initially empty)
+        ;
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   QUE_ELEMSIZE * STD_TARGWORDMAUS
+        .word   :name:$todevice
+        .word   :name:$todevice
+        .word   :name:$todevice
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   QUE_ELEMSIZE * STD_TARGWORDMAUS
+        .word   :name:$frdevice
+        .word   :name:$frdevice
+        .word   :name:$frdevice
+
+        .endm
+
+        .endif          ; .if ($isdefed("SIO_") = 0) 

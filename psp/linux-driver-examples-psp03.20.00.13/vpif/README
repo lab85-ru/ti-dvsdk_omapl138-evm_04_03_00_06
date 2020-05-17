@@ -1,0 +1,84 @@
+VPIF Sample applications
+========================
+
+Sample applications demonstrating VPIF capabilities.
+
+
+Building the sample applications
+--------------------------------
+
+make KERNEL_PATH=<kernel directory path>
+
+
+VPIF MMAP based sample application
+----------------------------------
+
+Options:
+	-c <channel-> 0: Composite or 1: S-Video>
+	-p <0: no prints or 1:print frame number>
+	-m <0:NTSC or 1:PAL>
+	-s <stress test: 0 or 1>
+
+To test NTSC composite
+./vpif_test_mmap_loopback -c0 -m0  -p1
+
+To test PAL composite
+./vpif_test_mmap_loopback -c0 -m1  -p1
+
+To test NTSC S-Video
+./vpif_test_mmap_loopback -c1 -m0  -p1
+
+To test PAL S-Video
+./vpif_test_mmap_loopback -c1 -m1  -p1
+
+By default the test runs for 500 frames, unless the stress test option is set
+(with -s1 option) in which case the application does not exit.
+
+
+VPIF User pointer based sample application
+------------------------------------------
+
+Options:
+	-c <channel-> 0: Composite or 1: S-Video>
+	-p <0: no prints or 1:print frame number>
+	-m <0:NTSC or 1:PAL>
+	-s <stress test: 0 or 1>
+
+To test NTSC composite
+./vpif_test_userptr_loopback -c0 -m0  -p1
+
+To test PAL composite
+./vpif_test_userptr_loopback -c0 -m1  -p1
+
+To test NTSC S-Video
+./vpif_test_userptr_loopback -c1 -m0  -p1
+
+To test PAL S-Video
+./vpif_test_userptr_loopback -c1 -m1  -p1
+
+By default the test runs for 500 frames, unless the stress test option is set
+(with -s1 option) in which case the application does not exit.
+
+
+VPIF display(color bar)sample application
+------------------------------------------
+
+Options:
+	-o <output number-> 0: Composite or 1: S-Video>
+	-p <0: no prints or 1:print frame number>
+	-m <0:NTSC or 1:PAL>
+
+To test NTSC composite
+./vpif_test_display -o0 -m0  -p1
+
+To test PAL composite
+./vpif_test_display -o0 -m1  -p1
+
+To test NTSC S-Video
+./vpif_test_display -o1 -m0  -p1
+
+To test PAL S-Video
+./vpif_test_display -o1 -m1  -p1
+
+Please note that the bootargs for NTSC and PAL have to be set properly
+for the sample applications to execute.

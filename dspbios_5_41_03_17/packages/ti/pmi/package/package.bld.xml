@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.pmi" version="1, 0, 0, 0">
+    <units>
+    </units>
+    <sources>
+        <srcFile name="src/pmi/pmi_pll.c"/>
+        <srcFile name="src/pmi/pmi_relock1.c"/>
+        <srcFile name=".ident.c"/>
+        <srcFile name="src/pmi/pmi_voltnull.c"/>
+        <srcFile name="src/pmi/pmi_i2c.c"/>
+        <srcFile name="src/pmi/pmi_onchip.s64P"/>
+        <srcFile name="src/pmi/pmi_slp.c"/>
+        <srcFile name="package/package_ti.pmi.c"/>
+        <srcFile name="src/pmi/pmi_volt6748evm.c"/>
+        <srcFile name="src/pmi/pmi_shared_volt6748evm.c"/>
+        <srcFile name="src/pmi/pmi_idle.s64P"/>
+        <srcFile name="src/pmi/pmi_init.c"/>
+        <srcFile name="src/pmi/pmi_ms.c"/>
+    </sources>
+    <configurations>
+    </configurations>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="lib/pmi_ctl_null.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/pmi_ctl_null/package/package_ti.pmi.o674.dep" src="package/package_ti.pmi.c"/>
+        <srcFile name="package/lib/lib/pmi_ctl_null/.ident.o674.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/pmi_ctl_null/src/pmi/pmi_voltnull.o674.dep" src="src/pmi/pmi_voltnull.c"/>
+        <srcFile name="lib/pmi.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/pmi/src/pmi/pmi_relock1.o674.dep" src="src/pmi/pmi_relock1.c"/>
+        <srcFile name="package/lib/lib/pmi/.ident.o674.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/pmi/src/pmi/pmi_ms.o674.dep" src="src/pmi/pmi_ms.c"/>
+        <srcFile name="package/lib/lib/pmi/src/pmi/pmi_onchip.o674.dep" src="src/pmi/pmi_onchip.s64P"/>
+        <srcFile name="package/lib/lib/pmi/src/pmi/pmi_init.o674.dep" src="src/pmi/pmi_init.c"/>
+        <srcFile name="package/lib/lib/pmi/src/pmi/pmi_pll.o674.dep" src="src/pmi/pmi_pll.c"/>
+        <srcFile name="package/lib/lib/pmi/package/package_ti.pmi.o674.dep" src="package/package_ti.pmi.c"/>
+        <srcFile name="package/lib/lib/pmi/src/pmi/pmi_idle.o674.dep" src="src/pmi/pmi_idle.s64P"/>
+        <srcFile name="package/lib/lib/pmi/src/pmi/pmi_slp.o674.dep" src="src/pmi/pmi_slp.c"/>
+        <srcFile name="lib/pmi_ctl_evm6748.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/pmi_ctl_evm6748/src/pmi/pmi_volt6748evm.o674.dep" src="src/pmi/pmi_volt6748evm.c"/>
+        <srcFile name="package/lib/lib/pmi_ctl_evm6748/src/pmi/pmi_i2c.o674.dep" src="src/pmi/pmi_i2c.c"/>
+        <srcFile name="package/lib/lib/pmi_ctl_evm6748/.ident.o674.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/pmi_ctl_evm6748/package/package_ti.pmi.o674.dep" src="package/package_ti.pmi.c"/>
+        <srcFile name="lib/pmi_shared_evm6748.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/pmi_shared_evm6748/src/pmi/pmi_i2c.o674.dep" src="src/pmi/pmi_i2c.c"/>
+        <srcFile name="package/lib/lib/pmi_shared_evm6748/.ident.o674.dep" src=".ident.c"/>
+        <srcFile name="package/lib/lib/pmi_shared_evm6748/src/pmi/pmi_shared_volt6748evm.o674.dep" src="src/pmi/pmi_shared_volt6748evm.c"/>
+        <srcFile name="package/lib/lib/pmi_shared_evm6748/package/package_ti.pmi.o674.dep" src="package/package_ti.pmi.c"/>
+        <srcFile name="package/rel/ti_pmi.tar.dep" src="package/rel/ti_pmi.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.C674"
+            version="ti.targets.C674{1,0,6.1,5"
+            platform="ti.platforms.evmDA830"
+            isa="674"
+            suffix="674"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.1.5/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    <library name="lib/pmi_ctl_null"
+        pname="lib/pmi_ctl_null.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    <library name="lib/pmi"
+        pname="lib/pmi.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    <library name="lib/pmi_ctl_evm6748"
+        pname="lib/pmi_ctl_evm6748.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    <library name="lib/pmi_shared_evm6748"
+        pname="lib/pmi_shared_evm6748.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    </libraries>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_pmi"
+        pname="ti_pmi.tar"
+        label="default"
+    >
+        <file name="lib/pmi.a674"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package/package.rel.dot"/>
+        <file name="package/package.bld.xml"/>
+        <file name="lib/pmi_ctl_evm6748.a674"/>
+        <file name="package/package.ext.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="lib/pmi_ctl_null.a674"/>
+        <file name="lib/pmi_shared_evm6748.a674"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

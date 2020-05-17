@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?NLS TYPE="org.eclipse.help.toc"?>
+
+<toc label="BIOS 5.41.03.17 Help">
+  <topic label="Release Notes" href="Bios_5_41_03_17_release_notes.html"/>
+  <topic label="Setup Guide CCSv3" href="SetupGuide_CCSv3.html"/>
+  <topic label="Setup Guide CCSv4" href="SetupGuide_CCSv4.html"/>
+  <topic label="User's Guide" href="spru423h.pdf"/>
+  <topic label="TConf User's Guide" href="spru007h.pdf"/>
+  <topic label="C28x API Reference" href="spru625k.pdf"/>
+  <topic label="C55x API Reference" href="spru404p.pdf"/>
+  <topic label="C6x API Reference" href="spru403q.pdf"/>
+</toc>

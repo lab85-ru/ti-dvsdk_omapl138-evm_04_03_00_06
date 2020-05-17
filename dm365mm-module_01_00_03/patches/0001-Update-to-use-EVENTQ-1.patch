@@ -1,0 +1,25 @@
+From c505389a0921a05dd40e9c29ce554b2dbd15d789 Mon Sep 17 00:00:00 2001
+From: Arnie Reynoso <arnier@ti.com>
+Date: Wed, 2 Mar 2011 11:53:58 -0600
+Subject: [PATCH] Update to use EVENTQ 1
+
+---
+ dm365mm_01_00_03/module/dm365mmap.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/module/dm365mmap.c b/module/dm365mmap.c
+index 1522bff..1657ba2 100644
+--- a/module/dm365mmap.c
++++ b/module/dm365mmap.c
+@@ -173,7 +173,7 @@ static int ioctl(struct inode *inode, struct file *filp, unsigned int cmd,
+ 
+             edma_channel =
+                 edma_alloc_channel(EDMA_CHANNEL_ANY, &memcpy_dma_irq_handler,
+-                                   NULL, EVENTQ_DEFAULT);
++                                   NULL, EVENTQ_1);
+ 
+             /* Handle Failure condition here */
+             if (edma_channel < 0) {
+-- 
+1.7.0.4
+

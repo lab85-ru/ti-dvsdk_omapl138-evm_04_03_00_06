@@ -1,0 +1,15 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== confend.s28 ========
+;  The statements in this file are inserted at the end of
+;  every BIOS configuration file.
+;
+        .include vers.h28
+
+        VERS_create VERS$DATE, VERS$CDB, VERS$TREE, VERS$CDBRELATIVEPATH
+
+        .text
+

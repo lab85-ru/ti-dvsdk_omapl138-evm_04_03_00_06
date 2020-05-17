@@ -1,0 +1,225 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== c64.h64 ========
+;  Assembly language c64 macros
+;
+;                       instead of 1 due to 5-bit offset limit.
+;
+        
+        .if ($isdefed("C64_") = 0)      ; prevent multiple includes
+C64_    .set    1
+
+        .include c6x.h62
+;
+; Symbol and constant definitions
+; Values used for CCMASK in HWI_enter/HWI_exit.
+;
+C64_PCC_DISABLE .set    0x0000  ; Program Cache Control code
+C64_PCC_ENABLE  .set    0x0040  ; Program Cache Control code
+C64_PCC_FREEZE  .set    0x0060  ; Program Cache Control code
+C64_PCC_BYPASS  .set    0x0080  ; Program Cache Control code
+
+C64_CCFIELDS    .set    0x00fc  ; Cache Control field mask
+
+;
+; Register bitmap position definitions used below
+;
+C64_ra0     .set    C6X_ra0
+C64_ra1     .set    C6X_ra1
+C64_ra2     .set    C6X_ra2
+C64_ra3     .set    C6X_ra3
+C64_ra4     .set    C6X_ra4
+C64_ra5     .set    C6X_ra5
+C64_ra6     .set    C6X_ra6
+C64_ra7     .set    C6X_ra7
+C64_ra8     .set    C6X_ra8
+C64_ra9     .set    C6X_ra9
+C64_ra10    .set    C6X_ra10
+C64_ra11    .set    C6X_ra11
+C64_ra12    .set    C6X_ra12
+C64_ra13    .set    C6X_ra13
+C64_ra14    .set    C6X_ra14
+C64_ra15    .set    C6X_ra15
+C64_ra16    .set    C6X_ra16
+C64_ra17    .set    C6X_ra17
+C64_ra18    .set    C6X_ra18
+C64_ra19    .set    C6X_ra19
+C64_ra20    .set    C6X_ra20
+C64_ra21    .set    C6X_ra21
+C64_ra22    .set    C6X_ra22
+C64_ra23    .set    C6X_ra23
+C64_ra24    .set    C6X_ra24
+C64_ra25    .set    C6X_ra25
+C64_ra26    .set    C6X_ra26
+C64_ra27    .set    C6X_ra27
+C64_ra28    .set    C6X_ra28
+C64_ra29    .set    C6X_ra29
+C64_ra30    .set    C6X_ra30
+C64_ra31    .set    C6X_ra31
+
+C64_rb0     .set    C6X_rb0
+C64_rb1     .set    C6X_rb1
+C64_rb2     .set    C6X_rb2
+C64_rb3     .set    C6X_rb3
+C64_rb4     .set    C6X_rb4
+C64_rb5     .set    C6X_rb5
+C64_rb6     .set    C6X_rb6
+C64_rb7     .set    C6X_rb7
+C64_rb8     .set    C6X_rb8
+C64_rb9     .set    C6X_rb9
+C64_rb10    .set    C6X_rb10
+C64_rb11    .set    C6X_rb11
+C64_rb12    .set    C6X_rb12
+C64_rb13    .set    C6X_rb13
+C64_rb14    .set    C6X_rb14
+C64_rb15    .set    C6X_rb15
+C64_rb16    .set    C6X_rb16
+C64_rb17    .set    C6X_rb17
+C64_rb18    .set    C6X_rb18
+C64_rb19    .set    C6X_rb19
+C64_rb20    .set    C6X_rb20
+C64_rb21    .set    C6X_rb21
+C64_rb22    .set    C6X_rb22
+C64_rb23    .set    C6X_rb23
+C64_rb24    .set    C6X_rb24
+C64_rb25    .set    C6X_rb25
+C64_rb26    .set    C6X_rb26
+C64_rb27    .set    C6X_rb27
+C64_rb28    .set    C6X_rb28
+C64_rb29    .set    C6X_rb29
+C64_rb30    .set    C6X_rb30
+C64_rb31    .set    C6X_rb31
+
+C64_ramr    .set    C6X_ramr
+C64_rcsr    .set    C6X_rcsr
+C64_rier    .set    C6X_rier
+C64_rist    .set    C6X_rist
+C64_rirp    .set    C6X_rirp
+C64_rnrp    .set    C6X_rnrp
+
+;
+; Definitions for C64_xTEMPS
+;
+C64_A0  .set    1 << C64_ra0
+C64_A1  .set    1 << C64_ra1
+C64_A2  .set    1 << C64_ra2
+C64_A3  .set    1 << C64_ra3
+C64_A4  .set    1 << C64_ra4
+C64_A5  .set    1 << C64_ra5
+C64_A6  .set    1 << C64_ra6
+C64_A7  .set    1 << C64_ra7
+C64_A8  .set    1 << C64_ra8
+C64_A9  .set    1 << C64_ra9
+C64_A10 .set    1 << C64_ra10
+C64_A11 .set    1 << C64_ra11
+C64_A12 .set    1 << C64_ra12
+C64_A13 .set    1 << C64_ra13
+C64_A14 .set    1 << C64_ra14
+C64_A15 .set    1 << C64_ra15
+C64_A16 .set    1 << C64_ra16
+C64_A17 .set    1 << C64_ra17
+C64_A18 .set    1 << C64_ra18
+C64_A19 .set    1 << C64_ra19
+C64_A20 .set    1 << C64_ra20
+C64_A21 .set    1 << C64_ra21
+C64_A22 .set    1 << C64_ra22
+C64_A23 .set    1 << C64_ra23
+C64_A24 .set    1 << C64_ra24
+C64_A25 .set    1 << C64_ra25
+C64_A26 .set    1 << C64_ra26
+C64_A27 .set    1 << C64_ra27
+C64_A28 .set    1 << C64_ra28
+C64_A29 .set    1 << C64_ra29
+C64_A30 .set    1 << C64_ra30
+C64_A31 .set    1 << C64_ra31
+
+C64_B0  .set    1 << C64_rb0
+C64_B1  .set    1 << C64_rb1
+C64_B2  .set    1 << C64_rb2
+C64_B3  .set    1 << C64_rb3
+C64_B4  .set    1 << C64_rb4
+C64_B5  .set    1 << C64_rb5
+C64_B6  .set    1 << C64_rb6
+C64_B7  .set    1 << C64_rb7
+C64_B8  .set    1 << C64_rb8
+C64_B9  .set    1 << C64_rb9
+C64_B10 .set    1 << C64_rb10
+C64_B11 .set    1 << C64_rb11
+C64_B12 .set    1 << C64_rb12
+C64_B13 .set    1 << C64_rb13
+C64_B14 .set    1 << C64_rb14
+C64_B15 .set    1 << C64_rb15
+C64_B16 .set    1 << C64_rb16
+C64_B17 .set    1 << C64_rb17
+C64_B18 .set    1 << C64_rb18
+C64_B19 .set    1 << C64_rb19
+C64_B20 .set    1 << C64_rb20
+C64_B21 .set    1 << C64_rb21
+C64_B22 .set    1 << C64_rb22
+C64_B23 .set    1 << C64_rb23
+C64_B24 .set    1 << C64_rb24
+C64_B25 .set    1 << C64_rb25
+C64_B26 .set    1 << C64_rb26
+C64_B27 .set    1 << C64_rb27
+C64_B28 .set    1 << C64_rb28
+C64_B29 .set    1 << C64_rb29
+C64_B30 .set    1 << C64_rb30
+C64_B31 .set    1 << C64_rb31
+
+C64_AMR .set    1 << C64_ramr           ; Addressing mode register
+C64_CSR .set    1 << C64_rcsr           ; Control status register
+C64_IER .set    1 << C64_rier           ; Interrupt enable register
+C64_IST .set    1 << C64_rist           ; Interrupt service table pointer
+C64_IRP .set    1 << C64_rirp           ; Interrupt return pointer
+C64_NRP .set    1 << C64_rnrp           ; Non-maskable int. return pointer
+
+;
+; Masks for ISR registers saved and restored internally 
+;
+C64_ISRA .set   C64_A0 | C64_A1 | C64_A2 | C64_A3
+C64_ISRB .set   C64_B0 | C64_B1 | C64_B2 | C64_B3 | C64_B14
+C64_ISRC  .set  C64_AMR | C64_IRP | C64_IER
+
+;
+; Register combinations 
+;
+C64_ATEMPSLO    .set    C64_A0 | C64_A1 | C64_A2 | C64_A3 | C64_A4 
+C64_ATEMPSHI    .set    C64_A5 | C64_A6 | C64_A7 | C64_A8 | C64_A9
+C64_ATEMPSUP1   .set    C64_A16 | C64_A17 | C64_A18 | C64_A19 | C64_A20 
+C64_ATEMPSUP2   .set    C64_A21 | C64_A22 | C64_A23 | C64_A24 | C64_A25
+C64_ATEMPSUP3   .set    C64_A26 | C64_A27 | C64_A28 | C64_A29 | C64_A30 |C64_A31
+C64_ATEMPSUP    .set    C64_ATEMPSUP1 | C64_ATEMPSUP2 | C64_ATEMPSUP3
+C64_ATEMPS      .set    C64_ATEMPSLO | C64_ATEMPSHI | C64_ATEMPSUP
+
+C64_BTEMPSLO    .set    C64_B0 | C64_B1 | C64_B2 | C64_B3 | C64_B4
+C64_BTEMPSHI    .set    C64_B5 | C64_B6 | C64_B7 | C64_B8 | C64_B9
+C64_BTEMPSUP1   .set    C64_B16 | C64_B17 | C64_B18 | C64_B19 | C64_B20 
+C64_BTEMPSUP2   .set    C64_B21 | C64_B22 | C64_B23 | C64_B24 | C64_B25
+C64_BTEMPSUP3   .set    C64_B26 | C64_B27 | C64_B28 | C64_B29 | C64_B30 |C64_B31
+C64_BTEMPSUP    .set    C64_BTEMPSUP1 | C64_BTEMPSUP2 | C64_BTEMPSUP3
+C64_BTEMPS      .set    C64_BTEMPSLO | C64_BTEMPSHI | C64_BTEMPSUP
+
+C64_CTEMPS      .set    C64_AMR
+
+
+;
+;# ======== C64_disableIER ========
+;  Backward compatibility
+;
+C64_disableIER  .macro  IEMASK, REG0, REG1
+        C6X_disableIER IEMASK, REG0, REG1
+        .endm
+
+;
+;# ======== C64_enableIER ========
+;  Backward compatibility
+;
+C64_enableIER   .macro  IEMASK, REG0, REG1
+        C6X_enableIER IEMASK, REG0, REG1
+        .endm
+
+        .endif                  ; if C64_ is not defined
+

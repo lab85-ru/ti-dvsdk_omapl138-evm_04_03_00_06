@@ -1,0 +1,17 @@
+#!/bin/csh -f
+# ***************************************************************************
+# (C) Copyright 1995 - 2002 by Texas Instruments Incorporated               *
+# All rights reserved                                                       *
+# ***************************************************************************
+
+setenv LO_PATH #<your_pathname>#
+setenv LINUX_PATH ${LO_PATH}/bin
+
+if ($?LD_LIBRARY_PATH == 0) then
+    setenv LD_LIBRARY_PATH ${LINUX_PATH}
+else
+    setenv LD_LIBRARY_PATH ${LINUX_PATH}:${LD_LIBRARY_PATH}
+endif
+
+${LINUX_PATH}/load6xexe $*
+

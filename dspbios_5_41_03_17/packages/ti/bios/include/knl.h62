@@ -1,0 +1,25 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== knl.h62 ========
+;
+;
+
+        .if ($isdefed("KNL_") = 0)  ; prevent multiple includes of this file
+KNL_    .set    1
+
+;
+; Warning! KNL_SWIMASK and KNL_CURMASK must match their counterparts in knl.h
+;
+KNL_SWIMASK     .set 0x1        ; priority mask of KNL_swi 
+KNL_CURMASK     .set 0x2        ; SWI_D_curmask value when inside the kernel
+
+        .global _KNL_exit
+        .global KNL_glue
+
+        .global _KNL_inactive
+        .global _KNL_queues
+
+        .endif          ; if KNL_ is not defined

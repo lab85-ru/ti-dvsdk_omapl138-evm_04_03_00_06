@@ -1,0 +1,1773 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:st1="urn:schemas-microsoft-com:office:smarttags" xmlns="http://www.w3.org/TR/REC-html40"><head>
+
+
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+
+  
+  <meta name="ProgId" content="FrontPage.Editor.Document">
+
+
+  
+  <meta name="Generator" content="Microsoft FrontPage 5.0">
+
+
+  
+  <meta name="Originator" content="Microsoft Word 11">
+
+
+  
+  <link rel="Edit-Time-Data" href="file:///R:/products/sabios-g02x/src/doc/GettingStartedGuide520_files/editdata.mso">
+
+
+
+  
+  
+  
+  <title>DSP/BIOS™ Setup Guide</title><o:smarttagtype namespaceuri="urn:schemas-microsoft-com:office:smarttags" name="State"></o:smarttagtype>
+  <o:smarttagtype namespaceuri="urn:schemas-microsoft-com:office:smarttags" name="place" downloadurl="http://www.5iantlavalamp.com/"></o:smarttagtype><!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:LastAuthor>A0323832</o:LastAuthor>
+  <o:Revision>30</o:Revision>
+  <o:TotalTime>4002</o:TotalTime>
+  <o:LastPrinted>2004-04-01T15:54:00Z</o:LastPrinted>
+  <o:Created>2005-03-29T16:22:00Z</o:Created>
+  <o:LastSaved>2005-03-30T22:07:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>3104</o:Words>
+  <o:Characters>17698</o:Characters>
+  <o:Company>Texas Instruments Inc</o:Company>
+  <o:Lines>147</o:Lines>
+  <o:Paragraphs>41</o:Paragraphs>
+  <o:CharactersWithSpaces>20761</o:CharactersWithSpaces>
+  <o:Version>11.5703</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+
+  
+  <style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Verdana;
+	panose-1:2 11 6 4 3 5 4 4 2 4;
+	mso-font-charset:0;
+	mso-generic-font-family:swiss;
+	mso-font-pitch:variable;
+	mso-font-signature:536871559 0 0 0 415 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman"; margin-left:0in; margin-right:0in; margin-top:0in}
+h1
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:1;
+	font-size:16.0pt;
+	font-family:Arial;
+	mso-font-kerning:16.0pt;
+	font-weight:bold;}
+h2
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:2;
+	font-size:14.0pt;
+	font-family:Arial;
+	font-weight:bold;
+	font-style:italic;}
+h3
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:3;
+	font-size:13.0pt;
+	font-family:Arial;
+	font-weight:bold;}
+h4
+	{mso-style-next:Normal;
+	margin-top:12.0pt;
+	margin-right:0in;
+	margin-bottom:3.0pt;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	page-break-after:avoid;
+	mso-outline-level:4;
+	font-size:14.0pt;
+	font-family:"Times New Roman";
+	font-weight:bold;}
+p.MsoHeader, li.MsoHeader, div.MsoHeader
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoFooter, li.MsoFooter, div.MsoFooter
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:center 3.0in right 6.0in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoListBullet, li.MsoListBullet, div.MsoListBullet
+	{mso-style-update:auto;
+	margin-top:4.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.5in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	mso-pagination:widow-orphan;
+	mso-list:l1 level1 lfo1;
+	tab-stops:list .5in;
+	font-size:10.0pt;
+	font-family:Verdana;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+p.MsoListNumber, li.MsoListNumber, div.MsoListNumber
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.25in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	mso-pagination:widow-orphan;
+	mso-list:l0 level1 lfo2;
+	tab-stops:list .25in;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+p.MsoListBullet2, li.MsoListBullet2, div.MsoListBullet2
+	{mso-style-update:auto;
+	margin-top:4.0pt;
+	margin-right:0in;
+	margin-bottom:0in;
+	margin-left:.75in;
+	margin-bottom:.0001pt;
+	text-indent:-.25in;
+	mso-pagination:widow-orphan;
+	mso-list:l5 level1 lfo3;
+	tab-stops:list .75in;
+	font-size:10.0pt;
+	font-family:Verdana;
+	mso-fareast-font-family:"Times New Roman";
+	mso-bidi-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p
+	{mso-margin-top-alt:auto;
+	margin-right:0in;
+	mso-margin-bottom-alt:auto;
+	margin-left:0in;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+pre
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	tab-stops:45.8pt 91.6pt 137.4pt 183.2pt 229.0pt 274.8pt 320.6pt 366.4pt 412.2pt 458.0pt 503.8pt 549.6pt 595.4pt 641.2pt 687.0pt 732.8pt;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.25in 1.0in 1.25in;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+ /* List Definitions */
+ @list l0
+	{mso-list-id:-120;
+	mso-list-type:simple;
+	mso-list-template-ids:235147538;}
+@list l0:level1
+	{mso-level-style-link:"List Number";
+	mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;}
+@list l1
+	{mso-list-id:-119;
+	mso-list-type:simple;
+	mso-list-template-ids:-1664451218;}
+@list l1:level1
+	{mso-level-number-format:bullet;
+	mso-level-style-link:"List Bullet";
+	mso-level-text:\F0B7;
+	mso-level-tab-stop:.25in;
+	mso-level-number-position:left;
+	margin-left:.25in;
+	text-indent:-.25in;
+	font-family:Symbol;}
+@list l2
+	{mso-list-id:308632791;
+	mso-list-type:hybrid;
+	mso-list-template-ids:1640387616 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l2:level1
+	{mso-level-tab-stop:.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l2:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3
+	{mso-list-id:1037660357;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-373227952 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l3:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l3:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l3:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4
+	{mso-list-id:1563756356;
+	mso-list-type:hybrid;
+	mso-list-template-ids:-459094688 67698703 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l4:level1
+	{mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;}
+@list l4:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l4:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5
+	{mso-list-id:1591281273;
+	mso-list-type:hybrid;
+	mso-list-template-ids:87198840 -2080050284 67698713 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+@list l5:level1
+	{mso-level-number-format:bullet;
+	mso-level-text:o;
+	mso-level-tab-stop:.75in;
+	mso-level-number-position:left;
+	margin-left:.75in;
+	text-indent:-.25in;
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:9.0pt;
+	font-family:"Courier New";
+	mso-bidi-font-family:"Times New Roman";}
+@list l5:level2
+	{mso-level-tab-stop:1.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level3
+	{mso-level-tab-stop:1.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level4
+	{mso-level-tab-stop:2.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level5
+	{mso-level-tab-stop:2.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level6
+	{mso-level-tab-stop:3.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level7
+	{mso-level-tab-stop:3.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level8
+	{mso-level-tab-stop:4.0in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+@list l5:level9
+	{mso-level-tab-stop:4.5in;
+	mso-level-number-position:left;
+	text-indent:-.25in;}
+ol
+	{margin-bottom:0in;}
+ul
+	{margin-bottom:0in;}
+-->
+  </style><!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]--></head>
+<body style="" lang="EN-US" link="blue" vlink="purple">
+
+
+
+<div class="Section1">
+
+<p class="MsoNormal" style="text-align: center;" align="center"><span style="font-family: Verdana;"><img id="_x0000_i1025" src="logocorp.gif" height="32" width="576"><b style=""><o:p></o:p></b></span></p>
+
+
+
+<h1 style="text-align: center;" align="center"><span style="font-size: 20pt; font-family: Verdana;">Installation and Setup for DSP/BIOS 5.41</span></h1>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">This version of DSP/BIOS is delivered independent of Code
+Composer Studio (CCStudio). It is available for Linux, Solaris, and Microsoft Windows.
+It includes support for all DSP families supported by DSP/BIOS:  C28x, 
+C55x, and C6x.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><b style=""><span style="font-size: 10pt; font-family: Verdana;">Quick Start: </span></b><span style="font-size: 10pt; font-family: Verdana;">If you want to quickly try
+DSP/BIOS with command-line/makefile builds (and not use Code Composer Studio),
+follow the steps in the <a href="#_Installing_DSP/BIOS">Installing
+DSP/BIOS</a>, <a href="#_Setting_System_Variables">Setting System Variables</a>, and the
+<a href="#_Building_Examples_from_the_Command_">Building
+Examples from the Command Line</a> sections.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;</span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><b style=""><span style="font-size: 10pt; font-family: Verdana;">IMPORTANT:</span></b><span style="font-size: 10pt; font-family: Verdana;"> <o:p>
+The BIOS_INSTALL_DIR environment variable must be set in order for you to use 
+BIOS 5.41, see </o:p></span><span style="font-size: 10pt; font-family: Verdana;"> <a href="#_Setting_System_Variables">Setting System Variables</a></span><span style="font-size: 10pt; font-family: Verdana;"><o:p>.</o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;">&nbsp;</p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">For the latest information about what’s new in this
+release and any known issues, see the release
+notes (which, in turn, has links to the release notes of the sub-components
+that make up the DSP/BIOS product).<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">This document describes how to perform the following
+tasks:<o:p></o:p></span></p>
+
+
+
+<ul><li><span style="font-family: Symbol;"><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">
+</span></span>
+<a style="color: blue; text-decoration: underline;" href="#_Installing_DSP/BIOS">Installing
+DSP/BIOS</a></li><li><img id="_x0000_i1029" src="highlighticon.gif" border="0" height="15" width="14"><span style="">&nbsp;</span><b><a style="color: blue; text-decoration: underline;" href="#_Setting_System_Variables">Setting System Variables</a></b></li><li><a href="#_Coordinating_with_CCStudio">Coordinating
+with CCStudio</a></li><ul><li><a href="#_Selecting_the_DSP/BIOS_Version_for_CCStudio">Selecting
+the DSP/BIOS Version for CCStudio</a> </li></ul><ul><li><a href="#_Testing_the_Installation">Testing the
+Installation</a></li></ul><li><a href="#_Updating_DSP/BIOS_Applications">Updating
+DSP/BIOS Applications</a></li><ul><li><img id="_x0000_i1026" src="highlighticon.gif" border="0" height="15" width="14"><span style="">&nbsp;</span><b style=""><a href="#_Converting_CDB_Files_to_TCF_Files">Converting
+CDB Files to TCF Files</a></b> <br>
+
+
+(For the CCStudio message about converting CDB files, read this section.)</li></ul><ul><li>&nbsp;<a href="#_Modifying_CCStudio_Projects_to_Use_TCF_Files">Modifying
+CCStudio Projects to Use TCF Files</a></li></ul><ul><li><a href="#_Makefiles_for_DSP_BIOS_Applications">Makefiles for DSP/BIOS Applications</a></li></ul><ul><li><a href="#_Running_the_Tconf_Debugger">Running
+the Tconf Debugger</a></li></ul><li><a href="#_DSP/BIOS_Examples">DSP/BIOS
+Examples</a></li><ul><li><a style="color: blue; text-decoration: underline;" href="#_Building_Examples_from_the_Command_">Building
+Examples from the Command Line</a></li></ul><ul><li><a style="color: blue; text-decoration: underline;" href="#_Porting_Examples_to_a_New_Platform">Porting Examples to a New Platform</a></li></ul><li><a href="#_How_to_make_one_DSP/BIOS_installation_accessible_to_multiple_CCStudio_installations_via_the_BIOS_Selector">How to make one DSP/BIOS installation accessible to multiple CCStudio installations via the BIOS Selector</a></li><li><a href="#_More_Information_About_DSP/BIOS">More
+Information About DSP/BIOS</a></li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2><a name="_Installing_DSP/BIOS"></a><span style="font-size: 16pt; font-family: Verdana;">Installing DSP/BIOS </span></h2>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">To install this version of
+DSP/BIOS, follow these steps:<o:p></o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">1.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Copy
+or download the distribution
+file for your operating system to a temporary location. There is a
+different
+distribution file for Linux and Windows; make sure to install the
+proper one. The Linux distribution can be installed either via the GUI
+or the command line ("--mode console" option).
+The Windows distribution install is supported only via the GUI.<o:p></o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">2.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Choose an install directory 
+anywhere on your system; if Windows it is recommended to be at the top of a CCS 
+3.3 
+(or higher) installation (e.g.
+C:\CCStudio_v3.3). The directory <b style=""><i style="">must not have any spaces in its path</i></b>.
+
+Make sure
+you have at least 400 MB of space available.<br>
+
+
+<br>
+
+
+The rest of this document uses <i style="">&lt;install_dir&gt;</i>
+to refer to the location you choose. Most examples in this document are for
+Windows.<o:p></o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">3.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Run the self-extracting
+installation file you downloaded. For command-line installations, use the
+–-mode flag on the command line. For example:<o:p></o:p></span></p>
+
+
+
+<pre style="margin: 6pt 0in 0.0001pt 49.5pt;">./bios_setuplinux_5_41_00_06.bin --mode console<span style="font-family: Verdana;"><o:p></o:p></span></pre>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">4.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">During the installation, accept the 
+End User License Agreement, and specify the directory you chose above as the 
+destination directory.</span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><font size="2">
+<span style="font-family: Verdana;">5.&nbsp; For Windows Installations, if CCS 3.3 is already installed, 
+then during the BIOS 5.41 installation a utility runs that updates the CCS 
+version of TConfCmdObject.ocx (a hidden plugin responsible for Tconf integration 
+and updating from 4.90 to 5.41).&nbsp; If BIOS 5.41 is installed prior to CCS 
+3.3, then the BIOS 5.41 UpdateTConfCmdObject.exe utility needs to be run 
+manually after CCS 3.3 is installed.&nbsp; To do this, open a command window, 
+change to the &lt;</span></font><span style="font-size: 10pt; font-family: Verdana;"><i style="">install_dir</i></span><font size="2"><span style="font-family: Verdana;">&gt;/packages/ti/bios/bti/bin 
+directory, and type "UpdateTconfCmdObject -f".</span></font></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;">&nbsp;</p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">If you ever need to uninstall
+DSP/BIOS, an uninstaller is provided for Windows (e.g. Control Panel -&gt;
+Add/Remove Programs). For Linux, go to the &lt;<i style="">install_dir</i>&gt; and remove all the files with the “rm –rf &lt;<i style="">install_dir</i>&gt;/bios_5_41_00_06” command or run&nbsp;</span><span style="font-size: 10pt; font-family: Verdana;">&lt;<i style="">install_dir</i>&gt;/bios_5_41_00_06/uninstall.bin</span><span style="font-size: 10pt; font-family: Verdana;">.<o:p></o:p></span></p>
+
+
+
+<h2><a name="_Setting_System_Variables"></a><span style="font-size: 16pt; font-family: Verdana;">Setting System Variables<o:p></o:p></span></h2>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><b>To setup this version of DSP/BIOS,  these steps 
+must be followed</b>:<o:p></o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><a name="bios_install_dir">
+<font size="2"><span style="font-family: Verdana;">1</span></font><span style="font-size: 10pt; font-family: Verdana;">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">Create the BIOS_INSTALL_DIR</span></a><span style="font-size: 10pt; font-family: Verdana;"> system environment variable, and
+set it to </span><i style=""><span style="font-size: 10pt; font-family: &quot;Courier New&quot;;">&lt;install_dir&gt;</span></i><font size="2"><span style="font-family: Courier New;">/</span></font><span style="font-size: 10pt; font-family: &quot;Courier New&quot;;">bios_5_41_00_06</span><span style="font-size: 10pt; font-family: Verdana;">. </span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 9pt; text-indent: -9pt;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.5in; text-indent: -0.25in;"><b style=""><span style="font-size: 10pt; font-family: Verdana;"><span style="">&nbsp;</span></span></b><span style="font-size: 10pt; font-family: Verdana;"><span style="">&nbsp;</span><span style="">&nbsp;&nbsp; </span>On
+Windows the environment variable is set by the installer. For Linux you must set it manually. <br>
+
+
+&nbsp;</span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><font size="2">
+<span style="font-family: Verdana;">2</span></font><span style="font-size: 10pt; font-family: Verdana;">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">If building outside of CCS, Insert the following location at
+the beginning of your PATH system environment variable. (Remove any that were
+put in for a DSP/BIOS 5.10 or 5.20 installation.)<span style="">&nbsp;
+</span></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><font size="2">
+<span style="font-family: Verdana;">&nbsp;&nbsp;&nbsp;&nbsp; </span></font><span style="font-size: 10pt; font-family: Verdana;">For Windows use back slashes (“\”):</span></p>
+
+
+
+<pre style="margin: 6pt 0in 0.0001pt 49.5pt;"><span style="font-family: Verdana;">%BIOS_INSTALL_DIR%</span>\xdctools</pre>
+
+
+
+<pre style="margin: 6pt 0in 0.0001pt 49.5pt;"><font face="Verdana">(Windows requires a semicolon ; between each system environment variable you add to the PATH)</font></pre>
+
+
+
+<pre style="margin: 6pt 0in 0.0001pt 49.5pt;">&nbsp;</pre>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><font size="2">
+<span style="font-family: Verdana;">&nbsp;&nbsp;&nbsp;&nbsp; </span></font><span style="font-size: 10pt; font-family: Verdana;">For&nbsp;Linux use forward 
+slashes (“/”):</span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;">&nbsp;</p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+If you are using bash on Linux, change the PATH with the following command:<o:p></o:p></span></p>
+
+
+
+<pre style="margin: 6pt 0in 0.0001pt 49.5pt; font-size: 10pt; font-family: Courier New;">export PATH=$<span style="font-family: Verdana;">BIOS_INSTALL_DIR</span>/xdctools:$PATH<span style="font-family: Verdana;"><o:p></o:p></span></pre>
+
+
+
+<p class="MsoNormal" style="margin: 6pt 0in 0.0001pt 0.5in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp; If you are using csh on Solaris,
+change the PATH with the following command:<o:p></o:p></span></p>
+
+
+
+<pre style="margin: 6pt 0in 0.0001pt 49.5pt; font-size: 10pt; font-family: Courier New;">Set PATH =($<span style="font-family: Verdana;">BIOS_INSTALL_DIR</span>/xdctools $PATH)<span style="font-family: Verdana;"><o:p></o:p></span></pre>
+
+
+
+<h2 style=""><a name="_Coordinating_with_CCStudio"></a><span style="font-size: 16pt; font-family: Verdana;">Coordinating with CCStudio<o:p></o:p></span></h2>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">In order to correctly build and
+communicate via Run-Time Analysis (RTA) with a DSP/BIOS application, CCStudio
+needs to be configured with the version of the tools and DLLs that matches the
+DSP/BIOS version of the applications.<span style="">&nbsp;
+</span>This is setup via the
+<a href="#_Selecting_the_DSP/BIOS_Version_for_CCStudio">BIOS Selector</a>.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><o:p>&nbsp;</o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">If you are using Linux/Solaris,
+you can copy applications you have built to a Windows system with CCStudio for
+debugging.<o:p></o:p></span></p>
+
+
+
+<h3 style="margin-left: 0.25in;">
+<a name="_Selecting_the_DSP/BIOS_Version_for_CCStudio"></a><span style="font-family: Verdana;">Selecting
+the DSP/BIOS Version for CCStudio<o:p></o:p></span></h3>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">For CCStudio 3.3 or higher, you
+can choose which version of DSP/BIOS to use with CCStudio. This choice is on a
+per DSP family basis. To do this, follow these steps:<o:p></o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">1.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Open
+the Component Manager, by choosing <b style="">Help-&gt;About</b>
+in CCStudio and clicking the Component Manager button. You can also open the
+Component Manger from the <b style="">Start-&gt;Programs-&gt;<st1:place w:st="on"><st1:state w:st="on">Texas</st1:state></st1:place> Instruments</b>
+menu.<o:p></o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">2.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Expand the <b style="">Target Content (DSP/BIOS)</b> folder to see a list of targets. For your
+target platform, expand the list to see the available DSP/BIOS versions. Put a
+checkmark next to the version of DSP/BIOS you want to use. Information about
+the selected version of DSP/BIOS is shown to the right.<o:p></o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin-top: 8pt;"><span style="font-size: 10pt; font-family: Verdana;"><o:p>&nbsp;</o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<img id="_x0000_i1027" src="componentMgr_sm.png" border="0" height="258" width="628"><o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.5in;"><span style="font-size: 10pt; font-family: Verdana;"><br style="">
+
+
+<br style="">
+
+
+<o:p></o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><a name="_Building_DSP/BIOS_Applications_from"></a><span style="font-size: 10pt; font-family: Verdana;"><span style="">3.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">You may see a message that says
+the combination you have selected is untested. This message is informational
+only, and does not necessarily indicate that the combination will not work
+correctly.<o:p>&nbsp; Please check the release notes for CCS and DSP/BIOS.</o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">4.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Save your change and exit from the
+Component Manager. Then, restart CCStudio.<o:p>&nbsp; CCStudio uses 
+a field in the project file (*.pjt), CPUFamily, to determine which BIOS is 
+selected.&nbsp;&nbsp;  </o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><b style=""><span style="font-size: 10pt; font-family: Verdana;">IMPORTANT:</span></b><span style="font-size: 10pt; font-family: Verdana;"> <o:p>Make sure when you are switching BIOS versions 
+that the <b>BIOS_INSTALL_DIR</b> variable is updated to match and if you are 
+using <b>DosRun.bat</b> that it is updated as well for both BIOS and RTDX.</o:p></span></p>
+
+
+
+<h3 style="margin-left: 0.25in;">
+<a name="_Testing_the_Installation"></a><span style="font-family: Verdana;">Testing
+the Installation<o:p></o:p></span></h3>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">The hello example comes with all
+the files generated for a number of platforms. You can run the example without
+rebuilding to test the installation and your selection of the DSP/BIOS version.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">1.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Open
+CCStudio.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">2.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Load
+the hello.out executable for the platform you are using. These are in &lt;<i style="">install_dir</i>&gt;\bios_5_41_00_06\packages\ti\bios\examples\basic\hello\&lt;<i style="">target</i>&gt;.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">3.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Choose
+<b style="">DSP/BIOS-&gt;Message Log</b> to open the
+log.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">4.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Run
+the program.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">5.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">View
+the log and you should see the hello message.<o:p></o:p></span></p>
+
+
+
+<h2 style="">
+<a name="_Updating_DSP/BIOS_Applications"></a><span style="font-size: 16pt; font-family: Verdana;">Updating DSP/BIOS Applications<o:p></o:p></span></h2>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">DSP/BIOS 5.41 now uses Tconf for
+DSP/BIOS configuration instead of a CDB file. If you have a DSP/BIOS 4.90
+application or older, you first <a href="#_Converting_CDB_Files_to_TCF_Files">
+convert your CDB file to TCF</a>, and then use CCStudio as you would normally to build projects, or
+<a href="#_Building_Examples_from_the_Command_">build from the command line</a>.</span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;">&nbsp;</p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><b>NOTE:</b>&nbsp; The CDB file  created by the DSP/BIOS
+Configuration Tool (gconf) is now generated when you run gconf or a TCF Tconf 
+script and no longer considered a source file. You can still view CDB
+files with the gconf DSP/BIOS Configuration Tool in read-only mode. However, to
+change a DSP/BIOS configuration, you must now edit the TCF file with gconf or a
+text editor.<o:p></o:p></span></p>
+
+
+
+<h3 style="margin-left: 0.25in;">
+<a name="_Converting_CDB_Files_to_TCF_Files"></a><span style="font-family: Verdana;">Converting
+CDB Files to TCF Files<o:p></o:p></span></h3>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><i style=""><span style="font-size: 10pt; font-family: Verdana;">Unless you already have a TCF file</span></i><span style="font-size: 10pt; font-family: Verdana;">, you need to follow one of these procedures to 
+convert your CDB file to a TCF file.&nbsp; In both cases you must have access to 
+your previous version of DSP/BIOS that you were using CDB with.</span></p>
+
+
+
+<h4 style="margin-left: 0.25in;"><font face="Verdana" size="2">
+<a name="CCS Automated Procedure">CCS 
+Automated Procedure</a>:</font></h4>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;">&nbsp;<span style="font-size: 10pt; font-family: Verdana;">1.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">From 
+within CCS, open your project file.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;">&nbsp;<span style="font-size: 10pt; font-family: Verdana;">2.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><font size="2"><span style="font-family: Verdana;">You 
+will see a popup box indicating that your CDB file and project need to be 
+updated; click OK which will then do the conversion.&nbsp; </span></font></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><font size="2"><span style="font-family: Verdana;"><b>
+NOTE:</b>&nbsp; If you are using CCS 3.3 or later this step will fail, but a 
+script file (cdb2tcf.bat) which automates the procedure below is generated in 
+the same directory as your project file.&nbsp; This file can then be modified to 
+point to your old BIOS version and then run manually to complete the conversion.&nbsp; 
+If there happens to be another kind of failure in the automated conversion, then 
+this same script file can be corrected to fix the issue.</span></font></p>
+
+
+
+<h4 style="margin-left: 0.25in;"><font face="Verdana" size="2">
+Command Line Procedure:</font></h4>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;">&nbsp;<span style="font-size: 10pt; font-family: Verdana;">1.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">From
+a command prompt, move to the directory that contains your project’s CDB file.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;">&nbsp;<span style="font-size: 10pt; font-family: Verdana;">2.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">If
+you added the </span><span style="font-size: 10pt; font-family: &quot;Courier New&quot;;">%BIOS_INSTALL_DIR%\xdctools
+</span><span style="font-size: 10pt; font-family: Verdana;">directory to your
+PATH definition, run the cdb2tcf utility as follows:<o:p></o:p></span></p>
+
+
+
+<pre style="margin: 6pt 0in 0.0001pt 49.5pt;">cdb2tcf &lt;<i style="">seedpath</i>&gt; &lt;<i style="">project</i>&gt;.cdb.</pre>
+
+
+
+<p class="MsoNormal" style="margin: 4pt 0in 0.0001pt 0.5in;"><span style="font-size: 10pt; font-family: Verdana;">For example:<o:p></o:p></span></p>
+
+
+
+<pre style="margin: 6pt 0in 0.0001pt 49.5pt;">cdb2tcf c:\CCStudio_v3.3\c6000\bios\include hello.cdb.<span style="font-family: Verdana;"><o:p></o:p></span></pre>
+
+
+
+<p class="MsoNormal" style="margin: 4pt 0in 0.0001pt 0.5in;"><span style="font-size: 10pt; font-family: Verdana;">The &lt;<i style="">seedpath</i>&gt;
+should point to the directory containing CDB seed files. That directory is
+usually c:\CCStudio_v3.3\&lt;<i style="">ISA</i>&gt;\bios\include,
+where &lt;<i style="">ISA</i>&gt; is  c6000.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">3.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Make
+sure BIOS_INSTALL_DIR is set as described in the section on
+<a href="#_Setting_System_Variables">Setting System Variables</a>.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">4.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">The
+cdb2tcf utility provides messages about the steps it performs. If the original
+seed file specified inside your CDB file exists in the location specified, the
+conversion should be successful.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">5.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">If
+your configuration made any CSL (Chip Support Library) settings, cdb2tcf
+generates two files: &lt;<i style="">project</i>&gt;_csl.c
+and &lt;<i style="">project</i>&gt;_csl.h. If these files
+were generated, follow these steps:<o:p></o:p></span></p>
+
+
+
+<ul><ul><li><span style="font-size: 9pt; font-family: &quot;Courier New&quot;;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;</span></span></span>Add &lt;<i style="">project</i>&gt;_csl.c
+to your project.</li></ul></ul>
+
+
+
+<ul><ul><li><span style="font-size: 9pt; font-family: &quot;Courier New&quot;;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>Add a call to cslCfgInit() to your main()
+function. The function is in the generated &lt;<i style="">project</i>&gt;_csl.c file.&nbsp;DSP/BIOS no longer calls this function
+for you.</li></ul></ul>
+
+
+
+<ul><ul><li><span style="font-size: 9pt; font-family: &quot;Courier New&quot;;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>You may need to modify source files that
+#include &lt;<i style="">project</i>&gt;cfg.h to also
+#include &lt;<i style="">project</i>&gt;_csl.h. You
+need only modify files that use CSL configuration structures defined in these
+two files.</li></ul></ul>
+
+
+
+<ul><ul><li><span style="font-size: 9pt; font-family: &quot;Courier New&quot;;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>If you have device driver code that makes CSL calls,
+make sure that code calls CSL_init() before calling any other CSL API.
+Alternately, you may want to create a function that calls CSL_init() and
+reference that function in your DSP/BIOS configuration by adding the following
+lines to the Tconf script:</li></ul></ul>
+
+
+
+<pre style="margin: 6pt 0in 0.0001pt 67.5pt;">bios.GBL.CALLUSERINITFXN = true;</pre>
+
+<pre style="margin-left: 67.5pt;">bios.GBL.USERINITFXN = prog.extern(“<i style="">your_function_name”</i>);</pre>
+
+
+
+<ul><ul><li><span style="font-size: 9pt; font-family: &quot;Courier New&quot;;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>Add the appropriate CSL library for your target
+to the project or to a linker command file that is separate from the one
+generated by Tconf (&lt;<i style="">project</i>&gt;cfg.cmd).
+For example:</li></ul></ul>
+
+
+
+<pre style="margin: 6pt 0in 0.0001pt 67.5pt;">-lcsl6416.lib</pre>
+
+
+
+<ul><ul><li><span style="font-size: 9pt; font-family: &quot;Courier New&quot;;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>You may see some CSL related warnings when you
+build your project. If you see a warning that says “Creating output section
+.csldata:SYS_data without SECTIONS specification”, you need to add the .csldata
+section to the memory section of your linker command file. (If you are using the 
+generated linker command file, then you will need to create (and add to your 
+project) your own that includes the BIOS generated linker command file and then 
+adds this .csldata section.)&nbsp; For example:</li></ul></ul>
+
+
+
+<pre style="margin: 6pt 0in 0.0001pt 67.5pt;">SECTIONS {</pre>
+
+<pre style="margin-left: 67.5pt;"><span style="">&nbsp;&nbsp; </span>.csldata &gt; IDATA</pre>
+
+<pre style="margin-left: 67.5pt;">}</pre>
+
+
+
+<ul><ul><li><span style="font-size: 9pt; font-family: &quot;Courier New&quot;;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;</span></span></span>Add the CSL include directory to your project
+build’s include path.</li></ul></ul>
+
+
+
+<ul><ul><li><span style="font-size: 9pt; font-family: &quot;Courier New&quot;;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>You are now responsible for managing and
+updating &lt;<i style="">project</i>&gt;_csl.c and
+&lt;<i style="">project</i>&gt;_csl.h as source
+files. DSP/BIOS no longer supports configuring CSL. See the CSL documentation
+for details.</li></ul></ul>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">6.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Follow
+the steps in the <a href="#_Modifying_CCStudio_Projects_to_Use_TCF_Files">next section</a>
+to add the TCF file to your project and make other project modifications.<o:p></o:p></span></p>
+
+
+
+<h3 style="margin-left: 0.25in;">
+<a name="_Modifying_CCStudio_Projects_to_Use_TCF_Files"></a><span style="font-family: Verdana;">Modifying
+CCStudio Projects to Use TCF Files<o:p></o:p></span></h3>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">For CCStudio 3.3 and newer, your 
+BIOS 5.41
+projects must use a TCF file for DSP/BIOS configuration. The previous section
+tells how to convert a CDB file to a TCF file. To use that file in a CCStudio
+project that previously used cdb-based BIOS 4.90, follow these steps unless it 
+was already done via the <a href="#CCS%20Automated%20Procedure">automated procedure</a>.<o:p></o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">1.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Open
+CCStudio and your project. Click OK in the popup box that indicating that it 
+will convert
+the CDB file. (If you attempt to build without converting, the build procedure
+attempts to run the CDB file as a TCF file, which generates errors.)<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">2.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">In
+CCStudio, remove the CDB file from your project.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">3.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Add
+the &lt;<i style="">project</i>&gt;.tcf file to your
+CCStudio project.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><a name="importPath"><span style="font-size: 10pt; font-family: Verdana;"><span style="">4.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">If you use a </span></a><span style="font-size: 10pt; font-family: Verdana;">custom platform configuration
+file, you might need to specify the config.importPath. (If you use only TI-supplied
+platform configuration files, you can skip this step.) For example, if the
+directory containing your platform configuration file is D:\work\platforms,
+choose the <b style="">Project-&gt;Build Options</b>
+menu item in CCStudio. In the DspBiosBuilder tab, select the Basic category and
+specify the <b style="">config.importPath</b> as
+follows: (Note that forward slashes are required.)<br>
+
+
+<br>
+
+
+</span><span style="font-size: 10pt; font-family: &quot;Courier New&quot;;">&nbsp;&nbsp;&nbsp; D:/work/platforms</span><span style="font-size: 10pt; font-family: Verdana;"><br>
+
+
+<br>
+
+
+If you have more than one directory containing custom platform configuration
+files, separate them with semicolons:<br>
+
+
+<br>
+
+
+</span><span style="font-size: 10pt; font-family: &quot;Courier New&quot;;">&nbsp;&nbsp;&nbsp; D:/work/platforms;D:/morework/platforms</span><span style="font-size: 10pt; font-family: Verdana;"><br>
+
+
+<br>
+
+
+See the <i style="">DSP/BIOS Textual Configuration
+(Tconf) User’s Guide</i> (<a href="../xdctools/docs/Bios_Tconf_User_Guide.pdf">SPRU007H</a>) for details on defining config.importPath.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">5.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">If
+your TCF file requires other parameters or arguments to be passed in, choose <b style="">Project-&gt;Build Options</b> menu item in
+CCStudio. In the DspBiosBuilder tab, enter the -D&lt;name&gt;=&lt;value&gt; options directly 
+in the top edit box.<span style="">&nbsp; </span>For
+example:<br>
+
+
+<span style="">&nbsp;&nbsp;&nbsp; </span></span><span style="font-size: 10pt; font-family: &quot;Courier New&quot;;">-Dconfig.platform = “Dsk6416”</span><span style="font-size: 10pt; font-family: Verdana;"><o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">6.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">If
+you are creating a new CCStudio project, in most cases you should add the
+generated &lt;<i style="">project</i>&gt;cfg.cmd linker
+command file to the project. The generated linker command file is not added
+automatically by CCStudio.&nbsp;&nbsp;&nbsp; Note: If the generated linker 
+command file is not available, then add the tcf file to the project, right-click 
+and 'compile' the tcf file to generate it.<br>
+
+
+<br>
+
+
+If, however, your project has its <i style="">own
+linker command file</i>, make sure that the &lt;<i style="">project</i>&gt;cfg.cmd is either not included by your own linker command
+file or that it is excluded from the project. (That is, make sure it only gets
+into the project once, rather than twice.) To remove the generated file from
+the project if your own linker file includes it, right-click the &lt;<i style="">project</i>&gt;cfg.cmd file in the Generated
+Files folder of the project view. Select File-Specific Options. Check the
+Exclude File from Build option.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin: 8pt 0in 0.0001pt 0.5in; text-indent: -0.25in;"><span style="font-size: 10pt; font-family: Verdana;"><span style="">7.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 10pt; font-family: Verdana;">Run
+<b style="">Project-&gt;Build</b>.<o:p></o:p></span></p>
+
+
+
+<h3 style="margin-left: 0.25in;">
+<a name="_Makefiles_for_DSP_BIOS_Applications"></a><span style="font-family: Verdana;">
+Makefiles for DSP/BIOS Applications<o:p></o:p></span></h3>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">If you do not  use CCStudio
+to build your application, you can build from the command line using gmake and
+makefiles.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">The best way to create build files
+for your application is to copy and revise the files used to build a
+<a href="#_DSP/BIOS_Examples">DSP/BIOS example</a>. The relevant files for the
+examples shipped with DSP/BIOS 5.41 are:<o:p></o:p></span></p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>makefile in a specific example directory</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>config.mak in &lt;<i style="">install_dir</i>&gt;\bios_5_41\packages\ti\bios\examples\common</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>c<i style="">NN</i>rules.mak
+in &lt;<i style="">install_dir</i>&gt;\bios_5_41\packages\ti\bios\examples\common
+<br>
+
+
+<span style="">&nbsp;&nbsp; </span>(<i style="">NN</i>
+is the DSP family)</p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><font size="2"><b>
+<span style="font-family: Verdana;"><a name="_example_copy"></a>NOTE</span></b></font><b style=""><span style="font-size: 10pt; font-family: Verdana;">:</span></b><span style="font-size: 10pt; font-family: Verdana;"> When a 
+single example is copied, it is still using the common directory from the 
+installation.&nbsp; You must change the makefile and TCF file  to 
+reference a different location for the items in common.</span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;">&nbsp;</p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><b style=""><span style="font-size: 10pt; font-family: Verdana;">IMPORTANT:</span></b><span style="font-size: 10pt; font-family: Verdana;"> </span>
+<font size="2"><span style="font-family: Verdana;">O</span></font><span style="font-size: 10pt; font-family: Verdana;">nly </span><span style="font-size: 10pt; font-family: Verdana;">
+use forward slashes (“/”) in all makefiles and files included by makefiles
+regardless of the OS you are using.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;">
+<a name="config_make"></a><span style="font-size: 10pt; font-family: Verdana;">Typical things you might need to
+change in <b style="">config.mak</b> are:<o:p></o:p></span></p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="">INSTALL_ROOT
+and COMPONENT_ROOT should point to the location where you installed DSP/BIOS.
+Currently, they are set to use the BIOS_INSTALL_DIR environment variable.</span></p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>If you want to use a version of RTDX or PSL
+other than the version provided with the DSP/BIOS installation, change the
+variable for that component. For example, you might set PSL_ROOT to
+C:/ti/c5500/psl.</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>The CnnX_CODEGEN_ROOT variable for your DSP
+platform should point to the location of the codegen tools you want to use. For
+example, C6X_CODEGEN_ROOT = C:/CCStudio/c6000/cgtools. (If you use multiple
+operating systems, note that the codegen tools are OS-specific.)</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>If you are using UNIX, comment out the REMOVE
+definition for Windows and uncomment the corresponding definitions for UNIX.</p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">Typical things you might need to
+change in <b style="">c<i style="">NN</i>rules.mak</b> are:<o:p></o:p></span></p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>Currently all examples are built for debug (-g).
+To change this, remove the “-g” from the CC<i style="">NN</i>OPTS
+line.</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>Change or add any compiler, assembler, or linker
+options as needed in the definitions of CC<i style="">NN</i>OPTS,
+AS<i style="">NN</i>OPTS, and LD<i style="">NN</i>OPTS.</p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">Typical things you might need to
+change in the <b style="">makefile</b> are:<o:p></o:p></span></p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>COMMON_DIR should point to the location of
+config.mak and C<i style="">NN</i>rules.mak.</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>TCONFOPTS should be the –D option for use on the
+tconf command line. See the instructions for <a href="#importPath">defining the
+config.importPath for CCStudio</a> and the <i style="">DSP/BIOS
+Textual Configuration (Tconf) User’s Guide</i> (SPRU007H).</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>CC<i style="">NN</i>FLAGS,
+AS<i style="">NN</i>FLAGS, and LD<i style="">NN</i>FLAGS allow you to specify any additional compiler, assembler,
+and linker flags specific to this application.<br>
+
+
+<br>
+
+
+For example, to have a map file created for the bigTime example, add “-m
+bigtime.map” to LD55FLAGS. To build with the C55x large model, first change the
+configuration in the tcf file, and then add the “-ml” flag to the C55FLAGS and
+AS55FLAGS definitions in the makefile.</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>PROG, OBJS, and CMDS should reference your
+source files, object files, and linker command files.</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>If the application uses CSL directly, add the
+“-i” option to CC<i style="">NN</i>FLAGS to point to
+the directory that contains the CSL header files.</p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.5in;"><b style=""><span style="font-size: 10pt; font-family: Verdana;">IMPORTANT:</span></b><span style="font-size: 10pt; font-family: Verdana;"> If your application includes CSL
+header and library files from CCStudio 2.21, 2.3, or 3.0, first copy these
+files from their DSP/BIOS directory to a corresponding new CSL directory. Then,
+reference the new directory in the makefile. For example, for ‘C6x CSL header
+files, copy the &lt;<i style="">CCStudio_install_dir</i>&gt;\C6000\bios\include\csl*.h
+files to &lt;<i style="">CCStudio_install_dir</i>&gt;\C6000\csl\include. 
+For ‘C6x CSL library files, copy the &lt;<i style="">CCStudio_install_dir</i>&gt;\C6000\bios\lib\csl*.lib
+files to &lt;<i style="">CCStudio_install_dir</i>&gt;\C6000\csl\lib.<o:p></o:p></span></p>
+
+
+
+<h3 style="margin-left: 0.25in;">
+<a name="_Running_the_Tconf_Debugger"></a><span style="font-family: Verdana;">Running the Tconf Debugger<o:p></o:p></span></h3>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">Tconf comes with the Rhino 
+javascript debugger
+for use with Tconf scripts.<o:p>&nbsp;&nbsp; To invoke the debugger, pass '-g' 
+to Tconf.&nbsp;&nbsp; Three options are shown:</o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">1) CCS Project:&nbsp; When you are using 
+CCStudio 3.3
+or higher, you can launch the debugger when Tconf is invoked from the project, 
+in </span><span style="font-size: 10pt; font-family: Verdana;"> <b style="">Project-&gt;Build Options,</b></span><span style="font-size: 10pt; font-family: Verdana;"> DspBiosBuilder tab, select the 
+'Debug' Category and change Graphical debugger option from 'none' to 'run the 
+*.tcf in the graphical debugger'.</span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;">&nbsp;</p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><font size="2">
+<span style="font-family: Verdana;">2) Command Line:&nbsp; Another method for 
+running the debugger is In a command prompt</span></font><span style="font-size: 10pt; font-family: Verdana;">, invoke Tconf with the '-g' 
+option.&nbsp;&nbsp; For example, here is a sample tconf command
+line that runs the debugger: <o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<pre><span style="font-size: 9pt;"><span style="">&nbsp;&nbsp;&nbsp; </span>tconf -g -Dconfig.importPath=c:\CCStudio_v3.3\bios_5_41_00_06\packages hello.tcf<o:p></o:p></span></pre>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">3) Makefile:&nbsp; If you are building from a
+makefile, a special build target has been added to makefiles shipped with the 
+bios examples to support using the Tconf
+debugger. To use this build target, type:<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style=""><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 9pt; font-family: &quot;Courier New&quot;;">gmake .tconfdebug .<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">See the section on modifying
+<a href="#_Modifying_CCStudio_Projects_to_Use_TCF_Files">CCStudio projects to use Tconf</a> and the <i style="">DSP/BIOS Textual Configuration (Tconf)
+User’s Guide</i> (SPRU007H) for information on setting command line arguments 
+for Tconf.</span></p>
+
+
+
+<h2 style="">
+<a name="_DSP/BIOS_Examples"></a><span style="font-size: 16pt; font-family: Verdana;">DSP/BIOS
+Examples<o:p></o:p></span></h2>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">You can use the following sources
+for example DSP/BIOS applications:<o:p></o:p></span></p>
+
+
+
+<p class="MsoListBullet">&nbsp;<span style="font-family: Symbol;">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><b style="">DSP/BIOS
+Examples.</b> A number of DSP/BIOS example applications are provided with this
+installation in the &lt;<i style="">install_dir</i>&gt;\bios_5_41_00_06\packages\ti\bios\examples
+directory. The examples have been reorganized into basic and advanced
+directories and renamed to make them easier to reference. The README file in
+the top-level examples directory describes the examples. The directory for each
+example contains a README file that further describes the example and its
+expected output. The
+<a style="color: blue; text-decoration: underline;" href="#_Porting_Examples_to_a_New_Platform">following
+section</a> tells how to build these examples from the command line.&nbsp; The 
+CCS tutorial has also been updated to work with these examples.</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><b style="">Reference
+Frameworks.</b> Design-ready, reusable, C language source code for TMS320
+'C5000 and 'C6000 DSPs. You can build on top of the framework, confident that
+the underlying pieces are robust and appropriate for the characteristics of the
+target application. Levels 1, 3, and 5 support differing application complexity
+needs. Go to <a href="http://www.dspvillage.com/">www.dspvillage.com</a> and
+choose <b style="">Software-&gt;Reference Frameworks</b>
+from the left-side menus.</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><b style="">Application
+Notes.</b> A number of application notes have been provided about various
+aspects of DSP/BIOS. Go to <a href="http://www.dspvillage.com/">www.dspvillage.com</a>
+and choose <b style="">Technical
+Documents-&gt;Application Notes</b>. Choose the View by Software tab and select
+the Real-Time OS – DSP/BIOS item.</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><b style="">Device
+Driver Developer’s Kit.</b> This kit comes with examples of how to develop
+drivers and how to integrate third-party drivers.</p>
+
+
+
+<h3 style="margin-left: 0.25in;">
+<a name="_Building_Examples_from_the_Command_"></a><span style="font-family: Verdana;">Building
+Examples from the Command Line<o:p></o:p></span></h3>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">All DSP/BIOS examples can be built
+with CCStudio with the provided pjt files, but to build the examples provided
+with DSP/BIOS from the command line, follow these steps. You can use the makefiles
+for the examples as a basis for creating your own makefiles.<o:p></o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;">&nbsp;<span style="font-size: 10pt; font-family: Verdana;">1.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">You 
+can
+copy the entire example tree to a directory with write access, or at a minimum, 
+copy the directory that contains the individual example (see
+<a href="#_example_copy" style="color: blue; text-decoration: underline;">
+note</a>)<o:p>.</o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;">&nbsp;<span style="font-size: 10pt; font-family: Verdana;">2.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">In
+the ../examples/common directory, edit the "config.mak" file. Make
+changes as described in the section on 
+<a href="#config_make" style="color: blue; text-decoration: underline;">building with
+gmake</a>.</span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;">&nbsp;<span style="font-size: 10pt; font-family: Verdana;">3.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">At the command prompt, go to </span><span style="font-size: 10pt; font-family: Verdana;">your example directory and the
+platform of interest. For example:<br>
+
+
+<span style="">&nbsp;&nbsp; </span>cd </span><span style="font-size: 10pt; font-family: Verdana;">E</span><span style="font-size: 10pt; font-family: &quot;Courier New&quot;;">:\BiosWorkarea\examples\basic\bigtime\sim64P</span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;">&nbsp;<span style="font-size: 10pt; font-family: Verdana;">4.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">Run gmake. <br>
+
+
+<br>
+
+
+<b style="">Note:</b> </span><span style="font-size: 10pt; font-family: Verdana;">To build examples, go to ..\examples and run
+one of the following:<br>
+
+
+</span><span style="font-size: 10pt; font-family: &quot;Courier New&quot;;">
+<span style="">&nbsp; </span>gmake –f makefile,6x<br>
+
+
+<span style="">&nbsp; </span>gmake –f makefile,64P<span style="">&nbsp; </span>(If using codegen from CCS 3.3)<br>
+
+
+<span style="">&nbsp; </span>gmake –f makefile,67P<span style="">&nbsp; </span>(If using codegen from CCS 3.3)<br>
+
+
+<span style="">&nbsp; </span></span></p>
+
+
+
+<h3 style="margin-left: 0.25in;">
+<a name="_Porting_Examples_to_a_New_Platform">Porting Examples to a New Platform</a></h3>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">All DSP/BIOS examples come 
+preconfigured for a specific set of platforms, but to build these examples for 
+your own board, follow these steps. You can use the existing board specific 
+configuration files
+for the examples as a basis for creating your own versions.<o:p></o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;">&nbsp;<span style="font-size: 10pt; font-family: Verdana;">1.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><font size="2">
+<span style="font-style: normal; font-variant: normal; font-weight: normal; font-family: Verdana;">
+Create</span></font><font size="2"><span style="font-family: Verdana;"> a 
+custom platform file (Platform.tci) for your board</span></font><span style="font-size: 10pt; font-family: Verdana;"> 
+&lt;new_board&gt; by following the steps in the
+<a href="../xdctools/docs/Bios_Tconf_User_Guide.pdf">TextConf User's Guide</a><o:p>, section 4.3.</o:p></span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;">&nbsp;<span style="font-size: 10pt; font-family: Verdana;">2.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span><span style="font-style: normal; font-variant: normal; font-weight: normal;">
+Create</span></span><span style="font-size: 10pt; font-family: Verdana;"> 
+a &lt;new_board&gt;_common.tci file in the &lt;</span><span style="font-size: 10pt; font-family: Verdana;"><i style="">install_dir</i></span><span style="font-size: 10pt; font-family: Verdana;">&gt;/packages/ti/bios/examples/common 
+directory</span><span style="font-size: 10pt; font-family: Verdana;"> (see
+<a href="#_example_copy" style="color: blue; text-decoration: underline;">
+note</a>)</span><span style="font-size: 10pt; font-family: Verdana;">.&nbsp; Refer 
+to the <a href="../packages/ti/bios/examples/README">README</a> in the examples 
+directory for what goes in this file.</span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;">&nbsp;<span style="font-size: 10pt; font-family: Verdana;">3.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">Make a new platform subdirectory 
+for the example you wish to port, i.e. </span><span style="font-size: 10pt; font-family: Verdana;">
+&lt;<i style="">install_dir</i></span><span style="font-size: 10pt; font-family: Verdana;">&gt;/packages/ti/bios/examples/basic/mailbox/&lt;new_board&gt;. </span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;">&nbsp;<span style="font-size: 10pt; font-family: Verdana;">4.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">Copy the makefile and &lt;example&gt;.tcf files 
+from a similar architecture platform for this example to this new platform 
+directory. </span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><font size="2"><span style="font-family: Verdana;">5</span></font><span style="font-size: 10pt; font-family: Verdana;">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span><font size="2">
+<span style="font-style: normal; font-variant: normal; font-weight: normal; font-family: Verdana;">
+Make any necessary changes to</span></font><font size="2"><span style="font-family: Verdana;"> 
+the</span></font><span style="font-size: 10pt; font-family: Verdana;"> makefile and update the &lt;example&gt;.tcf to 
+reference your new platform created in step 1. </span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><font size="2"><span style="font-family: Verdana;">6</span></font><span style="font-size: 10pt; font-family: Verdana;">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><font size="2"><span style="font-family: Verdana;">Copy 
+over and update the &lt;example&gt;_&lt;new_board&gt;_custom.tci file if necessary (only 
+needed for a few examples)</span></font><span style="font-size: 10pt; font-family: Verdana;">. </span></p>
+
+
+
+<p class="MsoListNumber" style="margin: 8pt 0in 0.0001pt 0.5in;"><font size="2"><span style="font-family: Verdana;">7</span></font><span style="font-size: 10pt; font-family: Verdana;">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span><span style="font-size: 10pt; font-family: Verdana;">Create a CCS project for this example 
+platform or build using the command line with gmake. </span></p>
+
+
+
+<h2 style=""><a name="#_How_to_make_one_DSP/BIOS_installation_accessible_to_multiple_CCStudio_installations_via_the_BIOS_Selector"></a><span style="font-size: 16pt; font-family: Verdana;">How to make one DSP/BIOS installation accessible to multiple CCStudio installations via the BIOS Selector<o:p></o:p></span></h2>
+
+
+
+<p class="MsoListNumber" style="margin-top: 8pt; margin-right: 0in;"><font size="2"><span style="font-family: Verdana;">1</span></font><spanstyle ="mso-list:Ignore; font-size:10.0pt; font-family:Verdana; mso-fareast-font-family:Verdana; mso-bidi-font-family:Verdana">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size: 10pt; font-family: Verdana;">On
+a PC with Code Composer Studio installed, map a network drive to the
+remote network where DSP/BIOS 5.41 is to be installed. Choose a drive
+letter that can be used on all other PCs with CCS installations that
+need to access DSP/BIOS 5.41 remotely.</span></spanstyle></p>
+
+
+
+<p class="MsoListNumber" style="margin-top: 8pt; margin-right: 0in;"><font size="2"><span style="font-family: Verdana;">2</span></font><spanstyle ="mso-list:Ignore; font-size:10.0pt; font-family:Verdana; mso-fareast-font-family:Verdana; mso-bidi-font-family:Verdana">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size: 10pt; font-family: Verdana;">From the PC with the CCStudio installation, install DSP/BIOS 
+5.41 on the remote drive that you just mapped.</span></spanstyle></p>
+
+
+
+<p class="MsoListNumber" style="margin-top: 8pt; margin-right: 0in;"><font size="2"><span style="font-family: Verdana;">3</span></font><spanstyle ="mso-list:Ignore; font-size:10.0pt; font-family:Verdana; mso-fareast-font-family:Verdana; mso-bidi-font-family:Verdana">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size: 10pt; font-family: Verdana;">On the remote PC with the DSP/BIOS 
+5.41 installation, run regedit.</span></spanstyle></p>
+
+
+
+<p class="MsoListNumber" style="margin-top: 8pt; margin-right: 0in;"><font size="2"><span style="font-family: Verdana;">4</span></font><spanstyle ="mso-list:Ignore; font-size:10.0pt; font-family:Verdana; mso-fareast-font-family:Verdana; mso-bidi-font-family:Verdana">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size: 10pt; font-family: Verdana;">Right
+click on the key “HKEY_LOCAL_MACHINE\SOFTWARE\Texas
+Instruments\DBT_&lt;mapped_drive&gt;:|bios_5_41_00_06|” and select the
+“Export” menu item.</span></spanstyle></p>
+
+
+
+<p class="MsoListNumber" style="margin-top: 8pt; margin-right: 0in;"><font size="2"><span style="font-family: Verdana;">5</span></font><spanstyle ="mso-list:Ignore; font-size:10.0pt; font-family:Verdana; mso-fareast-font-family:Verdana; mso-bidi-font-family:Verdana">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size: 10pt; font-family: Verdana;">Save the selected branch as “bios_5_41_00_06.reg”</span></spanstyle></p>
+
+
+
+<p class="MsoListNumber" style="margin-top: 8pt; margin-right: 0in;"><font size="2"><span style="font-family: Verdana;">6</span></font><spanstyle ="mso-list:Ignore; font-size:10.0pt; font-family:Verdana; mso-fareast-font-family:Verdana; mso-bidi-font-family:Verdana">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size: 10pt; font-family: Verdana;">On
+a different PC with CCStudio installed, run regedit. Select the menu
+item “File-&gt;Import”, and import the
+“bios_5_41_00_06.reg” that you previously exported.</span></spanstyle></p>
+
+
+
+<p class="MsoListNumber" style="margin-top: 8pt; margin-right: 0in;"><font size="2"><span style="font-family: Verdana;">7</span></font><spanstyle ="mso-list:Ignore; font-size:10.0pt; font-family:Verdana; mso-fareast-font-family:Verdana; mso-bidi-font-family:Verdana">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size: 10pt; font-family: Verdana;">On
+the different PC, follow the directions in &lt;bios_5_41_00_06
+install_dir&gt;\SetupGuide.html, sections “Setting System
+Variables” and “Coordinating with CCStudio”. When
+selecting the DSP/BIOS version for CCStudio, select the DSP/BIOS 5.41
+that is installed on the remote PC.</span></spanstyle></p>
+
+
+
+<p class="MsoListNumber" style="margin-top: 8pt; margin-right: 0in;"><font size="2"><span style="font-family: Verdana;">8</span></font><spanstyle ="mso-list:Ignore; font-size:10.0pt; font-family:Verdana; mso-fareast-font-family:Verdana; mso-bidi-font-family:Verdana">.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size: 10pt; font-family: Verdana;">For all other PCs that will be running the remote DSP/BIOS 
+5.41, follow steps 1, 6 and 7.</span></spanstyle></p>
+
+
+
+<h2 style=""><a name="_More_Information_About_DSP/BIOS"></a><span style="font-size: 16pt; font-family: Verdana;">More Information About DSP/BIOS<o:p></o:p></span></h2>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">See the following documents
+available with this release and also on <a href="http://www.dspvillage.com/">www.dspvillage.com</a> to
+learn about DSP/BIOS:<o:p></o:p></span></p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><i style="">TMS320
+DSP/BIOS User’s Guide</i> (SPRU423)</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><i style="">TMS320C5000
+DSP/BIOS API Reference Guide</i> (SPRU404)</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><i style="">TMS320C6000
+DSP/BIOS API Reference Guide</i> (SPRU403)</p><p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><i style="">TMS320C28x
+DSP/BIOS API Reference Guide</i> (SPRU625)</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><i style="">DSP/BIOS
+Textual Configuration (Tconf) User’s Guide </i>(SPRU007H)</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><i style="">DSP/BIOS
+Driver Developer’s Guide </i>(SPRU616)</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>DSP/BIOS online help</p><p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><small><a href="http://tiexpressdsp.com/wiki/index.php?title=Category:DSPBIOS">TI eXpressDSP Wiki</a></small></p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span>
+<span style="font-style: normal; font-variant: normal; font-weight: normal;">
+Release</span> notes</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span>Application notes</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>Reference Frameworks</p>
+
+
+
+<p class="MsoListBullet"><span style="font-family: Symbol;"><span style="">·<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span>DSP/BIOS Link documentation and application
+notes (for multiprocessor or OMAP applications)</p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-left: 0.25in;"><span style="font-size: 10pt; font-family: Verdana;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style=""><span style="font-size: 9pt; font-family: Arial;">Copyright </span><span style="font-size: 9pt;">©</span><span style="font-size: 9pt; font-family: Symbol;"> </span><span style="font-size: 9pt; font-family: Arial;">2009, Texas Instruments Incorporated<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style=""><span style="font-size: 9pt; font-family: Arial;">&nbsp;<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style=""><span style="font-size: 9pt; font-family: Arial;">Code Composer Studio, DSP/BIOS, eXpressDSP, and TMS320 are
+among the trademarks of Texas Instruments. See www.ti.com for a list of trademarks
+and registered trademarks belonging to Texas Instruments.<o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="">&nbsp;</p>
+
+
+
+</div>
+
+
+
+</body></html>

@@ -1,0 +1,10 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== confbeg.s28 ========
+;  The statements in this file are inserted at the beginning of 
+;  every BIOS configuration file.
+;
+

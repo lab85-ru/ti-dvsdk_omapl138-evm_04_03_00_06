@@ -1,0 +1,6 @@
+/etc/network/if-post-down.d/wpa-supplicant
+/etc/network/if-pre-up.d/wpa-supplicant
+/etc/wpa_supplicant.conf
+/etc/default/volatiles/99_wpa_supplicant
+/usr/sbin/wpa_supplicant
+/etc/default/wpa

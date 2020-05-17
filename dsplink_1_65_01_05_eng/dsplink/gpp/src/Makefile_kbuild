@@ -1,0 +1,138 @@
+#   ============================================================================
+#   @file   Makefile_kbuild
+#
+#   @path   $(DSPLINK)/gpp/src/
+#
+#   @desc   This file is used to build the DSPLink using kernel build system.
+#
+#   @ver    1.65.01.05_eng
+#   ============================================================================
+#   Copyright (C) 2002-2009, Texas Instruments Incorporated -
+#   http://www.ti.com/
+#
+#   Redistribution and use in source and binary forms, with or without
+#   modification, are permitted provided that the following conditions
+#   are met:
+#   
+#   *  Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
+#   
+#   *  Redistributions in binary form must reproduce the above copyright
+#      notice, this list of conditions and the following disclaimer in the
+#      documentation and/or other materials provided with the distribution.
+#   
+#   *  Neither the name of Texas Instruments Incorporated nor the names of
+#      its contributors may be used to endorse or promote products derived
+#      from this software without specific prior written permission.
+#   
+#   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+#   THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+#   PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+#   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+#   EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+#   PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+#   OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#   OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+#   EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#   ============================================================================
+
+
+# Directory Separator
+DIRSEP=/
+
+TI_DSPLINK_RELATIVE_PATH := ../../
+
+# Set PROFILE to DEBUG or RELEASE.
+#export PROFILE :=
+
+# include the CURRENTCFG.mk
+include $(DSPLINK)$(DIRSEP)config$(DIRSEP)BUILD$(DIRSEP)CURRENTCFG.MK
+
+# Generate the list of sources
+SOURCES :=
+include $(TI_DSPLINK_GPPROOT)$(DIRSEP)src$(DIRSEP)arch$(DIRSEP)SOURCES
+ARCH_SOURCES := $(addprefix $(TI_DSPLINK_RELATIVE_PATH)gpp$(DIRSEP)src$(DIRSEP)arch$(DIRSEP),$(SOURCES))
+SOURCES :=
+include $(TI_DSPLINK_GPPROOT)$(DIRSEP)src$(DIRSEP)ldrv$(DIRSEP)SOURCES
+LDRV_SOURCES := $(addprefix $(TI_DSPLINK_RELATIVE_PATH)gpp$(DIRSEP)src$(DIRSEP)ldrv$(DIRSEP),$(SOURCES))
+SOURCES :=
+include $(TI_DSPLINK_GPPROOT)$(DIRSEP)src$(DIRSEP)ldrv$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)SOURCES
+LDRV_SOURCES += $(addprefix $(TI_DSPLINK_RELATIVE_PATH)gpp$(DIRSEP)src$(DIRSEP)ldrv$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP),$(SOURCES))
+SOURCES :=
+include $(TI_DSPLINK_GPPROOT)$(DIRSEP)src$(DIRSEP)gen$(DIRSEP)SOURCES
+GEN_SOURCES := $(addprefix $(TI_DSPLINK_RELATIVE_PATH)gpp$(DIRSEP)src$(DIRSEP)gen$(DIRSEP),$(SOURCES))
+SOURCES :=
+include $(TI_DSPLINK_GPPROOT)$(DIRSEP)src$(DIRSEP)pmgr$(DIRSEP)SOURCES
+PMGR_SOURCES := $(addprefix $(TI_DSPLINK_RELATIVE_PATH)gpp$(DIRSEP)src$(DIRSEP)pmgr$(DIRSEP),$(SOURCES))
+SOURCES :=
+include $(TI_DSPLINK_GPPROOT)$(DIRSEP)src$(DIRSEP)pmgr$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)SOURCES
+PMGR_SOURCES += $(addpreifx $(TI_DSPLINK_RELATIVE_PATH)gpp$(DIRSEP)src$(DIRSEP)pmgr$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP),$(SOURCES))
+SOURCES :=
+include $(TI_DSPLINK_GPPROOT)$(DIRSEP)src$(DIRSEP)pmgr$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)$(TI_DSPLINK_GPPOSVERSION)$(DIRSEP)SOURCES
+PMGR_SOURCES += $(addprefix $(TI_DSPLINK_RELATIVE_PATH)gpp$(DIRSEP)src$(DIRSEP)pmgr$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)$(TI_DSPLINK_GPPOSVERSION)$(DIRSEP),$(SOURCES))
+SOURCES :=
+include $(TI_DSPLINK_GPPROOT)$(DIRSEP)src$(DIRSEP)osal$(DIRSEP)$(DIRSEP)SOURCES
+OSAL_SOURCES := $(addprefix $(TI_DSPLINK_RELATIVE_PATH)gpp$(DIRSEP)src$(DIRSEP)osal$(DIRSEP),$(SOURCES))
+SOURCES :=
+include $(TI_DSPLINK_GPPROOT)$(DIRSEP)src$(DIRSEP)osal$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)SOURCES
+OSAL_SOURCES += $(addprefix $(TI_DSPLINK_RELATIVE_PATH)gpp$(DIRSEP)src$(DIRSEP)osal$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP),$(SOURCES))
+SOURCES :=
+include $(TI_DSPLINK_GPPROOT)$(DIRSEP)src$(DIRSEP)osal$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)$(TI_DSPLINK_GPPOSVERSION)$(DIRSEP)SOURCES
+OSAL_SOURCES += $(addprefix $(TI_DSPLINK_RELATIVE_PATH)gpp$(DIRSEP)src$(DIRSEP)osal$(DIRSEP)$(TI_DSPLINK_GPPOS)$(DIRSEP)$(TI_DSPLINK_GPPOSVERSION)$(DIRSEP),$(SOURCES))
+
+DSPLINK_SOURCES := $(ARCH_SOURCES) $(LDRV_SOURCES) $(GEN_SOURCES) $(OSAL_SOURCES) $(PMGR_SOURCES)
+DSPLINK_OBJS    := $(foreach srcFile, $(DSPLINK_SOURCES),$(basename $(srcFile)).o)
+
+# CFLAGS
+EXTRA_CFLAGS += $(addprefix -D, $(TI_DSPLINK_GPP_DEFINES))
+EXTRA_CFLAGS += $(addprefix -I, $(TI_DSPLINK_GPP_INC_PATH))
+EXTRA_CFLAGS += -DEXPORT_SYMTAB -DTRACE_KERNEL
+EXTRA_CFLAGS += $(PROFILE_FLAGS)
+
+ifeq ("$(PROFILE)", "DEBUG")
+    EXTRA_CFLAGS += -DDDSP_DEBUG
+endif
+
+# If KERNELRELEASE is defined, then this makefile has been invoked
+# from the kernel build system. Use native build language.
+ifneq ($(KERNELRELEASE),)
+obj-m	:= dsplinkk.o
+libs-m  := $(shell pwd)
+lib-m   := $(foreach srcFile, $(API_SOURCES),$(basename $(srcFile)).o)
+dsplinkk-objs := $(DSPLINK_OBJS)
+
+# Otherwise, this makefile has been invoked directly from the
+# command line. Invoke the kernel build system.
+else
+
+PWD	:= $(shell pwd)
+COMP_NAME  := TI_DSPLINK_KBUILD_TEMPVAR
+export COMP_NAME
+
+debug:
+	$(shell echo $(addprefix -I, $(TI_DSPLINK_GPP_INC_PATH)) > PMGR_includes.txt)
+	$(shell echo $(addprefix -D, $(TI_DSPLINK_GPP_DEFINES)) > PMGR_defines.txt)
+	echo Building kernel side code using kbuild
+	$(MAKE) PROFILE=DEBUG -C $(KERNEL_DIR) SUBDIRS=$(PWD) $(MAKE_OPTS) modules
+	echo Kernel side build complete
+	echo Copying dsplinkk.ko to $(TI_DSPLINK_GPPROOT)$(DIRSEP)export$(DIRSEP)BIN$(DIRSEP)$(TI_DSPLINK_GPPOSPREFIX)Linux$(DIRSEP)$(TI_DSPLINK_PLATFORM)$(DIRSEP)DEBUG
+	mv dsplinkk.ko Module.symvers PMGR_includes.txt PMGR_defines.txt  $(TI_DSPLINK_GPPROOT)$(DIRSEP)export$(DIRSEP)BIN$(DIRSEP)$(TI_DSPLINK_GPPOSPREFIX)Linux$(DIRSEP)$(TI_DSPLINK_PLATFORM)$(DIRSEP)DEBUG
+
+release:
+	$(shell echo $(addprefix -I, $(TI_DSPLINK_GPP_INC_PATH)) > PMGR_includes.txt)
+	$(shell echo $(addprefix -D, $(TI_DSPLINK_GPP_DEFINES)) > PMGR_defines.txt)
+	echo Building kernel side code using kbuild
+	$(MAKE) PROFILE=RELEASE -C $(KERNEL_DIR) SUBDIRS=$(PWD) $(MAKE_OPTS) modules
+	echo Kernel side build complete
+	echo Copying dsplinkk.ko to $(TI_DSPLINK_GPPROOT)$(DIRSEP)export$(DIRSEP)BIN$(DIRSEP)$(TI_DSPLINK_GPPOSPREFIX)Linux$(DIRSEP)$(TI_DSPLINK_PLATFORM)$(DIRSEP)RELEASE
+	mv dsplinkk.ko Module.symvers PMGR_includes.txt PMGR_defines.txt  $(TI_DSPLINK_GPPROOT)$(DIRSEP)export$(DIRSEP)BIN$(DIRSEP)$(TI_DSPLINK_GPPOSPREFIX)Linux$(DIRSEP)$(TI_DSPLINK_PLATFORM)$(DIRSEP)RELEASE
+
+clean:
+	find $(DSPLINK) -name "*.o" -exec rm {} \;
+	rm -fr PMGR_includes.txt PMGR_defines.txt dsplinkk.ko dsplinkk.mod.c Module.symvers dsplinkk.o dsplinkk.mod.o modules.order .dsplink* .tmp_versions
+
+all: debug release
+
+endif

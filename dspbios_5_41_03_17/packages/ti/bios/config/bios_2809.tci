@@ -1,0 +1,16 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_2809.tci ========
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_2801.tci");
+
+/*
+ *  ======== bios.init2809 ========
+ *  BIOS initialization for the 2809 is same as for 2801
+ */
+bios.init2809 = bios.init2801;

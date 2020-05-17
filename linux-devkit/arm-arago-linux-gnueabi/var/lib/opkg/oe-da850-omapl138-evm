@@ -1,0 +1,2017 @@
+Package: gst-plugin-alaw
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 9a94e7869eb5c4aad770659e124c20e4
+Size: 9588
+Filename: gst-plugin-alaw_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for alaw
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-alpha
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: d00c5186b55e169f02763f14c561a18b
+Size: 30278
+Filename: gst-plugin-alpha_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for alpha
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-alphacolor
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 108cf92b632a83745f15dc4c6676a6bd
+Size: 6918
+Filename: gst-plugin-alphacolor_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for alphacolor
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-annodex
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libgthread-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libglib-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: c69fa437d2228974a0b0f0cf9b21da24
+Size: 25812
+Filename: gst-plugin-annodex_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for annodex
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-apetag
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), libgstpbutils-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 5f0852dba576936c3f030f2af88e07e6
+Size: 7636
+Filename: gst-plugin-apetag_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for apetag
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-audiofx
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgstfft-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: c09c08c99f73c8de6d709b68c180eaa1
+Size: 55778
+Filename: gst-plugin-audiofx_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for audiofx
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-auparse
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 1b9d23060fb5b46a89edb182e2d29fbc
+Size: 10832
+Filename: gst-plugin-auparse_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for auparse
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-autodetect
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: e7b91bb7bdd59a69531038ec5e1fe219
+Size: 11426
+Filename: gst-plugin-autodetect_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for autodetect
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-avi
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstriff-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 7ea75c744d62c2c9abf5630dda04554b
+Size: 77412
+Filename: gst-plugin-avi_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for avi
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-cutter
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: c166d222541b9369b84d4170ce4d5e3a
+Size: 11010
+Filename: gst-plugin-cutter_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for cutter
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-debug
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 28722da1f464ba9f43ccb9ff4c6fb781
+Size: 25964
+Filename: gst-plugin-debug_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for debug
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-deinterlace
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), liborc-0.4-0 (>= 0.4.10), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 2775a88be439aa791cf057de815586ec
+Size: 36476
+Filename: gst-plugin-deinterlace_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for deinterlace
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-efence
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 2de2517aced44624a83441dc40c33b4b
+Size: 8474
+Filename: gst-plugin-efence_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for efence
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-effectv
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 1f182b32d87d18c5863bbcbbb6aa429e
+Size: 31216
+Filename: gst-plugin-effectv_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for effectv
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-equalizer
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: b2e131f89224888b4e22b6d0a91e63be
+Size: 15266
+Filename: gst-plugin-equalizer_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for equalizer
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-flv
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: cd3e3307df9068045eec7263e0a88f93
+Size: 44632
+Filename: gst-plugin-flv_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for flv
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-flxdec
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 375ac4ebeb2a66a45dc2f6079f6befee
+Size: 10100
+Filename: gst-plugin-flxdec_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for flxdec
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-goom2k1
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 0706f427a025dc4aace1690db5df9164
+Size: 18674
+Filename: gst-plugin-goom2k1_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for goom2k1
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-goom
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), liborc-0.4-0 (>= 0.4.10), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 0e022671e426c6a390da0fe452c40679
+Size: 44534
+Filename: gst-plugin-goom_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for goom
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-icydemux
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libz1 (>= 1.2.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 858ebe32b1dc6ee505d08b81ba44c897
+Size: 7474
+Filename: gst-plugin-icydemux_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for icydemux
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-id3demux
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), libgstpbutils-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libz1 (>= 1.2.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 3bdf49784bf85b0673274fd260c05116
+Size: 20692
+Filename: gst-plugin-id3demux_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for id3demux
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-imagefreeze
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 893fdd8859af34caebc30f7b32826f3a
+Size: 12720
+Filename: gst-plugin-imagefreeze_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for imagefreeze
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-interleave
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 6efbfbd60a2e8723226a46c6234e3c48
+Size: 19118
+Filename: gst-plugin-interleave_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for interleave
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-jpeg
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libjpeg8 (>= 8b), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: c82967d615aa22a940750f5dc1ff8db4
+Size: 36862
+Filename: gst-plugin-jpeg_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for jpeg
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-level
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: fbf98899c76260bb2ff5f650a7827cef
+Size: 12954
+Filename: gst-plugin-level_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for level
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-matroska
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstriff-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 369d92680ca951be90f49763fa276c29
+Size: 102332
+Filename: gst-plugin-matroska_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for matroska
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-mulaw
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 80bd4854ea88f7c5a87110f28b1088ce
+Size: 6714
+Filename: gst-plugin-mulaw_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for mulaw
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-multifile
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 4e3044cd32f3d5f4700e657a6f030cd8
+Size: 8630
+Filename: gst-plugin-multifile_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for multifile
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-multipart
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: c55dea5ddd72bf11d3d7114626750404
+Size: 13698
+Filename: gst-plugin-multipart_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for multipart
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-navigationtest
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 3f5280612d8baa1678d5804ff6b7ce13
+Size: 6026
+Filename: gst-plugin-navigationtest_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for navigationtest
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-oss4audio
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: ede704555ffa06b17f2bc3ed2b0e542c
+Size: 46026
+Filename: gst-plugin-oss4audio_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for oss4audio
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-ossaudio
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 90a2a8c4b7b6d91cf70b99603b5e92e7
+Size: 19722
+Filename: gst-plugin-ossaudio_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for ossaudio
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-png
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libpng12-0 (>= 1.2.44), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 32fe764960be3b1ec66b0fc9d513276c
+Size: 16154
+Filename: gst-plugin-png_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for png
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-qtdemux
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstriff-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgstrtp-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 8817e064a8b245c8586d3b45fac05cc5
+Size: 100348
+Filename: gst-plugin-qtdemux_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for qtdemux
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-replaygain
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstpbutils-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 301d9660ba004add4a28babef9b68614
+Size: 22118
+Filename: gst-plugin-replaygain_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for replaygain
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-rtp
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), libgstrtp-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 60aedd51a41d31d0aa159c44a1c88812
+Size: 133228
+Filename: gst-plugin-rtp_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for rtp
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-rtpmanager
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstnetbuffer-0.10-0 (>= 0.10.30), libgstrtp-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: b6495175d361b85110111c66fa274e44
+Size: 91860
+Filename: gst-plugin-rtpmanager_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for rtpmanager
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-rtsp
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstinterfaces-0.10-0 (>= 0.10.30), libgstrtp-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstrtsp-0.10-0 (>= 0.10.30), libgstsdp-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 262f743be682e82dce4219ed59fa9fcb
+Size: 54720
+Filename: gst-plugin-rtsp_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for rtsp
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-shapewipe
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgstvideo-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 26621f9e4ef457ee932dd507ae1b2b91
+Size: 16846
+Filename: gst-plugin-shapewipe_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for shapewipe
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-smpte
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 6f216d4bec89ff49ca047f1f480aea98
+Size: 25336
+Filename: gst-plugin-smpte_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for smpte
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-spectrum
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstfft-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: d365e9dff83c52f70c891771ce600e46
+Size: 12860
+Filename: gst-plugin-spectrum_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for spectrum
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-udp
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstnetbuffer-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 32fc2c995bec0e8d4a239e1706070ca2
+Size: 24006
+Filename: gst-plugin-udp_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for udp
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-video4linux2
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libv4l (>= 0.8.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: dd2ce19a50442b4281ead802e2ba9939
+Size: 49766
+Filename: gst-plugin-video4linux2_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for video4linux2
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-videobox
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), liborc-0.4-0 (>= 0.4.10), libgstvideo-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 70d34cd2902a739798bd42e90d0cf38b
+Size: 37208
+Filename: gst-plugin-videobox_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for videobox
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-videocrop
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 6eb8ff28cbcdda4415418f3a9bda86e2
+Size: 13894
+Filename: gst-plugin-videocrop_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for videocrop
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-videofilter
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: aec1327c8f5e526b9542e8e3e4b5de06
+Size: 20650
+Filename: gst-plugin-videofilter_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for videofilter
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-videomixer
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), liborc-0.4-0 (>= 0.4.10), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 1ce79500c5a90409616f913738435a69
+Size: 31364
+Filename: gst-plugin-videomixer_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for videomixer
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-wavenc
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstriff-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 47ab21c8977f0cb1ae55ee9c27ccc76d
+Size: 8670
+Filename: gst-plugin-wavenc_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for wavenc
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-wavparse
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstriff-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 38d2f04edd2aaa722a151084310d6322
+Size: 26144
+Filename: gst-plugin-wavparse_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for wavparse
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-ximagesrc
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libz1 (>= 1.2.3), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libsm6 (>= 1.2.0), libuuid1 (>= 2.18), libice6 (>= 1.0.7), libx11-6 (>= 1.4.1), libxcb1 (>= 1.6), libpthread-stubs0 (>= 0.2), libxau6 (>= 1.0.6), libxdmcp6 (>= 1.1.0)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 40712e58ae762e19f844ca149b315166
+Size: 13700
+Filename: gst-plugin-ximagesrc_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for ximagesrc
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugin-y4menc
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 9b126795dac9675e0c338ca623d5a0c3
+Size: 6062
+Filename: gst-plugin-y4menc_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: GStreamer plugin for y4menc
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugins-good-apps
+Version: 0.10.25-r11.0-arago4.6
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 9097cffe1947891ef6190555a8f367cc
+Size: 1230
+Filename: gst-plugins-good-apps_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: Plugins for GStreamer
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugins-good-dev
+Version: 0.10.25-r11.0-arago4.6
+Depends: gst-plugins-good (= 0.10.25-r11.0-arago4.6)
+Recommends: gstreamer-dev, faac-dev, faad2-dev, libmikmod-dev, liboil-dev, libmad-dev, libid3tag-dev, gst-plugins-base-dev, libpopt-dev, libv4l-dev
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 269d4f788493f2929f5d76e28f04d72c
+Size: 1300
+Filename: gst-plugins-good-dev_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: Plugins for GStreamer
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugins-good-meta
+Version: 0.10.25-r11.0-arago4.6
+Depends: gst-plugins-good, gst-plugins-good-apps, gst-plugin-efence, gst-plugin-udp, gst-plugin-goom, gst-plugin-smpte, gst-plugin-png, gst-plugin-matroska, gst-plugin-auparse, gst-plugin-ossaudio, gst-plugin-goom2k1, gst-plugin-interleave, gst-plugin-level, gst-plugin-rtpmanager, gst-plugin-y4menc, gst-plugin-icydemux, gst-plugin-apetag, gst-plugin-replaygain, gst-plugin-multifile, gst-plugin-shapewipe, gst-plugin-wavparse, gst-plugin-effectv, gst-plugin-deinterlace, gst-plugin-multipart, gst-plugin-flxdec, gst-plugin-equalizer, gst-plugin-alpha, gst-plugin-navigationtest, gst-plugin-videomixer, gst-plugin-video4linux2, gst-plugin-avi, gst-plugin-id3demux, gst-plugin-debug, gst-plugin-autodetect, gst-plugin-videobox, gst-plugin-cutter, gst-plugin-videocrop, gst-plugin-jpeg, gst-plugin-ximagesrc, gst-plugin-videofilter, gst-plugin-rtsp, gst-plugin-audiofx, gst-plugin-wavenc, gst-plugin-spectrum, gst-plugin-qtdemux, gst-plugin-alphacolor, gst-plugin-alaw, gst-plugin-imagefreeze, gst-plugin-rtp, gst-plugin-flv, gst-plugin-oss4audio, gst-plugin-annodex, gst-plugin-mulaw
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 8bdc3a48665128c885b75889e2feabcd
+Size: 1528
+Filename: gst-plugins-good-meta_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: gst-plugins-good meta package
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gst-plugins-good
+Version: 0.10.25-r11.0-arago4.6
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 9a6254e2ed7df95f7c93edcb3d30fb6b
+Size: 1852
+Filename: gst-plugins-good_0.10.25-r11.0-arago4.6_da850-omapl138-evm.ipk
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-0.10.25.tar.bz2;name=archive file://0001-v4l2src-add-input-src-property-to-specify-capture-in.patch file://0002-v4l2src-keep-track-of-the-input-ID-that-will-be-used.patch file://0003-v4l2src-make-sure-capture-buffer-size-is-aligned-on-.patch file://0004-osssink-handle-all-supported-sample-rates.patch file://0005-v4l2src-add-support-for-DaVinci-platforms-using-MVL-.patch file://0006-v4l2src-support-NV12-capture-on-DM365-using-the-IPIP.patch file://0007-v4l2src-accept-EPERM-as-a-non-fatal-error-for-VIDIOC.patch file://0008-v4l2src-try-progressive-mode-first-for-component-inp.patch file://0009-v4l2src-add-support-for-NV16-colorspace.patch file://0010-v4l2src-set-bytesperline-and-sizeimage-before-callin.patch file://0011-v4l2src-update-gst_v4l2_get_norm-to-handle-DM6467T-a.patch file://0012-v4l2src-add-V4L2-ioctl-calls-to-initialize-capture-d.patch file://0013-v4l2src-disable-video-device-polling-by-default-on-D.patch file://0014-v4l2src-Skip-detection-of-private-controls.patch file://0015-v4l2src-Remove-short-circuit-of-VIDIOC_S_FMT-call.patch file://0016-v4l2src-add-feature-to-artifically-lower-framerate-b.patch file://0017-v4l2src-always-set-the-desired-framerate-on-DM365.patch
+Description: Plugins for GStreamer
+OE: gst-plugins-good
+HomePage: http://www.gstreamer.net/
+Priority: optional
+
+
+Package: gstreamer-ti
+Version: svnr919-r93+r57.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Recommends: ti-codecs-omapl138-server, ti-cmem-module, ti-dsplink-module, ti-tisdk-loadmodule
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 034c7fb4f6eb9bcd4a7c925d6cec81b1
+Size: 527088
+Filename: gstreamer-ti_svnr919-r93+r57.6_da850-omapl138-evm.ipk
+Source: svn://gforge.ti.com/svn/gstreamer_ti/trunk;module=gstreamer_ti;proto=https;user=anonymous;pswd='' file://0001-Introducing-TIDmaiVideoSink-version-2.-rename-it-to-.patch;striplevel=4 file://0002-set-maxInterFrameInterval-params-needed-by-ittiam-co.patch;striplevel=4 file://0003-update-omapl138-cfg-to-use-cs.674.patch;striplevel=4 file://change-display-node-as-per-latest-psp.patch;striplevel=4
+Description: GSTREAMER Plugin (gstreamer-ti) for TI ARM/DSP processors
+OE: gstreamer-ti
+HomePage: https://gforge.ti.com/gf/project/gstreamer_ti/
+Priority: optional
+
+
+Package: kernel-2.6.37
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: a8da1105569edb43608202af02c7d186
+Size: 964
+Filename: kernel-2.6.37_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: Linux kernel for DaVinci EVM from PSP, based on linux-davinci kernel
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-image-2.6.37
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: bdb20fb4b2a07e0bc93d4cc49b1198f3
+Size: 2298090
+Filename: kernel-image-2.6.37_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: Linux kernel for DaVinci EVM from PSP, based on linux-davinci kernel
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-atkbd
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 79d7437f9ae96722405e9d7307845ea3
+Size: 11456
+Filename: kernel-module-atkbd_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: atkbd kernel module; AT and PS/2 keyboard driver
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-autofs4
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 166149e4674e9e6d9a77291ef4954c67
+Size: 15258
+Filename: kernel-module-autofs4_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: autofs4 kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-crc-ccitt
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 3c55748f421c3916521c48d13624ee83
+Size: 2874
+Filename: kernel-module-crc-ccitt_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: crc-ccitt kernel module; CRC-CCITT calculations
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-crc-t10dif
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: e689c7e819bd71d86feeca7183cadea4
+Size: 2806
+Filename: kernel-module-crc-t10dif_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: crc-t10dif kernel module; T10 DIF CRC calculation
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-exportfs
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 82a5a8fcf3cd0fbe5f70891e87d303ab
+Size: 4174
+Filename: kernel-module-exportfs_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: exportfs kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-ipv6
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 12c8c1ada734d338c7b9eb804aea2f86
+Size: 133812
+Filename: kernel-module-ipv6_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: ipv6 kernel module; IPv6 protocol stack for Linux
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-loop
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: dd32cbedc6caa13d5e5e0689dadebefa
+Size: 11808
+Filename: kernel-module-loop_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: loop kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-minix
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 4f07987493b6c28545d4e32e84969a4a
+Size: 16538
+Filename: kernel-module-minix_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: minix kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-nfsd
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37, kernel-module-exportfs
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 05ff55ff7f71223325fc4e88eb277996
+Size: 49192
+Filename: kernel-module-nfsd_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: nfsd kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-nls-ascii
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 6468d5c958e8c9b2bc4086075dac93ea
+Size: 2850
+Filename: kernel-module-nls-ascii_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: nls-ascii kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-nls-utf8
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 4c957943b83ae75c366b21f77d1df30e
+Size: 2448
+Filename: kernel-module-nls-utf8_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: nls-utf8 kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-rng-core
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: fae207e29332e56fedd24780f0ad151b
+Size: 4274
+Filename: kernel-module-rng-core_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: rng-core kernel module; H/W Random Number Generator (RNG) driver
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-scsi-wait-scan
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: cd0bb420ebdcd34c00ce7ea7091222e4
+Size: 2218
+Filename: kernel-module-scsi-wait-scan_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: scsi-wait-scan kernel module; SCSI wait for scans
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-sit
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37, kernel-module-tunnel4, kernel-module-ipv6
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 66fb0f31a1d5666a5b8fa397fa978291
+Size: 8886
+Filename: kernel-module-sit_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: sit kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-tunnel4
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 47b2d73fa03874362349066532efcc98
+Size: 3362
+Filename: kernel-module-tunnel4_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: tunnel4 kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-uio-pru
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 0364d022d85af5251e2c746147ad9478
+Size: 3986
+Filename: kernel-module-uio-pru_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: uio-pru kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-xfrm6-mode-beet
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37, kernel-module-ipv6
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 346b642e48e17c9014b4826b74cc7519
+Size: 3080
+Filename: kernel-module-xfrm6-mode-beet_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: xfrm6-mode-beet kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-xfrm6-mode-transport
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: c7d0fefbf881284c247ad8c804878075
+Size: 2630
+Filename: kernel-module-xfrm6-mode-transport_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: xfrm6-mode-transport kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-xfrm6-mode-tunnel
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37, kernel-module-ipv6
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: f7b402d6ded71382cd112220b7dcd76c
+Size: 2986
+Filename: kernel-module-xfrm6-mode-tunnel_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: xfrm6-mode-tunnel kernel module
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-module-xtkbd
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: f44b706e19fee9a0f35490554873aabc
+Size: 3590
+Filename: kernel-module-xtkbd_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: xtkbd kernel module; XT keyboard driver
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-modules
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Recommends: kernel-module-crc-ccitt, kernel-module-crc-t10dif, kernel-module-autofs4, kernel-module-minix, kernel-module-nls-utf8, kernel-module-nls-ascii, kernel-module-nfsd, kernel-module-xfrm6-mode-beet, kernel-module-xfrm6-mode-transport, kernel-module-xfrm6-mode-tunnel, kernel-module-sit, kernel-module-scsi-wait-scan, kernel-module-loop, kernel-module-rng-core, kernel-module-uio-pru, kernel-module-atkbd, kernel-module-xtkbd
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 7d4488761498d41d36f18f84a410b980
+Size: 1076
+Filename: kernel-modules_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: Kernel modules meta package
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: kernel-vmlinux
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Section: kernel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 9c5faf41b569ef16bdb977f336089943
+Size: 2874384
+Filename: kernel-vmlinux_2.6.37-psp03.21.00.04.sdk-r57.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch
+Description: Linux kernel for DaVinci EVM from PSP, based on linux-davinci kernel
+OE: linux-davinci
+HomePage: unknown
+Priority: optional
+
+
+Package: matrix-gui-common
+Version: 1.4-r10.17.6
+Recommends: am-sysinfo
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: a3be40f4ac78a66cb42d60801360af36
+Size: 2693958
+Filename: matrix-gui-common_1.4-r10.17.6_da850-omapl138-evm.ipk
+Source: svn://gforge.ti.com/svn/matrix_gui/;module=trunk;proto=https;user=anonymous;pswd='' file://integrate-wifi-demos-with-omapl138-from-amsdk.patch;striplevel=2 file://integrate-wifi-demos-with-dm3730-from-amsdk.patch;striplevel=2 file://work-around-for-gst-mpeg4-dec-demo.patch;striplevel=2 file://chameleon-man-fix-in-dm3730.patch;striplevel=2
+Description: Common files for all versions of Matrix GUI
+OE: matrix-gui-common
+HomePage: https://gforge.ti.com/gf/project/matrix_gui/
+Priority: optional
+
+
+Package: matrix-gui-e
+Version: 1.3-r24.16.6
+Depends: matrix-gui-common, update-rc.d, libpng12-0 (>= 1.2.44), libfreetype6 (>= 2.4.3), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libqtwebkite4 (>= 4.6.3), libphonone4 (>= 4.6.3), libqtdbuse4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Recommends: qt4-embedded-plugin-mousedriver-tslib, qt4-embedded-fonts
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: d7b82e38a6fb17cb0d3a49f1f4b7c310
+Size: 24732
+Filename: matrix-gui-e_1.3-r24.16.6_da850-omapl138-evm.ipk
+Source: svn://gforge.ti.com/svn/matrix_gui/;module=trunk;proto=https;user=anonymous;pswd=''
+Description: Matrix GUI for Qt Embedded
+OE: matrix-gui-e
+HomePage: https://gforge.ti.com/gf/project/matrix_gui/
+Priority: optional
+
+
+Package: pinmux-utility
+Version: 1.1.4.0-r1.0.6
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 77a0c3feb692206613fac3a959f5048c
+Size: 40274
+Filename: pinmux-utility_1.1.4.0-r1.0.6_da850-omapl138-evm.ipk
+Source: https://gforge.ti.com/gf/download/frsrelease/461/4210/Pin_Setup_AM18xx_01_00_1076_03.zip;name=omapl138
+Description: Texas Instruments Pinmux Utility
+OE: pinmux-utility
+HomePage: unknown
+Priority: optional
+
+
+Package: pointercal
+Version: 0.0-r22.6
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: d41adb62b7ea9669ba9404e7e021408a
+Size: 660
+Filename: pointercal_0.0-r22.6_da850-omapl138-evm.ipk
+Source: file://pointercal
+Description: Touchscreen calibration data
+OE: pointercal
+HomePage: unknown
+Priority: optional
+
+
+Package: qt-mandelbrot-accel
+Version: 4.6-r2.6
+Depends: libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Recommends: qt4-embedded-plugin-mousedriver-tslib
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: e4c2288ec3763c70f12cd48bdf4d8b76
+Size: 160310
+Filename: qt-mandelbrot-accel_4.6-r2.6_da850-omapl138-evm.ipk
+Source: file://mandelbrot-v4.6.tar.gz file://qt-mandelbrot-accel-Add-DSP-acceleration.patch file://exit.png
+Description: Qt Embedded TI DSP Fractal Demo
+OE: qt-mandelbrot-accel
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-gst
+Version: 1.0-r21.6
+Depends: gstreamer, gst-plugins-base, gst-plugins-good, gst-plugins-bad, gst-plugins-ugly, gst-plugins-base-meta, gst-plugins-good-meta, gst-plugins-bad-meta, gst-plugins-ugly-meta
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 888d8ba85a1d0337aa122b0f97d97ca4
+Size: 764
+Filename: task-arago-gst_1.0-r21.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-gst.bb
+Description: Task to add base gstreamer and TI plugins
+OE: task-arago-gst
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-tisdk-addons
+Version: 1.0-r16.6
+Depends: am-sysinfo, am-benchmarks, ti-pru-sw-examples
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 4057c98e967c41ea8adccdc53034bf25
+Size: 758
+Filename: task-arago-tisdk-addons_1.0-r16.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-tisdk-addons.bb
+Description: Task to install additional utilities/demos for SDKs
+OE: task-arago-tisdk-addons
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-tisdk-bsp
+Version: 1.0-r20.6
+Depends: ti-linux-driver-examples-omapl, bluez4, bluez4-agent, libasound-module-bluez, bluez-hcidump, libopenobex1, openobex-apps, obexftp, ussp-push
+Recommends: kernel-modules, kernel-image-2.6.37, kernel-vmlinux, u-boot
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 31c290fea72a48235e35289ad04eab04
+Size: 850
+Filename: task-arago-tisdk-bsp_1.0-r20.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-tisdk-bsp.bb
+Description: Task to install Board Support Package binaries on da850-omapl138-evm
+OE: task-arago-tisdk-bsp
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-tisdk-crypto
+Version: 1.0-r15.6
+Depends: openssl, wpa-supplicant, dropbear, openssh-sftp-server, openssl-misc, hostap-daemon, ti-wifi-utils, wireless-tools, htop, netperf, iw, linux-firmware-wl12xx, wpa-gui-e, crda, softap-udhcpd-config, ti-compat-wireless-wl12xx, wl1271-bluetooth
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 27f54c38c4d439c72880323f15e2e8fe
+Size: 868
+Filename: task-arago-tisdk-crypto_1.0-r15.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-tisdk-crypto.bb
+Description: Task to install crypto packages into target FS
+OE: task-arago-tisdk-crypto
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-tisdk-dsp
+Version: 1.0-r17.6
+Depends: ti-dsplink-examples, ti-c6accel-apps, ti-dsp-benchmark-apps, ti-c6run-apps, qt-mandelbrot-accel
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: eeefc917458eda309fb19cd0d763d765
+Size: 772
+Filename: task-arago-tisdk-dsp_1.0-r17.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-tisdk-dsp.bb
+Description: Task to install dsp binaries on da850-omapl138-evm
+OE: task-arago-tisdk-dsp
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-tisdk-graphics
+Version: 1.0-r12.6
+Depends: task-arago-qte, qt4-embedded-plugin-phonon-backend-gstreamer, qt4-embedded-plugin-imageformat-gif, qt4-embedded-plugin-imageformat-jpeg, libxml2, matrix-gui-e, qt-embedded-widgets-demo
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 4dc27bda7d68e14833032674fe2ce059
+Size: 806
+Filename: task-arago-tisdk-graphics_1.0-r12.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-tisdk-graphics.bb
+Description: Task to install graphics binaries on da850-omapl138-evm
+OE: task-arago-tisdk-graphics
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-tisdk-multimedia
+Version: 1.0-r36.6
+Depends: ti-dmai-apps, ti-codec-engine-examples, ti-data, task-arago-gst, gstreamer-ti, ti-tisdk-loadmodule
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: c838c016247436bf56bf91484e3da692
+Size: 778
+Filename: task-arago-tisdk-multimedia_1.0-r36.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-tisdk-multimedia.bb
+Description: Task to install multimedia binaries on da850-omapl138-evm
+OE: task-arago-tisdk-multimedia
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-toolchain-tisdk-addons-host
+Version: 1.0-r13.6
+Depends: am-sysinfo-src, am-benchmarks-src, am-sysinfo-src, am-benchmarks-src
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: b526c0a6694251880568f168f2f4c24c
+Size: 766
+Filename: task-arago-toolchain-tisdk-addons-host_1.0-r13.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-addons-host.bb
+Description: Task to install sources for additional utilities/demos for SDKs
+OE: task-arago-toolchain-tisdk-addons-host
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-toolchain-tisdk-bsp-host
+Version: 1.0-r43.6
+Recommends: ti-tisdk-licenses-src, u-boot-src, ti-tisdk-setup, ti-tisdk-mksdboot, linux-davinci-src, pinmux-utility, ti-board-utilities-omapl138, ti-linux-driver-examples-omapl-src, ti-tisdk-docs-hardcopy, ti-tisdk-docs-wiki
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: f5cc65336c7da4b74d41d27c49bdddcc
+Size: 862
+Filename: task-arago-toolchain-tisdk-bsp-host_1.0-r43.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-bsp-host.bb
+Description: Task to build and install Board Support Package sources (or development header) packages on host
+OE: task-arago-toolchain-tisdk-bsp-host
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-toolchain-tisdk-crypto-host
+Version: 1.0-r4.6
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 0c6ccfdf7330e1449fee1dbbd76fef59
+Size: 716
+Filename: task-arago-toolchain-tisdk-crypto-host_1.0-r4.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-crypto-host.bb
+Description: Task to install crypto sources in SDK
+OE: task-arago-toolchain-tisdk-crypto-host
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-toolchain-tisdk-crypto-target
+Version: 1.0-r4.6
+Depends: openssl-dev, wpa-supplicant-dev, ocf-linux-dev
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 4c200cdc679c8e97869391a8defc12fc
+Size: 760
+Filename: task-arago-toolchain-tisdk-crypto-target_1.0-r4.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-crypto-target.bb
+Description: Task to install crypto dev packages in SDK
+OE: task-arago-toolchain-tisdk-crypto-target
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-toolchain-tisdk-dsp-host
+Version: 1.0-r16.6
+Recommends: ti-cgt6x-src, ti-dspbios-src, ti-biosutils-src, ti-dsplink-src, ti-edma3lld-src, ti-biospsp-src, ti-audio-soc-example-src, ti-c6accel-src, ti-dsp-benchmark-src, ti-framework-components-src, ti-codec-engine-src, ti-xdais-src, ti-c6run-src, ti-dsp-benchmark-src
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 60cdbb2704dffe2f718cee0c64d0ca21
+Size: 854
+Filename: task-arago-toolchain-tisdk-dsp-host_1.0-r16.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-dsp-host.bb
+Description: Task to build and install source (or development) packages on host
+OE: task-arago-toolchain-tisdk-dsp-host
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-toolchain-tisdk-graphics-host
+Version: 1.0-r8.6
+Depends: matrix-gui-e-src
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 18fccc2b233d1604e3adb220d7c54e12
+Size: 748
+Filename: task-arago-toolchain-tisdk-graphics-host_1.0-r8.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-graphics-host.bb
+Description: Task to install graphics application sources on host
+OE: task-arago-toolchain-tisdk-graphics-host
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-toolchain-tisdk-graphics-target
+Version: 1.0-r6.6
+Depends: qt4-embedded-dev, qt4-embedded-mkspecs, libphonone-dev, libqt3supporte-dev, libqtassistantcliente-dev, libqtclucenee-dev, libqtcoree-dev, libqtdbuse-dev, libqtdesignercomponentse-dev, libqtdesignere-dev, libqt-embeddeduitools4-dev, libqtguie-dev, libqthelpe-dev, libqtnetworke-dev, libqtscripte-dev, libqtscripttoolse-dev, libqtsvge-dev, libqtteste-dev, libqtwebkite-dev, libqtxmle-dev
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: ca9844d4d3140af55e05575df2e47079
+Size: 872
+Filename: task-arago-toolchain-tisdk-graphics-target_1.0-r6.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-graphics-target.bb
+Description: Task to install graphics binaries on sdk target
+OE: task-arago-toolchain-tisdk-graphics-target
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-toolchain-tisdk-multimedia-host
+Version: 1.0-r30.6
+Recommends: ti-framework-components-src, ti-codec-engine-src, ti-linuxutils-src, ti-xdctools-src, ti-dmai-src, ti-xdais-src, gstreamer-ti-src, ti-tisdk-loadmodule, ti-codecs-omapl138-src, ti-dm365mm-module-src
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 8248d7fbfff61f0455aa9457054d0920
+Size: 846
+Filename: task-arago-toolchain-tisdk-multimedia-host_1.0-r30.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-multimedia-host.bb
+Description: Task to build and install multimedia source (or development header) packages on host
+OE: task-arago-toolchain-tisdk-multimedia-host
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-board-utilities-omapl138
+Version: 03.20.00.14-r2.6
+Depends: libc6 (>= 2.9)
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 4beb7b8a351d721c2417a6872bf47cc7
+Size: 541966
+Filename: ti-board-utilities-omapl138_03.20.00.14-r2.6_da850-omapl138-evm.ipk
+Source: http://sourceforge.net/projects/dvflashutils/files/OMAP-L138/v2.30/OMAP-L138_FlashAndBootUtils_2_30.tar.gz;name=serialflasher http://software-dl.ti.com/dsps/dsps_public_sw/psp/LinuxPSP/DaVinci_03_20/03_20_00_14//exports/DaVinci-PSP-SDK-03.20.00.14.tgz;name=psprelease
+Description: TI UBL and Serial Boot and Flashing board utilites
+OE: ti-board-utilities-omapl138
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-c6accel-apps
+Version: 1_01_00_07-r12.6
+Depends: ti-cmem-module, ti-dsplink-module, libc6 (>= 2.9)
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: e28f74aea36a3b6cd02968b8ef731add
+Size: 10351928
+Filename: ti-c6accel-apps_1_01_00_07-r12.6_da850-omapl138-evm.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/c6000/web/c6accel/latest/exports//c6accel_1_01_00_07_Linux-x86_Setup.bin;name=c6accelbin
+Description: TI C6Accel - DSP Software Libraries on ARM
+OE: ti-c6accel
+HomePage: https://gforge01.dal.design.ti.com/gf/project/dsplib4arm/
+Priority: optional
+
+
+Package: ti-c6run-apps
+Version: 0_98_03_03-r3.6
+Depends: ti-cmem-module, ti-dsplink-module, libc6 (>= 2.9)
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 38c67ab35f0abae74dedeb831746114f
+Size: 4807488
+Filename: ti-c6run-apps_0_98_03_03-r3.6_da850-omapl138-evm.ipk
+Source: svn://gforge.ti.com/svn/dspeasy/;module=tags/0_98_03_03;proto=https;user=anonymous;pswd=''
+Description: TI C6Run - DSP Code Development for ARM/Linux Users
+OE: ti-c6run
+HomePage: https://gforge.ti.com/gf/project/dspeasy/
+Priority: optional
+
+
+Package: ti-cmem-module
+Version: 1:2_26_02_05-r57d.6
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 1243f11a873cc52843ec7d1a08c77502
+Size: 11974
+Filename: ti-cmem-module_2_26_02_05-r57d.6_da850-omapl138-evm.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/linuxutils/2_26_02_05/exports/linuxutils_2_26_02_05.tar.gz file://CMEM-fix-for-issue-symbol-arm926_dma_map_area.patch
+Description: MFP Linux utils for TI ARM/DSP processors
+OE: ti-linuxutils
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-codec-engine-examples
+Version: 2_26_02_11-r57a.6
+Depends: ti-cmem-module, ti-dsplink-module, libc6 (>= 2.9)
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 1a8e68fa308771098daedac9322315ae
+Size: 5511778
+Filename: ti-codec-engine-examples_2_26_02_11-r57a.6_da850-omapl138-evm.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ce/2_26_02_11/exports/codec_engine_2_26_02_11,lite.tar.gz;name=cetarball file://0001-switch-to-arago-tool-chain.patch
+Description: Codec Engine for TI ARM/DSP processors
+OE: ti-codec-engine
+HomePage: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ce
+Priority: optional
+
+
+Package: ti-codec-engine-src
+Version: 2_26_02_11-r57a
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 5daa9ae36efb3a62bd5802117750b22f
+Size: 31147060
+Filename: ti-codec-engine-src_2_26_02_11-r57a_da850-omapl138-evm.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ce/2_26_02_11/exports/codec_engine_2_26_02_11,lite.tar.gz;name=cetarball            file://0001-switch-to-arago-tool-chain.patch
+Description: Patched sources for ti-codec-engine
+Priority: Optional
+
+
+Package: ti-codecs-omapl138-server
+Version: 4_02_00_00-r57d.6
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 47655d7d5939cd58c10473952a13315f
+Size: 2108228
+Filename: ti-codecs-omapl138-server_4_02_00_00-r57d.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/codec-servers.git;protocol=git http://install.dir.local.com/c64xplus_jpegenc_02_00_01_00_production.tar.gz;name=jpegenc http://install.dir.local.com/c64xplus_jpegdec_02_00_01_01_production.tar.gz;name=jpegdec http://install.dir.local.com/c64xplus_mpeg2dec_02_00_02_00_production.tar.gz;name=mpeg2dec http://install.dir.local.com/c64xplus_mpeg4dec_02_01_00_00_production.tar.gz;name=mpeg4dec http://install.dir.local.com/c64xplus_mpeg4enc_02_02_04_production.tar.gz;name=mpeg4enc http://install.dir.local.com/dm6446_h264enc_02_02_00_02_production.tar.gz;name=h264enc http://install.dir.local.com/dm6446_h264dec_2_00_002_production.tar.gz;name=h264dec http://install.dir.local.com/dm6446_aachedec_01_30_03_00_production.tar.gz;name=aachedec http://install.dir.local.com/dm6446_g711dec_1_12_00_000_production.tar.gz;name=g711dec http://install.dir.local.com/dm6446_g711enc_1_12_00_000_production.tar.gz;name=g711enc
+Description: TI Codecs and Server Combo for OMAPL138
+OE: ti-codecs-omapl138
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-compat-wireless-wl12xx
+Version: 0.20110517r3m1rc2-r57.6
+Depends: kernel-2.6.37, update-modules
+Section: kernel/modules
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 8f537ae0fdad524ef7ab35fcc517bdd5
+Size: 322484
+Filename: ti-compat-wireless-wl12xx_0.20110517r3m1rc2-r57.6_da850-omapl138-evm.ipk
+Source: https://gforge.ti.com/gf/download/frsrelease/555/4629/ti-compat-wireless-wl12xx-2011-05-17-r3-m1-rc2.tgz file://0001-wl12xx_sdio-enable-wowlan-only-if-enable_irq_wake-su.patch file://0002-ti-compat-wireless-enable-uapsd-configuration.patch file://0003-mac80211-don-t-start-the-dynamic-ps-timer-if-not-associated.patch
+Description: ti compat-wireless drivers
+OE: ti-compat-wireless-wl12xx
+HomePage: https://gforge.ti.com/gf/project/ecs_nlcp/
+Priority: optional
+
+
+Package: ti-data
+Version: 1_00_00_19-r8.6
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: e5aa5ddc1716ce1152d1f569cf944b5a
+Size: 27068722
+Filename: ti-data_1_00_00_19-r8.6_da850-omapl138-evm.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/avdata/latest/exports/omapl138_avdata_1_00_00_19.tar.gz;name=omapl138_datatarball
+Description: Media files for TI DVSDK
+OE: ti-data
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-dm365mm-module
+Version: 01_00_03-r57b.6
+Depends: kernel-2.6.37, update-modules
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 5d465f504296491e1382c41e81da94e4
+Size: 3462
+Filename: ti-dm365mm-module_01_00_03-r57b.6_da850-omapl138-evm.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/dvsdk/DVSDK_3_10/latest/exports/dm365mm_01_00_03.tar.gz;name=dm365mmtarball file://0001-Update-to-use-EVENTQ-1.patch file://0002-dm365-porting-to-kernel-2.6.37.patch
+Description: User space DMA module for DM365
+OE: ti-dm365mm-module
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-dmai-apps
+Version: 1:2_20_00_15-r2.6
+Depends: ti-codecs-omapl138-server, ti-cmem-module, ti-dsplink-module, ti-dm365mm-module
+Section: multimedia
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: b943b3f655cf1eaef18cdf9db64269e9
+Size: 1337506
+Filename: ti-dmai-apps_2_20_00_15-r2.6_da850-omapl138-evm.ipk
+Source: svn://gforge.ti.com/svn/dmai/;module=tags/TAG_2_20_00_15;proto=https;user=anonymous;pswd='' file://doxygen_templates.tar.gz file://arago-tdox file://0001-dmai-porting-to-kernel-2.6.37.patch file://add-media-controller-support-dev-node-change.patch
+Description: Davinci Multimedia Application Interface (DMAI) for TI ARM/DSP processors
+OE: ti-dmai
+HomePage: https://gforge.ti.com/gf/project/dmai/
+Priority: optional
+
+
+Package: ti-dsp-benchmark-apps
+Version: 1_00_00_02-r1.6
+Depends: ti-cmem-module, ti-dsplink-module, libc6 (>= 2.9)
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: b906aaf0ec200ee340fab0a4e72560b1
+Size: 5945156
+Filename: ti-dsp-benchmark-apps_1_00_00_02-r1.6_da850-omapl138-evm.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/c6000/web/c6accel/latest/exports//dsp_benchmark_demo_1_00_00_02_Linux-x86_Setup.bin;name=dspbenchmarksbin
+Description: TI DSP Benchmark applications
+OE: ti-dsp-benchmark
+HomePage: http://software-dl.ti.com/dsps/dsps_public_sw/c6000/web/c6accel/latest/index_FDS.html
+Priority: optional
+
+
+Package: ti-dsp-benchmark-src
+Version: 1_00_00_02-r1
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 16a85b5fb763c76eb1cd408fc3b023d4
+Size: 5693210
+Filename: ti-dsp-benchmark-src_1_00_00_02-r1_da850-omapl138-evm.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/c6000/web/c6accel/latest/exports//dsp_benchmark_demo_1_00_00_02_Linux-x86_Setup.bin;name=dspbenchmarksbin
+Description: Patched sources for ti-dsp-benchmark
+Priority: Optional
+
+
+Package: ti-dsplink-examples
+Version: 1:1_65_01_05_eng-r57i.6
+Depends: ti-dsplink-module, libc6 (>= 2.9)
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 9c495a76ede7582cc56003e907dce6f1
+Size: 1072732
+Filename: ti-dsplink-examples_1_65_01_05_eng-r57i.6_da850-omapl138-evm.ipk
+Source: http://www.sanb.design.ti.com/tisb_releases/DSPLink/1_65_01_05/exports/dsplink_linux_1_65_01_05_eng.tar.gz;name=dsplinktarball file://ti-dsplink-examples-run.sh file://0001-switch-to-arago-tool-chain.patch
+Description: DSPLINK Inter-Processor Communications (IPC) for TI ARM/DSP processors
+OE: ti-dsplink
+HomePage: http://software-dl.ti.com/dsps/dsps_public_sw/DSPLink/index.html
+Priority: optional
+
+
+Package: ti-dsplink-module
+Version: 1:1_65_01_05_eng-r57i.6
+Depends: update-modules
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 304968dd9ab2cb9096906e62153e2b1b
+Size: 56458
+Filename: ti-dsplink-module_1_65_01_05_eng-r57i.6_da850-omapl138-evm.ipk
+Source: http://www.sanb.design.ti.com/tisb_releases/DSPLink/1_65_01_05/exports/dsplink_linux_1_65_01_05_eng.tar.gz;name=dsplinktarball file://ti-dsplink-examples-run.sh file://0001-switch-to-arago-tool-chain.patch
+Description: DSPLINK Inter-Processor Communications (IPC) for TI ARM/DSP processors
+OE: ti-dsplink
+HomePage: http://software-dl.ti.com/dsps/dsps_public_sw/DSPLink/index.html
+Priority: optional
+
+
+Package: ti-framework-components-src
+Version: 2_26_00_01-r1
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: cb3052701948a5aef0f25caced4d5f6f
+Size: 22580920
+Filename: ti-framework-components-src_2_26_00_01-r1_da850-omapl138-evm.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/fc/2_26_00_01/exports/framework_components_2_26_00_01,lite.tar.gz;name=fctarball
+Description: Patched sources for ti-framework-components
+Priority: Optional
+
+
+Package: ti-linux-driver-examples-omapl
+Version: psp03.20.00.13-r3.6
+Depends: libc6 (>= 2.9)
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 8f448565f2de6d4446cf79b06284e9f7
+Size: 30696
+Filename: ti-linux-driver-examples-omapl_psp03.20.00.13-r3.6_da850-omapl138-evm.ipk
+Source: ftp://nemo.sc.ti.com/pub/int-packages/omapl138-linux-driver-examples-psp03.20.00.13.tar.gz;name=linuxexamplestarball
+Description: Linux dirver examples/test application of OMAP_L138
+OE: ti-linux-driver-examples-omapl
+Priority: optional
+
+
+Package: ti-linuxutils-src
+Version: 2_26_02_05-r57d
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: b185832ce14af1a7d83a29f3e2a7e20a
+Size: 630060
+Filename: ti-linuxutils-src_2_26_02_05-r57d_da850-omapl138-evm.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/linuxutils/2_26_02_05/exports/linuxutils_2_26_02_05.tar.gz file://CMEM-fix-for-issue-symbol-arm926_dma_map_area.patch
+Description: Patched sources for ti-linuxutils
+Priority: Optional
+
+
+Package: ti-tisdk-docs-hardcopy
+Version: 4.03-r6.6
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: b5a4292893a3b829a256b07a01fc21b2
+Size: 9291956
+Filename: ti-tisdk-docs-hardcopy_4.03-r6.6_da850-omapl138-evm.ipk
+Source: http://install.source.dir.local/omapl138-docs-hardcopy_4.03.tar.gz;name=omapl138docs
+Description: Recipe to fetch PDF docs
+OE: ti-tisdk-docs-hardcopy
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-tisdk-docs-wiki
+Version: 1.0-r0.6
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 2ebd98dd86381dd4297b59154198f1a5
+Size: 1143646
+Filename: ti-tisdk-docs-wiki_1.0-r0.6_da850-omapl138-evm.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/ti/ti-tisdk-docs-wiki.bb
+Description: Recipe to fetch wiki pages from internal wiki and generate PDF
+OE: ti-tisdk-docs-wiki
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-tisdk-loadmodule
+Version: 1.0-r3.6
+Depends: update-rc.d
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 0f86558938a92ca28c414c7686aa6ffc
+Size: 1388
+Filename: ti-tisdk-loadmodule_1.0-r3.6_da850-omapl138-evm.ipk
+Source: file://loadmodule-rc
+Description: Package contains system wide loadmodule for DVSDK
+OE: ti-tisdk-loadmodule
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-tisdk-makefile
+Version: 1.0-r103.6
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 763cc030ad4b6c5cac3655dcd01f5a0b
+Size: 6412
+Filename: ti-tisdk-makefile_1.0-r103.6_da850-omapl138-evm.ipk
+Source: file://Makefile file://Rules.make
+Description: Package contain Makefile and Rule.make used for building DVSDK components
+OE: ti-tisdk-makefile
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-tisdk-mksdboot
+Version: 1.0-r37.6
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: e92aa0071e0a005bd2bde80732522cf1
+Size: 620324
+Filename: ti-tisdk-mksdboot_1.0-r37.6_da850-omapl138-evm.ipk
+Source: file://mksdboot.sh file://setup.htm file://top_omapl138_evm.png file://README.boot.scr file://windows_users.htm file://c6748.htm
+Description: Scripts to create bootable SD card for da850-omapl138-evm
+OE: ti-tisdk-mksdboot
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-tisdk-setup
+Version: 1.0-r34.6
+Section: base
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 2ede10d79fae5c1f41659532854ff245
+Size: 5708
+Filename: ti-tisdk-setup_1.0-r34.6_da850-omapl138-evm.ipk
+Source: file://setup.sh file://common.sh file://setup-host-check.sh file://setup-minicom.sh file://setup-package-install.sh file://setup-targetfs-nfs.sh file://setup-tftp.sh file://setup-uboot-env-omapl138.sh
+Description: Package contain Makefile and Rule.make used for building DVSDK components
+OE: ti-tisdk-setup
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-xdais-src
+Version: 6_26_01_03-r2
+Section: devel
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 671986e19d1f83a9dc0117273e96f4de
+Size: 5961582
+Filename: ti-xdais-src_6_26_01_03-r2_da850-omapl138-evm.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/xdais/6_26_01_03/exports/xdais_6_26_01_03.tar.gz;name=xdaistarball
+Description: Patched sources for ti-xdais
+Priority: Optional
+
+
+Package: u-boot-src
+Version: 2010.12-psp03.21.00.04.sdk-r0
+Section: bootloaders
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: abf5f0249dd5c5e949d539a0445d71a0
+Size: 11399046
+Filename: u-boot-src_2010.12-psp03.21.00.04.sdk-r0_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/u-boot-davinci.git;protocol=git;branch=03.21.00.03          file://0001-da850evm-change-default-memory-to-not-limit-at-32MB.patch
+Description: Patched sources for u-boot
+Priority: Optional
+
+
+Package: u-boot
+Version: 2010.12-psp03.21.00.04.sdk-r0.6
+Section: bootloaders
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 3c19d3c83f164d85d57125d80605d510
+Size: 97592
+Filename: u-boot_2010.12-psp03.21.00.04.sdk-r0.6_da850-omapl138-evm.ipk
+Source: git://arago-project.org/git/projects/u-boot-davinci.git;protocol=git;branch=03.21.00.03 file://0001-da850evm-change-default-memory-to-not-limit-at-32MB.patch
+Description: u-boot bootloader for DaVinci devices
+OE: u-boot
+HomePage: http://www.denx.de/wiki/U-Boot/WebHome
+Priority: optional
+
+
+Package: wl1271-bluetooth
+Version: 1.0-r57a.6
+Depends: kernel-2.6.37, update-modules, libopenobex1 (>= 1.5), bluez4 (>= 4.89), libc6 (>= 2.9)
+Section: network
+Architecture: da850-omapl138-evm
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 72b2da2c373a921e004a9d133d1f337c
+Size: 23470628
+Filename: wl1271-bluetooth_1.0-r57a.6_da850-omapl138-evm.ipk
+Source: https://gforge.ti.com/gf/download/frsrelease/556/4630/wl1271-bluetooth-2011-05-17.tar file://change-linux-firmware-wl12xx-license-file.patch
+Description: Initialization and demo application for bluetooth on WL1271 chipset
+OE: wl1271-bluetooth
+HomePage: unknown
+Priority: optional
+
+

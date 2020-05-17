@@ -1,0 +1,13 @@
+Package: task-arago-toolchain-tisdk-crypto-target
+Version: 1.0-r4.6
+Description: Task to install crypto dev packages in SDK
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: task-arago-toolchain-tisdk-crypto-target
+Homepage: unknown
+Build: install/d0bd439
+Depends: openssl-dev, wpa-supplicant-dev, ocf-linux-dev
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-crypto-target.bb

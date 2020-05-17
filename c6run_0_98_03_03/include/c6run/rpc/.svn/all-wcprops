@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/rpc
+END
+dsp_to_gpp_stub.h
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/rpc/dsp_to_gpp_stub.h
+END
+gpp_to_dsp_stub.h
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/rpc/gpp_to_dsp_stub.h
+END
+dsp_from_gpp_stub.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/rpc/dsp_from_gpp_stub.h
+END
+gpp_from_dsp_stub.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/include/c6run/rpc/gpp_from_dsp_stub.h
+END

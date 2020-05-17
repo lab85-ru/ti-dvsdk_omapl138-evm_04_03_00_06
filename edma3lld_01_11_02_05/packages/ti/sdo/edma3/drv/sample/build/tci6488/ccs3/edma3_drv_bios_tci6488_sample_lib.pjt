@@ -1,0 +1,46 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="D:\EDMA3\Primus_Release\edma3_drv_bios5\edma3_lld_01_06_00\packages\ti\sdo\edma3\drv\sample\build\tci6488\"
+ProjectType=Library
+CPUFamily=TMS320C64XX
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="XDC"
+Config="Debug"
+Config="iDebug"
+Config="iRelease"
+Config="Release"
+
+[Source Files]
+Source="..\..\..\src\bios_edma3_drv_sample_cs_multi_dsp.c"
+Source="..\..\..\src\bios_edma3_drv_sample_init_multi_dsp.c"
+Source="..\..\..\src\configs\bios_edma3_drv_sample_tci6488_cfg.c"
+Source="..\..\..\src\configs\bios_edma3_drv_sample_tci6488_int_reg.c"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\tci6488\Debug\edma3_drv_bios_sample.lib"
+
+["Archiver" Settings: "iDebug"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\tci6488\Debug\edma3_drv_bios_sample_i.lib"
+
+["Archiver" Settings: "iRelease"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\tci6488\Release\edma3_drv_bios_sample_i.lib"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\tci6488\Release\edma3_drv_bios_sample.lib"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "iDebug"]
+Options=-g -pdr -fr"$(Proj_dir)\iDebug"  -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "iRelease"]
+Options=-pdr -o2 -fr"$(Proj_dir)\iRelease"  -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -d"_RELEASE" -mv6400+
+
+["Compiler" Settings: "Release"]
+Options=-pdr -o2 -fr"$(Proj_dir)\Release"  -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -d"_RELEASE" -mv6400+
+

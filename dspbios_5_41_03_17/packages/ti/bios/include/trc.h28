@@ -1,0 +1,199 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== trc.h28 ========
+;
+;
+
+        .if ($isdefed("TRC_") = 0)    ; prevent multiple includes of this file
+TRC_    .set    1
+
+        .include chk.h28
+        .include cinit.h28
+
+;
+;  ======== TRC_NOOP ========
+;  Define this symbol to "compile out" all TRC macros
+;
+;  TRC_NOOP       .set 1        ; Note: TRC_NOOP is defined when uncommented
+;
+
+;
+;  ======== Trace Event Classes ========
+;
+TRC_LOGSWI      .set    0001H
+TRC_LOGPRD      .set    0002H
+TRC_LOGCLK      .set    0004H
+TRC_RESV0       .set    0008H   ; reserved for DSP/BIOS
+TRC_RESV1       .set    0010H   ; reserved for DSP/BIOS
+TRC_STSSWI      .set    0020H
+TRC_STSPRD      .set    0040H
+TRC_STSPIP      .set    0080H
+TRC_STSHWI      .set    0100H
+TRC_RESV2       .set    0200H   ; reserved for DSP/BIOS
+TRC_RESV3       .set    0400H   ; reserved for DSP/BIOS
+TRC_USER0       .set    0800H
+TRC_USER1       .set    1000H
+TRC_USER2       .set    2000H
+TRC_GBLTARG     .set    4000H
+TRC_GBLHOST     .set    8000H
+TRC_LOGTSK      .set    0x0008
+TRC_STSTSK      .set    0x0200
+
+
+        .global TRC_R_mask
+        .global TRC_cinit
+        .global TRC_GBLTARG
+
+;
+;#  ======== TRC_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", TRC_config$regs
+TRC_config      .macro
+        .endm
+
+;
+;# ======== TRC_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", TRC_end$regs
+TRC_end .macro
+        .endm
+
+;
+;# ======== TRC_init ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "xar0,al", TRC_init$regs
+TRC_init        .macro
+                 movl xar0, #TRC_cinit          ; xar0 = #TRC_cinit
+                 mov  al, *xar0                 ; al   = *(TRC_cinit) 
+                 movl xar0, #TRC_R_mask         ; xar0 = #TRC_R_mask
+                 mov *xar0, al                  ; *(TRC_R_mask) = *(TRC_cinit)
+                .endm
+
+;
+;# ======== TRC_disable ========
+;
+;#
+;# Preconditions:
+;#      constant = trace event mask (TRC_LOGSWI, TRC_LOGPRD, ...)
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "xar0,al", TRC_disable$regs
+TRC_disable     .macro constant
+        .if ($isdefed("TRC_NOOP") = 1)
+            .mexit
+        .endif
+        CHK_nargs TRC_disable, constant
+        .if ($symlen(":CHK_status:") != 0)
+            .emsg "TRC_disable parameter error."
+        .endif
+        movl xar0, #TRC_R_mask          ; xar0 = #TRC_R_mask
+        mov al, #((~:constant:) & 0xffff); al = #((~:constant:) & 0xffff)
+        and *xar0, al                   ; *(TRC_R_mask) = *(TRC_R_mask)& al
+        .endm
+
+;
+;# ======== TRC_enable ========
+;  Enable trace events specified by 'constant'
+;
+;#
+;# Preconditions:
+;#      constant = trace event mask (TRC_LOGSWI, TRC_LOGPRD, ...)
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "xar0,al", TRC_enable$regs
+TRC_enable      .macro constant
+        .if ($isdefed("TRC_NOOP") = 1)
+            .mexit
+        .endif
+        CHK_nargs TRC_enable, constant
+        .if ($symlen(":CHK_status:") != 0)
+            .emsg "TRC_enable parameter error."
+        .endif
+        movl xar0, #TRC_R_mask          ; xar0 = #TRC_R_mask
+        mov al, #((~:constant:) & 0xffff); al = #((~:constant:) & 0xffff)
+        or *xar0, al                    ; *(TRC_R_mask) = *(TRC_R_mask) | al
+    .endm
+
+;
+;# ======== TRC_query ========
+;  Test if all trace types are enabled
+;
+;#
+;#  Preconditions:
+;#      constant - trace event mask
+;#
+;#  Postconditions:
+;#      al == 0 if all queried trace types are enabled
+;#      al != 0 if any of the queried trace types are disabsled
+;#
+;
+        .asg    "al,t,xar0", TRC_query$regs
+TRC_query       .macro  constant
+        CHK_nargs TRC_query, constant
+        .if ($isdefed("TRC_NOOP") = 1)
+            .mexit
+        .endif
+
+        .if ($symlen(":CHK_status:") != 0)
+            .emsg "TRC_query parameter error."
+        .endif
+
+        .eval   (TRC_GBLHOST | TRC_GBLTARG | :constant:), mask
+
+        movl xar0, #TRC_R_mask          ; xar0 = #TRC_R_mask
+        mov al, #mask                   ; al = #mask
+        mov t, *xar0                    ; t  = *(TRC_R_mask)
+        and @t, al                      ; t = *(TRC_R_mask)&#mask
+        xor al, @t                      ; al = #mask ^ (*(TRC_R_mask)&#mask)
+        .endm
+
+
+;
+;# ======== TRC_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", TRC_startup$regs
+TRC_startup        .macro
+        .endm
+
+        .endif          ; if TRC_ is not defined
+
+

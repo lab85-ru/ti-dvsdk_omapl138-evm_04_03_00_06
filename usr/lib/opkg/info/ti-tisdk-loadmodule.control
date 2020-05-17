@@ -1,0 +1,13 @@
+Package: ti-tisdk-loadmodule
+Version: 1.0-r3.6
+Description: Package contains system wide loadmodule for DVSDK
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI
+Architecture: da850-omapl138-evm
+OE: ti-tisdk-loadmodule
+Homepage: unknown
+Build: install/d0bd439
+Depends: update-rc.d
+Source: file://loadmodule-rc

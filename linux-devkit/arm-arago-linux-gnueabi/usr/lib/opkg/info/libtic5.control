@@ -1,0 +1,13 @@
+Package: libtic5
+Version: 5.9-r0.6
+Description: ncurses tic library
+Section: libs
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: armv5te
+OE: ncurses
+Homepage: http://www.gnu.org/software/ncurses/ncurses.html
+Build: install/d0bd439
+Depends: libc6 (>= 2.9), libtinfo5 (>= 5.9)
+Source: ftp://ftp.gnu.org/gnu/ncurses/ncurses-5.9.tar.gz file://tic-hang.patch file://config.cache

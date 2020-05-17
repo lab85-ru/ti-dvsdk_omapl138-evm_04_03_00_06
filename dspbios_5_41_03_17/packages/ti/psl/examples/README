@@ -1,0 +1,60 @@
+
+    Here is a brief description of each PSL example:
+
+1) psl_basic: 
+    This example shows how to use some of the basic functionality that 
+    is provided by the PSL.  It shows:
+
+        - how to initialize the PSL
+        - how to change the frequency and voltage using the PSL.
+        - how to determine the current frequency and voltage settings.
+
+2) psl_timer: 
+    This example shows how to use the callback hooks that are provided 
+    by the PSL to adjust peripherals before/after scaling operations.
+    These hook functions are called by the PSL's PSL_changeSetpoints
+    function.
+
+    This particular test uses the callback hooks to stop a timer before
+    a scaling operation, and to reprogram and restart the timer following
+    a scaling operation.  This example uses the CSL to program the timer.
+    The callback functions and timer setup code are located in timer.c.
+
+    The timer is programmed to trigger every 10 microseconds regardless of
+    the frequency.  This test counts the number of timer interrupts that 
+    occur.  Since the timer triggers every 10 microseconds, the number of
+    interrupts that occur will depend on the frequencies which are used.   
+
+
+    To build an individual example, navigate into the example/<board> and run 
+the command:
+
+    gmake
+
+    (Note: you must first set up the common/config.mak file.) If you wish 
+to build all c55x examples navigate to the ti/psl/examples directory, run the
+command:
+
+    gmake -f makefile,55x
+
+
+    Each example contains a README file which includes the purpose of the 
+example, a description, and the expected output when the example is run. For 
+more information on each example, please see the README file of each example.
+
+    Each example consists of a directory named for the example, which in turn 
+contains various files and sub-directories. The sub-directories are named
+after a respective platform.  When this example is built for the dsk5510, 
+the generated files will be stored in the directory dsk5510.
+
+    The src/examples directory contains a directory called common which 
+stores files that are used by multiple examples. This directory contains 
+makefiles. The makefiles in this directory define rules and variables that 
+are used by either all examples built for a particular architecture, 
+or for the entire set of examples. For instance, the 
+file c55rules.mak defines all the rules necessary to build the c55x 
+architecture examples, and is included by each c55x example's makefile. On 
+the other hand, the file config.mak contains variable definitions, such as the 
+absolute path to the PSL root directory, which apply to all platforms. This 
+file is included by every example's makefile, regardless of architecture.
+

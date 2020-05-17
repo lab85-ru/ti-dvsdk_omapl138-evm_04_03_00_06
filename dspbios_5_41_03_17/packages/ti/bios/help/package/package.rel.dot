@@ -1,0 +1,79 @@
+digraph dependencies {
+    label="\nPackage ti.bios.help Dependency Graph";
+    size="7.5,10";
+    rankdir=LR;
+    ranksep=".75";
+    concentrate="true";
+    node [fixedsize=true, width=1.5, style=filled, color=black];
+    node [font=Helvetica, fontsize=12, fillcolor=lightgrey];
+    ti_bios_help [shape=record,label="ti.bios.help|", URL="package.rel.xml"];
+    node [fontsize=10, fillcolor=white];
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+    xdc [shape=record,label="xdc|1, 1, 0, 0", URL="../../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-e15/Solaris/packages/xdc/package/package.rel.svg"];
+    ti_bios_help -> xdc;
+    xdc_bld2 [shape=record,label="xdc.bld2|", URL="../../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-e15/Solaris/packages/xdc/bld2/package/package.rel.svg"];
+    ti_bios_help -> xdc_bld2;
+    xdc_gen2 [shape=record,label="xdc.gen2|", URL="../../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-e15/Solaris/packages/xdc/gen2/package/package.rel.svg"];
+    ti_bios_help -> xdc_gen2;
+    xdc_spec2 [shape=record,label="xdc.spec2|", URL="../../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-e15/Solaris/packages/xdc/spec2/package/package.rel.svg"];
+    ti_bios_help -> xdc_spec2;
+    xdc_shelf [shape=record,label="xdc.shelf|1, 0, 0, 0", URL="../../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-e15/Solaris/packages/xdc/shelf/package/package.rel.svg"];
+    ti_bios_help -> xdc_shelf;
+    xdc_bld [shape=record,label="xdc.bld|1, 0, 0, 0", URL="../../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-e15/Solaris/packages/xdc/bld/package/package.rel.svg"];
+    ti_bios_help -> xdc_bld;
+
+    edge [style=solid, color=blue]
+    xdc_bld -> xdc_bld2;
+
+    edge [style=solid, color=lightgrey]
+    xdc_bld -> xdc_spec2;
+    xdc_bld -> xdc_bld2;
+    xdc_bld -> xdc_shelf;
+    xdc_bld -> xdc_gen2;
+    xdc_bld -> xdc;
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+    xdc_shelf -> xdc_spec2;
+    xdc_shelf -> xdc_bld2;
+    xdc_shelf -> xdc_gen2;
+
+    edge [style=solid, color=blue]
+    xdc_spec2 -> xdc_shelf;
+
+    edge [style=solid, color=lightgrey]
+    xdc_spec2 -> xdc_bld2;
+    xdc_spec2 -> xdc_gen2;
+    xdc_spec2 -> xdc_shelf;
+
+    edge [style=solid, color=blue]
+    xdc_gen2 -> xdc_shelf;
+    xdc_gen2 -> xdc_spec2;
+
+    edge [style=solid, color=lightgrey]
+    xdc_gen2 -> xdc_spec2;
+    xdc_gen2 -> xdc_bld2;
+    xdc_gen2 -> xdc_shelf;
+
+    edge [style=solid, color=blue]
+    xdc_bld2 -> xdc_shelf;
+    xdc_bld2 -> xdc_spec2;
+    xdc_bld2 -> xdc_gen2;
+
+    edge [style=solid, color=lightgrey]
+    xdc_bld2 -> xdc_spec2;
+    xdc_bld2 -> xdc_gen2;
+    xdc_bld2 -> xdc_shelf;
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+    xdc -> xdc_spec2;
+    xdc -> xdc_bld2;
+    xdc -> xdc_shelf;
+    xdc -> xdc_gen2;
+}

@@ -1,0 +1,5 @@
+<?xml version='1.0'?>
+<package name='ti.bios.config.gconf' release='' xmlns='xdc/spec'>
+    <module name='Settings' hostonly='1'>
+    </module>
+</package>

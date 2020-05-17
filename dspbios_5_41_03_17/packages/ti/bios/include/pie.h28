@@ -1,0 +1,152 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+
+;  ======== pie.h28 ========
+;
+
+
+
+
+
+    .if ($isdefed("PIE_") = 0)    ; prevent multiple includes of this file
+PIE_    .set    1
+
+
+        .include hwi.h28
+
+PIEIFR1_ADDR            .set    0x000ce3
+PIEIFR2_ADDR            .set    0x000ce5
+PIEIFR3_ADDR            .set    0x000ce7
+PIEIFR4_ADDR            .set    0x000ce9
+PIEIFR5_ADDR            .set    0x000ceb
+PIEIFR6_ADDR            .set    0x000ced
+PIEIFR7_ADDR            .set    0x000cef
+PIEIFR8_ADDR            .set    0x000cf1
+PIEIFR9_ADDR            .set    0x000cf3
+PIEIFR10_ADDR           .set    0x000cf5
+PIEIFR11_ADDR           .set    0x000cf7
+PIEIFR12_ADDR           .set    0x000cf9
+PIECTRL_ADDR            .set    0x000ce0
+PIEACK_ADDR             .set    0x000ce1
+PIECTRL_ENPIE_BIT       .set    0x0
+PIECTRL_VECID_MASK      .set    0x00fe
+
+
+
+;# ======== PIE_init ========
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "", PIE_init$regs
+PIE_init .macro
+
+        .if (HWI_PIESELECT == 1)        ; if PIE is enabled, clear all PIEIFRx
+                                        ; registers. This is to insure that
+                                        ; restart is same as reset CPU option.
+                                        ; Also at the end we will clear the 
+                                        ; PIEACK bits so that no interrupt is 
+                                        ; blocked due to PIEACK bit is set.
+
+                movl xar0, #PIEIFR1_ADDR
+                and *xar0, #0x0000
+                movl xar4, #PIEIFR2_ADDR
+                and *xar4, #0x0000
+                movl xar0, #PIEIFR3_ADDR
+                and *xar0, #0x0000
+                movl xar4, #PIEIFR4_ADDR
+                and *xar4, #0x0000
+                movl xar0, #PIEIFR5_ADDR
+                and *xar0, #0x0000
+                movl xar4, #PIEIFR6_ADDR
+                and *xar4, #0x0000
+                movl xar0, #PIEIFR7_ADDR
+                and *xar0, #0x0000
+                movl xar4, #PIEIFR8_ADDR
+                and *xar4, #0x0000
+                movl xar0, #PIEIFR9_ADDR
+                and *xar0, #0x0000
+                movl xar4, #PIEIFR10_ADDR
+                and *xar4, #0x0000
+                movl xar0, #PIEIFR11_ADDR
+                and *xar0, #0x0000
+                movl xar4, #PIEIFR12_ADDR
+                and *xar4, #0x0000
+                movl xar4, #PIEACK_ADDR
+                or  *xar4, #0x0FFF
+
+        .endif
+   .endm
+
+
+;# ======== PIE_end ========
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "", PIE_end$regs
+PIE_end .macro
+        .endm
+
+;# ======== PIE_startup ========
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "", PIE_startup$regs
+PIE_startup .macro
+        .endm
+
+
+;# ======== PIE_config ========
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+    .asg    "", PIE_config$regs
+PIE_config .macro
+        .endm
+
+;# ======== PIE_Obj ========
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+
+
+    .asg    ":HWI_Obj$regs:", PIE_Obj$regs
+
+PIE_Obj .macro  cflag, name, id, fxn, monitor, addr, type, operation, client, dispatcher, arg, iermask
+
+        .if (HWI_PIESELECT == 1)
+
+
+        HWI_Obj  :cflag:, :name:, :id:, :fxn:, :monitor:, :addr:, :type:, :operation:, :client:, :dispatcher:, :arg:, :iermask:
+        
+        .else
+:name: .set :id:
+        .endif
+   .endm
+
+   .endif 

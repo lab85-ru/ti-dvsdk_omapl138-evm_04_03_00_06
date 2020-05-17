@@ -1,0 +1,9 @@
+Package: ti-biospsp-src
+Version: 01_30_01-r2
+Description: Patched sources for ti-biospsp
+Section: devel
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI BSD
+Architecture: all
+Source: ftp://ftp.india.ti.com/PSP/Releases/ODC/Freon_BIOS_PSP/REL.BIOSPSP.01.30.01.GA/BIOSPSP_01_30_01.tar.gz;name=biospsptarball

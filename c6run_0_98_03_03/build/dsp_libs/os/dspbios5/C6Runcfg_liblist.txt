@@ -1,0 +1,6 @@
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/dspbios_5_41_03_17/packages/ti/bios/lib/lnknone.a674
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/dspbios_5_41_03_17/packages/ti/bios/lib/log8.a674
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/dspbios_5_41_03_17/packages/ti/bios/lib/drivers.a674
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/dspbios_5_41_03_17/packages/ti/bios/lib/sioboth.a674
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/dspbios_5_41_03_17/packages/ti/bios/lib/bios6748.a674
+/opt/ti-dvsdk_omapl138-evm_04_03_00_06/dspbios_5_41_03_17/packages/ti/bios/lib/bios.a674

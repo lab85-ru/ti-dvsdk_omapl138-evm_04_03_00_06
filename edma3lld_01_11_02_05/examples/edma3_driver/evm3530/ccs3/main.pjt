@@ -1,0 +1,82 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Debug"
+Config="iDebug"
+Config="iRelease"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\common.c"
+Source="..\..\src\dma_chain_test.c"
+Source="..\..\src\dma_link_test.c"
+Source="..\..\src\dma_misc_test.c"
+Source="..\..\src\dma_ping_pong_test.c"
+Source="..\..\src\dma_poll_test.c"
+Source="..\..\src\dma_test.c"
+Source="..\..\src\main.c"
+Source="..\..\src\qdma_link_test.c"
+Source="..\..\src\qdma_test.c"
+Source="main.tcf"
+Source="main.cmd"
+Source="ping_pong.cmd"
+
+[Generated Files]
+Source="maincfg.s62"
+Source="maincfg_c.c"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\packages\" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "iDebug"]
+Options=-g -pdr -fr"$(Proj_dir)\iDebug" -i"$(Proj_dir)\..\..\..\..\packages\" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "iRelease"]
+Options=-pdr -o2 -fr"$(Proj_dir)\iRelease" -i"$(Proj_dir)\..\..\..\..\packages\" -d"_RELEASE" -mv6400+
+
+["Compiler" Settings: "Release"]
+Options=-pdr -o2 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\packages\" -d"_RELEASE" -mv6400+
+
+["DspBiosBuilder" Settings: "Debug"]
+Options=-Dconfig.importPath="%BIOS_INSTALL_DIR%/packages/ti/bios/examples/common;"
+
+["DspBiosBuilder" Settings: "iDebug"]
+Options=-Dconfig.importPath="%BIOS_INSTALL_DIR%/packages/ti/bios/examples/common;"
+
+["DspBiosBuilder" Settings: "iRelease"]
+Options=-Dconfig.importPath="%BIOS_INSTALL_DIR%/packages/ti/bios/examples/common;"
+
+["DspBiosBuilder" Settings: "Release"]
+Options=-Dconfig.importPath="%BIOS_INSTALL_DIR%/packages/ti/bios/examples/common;"
+
+["Linker" Settings: "Debug"]
+Options=-c -m".\Debug\main.map" -o".\Debug\main.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\rtdx\lib\c6000" -i"$(Proj_dir)\..\..\..\..\packages\ti\sdo\edma3\drv\lib\Debug" -i"$(Proj_dir)\..\..\..\..\packages\ti\sdo\edma3\drv\sample\lib\omap35xx\Debug" -i"$(Proj_dir)\..\..\..\..\packages\ti\sdo\edma3\rm\lib\omap35xx\Debug" -l"edma3_drv_bios.lib" -l"edma3_drv_bios_sample.lib" -l"edma3_rm_bios.lib"
+
+["Linker" Settings: "iDebug"]
+Options=-c -m".\iDebug\main.map" -o".\iDebug\main.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\rtdx\lib\c6000" -i"$(Proj_dir)\..\..\..\..\packages\ti\sdo\edma3\drv\lib\Debug" -i"$(Proj_dir)\..\..\..\..\packages\ti\sdo\edma3\drv\sample\lib\omap35xx\Debug" -i"$(Proj_dir)\..\..\..\..\packages\ti\sdo\edma3\rm\lib\omap35xx\Debug" -l"edma3_drv_bios_i.lib" -l"edma3_drv_bios_sample_i.lib" -l"edma3_rm_bios_i.lib" -l"log8.a64P"
+
+["Linker" Settings: "iRelease"]
+Options=-c -m".\iRelease\main.map" -o".\iRelease\main.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\rtdx\lib\c6000" -i"$(Proj_dir)\..\..\..\..\packages\ti\sdo\edma3\drv\lib\Release" -i"$(Proj_dir)\..\..\..\..\packages\ti\sdo\edma3\drv\sample\lib\omap35xx\Release" -i"$(Proj_dir)\..\..\..\..\packages\ti\sdo\edma3\rm\lib\omap35xx\Release" -l"edma3_drv_bios_i.lib" -l"edma3_drv_bios_sample_i.lib" -l"edma3_rm_bios_i.lib" -l"log8.a64P"
+
+["Linker" Settings: "Release"]
+Options=-c -m".\Release\main.map" -o".\Release\main.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\rtdx\lib\c6000" -i"$(Proj_dir)\..\..\..\..\packages\ti\sdo\edma3\drv\lib\Release" -i"$(Proj_dir)\..\..\..\..\packages\ti\sdo\edma3\drv\sample\lib\omap35xx\Release" -i"$(Proj_dir)\..\..\..\..\packages\ti\sdo\edma3\rm\lib\omap35xx\Release" -l"edma3_drv_bios.lib" -l"edma3_drv_bios_sample.lib" -l"edma3_rm_bios.lib"
+
+["ping_pong.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["ping_pong.cmd" Settings: "iDebug"]
+LinkOrder=1
+
+["ping_pong.cmd" Settings: "iRelease"]
+LinkOrder=1
+
+["ping_pong.cmd" Settings: "Release"]
+LinkOrder=1
+

@@ -1,0 +1,563 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD></HEAD><BODY>
+<OBJECT type="text/site properties">
+<param name="FrameName" value="right">
+</OBJECT>
+<UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#86ce51bcde596db8686df5151d1e36f4"><param name="Name" value="A_B_CNT"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#6b793fb789c2e62244588c1de455d5c3"><param name="Name" value="aCnt"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html#g68626326af217e390169428e10850a48"><param name="Name" value="ARG1"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html#gd70afc6e024c7819e366741a7a666a38"><param name="Name" value="ARG2"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html#g518b05a235241dd1d0dbc30e345c715a"><param name="Name" value="ARG3"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#c79c170f0c84f077084772c06334e72c"><param name="Name" value="avlblDmaChannels"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#bca40d62bbca7c0e31a8945e7a61f2f2"><param name="Name" value="avlblPaRAMSets"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#b1377abba4e39bb4c32f69898be3ab1d"><param name="Name" value="avlblQdmaChannels"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#a25e136d2bae2f3a8c159bf6aa38e84e"><param name="Name" value="avlblTccs"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#c7a839fc4ec88ef71de0298ae9d0f5c0"><param name="Name" value="bCnt"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#e7a0840fb53ccfd2ae35e943390bf9f2"><param name="Name" value="bCntReload"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__TccCallbackParams.html#9834742e3ec7ea2b7ec1064055417cab"><param name="Name" value="cbData"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#9154b7f04bfe4b3f3d1071da8ad8b483"><param name="Name" value="ccError"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#a3ef14c588c533a40427f219242e7f2a"><param name="Name" value="CCNT"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#88d49983095c65ad1787cc02d56daf27"><param name="Name" value="cCnt"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html"><param name="Name" value="Completion status"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg6552b0f8faaf17b884686da3bdcb955f6cf71fce76ce1cce31e7bca576fde04d"><param name="Name" value="EDMA3_RM_E_CC_DMA_EVT_MISS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg6552b0f8faaf17b884686da3bdcb955f9cbbf1da9c1b57d04438bc64d69f64e8"><param name="Name" value="EDMA3_RM_E_CC_QDMA_EVT_MISS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg16a012f757d48bd975b8ea0c971be3ab67c32e3e11c96cc049c518a59f032a70"><param name="Name" value="EDMA3_RM_E_CC_QUE_THRES_EXCEED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg16a012f757d48bd975b8ea0c971be3ab15eeafe3ddc875b7571a98e9c884222d"><param name="Name" value="EDMA3_RM_E_CC_TCC"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg16a012f757d48bd975b8ea0c971be3ab7774e7eed3ad708e68c7ab8b2454abbf"><param name="Name" value="EDMA3_RM_E_TC_INVALID_ADDR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg16a012f757d48bd975b8ea0c971be3ab9952222420c3a56606ba380edbaaf9e9"><param name="Name" value="EDMA3_RM_E_TC_MEM_LOCATION_READ_ERROR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg16a012f757d48bd975b8ea0c971be3ab56ede56517c9fa52d205b2f65750bdfc"><param name="Name" value="EDMA3_RM_E_TC_MEM_LOCATION_WRITE_ERROR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg16a012f757d48bd975b8ea0c971be3ab1ebe8bff6b178fb7f7b5f1b540eccf93"><param name="Name" value="EDMA3_RM_E_TC_TR_ERROR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg6552b0f8faaf17b884686da3bdcb955f5622a3db75c641b1ae3ea335978b4520"><param name="Name" value="EDMA3_RM_XFER_COMPLETE"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#476c3a53fd360b0c823c4432ef3da665"><param name="Name" value="destAddr"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#20e706a171712ea04b3f73cfaaa9b388"><param name="Name" value="destBIdx"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#14e3f593a8db50dd39fc5379a7fa2b7a"><param name="Name" value="destCIdx"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#c75808b1b49e327e540620ff08eb23d7"><param name="Name" value="dmaChannelHwEvtMap"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#fa7ba95cc73b21f640888aab87a66533"><param name="Name" value="dmaChannelPaRAMMap"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#b06c1d88f0efb9c82c963daf8d7ea684"><param name="Name" value="dmaChannelTccMap"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#51b46695b8424bfe97fa1f23106c7161"><param name="Name" value="dmaChPaRAMMapExists"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#962a4fded1f7b63f8cc9150c924b97f5"><param name="Name" value="DST"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html#g7eb0d48c8977841b5d9baa9a88ec1dcc"><param name="Name" value="DVTEvent_Log"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html"><param name="Name" value="EDMA3 Resources Management"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4fc23c4dcf4eed6dc198407fcee1aad625"><param name="Name" value="EDMA3_RM_CC_PHY_ADDR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598336383be93339425d5aed5ea8f4f0f424"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_0"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983c4bcf908f99dd4a3405694b5f7d32cd6"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983940fd8b1dadd049651ec55dee523bc76"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_10"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598389e615b09da9622a28b93c852df5ff73"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_11"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983bf3c0aa627d88cb7f6b6bc49b1f6af2b"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_12"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983fc4a86a5abdc0daac2523c0ac5ff3d81"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_13"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59837eae9f6b88c1d820de33e947fecabc6d"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_14"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983a35a9951f83268c78506b6539b25ab53"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_15"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598361d48d509e4103c06badc889edef347c"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_16"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983d63919826214431cb2bdc5362a3e4c9b"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_17"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598319c2c9195e86f93bb8257a62d6c57aab"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_18"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983d93d0f638772470b319fc756ac231f20"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_19"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983707a8c6c78f5b139cf91e5de82960d56"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598308682839f8c9fd5e096481660db3022e"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_20"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983d61c0666de7cacf0b7adc2edae48bfe9"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_21"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983d79a7a55181e36791c40e9f949337632"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_22"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983dba00c2fdee55b9daa7561a2db798947"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_23"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59839288ea07fb3dd39e08c4d787eba4425e"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_24"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598302c7a9ea32aa72d702181413c82d0f5f"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_25"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598360e9f7f2ee5e84046c9b4ed04348f1ed"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_26"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59833aab3e6c872e5cffc64d5c7ab7506106"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_27"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59830eb37ca83f31fc53739ad6b9a62ef486"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_28"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59834910e36da2653d3e39f5fb731512d7c9"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_29"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59833ee1fd2d9efe34035c2325d40a6c88d2"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59837a6eee183c0d2d6b07dc3431baf3a7b2"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_30"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983458f13d20b7079c9a6690a7a56726b81"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_31"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983bbd7ce1b5cc1476dfcf2ac29535ce2a6"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_32"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598354a3f186294089998e10d35c78142214"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_33"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983258ef2e36913df1ac176ad240d2091f1"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_34"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598345a4c89288567bb72f805d3cac984c81"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_35"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983f2fbb953ea5c004259e199df0e78b814"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_36"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598373cf6088d4f039a6ac4e0b0aa1091725"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_37"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59838ea8aacf961b9aa74ae4f359171a7f07"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_38"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59838e31f766b1f035301056fcfcb0f9900d"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_39"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983a902d93f35dfadeff02c88d4602e90d8"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_4"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59839931f0b931e163f8aa548532ad4a8a92"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_40"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59831279c7cdc29c44d941fcb09afdf50c41"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_41"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983341758d0920b983d7a7f726e811c259a"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_42"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59837671680d546db8b296813dec006650b2"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_43"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983ecdbd9734379a1567737bad475811500"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_44"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59832309b832c17eaac0e041fb54ac9be64f"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_45"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983bcbda367132da2ca7ff0bf826ff41a86"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_46"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59836d97432e612a4c8b61d98adac669530b"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_47"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983e5710ce16159d8c056fe9a0b1453fcd0"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_48"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598337bac118eb47fb9cb0e6e3127417e6d5"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_49"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983b1aaab278b7ff001e6c0208253218583"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_5"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983cd3ebb81b605668d21f7122fc561f053"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_50"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983f89b055da2d0e76054db9a1bbbfb6c6d"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_51"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59836698aabf676fa24a1e206fe764684737"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_52"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59833302bef196d81f75ed3ae695b96b8c46"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_53"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983570ea28f7a9c793837b14efe8082411c"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_54"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983a2c27c123a44f395b294bb892fbac571"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_55"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983ed74bf8aec01ec615bb9e57702d7aa69"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_56"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983e24ae8a1db88427283550774c38e8955"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_57"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983cfd16b307370a799a1a9d6e03da4aaf2"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_58"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983a3cfc4353c4e6a4f748eeced40aa65e4"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_59"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598395c8501532da8df12256542c4c5eaa9d"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_6"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983050e2ae137f83611b2ab9cd8e8edff2f"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_60"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983ac2979ff5bb64da0eb116a352b55a62e"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_61"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59835aadeed141991d841e66fc8131cb1757"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_62"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983767291d80903f8e045ae8a09623d8b1c"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_63"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983b9f2b16098a1d2a640163855ca20561a"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_7"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983863bc4b0d87e6f88c913a55362c4c0fe"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_8"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598389ba7f3e0f5779fb5aeb44d8762a2786"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_9"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg009c5aa71d396e2d6b84426709a8da7e499e21c8201b7cde74b51ae9d05bac46"><param name="Name" value="EDMA3_RM_IOCTL_GET_GBL_REG_MODIFY_OPTION"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg009c5aa71d396e2d6b84426709a8da7ee030b74d933852aeec16cce9fa6f2a93"><param name="Name" value="EDMA3_RM_IOCTL_GET_PARAM_CLEAR_OPTION"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg009c5aa71d396e2d6b84426709a8da7e746e145f594c91c85f7e85baf68c8adb"><param name="Name" value="EDMA3_RM_IOCTL_SET_GBL_REG_MODIFY_OPTION"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg009c5aa71d396e2d6b84426709a8da7e7816690debb0fa075bd90ceea45bb14f"><param name="Name" value="EDMA3_RM_IOCTL_SET_PARAM_CLEAR_OPTION"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c4ec46b54b0ada6e466bdcc62b9ae28f2c"><param name="Name" value="EDMA3_RM_QDMA_TRIG_ACNT_BCNT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c4be3e5b6686f373cdf1979f11ee808824"><param name="Name" value="EDMA3_RM_QDMA_TRIG_CCNT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c44182acec4e23b71fb8526ecbd154aa16"><param name="Name" value="EDMA3_RM_QDMA_TRIG_DEFAULT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c431db4f8d0eb86cf4dcb2f682ad03de22"><param name="Name" value="EDMA3_RM_QDMA_TRIG_DST"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c41e57b62e9a39360332668725251e7562"><param name="Name" value="EDMA3_RM_QDMA_TRIG_LINK_BCNTRLD"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c404d3b9e93a0257fe8273ab578b661a5c"><param name="Name" value="EDMA3_RM_QDMA_TRIG_OPT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c44bc02851c4946acb38f2349c784b73ce"><param name="Name" value="EDMA3_RM_QDMA_TRIG_SRC"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c420cbe086b6dca356864ebf6dc623004d"><param name="Name" value="EDMA3_RM_QDMA_TRIG_SRC_DST_BIDX"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c4e320fffecb3cba6c6972b2d8116a60f1"><param name="Name" value="EDMA3_RM_QDMA_TRIG_SRC_DST_CIDX"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4f30216a365bc514ad05f04dd22744ade1"><param name="Name" value="EDMA3_RM_TC0_PHY_ADDR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4fd1e7745c273ef1cf2ced06118ee1f14a"><param name="Name" value="EDMA3_RM_TC1_PHY_ADDR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4f3073c53672cfdcaca3de79eb6cbd473f"><param name="Name" value="EDMA3_RM_TC2_PHY_ADDR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4f217286c7a9d29f96807359576fb78a57"><param name="Name" value="EDMA3_RM_TC3_PHY_ADDR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4f6f5594aee5fcfd2f27f900a7dba66269"><param name="Name" value="EDMA3_RM_TC4_PHY_ADDR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4fdc7abd04c57e1f71e2c97f8019e5d2b9"><param name="Name" value="EDMA3_RM_TC5_PHY_ADDR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4f49b1af0a19b3b71bc7ca6ae5637ffdea"><param name="Name" value="EDMA3_RM_TC6_PHY_ADDR"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4ffc8a8af9083ee0a6d4b6c8dc11aae187"><param name="Name" value="EDMA3_RM_TC7_PHY_ADDR"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html"><param name="Name" value="EDMA3"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html#g68626326af217e390169428e10850a48"><param name="Name" value="ARG1"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html#gd70afc6e024c7819e366741a7a666a38"><param name="Name" value="ARG2"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html#g518b05a235241dd1d0dbc30e345c715a"><param name="Name" value="ARG3"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html#g7eb0d48c8977841b5d9baa9a88ec1dcc"><param name="Name" value="DVTEvent_Log"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html#g65b32441f73954c4b3c7ead14ec4342f"><param name="Name" value="EDMA3_DVT_DESC"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html#g484fce4a0be2e988ac559bfae0e94e90"><param name="Name" value="EDMA3_LOG_EVENT"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html#g65b32441f73954c4b3c7ead14ec4342f"><param name="Name" value="EDMA3_DVT_DESC"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__EDMA3.html#g484fce4a0be2e988ac559bfae0e94e90"><param name="Name" value="EDMA3_LOG_EVENT"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g91a8cc9b909db61a200572ace81a22f3"><param name="Name" value="EDMA3_RM_allocContiguousResource"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g4ac58bd9d22200f51216887576f77d32"><param name="Name" value="EDMA3_RM_allocLogicalChannel"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ga8d149c517bb15b5539f22f497327775"><param name="Name" value="EDMA3_RM_allocResource"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4fc23c4dcf4eed6dc198407fcee1aad625"><param name="Name" value="EDMA3_RM_CC_PHY_ADDR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g2bd465038593def3a5c561d7c561a1fd"><param name="Name" value="EDMA3_RM_CH_NO_PARAM_MAP"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gaf9c51774af350a6e60dac73a55963ed"><param name="Name" value="EDMA3_RM_CH_NO_TCC_MAP"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ChBoundResources.html"><param name="Name" value="EDMA3_RM_ChBoundResources"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ChBoundResources.html#be7b47232db77c8ed3ce9487ca8f658f"><param name="Name" value="paRAMId"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ChBoundResources.html#c312830c57f5f44cc9ce7eb86513ae7d"><param name="Name" value="tcc"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g0ebe052bd9f612942908236bc96c54b4"><param name="Name" value="EDMA3_RM_checkAndClearTcc"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html#g92776ae6a8795fe8ffce672e8a04e409"><param name="Name" value="EDMA3_RM_close"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgrIntObjMaint.html#gg12f47d9e744ff042541b8f384331e21363316a48e3824e29716bbf1473f7f198"><param name="Name" value="EDMA3_RM_CLOSED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html#gdc4459024208af43ca53740f5f0e24f2"><param name="Name" value="EDMA3_RM_create"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgrIntObjMaint.html#gg12f47d9e744ff042541b8f384331e2138430ad1934474c9cc45c05ef7397a064"><param name="Name" value="EDMA3_RM_CREATED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html#g91cc5101fd09c700b6d2a2e72baf88fe"><param name="Name" value="EDMA3_RM_delete"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgrIntObjMaint.html#gg12f47d9e744ff042541b8f384331e213f9ecffaa0b927c32a79ccf09d13249ba"><param name="Name" value="EDMA3_RM_DELETED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html#g24993f4530d360b4a11fe086b240ae5d"><param name="Name" value="EDMA3_RM_DMA_CH_MAX_VAL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g97cdc5ef936a13a0511ded85385cdfc6"><param name="Name" value="EDMA3_RM_DMA_CHANNEL_ANY"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#gda9f7091b0b9d2ef91485e72e88eb27b"><param name="Name" value="EDMA3_RM_E_ALL_RES_NOT_AVAILABLE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#gb014f5a62cb4f050873d3836cc189ca7"><param name="Name" value="EDMA3_RM_E_BASE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#ga97036c99c34f9837e7272f8c50e6b21"><param name="Name" value="EDMA3_RM_E_CALLBACK_ALREADY_REGISTERED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg6552b0f8faaf17b884686da3bdcb955f6cf71fce76ce1cce31e7bca576fde04d"><param name="Name" value="EDMA3_RM_E_CC_DMA_EVT_MISS"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg6552b0f8faaf17b884686da3bdcb955f9cbbf1da9c1b57d04438bc64d69f64e8"><param name="Name" value="EDMA3_RM_E_CC_QDMA_EVT_MISS"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg16a012f757d48bd975b8ea0c971be3ab67c32e3e11c96cc049c518a59f032a70"><param name="Name" value="EDMA3_RM_E_CC_QUE_THRES_EXCEED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg16a012f757d48bd975b8ea0c971be3ab15eeafe3ddc875b7571a98e9c884222d"><param name="Name" value="EDMA3_RM_E_CC_TCC"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g6e01bd5ae80120e94b9624b03bd4f354"><param name="Name" value="EDMA3_RM_E_FEATURE_UNSUPPORTED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g515ee7881e4bd19c1af01a5518bb5608"><param name="Name" value="EDMA3_RM_E_INVALID_PARAM"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#ge0e83d8e8229a31316f77285554c67a8"><param name="Name" value="EDMA3_RM_E_INVALID_STATE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g4b2559090dd93344d121c02bc0dbd369"><param name="Name" value="EDMA3_RM_E_MAX_RM_INST_OPENED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#gaf4a8d35e9b2acedc8962b56e02a776f"><param name="Name" value="EDMA3_RM_E_OBJ_NOT_CLOSED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g9b69fe3203335237b365833e70d49ff8"><param name="Name" value="EDMA3_RM_E_OBJ_NOT_DELETED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g0127b16958e3caa025b1fa678251349a"><param name="Name" value="EDMA3_RM_E_OBJ_NOT_OPENED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#gbfb8e410466d8c4373aefeddc9f81dc2"><param name="Name" value="EDMA3_RM_E_RES_ALREADY_FREE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g5e0b75a258b42f40a54c1827d6dbdd13"><param name="Name" value="EDMA3_RM_E_RES_NOT_ALLOCATED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#gc6c5d09c61d9b2549269576e6d31e41a"><param name="Name" value="EDMA3_RM_E_RES_NOT_OWNED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g7c4aba313c475ed818203053007d8e74"><param name="Name" value="EDMA3_RM_E_RM_MASTER_ALREADY_EXISTS"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g610aeab3e667a0edbaf9a673c6253b5b"><param name="Name" value="EDMA3_RM_E_SEMAPHORE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g3b062119a0e29e3c9ba65c5e6ffb0629"><param name="Name" value="EDMA3_RM_E_SPECIFIED_RES_NOT_AVAILABLE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg16a012f757d48bd975b8ea0c971be3ab7774e7eed3ad708e68c7ab8b2454abbf"><param name="Name" value="EDMA3_RM_E_TC_INVALID_ADDR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg16a012f757d48bd975b8ea0c971be3ab9952222420c3a56606ba380edbaaf9e9"><param name="Name" value="EDMA3_RM_E_TC_MEM_LOCATION_READ_ERROR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg16a012f757d48bd975b8ea0c971be3ab56ede56517c9fa52d205b2f65750bdfc"><param name="Name" value="EDMA3_RM_E_TC_MEM_LOCATION_WRITE_ERROR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg16a012f757d48bd975b8ea0c971be3ab1ebe8bff6b178fb7f7b5f1b540eccf93"><param name="Name" value="EDMA3_RM_E_TC_TR_ERROR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html#g73da34ea04a5d4c536919febc341ff2a"><param name="Name" value="EDMA3_RM_EventQueue"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g787f3fe9f08e7c0105e56ad1171cabca"><param name="Name" value="EDMA3_RM_freeContiguousResource"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g5edfca892da0ae3320f9bf9df4bfd52f"><param name="Name" value="EDMA3_RM_freeLogicalChannel"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g2ba87def618a4bdd08b01f8e89ef1e9d"><param name="Name" value="EDMA3_RM_freeResource"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html"><param name="Name" value="EDMA3_RM_GblConfigParams"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#9154b7f04bfe4b3f3d1071da8ad8b483"><param name="Name" value="ccError"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#c75808b1b49e327e540620ff08eb23d7"><param name="Name" value="dmaChannelHwEvtMap"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#fa7ba95cc73b21f640888aab87a66533"><param name="Name" value="dmaChannelPaRAMMap"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#b06c1d88f0efb9c82c963daf8d7ea684"><param name="Name" value="dmaChannelTccMap"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#51b46695b8424bfe97fa1f23106c7161"><param name="Name" value="dmaChPaRAMMapExists"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#d4e9caa9307edbc6832ebe662de1b6f6"><param name="Name" value="evtQPri"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#e633ff54dda219dafc5d3b609a28a202"><param name="Name" value="evtQueueWaterMarkLvl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#c37e1efa702856b32e621560d4ddde2d"><param name="Name" value="globalRegs"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#4f142ccb3c6a0e2ec3146439f4b38443"><param name="Name" value="memProtectionExists"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#146c49c83ca4e65a3145d9b15d73571d"><param name="Name" value="numDmaChannels"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#152b2623285f14f6013b130fbfdf2ee1"><param name="Name" value="numEvtQueue"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#9f66e1878cc69101518f94c5f95ec393"><param name="Name" value="numPaRAMSets"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#49bb3d33efc585d75c8c18cf26dbf169"><param name="Name" value="numQdmaChannels"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#f96ad7a22abe4152c2dbec6ddd793ffb"><param name="Name" value="numRegions"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#de09c3f169c87739ab5b5d00101a59ed"><param name="Name" value="numTccs"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#2469da2ae6f4c3895c1edf6333590b1e"><param name="Name" value="numTcs"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#dd171129e6252b02ba54d5e79cb7ecea"><param name="Name" value="tcDefaultBurstSize"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#72c01f8e87453fc8495371cd44b2dcc4"><param name="Name" value="tcError"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#167e1ab12a947d4446ba56f8129ed91d"><param name="Name" value="tcRegs"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#f902e3c9d3d6d54fdc472bf79297c947"><param name="Name" value="xferCompleteInt"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#g6768147ae320fd3951df6762133d2ede"><param name="Name" value="EDMA3_RM_GblErrCallback"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblErrCallbackParams.html"><param name="Name" value="EDMA3_RM_GblErrCallbackParams"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblErrCallbackParams.html#7e71d5910d29c6a69576c3f860f6b272"><param name="Name" value="gblerrCb"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblErrCallbackParams.html#f2a780928d2b6918ec49426a8ea60144"><param name="Name" value="gblerrData"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gfeb4ec75d54a14cd76f4ef9bbfc7c182"><param name="Name" value="EDMA3_RM_getBaseAddress"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gea15b18d6ef5224fe0e4a1beadc6d1ee"><param name="Name" value="EDMA3_RM_getCCRegister"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gbe844cd7d2e2c907ff3ffd0dabd4efaa"><param name="Name" value="EDMA3_RM_getGblConfigParams"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gc3035b42aa8cbb53603cbcdc6e6ca5b8"><param name="Name" value="EDMA3_RM_getInstanceInitCfg"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g3ba432ad2e794dcce6f892e839a1c4fd"><param name="Name" value="EDMA3_RM_getPaRAM"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gc1155de8f396305d8e23da2bb81cc731"><param name="Name" value="EDMA3_RM_getPaRAMPhyAddr"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598336383be93339425d5aed5ea8f4f0f424"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_0"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983940fd8b1dadd049651ec55dee523bc76"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_10"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598389e615b09da9622a28b93c852df5ff73"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_11"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983bf3c0aa627d88cb7f6b6bc49b1f6af2b"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_12"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983fc4a86a5abdc0daac2523c0ac5ff3d81"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_13"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59837eae9f6b88c1d820de33e947fecabc6d"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_14"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983a35a9951f83268c78506b6539b25ab53"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_15"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598361d48d509e4103c06badc889edef347c"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_16"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983d63919826214431cb2bdc5362a3e4c9b"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_17"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598319c2c9195e86f93bb8257a62d6c57aab"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_18"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983d93d0f638772470b319fc756ac231f20"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_19"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983c4bcf908f99dd4a3405694b5f7d32cd6"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_1"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598308682839f8c9fd5e096481660db3022e"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_20"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983d61c0666de7cacf0b7adc2edae48bfe9"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_21"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983d79a7a55181e36791c40e9f949337632"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_22"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983dba00c2fdee55b9daa7561a2db798947"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_23"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59839288ea07fb3dd39e08c4d787eba4425e"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_24"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598302c7a9ea32aa72d702181413c82d0f5f"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_25"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598360e9f7f2ee5e84046c9b4ed04348f1ed"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_26"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59833aab3e6c872e5cffc64d5c7ab7506106"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_27"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59830eb37ca83f31fc53739ad6b9a62ef486"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_28"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59834910e36da2653d3e39f5fb731512d7c9"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_29"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983707a8c6c78f5b139cf91e5de82960d56"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_2"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59837a6eee183c0d2d6b07dc3431baf3a7b2"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_30"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983458f13d20b7079c9a6690a7a56726b81"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_31"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983bbd7ce1b5cc1476dfcf2ac29535ce2a6"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_32"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598354a3f186294089998e10d35c78142214"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_33"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983258ef2e36913df1ac176ad240d2091f1"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_34"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598345a4c89288567bb72f805d3cac984c81"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_35"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983f2fbb953ea5c004259e199df0e78b814"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_36"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598373cf6088d4f039a6ac4e0b0aa1091725"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_37"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59838ea8aacf961b9aa74ae4f359171a7f07"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_38"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59838e31f766b1f035301056fcfcb0f9900d"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_39"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59833ee1fd2d9efe34035c2325d40a6c88d2"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_3"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59839931f0b931e163f8aa548532ad4a8a92"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_40"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59831279c7cdc29c44d941fcb09afdf50c41"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_41"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983341758d0920b983d7a7f726e811c259a"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_42"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59837671680d546db8b296813dec006650b2"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_43"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983ecdbd9734379a1567737bad475811500"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_44"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59832309b832c17eaac0e041fb54ac9be64f"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_45"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983bcbda367132da2ca7ff0bf826ff41a86"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_46"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59836d97432e612a4c8b61d98adac669530b"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_47"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983e5710ce16159d8c056fe9a0b1453fcd0"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_48"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598337bac118eb47fb9cb0e6e3127417e6d5"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_49"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983a902d93f35dfadeff02c88d4602e90d8"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_4"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983cd3ebb81b605668d21f7122fc561f053"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_50"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983f89b055da2d0e76054db9a1bbbfb6c6d"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_51"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59836698aabf676fa24a1e206fe764684737"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_52"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59833302bef196d81f75ed3ae695b96b8c46"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_53"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983570ea28f7a9c793837b14efe8082411c"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_54"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983a2c27c123a44f395b294bb892fbac571"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_55"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983ed74bf8aec01ec615bb9e57702d7aa69"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_56"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983e24ae8a1db88427283550774c38e8955"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_57"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983cfd16b307370a799a1a9d6e03da4aaf2"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_58"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983a3cfc4353c4e6a4f748eeced40aa65e4"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_59"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983b1aaab278b7ff001e6c0208253218583"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_5"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983050e2ae137f83611b2ab9cd8e8edff2f"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_60"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983ac2979ff5bb64da0eb116a352b55a62e"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_61"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f59835aadeed141991d841e66fc8131cb1757"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_62"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983767291d80903f8e045ae8a09623d8b1c"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_63"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598395c8501532da8df12256542c4c5eaa9d"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_6"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983b9f2b16098a1d2a640163855ca20561a"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_7"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f5983863bc4b0d87e6f88c913a55362c4c0fe"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_8"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg3b0df3797d7f94e5f812aa1d732f598389ba7f3e0f5779fb5aeb44d8762a2786"><param name="Name" value="EDMA3_RM_HW_CHANNEL_EVENT_9"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html"><param name="Name" value="EDMA3_RM_Instance"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#c79c170f0c84f077084772c06334e72c"><param name="Name" value="avlblDmaChannels"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#bca40d62bbca7c0e31a8945e7a61f2f2"><param name="Name" value="avlblPaRAMSets"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#b1377abba4e39bb4c32f69898be3ab1d"><param name="Name" value="avlblQdmaChannels"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#a25e136d2bae2f3a8c159bf6aa38e84e"><param name="Name" value="avlblTccs"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#9ea516313f4cbf1203ed945b75120770"><param name="Name" value="initParam"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#750feffdd410001a563b312cd6d1442c"><param name="Name" value="paramInitRequired"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#c8c4e0d16fe56d1465b4860f11060733"><param name="Name" value="pResMgrObjHandle"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#9994deccfdf8a63db677311aced1db79"><param name="Name" value="regModificationRequired"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#b3bc4cc87520c8156b0569600b9678e5"><param name="Name" value="shadowRegs"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html"><param name="Name" value="EDMA3_RM_InstanceInitConfig"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#fea6ae753bce07d64d92f6521bb489e5"><param name="Name" value="ownDmaChannels"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#195712f03e6c92f0a386dd036422f956"><param name="Name" value="ownPaRAMSets"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#836f8f25e8a2e01d6649034b7cc92d50"><param name="Name" value="ownQdmaChannels"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#38b3b42404f41e978c3b682ccf63fa8f"><param name="Name" value="ownTccs"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#6df76275220d03b4b42c9161b4d670ff"><param name="Name" value="resvdDmaChannels"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#b97d5476ee84765b1cb26216af673cfc"><param name="Name" value="resvdPaRAMSets"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#e7909518f9ba93b32c496193e797bf3b"><param name="Name" value="resvdQdmaChannels"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#7996562a8045cf6b7f33e40aa9b49313"><param name="Name" value="resvdTccs"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gf0e5b30b8e1d058499bcf088847484c5"><param name="Name" value="EDMA3_RM_Ioctl"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg009c5aa71d396e2d6b84426709a8da7e499e21c8201b7cde74b51ae9d05bac46"><param name="Name" value="EDMA3_RM_IOCTL_GET_GBL_REG_MODIFY_OPTION"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg009c5aa71d396e2d6b84426709a8da7ee030b74d933852aeec16cce9fa6f2a93"><param name="Name" value="EDMA3_RM_IOCTL_GET_PARAM_CLEAR_OPTION"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg009c5aa71d396e2d6b84426709a8da7e746e145f594c91c85f7e85baf68c8adb"><param name="Name" value="EDMA3_RM_IOCTL_SET_GBL_REG_MODIFY_OPTION"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg009c5aa71d396e2d6b84426709a8da7e7816690debb0fa075bd90ceea45bb14f"><param name="Name" value="EDMA3_RM_IOCTL_SET_PARAM_CLEAR_OPTION"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html#gf2cd795a543616ad8d9f4850c5d72ac2"><param name="Name" value="EDMA3_RM_LINK_CH_MAX_VAL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html#g45b446acc59ea6ca20286ffa236e04a7"><param name="Name" value="EDMA3_RM_LINK_CH_MIN_VAL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html#g2b3db9a8bf2349d5c5e1451b2ec79ddb"><param name="Name" value="EDMA3_RM_LOG_CH_MAX_VAL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gc921ebbbe2c23fb5b55d6822d8731b90"><param name="Name" value="EDMA3_RM_mapEdmaChannel"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g9ed44bdab3967bbad7d4edddadde819f"><param name="Name" value="EDMA3_RM_mapQdmaChannel"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__MiscParam.html"><param name="Name" value="EDMA3_RM_MiscParam"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__MiscParam.html#56ea473581e1d76b7497796d1e46d850"><param name="Name" value="isSlave"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__MiscParam.html#b66a1abe88183a9f57c85373010e5c75"><param name="Name" value="param"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Obj.html"><param name="Name" value="EDMA3_RM_Obj"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Obj.html#6bac11beb5c7f95204cac16455bb424c"><param name="Name" value="gblCfgParams"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Obj.html#13b4308a8ad6baf647b5c7adbe54702c"><param name="Name" value="numOpens"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Obj.html#e3c0a4a97c25259407c34e3582255198"><param name="Name" value="phyCtrllerInstId"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Obj.html#a262df0776f0a9b6163e8f64d91a0265"><param name="Name" value="state"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html#g06b18003d700ce3c227f70e422dd9897"><param name="Name" value="EDMA3_RM_open"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgrIntObjMaint.html#gg12f47d9e744ff042541b8f384331e213204be13ae2662478c7b424cb634020f4"><param name="Name" value="EDMA3_RM_OPENED"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html"><param name="Name" value="EDMA3_RM_Param"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html#bafa6f546c9a5a893885f161d96ebe61"><param name="Name" value="gblerrCbParams"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html#f8461561ef2a4b6f432c57394b89296a"><param name="Name" value="isMaster"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html#5722cd299dd4712cdb9f7cf7aec869b6"><param name="Name" value="regionId"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html#e0b670ea74b53074559f5ad4c5fe7366"><param name="Name" value="regionInitEnable"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html#b4b422aad358309280f16027423df238"><param name="Name" value="rmInstInitConfig"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html#5f6478d1cacf5b62e3039f37c82a4e78"><param name="Name" value="rmSemHandle"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ge69b6d16d4e673690ddf4208465b74b0"><param name="Name" value="EDMA3_RM_PARAM_ANY"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html"><param name="Name" value="EDMA3_RM_ParamentryRegs"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#86ce51bcde596db8686df5151d1e36f4"><param name="Name" value="A_B_CNT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#a3ef14c588c533a40427f219242e7f2a"><param name="Name" value="CCNT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#962a4fded1f7b63f8cc9150c924b97f5"><param name="Name" value="DST"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#4262be65b0dcae242b5e2dccd5b5b23f"><param name="Name" value="LINK_BCNTRLD"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#0cf7a755d7bae28725d5473f55e4b285"><param name="Name" value="OPT"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#5cdf48fe9dfa1bf57634707cb0844272"><param name="Name" value="SRC"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#fb5a2b7960d93156dbf7d5f1966b5b47"><param name="Name" value="SRC_DST_BIDX"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#c2f5d7cc117f6078c9857ebb630cad17"><param name="Name" value="SRC_DST_CIDX"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html"><param name="Name" value="EDMA3_RM_PaRAMRegs"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#6b793fb789c2e62244588c1de455d5c3"><param name="Name" value="aCnt"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#c7a839fc4ec88ef71de0298ae9d0f5c0"><param name="Name" value="bCnt"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#e7a0840fb53ccfd2ae35e943390bf9f2"><param name="Name" value="bCntReload"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#88d49983095c65ad1787cc02d56daf27"><param name="Name" value="cCnt"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#476c3a53fd360b0c823c4432ef3da665"><param name="Name" value="destAddr"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#20e706a171712ea04b3f73cfaaa9b388"><param name="Name" value="destBIdx"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#14e3f593a8db50dd39fc5379a7fa2b7a"><param name="Name" value="destCIdx"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#895743ea8620f21b5ddc2149d2a05c3b"><param name="Name" value="linkAddr"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#b3fbc10843edca5369164bb54f8f1311"><param name="Name" value="opt"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#88f22ecb531e50776a8d39efb07e1f03"><param name="Name" value="srcAddr"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#379c5a7e527a0df8f1a0f3f570370a4a"><param name="Name" value="srcBIdx"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#948163aaedd3fff182f8ba9de03b4091"><param name="Name" value="srcCIdx"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html#gfae3b6b39b38b3efb2a094aba6154c91"><param name="Name" value="EDMA3_RM_QDMA_CH_MAX_VAL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html#g0618595d31a9646bb5035c91daa1a09a"><param name="Name" value="EDMA3_RM_QDMA_CH_MIN_VAL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g3feac8298cdc0d35b02e4932e6a7d59f"><param name="Name" value="EDMA3_RM_QDMA_CHANNEL_ANY"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c4ec46b54b0ada6e466bdcc62b9ae28f2c"><param name="Name" value="EDMA3_RM_QDMA_TRIG_ACNT_BCNT"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c4be3e5b6686f373cdf1979f11ee808824"><param name="Name" value="EDMA3_RM_QDMA_TRIG_CCNT"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c44182acec4e23b71fb8526ecbd154aa16"><param name="Name" value="EDMA3_RM_QDMA_TRIG_DEFAULT"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c431db4f8d0eb86cf4dcb2f682ad03de22"><param name="Name" value="EDMA3_RM_QDMA_TRIG_DST"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c41e57b62e9a39360332668725251e7562"><param name="Name" value="EDMA3_RM_QDMA_TRIG_LINK_BCNTRLD"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c404d3b9e93a0257fe8273ab578b661a5c"><param name="Name" value="EDMA3_RM_QDMA_TRIG_OPT"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c44bc02851c4946acb38f2349c784b73ce"><param name="Name" value="EDMA3_RM_QDMA_TRIG_SRC"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c420cbe086b6dca356864ebf6dc623004d"><param name="Name" value="EDMA3_RM_QDMA_TRIG_SRC_DST_BIDX"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ggcabe6aeb4a0ce496671777e783cdb2c4e320fffecb3cba6c6972b2d8116a60f1"><param name="Name" value="EDMA3_RM_QDMA_TRIG_SRC_DST_CIDX"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html#g95ce8c6a9989cc4bbd29e0234e6ee5e4"><param name="Name" value="EDMA3_RM_RegionId"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntrMgrChannel.html#gd57281a3cabf45b1520007a1a78f6a53"><param name="Name" value="EDMA3_RM_registerTccCb"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResType.html#g2bc56ec70e329a97072891f90ed78bf9"><param name="Name" value="EDMA3_RM_RES_ANY"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResType.html#gg05b92650ee862481552b709fe0f4f90476969f54bf15dd78fc14ab2b95878a67"><param name="Name" value="EDMA3_RM_RES_DMA_CHANNEL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResType.html#gg05b92650ee862481552b709fe0f4f904eb1f89bd49855b2bf172f25d87861dbd"><param name="Name" value="EDMA3_RM_RES_PARAM_SET"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResType.html#gg05b92650ee862481552b709fe0f4f904ae2e7e5b11cdf3639b9dd136228398f6"><param name="Name" value="EDMA3_RM_RES_QDMA_CHANNEL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResType.html#gg05b92650ee862481552b709fe0f4f9044cc4cd8404e3c1f7ad691bbbb050230b"><param name="Name" value="EDMA3_RM_RES_TCC"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ResDesc.html"><param name="Name" value="EDMA3_RM_ResDesc"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ResDesc.html#8fffc8bd17e838ce866a225ffe14ce02"><param name="Name" value="resId"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ResDesc.html#3d13077eac87394e8c0721e6346c3716"><param name="Name" value="type"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g1c222a9feda9024cf4e28ba897b5c285"><param name="Name" value="EDMA3_RM_setCCRegister"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ge904366a2d8518b01bf36c4fe5e1596b"><param name="Name" value="EDMA3_RM_setPaRAM"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4f30216a365bc514ad05f04dd22744ade1"><param name="Name" value="EDMA3_RM_TC0_PHY_ADDR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4fd1e7745c273ef1cf2ced06118ee1f14a"><param name="Name" value="EDMA3_RM_TC1_PHY_ADDR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4f3073c53672cfdcaca3de79eb6cbd473f"><param name="Name" value="EDMA3_RM_TC2_PHY_ADDR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4f217286c7a9d29f96807359576fb78a57"><param name="Name" value="EDMA3_RM_TC3_PHY_ADDR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4f6f5594aee5fcfd2f27f900a7dba66269"><param name="Name" value="EDMA3_RM_TC4_PHY_ADDR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4fdc7abd04c57e1f71e2c97f8019e5d2b9"><param name="Name" value="EDMA3_RM_TC5_PHY_ADDR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4f49b1af0a19b3b71bc7ca6ae5637ffdea"><param name="Name" value="EDMA3_RM_TC6_PHY_ADDR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gg73a8a7c45f838fa372757dca388c8a4ffc8a8af9083ee0a6d4b6c8dc11aae187"><param name="Name" value="EDMA3_RM_TC7_PHY_ADDR"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gf7d4a0f69df53d72e3fcc12816aa600e"><param name="Name" value="EDMA3_RM_TCC_ANY"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntrMgrChannel.html#gadca81927be74261ef874009bf8e37d3"><param name="Name" value="EDMA3_RM_TccCallback"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__TccCallbackParams.html"><param name="Name" value="EDMA3_RM_TccCallbackParams"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__TccCallbackParams.html#9834742e3ec7ea2b7ec1064055417cab"><param name="Name" value="cbData"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__TccCallbackParams.html#b46111c7ca4b209d38383103bfd9a1e5"><param name="Name" value="tccCb"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntrMgrChannel.html#g34a841202d01ea2e2a35747aa873a984"><param name="Name" value="EDMA3_RM_unregisterTccCb"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gc9a6d0bd72ba4476c30b2898e407888e"><param name="Name" value="EDMA3_RM_waitAndClearTcc"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html#gg6552b0f8faaf17b884686da3bdcb955f5622a3db75c641b1ae3ea335978b4520"><param name="Name" value="EDMA3_RM_XFER_COMPLETE"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html"><param name="Name" value="Edma3ResMgr"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g91a8cc9b909db61a200572ace81a22f3"><param name="Name" value="EDMA3_RM_allocContiguousResource"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g4ac58bd9d22200f51216887576f77d32"><param name="Name" value="EDMA3_RM_allocLogicalChannel"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ga8d149c517bb15b5539f22f497327775"><param name="Name" value="EDMA3_RM_allocResource"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g2bd465038593def3a5c561d7c561a1fd"><param name="Name" value="EDMA3_RM_CH_NO_PARAM_MAP"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gaf9c51774af350a6e60dac73a55963ed"><param name="Name" value="EDMA3_RM_CH_NO_TCC_MAP"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g0ebe052bd9f612942908236bc96c54b4"><param name="Name" value="EDMA3_RM_checkAndClearTcc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g97cdc5ef936a13a0511ded85385cdfc6"><param name="Name" value="EDMA3_RM_DMA_CHANNEL_ANY"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g787f3fe9f08e7c0105e56ad1171cabca"><param name="Name" value="EDMA3_RM_freeContiguousResource"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g5edfca892da0ae3320f9bf9df4bfd52f"><param name="Name" value="EDMA3_RM_freeLogicalChannel"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g2ba87def618a4bdd08b01f8e89ef1e9d"><param name="Name" value="EDMA3_RM_freeResource"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gfeb4ec75d54a14cd76f4ef9bbfc7c182"><param name="Name" value="EDMA3_RM_getBaseAddress"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gea15b18d6ef5224fe0e4a1beadc6d1ee"><param name="Name" value="EDMA3_RM_getCCRegister"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gbe844cd7d2e2c907ff3ffd0dabd4efaa"><param name="Name" value="EDMA3_RM_getGblConfigParams"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gc3035b42aa8cbb53603cbcdc6e6ca5b8"><param name="Name" value="EDMA3_RM_getInstanceInitCfg"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g3ba432ad2e794dcce6f892e839a1c4fd"><param name="Name" value="EDMA3_RM_getPaRAM"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gc1155de8f396305d8e23da2bb81cc731"><param name="Name" value="EDMA3_RM_getPaRAMPhyAddr"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gf0e5b30b8e1d058499bcf088847484c5"><param name="Name" value="EDMA3_RM_Ioctl"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gc921ebbbe2c23fb5b55d6822d8731b90"><param name="Name" value="EDMA3_RM_mapEdmaChannel"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g9ed44bdab3967bbad7d4edddadde819f"><param name="Name" value="EDMA3_RM_mapQdmaChannel"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ge69b6d16d4e673690ddf4208465b74b0"><param name="Name" value="EDMA3_RM_PARAM_ANY"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g3feac8298cdc0d35b02e4932e6a7d59f"><param name="Name" value="EDMA3_RM_QDMA_CHANNEL_ANY"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#g1c222a9feda9024cf4e28ba897b5c285"><param name="Name" value="EDMA3_RM_setCCRegister"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#ge904366a2d8518b01bf36c4fe5e1596b"><param name="Name" value="EDMA3_RM_setPaRAM"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gf7d4a0f69df53d72e3fcc12816aa600e"><param name="Name" value="EDMA3_RM_TCC_ANY"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgr.html#gc9a6d0bd72ba4476c30b2898e407888e"><param name="Name" value="EDMA3_RM_waitAndClearTcc"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResType.html"><param name="Name" value="Edma3ResType"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html"><param name="Name" value="Edma3RMErrCode"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#gda9f7091b0b9d2ef91485e72e88eb27b"><param name="Name" value="EDMA3_RM_E_ALL_RES_NOT_AVAILABLE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#gb014f5a62cb4f050873d3836cc189ca7"><param name="Name" value="EDMA3_RM_E_BASE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#ga97036c99c34f9837e7272f8c50e6b21"><param name="Name" value="EDMA3_RM_E_CALLBACK_ALREADY_REGISTERED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g6e01bd5ae80120e94b9624b03bd4f354"><param name="Name" value="EDMA3_RM_E_FEATURE_UNSUPPORTED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g515ee7881e4bd19c1af01a5518bb5608"><param name="Name" value="EDMA3_RM_E_INVALID_PARAM"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#ge0e83d8e8229a31316f77285554c67a8"><param name="Name" value="EDMA3_RM_E_INVALID_STATE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g4b2559090dd93344d121c02bc0dbd369"><param name="Name" value="EDMA3_RM_E_MAX_RM_INST_OPENED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#gaf4a8d35e9b2acedc8962b56e02a776f"><param name="Name" value="EDMA3_RM_E_OBJ_NOT_CLOSED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g9b69fe3203335237b365833e70d49ff8"><param name="Name" value="EDMA3_RM_E_OBJ_NOT_DELETED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g0127b16958e3caa025b1fa678251349a"><param name="Name" value="EDMA3_RM_E_OBJ_NOT_OPENED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#gbfb8e410466d8c4373aefeddc9f81dc2"><param name="Name" value="EDMA3_RM_E_RES_ALREADY_FREE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g5e0b75a258b42f40a54c1827d6dbdd13"><param name="Name" value="EDMA3_RM_E_RES_NOT_ALLOCATED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#gc6c5d09c61d9b2549269576e6d31e41a"><param name="Name" value="EDMA3_RM_E_RES_NOT_OWNED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g7c4aba313c475ed818203053007d8e74"><param name="Name" value="EDMA3_RM_E_RM_MASTER_ALREADY_EXISTS"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g610aeab3e667a0edbaf9a673c6253b5b"><param name="Name" value="EDMA3_RM_E_SEMAPHORE"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMErrCode.html#g3b062119a0e29e3c9ba65c5e6ffb0629"><param name="Name" value="EDMA3_RM_E_SPECIFIED_RES_NOT_AVAILABLE"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html"><param name="Name" value="Edma3RMIntBoundVals"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html#g24993f4530d360b4a11fe086b240ae5d"><param name="Name" value="EDMA3_RM_DMA_CH_MAX_VAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html#gf2cd795a543616ad8d9f4850c5d72ac2"><param name="Name" value="EDMA3_RM_LINK_CH_MAX_VAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html#g45b446acc59ea6ca20286ffa236e04a7"><param name="Name" value="EDMA3_RM_LINK_CH_MIN_VAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html#g2b3db9a8bf2349d5c5e1451b2ec79ddb"><param name="Name" value="EDMA3_RM_LOG_CH_MAX_VAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html#gfae3b6b39b38b3efb2a094aba6154c91"><param name="Name" value="EDMA3_RM_QDMA_CH_MAX_VAL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntBoundVals.html#g0618595d31a9646bb5035c91daa1a09a"><param name="Name" value="EDMA3_RM_QDMA_CH_MIN_VAL"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntrMgrChannel.html"><param name="Name" value="Edma3RMIntrMgrChannel"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntrMgrChannel.html#gd57281a3cabf45b1520007a1a78f6a53"><param name="Name" value="EDMA3_RM_registerTccCb"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntrMgrChannel.html#gadca81927be74261ef874009bf8e37d3"><param name="Name" value="EDMA3_RM_TccCallback"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMIntrMgrChannel.html#g34a841202d01ea2e2a35747aa873a984"><param name="Name" value="EDMA3_RM_unregisterTccCb"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html"><param name="Name" value="Edma3RMMain"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html#g92776ae6a8795fe8ffce672e8a04e409"><param name="Name" value="EDMA3_RM_close"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html#gdc4459024208af43ca53740f5f0e24f2"><param name="Name" value="EDMA3_RM_create"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html#g91cc5101fd09c700b6d2a2e72baf88fe"><param name="Name" value="EDMA3_RM_delete"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html#g73da34ea04a5d4c536919febc341ff2a"><param name="Name" value="EDMA3_RM_EventQueue"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html#g06b18003d700ce3c227f70e422dd9897"><param name="Name" value="EDMA3_RM_open"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMMain.html#g95ce8c6a9989cc4bbd29e0234e6ee5e4"><param name="Name" value="EDMA3_RM_RegionId"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3RMStatus.html"><param name="Name" value="Edma3RMStatus"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#d4e9caa9307edbc6832ebe662de1b6f6"><param name="Name" value="evtQPri"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#e633ff54dda219dafc5d3b609a28a202"><param name="Name" value="evtQueueWaterMarkLvl"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Obj.html#6bac11beb5c7f95204cac16455bb424c"><param name="Name" value="gblCfgParams"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblErrCallbackParams.html#7e71d5910d29c6a69576c3f860f6b272"><param name="Name" value="gblerrCb"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html#bafa6f546c9a5a893885f161d96ebe61"><param name="Name" value="gblerrCbParams"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblErrCallbackParams.html#f2a780928d2b6918ec49426a8ea60144"><param name="Name" value="gblerrData"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#c37e1efa702856b32e621560d4ddde2d"><param name="Name" value="globalRegs"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#9ea516313f4cbf1203ed945b75120770"><param name="Name" value="initParam"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html#f8461561ef2a4b6f432c57394b89296a"><param name="Name" value="isMaster"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__MiscParam.html#56ea473581e1d76b7497796d1e46d850"><param name="Name" value="isSlave"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#4262be65b0dcae242b5e2dccd5b5b23f"><param name="Name" value="LINK_BCNTRLD"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#895743ea8620f21b5ddc2149d2a05c3b"><param name="Name" value="linkAddr"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#4f142ccb3c6a0e2ec3146439f4b38443"><param name="Name" value="memProtectionExists"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#146c49c83ca4e65a3145d9b15d73571d"><param name="Name" value="numDmaChannels"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#152b2623285f14f6013b130fbfdf2ee1"><param name="Name" value="numEvtQueue"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Obj.html#13b4308a8ad6baf647b5c7adbe54702c"><param name="Name" value="numOpens"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#9f66e1878cc69101518f94c5f95ec393"><param name="Name" value="numPaRAMSets"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#49bb3d33efc585d75c8c18cf26dbf169"><param name="Name" value="numQdmaChannels"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#f96ad7a22abe4152c2dbec6ddd793ffb"><param name="Name" value="numRegions"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#de09c3f169c87739ab5b5d00101a59ed"><param name="Name" value="numTccs"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#2469da2ae6f4c3895c1edf6333590b1e"><param name="Name" value="numTcs"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgrIntObjMaint.html"><param name="Name" value="Object Maintenance"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgrIntObjMaint.html#gg12f47d9e744ff042541b8f384331e21363316a48e3824e29716bbf1473f7f198"><param name="Name" value="EDMA3_RM_CLOSED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgrIntObjMaint.html#gg12f47d9e744ff042541b8f384331e2138430ad1934474c9cc45c05ef7397a064"><param name="Name" value="EDMA3_RM_CREATED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgrIntObjMaint.html#gg12f47d9e744ff042541b8f384331e213f9ecffaa0b927c32a79ccf09d13249ba"><param name="Name" value="EDMA3_RM_DELETED"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResMgrIntObjMaint.html#gg12f47d9e744ff042541b8f384331e213204be13ae2662478c7b424cb634020f4"><param name="Name" value="EDMA3_RM_OPENED"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#0cf7a755d7bae28725d5473f55e4b285"><param name="Name" value="OPT"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#b3fbc10843edca5369164bb54f8f1311"><param name="Name" value="opt"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#fea6ae753bce07d64d92f6521bb489e5"><param name="Name" value="ownDmaChannels"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#195712f03e6c92f0a386dd036422f956"><param name="Name" value="ownPaRAMSets"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#836f8f25e8a2e01d6649034b7cc92d50"><param name="Name" value="ownQdmaChannels"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#38b3b42404f41e978c3b682ccf63fa8f"><param name="Name" value="ownTccs"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__MiscParam.html#b66a1abe88183a9f57c85373010e5c75"><param name="Name" value="param"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ChBoundResources.html#be7b47232db77c8ed3ce9487ca8f658f"><param name="Name" value="paRAMId"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#750feffdd410001a563b312cd6d1442c"><param name="Name" value="paramInitRequired"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Obj.html#e3c0a4a97c25259407c34e3582255198"><param name="Name" value="phyCtrllerInstId"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#c8c4e0d16fe56d1465b4860f11060733"><param name="Name" value="pResMgrObjHandle"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html#5722cd299dd4712cdb9f7cf7aec869b6"><param name="Name" value="regionId"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html#e0b670ea74b53074559f5ad4c5fe7366"><param name="Name" value="regionInitEnable"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#9994deccfdf8a63db677311aced1db79"><param name="Name" value="regModificationRequired"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ResDesc.html#8fffc8bd17e838ce866a225ffe14ce02"><param name="Name" value="resId"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResType.html"><param name="Name" value="Resource Type"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResType.html#gg05b92650ee862481552b709fe0f4f90476969f54bf15dd78fc14ab2b95878a67"><param name="Name" value="EDMA3_RM_RES_DMA_CHANNEL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResType.html#gg05b92650ee862481552b709fe0f4f904eb1f89bd49855b2bf172f25d87861dbd"><param name="Name" value="EDMA3_RM_RES_PARAM_SET"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResType.html#gg05b92650ee862481552b709fe0f4f904ae2e7e5b11cdf3639b9dd136228398f6"><param name="Name" value="EDMA3_RM_RES_QDMA_CHANNEL"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="group__Edma3ResType.html#gg05b92650ee862481552b709fe0f4f9044cc4cd8404e3c1f7ad691bbbb050230b"><param name="Name" value="EDMA3_RM_RES_TCC"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#6df76275220d03b4b42c9161b4d670ff"><param name="Name" value="resvdDmaChannels"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#b97d5476ee84765b1cb26216af673cfc"><param name="Name" value="resvdPaRAMSets"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#e7909518f9ba93b32c496193e797bf3b"><param name="Name" value="resvdQdmaChannels"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__InstanceInitConfig.html#7996562a8045cf6b7f33e40aa9b49313"><param name="Name" value="resvdTccs"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html#b4b422aad358309280f16027423df238"><param name="Name" value="rmInstInitConfig"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Param.html#5f6478d1cacf5b62e3039f37c82a4e78"><param name="Name" value="rmSemHandle"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Instance.html#b3bc4cc87520c8156b0569600b9678e5"><param name="Name" value="shadowRegs"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#5cdf48fe9dfa1bf57634707cb0844272"><param name="Name" value="SRC"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#fb5a2b7960d93156dbf7d5f1966b5b47"><param name="Name" value="SRC_DST_BIDX"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ParamentryRegs.html#c2f5d7cc117f6078c9857ebb630cad17"><param name="Name" value="SRC_DST_CIDX"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#88f22ecb531e50776a8d39efb07e1f03"><param name="Name" value="srcAddr"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#379c5a7e527a0df8f1a0f3f570370a4a"><param name="Name" value="srcBIdx"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__PaRAMRegs.html#948163aaedd3fff182f8ba9de03b4091"><param name="Name" value="srcCIdx"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__Obj.html#a262df0776f0a9b6163e8f64d91a0265"><param name="Name" value="state"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ChBoundResources.html#c312830c57f5f44cc9ce7eb86513ae7d"><param name="Name" value="tcc"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__TccCallbackParams.html#b46111c7ca4b209d38383103bfd9a1e5"><param name="Name" value="tccCb"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#dd171129e6252b02ba54d5e79cb7ecea"><param name="Name" value="tcDefaultBurstSize"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#72c01f8e87453fc8495371cd44b2dcc4"><param name="Name" value="tcError"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#167e1ab12a947d4446ba56f8129ed91d"><param name="Name" value="tcRegs"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__ResDesc.html#3d13077eac87394e8c0721e6346c3716"><param name="Name" value="type"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEDMA3__RM__GblConfigParams.html#f902e3c9d3d6d54fdc472bf79297c947"><param name="Name" value="xferCompleteInt"></OBJECT>
+</UL>
+</BODY>
+</HTML>

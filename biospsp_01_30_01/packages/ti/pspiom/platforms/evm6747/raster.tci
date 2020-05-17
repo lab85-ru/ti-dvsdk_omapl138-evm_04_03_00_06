@@ -1,0 +1,11 @@
+/*
+ * ======== LCDC Raster Configuration ========
+ */
+
+/* Add I2c driver to DEV table */
+bios.UDEV.create("I2C0");
+bios.UDEV.instance("I2C0").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("I2C0").initFxn = prog.extern("lcdcUserI2cInit");
+bios.UDEV.instance("I2C0").params = prog.extern("lcdcI2cParams");
+bios.UDEV.instance("I2C0").fxnTable = prog.extern("I2c_IOMFXNS");
+bios.UDEV.instance("I2C0").deviceId = 0;

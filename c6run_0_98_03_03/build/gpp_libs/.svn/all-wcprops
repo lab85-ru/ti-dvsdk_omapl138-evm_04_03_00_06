@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs
+END
+C6Run_rpc.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/C6Run_rpc.c
+END
+C6Run_control.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/C6Run_control.h
+END
+C6Run_rpc.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/C6Run_rpc.h
+END
+malloc.c
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/malloc.c
+END
+rpc_variadics.c
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/rpc_variadics.c
+END
+rpc_server.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/rpc_server.c
+END
+rpc_memory.c
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/rpc_memory.c
+END
+rpc_variadics.h
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/rpc_variadics.h
+END
+rpc_server.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/rpc_server.h
+END
+rpc_memory.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/rpc_memory.h
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/main.c
+END
+C6Run_cio.c
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/C6Run_cio.c
+END
+C6Run_cio.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/C6Run_cio.h
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/Makefile
+END
+C6Run.c
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/C6Run.c
+END
+C6Run_control.c
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/gpp_libs/C6Run_control.c
+END

@@ -1,0 +1,95 @@
+/* Note: Using the EVM DRA459 */
+utils.loadPlatform("ti.platforms.evmDRA459");
+
+/* The following DSP/BIOS Features are enabled.  */
+bios.enableTskManager(prog);
+bios.enableRtdx(prog);
+bios.enableMemoryHeaps(prog);
+
+bios.MEM.instance("EMIFA").createHeap = 1;
+bios.MEM.instance("EMIFA").heapSize = 0x03000000;
+
+
+bios.LOG.create("trace");
+bios.LOG.instance("LOG_system").bufLen = 1024;
+bios.LOG.instance("trace").bufLen = 1024;
+
+/*Decide on sections*/
+bios.SIO.OBJMEMSEG = prog.get("EMIFA");
+bios.DIO.OBJMEMSEG = prog.get("EMIFA");
+bios.SEM.OBJMEMSEG = prog.get("EMIFA");
+bios.MBX.OBJMEMSEG = prog.get("EMIFA");
+bios.QUE.OBJMEMSEG = prog.get("EMIFA");
+bios.LCK.OBJMEMSEG = prog.get("EMIFA");
+bios.SWI.OBJMEMSEG = prog.get("EMIFA");
+bios.TSK.OBJMEMSEG = prog.get("EMIFA");
+bios.TSK.STACKSEG = prog.get("EMIFA");
+bios.PRD.OBJMEMSEG = prog.get("EMIFA");
+bios.MEM.BIOSOBJSEG = prog.get("EMIFA");
+bios.MEM.MALLOCSEG = prog.get("EMIFA");
+bios.MEM.ARGSSEG = prog.get("EMIFA");
+bios.MEM.STACKSEG = prog.get("EMIFA");
+bios.MEM.GBLINITSEG = prog.get("EMIFA");
+bios.MEM.TRCDATASEG = prog.get("EMIFA");
+bios.MEM.OBJSEG = prog.get("EMIFA");
+bios.MEM.SYSDATASEG = prog.get("EMIFA");
+bios.MEM.TEXTSEG = prog.get("EMIFA");
+bios.MEM.SWITCHSEG = prog.get("EMIFA");
+bios.MEM.BSSSEG = prog.get("EMIFA");
+bios.MEM.CINITSEG = prog.get("EMIFA");
+bios.MEM.FARSEG = prog.get("EMIFA");
+bios.MEM.PINITSEG = prog.get("EMIFA");
+bios.MEM.CONSTSEG = prog.get("EMIFA");
+bios.MEM.DATASEG = prog.get("EMIFA");
+bios.MEM.CIOSEG = prog.get("EMIFA");
+bios.MEM.BIOSSEG = prog.get("EMIFA");
+bios.MEM.SYSINITSEG = prog.get("EMIFA");
+bios.MEM.HWISEG = prog.get("EMIFA");
+bios.MEM.HWIVECSEG = prog.get("EMIFA");
+bios.MEM.RTDXTEXTSEG = prog.get("EMIFA");
+bios.LOG.instance("LOG_system").bufLen = 64;
+bios.MEM.MALLOCSEG = prog.get("EMIFA");
+bios.BUF.OBJMEMSEG = prog.get("EMIFA");
+bios.LOG.OBJMEMSEG = prog.get("EMIFA");
+bios.STS.OBJMEMSEG = prog.get("EMIFA");
+bios.IDL.OBJMEMSEG = prog.get("EMIFA");
+bios.DHL.OBJMEMSEG = prog.get("EMIFA");
+bios.RTDX.RTDXDATASEG = prog.get("EMIFA");
+bios.TSK.instance("TSK_idle").stackMemSeg = prog.get("EMIFA");
+bios.LOG.instance("LOG_system").bufSeg = prog.get("EMIFA");
+bios.HST.OBJMEMSEG = prog.get("EMIFA");
+bios.HST.instance("RTA_fromHost").bufSeg = prog.get("EMIFA");
+bios.HST.instance("RTA_toHost").bufSeg = prog.get("EMIFA");
+bios.SYS.TRACESEG = prog.get("EMIFA");
+bios.PIP.OBJMEMSEG = prog.get("EMIFA");
+bios.CLK.OBJMEMSEG = prog.get("EMIFA");
+bios.ECM.ENABLE = 1;
+
+/*ECM configuration*/
+bios.HWI.instance("HWI_INT6").interruptSelectNumber = 0;
+bios.HWI.instance("HWI_INT7").interruptSelectNumber = 1;
+bios.HWI.instance("HWI_INT8").interruptSelectNumber = 2;
+bios.HWI.instance("HWI_INT9").interruptSelectNumber = 3;
+
+bios.CLK.RESETTIMER = 1;
+
+bios.TSK.instance("TSK_idle").order = 1;
+
+/*task configuration*/
+bios.TSK.create("echoTask");
+bios.TSK.instance("echoTask").stackSize = 32768;
+bios.TSK.instance("echoTask").fxn = prog.extern("echo");
+bios.TSK.instance("echoTask").comment = "Echo Task";
+bios.TSK.instance("TSK_idle").order = 1;
+bios.TSK.instance("echoTask").order = 2;
+
+/* EMIFB size is 128MB, Heap is 48MB, Stack is 32K */
+bios.MEM.STACKSIZE = 0x8000;
+bios.MEM.instance("EMIFA").len = 0x08000000;
+
+bios.CLK.TIMERSELECT = "RTI2 Timer0";
+bios.HWI.instance("HWI_INT15").interruptSelectNumber = 15;
+// !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+
+prog.gen();
+

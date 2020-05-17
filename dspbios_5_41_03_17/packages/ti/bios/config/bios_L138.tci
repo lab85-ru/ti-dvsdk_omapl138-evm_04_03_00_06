@@ -1,0 +1,23 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_L138.tci ========
+ *  This file contains BIOS settings for OMAPL138.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_6748.tci");
+
+/*
+ *  ======== bios.initL138 ========
+ *  BIOS initialization for the L138 is same as for 6748 except that
+ *  we do not reset the timer by default (timer is shared with Arm).
+ */
+bios.initL138 = function (prog, baseseed)
+{
+    bios.init6748(prog, baseseed);
+
+    prog.module("CLK").RESETTIMER = false;
+}

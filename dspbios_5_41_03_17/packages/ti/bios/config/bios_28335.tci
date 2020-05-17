@@ -1,0 +1,82 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_28335.tci ========
+ *  This file contains BIOS settings for 28335.
+ *
+ */
+
+/*
+ *  ======== bios.setupMemory28335 ========
+ *  This function is the top-level function that will remove all MEM segments
+ *  from the cdb file.  It will take your physical memory map from calling
+ *  getMemoryMap() and create MEM instances in cdb.
+ *  It will then set sections to the default segment specified and fix up
+ *  the length and/or base of MEM segments if needed.
+ */
+bios.internal.setupMemory28335 = function (prog)
+{
+     /*
+      *  BIOS MEM segments will be created from object model memory definitions.
+      *  Place default code and data sections into specified memory segments.
+      */
+    bios.initializeMemory(prog, "L03SARAM", "L47SARAM");
+
+    var msaram = prog.module("MEM").instance("MSARAM");
+
+    /* place .stack section into MSARAM so LSARAM does not overflow */
+    prog.module("MEM").STACKSEG = msaram;
+}
+
+/*
+ *  ======== bios.init28335 ========
+ *  BIOS initialization for the 28335
+ */
+bios.init28335 = function (prog, baseseed)
+{
+    /*
+     *  Find configuration seed files to load
+     */
+    if (baseseed == null) {
+        baseseed = "ti/bios/config/cdb/c28xx.cdb";
+    }
+
+    var seed = utils.findSeed(baseseed);
+    if (seed != null) {
+	try {
+	    prog.load(seed);
+	}
+	catch (e) {
+	    throw new Error ("Can't load configuration seed '" + seed + "' : "
+		+ e);
+	}
+    }
+    else {
+	throw new Error ("Can't find configuration seed: " + baseseed);
+    }
+
+    /* Set CHIPTYPE to "other". No CSL support from BIOS config file */
+    /* Set DSPSUBTYPE to 28300 for 283xx device */
+    prog.module("GBL").CHIPTYPE = "other";
+    prog.module("GBL").PLLTYPE = "283xx";
+
+    /* CLKOUT will be set to cpu.clockRate */
+    bios.internal.setClkout(prog);
+
+    /* If the old memory names are used, we call the function that sets up
+     * the old external memory names, while the internal names (and some old 
+     * ones are retained from the CDB file.
+     */
+    if (bios.supportOldMemoryNames) {
+	bios.internal.oldMemoryNames(prog);
+    }
+    else {
+	/* set the default memory segments for 28335 using new memory names */
+	bios.internal.setupMemory28335(prog);
+    }
+    
+    /* initialize some memory map registers */
+    bios.internal.initializeRegisterMap(prog);
+}

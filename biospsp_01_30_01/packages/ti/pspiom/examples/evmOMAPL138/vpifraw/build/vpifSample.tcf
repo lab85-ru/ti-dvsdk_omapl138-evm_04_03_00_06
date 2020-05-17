@@ -1,0 +1,87 @@
+/*
+ *  Load platform file for evmOMAPL138
+ */
+utils.loadPlatform("ti.platforms.evmOMAPL138");
+
+/* Enable Time Stamp Logging */
+bios.LOG.TS = true;
+
+/*
+ * Enable common BIOS features used by all examples
+ */
+bios.enableRealTimeAnalysis(prog);
+bios.enableMemoryHeaps(prog);
+bios.enableRtdx(prog);
+bios.enableTskManager(prog);
+bios.setMemCodeSections(prog, prog.get("DDR"));
+
+/* Enable ECM Handler */
+bios.ECM.ENABLE = 1;
+
+/* Import driver TCI files */
+utils.importFile("../../../../platforms/evmOMAPL138/vpif.tci");
+utils.importFile("vpifSample.tci");
+
+/*
+ * Create a heap for the VPIF capture and display buffers.
+ *
+ * This heap shall be utilized by the driver when allocating the frambuffers, on
+ * application's behalf. However, the user may define their own heap instance,
+ * which can be set using the 'segId' parameter in the channel parameters.
+ *
+ * If this parameter is not set, then the default heap is used.
+ */
+bios.MEM.instance("DDR").createHeap = 1;
+bios.MEM.instance("DDR").heapSize = 0x01000000;
+bios.MEM.BIOSOBJSEG = prog.get("DDR");
+bios.MEM.MALLOCSEG = prog.get("DDR");
+bios.MEM.instance("DDR").enableHeapLabel = 1;
+bios.MEM.instance("DDR").heapLabel = prog.extern("EXTERNALHEAP");
+bios.MEM.instance("DDR").heapSize = 0xC00000;
+
+/* setup LOGs */
+bios.LOG_system.bufSeg = prog.get("IRAM");
+bios.LOG_system.bufLen = 1024;
+bios.LOG_system.logType = "circular";
+
+bios.LOG.create("trace");
+bios.LOG.instance("trace").bufLen = 1024;
+bios.LOG.instance("trace").bufSeg = prog.get("IRAM");
+
+bios.LOG.create("DVTEvent_Log");
+bios.LOG.instance("DVTEvent_Log").bufSeg = prog.get("IRAM");
+bios.LOG.instance("DVTEvent_Log").bufLen = 8192;
+bios.LOG.instance("DVTEvent_Log").comment = "DVT";
+
+/* Allow DSP to reset timer */
+bios.CLK.RESETTIMER = 1;
+
+/* Use instrumented bios libraries */
+bios.GBL.ENABLEINST = 1;
+
+/* MAR bits config */
+bios.GBL.C64PLUSMAR128to159 = 0x0000ffff;
+
+/* ECM configuration */
+bios.HWI.instance("HWI_INT7").interruptSelectNumber = 0;
+bios.HWI.instance("HWI_INT8").interruptSelectNumber = 1;
+bios.HWI.instance("HWI_INT9").interruptSelectNumber = 2;
+bios.HWI.instance("HWI_INT10").interruptSelectNumber = 3;
+
+/*task configuration*/
+bios.TSK.create("echoTask");
+bios.TSK.instance("echoTask").stackSize = 16384;
+bios.TSK.instance("echoTask").fxn = prog.extern("vpifSampleTask");
+bios.TSK.instance("echoTask").comment = "VPIF Sample Application Task";
+
+bios.PWRM.ENABLE = 1;
+bios.PWRM.RESOURCETRACKING = 1;
+bios.PWRM.SCALING = 1;
+bios.PWRM.MOVESPS = 1;
+
+/* system stack size */
+bios.MEM.STACKSIZE = 0x10000;
+
+// !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+prog.gen();
+

@@ -1,0 +1,75 @@
+/*
+ *  Load platform file for the SOC
+ */
+utils.loadPlatform("ti.platforms.evmDM6437");
+
+
+/*
+ * Enable common BIOS features used by all examples
+ */
+bios.enableRealTimeAnalysis(prog);
+bios.enableMemoryHeaps(prog);
+bios.enableRtdx(prog);
+bios.enableTskManager(prog);
+
+/* Enable ECM Handler */
+bios.ECM.ENABLE = 1;
+
+/*
+ * Enable heap usage.
+ * Note: Heap Size is so large due to VPSS test application
+ */
+bios.MEM.instance("DDR2").createHeap = 1;
+bios.MEM.instance("DDR2").enableHeapLabel = 1;
+bios.MEM.instance("DDR2").heapLabel = prog.extern("DDR2_HEAP", "asm");
+
+bios.MEM.BIOSOBJSEG = prog.get("DDR2");
+bios.MEM.MALLOCSEG = prog.get("DDR2");
+bios.MEM.STACKSEG = prog.get("IRAM");
+bios.MEM.ARGSSEG = prog.get("IRAM");
+bios.MEM.SYSDATASEG = prog.get("DDR2");
+bios.MEM.OBJSEG = prog.get("DDR2");
+bios.MEM.BIOSSEG = prog.get("DDR2");
+bios.MEM.SYSINITSEG = prog.get("DDR2");
+bios.MEM.HWISEG = prog.get("DDR2");
+bios.MEM.HWIVECSEG = prog.get("DDR2");
+bios.MEM.RTDXTEXTSEG = prog.get("DDR2");
+bios.MEM.ARGSSEG = prog.get("DDR2");
+bios.MEM.STACKSEG = prog.get("DDR2");
+bios.MEM.GBLINITSEG = prog.get("DDR2");
+bios.MEM.TRCDATASEG = prog.get("DDR2");
+bios.MEM.TEXTSEG = prog.get("DDR2");
+bios.MEM.SWITCHSEG = prog.get("DDR2");
+bios.MEM.BSSSEG = prog.get("DDR2");
+bios.MEM.FARSEG = prog.get("DDR2");
+bios.MEM.CINITSEG = prog.get("DDR2");
+bios.MEM.PINITSEG = prog.get("DDR2");
+bios.ECM.ENABLE = 1;
+bios.HST.HOSTLINKTYPE = "NONE";
+bios.RTDX.ENABLERTDX = 0;
+
+bios.CLK.RESETTIMER = 1;
+
+bios.GBL.ENABLEINST = 1;
+bios.GBL.C64PLUSMAR128to159 = 0x0000ffff;
+
+bios.MEM.STACKSIZE = 0x8000;
+
+/* ECM configuration - manually Reflect these settings in soc.h */
+bios.HWI.instance("HWI_INT7").interruptSelectNumber = 0;
+bios.HWI.instance("HWI_INT8").interruptSelectNumber = 1;
+bios.HWI.instance("HWI_INT9").interruptSelectNumber = 2;
+bios.HWI.instance("HWI_INT10").interruptSelectNumber = 3;
+
+/*task configuration*/
+bios.TSK.create("TSK0");
+bios.TSK.instance("TSK0").stackSize = 16384;
+bios.TSK.instance("TSK0").order = 3;
+bios.TSK.instance("TSK0").fxn = prog.extern("dat_main");
+bios.TSK.instance("TSK0").comment = "DAT main function";
+
+bios.TSK.instance("TSK0").fxn = prog.extern("DAT_main");
+
+// !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+prog.gen();
+

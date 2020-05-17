@@ -1,0 +1,9 @@
+#Mon Sep 14 18:34:07 IST 2009
+com.ti.ccstudio.buildDefinitions.C6000.Debug.211994571/internalBuilder/enabled=false
+com.ti.ccstudio.buildDefinitions.C6000.Debug.211994571/internalBuilder/ignoreErr=true
+com.ti.ccstudio.buildDefinitions.C6000.Release.1855096425/internalBuilder/enabled=false
+com.ti.ccstudio.buildDefinitions.C6000.Release.1855096425/internalBuilder/ignoreErr=true
+eclipse.preferences.version=1
+environment/project=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<environment/>\r\n
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Debug.211994571=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<environment/>\r\n
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Release.1855096425=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<environment/>\r\n

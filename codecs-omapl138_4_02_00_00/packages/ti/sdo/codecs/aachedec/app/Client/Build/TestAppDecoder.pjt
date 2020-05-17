@@ -1,0 +1,30 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="D:\AAC_DECODER_ROBUST_ver4\AAC_Decoder_100\A_AAC_D_HE_C64X+_100\100_A_AAC_D_HE_c64x+_1_00\Client\Build\"
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Debug"
+
+[Source Files]
+Source="..\Test\Src\alg_create.c"
+Source="..\Test\Src\alg_malloc.c"
+Source="..\Test\Src\TestAppDecoder.c"
+Source="AACADecApp.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-q -fr".\..\..\..\Client\Build\Obj" -i"$(Install_dir)\bios_5_21\packages\ti\bios\include" -i"..\..\..\Client\Test\Inc" -i"..\..\..\Inc" -i"$(Install_dir)\C6000\xdais\src\api" -i"$(Install_dir)\packages\ti\bios\include" -mv6400+ --mem_model:data=far
+
+["DspBiosBuilder" Settings: "Debug"]
+Options=-v6x
+
+["Linker" Settings: "Debug"]
+Options=-q -c -m".\Map\TestAppDecoder.map" -o".\Out\TestAppDecoder.out" -w -x -i"$(Install_dir)\bios_5_21\packages\ti\bios\lib" -i"..\..\Lib" -i"$(Install_dir)\C6000\cgtools\lib" -l"aacdec_tii.l64P" -l"rts64plus.lib" -l"biosDM420.a64P"
+
+["AACADecApp.cmd" Settings: "Debug"]
+LinkOrder=1
+

@@ -1,0 +1,302 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== sts.h28 ========
+;  Statistics accumulator
+;
+;  This module provides an object that maintains 3 statistics about a 
+;  time series of 32-bit signed values: the number of values, the sum of the
+;  values, and the maximum value.
+;
+
+        .if ($isdefed("STS_") = 0)    ; prevent multiple includes of this file
+STS_    .set    1
+
+        .include chk.h28
+        .include cinit.h28
+        .include std.h28
+
+        .global STS_F_add, STS_F_delta,  STS_F_reset, _STS_set
+
+        ; needs to be a .ref to force the symbols to be defined for VBD
+        .ref STS_A_TABBEG 
+
+
+;  ======== STS_Obj ========
+;
+isStsAligned    .set    2
+STS_Obj        .struct
+num     .long           ; number of values, 32 bits
+accum   .long           ; accumulated value, 32 bits
+maks    .long           ; maximum value, 32 bits
+endPad  .align  isStsAligned
+
+STS_A_OBJSIZE    .endstruct
+
+STS_BASE        .set    STS_Obj.num
+
+STS_O_NUM       .set    STS_Obj.num - STS_BASE
+STS_O_ACC       .set    STS_Obj.accum - STS_BASE
+STS_O_MAX       .set    STS_Obj.maks - STS_BASE
+
+STS_Cinit_Obj   .struct
+history         .long           ; This is the history value
+stsObject       .tag   STS_Obj  ; This is the stsObject
+STS_A_CINIT_OBJSIZE  .endstruct
+
+STS_CINIT_BASE          .set    STS_Cinit_Obj.history
+STS_CINIT_O_HISTORY     .set    STS_Cinit_Obj.history - STS_CINIT_BASE 
+STS_CINIT_O_STSOBJECT   .set    STS_Cinit_Obj.stsObject - STS_CINIT_BASE 
+
+
+
+
+;
+;# ======== STS_Obj ========
+;  Allocate (and initialize) an STS object and two extra words
+;  before object to hold previous 32-bit time series sample.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", STS_Obj$regs
+
+STS_Obj         .macro cflag, name, id, filter, maxfmt, sumfmt, avgfmt, operation, unittype, iA, iB, iC, prevh, prevl
+
+        CHK_nargs "STS_Obj", prevl
+
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "STS_Obj parameter error."
+        .endif
+
+        .if (:cflag: = 0)                  ; if this object is not
+                                           ; really to be allocated
+            .mexit                         ; exit quietly now
+        .endif
+        .eval (prevh << 16) + prevl , prev
+
+        ; sts filter info
+        .global :name:, :name:$stsobj     
+        .global :name:$filter, :name:$unittype
+        .global :name:$maxfmt, :name:$sumfmt, :name:$avgfmt
+
+:name:$filter .set      :filter:
+:name:$unittype .set    :unittype:
+
+        ; place the following format strings into the .printf section
+        ; .byte 0's are for '\0' to terminate format strings
+        .sect ".printf"
+:name:$maxfmt .string   ":maxfmt:"
+        .byte   0
+:name:$sumfmt .string   ":sumfmt:"
+        .byte   0
+:name:$avgfmt .string   ":avgfmt:"
+        .byte   0
+
+        .if (:filter: = 1)
+            .global :name:$iA, :name:$iB, :name:$iC, :name:$operation
+:name:$iA .set  :iA:
+:name:$iB .set  :iB:
+:name:$iC .set  :iC:
+:name:$operation .set   :operation:
+        .endif
+
+        ; Set blocking bit as 0 here, since we need to keep STS_Obj contiunous
+        ; address and we don't have C macro interface to access
+        ; STS macro so it is safe SDSsq31971
+        C28_allocateObject   isStsAligned, :name:$stsobj:, STS_A_CINIT_OBJSIZE , ".sts", 0
+:name:  .set            :name:$stsobj +   STS_CINIT_O_STSOBJECT        
+        C28_cinitHeader  CINITALIGN, isStsAligned, :name:$stsobj, STS_A_CINIT_OBJSIZE
+
+        C28_cinitLong   :prev:
+        C28_cinitLong    0
+        C28_cinitLong    0
+        C28_cinitLong    0x80000000
+ .endm
+
+;
+;# ======== STS_add ========
+;  Add signed 32-bit sample to time series
+;
+;#
+;# Preconditions:
+;#      xar4  = address of the sts object
+;#      acc  = 32-bit sample
+;#      sxm = 1
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    ":STS_F_add$regs:", STS_add$regs
+STS_add         .macro  opcode
+        
+        CHK_domain STS_add, opcode, "b,call","call"
+        .asg ":CHK_status:", opcode
+        
+        .if ($symcmp(":opcode:", "call") = 0)
+                 lcr STS_F_add
+        .else
+                 .if ($symcmp(":opcode:", "b") = 0)
+                   b STS_F_add, UNC
+                 .endif
+        .endif   
+        .endm
+
+;
+;# ======== STS_config ========
+;  Static configuration of the STS module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", STS_config$regs
+STS_config      .macro
+        ; only expand if the STS module is configured by the user
+        .if (STS$ = 1)
+            .if (STS$NUMOF > 0)
+            .endif
+        .endif
+        
+        .endm
+
+;
+;# ======== STS_delta ========
+;  Add 32-bit delta(new, old) to time series, where
+;  delta(new, old) = new - old.
+;
+;#
+;# Preconditions:
+;#      xar4  = address of the sts object
+;#      acc  = 32-bit sample
+;#      sxm = 1
+;#
+;# Postconditions:
+;#      none
+;#
+;# Constraints and Calling Environment:
+;#      STS_delta can only be used after a call to STS_set or the user
+;#      used the DSP/BIOS Configuration Tool to set the "prev" property
+;#      for this STS object.
+;#
+;
+        .asg    ":STS_F_delta$regs:", STS_delta$regs
+STS_delta       .macro opcode
+        CHK_domain STS_delta, opcode, "b,call", "call"
+        .asg ":CHK_status:", opcode
+        .if ($symcmp(":opcode:", "call") = 0)
+                 lcr STS_F_delta
+        .else
+                 .if ($symcmp(":opcode:", "b") = 0)
+                   b STS_F_delta, UNC
+                 .endif
+        .endif   
+        .endm
+
+
+;
+;# ======== STS_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", STS_end$regs
+STS_end .macro
+        .endm
+
+;
+;# ======== STS_init ========
+;  Runtime initialization of the STS module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", STS_init$regs
+STS_init        .macro
+        .endm
+
+;
+;# ======== STS_reset ========
+;  Reset the statistics to their initial value (when allocated)
+;
+;#
+;# Preconditions:
+;#      xar4  = address of the sts object
+;#
+;# Postconditions:
+;#      none
+;# 
+
+
+        .asg    ":STS_F_reset$regs:", STS_reset$regs
+STS_reset       .macro opcode
+        CHK_domain STS_reset, opcode, "b, call", "call"
+        .asg ":CHK_status:", opcode
+        .if ($symcmp(":opcode:", "call") = 0)
+                 lcr STS_F_reset
+        .else
+                 .if ($symcmp(":opcode:", "b") = 0)
+                   b STS_F_reset, UNC
+                 .endif
+        .endif   
+
+        .endm
+
+;
+;# ======== STS_set ========
+;  Set history word of STS object.
+;  The history word  resides above the STS records.
+;  It is used by the STS_delta operation.  
+;#
+;# Preconditions:
+;#      xar4  = address of the sts object
+;#      acc = 32-bit value
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", STS_set$regs
+STS_set .macro dummy
+        CHK_void STS_set, dummy
+        lcr _STS_set                    ; assign 32 bit value to
+                                        ; the history field,
+                                        ; present
+                                        ; above the STS_Obj
+                
+        .endm
+
+;
+;# ======== STS_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", STS_startup$regs
+STS_startup        .macro
+        .endm
+
+        .endif  ; STS_ not defined
+

@@ -1,0 +1,86 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Library
+CPUFamily=TMS320C64XX
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="XDC"
+Config="Debug"
+Config="iDebug"
+Config="iRelease"
+Config="Release"
+
+[Source Files]
+Source="..\..\..\src\bios_edma3_rm_sample_cs.c"
+Source="..\..\..\src\configs\bios_edma3_rm_sample_omap3430_cfg.c"
+Source="..\..\..\src\bios_edma3_rm_sample_init.c"
+Source="edma3_rm_bios_omap3430_sample_lib_XDC.cfg"
+Source="xdcpaths.dat"
+
+[Generated Files]
+Source="xdcconfig\cfg.c"
+Source="xdcconfig\linker.cmd"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\omap3430\Debug\edma3_rm_bios_sample.lib"
+
+["Archiver" Settings: "iDebug"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\omap3430\Debug\edma3_rm_bios_sample_i.lib"
+
+["Archiver" Settings: "iRelease"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\omap3430\Release\edma3_rm_bios_sample_i.lib"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"$(Proj_dir)\..\..\..\lib\omap3430\Release\edma3_rm_bios_sample.lib"
+
+["Compiler" Settings: "Debug"]
+Options=-g -@"=$(Proj_dir)/xdcconfig/compiler.opt" -pdr -fr"$(Proj_dir)\Debug" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "iDebug"]
+Options=-g -@"=$(Proj_dir)/xdcconfig/compiler.opt" -pdr -fr"$(Proj_dir)\iDebug" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "iRelease"]
+Options=-@"=$(Proj_dir)/xdcconfig/compiler.opt" -pdr -o2 -fr"$(Proj_dir)\iRelease" -d"_RELEASE" -mv6400+
+
+["Compiler" Settings: "Release"]
+Options=-@"=$(Proj_dir)/xdcconfig/compiler.opt" -pdr -o2 -fr"$(Proj_dir)\Release" -d"_RELEASE" -mv6400+
+
+["XDC" Settings: "Debug"]
+Options=--xdcpathsfile="xdcpaths.dat" -tti.targets.C64P -rdebug
+
+["XDC" Settings: "iDebug"]
+Options=--xdcpathsfile="xdcpaths.dat" -tti.targets.C64P -ridebug
+
+["XDC" Settings: "iRelease"]
+Options=--xdcpathsfile="xdcpaths.dat" -tti.targets.C64P -rirelease
+
+["XDC" Settings: "Release"]
+Options=--xdcpathsfile="xdcpaths.dat" -tti.targets.C64P -rrelease
+
+["xdcpaths.dat" Settings: "Debug"]
+ExcludeFromBuild=true
+
+["xdcpaths.dat" Settings: "iDebug"]
+ExcludeFromBuild=true
+
+["xdcpaths.dat" Settings: "iRelease"]
+ExcludeFromBuild=true
+
+["xdcpaths.dat" Settings: "Release"]
+ExcludeFromBuild=true
+
+["xdcconfig\cfg.c" Settings: "Debug"]
+ExcludeFromBuild=true
+
+["xdcconfig\cfg.c" Settings: "iDebug"]
+ExcludeFromBuild=true
+
+["xdcconfig\cfg.c" Settings: "iRelease"]
+ExcludeFromBuild=true
+
+["xdcconfig\cfg.c" Settings: "Release"]
+ExcludeFromBuild=true

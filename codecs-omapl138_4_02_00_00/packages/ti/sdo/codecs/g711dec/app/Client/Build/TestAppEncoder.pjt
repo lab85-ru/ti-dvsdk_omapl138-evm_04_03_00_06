@@ -1,0 +1,33 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="V:\speech_codecs\mkrel\100_S_G711_X_ALL_C64XPLUS_1_11\G711_C64XPLUS\Client\Build\"
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Debug"
+
+[Source Files]
+Source="..\Test\Src\alg_create.c"
+Source="..\Test\Src\alg_malloc.c"
+Source="..\Test\Src\TestAppConfigParser.c"
+Source="..\Test\Src\TestAppEncoder.c"
+Source="TestAppEncoder.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-g -q -s -fr"$(Proj_dir)\Obj" -fs"$(Proj_dir)\Obj" -ft"$(Proj_dir)\Obj" -i"$(Proj_dir)\..\Test\Inc" -i"$(Proj_dir)\..\..\Inc" -i"$(Install_dir)\C6000\xdais\include" -i"$(Install_dir)\C6000\xdais\src\api" -i"$(Install_dir)\bios_5_21\packages\ti\bios\include" -ml3 -mr1 -mv6400+
+
+["Linker" Settings: "Debug"]
+Options=-q -a -c -m"$(Proj_dir)\Map\TestAppEncoder.map" -o"$(Proj_dir)\Out\TestAppEncoder.out" -w -x -i"$(Proj_dir)\..\..\..\Lib" -i"$(Install_dir)\C6000\cgtools\lib" -i"$(Install_dir)\bios_5_21\packages\ti\bios\lib" -l"rts64plus.lib" -l"g711enc_tii.l64P" -l"biosDM420.a64P"
+
+["TestAppEncoder.cmd" Settings: "Debug"]
+LinkOrder=1
+
+
+[Tools]
+ToolDeleteList 
+ToolAddCmd='$_custom_tool_$_1','API Database Editor',1342177312,'cwtedit.exe'
+ToolAddCmd='$_custom_tool_$_2','Paint',1342177312,'pbrush.exe'

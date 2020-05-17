@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: BIOS 5.41.03.17 Help
+Bundle-SymbolicName: com.ti.bios.rtscRegistry_5.41.3.17;singleton:=true
+Bundle-Version: 5.41.3.17
+Bundle-Activator: org.eclipse.rtsc.xdctools.ui.CCSActivator
+Bundle-Vendor: Texas Instruments
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.help,
+ org.eclipse.rtsc.xdctools.ui
+Eclipse-LazyStart: true

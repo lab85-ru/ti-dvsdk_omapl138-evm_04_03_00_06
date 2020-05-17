@@ -1,0 +1,87 @@
+/*
+ *  Copyright (c) 2010 by Texas Instruments and others.
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *
+ *  Contributors:
+ *      Texas Instruments - initial implementation
+ *
+ * */
+
+/*
+ *  ======== Platform_54_Group1.tci ========
+ *
+ */
+
+/*  PLEASE DO NOT REMOVE THE NEXT TWO LINES. THEY ARE USED BY GCONF.
+ *  !NAME! mycompany.platforms.myboard
+ *  !DESCRIPTION 54XX!  MyBoard with 96 KBytes of external memory
+ *
+ *  The "NAME" comment communicates the logical name of the platform to the
+ *  Graphical Config Tool (Gconf). This logical name must match the physical
+ *  directory where this Platform.tci file is located.
+ *
+ *  The "DESCRIPTION" comment specifies the tab in the Gconf File->New dialog,
+ *  and gives a text description of the platform displayed in that dialog.
+ *  The specified tab name does not need to be changed, while the text
+ *  description should be edited to describe your board.
+ */
+
+/*
+ * The array of memory objects 'mem_ext' defines off-chip memories accessible to
+ * the DSP. If there are no such memories, the array should be left empty.
+ * The property 'name' defines the name which you will use in your configuration
+ * to refer to this memory.
+ * The properties 'base' and 'len' are the address of the first byte and the
+ * size of the memory object in MAUs.
+ * The property 'space' determines if the memory is "code", "data", "code/data"
+ * or in some cases "io".
+ */
+var mem_ext = [];
+
+mem_ext[0] = {
+    comment: "64 KBytes of External Program Memory",
+    name: "EXT0",
+    base: 0x48000,
+    len:  0x08000,
+    space: "code"
+};
+
+mem_ext[1] = {
+    comment: "32 KBytes of External Data Memory",
+    name: "EXT1",
+    base: 0xA000,
+    len:  0x4000,
+    space: "data"
+};
+
+var device_regs = {
+    pmst:  0x7fac,  // defines memory map (MP/MC = 0, OVLY = 1, DROM = 0)
+    clkmd: 0x9007,  // defines the behavior of the clock generator
+    swwsr: 0x4492,  // controls the software-programmable waitstate generator
+    swcr:  0x0,     // controls the software-programmable waitstate generator
+    bscr:  0xa002   // controls programmable bank-switching logic
+    /* for more detailed description of the parameters see Tconf User's Guide,
+     * chapter 4
+     */
+};
+
+/* The structure 'params' is described in detail in the Tconf User's Guide,
+ * chapter "Tconf Platform Files". The Guide (SPRU007G) is located in
+ * the xdctools/doc directory. 
+ */
+var params = {
+    clockRate: 160,
+    catalogName: "ti.catalog.c5400",
+    deviceName: "5416",
+    regs: device_regs,
+    mem: mem_ext
+};
+
+utils.loadPlatform("ti.platforms.generic", params);
+/*
+ *  @(#) mycompany.platforms.myboard; 1, 0, 0,157; 2-8-2010 11:04:29; /db/ztree/library/trees/platform/platform-k29x/src/
+ */
+

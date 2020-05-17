@@ -1,0 +1,9 @@
+Package: ti-dsplink-src
+Version: 1_65_01_05_eng-r57i
+Description: Patched sources for ti-dsplink
+Section: devel
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: all
+Source: http://www.sanb.design.ti.com/tisb_releases/DSPLink/1_65_01_05/exports/dsplink_linux_1_65_01_05_eng.tar.gz;name=dsplinktarball            file://ti-dsplink-examples-run.sh            file://0001-switch-to-arago-tool-chain.patch

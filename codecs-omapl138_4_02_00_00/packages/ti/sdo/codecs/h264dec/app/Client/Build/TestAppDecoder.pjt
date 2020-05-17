@@ -1,0 +1,35 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="D:\Ramesh\H.264\h264dec_release\h264\decoder_bp\Releases\100_V_H264AVC_D_1_10_00\OMAP2430_BP_001\Client\Build\"
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Debug"
+
+[Source Files]
+Source="..\Test\Src\alg_control.c"
+Source="..\Test\Src\alg_create.c"
+Source="..\Test\Src\alg_malloc.c"
+Source="..\Test\Src\bios_rts.c"
+Source="..\Test\Src\buffermanager.c"
+Source="..\Test\Src\TestAppConfigParser.c"
+Source="..\Test\Src\TestAppDecoder.c"
+Source="..\Test\Src\tsc_h.asm"
+Source="H264VDecApp.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-g -q -s -fr"$(Proj_dir)\Obj" -fs"$(Proj_dir)\Obj" -ft"$(Proj_dir)\Obj" -i"$(Proj_dir)\..\Test\Inc" -i"$(Proj_dir)\..\..\Inc" -i"$(Install_dir)\bios_5_32_02\packages\ti\bios\include" -i"$(Install_dir)\bios_5_32_02\packages" -i"$(Install_dir)\framework_components_2_20_00_15\packages" -i"$(Install_dir)\framework_components_2_20_00_15\fctools\packages" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\acpy3" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\dman3" -d"C6000" -d"_DAVINCI" -d"TIMER_ON" -d"SELF_TESTXX" -d"_RTS_MODE" -d"FMO_DEV" -mo -mt -mw -mh256 -ml3 -mv6400+
+
+["DspBiosBuilder" Settings: "Debug"]
+Options=-v6x
+
+["Linker" Settings: "Debug"]
+Options=-q -a -c -m"$(Proj_dir)\Map\H264VDecApp.map" -o"$(Proj_dir)\Out\H264VDecApp.out" -w -x -i"$(Proj_dir)\..\..\..\lib" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\dman3" -i"$(Install_dir)\bios_5_32_02\packages\ti\bios\lib" -i"$(Install_dir)\C6000\cgtools\lib" -i"$(Install_dir)\framework_components_2_20_00_15\packages\ti\sdo\fc\dman3\lib" -l"h264vdec_ti.l64P" -l"dman3.a64P" -l"biosDM420.a64P" -l"rts64plus.lib" --default_order --args250
+
+["H264VDecApp.cmd" Settings: "Debug"]
+LinkOrder=1
+

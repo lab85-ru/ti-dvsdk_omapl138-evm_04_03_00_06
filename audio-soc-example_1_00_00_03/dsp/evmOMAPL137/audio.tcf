@@ -1,0 +1,102 @@
+/* --COPYRIGHT--,BSD
+ * Copyright (c) 2010, Texas Instruments Incorporated
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * *  Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * *  Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * --/COPYRIGHT--*/
+
+/*
+ *  ======== audio.tcf ========
+ *  Configuration script used to generate the example's configuration files
+ */
+
+/*
+ *  Load the evmOMAPL137 settings that are common to most examples.
+ */
+
+utils.loadPlatform("ti.platforms.evmOMAPL137");
+
+/* 
+ * Import DSPLink platfrom specific file configuration 
+ * This file will setup DSP memory according to expected
+ * ARM configuration for DSPLink.
+ */
+utils.importFile("dsplink-omapl1xxgem-base.tci");
+
+/*
+ *  The following statements will enable the MAR bits for MAR 128 to MAR 143. 
+ *  This will make the external memory range (0x80000000-0x8FFFFFFF) cacheable.
+ */
+
+bios.GBL.C64PLUSCONFIGURE = 1;
+bios.GBL.C64PLUSMAR128to159 = 0x0000ffff;
+
+/* Create a heap in external memory */ 
+bios.MEM.instance("SDRAM").createHeap = 1;
+bios.MEM.instance("SDRAM").heapSize = 0x00030000;
+/* Place all code sections in External Memory */
+bios.setMemCodeSections(prog, prog.get("SDRAM"));
+bios.setMemDataHeapSections(prog, prog.get("SDRAM"));
+bios.setMemDataNoHeapSections (prog, prog.get("SDRAM")) ;
+
+/* Set TSK stack to be placed in External Memory */
+bios.TSK.STACKSEG = prog.get("SDRAM");
+
+/* Increase the system stack size */ 
+bios.MEM.STACKSIZE = 0x10000;
+
+/* Set Arg size as required by DSP/BIOS Link */
+bios.MEM.ARGSSIZE = 0x0032;
+
+/* 
+ *  Allow DSP to reset timer since ARM Linux should be configured 
+ *  not touch this timer. (Uses Timer1 by default)
+ */ 
+bios.CLK.RESETTIMER = 1;
+
+/* Enable ECM Handler */
+bios.ECM.ENABLE = 1;
+
+/* ECM configuration */
+bios.HWI.instance("HWI_INT7").interruptSelectNumber = 0;
+bios.HWI.instance("HWI_INT8").interruptSelectNumber = 1;
+bios.HWI.instance("HWI_INT9").interruptSelectNumber = 2;
+bios.HWI.instance("HWI_INT10").interruptSelectNumber = 3;
+
+/*
+ *  Import the generic framework configuration settings  
+ */
+utils.importFile("app.tci");
+
+/*  Import the audio driver configuration */
+utils.importFile("audioDriver.tci");
+
+// !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+
+if (config.hasReportedError == false) {
+    prog.gen();
+}

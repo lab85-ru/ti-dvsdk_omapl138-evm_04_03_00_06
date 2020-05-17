@@ -1,0 +1,667 @@
+#!/bin/bash
+#---------------------------------------------------------------------------
+# This is a wrapper script for TI cl6x using the C6RunApp build system
+#---------------------------------------------------------------------------
+#
+#############################################################################
+#                                                                           #
+#   Copyright (C) 2010 Texas Instruments Incorporated                       #
+#     http://www.ti.com/                                                    #
+#                                                                           #
+#############################################################################
+#
+#############################################################################
+#                                                                           #
+#  Redistribution and use in source and binary forms, with or without       #
+#  modification, are permitted provided that the following conditions       #
+#  are met:                                                                 #
+#                                                                           #
+#    Redistributions of source code must retain the above copyright         #
+#    notice, this list of conditions and the following disclaimer.          #
+#                                                                           #
+#    Redistributions in binary form must reproduce the above copyright      #
+#    notice, this list of conditions and the following disclaimer in the    #
+#    documentation and/or other materials provided with the                 #
+#    distribution.                                                          #
+#                                                                           #
+#    Neither the name of Texas Instruments Incorporated nor the names of    #
+#    its contributors may be used to endorse or promote products derived    #
+#    from this software without specific prior written permission.          #
+#                                                                           #
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS      #
+#  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT        #
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR    #
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT     #
+#  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,    #
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT         #
+#  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,    #
+#  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY    #
+#  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      #
+#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE    #
+#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.     #
+#                                                                           #
+#############################################################################
+
+# Specify version number of tool
+VERSION=1.2.0.0
+
+# Get working directory from which this script was called
+CURR_WORK_DIR=`pwd`
+
+# Attempt to get name and path of this script
+ABSPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+PROGNAME=`basename $ABSPATH` # strip off path
+PROGDIR=`dirname $ABSPATH`
+
+# Select release mode libraries as default
+DEBUG_OR_RELEASE=Release
+
+# Default all log data to not be kept
+DEBUGOUT=/dev/null
+
+# Default to not replace the native malloc routines
+USE_C6RUN_MALLOC=FALSE
+
+# Default to not save the unstripped DSP executable
+SAVE_DSP_IMAGE=FALSE
+
+# Check if there are no command-line inputs
+if [ $# -eq 0 ]; then
+  echo "$PROGNAME: no input files"
+  exit 1
+fi
+
+# Default executable output name (matches GCC default)
+OUT_FILENAME="a.out"
+OUT_PATH="$PWD"
+OUT_FILENAME_GIVEN="FALSE"
+LINK="TRUE"
+
+# Disable DSP->GPP RPC by default
+RPC_ENABLED='0'
+RPC_STUBS_BIN_HEADER="_rpc_stubs_lib_.h"
+
+
+###########################################################################
+# Execute environment.sh to get certain enviroment variables              #
+###########################################################################
+
+C6RUN_INSTALL_DIR=${PROGDIR}/..
+unset DSP_CFLAGS
+source ${C6RUN_INSTALL_DIR}/c6run-environment.sh
+
+
+###########################################################################
+# Set default compiler and linker options for both ARM and DSP            #
+###########################################################################
+
+# Default applied options for TI c6000 compiler
+CL6X_CCARGS="${DSP_CFLAGS} -c -q --gcc --display_error_number"
+CL6X_LNKARGS="--run_linker -c -q -w --priority --display_error_number --diag_suppress=10063 --diag_suppress=10247"
+
+# Default applied options for ARM gcc cross-compiler
+GNU_CCARGS="${CFLAGS} -std=gnu99 \
+  -Wall -Wdeclaration-after-statement -Wno-trigraphs \
+  -fPIC -fno-strict-aliasing -fno-common -fno-omit-frame-pointer"
+
+  
+###########################################################################
+# Top-level functions for displaying help and version info                #
+###########################################################################
+
+showusage() {
+  cat <<END_OF_HELP
+Usage: $PROGNAME [options] file...
+Options:
+  --help                   Display this information
+  --target-help            Display target specific command line options
+  -E                       Preprocess only; do not compile, assemble or link
+  -S                       Compile only; do not assemble or link
+  -c                       Compile and assemble, but do not link
+  -o <file>                Place the output into <file>
+END_OF_HELP
+}
+
+showtargetusage() {
+  cat <<END_OF_TARGET_HELP
+The following options are target specific:
+  --C6Run:debug            Build app with debug versions of libraries
+  --C6Run:release          Build app with release versions of libraries
+END_OF_TARGET_HELP
+}
+
+showversion() {
+  echo "c6runapp-cc (TI C6Run Project) $VERSION"
+  echo "Copyright (C) 2010 Texas Instruments, Inc."
+  echo "This program is free software, licensed under the terms of"
+  echo "the New BSD License.  This program has absolutely no warranty."
+  echo
+}
+
+ 
+###########################################################################
+# For loop to change gcc options to cl6x options. This is the main body   #
+# of this tool.                                                           #
+###########################################################################
+while [ "$1" ]
+do 
+case $1 in
+# Display help
+--help )
+  showusage
+  exit 0
+  ;;
+--target-help )
+  showtargetusage
+  exit 0
+  ;;
+# Display version info  
+-v | --version )
+  showversion
+  #${CODEGEN_INSTALL_DIR}/bin/cl6x -version 2>&1 | grep "Compiler"
+  exit 0
+  ;;
+
+# Enable DSP->GPP RPC calls
+--rpc )
+  RPC_ENABLED='1'
+  ;;
+  
+# C6Run specific options
+--C6Run:* )
+  C6RUN_OPTION="`echo ${1#*C6Run:} | tr '[:upper:]' '[:lower:]'`"
+  case $C6RUN_OPTION in
+    debug )
+      DEBUG_OR_RELEASE=Debug
+      CL6X_CCARGS="$CL6X_CCARGS -g -d"_DEBUG" "
+      DEBUGOUT=debug.$PROGNAME.log
+      if [ -e $DEBUGOUT ]; then
+        rm -Rf $DEBUGOUT
+      fi
+    ;;
+    release )
+      DEBUG_OR_RELEASE=Release
+      DEBUGOUT=/dev/null
+    ;;
+    replace_malloc )
+      USE_C6RUN_MALLOC=TRUE
+    ;;
+    no_replace_malloc )
+      USE_C6RUN_MALLOC=FALSE
+    ;;
+    save_dsp_image )
+      SAVE_DSP_IMAGE=TRUE
+    ;;
+  esac
+  ;;
+
+# Compile only but do not link
+-c )
+  # Don't need to add this to CL6X_CCARGS, as it is already there
+  LINK="FALSE"
+  ;;
+# Skip assembly
+-S )
+  CL6X_CCARGS="$CL6X_CCARGS -n"
+  LINK="FALSE"
+  ;;
+# Pre-process only
+-E )
+  CL6X_CCARGS="$CL6X_CCARGS -ppo"
+  LINK="FALSE"  
+  ;;
+
+# Specify output filename
+-o* )
+  OUT_FILENAME=${1#-o}
+  if [ -z "$OUT_FILENAME" ]; then
+    OUT_FILENAME=$2
+    shift
+  fi
+  OUT_PATH=${OUT_FILENAME%/*}
+  if [ "$OUT_PATH" = "$OUT_FILENAME" ]; then
+    OUT_PATH=.
+  fi
+  OUT_FILENAME_GIVEN="TRUE"
+  ;;
+
+# Supported Target Chip Platforms
+-mcpu=* )
+  # Ignore (since this info is determined by platform config)
+  ;;
+# Support C674x floating point architecture
+-march=* )
+  # Ignore (since this info is determined by platform config)
+  ;;
+-mtune=* )
+  # Ignore
+  ;;
+-mv* )
+  # Ignore (and don't pass to cl6x since this info is determined by platform config)
+  ;;
+
+# Directory options
+-I* )
+  DIR="${1#-I}"
+  if [ -z "$DIR" ]; then
+    DIR=$2
+    shift
+  fi
+  CL6X_CCARGS="$CL6X_CCARGS --include_path=${DIR}"
+  ;;
+-iquote* )
+  DIR="${1#-iquote}"
+  if [ -z "$DIR" ]; then
+    DIR=$2
+    shift
+  fi
+  CL6X_CCARGS="$CL6X_CCARGS --include_path=${DIR}"
+  ;;
+-L* )
+  DIR="${1#-L}"
+  if [ -z "$DIR" ]; then
+    DIR=$2
+    shift
+  fi  
+  CL6X_LNKARGS="$CL6X_LNKARGS --search_path=${DIR}"
+  ;;
+  
+# Preprocessor options
+-D* )
+  DEFINEVAL="${1#-D}"
+  if [ -z "$DEFINEVAL" ]; then
+    DEFINEVAL=$2
+    shift
+  fi  
+  CL6X_CCARGS="$CL6X_CCARGS --define=${DEFINEVAL}"
+  ;;
+-U* )
+  DEFINEVAL="${1#-U}"
+  if [ -z "$DEFINEVAL" ]; then
+    DEFINEVAL=$2
+    shift
+  fi  
+  CL6X_CCARGS="$CL6X_CCARGS --undefine=${DEFINEVAL}"
+  ;;
+-M | -MM )
+  CL6X_CCARGS="$CL6X_CCARGS --preproc_dependency"
+  ;;
+-C | -CC )
+  CL6X_CCARGS="$CL6X_CCARGS --preproc_with_comments"
+  ;;
+-undef )
+  ;;
+-include* )
+  FILE="${1#-include}"
+  if [ -z "$FILE" ]; then
+    FILE=$2
+    shift
+  fi    
+  CL6X_CCARGS="$CL6X_CCARGS --preinclude=${FILE}"
+  PP_OPTS="$PP_OPTS -include ${FILE}"
+  ;;
+
+# Library options
+-l* )
+  LIBRARY="${1#-l}"
+  if [ -z "$LIBRARY" ]; then
+    LIBRARY=$2
+    shift
+  fi  
+  CL6X_LNKARGS="$CL6X_LNKARGS --library=${LIBRARY}"
+  ;;
+
+# Debug and Optimization options
+-g | -O0 | -O1 | -O2 | -O3 )  
+  CL6X_CCARGS="$CL6X_CCARGS $1"
+  ;;
+-O )
+  CL6X_CCARGS="$CL6X_CCARGS -O1"
+  ;;
+
+# Warning and diagnostic options
+-w )
+  CL6X_CCARGS="$CL6X_CCARGS --no_warnings"
+  ;;
+# FIXME - Add appropriate warnings if any
+-W | -Wextra )
+  CL6X_CCARGS="$CL6X_CCARGS"
+  ;;
+-Wall )
+  CL6X_CCARGS="$CL6X_CCARGS --display_error_number --verbose_diagnostics"
+  ;;
+
+# Optimization options
+-fno-inline )
+  CL6X_CCARGS="$CL6X_CCARGS --no_inlining"
+  ;;
+-finline-limit=* )
+  LIMIT=`echo $1 | sed -e 's/^-finline-limit=\(.*\)/\1/'`
+  CL6X_CCARGS="$CL6X_CCARGS --auto_inline=$LIMIT"
+  ;;
+
+# Ignore these gcc optimization options
+-fno-default-inline | -fno-defer-pop | -fforward-propagate | -fomit-frame-pointer \
+| -foptimize-sibling-calls | -finline-small-functions | -findirect-inlining \
+| -finline-functions | -finline-functions-called-once | -fearly-inlining | -fipa-sra \
+| -fkeep-inline-functions | -fkeep-static-consts | -fmerge-constants \
+| -fmerge-all-constants | -fmodulo-sched | -fmodulo-sched-allow-regmoves| -fno-branch-count-reg \
+| -fno-function-cse | -fno-zero-initialized-in-bss | -fmudflap | -fmudflapth | -fmudflapir \
+| -fthread-jumps | -fsplit-wide-types | -fcse-follow-jumps | -fcse-skip-blocks | -frerun-cse-after-loop \
+| -fgcse | -fgcse-lm | -fgcse-sm | -fgcse-las | -fgcse-after-reload | -funsafe-loop-optimizations \
+| -fcrossjumping | -fauto-inc-dec | -fdce | -fdse | -fif-conversion | -fif-conversion2 \
+| -fdelete-null-pointer-checks | -fexpensive-optimizations | -foptimize-register-move \
+| -fregmove | -fira-algorithm=* | -fira-region=* | -fira-coalesce | -fno-ira-share-save-slots \
+| -fno-ira-share-spill-slots | -fira-verbose=* | -fdelayed-branch | -fschedule-insns | -fschedule-insns2 \
+| -fno-sched-interblock | -fno-sched-spec | -fsched-pressure | -fsched-spec-load | -fsched-spec-load-dangerous \
+| -fsched-stalled-insns | -fsched-stalled-insns=* | -fsched-stalled-insns-dep | -fsched-stalled-insns-dep=* \
+| -fsched2-use-superblocks | -fsched-group-heuristic | -fsched-critical-path-heuristic | -fsched-spec-insn-heuristic \
+| -fsched-rank-heuristic | -fsched-last-insn-heuristic | -fsched-dep-count-heuristic | -fsched2-use-traces \
+| -freschedule-modulo-scheduled-loops | -fselective-scheduling | -fselective-scheduling2 \
+| -fsel-sched-pipelining | -fsel-sched-pipelining-outer-loops | -fcaller-saves | -fconserve-stack \
+| -ftree-reassoc | -ftree-pre | -ftree-forwprop | -ftree-fre | -ftree-phiprop | -ftree-copy-prop \
+| -fipa-pure-const | -fipa-reference | -fipa-struct-reorg | -fipa-pta | -fipa-cp | -fipa-cp-clone \
+| -fipa-matrix-reorg | -ftree-sink | -ftree-ccp | -ftree-switch-conversion | -ftree-dce \
+| -ftree-builtin-call-dce | -ftree-dominator-opts | -ftree-dse | -ftree-ch | -ftree-loop-optimize \
+| -ftree-loop-linear | -floop-interchange | -floop-strip-mine | -floop-block | -fgraphite-identity \
+| -floop-parallelize-all | -fcheck-data-deps | -ftree-loop-distribution | -ftree-loop-im \
+| -ftree-loop-ivcanon | -fivopts | -ftree-parallelize-loops=* | -ftree-pta | -ftree-sra \
+| -ftree-copyrename | -ftree-ter | -ftree-vectorize | -ftree-vect-loop-version | -fvect-cost-model \
+| -ftree-vrp | -ftracer | -funroll-loops | -funroll-all-loops | -fsplit-ivs-in-unroller \
+| -fvariable-expansion-in-unroller | -fpredictive-commoning | -fprefetch-loop-arrays | -fno-peephole \
+| -fno-peephole2 | -fno-guess-branch-probability | -freorder-blocks | -freorder-blocks-and-partition \
+| -freorder-functions | -fstrict-aliasing | -fstrict-overflow | -falign-functions | -falign-functions=* \
+| -falign-labels | -falign-labels=* | -falign-loops | -falign-loops=* | -falign-jumps | -falign-jumps=* \
+| -funit-at-a-time | -fno-toplevel-reorder | -fweb | -fwhole-program | -fcprop-registers | -fprofile-correction \
+| -fprofile-dir=* | -fprofile-generate | -fprofile-generate=* | -fprofile-use | -fprofile-use=* \
+| -ffloat-store | -fexcess-precision=* | -ffast-math | -fno-math-errno | -funsafe-math-optimizations \
+| -fassociative-math | -freciprocal-math | -ffinite-math-only | -fno-signed-zeros | -fno-trapping-math \
+| -frounding-math | -fsignaling-nans | -fsingle-precision-constant | -fcx-limited-range | -fcx-fortran-rules \
+| -fbranch-probabilities | -fprofile-values | -fvpt | -frename-registers | -ftracer | -funroll-loops \
+| -funroll-all-loops | -fpeel-loops | -fmove-loop-invariants | -funswitch-loops | -ffunction-sections \
+| -fdata-sections | -fbranch-target-load-optimize | -fbranch-target-load-optimize2 | -fbtr-bb-exclusive \
+| -fstack-protector | -fstack-protector-all | -fsection-anchors )
+  ;;
+
+# Ignore these GCC warning options
+-Wmissing-prototypes | -Wmissing-declarations | -Wmissing-field-initializers \
+| -Wstrict-prototypes | -Wwrite-strings | -Winline | -Wno-uninitialized   \
+| -Wno-format | -Wno-trigraphs | -Wno-unused | -Wno-pointer-sign )
+  ;;  
+
+# Ignore these other gcc options
+-msoft-float | -ffreestanding | -nostdinc  \
+| -fno-inline-functions | -finhibit-size-directive | -fno-exceptions   \
+| -fno-builtin | -fexceptions | -pipe   \
+| --param | max-inline-insns=* \
+| -frename-registers | -falign-functions=* | -fno-strict-aliasing   \
+| -fno-common | -ffixed-r13 | -mb-step | -traditional       \
+| -mpreferred-stack-boundary=2 | -fplugin=* | -fplugin-arg* | -malign-functions=*   \
+| -malign-jumps=* | -malign-loops=* | -gstabs )
+  ;;
+
+# Sources are collected (c files, assembly files, linear assembly files)
+*.c | *.s | *.sa )
+  if [ ! -e $1 ]; then
+    echo "$PROGNAME: $1: No such file or directory"
+  else
+    SOURCES="$1 ${SOURCES}"
+  fi
+  ;;
+# Object files are collected
+*.o | *.lib | *.obj | *.a )
+  if [ ! -e $1 ]; then
+    echo "$PROGNAME: $1: No such file or directory"
+  else
+    OBJECTSFROMFILE="$OBJECTSFROMFILE $1"
+  fi
+  ;;
+
+#Input option files are collected
+@* )
+  CL6X_CCARGS="$CL6X_CCARGS -$1"
+  ;;
+# Get Linker command file
+-T )
+  CL6X_LNKARGS="$CL6X_LNKARGS $2"
+  shift
+  ;;
+# All other options are passed as is
+-* )
+  CL6X_CCARGS="$CL6X_CCARGS $1"
+  ;;
+# Anything else is ignored
+* )
+  ;;
+esac
+shift
+done 
+
+
+##################################################
+# Post Modification/Checking of compiler options #
+##################################################
+
+# Insert RPC-related targets FIXME but not like this! there's got to be a better way
+if [ $RPC_ENABLED = '1' ]; then
+    RPC_DIR="${PROGDIR}/../rpc"
+    RPC_SOURCES="${RPC_DIR}/core/dsp_core.c"
+    RPC_OBJS="dsp_core.o"
+    
+    # Collect DSP-side stubs from the rpc/dsp directory
+    for fn in ${RPC_DIR}/dsp/*.c; do
+	    RPC_SOURCES="${fn} ${RPC_SOURCES} "
+	    FILENAME="${fn##*/}"
+        RPC_OBJS="${FILENAME%.*}.o ${RPC_OBJS}"
+    done
+    
+    SOURCES="${RPC_SOURCES} ${SOURCES}"	
+    OBJECTSFROMSOURCE="${RPC_OBJS} ${OBJECTSFROMSOURCE}"
+
+    # Collect GPP-side stubs from the rpc/gpp directory
+    for fn in ${RPC_DIR}/gpp/*.c; do
+	    RPC_STUBS_SOURCES="${fn} ${RPC_STUBS_SOURCES} "
+	    FILENAME="${fn##*/}"
+        RPC_STUBS_OBJS="${FILENAME%.*}.o ${RPC_STUBS_OBJS}"
+    done
+    
+    # Collect GPP-side function sources from the rpc/gpp_sources directory
+    for fn in ${RPC_DIR}/gpp_sources/*.c; do
+	    RPC_STUBS_SOURCES="${fn} ${RPC_STUBS_SOURCES} "
+	    FILENAME="${fn##*/}"
+        RPC_STUBS_OBJS="${FILENAME%.*}.o ${RPC_STUBS_OBJS}"
+    done
+    
+    RPC_STUBS_LIB="librpcstubs.so"
+fi
+
+# Make sure some sources were supplied
+if [ -z "$SOURCES" ]; then
+  if [ -z "$OBJECTSFROMFILE" ]; then
+    echo "$PROGNAME: no input files"
+    exit 1
+  fi
+fi
+
+# Update C6000 Compiler flags with standard header file locations
+CL6X_CCARGS="$CL6X_CCARGS -I${CODEGEN_INSTALL_DIR}/include"
+CL6X_CCARGS="$CL6X_CCARGS -I${C6RUN_INSTALL_DIR}/include -I${C6RUN_INSTALL_DIR}/include/c6run -I${C6RUN_INSTALL_DIR}/include/c6run/dsp"
+
+# Update the C6000 Linker flags with standard library locations
+CL6X_LNKARGS="$CL6X_LNKARGS --search_path=${CODEGEN_INSTALL_DIR}/lib"
+
+# Setup the C6RunApp lib names and linker command file for DSP side linking
+DSP_IMGCFILE="_dsp_program_data_.c"
+DSP_IMGOBJ="_dsp_program_data_.o"
+if [ ${DEBUG_OR_RELEASE} != "Debug" ]; then
+  DSP_C6RUNLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libc6run.a"
+  DSP_OSLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libos.a"
+  DSP_IPCLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libipc.a"
+  DSP_SMLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libsm.a"
+  DSP_LINKSCRIPT="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/c6rund.cmd"
+  GPP_C6RUNLIB="${C6RUN_INSTALL_DIR}/lib/c6run_gpp/libc6run.a"
+  GPP_MAINLIB="${C6RUN_INSTALL_DIR}/lib/c6run_gpp/libc6run_main.a"
+  GPP_MALLOCLIB="${C6RUN_INSTALL_DIR}/lib/c6run_gpp/libc6run_malloc.a"
+else
+  DSP_C6RUNLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libc6rund.a"
+  DSP_OSLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libosd.a"
+  DSP_IPCLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libipcd.a"
+  DSP_SMLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libsmd.a"
+  DSP_LINKSCRIPT="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/c6run.cmd"
+  GPP_C6RUNLIB="${C6RUN_INSTALL_DIR}/lib/c6run_gpp/libc6rund.a"
+  GPP_MAINLIB="${C6RUN_INSTALL_DIR}/lib/c6run_gpp/libc6run_maind.a"
+  GPP_MALLOCLIB="${C6RUN_INSTALL_DIR}/lib/c6run_gpp/libc6run_mallocd.a"
+fi
+
+
+##################################################
+# Actual compilation/linking steps               #
+##################################################
+
+# Generate RPC stubs dynamic library if RPC is enabled
+if [ $RPC_ENABLED = '1' ]; then
+  echo "Generating ARM side RPC stubs." >> $DEBUGOUT
+  ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}gcc -I${RPC_DIR}/core -fPIC -c ${RPC_STUBS_SOURCES}
+  ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}gcc -shared -lm -Wl,-soname,${RPC_STUBS_LIB} -o ${RPC_STUBS_LIB} ${RPC_STUBS_OBJS}
+fi 
+
+if [ $LINK = "TRUE" ]; then
+  # We are linking
+
+  if [ ! -z "$SOURCES" ]; then
+    # We have some source files that we need to compile
+    echo "Compiling user sources for DSP." >> $DEBUGOUT
+    echo "  ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_CCARGS} -eo=temp.o -ea=s -el=sa --obj_directory=${OUT_PATH} ${SOURCES}" >> $DEBUGOUT
+    ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_CCARGS} -eo=temp.o -ea=s -el=sa --obj_directory=${OUT_PATH} ${SOURCES}
+    retVal=$?
+    if [ $retVal -ne 0 ]; then
+      exit $retVal
+    fi
+  fi
+  
+  # Convert source file names to object file names
+  for OBJ in $SOURCES; do
+    FILENAME=${OBJ##*/}
+    OBJECTSFROMSOURCE="${OUT_PATH}/${FILENAME%.*}.temp.o $OBJECTSFROMSOURCE"
+  done
+
+  # Execute the DSP Linker (link OBJECTSFROMSOURCE and OBJECTSFROMFILE)
+  CL6X_LNKARGS="$CL6X_LNKARGS --output_file=${OUT_FILENAME}.dsp_image.out --map_file=${OUT_FILENAME}.dsp_image.map"
+  echo "Linking DSP side executable." >> $DEBUGOUT  
+  echo "  ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_LNKARGS} ${OBJECTSFROMSOURCE} ${OBJECTSFROMFILE} --library=${DSP_C6RUNLIB} --library=${DSP_IPCLIB} --library=${DSP_OSLIB} ${DSP_LINKSCRIPT} --library=libc.a" >> $DEBUGOUT
+  ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_LNKARGS} ${OBJECTSFROMSOURCE} ${OBJECTSFROMFILE} --library=${DSP_C6RUNLIB} --library=${DSP_IPCLIB} --library=${DSP_OSLIB} ${DSP_LINKSCRIPT} --library=libc.a >> $DEBUGOUT
+  retVal=$?
+  if [ $retVal -ne 0 ]; then
+    exit $retVal
+  fi
+  
+  # Keep a copy of the full DSP image (with symbolic debug info) if desired
+  if [ $SAVE_DSP_IMAGE = "TRUE" ]; then
+    cp ${OUT_FILENAME}.dsp_image.out ${OUT_FILENAME}.dsp
+  else
+    mv ${OUT_FILENAME}.dsp_image.out ${OUT_FILENAME}.dsp
+    rm -Rf ${OUT_FILENAME}.dsp_image.map
+  fi
+
+  # Convert the binary DSP program to a C file and then object file
+  # for embedding into the GPP executable
+  echo "Converting DSP executable to C array..." >> $DEBUGOUT
+  echo "  ${CODEGEN_INSTALL_DIR}/bin/strip6x ${OUT_FILENAME}.dsp" >> $DEBUGOUT
+  ${CODEGEN_INSTALL_DIR}/bin/strip6x ${OUT_FILENAME}.dsp
+  retVal=$?
+  if [ $retVal -ne 0 ]; then
+    exit $retVal
+  fi
+  echo "  Using od and sed to generate C file of DSP image data." >> $DEBUGOUT
+  echo "const unsigned char _dsp_program_data_[] = {" > ${DSP_IMGCFILE}
+  od -txC -v ${OUT_FILENAME}.dsp | \
+    sed -e "s/^[0-9]*//" -e "s/ \([0-9a-f][0-9a-f]\)/0x\1,/g" -e"\$d" | \
+    sed -e"\$s/,$/};/" >> ${DSP_IMGCFILE}
+  linecount=`wc -l < ${DSP_IMGCFILE}`
+  echo "" >> ${DSP_IMGCFILE}
+  echo "const unsigned int _dsp_program_data_size_ = ($linecount - 1) * 16;" >> ${DSP_IMGCFILE}
+  echo "Converting DSP executable data array to ARM object file..." >> $DEBUGOUT
+  echo "  ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}gcc ${CFLAGS} -c -o ${DSP_IMGOBJ} ${DSP_IMGCFILE}" >> $DEBUGOUT
+  ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}gcc ${CFLAGS} -c -o ${DSP_IMGOBJ} ${DSP_IMGCFILE}
+  retVal=$?
+  if [ $retVal -ne 0 ]; then
+    exit $retVal
+  fi
+  # Delete the stripped DSP image file now that we are done with it
+  rm -Rf ${OUT_FILENAME}.dsp
+  # FIXME - finish proper integration of dsp-rpc-posix
+  # Convert RPC GPP-side stubs lib to a C file for embedding into the GPP executable
+  if [ $RPC_ENABLED = '1' ]; then
+    echo "Converting RPC GPP-side stubs lib to C array." >> $DEBUGOUT
+    echo "const unsigned char rpc_stubs_lib[] = {" > ${RPC_STUBS_BIN_HEADER}
+    od -txC -v ${RPC_STUBS_LIB}  | sed -e "s/^[0-9]*//" -e s"/ \([0-9a-f][0-9a-f]\)/0x\1,/g" -e"\$d" | sed -e"\$s/,$/};/" >>  ${RPC_STUBS_BIN_HEADER}
+#  else
+#    echo "const unsigned char rpc_stubs_lib[] = {" > ${RPC_STUBS_BIN_HEADER}
+#    echo "0xef,0xbe,0xad,0xde};" >> ${RPC_STUBS_BIN_HEADER}
+  fi
+  
+  # Cross-compile executable for generating output ARM
+  echo "Compiling and linking ARM loader components." >> $DEBUGOUT
+  echo "Generating final ARM executable." >> $DEBUGOUT
+  echo "  ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}gcc ${CFLAGS} -lpthread -ldl -o ${OUT_FILENAME} ${GPP_MAINLIB} ${GPP_C6RUNOBJ} ${DSP_IMGOBJ} ${GPP_C6RUNLIB} " >> $DEBUGOUT
+  ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}gcc ${CFLAGS} -lpthread -ldl -o ${OUT_FILENAME} ${GPP_MAINLIB} ${GPP_C6RUNOBJ} ${DSP_IMGOBJ} ${GPP_C6RUNLIB}
+  retVal=$?
+
+  # Remove intermediate object files (ones generated from source files)
+  echo "Removing intermediate object files generated from source." >> $DEBUGOUT
+  echo "rm -f ${OBJECTSFROMSOURCE}" >> $DEBUGOUT
+  rm -f ${OBJECTSFROMSOURCE}
+  
+  # Remove RPC-related files
+  if [ $RPC_ENABLED = '1' ]; then  
+    echo "Removing RPC-related files." >> $DEBUGOUT
+    rm -f ${RPC_STUBS_OBJS}
+    rm -f ${RPC_STUBS_LIB}
+    rm -rf ${RPC_STUBS_BIN_HEADER}
+  fi   
+  
+  # Remove/cleanup leftover files
+  if [ ${DEBUG_OR_RELEASE} != "Debug" ]; then
+    echo "Removing intermediate DSP files (${DSP_IMGCFILE},${DSP_IMGOBJ})." >> $DEBUGOUT
+    rm -Rf ${DSP_IMGCFILE}
+    rm -Rf ${DSP_IMGOBJ}
+  fi
+else
+  # We are not linking
+  if [ ! -z "$OBJECTSFROMFILE" ]; then
+    # but we have input object files on the command line
+    arr_obj=( ${OBJECTSFROMFILE} )
+    for FILE in ${OBJECTSFROMFILE}; do
+      echo "$PROGNAME: $FILE:  linker input file unused because linking not done"
+    done
+    retVal=1
+  else
+    # and we have no object files specified on the command-line
+    if [ $OUT_FILENAME_GIVEN = "TRUE" ]; then
+      # and output file name is given
+      arr_src=( ${SOURCES} )
+      if [ ${#arr_src[*]} -ne 1 ]; then
+        # and if our input source file array consists of more than one item
+        echo "$PROGNAME: cannot specify -o with -c or -S with multiple files"
+        retVal=1
+      else
+        # and we only have one input source file, so compile it to output filename
+        echo "Compiling user source for DSP." >> $DEBUGOUT
+        echo "  ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_CCARGS} --output_file=${OUT_FILENAME} ${SOURCES}" >> $DEBUGOUT
+        ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_CCARGS} --output_file=${OUT_FILENAME} ${SOURCES}
+        retVal=$?
+      fi
+    else
+      # and output file name is not given, so compile all sources to current directory
+      if [ ! -z "$SOURCES" ]; then
+        echo "Compiling user sources for DSP." >> $DEBUGOUT
+        echo "  ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_CCARGS} -eo=o -ea=s -el=sa --obj_directory=${OUT_PATH} ${SOURCES}" >> $DEBUGOUT
+        ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_CCARGS} -eo=o -ea=s -el=sa --obj_directory=${OUT_PATH} ${SOURCES}
+        retVal=$?
+      fi
+    fi
+  fi
+fi
+
+exit $retVal
+

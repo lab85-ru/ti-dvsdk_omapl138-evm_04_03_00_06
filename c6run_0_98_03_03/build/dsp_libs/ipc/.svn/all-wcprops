@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/ipc
+END
+control_ipc.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/ipc/control_ipc.h
+END
+rpc_ipc.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/ipc/rpc_ipc.h
+END
+cio_ipc.h
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/dsp_libs/ipc/cio_ipc.h
+END

@@ -1,0 +1,9 @@
+Package: ti-edma3lld-src
+Version: 01_11_02_05-r2
+Description: Patched sources for ti-edma3lld
+Section: devel
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI TSPA
+Architecture: all
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/edma3_lld/edma3-lld-bios5/01_11_02_05/exports/EDMA3_LLD_setuplinux_01_11_02_05.bin;name=edma3lldbin

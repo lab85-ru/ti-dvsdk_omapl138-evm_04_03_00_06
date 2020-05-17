@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/lib/perl/GCC
+END
+MANIFEST
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/lib/perl/GCC/MANIFEST
+END
+Changes
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/lib/perl/GCC/Changes
+END
+TranslationUnit.pm
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/lib/perl/GCC/TranslationUnit.pm
+END
+Tree.pm
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/lib/perl/GCC/Tree.pm
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/lib/perl/GCC/README
+END

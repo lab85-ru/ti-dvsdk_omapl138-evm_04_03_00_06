@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/am_benchmarks/!svn/ver/63/trunk/armv7a/whetstone/Release
+END
+objects.mk
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/am_benchmarks/!svn/ver/63/trunk/armv7a/whetstone/Release/objects.mk
+END
+sources.mk
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/am_benchmarks/!svn/ver/63/trunk/armv7a/whetstone/Release/sources.mk
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/am_benchmarks/!svn/ver/63/trunk/armv7a/whetstone/Release/makefile
+END
+subdir.mk
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/am_benchmarks/!svn/ver/63/trunk/armv7a/whetstone/Release/subdir.mk
+END

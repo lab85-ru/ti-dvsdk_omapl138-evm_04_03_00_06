@@ -1,0 +1,95 @@
+<!--                                                                           -->
+<!--                                                                           -->
+<!-- {module name} desc_arm_multimedia_h264dec.html					 -->
+<!--                                                                           -->
+<!-- {module description} Description for arm multimedia H.264 video decoder   -->
+<!--                                                                           -->
+<!-- Copyright (C) {YEAR} Texas Instruments Incorporated - http://www.ti.com/  -->
+<!--                                                                           -->
+<!--                                                                           -->
+<!--  Redistribution and use in source and binary forms, with or without       -->
+<!--  modification, are permitted provided that the following conditions       -->
+<!--  are met:                                                                 -->
+<!--                                                                           -->
+<!--    Redistributions of source code must retain the above copyright         -->
+<!--    notice, this list of conditions and the following disclaimer.          -->
+<!--                                                                           -->
+<!--    Redistributions in binary form must reproduce the above copyright      -->
+<!--    notice, this list of conditions and the following disclaimer in the    -->
+<!--    documentation and/or other materials provided with the                 -->
+<!--    distribution.                                                          -->
+<!--                                                                           -->
+<!--    Neither the name of Texas Instruments Incorporated nor the names of    -->
+<!--    its contributors may be used to endorse or promote products derived    -->
+<!--    from this software without specific prior written permission.          -->
+<!--                                                                           -->
+<!--  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS      -->
+<!--  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT        -->
+<!--  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR    -->
+<!--  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT     -->
+<!--  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,    -->
+<!--  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT         -->
+<!--  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,    -->
+<!--  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY    -->
+<!--  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      -->
+<!--  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE    -->
+<!--  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.     -->
+<!--                                                                           -->
+<!--                                                                           -->
+<head>
+  <title>Multimedia</title>
+  <link rel="stylesheet" href="/usr/share/matrix/html/matrix.css" />
+</head>
+
+<body>
+  <div class="topBar">
+    <object>
+    </object>
+  </div>
+  <div class="topBar">
+    <object type="image/svg+xml" data="/usr/share/matrix/images/tex.svg" >
+    <img src="/usr/share/matrix/images/tex.svg" />
+  </div>
+  <div id="header">Multimedia on ARM</div>
+  <div class="topBar">
+    <object type="application/x-matrix" >
+      <param name="iconName" value="/usr/share/matrix/images/multi-icon.png" />
+      <param name="appName" value="Close" />
+    </object>
+  </div>
+  <div class="topBar">
+    <object>
+    </object>
+  </div>
+
+<h1> ARM H.264 Video Decode </h1>
+
+<p> This example demonstrates video content decoding capability of Cortex-A8 core using H.264 codec. The Multimedia framework used is GStreamer and gst-ffmpeg plug-in is used to call into open source FFmpeg codec libraries. </p>
+<p> The data file resolution has been modified to retain the original aspect ratio of 16:9. </p>
+
+<h2> Multimedia Pipeline </h2>
+<p>
+gst-launch <br>
+&nbsp;|_ h264parse <br>
+&nbsp; &nbsp;|_ ffdec_h264 <br>
+&nbsp; &nbsp; &nbsp;|_ v4l2/fbdev sink <br>
+</p>
+
+<h3> Plug-in Details </h3>
+<b> gst-ffmpeg </b> <br>
+Version:&nbsp; &nbsp; 0.10.11 <br>
+<b> FFmpeg </b> <br>
+Version:&nbsp; &nbsp; 0.6 <br>
+License:&nbsp; &nbsp; LGPL <br>
+
+  <div class="run">
+    <object type="application/x-matrix" >
+      <param name="iconName" value="/usr/share/matrix/images/run-icon.png" />
+      <param name="appName" value="Description" />
+    </object>
+  </div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,229 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== dgn.h28 ========
+;
+;
+
+        .if ($isdefed("DGN_H28") = 0)   ; prevent multiple includes of this file
+DGN_H28 .set    1
+
+        .include std.h28
+
+        .include cinit.h28
+        .include dev.h28
+
+DGN_Params              .struct
+constValue              Int     1
+randSeed                Long    1
+randLower               Int     1
+randUpper               Int     1
+sineGain                Int     1
+sineFreq                Int     1
+sinePhase               Int     1
+sineRate                Int     1
+userFxn         CodePtr 1
+userArg         Arg     1
+dummy                   .align  2
+DGN_A_PARAMSSIZE        .endstruct
+
+        .eval DGN_A_PARAMSSIZE, DGN_IPARSIZE
+
+isDgnParamsAligned      .set    2
+
+DGN_PARAMBASE   .set    DGN_Params.constValue
+DGN_O_CVALUE    .set    DGN_Params.constValue - DGN_PARAMBASE
+DGN_O_RSEED     .set    DGN_Params.randSeed - DGN_PARAMBASE
+DGN_O_RLOWER    .set    DGN_Params.randLower - DGN_PARAMBASE
+DGN_O_RUPPER    .set    DGN_Params.randUpper - DGN_PARAMBASE
+DGN_O_SGAIN     .set    DGN_Params.sineGain - DGN_PARAMBASE
+DGN_O_SFREQ     .set    DGN_Params.sineFreq - DGN_PARAMBASE
+DGN_O_SPHASE    .set    DGN_Params.sinePhase - DGN_PARAMBASE
+DGN_O_SRATE     .set    DGN_Params.sineRate - DGN_PARAMBASE
+DGN_O_UFXN      .set    DGN_Params.userFxn - DGN_PARAMBASE
+DGN_O_UARG      .set    DGN_Params.userArg - DGN_PARAMBASE
+
+DGN_GenObj              .struct
+fxn                     CodePtr 1
+arg                     Arg     1
+seed                    Long    1
+index                   Int     1
+step                    Int     1
+shift                   Int     1
+dparams                 DataPtr 1
+dummy                   .align  2
+DGN_A_GENOBJSIZE        .endstruct
+
+isDgnAligned            .set    2
+
+DGN_GENOBJBASE  .set    DGN_GenObj.fxn
+DGN_O_FXN       .set    DGN_GenObj.fxn - DGN_GENOBJBASE
+DGN_O_ARG       .set    DGN_GenObj.arg - DGN_GENOBJBASE
+DGN_O_SEED      .set    DGN_GenObj.seed - DGN_GENOBJBASE
+DGN_O_INDEX     .set    DGN_GenObj.index - DGN_GENOBJBASE
+DGN_O_STEP      .set    DGN_GenObj.step - DGN_GENOBJBASE
+DGN_O_SHIFT     .set    DGN_GenObj.shift - DGN_GENOBJBASE
+DGN_O_DPARAMS   .set    DGN_GenObj.dparams - DGN_GENOBJBASE
+
+;
+;# ======== DGN_config ========
+;  Static configuration of the DGN module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DGN_config$regs
+DGN_config      .macro _enabled
+
+        .global _DGN_iconst
+        .global _DGN_irand
+        .global _DGN_isine
+        .global _DGN_user
+
+        .asg    _DGN_iconst, DGN_CONST
+        .asg    _DGN_irand,  DGN_RAND
+        .asg    _DGN_isine,  DGN_SINE
+        .asg    _DGN_user,   DGN_USER
+
+        .endm
+
+;
+;# ======== DGN_end ========
+;  Invoked at the end of all other configuration declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DGN_end$regs
+DGN_end .macro
+        .endm
+
+;
+;# ======== DGN_init ========
+;  Runtime initialization of the DGN module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DGN_init$regs
+DGN_init        .macro
+        .endm
+
+;
+;# ======== DGN_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", DGN_startup$regs
+DGN_startup        .macro
+        .if     DGN$NUMOF != 0
+
+        ;
+        ; DGN_init is #defined as SYS_nop in dgn.h,
+        ; so we won't do anything here.
+        ;
+        ;.global _DGN_init
+        ; call   _DGN_init
+
+        .endif
+        .endm
+
+;
+;# ======== DGN_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DGN_Obj$regs
+DGN_Obj .macro cflag, name, id, _useDefaults, _devId, _constant, _randSeed, _randLower, _randUpper, _sineGain, _sineFreq, _sinePhase, _sineRate, _userFxn, _userArg
+
+  .sect ".econst"
+DGN_:name:      .byte   "/:name:", 0    ; Set up string "/<devName>"
+
+  .if (:_useDefaults: == 0)
+
+; Reserve space for this device's parameters
+;
+    C28_allocateObject isDgnParamsAligned, SIO_:name:$params, DGN_IPARSIZE, ".dgn", 0
+
+    .if $isname(":_userFxn:")
+      .ref :_userFxn:
+    .endif
+
+    .if $isname(":_userArg:")
+        ;
+        ; This symbol declaration/reference needs to be performed
+        ; using a .global instead of a .ref.  This is due to the
+        ; fact that _userArg might be defined within the same cfg
+        ; file that uses this DGN_Obj macro (in the case where
+        ; _userArg is a reference to a symbol that is created
+        ; within the configuration) and you get an assembler warning
+        ; if you try to .ref a symbol which is already defined.
+        ;
+        .global :_userArg:
+    .endif
+
+; .cinit this device's parameters
+;
+    C28_cinitHeader CINITALIGN, isDgnParamsAligned, SIO_:name:$params, DGN_IPARSIZE
+    C28_cinitBegin      isDgnParamsAligned
+
+    C28_cinitInt        :_constant:
+    C28_cinitLong       :_randSeed:
+    C28_cinitInt        :_randLower:
+    C28_cinitInt        :_randUpper:
+    C28_cinitInt        :_sineGain:
+    C28_cinitInt        :_sineFreq:
+    C28_cinitInt        :_sinePhase:
+    C28_cinitInt        :_sineRate:
+    C28_cinitCodePtr    :_userFxn:
+    C28_cinitArg        :_userArg:
+
+    C28_cinitEnd        isDgnParamsAligned
+
+  .else
+;
+; This matches SIO_:_device:$params in sio.h28
+;
+SIO_:name:$params       .set    0       ; to select default paramters, use NULL
+
+  .endif                                ; .if(:_useDefaults == 0)
+
+;
+; .cinit the entries in DEV_devtab as well as DEV_devinit for this device
+; via the DEV_addDevice macro.
+;
+  .global  _DGN_FXNS
+  DEV_addDevice DGN_:name:, _DGN_FXNS, :_devId:, SIO_:name:$params, 0, DEV_SIOTYPE, 0
+
+        .endm
+
+        .endif          ; if DGN_H28 is not defined
+

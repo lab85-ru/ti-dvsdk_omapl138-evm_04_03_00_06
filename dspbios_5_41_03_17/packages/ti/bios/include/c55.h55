@@ -1,0 +1,3747 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+; ======== c55.h55 ========
+; C55 miscellaneous macros 
+;
+;
+
+        .if ($isdefed("C55_") = 0)   ; prevent multiple includes of this file
+C55_    .set    1
+
+        .mmregs
+        .include hwi.h55
+;
+; The following .set definitions assign hex values to those names that 
+; represent single or group C55 registers. Most likely, those names will be 
+; used when the HWI_enter and HWI_exit macros are invoked.
+;
+
+
+
+C55_AR0_L       .set      01h
+C55_AR1_L       .set      02h
+C55_AR2_L       .set      04h
+C55_AR3_L       .set      08h
+C55_AR4_L       .set      10h
+C55_AR5_L       .set      20h
+C55_AR6_L       .set      40h
+C55_AR7_L       .set      80h
+C55_T0_L        .set      100h
+C55_T1_L        .set      200h
+C55_T2_L        .set      400h
+C55_T3_L        .set      800h
+
+C55_ALL_AR_DR_REGS  .set  C55_AR0_L|C55_AR1_L|C55_AR2_L|C55_AR3_L|C55_AR4_L| C55_AR5_L|C55_AR6_L|C55_AR7_L|C55_T0_L|C55_T1_L|C55_T2_L|C55_T3_L
+
+
+C55_CPRESERVED  .set    C55_AR5_L|C55_AR6_L|C55_AR7_L|C55_T2_L|C55_T3_L
+
+C55_AC0_L       .set    10h
+C55_AC0_H       .set    20h
+C55_AC0_G       .set    40h
+C55_AC1_L       .set    80h
+C55_AC1_H       .set    100h
+C55_AC1_G       .set    200h
+C55_AC2_L       .set    400h
+C55_AC2_H       .set    800h
+C55_AC2_G       .set    1000h
+C55_AC3_L       .set    2000h
+C55_AC3_H       .set    4000h
+C55_AC3_G       .set    8000h
+
+C55_ALL_ACC_REGS .set   C55_AC0_L|C55_AC0_H|C55_AC0_G|C55_AC1_L|C55_AC1_H|C55_AC1_G|C55_AC2_L|C55_AC2_H|C55_AC2_G|C55_AC3_L|C55_AC3_H|C55_AC3_G
+
+
+
+C55_IMR0_L      .set    01h
+C55_IFR0_L      .set    02h
+C55_DBIMR0_L    .set    04h
+C55_IMR1_L      .set    08h
+C55_IFR1_L      .set    10h
+C55_DBIMR1_L    .set    20h
+C55_ST0_L       .set    40h
+C55_ST1_L       .set    80h
+C55_ST2_L       .set    100h
+C55_ST3_L       .set    200h
+C55_TRN0_L      .set    800h
+C55_BK03_L      .set    1000h
+C55_BRC0_L      .set    2000h
+C55_DP_H        .set    4000h
+C55_CDP_H       .set    8000h
+
+C55_ALL_MISC1_REGS .set C55_IMR0_L|C55_IFR0_L|C55_DBIMR0_L|C55_IMR1_L|C55_IFR1_L|C55_DBIMR1_L|C55_ST0_L|C55_ST1_L|C55_ST2_L|C55_ST3_L|C55_TRN0_L|C55_BK03_L|C55_BRC0_L|C55_DP_H|C55_CDP_H
+
+C55_DP_L        .set    01h
+C55_CDP_L       .set    02h
+C55_MDP_L       .set    04h
+                                        ; removed C55_MDP05_L and
+                                        ; C55_MDP67_L mask definitions
+                                        ; as they are not part of
+                                        ; the register set.
+C55_PDP_L       .set    20h
+C55_BK47_L      .set    40h
+C55_BKC_L       .set    80h
+C55_BOF01_L     .set    100h
+C55_BOF23_L     .set    200h
+C55_BOF45_L     .set    400h
+C55_BOF67_L     .set    800h
+C55_BOFC_L      .set    1000h
+C55_IVPD_L      .set    2000h
+C55_IVPH_L      .set    4000h
+C55_TRN1_L      .set    8000h
+
+
+C55_ALL_MISC2_REGS   .set C55_DP_L|C55_CDP_L|C55_MDP_L|C55_PDP_L|C55_BK47_L|C55_BKC_L|C55_BOF01_L|C55_BOF23_L|C55_BOF45_L|C55_BOF67_L|C55_BOFC_L|C55_IVPD_L|C55_IVPH_L|C55_TRN1_L
+
+
+
+C55_BRC1_L      .set    01h
+C55_BRS1_L      .set    02h                     
+C55_CSR_L       .set    04h
+C55_RSA0_H      .set    08h
+C55_RSA0_L      .set    10h
+C55_REA0_H      .set    20h
+C55_REA0_L      .set    40h
+C55_RSA1_H      .set    80h
+C55_RSA1_L      .set    100h
+C55_REA1_H      .set    200h
+C55_REA1_L      .set    400h
+C55_RPTC_L      .set    800h
+
+C55_ALL_MISC3_REGS  .set C55_BRC1_L|C55_BRS1_L|C55_CSR_L|C55_RSA0_H|C55_RSA0_L|C55_REA0_H|C55_REA0_L|C55_RSA1_H|C55_RSA1_L|C55_REA1_H|C55_REA1_L|C55_RPTC_L
+
+
+C55_AR03_MASK   .set    C55_AR0_L|C55_AR1_L|C55_AR2_L|C55_AR3_L
+C55_AR04_MASK   .set    C55_AR0_L|C55_AR1_L|C55_AR2_L|C55_AR3_L|C55_AR4_L
+C55_AR57_MASK   .set    C55_AR5_L|C55_AR6_L|C55_AR7_L
+
+C55_T01_MASK    .set    C55_T0_L|C55_T1_L
+C55_T23_MASK    .set    C55_T2_L|C55_T3_L
+C55_IMR01_MASK  .set    C55_IMR0_L|C55_IMR1_L
+C55_AR04_T01_MASK       .set    C55_AR04_MASK|C55_T01_MASK
+C55_AR57_T23_MASK       .set    C55_AR57_MASK|C55_T23_MASK
+C55_ST02_MASK   .set    C55_ST0_L|C55_ST1_L|C55_ST2_L
+C55_ST03_MASK   .set    C55_ST0_L|C55_ST1_L|C55_ST2_L|C55_ST3_L
+C55_T_MASK      .set    C55_T0_L|C55_T1_L|C55_T2_L|C55_T3_L
+C55_AR07_MASK   .set    C55_AR0_L|C55_AR1_L|C55_AR2_L|C55_AR3_L|C55_AR4_L|C55_AR5_L|C55_AR6_L|C55_AR7_L
+C55_AC0_MASK    .set    C55_AC0_L|C55_AC0_H|C55_AC0_G
+C55_AC1_MASK    .set    C55_AC1_L|C55_AC1_H|C55_AC1_G
+C55_AC2_MASK    .set    C55_AC2_L|C55_AC2_H|C55_AC2_G
+C55_AC3_MASK    .set    C55_AC3_L|C55_AC3_H|C55_AC3_G
+C55_AC03_MASK   .set    C55_AC0_MASK|C55_AC1_MASK|C55_AC2_MASK|C55_AC3_MASK
+
+C55_AR_SAVE_BY_CALLER_MASK      .set  C55_AR04_MASK
+C55_DR_SAVE_BY_CALLER_MASK      .set  C55_T01_MASK
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Define   the ; registers that the compiler
+        ; saves on entry to a function.
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+C55_AR_DR_SAVE_BY_CALLER_MASK   .set    C55_AR04_MASK|C55_T01_MASK
+C55_ACC_SAVE_BY_CALLER_MASK     .set    C55_AC03_MASK
+C55_MISC1_SAVE_BY_CALLER_MASK   .set    C55_TRN0_L|C55_BK03_L|C55_BRC0_L|C55_DP_H|C55_CDP_H
+C55_MISC2_SAVE_BY_CALLER_MASK   .set    C55_DP_L|C55_CDP_L|C55_MDP_L|C55_PDP_L|C55_BK47_L|C55_BKC_L|C55_BOF01_L|C55_BOF23_L|C55_BOF45_L|C55_BOF67_L|C55_BOFC_L|C55_TRN1_L
+C55_MISC3_SAVE_BY_CALLER_MASK   .set    C55_ALL_MISC3_REGS      
+
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Define   the ; registers that the compiler
+        ; Defined below are register  masks that correspond to
+        ; registers the the compiler  expects to be saved
+        ; by the callee.
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+C55_AR_DR_SAVE_BY_CALLEE_MASK   .set    C55_AR57_MASK|C55_T23_MASK
+C55_ACC_SAVE_BY_CALLEE_MASK     .set    0
+C55_MISC1_SAVE_BY_CALLEE_MASK   .set    0
+C55_MISC2_SAVE_BY_CALLEE_MASK   .set    0
+C55_MISC3_SAVE_BY_CALLEE_MASK   .set    0
+
+
+        ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; Defined below are register  masks that correspond to
+        ; registers the form BIOS SWI context
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ;
+
+C55_AR_DR_BIOS_CONTEXT_MASK     .set    C55_AR_DR_SAVE_BY_CALLER_MASK
+C55_ACC_BIOS_CONTEXT_MASK       .set    C55_ACC_SAVE_BY_CALLER_MASK
+C55_MISC1_BIOS_CONTEXT_MASK     .set    C55_TRN0_L|C55_BK03_L|C55_BRC0_L|C55_DP_H|C55_CDP_H
+C55_MISC2_BIOS_CONTEXT_MASK     .set    C55_DP_L|C55_CDP_L|C55_MDP_L|C55_PDP_L|C55_BK47_L|C55_BKC_L|C55_BOF01_L|C55_BOF23_L|C55_BOF45_L|C55_BOF67_L|C55_BOFC_L|C55_TRN1_L
+C55_MISC3_BIOS_CONTEXT_MASK     .set    C55_MISC3_SAVE_BY_CALLER_MASK
+
+; Define MMR addresses
+
+
+
+
+C55_IMR0_L_ADDR .set    0x0
+C55_IFR0_L_ADDR .set    0x1
+C55_ST0_L_ADDR  .set    0x6
+C55_ST1_L_ADDR  .set    0x7
+C55_AC0_L_ADDR  .set    0x8
+C55_AC0_H_ADDR  .set    0x9
+C55_AC0_G_ADDR  .set    0xa
+C55_AC1_L_ADDR  .set    0xb
+C55_AC1_H_ADDR  .set    0xc
+C55_AC1_G_ADDR  .set    0xd
+C55_TREG_L_LEAD2_ADDR   .set    0xe     ; T3
+C55_TRN0_L_ADDR .set    0xf
+
+
+
+C55_AR0_L_ADDR  .set    0x10
+C55_AR1_L_ADDR  .set    0x11
+C55_AR2_L_ADDR  .set    0x12
+C55_AR3_L_ADDR  .set    0x13
+C55_AR4_L_ADDR  .set    0x14
+C55_AR5_L_ADDR  .set    0x15
+C55_AR6_L_ADDR  .set    0x16
+C55_AR7_L_ADDR  .set    0x17
+C55_SP_L_ADDR   .set    0x18
+C55_BK03_L_ADDR .set    0x19
+C55_BRC0_L_ADDR .set    0x1a
+C55_RSA0_LEAD2_L_ADDR   .set    0x1b
+C55_REA0_LEAD2_L_ADDR   .set    0x1c
+C55_ST3_L_ADDR  .set    0x1d
+C55_T0_L_ADDR   .set    0x20
+C55_T1_L_ADDR   .set    0x21
+C55_T2_L_ADDR   .set    0x22
+C55_T3_L_ADDR   .set    0x23
+
+C55_AC2_L_ADDR  .set    0x24
+C55_AC2_H_ADDR  .set    0x25
+C55_AC2_G_ADDR  .set    0x26
+
+C55_CDP_L_ADDR  .set    0x27
+C55_AC3_L_ADDR  .set    0x28
+C55_AC3_H_ADDR  .set    0x29
+C55_AC3_G_ADDR  .set    0x2a
+C55_MDP_L_ADDR  .set    0x2b    ; DPH
+C55_DP_L_ADDR   .set    0x2e
+C55_PDP_L_ADDR  .set    0x2f
+C55_BK47_L_ADDR .set    0x30
+C55_BKC_L_ADDR  .set    0x31
+C55_BOF01_L_ADDR        .set    0x32
+C55_BOF23_L_ADDR        .set    0x33
+C55_BOF45_L_ADDR        .set    0x34
+C55_BOF67_L_ADDR        .set    0x35
+C55_BOFC_L_ADDR .set    0x36
+C55_BIOS_L_ADDR .set    0x37
+C55_TRN1_L_ADDR .set    0x38
+C55_BRC1_L_ADDR .set    0x39
+C55_BRS1_L_ADDR .set    0x3a
+C55_CSR_L_ADDR  .set    0x3b
+C55_RSA0_H_ADDR .set    0x3c
+C55_RSA0_L_ADDR .set    0x3d
+C55_REA0_H_ADDR .set    0x3e
+C55_REA0_L_ADDR .set    0x3f
+C55_RSA1_H_ADDR .set    0x40
+C55_RSA1_L_ADDR .set    0x41
+C55_REA1_H_ADDR .set    0x42
+C55_REA1_L_ADDR .set    0x43
+C55_RPTC_L_ADDR .set    0x44
+C55_IMR1_L_ADDR .set    0x45
+C55_IFR1_L_ADDR .set    0x46
+C55_DBIMR0_L_ADDR       .set    0x47
+C55_DBIMR1_L_ADDR       .set    0x48
+C55_IVPD_L_ADDR .set    0x49
+C55_IVPH_L_ADDR .set    0x4a
+C55_ST2_L_ADDR  .set    0x4b
+C55_SSP_L_ADDR  .set    0x4c
+
+
+C55_IFR0_TINT_MASK         .set    0x0010
+C55_IMR0_TINT_MASK         .set    0x0010
+
+C55_IFR0_TINT_POS         .set    0x4
+C55_IMR0_TINT_POS         .set    0x4
+
+                                                ; C55_STX_C_ZERO_BIT_POS are
+                                                ; the bits in the STX 
+                                                ; register which the compiler
+                                                ; expects to be 0.
+
+                                                ; C55_ST1_C_ONE_BIT_POS are
+                                                ; those bits in the STX 
+                                                ; register which the compiler
+                                                ; expects to be 1.
+
+
+    .if (.MNEMONIC)                     ; mnemonic assembler
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; version 1.80 mnemonic assembler does not take  ;
+        ; these macro definitons in terms of st1_bit     ;
+        ; expression, hence we are defining this value   ;
+        ; explicitly                                     ;
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+C55_ST1_C_ZERO_BIT_POS          .set    0x06E0           
+C55_ST1_C_ONE_BIT_POS           .set    0x4100
+C55_ST2_C_ZERO_BIT_POS          .set    0x05FF  
+C55_ST2_C_ONE_BIT_POS           .set    0x8000
+C55_ST3_C_ZERO_BIT_POS          .set    0x0020
+C55_ST3_C_ONE_BIT_POS           .set    0x0002
+C55_ST1_BIOS_ZERO_BIT_POS       .set    0x86ff
+C55_NOT_ST1_BIOS_ZERO_BIT_POS   .set    0x7900
+C55_ST1_BIOS_ONE_BIT_POS        .set    0x4100
+C55_ST2_BIOS_ZERO_BIT_POS       .set    0x05FF
+C55_ST2_BIOS_ONE_BIT_POS        .set    0x8000
+C55_ST3_BIOS_ZERO_BIT_POS       .set    0x0021
+C55_ST3_BIOS_ONE_BIT_POS        .set    0x0002
+
+    .else                               ; algebraic assembler
+
+C55_ST1_C_ZERO_BIT_POS  .set ((1 << st1_m40)|(1 << st1_satd)|(1 << st1_c16)|(1 << st1_frct)|(1 << st1_c54cm))
+                                        ; M40 = 0, bit 10
+                                        ; SATD = 0, bit 9
+                                        ; C16 = 0, bit 7
+                                        ; FRCT = 0 bit 6
+                                        ; C54CM = 0, bit 5
+
+C55_ST1_C_ONE_BIT_POS   .set ((1 << st1_cpl)|(1 << st1_sxmd))
+                                        ; CPL = 1, bit 14
+                                        ; SXMD= 1, bit 8
+                                        ; Refer to page 6-11 in C Compiler UG.
+
+C55_ST2_C_ZERO_BIT_POS  .set ((1 << st2_rdm)|(1 << st2_cdplc)|(1 << st2_ar7lc)|(1 << st2_ar6lc)|(1 << st2_ar5lc)|(1 << st2_ar4lc)|(1 << st2_ar3lc)|(1 << st2_ar2lc)|(1 << st2_ar1lc)|(1 << st2_ar0lc))
+                                        ; RDM = 0, bit 10
+                                        ; CDPLC =0, bit 8
+                                        ; AR7LC =0, bit 7
+                                        ; AR6LC =0, bit 6
+                                        ; AR5LC =0, bit 5
+                                        ; AR4LC =0, bit 4
+                                        ; AR3LC =0, bit 3
+                                        ; AR2LC =0, bit 2
+                                        ; AR1LC =0, bit 1
+                                        ; AR0LC =0, bit 0
+
+C55_ST2_C_ONE_BIT_POS   .set (1 << st2_arms)
+                                        ; ARMS = 1, bit 15
+
+C55_ST3_C_ZERO_BIT_POS  .set (1 << st3_sata)
+                                        ; SATA = 0, bit 5
+
+C55_ST3_C_ONE_BIT_POS   .set (1 << st3_smul)
+                                        ; SMUL = 1, bit 1
+
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; C55_STX_BIOS_ZERO_BIT_POS are the bits in the STX 
+        ; register which the bios environment expects to be 0.
+        ; C55_STX_BIOS_ONE_BIT_POS are those bits in the STX 
+        ; register which the bios environment expects to be 1.
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+C55_ST1_ASM_BITS .set 0x001f
+
+C55_ST1_BIOS_ZERO_BIT_POS       .set    0x86ff
+C55_NOT_ST1_BIOS_ZERO_BIT_POS   .set    0x7900
+;C55_ST1_BIOS_ZERO_BIT_POS .set (C55_ST1_C_ZERO_BIT_POS | (1 << st1_braf) | (C55_ST1_ASM_BITS))
+                                        ; BRAF = 0, bit 15
+                                        ; M40 = 0, bit 10
+                                        ; SATD = 0, bit 9
+                                        ; C16 = 0, bit 7
+                                        ; FRCT = 0 bit 6
+                                        ; C54CM = 0, bit 5
+                                        ; ASM = 0, bit 4-1
+
+C55_ST1_BIOS_ONE_BIT_POS  .set   C55_ST1_C_ONE_BIT_POS 
+                                        ; CPL = 1, bit 14
+                                        ; SXMD= 1, bit 8
+
+C55_ST2_BIOS_ZERO_BIT_POS .set  C55_ST2_C_ZERO_BIT_POS
+                                        ; RDM = 0, bit 10
+                                        ; CDPLC =0, bit 8
+                                        ; AR7LC =0, bit 7
+                                        ; AR6LC =0, bit 6
+                                        ; AR5LC =0, bit 5
+                                        ; AR4LC =0, bit 4
+                                        ; AR3LC =0, bit 3
+                                        ; AR2LC =0, bit 2
+                                        ; AR1LC =0, bit 1
+                                        ; AR0LC =0, bit 0
+
+C55_ST2_BIOS_ONE_BIT_POS  .set C55_ST2_C_ONE_BIT_POS
+                                        ; ARMS = 1, bit 15
+
+C55_ST3_BIOS_ZERO_BIT_POS .set (C55_ST3_C_ZERO_BIT_POS | ( 1 << st3_sst))
+                                        ; SATA = 0, bit 5
+                                        ; SST = 0, bit 0
+
+C55_ST3_BIOS_ONE_BIT_POS  .set C55_ST3_C_ONE_BIT_POS
+                                        ; SMUL = 1, bit 1
+    .endif
+
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;               Global and local bit masks.                ;
+; GET_ST1GBLBITMASK corresponds to the mask that would give; 
+; the settings of all the global bits in the register.It   ;
+; would also make the local bits zero.                     ;    
+; GET_ST1LCLBITMASK corresponds to the mask that would give; 
+; the settings of all the local bits in the register.It    ;
+; would also make the global bits zero.                    ;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; 
+
+
+
+C55_ST1GBL_BITMASK      .set    0x3000          ; bit(15)=braf,bit(14)=cpl
+                                                ; intm is ignored. intm
+                                                ; is not a global bit
+                                                ; as a context switch
+                                                ;
+C55_ST1LCL_BITMASK      .set    0xcfff          ; except for bit 13,12
+                                                ; are all local bits.
+                                                ; bit(13)=xf
+                                                ; bit(12)=hm
+C55_ST2GBL_BITMASK      .set    0x00
+
+C55_ST2LCL_BITMASK      .set    0xffff  
+C55_ST3GBL_BITMASK      .set    0xf0d4          ; bit(15) = cafrz
+                                                ; bit(14) = caen
+                                                ; bit(13) = caclr
+                                                ; bit(12) = hint 
+                                                ; bit(7)  = cberr       
+                                                ; bit(6) =  mpnmc
+                                                ; bit(4) = avis
+                                                ; bit(2) = clkoff
+
+C55_ST3LCL_BITMASK      .set    0x0f2b          ; bit(5) = sata
+                                                ; bit3 - reserved
+                                                ; bit(1) = smul 
+                                                ; bit(0) = sst
+
+C55_INTR_COUNT          .set  32                ; Number of interrupts
+                                                ; in the processor
+
+
+
+;# ======== C55_alias ========
+
+    .if (_55Pb_)
+        .if(.MNEMONIC)
+            .asg mmap(@ier0), IER0_MMR
+            .asg mmap(@ifr0), IFR0_MMR
+            .asg mmap(@st0_55), ST0_55_MMR
+            .asg mmap(@st1_55), ST1_55_MMR
+            .asg mmap(@st3_55), ST3_55_MMR
+            .asg mmap(@st0), ST0_MMR
+            .asg mmap(@st1), ST1_MMR
+            .asg mmap(@ac0l), AC0L_MMR
+            .asg mmap(@ac0h), AC0H_MMR
+            .asg mmap(@ac0g), AC0G_MMR
+            .asg mmap(@ac1l), AC1L_MMR
+            .asg mmap(@ac1h), AC1H_MMR
+            .asg mmap(@ac1g), AC1G_MMR
+
+            .asg mmap(@trn0), TRN0_MMR
+            .asg mmap(@ar0), AR0_MMR
+            .asg mmap(@ar1), AR1_MMR
+            .asg mmap(@ar2), AR2_MMR
+            .asg mmap(@ar3), AR3_MMR
+            .asg mmap(@ar4), AR4_MMR
+            .asg mmap(@ar5), AR5_MMR
+            .asg mmap(@ar6), AR6_MMR
+            .asg mmap(@ar7), AR7_MMR
+
+            .asg mmap(@bk03), BK03_MMR
+            .asg mmap(@brc0), BRC0_MMR
+
+
+            .asg mmap(@pmst), PMST_MMR
+            .asg mmap(@xpc), XPC_MMR
+            .asg mmap(@t0), T0_MMR
+            .asg mmap(@t1), T1_MMR
+            .asg mmap(@t2), T2_MMR
+            .asg mmap(@t3), T3_MMR
+            .asg mmap(@ac2l), AC2L_MMR
+            .asg mmap(@ac2h), AC2H_MMR
+            .asg mmap(@ac2g), AC2G_MMR
+            .asg mmap(@cdp), CDP_MMR
+            .asg mmap(@ac3l), AC3L_MMR
+            .asg mmap(@ac3h), AC3H_MMR
+            .asg mmap(@ac3g), AC3G_MMR
+            .asg mmap(@dph), DPH_MMR
+                                        ;mdp_l and dph refers to the same 
+                                        ;Memory mapped register.However
+                                        ;mdp is used in instructions
+            .asg mmap(@mdp05), MDP05_MMR
+            .asg mmap(@mdp67), MDP67_MMR
+
+            .asg mmap(@dp), DP_MMR
+            .asg mmap(@pdp), PDP_MMR
+            .asg mmap(@bk47), BK47_MMR
+            .asg mmap(@bkc), BKC_MMR
+            .asg mmap(@bsa01), BSA01_MMR
+            .asg mmap(@bsa23), BSA23_MMR
+            .asg mmap(@bsa45), BSA45_MMR
+            .asg mmap(@bsa67), BSA67_MMR
+            .asg mmap(@bsac), BSAC_MMR
+            .asg mmap(@trn1), TRN1_MMR
+            .asg mmap(@bios), BIOS_MMR
+            .asg mmap(@brc1), BRC1_MMR
+            .asg mmap(@brs1), BRS1_MMR
+            .asg mmap(@csr),  CSR_MMR
+            .asg mmap(@rsa0h), RSA0H_MMR
+            .asg mmap(@rsa0l), RSA0L_MMR
+            .asg mmap(@rea0h), REA0H_MMR
+            .asg mmap(@rea0l), REA0L_MMR
+            .asg mmap(@rsa1h), RSA1H_MMR
+            .asg mmap(@rsa1l), RSA1L_MMR
+            .asg mmap(@rea1h), REA1H_MMR
+            .asg mmap(@rea1l), REA1L_MMR
+            .asg mmap(@rptc), RPTC_MMR
+            .asg mmap(@ier1), IER1_MMR
+            .asg mmap(@ifr1), IFR1_MMR
+            .asg mmap(@dbier0), DBIER0_MMR
+            .asg mmap(@dbier1), DBIER1_MMR
+            .asg mmap(@ivpd), IVPD_MMR
+            .asg mmap(@ivph), IVPH_MMR
+            .asg mmap(@st2_55), ST2_55_MMR
+            .asg mmap(@ssp), SSP_MMR
+            .asg mmap(@sp), SP_MMR
+            .asg mmap(@sph), SPH_MMR
+            .asg mmap(@cdph), CDPH_MMR
+ 
+            
+            .asg mmap(@ier0), ier0_MMR
+            .asg mmap(@ifr0), ifr0_MMR
+            .asg mmap(@st0_55), st0_55_MMR
+            .asg mmap(@st1_55), st1_55_MMR
+            .asg mmap(@st3_55), st3_55_MMR
+            .asg mmap(@st0), st0_MMR
+            .asg mmap(@st1), st1_MMR
+            .asg mmap(@ac0l), ac0l_MMR
+            .asg mmap(@ac0h), ac0h_MMR
+            .asg mmap(@ac0g), ac0g_MMR
+            .asg mmap(@ac1l), ac1l_MMR
+            .asg mmap(@ac1h), ac1h_MMR
+            .asg mmap(@ac1g), ac1g_MMR
+
+            .asg mmap(@trn0), trn0_MMR
+            .asg mmap(@ar0), ar0_MMR
+            .asg mmap(@ar1), ar1_MMR
+            .asg mmap(@ar2), ar2_MMR
+            .asg mmap(@ar3), ar3_MMR
+            .asg mmap(@ar4), ar4_MMR
+            .asg mmap(@ar5), ar5_MMR
+            .asg mmap(@ar6), ar6_MMR
+            .asg mmap(@ar7), ar7_MMR
+
+            .asg mmap(@bk03), bk03_MMR
+            .asg mmap(@brc0), brc0_MMR
+
+
+            .asg mmap(@pmst), pmst_MMR
+            .asg mmap(@xpc), xpc_MMR
+            .asg mmap(@t0), t0_MMR
+            .asg mmap(@t1), t1_MMR
+            .asg mmap(@t2), t2_MMR
+            .asg mmap(@t3), t3_MMR
+            .asg mmap(@ac2l), ac2l_MMR
+            .asg mmap(@ac2h), ac2h_MMR
+            .asg mmap(@ac2g), ac2g_MMR
+            .asg mmap(@cdp), cdp_MMR
+            .asg mmap(@ac3l), ac3l_MMR
+            .asg mmap(@ac3h), ac3h_MMR
+            .asg mmap(@ac3g), ac3g_MMR
+            .asg mmap(@dph), dph_MMR
+                                        ;mdp_l and dph refers to the same 
+                                        ;Memory mapped register.However
+                                        ;mdp is used in instructions
+           
+            .asg mmap(@mdp05), mdp05_MMR
+            .asg mmap(@mdp67), mdp67_MMR
+            
+            .asg mmap(@dp), dp_MMR
+            .asg mmap(@pdp), pdp_MMR
+            .asg mmap(@bk47), bk47_MMR
+            .asg mmap(@bkc), bkc_MMR
+            .asg mmap(@bsa01), bsa01_MMR
+            .asg mmap(@bsa23), bsa23_MMR
+            .asg mmap(@bsa45), bsa45_MMR
+            .asg mmap(@bsa67), bsa67_MMR
+            .asg mmap(@bsac), bsac_MMR
+            .asg mmap(@trn1), trn1_MMR
+            .asg mmap(@bios), bios_MMR
+            .asg mmap(@brc1), brc1_MMR
+            .asg mmap(@brs1), brs1_MMR
+            .asg mmap(@csr),  csr_MMR
+            .asg mmap(@rsa0h), rsa0h_MMR
+            .asg mmap(@rsa0l), rsa0l_MMR
+            .asg mmap(@rea0h), rea0h_MMR
+            .asg mmap(@rea0l), rea0l_MMR
+            .asg mmap(@rsa1h), rsa1h_MMR
+            .asg mmap(@rsa1l), rsa1l_MMR
+            .asg mmap(@rea1h), rea1h_MMR
+            .asg mmap(@rea1l), rea1l_MMR
+            .asg mmap(@rptc), rptc_MMR
+            .asg mmap(@ier1), ier1_MMR
+            .asg mmap(@ifr1), ifr1_MMR
+            .asg mmap(@dbier0), dbier0_MMR
+            .asg mmap(@dbier1), dbier1_MMR
+            .asg mmap(@ivpd), ivpd_MMR
+            .asg mmap(@ivph), ivph_MMR
+            .asg mmap(@st2_55), st2_55_MMR
+            .asg mmap(@ssp), ssp_MMR
+            .asg mmap(@sp), sp_MMR
+            .asg mmap(@sph), sph_MMR
+            .asg mmap(@cdph), cdph_MMR
+
+           .asg st0_carry, STBIT_CARRY
+           .asg st1_intm, STBIT_INTM
+           .asg st1_sxmd, STBIT_SXMD
+           .asg st1_frct, STBIT_FRCT
+           .asg st2_arms, STBIT_ARMS
+           .asg st3_sata, STBIT_SATA
+           .asg st3_smul, STBIT_SMUL
+           .asg st3_caen, STBIT_CAEN
+           .asg st3_cafrz, STBIT_CAFRZ
+           .asg st3_caclr, STBIT_CACLR
+
+
+           .asg st3_sst, STBIT_SST
+           .asg st2_rdm, STBIT_RDM
+           .asg st2_cdplc, STBIT_CDPLC
+           .asg st2_ar0lc, STBIT_AR0LC
+           .asg st2_ar1lc, STBIT_AR1LC 
+           .asg st2_ar2lc, STBIT_AR2LC
+           .asg st2_ar3lc, STBIT_AR3LC
+           .asg st2_ar4lc, STBIT_AR4LC
+           .asg st2_ar5lc, STBIT_AR5LC
+           .asg st2_ar6lc, STBIT_AR6LC
+           .asg st2_ar7lc, STBIT_AR7LC
+           .asg st1_m40, STBIT_M40
+           .asg st1_satd, STBIT_SATD
+           .asg st1_c54cm, STBIT_C54CM
+           .asg st1_c16, STBIT_C16
+           .asg st1_cpl, ST1_CPL
+           .asg st1_cpl, STBIT_CPL
+
+        .else ; (.MNEMONIC)
+
+            .asg @imr0, IER0_MMR
+            .asg @ifr0, IFR0_MMR
+            .asg @st0_55, ST0_55_MMR
+            .asg @st1_55, ST1_55_MMR
+            .asg @st3_55, ST3_55_MMR
+            .asg @st0p_l, ST0_MMR
+            .asg @st1p_l, ST1_MMR
+            .asg "@ac0.l", AC0L_MMR
+            .asg "@ac0.h", AC0H_MMR
+            .asg "@ac0.g", AC0G_MMR
+            .asg "@ac1.l", AC1L_MMR
+            .asg "@ac1.h", AC1H_MMR
+            .asg "@ac1.g", AC1G_MMR
+
+            .asg @trn0, TRN0_MMR
+            .asg @ar0, AR0_MMR
+            .asg @ar1, AR1_MMR
+            .asg @ar2, AR2_MMR
+            .asg @ar3, AR3_MMR
+            .asg @ar4, AR4_MMR
+            .asg @ar5, AR5_MMR
+            .asg @ar6, AR6_MMR
+            .asg @ar7, AR7_MMR
+
+            .asg @bk03, BK03_MMR
+            .asg @brc0, BRC0_MMR
+
+            .asg @st3p, PMST_MMR
+            .asg @xpc_l, XPC_MMR
+            .asg @dr0, T0_MMR
+            .asg @dr1, T1_MMR
+            .asg @dr2, T2_MMR
+            .asg @dr3, T3_MMR
+            .asg "@ac2.l", AC2L_MMR
+            .asg "@ac2.h", AC2H_MMR
+            .asg "@ac2.g", AC2G_MMR
+            .asg "@cdp", CDP_MMR
+            .asg "@ac3.l", AC3L_MMR
+            .asg "@ac3.h", AC3H_MMR
+            .asg "@ac3.g", AC3G_MMR
+            .asg "@xdp.h", DPH_MMR
+                                        ;mdp_l and dp_h refers to the same 
+                                        ;Memory mapped register.However
+                                        ;mdp is used in instructions
+            .asg @mdp05_l, MDP05_MMR
+            .asg @mdp67_l, MDP67_MMR
+            
+            .asg @dp_l, DP_MMR
+            .asg @pdp, PDP_MMR
+            .asg @bk47_l, BK47_MMR
+            .asg @bkc_l, BKC_MMR
+            .asg @bof01_l, BSA01_MMR
+            .asg @bof23_l, BSA23_MMR
+            .asg @bof45_l, BSA45_MMR
+            .asg @bof67, BSA67_MMR
+            .asg @bofc, BSAC_MMR
+            .asg @trn1, TRN1_MMR
+            .asg @bios, BIOS_MMR
+            .asg @brc1, BRC1_MMR
+            .asg @brs1, BRS1_MMR
+            .asg @csr_l,  CSR_MMR
+            .asg @rsa0_h, RSA0H_MMR
+            .asg @rsa0_l, RSA0L_MMR
+            .asg @rea0_h, REA0H_MMR
+            .asg @rea0_l, REA0L_MMR
+            .asg @rsa1_h, RSA1H_MMR
+            .asg @rsa1_l, RSA1L_MMR
+            .asg @rea1_h, REA1H_MMR
+            .asg @rea1_l, REA1L_MMR
+            .asg @rptc, RPTC_MMR
+            .asg @imr1, IER1_MMR
+            .asg @ifr1, IFR1_MMR
+            .asg @dbimr0_l, DBIER0_MMR
+            .asg @dbimr1_l, DBIER1_MMR
+            .asg @ivpd, IVPD_MMR
+            .asg @ivph, IVPH_MMR
+            .asg @st2, ST2_55_MMR
+            .asg @ssp, SSP_MMR
+            .asg @sp, SP_MMR
+            .asg "@xsp.h", SPH_MMR
+            .asg "@xcdp.h", CDPH_MMR
+
+
+           .asg @imr0, ier0_MMR
+           .asg @ifr0, ifr0_MMR
+           .asg @st0_55, st0_55_MMR
+           .asg @st1_55, st1_55_MMR
+           .asg @st3_55, st3_55_MMR
+           .asg @st0p_l, st0_MMR
+           .asg @st1p_l, st1_MMR
+           .asg @ac0_l, ac0l_MMR
+           .asg @ac0_h, ac0h_MMR
+           .asg @ac0_g, ac0g_MMR
+           .asg @ac1_l, ac1l_MMR
+           .asg @ac1_h, ac1h_MMR
+           .asg @ac1_g, ac1g_MMR
+
+           .asg @trn0_l, trn0_MMR
+           .asg @ar0_l, ar0_MMR
+           .asg @ar1_l, ar1_MMR
+           .asg @ar2_l, ar2_MMR
+           .asg @ar3_l, ar3_MMR
+           .asg @ar4_l, ar4_MMR
+           .asg @ar5_l, ar5_MMR
+           .asg @ar6_l, ar6_MMR
+           .asg @ar7_l, ar7_MMR
+
+           .asg @bk03_l, bk03_MMR
+           .asg @brc0_l, brc0_MMR
+
+
+           .asg @st3p_l, pmst_MMR
+           .asg @xpc_l, xpc_MMR
+           .asg @dr0_l, t0_MMR
+           .asg @dr1_l, t1_MMR
+           .asg @dr2_l, t2_MMR
+           .asg @dr3_l, t3_MMR
+           .asg @ac2_l, ac2l_MMR
+           .asg @ac2_h, ac2h_MMR
+           .asg @ac2_g, ac2g_MMR
+           .asg @cdp_l, cdp_MMR
+           .asg @ac3_l, ac3l_MMR
+           .asg @ac3_h, ac3h_MMR
+           .asg @ac3_g, ac3g_MMR
+           .asg @dp_h, dph_MMR          ;mdp_l and dp_h refers to the same 
+                                        ;Memory mapped register.However
+                                        ;mdp is used in instructions
+           .asg @mdp05_l, mdp05_MMR     
+           .asg @mdp67_l, mdp67_MMR     
+
+           .asg @dp_l, dp_MMR
+           .asg @pdp_l, pdp_MMR
+           .asg @bk47_l, bk47_MMR
+           .asg @bkc_l, bkc_MMR
+           .asg @bof01_l, bsa01_MMR
+           .asg @bof23_l, bsa23_MMR
+           .asg @bof45_l, bsa45_MMR
+           .asg @bof67_l, bsa67_MMR
+           .asg @bofc_l, bsac_MMR
+           .asg @trn1_l, trn1_MMR
+           .asg @bios_l, bios_MMR
+           .asg @brc1_l, brc1_MMR
+           .asg @brs1_l, brs1_MMR
+           .asg @csr_l,  csr_MMR
+           .asg @rsa0_h, rsa0h_MMR
+           .asg @rsa0_l, rsa0l_MMR
+           .asg @rea0_h, rea0h_MMR
+           .asg @rea0_l, rea0l_MMR
+           .asg @rsa1_h, rsa1h_MMR
+           .asg @rsa1_l, rsa1l_MMR
+           .asg @rea1_h, rea1h_MMR
+           .asg @rea1_l, rea1l_MMR
+           .asg @rptc_l, rptc_MMR
+           .asg @imr1_l, ier1_MMR
+           .asg @ifr1_l, ifr1_MMR
+           .asg @dbimr0_l, dbier0_MMR
+           .asg @dbimr1_l, dbier1_MMR
+           .asg @ivpd_l, ivpd_MMR
+           .asg @ivph_l, ivph_MMR
+           .asg @st2_55, st2_55_MMR
+           .asg @ssp_l, ssp_MMR
+           .asg @sp_l, sp_MMR
+           .asg @sp_h, sph_MMR
+           .asg @cdp_h, cdph_MMR
+
+;Status Register Bits
+
+           .asg st0_carry, STBIT_CARRY
+           .asg st1_intm, STBIT_INTM
+           .asg st1_sxmd, STBIT_SXMD
+           .asg st1_frct, STBIT_FRCT
+           .asg st1_sxmd, STBIT_SXMD
+           .asg st2_arms, STBIT_ARMS
+           .asg st3_sata, STBIT_SATA
+           .asg st3_smul, STBIT_SMUL
+           .asg st3_caen, STBIT_CAEN
+           .asg st3_cafrz, STBIT_CAFRZ
+           .asg st3_caclr, STBIT_CACLR
+        
+
+           .asg st3_sst, STBIT_SST
+           .asg st2_rdm, STBIT_RDM
+           .asg st2_cdplc, STBIT_CDPLC
+           .asg st2_ar0lc, STBIT_AR0LC
+           .asg st2_ar1lc, STBIT_AR1LC 
+           .asg st2_ar2lc, STBIT_AR2LC
+           .asg st2_ar3lc, STBIT_AR3LC
+           .asg st2_ar4lc, STBIT_AR4LC
+           .asg st2_ar5lc, STBIT_AR5LC
+           .asg st2_ar6lc, STBIT_AR6LC
+           .asg st2_ar7lc, STBIT_AR7LC
+           .asg st1_m40, STBIT_M40
+           .asg st1_satd, STBIT_SATD
+           .asg st1_c54cm, STBIT_C54CM
+           .asg st1_c16, STBIT_C16
+           .asg st1_braf, STBIT_BRAF
+           .asg st1_cpl, STBIT_CPL
+
+           .asg t0, t0_l
+           .asg t1, t1_l
+           .asg sp, SP_L
+        .endif
+    .else ; (_55Pb_)
+        .if(.MNEMONIC)
+            .asg mmap(@ier0), IER0_MMR
+            .asg mmap(@ifr0), IFR0_MMR
+            .asg mmap(@st0_55), ST0_55_MMR
+            .asg mmap(@st1_55), ST1_55_MMR
+            .asg mmap(@st3_55), ST3_55_MMR
+            .asg mmap(@st0), ST0_MMR
+            .asg mmap(@st1), ST1_MMR
+            .asg mmap(@ac0l), AC0L_MMR
+            .asg mmap(@ac0h), AC0H_MMR
+            .asg mmap(@ac0g), AC0G_MMR
+            .asg mmap(@ac1l), AC1L_MMR
+            .asg mmap(@ac1h), AC1H_MMR
+            .asg mmap(@ac1g), AC1G_MMR
+
+            .asg mmap(@trn0), TRN0_MMR
+            .asg mmap(@ar0), AR0_MMR
+            .asg mmap(@ar1), AR1_MMR
+            .asg mmap(@ar2), AR2_MMR
+            .asg mmap(@ar3), AR3_MMR
+            .asg mmap(@ar4), AR4_MMR
+            .asg mmap(@ar5), AR5_MMR
+            .asg mmap(@ar6), AR6_MMR
+            .asg mmap(@ar7), AR7_MMR
+
+            .asg mmap(@bk03), BK03_MMR
+            .asg mmap(@brc0), BRC0_MMR
+
+
+            .asg mmap(@pmst), PMST_MMR
+            .asg mmap(@xpc), XPC_MMR
+            .asg mmap(@t0), T0_MMR
+            .asg mmap(@t1), T1_MMR
+            .asg mmap(@t2), T2_MMR
+            .asg mmap(@t3), T3_MMR
+            .asg mmap(@ac2l), AC2L_MMR
+            .asg mmap(@ac2h), AC2H_MMR
+            .asg mmap(@ac2g), AC2G_MMR
+            .asg mmap(@cdp), CDP_MMR
+            .asg mmap(@ac3l), AC3L_MMR
+            .asg mmap(@ac3h), AC3H_MMR
+            .asg mmap(@ac3g), AC3G_MMR
+            .asg mmap(@dph), DPH_MMR
+                                        ;mdp_l and dph refers to the same 
+                                        ;Memory mapped register.However
+                                        ;mdp is used in instructions
+            .asg mmap(@mdp05), MDP05_MMR
+            .asg mmap(@mdp67), MDP67_MMR
+
+            .asg mmap(@dp), DP_MMR
+            .asg mmap(@pdp), PDP_MMR
+            .asg mmap(@bk47), BK47_MMR
+            .asg mmap(@bkc), BKC_MMR
+            .asg mmap(@bsa01), BSA01_MMR
+            .asg mmap(@bsa23), BSA23_MMR
+            .asg mmap(@bsa45), BSA45_MMR
+            .asg mmap(@bsa67), BSA67_MMR
+            .asg mmap(@bsac), BSAC_MMR
+            .asg mmap(@trn1), TRN1_MMR
+            .asg mmap(@bios), BIOS_MMR
+            .asg mmap(@brc1), BRC1_MMR
+            .asg mmap(@brs1), BRS1_MMR
+            .asg mmap(@csr),  CSR_MMR
+            .asg mmap(@rsa0h), RSA0H_MMR
+            .asg mmap(@rsa0l), RSA0L_MMR
+            .asg mmap(@rea0h), REA0H_MMR
+            .asg mmap(@rea0l), REA0L_MMR
+            .asg mmap(@rsa1h), RSA1H_MMR
+            .asg mmap(@rsa1l), RSA1L_MMR
+            .asg mmap(@rea1h), REA1H_MMR
+            .asg mmap(@rea1l), REA1L_MMR
+            .asg mmap(@rptc), RPTC_MMR
+            .asg mmap(@ier1), IER1_MMR
+            .asg mmap(@ifr1), IFR1_MMR
+            .asg mmap(@dbier0), DBIER0_MMR
+            .asg mmap(@dbier1), DBIER1_MMR
+            .asg mmap(@ivpd), IVPD_MMR
+            .asg mmap(@ivph), IVPH_MMR
+            .asg mmap(@st2_55), ST2_55_MMR
+            .asg mmap(@ssp), SSP_MMR
+            .asg mmap(@sp), SP_MMR
+            .asg mmap(@sph), SPH_MMR
+            .asg mmap(@cdph), CDPH_MMR
+ 
+            
+            .asg mmap(@ier0), ier0_MMR
+            .asg mmap(@ifr0), ifr0_MMR
+            .asg mmap(@st0_55), st0_55_MMR
+            .asg mmap(@st1_55), st1_55_MMR
+            .asg mmap(@st3_55), st3_55_MMR
+            .asg mmap(@st0), st0_MMR
+            .asg mmap(@st1), st1_MMR
+            .asg mmap(@ac0l), ac0l_MMR
+            .asg mmap(@ac0h), ac0h_MMR
+            .asg mmap(@ac0g), ac0g_MMR
+            .asg mmap(@ac1l), ac1l_MMR
+            .asg mmap(@ac1h), ac1h_MMR
+            .asg mmap(@ac1g), ac1g_MMR
+
+            .asg mmap(@trn0), trn0_MMR
+            .asg mmap(@ar0), ar0_MMR
+            .asg mmap(@ar1), ar1_MMR
+            .asg mmap(@ar2), ar2_MMR
+            .asg mmap(@ar3), ar3_MMR
+            .asg mmap(@ar4), ar4_MMR
+            .asg mmap(@ar5), ar5_MMR
+            .asg mmap(@ar6), ar6_MMR
+            .asg mmap(@ar7), ar7_MMR
+
+            .asg mmap(@bk03), bk03_MMR
+            .asg mmap(@brc0), brc0_MMR
+
+
+            .asg mmap(@pmst), pmst_MMR
+            .asg mmap(@xpc), xpc_MMR
+            .asg mmap(@t0), t0_MMR
+            .asg mmap(@t1), t1_MMR
+            .asg mmap(@t2), t2_MMR
+            .asg mmap(@t3), t3_MMR
+            .asg mmap(@ac2l), ac2l_MMR
+            .asg mmap(@ac2h), ac2h_MMR
+            .asg mmap(@ac2g), ac2g_MMR
+            .asg mmap(@cdp), cdp_MMR
+            .asg mmap(@ac3l), ac3l_MMR
+            .asg mmap(@ac3h), ac3h_MMR
+            .asg mmap(@ac3g), ac3g_MMR
+            .asg mmap(@dph), dph_MMR
+                                        ;mdp_l and dph refers to the same 
+                                        ;Memory mapped register.However
+                                        ;mdp is used in instructions
+           
+            .asg mmap(@mdp05), mdp05_MMR
+            .asg mmap(@mdp67), mdp67_MMR
+            
+            .asg mmap(@dp), dp_MMR
+            .asg mmap(@pdp), pdp_MMR
+            .asg mmap(@bk47), bk47_MMR
+            .asg mmap(@bkc), bkc_MMR
+            .asg mmap(@bsa01), bsa01_MMR
+            .asg mmap(@bsa23), bsa23_MMR
+            .asg mmap(@bsa45), bsa45_MMR
+            .asg mmap(@bsa67), bsa67_MMR
+            .asg mmap(@bsac), bsac_MMR
+            .asg mmap(@trn1), trn1_MMR
+            .asg mmap(@bios), bios_MMR
+            .asg mmap(@brc1), brc1_MMR
+            .asg mmap(@brs1), brs1_MMR
+            .asg mmap(@csr),  csr_MMR
+            .asg mmap(@rsa0h), rsa0h_MMR
+            .asg mmap(@rsa0l), rsa0l_MMR
+            .asg mmap(@rea0h), rea0h_MMR
+            .asg mmap(@rea0l), rea0l_MMR
+            .asg mmap(@rsa1h), rsa1h_MMR
+            .asg mmap(@rsa1l), rsa1l_MMR
+            .asg mmap(@rea1h), rea1h_MMR
+            .asg mmap(@rea1l), rea1l_MMR
+            .asg mmap(@rptc), rptc_MMR
+            .asg mmap(@ier1), ier1_MMR
+            .asg mmap(@ifr1), ifr1_MMR
+            .asg mmap(@dbier0), dbier0_MMR
+            .asg mmap(@dbier1), dbier1_MMR
+            .asg mmap(@ivpd), ivpd_MMR
+            .asg mmap(@ivph), ivph_MMR
+            .asg mmap(@st2_55), st2_55_MMR
+            .asg mmap(@ssp), ssp_MMR
+            .asg mmap(@sp), sp_MMR
+            .asg mmap(@sph), sph_MMR
+            .asg mmap(@cdph), cdph_MMR
+
+           .asg st0_carry, STBIT_CARRY
+           .asg st1_intm, STBIT_INTM
+           .asg st1_sxmd, STBIT_SXMD
+           .asg st1_frct, STBIT_FRCT
+           .asg st2_arms, STBIT_ARMS
+           .asg st3_sata, STBIT_SATA
+           .asg st3_smul, STBIT_SMUL
+           .asg st3_caen, STBIT_CAEN
+           .asg st3_cafrz, STBIT_CAFRZ
+           .asg st3_caclr, STBIT_CACLR
+
+
+           .asg st3_sst, STBIT_SST
+           .asg st2_rdm, STBIT_RDM
+           .asg st2_cdplc, STBIT_CDPLC
+           .asg st2_ar0lc, STBIT_AR0LC
+           .asg st2_ar1lc, STBIT_AR1LC 
+           .asg st2_ar2lc, STBIT_AR2LC
+           .asg st2_ar3lc, STBIT_AR3LC
+           .asg st2_ar4lc, STBIT_AR4LC
+           .asg st2_ar5lc, STBIT_AR5LC
+           .asg st2_ar6lc, STBIT_AR6LC
+           .asg st2_ar7lc, STBIT_AR7LC
+           .asg st1_m40, STBIT_M40
+           .asg st1_satd, STBIT_SATD
+           .asg st1_c54cm, STBIT_C54CM
+           .asg st1_c16, STBIT_C16
+           .asg st1_cpl, ST1_CPL
+           .asg st1_cpl, STBIT_CPL
+
+        .else
+
+            .asg @imr0_l, IER0_MMR
+            .asg @ifr0_l, IFR0_MMR
+            .asg ifr0_l, ifr0
+            .asg ifr1_l, ifr1
+            .asg @st0_l, ST0_55_MMR
+            .asg @st1_l, ST1_55_MMR
+            .asg @st3_l, ST3_55_MMR
+            .asg @st0p_l, ST0_MMR
+            .asg @st1p_l, ST1_MMR
+            .asg @ac0_l, AC0L_MMR
+            .asg @ac0_h, AC0H_MMR
+            .asg @ac0_g, AC0G_MMR
+            .asg @ac1_l, AC1L_MMR
+            .asg @ac1_h, AC1H_MMR
+            .asg @ac1_g, AC1G_MMR
+
+            .asg @trn0_l, TRN0_MMR
+            .asg @ar0_l, AR0_MMR
+            .asg @ar1_l, AR1_MMR
+            .asg @ar2_l, AR2_MMR
+            .asg @ar3_l, AR3_MMR
+            .asg @ar4_l, AR4_MMR
+            .asg @ar5_l, AR5_MMR
+            .asg @ar6_l, AR6_MMR
+            .asg @ar7_l, AR7_MMR
+
+            .asg @bk03_l, BK03_MMR
+            .asg @brc0_l, BRC0_MMR
+
+            .asg @st3p_l, PMST_MMR
+            .asg @xpc_l, XPC_MMR
+            .asg @dr0_l, T0_MMR
+            .asg @dr1_l, T1_MMR
+            .asg @dr2_l, T2_MMR
+            .asg @dr3_l, T3_MMR
+            .asg @ac2_l, AC2L_MMR
+            .asg @ac2_h, AC2H_MMR
+            .asg @ac2_g, AC2G_MMR
+            .asg @cdp_l, CDP_MMR
+            .asg @ac3_l, AC3L_MMR
+            .asg @ac3_h, AC3H_MMR
+            .asg @ac3_g, AC3G_MMR
+            .asg @dp_h, DPH_MMR
+                                        ;mdp_l and dp_h refers to the same 
+                                        ;Memory mapped register.However
+                                        ;mdp is used in instructions
+            .asg @mdp05_l, MDP05_MMR
+            .asg @mdp67_l, MDP67_MMR
+            
+            .asg @dp_l, DP_MMR
+            .asg @pdp_l, PDP_MMR
+            .asg @bk47_l, BK47_MMR
+            .asg @bkc_l, BKC_MMR
+            .asg @bof01_l, BSA01_MMR
+            .asg @bof23_l, BSA23_MMR
+            .asg @bof45_l, BSA45_MMR
+            .asg @bof67_l, BSA67_MMR
+            .asg @bofc_l, BSAC_MMR
+            .asg @trn1_l, TRN1_MMR
+            .asg @bios_l, BIOS_MMR
+            .asg @brc1_l, BRC1_MMR
+            .asg @brs1_l, BRS1_MMR
+            .asg @csr_l,  CSR_MMR
+            .asg @rsa0_h, RSA0H_MMR
+            .asg @rsa0_l, RSA0L_MMR
+            .asg @rea0_h, REA0H_MMR
+            .asg @rea0_l, REA0L_MMR
+            .asg @rsa1_h, RSA1H_MMR
+            .asg @rsa1_l, RSA1L_MMR
+            .asg @rea1_h, REA1H_MMR
+            .asg @rea1_l, REA1L_MMR
+            .asg @rptc_l, RPTC_MMR
+            .asg @imr1_l, IER1_MMR
+            .asg @ifr1_l, IFR1_MMR
+            .asg @dbimr0_l, DBIER0_MMR
+            .asg @dbimr1_l, DBIER1_MMR
+            .asg @ivpd_l, IVPD_MMR
+            .asg @ivph_l, IVPH_MMR
+            .asg @st2_l, ST2_55_MMR
+            .asg @ssp_l, SSP_MMR
+            .asg @sp_l, SP_MMR
+            .asg @sp_h, SPH_MMR
+            .asg @cdp_h, CDPH_MMR
+
+
+           .asg @imr0_l, ier0_MMR
+           .asg @ifr0_l, ifr0_MMR
+           .asg @st0_l, st0_55_MMR
+           .asg @st1_l, st1_55_MMR
+           .asg @st3_l, st3_55_MMR
+           .asg @st0p_l, st0_MMR
+           .asg @st1p_l, st1_MMR
+           .asg @ac0_l, ac0l_MMR
+           .asg @ac0_h, ac0h_MMR
+           .asg @ac0_g, ac0g_MMR
+           .asg @ac1_l, ac1l_MMR
+           .asg @ac1_h, ac1h_MMR
+           .asg @ac1_g, ac1g_MMR
+
+           .asg @trn0_l, trn0_MMR
+           .asg @ar0_l, ar0_MMR
+           .asg @ar1_l, ar1_MMR
+           .asg @ar2_l, ar2_MMR
+           .asg @ar3_l, ar3_MMR
+           .asg @ar4_l, ar4_MMR
+           .asg @ar5_l, ar5_MMR
+           .asg @ar6_l, ar6_MMR
+           .asg @ar7_l, ar7_MMR
+
+           .asg @bk03_l, bk03_MMR
+           .asg @brc0_l, brc0_MMR
+
+
+           .asg @st3p_l, pmst_MMR
+           .asg @xpc_l, xpc_MMR
+           .asg @dr0_l, t0_MMR
+           .asg @dr1_l, t1_MMR
+           .asg @dr2_l, t2_MMR
+           .asg @dr3_l, t3_MMR
+           .asg @ac2_l, ac2l_MMR
+           .asg @ac2_h, ac2h_MMR
+           .asg @ac2_g, ac2g_MMR
+           .asg @cdp_l, cdp_MMR
+           .asg @ac3_l, ac3l_MMR
+           .asg @ac3_h, ac3h_MMR
+           .asg @ac3_g, ac3g_MMR
+           .asg @dp_h, dph_MMR          ;mdp_l and dp_h refers to the same 
+                                        ;Memory mapped register.However
+                                        ;mdp is used in instructions
+           .asg @mdp05_l, mdp05_MMR     
+           .asg @mdp67_l, mdp67_MMR     
+
+           .asg @dp_l, dp_MMR
+           .asg @pdp_l, pdp_MMR
+           .asg @bk47_l, bk47_MMR
+           .asg @bkc_l, bkc_MMR
+           .asg @bof01_l, bsa01_MMR
+           .asg @bof23_l, bsa23_MMR
+           .asg @bof45_l, bsa45_MMR
+           .asg @bof67_l, bsa67_MMR
+           .asg @bofc_l, bsac_MMR
+           .asg @trn1_l, trn1_MMR
+           .asg @bios_l, bios_MMR
+           .asg @brc1_l, brc1_MMR
+           .asg @brs1_l, brs1_MMR
+           .asg @csr_l,  csr_MMR
+           .asg @rsa0_h, rsa0h_MMR
+           .asg @rsa0_l, rsa0l_MMR
+           .asg @rea0_h, rea0h_MMR
+           .asg @rea0_l, rea0l_MMR
+           .asg @rsa1_h, rsa1h_MMR
+           .asg @rsa1_l, rsa1l_MMR
+           .asg @rea1_h, rea1h_MMR
+           .asg @rea1_l, rea1l_MMR
+           .asg @rptc_l, rptc_MMR
+           .asg @imr1_l, ier1_MMR
+           .asg @ifr1_l, ifr1_MMR
+           .asg @dbimr0_l, dbier0_MMR
+           .asg @dbimr1_l, dbier1_MMR
+           .asg @ivpd_l, ivpd_MMR
+           .asg @ivph_l, ivph_MMR
+           .asg @st2_l, st2_55_MMR
+           .asg @ssp_l, ssp_MMR
+           .asg @sp_l, sp_MMR
+           .asg @sp_h, sph_MMR
+           .asg @cdp_h, cdph_MMR
+
+;Status Register Bits
+
+           .asg st0_carry, STBIT_CARRY
+           .asg st1_intm, STBIT_INTM
+           .asg st1_sxmd, STBIT_SXMD
+           .asg st1_frct, STBIT_FRCT
+           .asg st1_sxmd, STBIT_SXMD
+           .asg st2_arms, STBIT_ARMS
+           .asg st3_sata, STBIT_SATA
+           .asg st3_smul, STBIT_SMUL
+           .asg st3_caen, STBIT_CAEN
+           .asg st3_cafrz, STBIT_CAFRZ
+           .asg st3_caclr, STBIT_CACLR
+        
+
+           .asg st3_sst, STBIT_SST
+           .asg st2_rdm, STBIT_RDM
+           .asg st2_cdplc, STBIT_CDPLC
+           .asg st2_ar0lc, STBIT_AR0LC
+           .asg st2_ar1lc, STBIT_AR1LC 
+           .asg st2_ar2lc, STBIT_AR2LC
+           .asg st2_ar3lc, STBIT_AR3LC
+           .asg st2_ar4lc, STBIT_AR4LC
+           .asg st2_ar5lc, STBIT_AR5LC
+           .asg st2_ar6lc, STBIT_AR6LC
+           .asg st2_ar7lc, STBIT_AR7LC
+           .asg st1_m40, STBIT_M40
+           .asg st1_satd, STBIT_SATD
+           .asg st1_c54cm, STBIT_C54CM
+           .asg st1_c16, STBIT_C16
+           .asg st1_braf, STBIT_BRAF
+           .asg st1_cpl, STBIT_CPL
+        .endif
+   .endif
+
+;
+;# ======== C55_save ========
+;  Save cpu registers for context switching or other purposes
+;  This macro saves all the necessary registers specified by mask
+;
+;#
+;# Preconditions
+;#      none
+;#
+;# Postconditions
+;#      none
+;#
+;
+
+        .asg    "sp", C55_save$regs
+C55_save        .macro  ar_dr_sp_mask, acc_mask, misc1_mask, misc2_mask, misc3_mask  
+        .if (ar_dr_sp_mask & C55_AR0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pshboth xar0 
+                .else
+                        pshboth(xar0) 
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pshboth xar1 
+                .else
+                        pshboth(xar1) 
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR2_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pshboth xar2 
+                .else
+                        pshboth(xar2) 
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR3_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pshboth xar3
+                .else
+                        pshboth(xar3)
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR4_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pshboth xar4
+                .else
+                        pshboth(xar4)
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR5_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pshboth xar5
+                .else
+                        pshboth(xar5)
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR6_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pshboth xar6
+                .else
+                        pshboth(xar6)
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR7_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pshboth xar7
+                .else
+                        pshboth(xar7)
+                .endif
+        .endif
+
+        .if (((ar_dr_sp_mask & C55_T0_L) != 0 ) & ((ar_dr_sp_mask & C55_T1_L)!= 0))
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh t0,t1
+                .else
+                        push(t0,t1)
+                .endif
+        .else
+                .if (ar_dr_sp_mask & C55_T0_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                psh t0
+                        .else
+                                push(t0)
+                        .endif
+                .endif
+                .if (ar_dr_sp_mask & C55_T1_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                psh t1
+                        .else
+                                push(t1)
+                        .endif
+                .endif
+        .endif 
+        .if (((ar_dr_sp_mask & C55_T2_L) != 0 ) & ((ar_dr_sp_mask & C55_T3_L)!= 0))
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh t2,t3
+                .else
+                        push(t2,t3)
+                .endif
+        .else
+                .if (ar_dr_sp_mask & C55_T2_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                psh t2
+                        .else
+                                push(t2)
+                        .endif
+                .endif
+                .if (ar_dr_sp_mask & C55_T3_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                psh t3
+                        .else
+                                push(t3)
+                        .endif
+                .endif
+        .endif
+
+        .if (((acc_mask & C55_AC0_L) != 0 ) & ((acc_mask & C55_AC0_H) != 0))
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pshboth ac0
+                .else
+                        pshboth(ac0)
+                .endif
+        .else
+                .if (acc_mask & C55_AC0_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                psh ac0
+                        .else
+                                push(ac0)
+                        .endif
+                .endif
+                .if (acc_mask & C55_AC0_H)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                psh AC0H_MMR
+                        .else
+                                push(AC0H_MMR) || mmap()
+                        .endif
+                .endif
+        .endif
+        .if (acc_mask & C55_AC0_G)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh AC0G_MMR
+                .else
+                        push(AC0G_MMR) || mmap()
+                .endif
+        .endif
+
+
+        .if (((acc_mask & C55_AC1_L) != 0 ) & ((acc_mask & C55_AC1_H) != 0))
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pshboth ac1
+                .else
+                        pshboth(ac1)
+                .endif
+        .else
+                .if (acc_mask & C55_AC1_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                psh ac1
+                        .else
+                                push(ac1)
+                        .endif
+                .endif
+                .if (acc_mask & C55_AC1_H)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                psh AC1H_MMR
+                        .else
+                                push(AC1H_MMR) || mmap()
+                        .endif
+                .endif
+        .endif
+        .if (acc_mask & C55_AC1_G)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh AC1G_MMR
+                .else
+                        push(AC1G_MMR) || mmap()
+                .endif
+        .endif
+
+
+        .if (((acc_mask & C55_AC2_L) != 0 ) & ((acc_mask & C55_AC2_H) != 0))
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pshboth ac2
+                .else
+                        pshboth(ac2)
+                .endif
+        .else
+                .if (acc_mask & C55_AC2_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                psh ac2
+                        .else
+                                push(ac2)
+                        .endif
+                .endif
+                .if (acc_mask & C55_AC2_H)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                psh AC2H_MMR
+                        .else
+                                push(AC2H_MMR) || mmap()
+                        .endif
+                .endif
+        .endif
+        .if (acc_mask & C55_AC2_G)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh AC2G_MMR
+                .else
+                        push(AC2G_MMR) || mmap()
+                .endif
+        .endif
+
+        .if (((acc_mask & C55_AC3_L) != 0 ) & ((acc_mask & C55_AC3_H) != 0))
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pshboth ac3
+                .else
+                        pshboth(ac3)
+                .endif
+        .else
+                .if (acc_mask & C55_AC3_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                psh ac3
+                        .else
+                                push(ac3)
+                        .endif
+                .endif
+                .if (acc_mask & C55_AC3_H)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                psh AC3H_MMR
+                        .else
+                                push(AC3H_MMR) || mmap()
+                        .endif
+                .endif
+        .endif
+        .if (acc_mask & C55_AC3_G)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh AC3G_MMR
+                .else
+                        push(AC3G_MMR) || mmap()
+                .endif
+        .endif
+
+
+        .if (misc1_mask & C55_IMR0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh IER0_MMR
+                .else
+                        push(IER0_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_DBIMR0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh DBIER0_MMR
+                .else
+                        push(DBIER0_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_IMR1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh IER1_MMR
+                .else
+                        push(IER1_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_DBIMR1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh DBIER1_MMR
+                .else
+                        push(DBIER1_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_ST0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh ST0_55_MMR
+                .else
+                        push(ST0_55_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_ST1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh ST1_55_MMR
+                .else
+                        push(ST1_55_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_ST2_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh ST2_55_MMR
+                .else
+                        push(ST2_55_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_ST3_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh ST3_55_MMR
+                .else
+                        push(ST3_55_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_TRN0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh TRN0_MMR
+                .else
+                        push(TRN0_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_BK03_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh BK03_MMR
+                .else
+                        push(BK03_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_BRC0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh BRC0_MMR
+                .else
+                        push(BRC0_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_DP_H)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh DPH_MMR
+                .else
+                        push(DPH_MMR) || mmap()
+                .endif
+        .endif
+
+        .if (misc1_mask & C55_CDP_H)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh CDPH_MMR
+                .else
+                        push(CDPH_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_DP_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh DP_MMR
+                .else
+                        push(DP_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_CDP_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh CDP_MMR
+                .else
+                        push(CDP_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_MDP_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh DPH_MMR
+                .else
+                        push(DPH_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_PDP_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh PDP_MMR
+                .else
+                        push(PDP_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BK47_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh BK47_MMR
+                .else
+                        push(BK47_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BKC_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh BKC_MMR
+                .else
+                        push(BKC_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BOF01_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh BSA01_MMR
+                .else
+                        push(BSA01_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BOF23_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh BSA23_MMR
+                .else
+                        push(BSA23_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BOF45_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh BSA45_MMR
+                .else
+                        push(BSA45_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BOF67_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh BSA67_MMR
+                .else
+                        push(BSA67_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BOFC_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh BSAC_MMR
+                .else
+                        push(BSAC_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_IVPD_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh IVPD_MMR
+                .else
+                        push(IVPD_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_IVPH_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh IVPH_MMR
+                .else
+                        push(IVPH_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_TRN1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh TRN1_MMR
+                .else
+                        push(TRN1_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_BRS1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh BRS1_MMR
+                .else
+                        push(BRS1_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_BRC1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh BRC1_MMR
+                .else
+                        push(BRC1_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_CSR_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh CSR_MMR
+                .else
+                        push(CSR_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_RSA0_H)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh RSA0H_MMR
+                .else
+                        push(RSA0H_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_RSA0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh RSA0L_MMR
+                .else
+                        push(RSA0L_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_REA0_H)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh REA0H_MMR
+                .else
+                        push(REA0H_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_REA0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh REA0L_MMR
+                .else
+                        push(REA0L_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_RSA1_H)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh RSA1H_MMR
+                .else
+                        push(RSA1H_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_RSA1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh RSA1L_MMR
+                .else
+                        push(RSA1L_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_REA1_H)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh REA1H_MMR
+                .else
+                        push(REA1H_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_REA1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh REA1L_MMR
+                .else
+                        push(REA1L_MMR) || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_RPTC_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        psh RPTC_MMR
+                .else
+                        push(RPTC_MMR) || mmap()
+                .endif
+        .endif
+ .endm
+
+;
+;# ======== C55_restore ========
+;  Restore cpu registers for context switching or other purposes
+;  This macro restores all the necessary registers specified by mask
+;
+;#
+;# Preconditions
+;#      none
+;#
+;# Postconditions
+;#      none
+;#
+;
+        .asg    "C55_pop_out_$regs", C55_restore_$regs
+C55_restore     .macro  ar_dr_sp_mask, acc_mask, misc1_mask, misc2_mask, misc3_mask  
+        .if (misc3_mask & C55_RPTC_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop RPTC_MMR
+                .else
+                        RPTC_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_REA1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop REA1L_MMR
+                .else
+                        REA1L_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_REA1_H)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop REA1H_MMR
+                .else
+                        REA1H_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_RSA1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop RSA1L_MMR
+                .else
+                        RSA1L_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_RSA1_H)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop RSA1H_MMR
+                .else
+                        RSA1H_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_REA0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop REA0L_MMR
+                .else
+                        REA0L_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_REA0_H)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop REA0H_MMR
+                .else
+                        REA0H_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_RSA0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop RSA0L_MMR
+                .else
+                        RSA0L_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_RSA0_H)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop RSA0H_MMR
+                .else
+                        RSA0H_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_CSR_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop CSR_MMR
+                .else
+                        CSR_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_BRC1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop BRC1_MMR
+                .else
+                        BRC1_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc3_mask & C55_BRS1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop BRS1_MMR
+                .else
+                        BRS1_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_TRN1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop TRN1_MMR
+                .else
+                        TRN1_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_IVPH_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop IVPH_MMR
+                .else
+                        IVPH_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_IVPD_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop IVPD_MMR
+                .else
+                        IVPD_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BOFC_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop BSAC_MMR
+                .else
+                        BSAC_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BOF67_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop BSA67_MMR
+                .else
+                        BSA67_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BOF45_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop BSA45_MMR
+                .else
+                        BSA45_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BOF23_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop BSA23_MMR
+                .else
+                        BSA23_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BOF01_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop BSA01_MMR
+                .else
+                        BSA01_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BKC_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop BKC_MMR
+                .else
+                        BKC_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_BK47_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop BK47_MMR
+                .else
+                        BK47_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_PDP_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop PDP_MMR
+                .else
+                        PDP_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_MDP_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop DPH_MMR
+                .else
+                        DPH_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_CDP_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop CDP_MMR
+                .else
+                        CDP_MMR  = pop() || mmap()
+                .endif
+        .endif
+        .if (misc2_mask & C55_DP_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop DP_MMR
+                .else
+                        DP_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_CDP_H)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop CDPH_MMR
+                .else
+                        CDPH_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_DP_H)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop DPH_MMR
+                .else
+                        DPH_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_BRC0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop BRC0_MMR
+                .else
+                        BRC0_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_BK03_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop BK03_MMR
+                .else
+                        BK03_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_TRN0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop TRN0_MMR
+                .else
+                        TRN0_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_ST3_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop ST3_55_MMR
+                .else
+                        ST3_55_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_ST2_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop ST2_55_MMR
+                .else
+                        ST2_55_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_ST1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop ST1_55_MMR
+                .else
+                        ST1_55_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_ST0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop ST0_55_MMR
+                .else
+                        ST0_55_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_DBIMR1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop DBIER1_MMR
+                .else
+                        DBIER1_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_IMR1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop IER1_MMR
+                .else
+                        IER1_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_DBIMR0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop DBIER0_MMR
+                .else
+                        DBIER0_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (misc1_mask & C55_IMR0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop IER0_MMR
+                .else
+                        IER0_MMR = pop() || mmap()
+                .endif
+        .endif
+
+        .if (acc_mask & C55_AC3_G)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop AC3G_MMR
+                .else
+                        AC3G_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (((acc_mask & C55_AC3_L) != 0 ) & ((acc_mask & C55_AC3_H) != 0))
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                  popboth ac3
+                .else
+                  ac3 = popboth()
+                .endif
+        .else
+                .if (acc_mask & C55_AC3_H)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                pop AC3H_MMR
+                        .else
+                                AC3H_MMR = pop() || mmap()
+                        .endif
+                .endif
+                .if (acc_mask & C55_AC3_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                pop ac3
+                        .else
+                                ac3 = pop()
+                        .endif
+                .endif
+        .endif
+
+        .if (acc_mask & C55_AC2_G)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop AC2G_MMR
+                .else
+                        AC2G_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (((acc_mask & C55_AC2_L) != 0 ) & ((acc_mask & C55_AC2_H) != 0))
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                  popboth ac2
+                .else
+                  ac2 = popboth()
+                .endif
+        .else
+                .if (acc_mask & C55_AC2_H)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                pop AC2H_MMR
+                        .else
+                                AC2H_MMR = pop() || mmap()
+                        .endif
+                .endif
+                .if (acc_mask & C55_AC2_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                pop ac2
+                        .else
+                                ac2 = pop()
+                        .endif
+                .endif
+        .endif
+
+        .if (acc_mask & C55_AC1_G)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop AC1G_MMR
+                .else
+                        AC1G_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (((acc_mask & C55_AC1_L) != 0 ) & ((acc_mask & C55_AC1_H) != 0))
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        popboth ac1
+                .else
+                        ac1 = popboth()
+                .endif
+        .else
+                .if (acc_mask & C55_AC1_H)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                pop AC1H_MMR
+                        .else
+                                AC1H_MMR = pop() || mmap()
+                        .endif
+                .endif
+                .if (acc_mask & C55_AC1_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                pop ac1
+                        .else
+                                ac1 = pop()
+                        .endif
+                .endif
+        .endif
+
+
+        .if (acc_mask & C55_AC0_G)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop AC0G_MMR
+                .else
+                        AC0G_MMR = pop() || mmap()
+                .endif
+        .endif
+        .if (((acc_mask & C55_AC0_L) != 0 ) & ((acc_mask & C55_AC0_H) != 0))
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        popboth ac0
+                .else
+                        ac0 = popboth()
+                .endif
+        .else
+                .if (acc_mask & C55_AC0_H)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                pop AC0H_MMR
+                        .else
+                                AC0H_MMR = pop() || mmap ()
+                        .endif
+                .endif
+                .if (acc_mask & C55_AC0_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                pop ac0
+                        .else
+                                ac0 = pop() 
+                        .endif
+                .endif
+        .endif
+        .if (((ar_dr_sp_mask & C55_T2_L) != 0 ) & ((ar_dr_sp_mask & C55_T3_L)!= 0))
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop t2,t3
+                .else
+                        t2,t3 = pop()
+                .endif
+        .else
+                .if (ar_dr_sp_mask & C55_T3_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                pop t3
+                        .else
+                                t3 = pop()
+                        .endif
+                .endif
+                .if (ar_dr_sp_mask & C55_T2_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                pop t2
+                        .else
+                                t2 = pop()
+                        .endif
+                .endif
+        .endif
+
+        .if (((ar_dr_sp_mask & C55_T1_L) != 0 ) & ((ar_dr_sp_mask & C55_T0_L)!= 0))
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        pop t0,t1
+                .else
+                        t0,t1 = pop()
+                .endif
+        .else
+                .if (ar_dr_sp_mask & C55_T1_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                pop t1
+                        .else
+                                t1 = pop()
+                        .endif
+                .endif
+                .if (ar_dr_sp_mask & C55_T0_L)
+                        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                                pop t0
+                        .else
+                                t0 = pop()
+                        .endif
+                .endif
+        .endif
+
+        .if (ar_dr_sp_mask & C55_AR7_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        popboth xar7
+                .else
+                        xar7 = popboth()
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR6_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        popboth xar6
+                .else
+                        xar6 = popboth()
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR5_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        popboth xar5
+                .else
+                        xar5 = popboth()
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR4_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        popboth xar4
+                .else
+                        xar4 = popboth()
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR3_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        popboth xar3
+                .else
+                        xar3 = popboth()
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR2_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        popboth xar2
+                .else
+                        xar2 = popboth()
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR1_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        popboth xar1
+                .else
+                        xar1 = popboth()
+                .endif
+        .endif
+        .if (ar_dr_sp_mask & C55_AR0_L)
+                .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+                        popboth xar0
+                .else
+                        xar0 = popboth()
+                .endif
+        .endif
+ .endm
+
+;# ======== C55_disableIMR0 ========
+;
+;  Disable interrupts using mask
+;  This macro sets a bit position of IMR register to 0, according 
+;  as the MASK supplied
+;  IEMASK       - Interrupt Enable mask
+;  REG0   - temporary register used to set IMR
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+C55_disableIMR0  .macro  IEMASK0, REG0
+        .if ($symlen(":IEMASK0:") == 0)
+            .emsg  "C55_disableIMR0 IEMASK0, REG0 operands missing."
+        .elseif ($symlen(":REG0:") == 0)
+                .emsg  "C55_disableIMR0 REG0 operand missing."
+       .else
+        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+            btst #STBIT_INTM, ST1_55_MMR, tc1    ; Begin atomic
+            HWI_disable 
+            mov #:IEMASK0:, :REG0:
+            and IER0_MMR, :REG0:                        ;AND mask with IMR0
+            not :REG0:, :REG0:                          ;Take Complement 
+            and IER0_MMR, :REG0:                        ;AND the complement
+                                                        ;with IMR0
+            mov :REG0:, IER0_MMR
+            xcc cond?, !tc1
+                HWI_enable                      ; End atomic
+cond?
+        .else
+            tc1 = bit(ST1_55_MMR,#STBIT_INTM) || mmap() ; Begin atomic
+            HWI_disable
+            :REG0: = #:IEMASK0:                         ;
+            :REG0: = :REG0: & IER0_MMR  || mmap()        ;AND mask with IMR0
+            :REG0: = ~:REG0:                            ;Take Complement 
+            :REG0: =  :REG0: & IER0_MMR || mmap()        ;AND the complement 
+            IER0_MMR = :REG0:  || mmap()                 ;with IMR0
+            if (!tc1) execute (AD_UNIT)
+                HWI_enable                         ;         End atomic
+        .endif
+                                                                            
+
+       .endif
+
+      .endm
+
+;# ======== C55_disableIMR1 ========
+;
+;  Disable interrupts using mask
+;  This macro sets a bit position of IMR register to 0, according 
+;  as the MASK supplied
+;  IEMASK1       - Interrupt Enable mask
+;  REG0   - temporary registers used to set IMR
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+C55_disableIMR1  .macro  IEMASK1, REG0
+        .if ($symlen(":IEMASK1:") == 0)
+            .emsg  "C55_disableIMR1 IEMASK1, and REG0 operands missing."
+        .elseif ($symlen(":REG0:") == 0)
+                .emsg  "C55_disableIMR1 REG0  operand missing."
+       .else
+        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+            btst #STBIT_INTM, ST1_55_MMR, tc1    ; Begin atomic
+            HWI_disable
+            mov #:IEMASK1:, :REG0:
+            and IER1_MMR, :REG0:                        ;AND mask with IMR1
+            not :REG0:, :REG0:                          ;Take Complement 
+            and IER1_MMR, :REG0:                        ;AND the complement
+                                                        ;with IMR1
+            mov :REG0:, IER1_MMR
+            xcc cond?, !tc1
+                HWI_enable                      ; End atomic
+cond?
+        .else
+            tc1 = bit(ST1_55_MMR,#STBIT_INTM)|| mmap() ; Begin atomic
+            HWI_disable
+            :REG0: = #:IEMASK1:                 ;
+            :REG0: = :REG0: & IER1_MMR || mmap()        ;AND mask with IMR0 
+            :REG0: = ~:REG0:                           ;Take Complement
+            :REG0: = :REG0: & IER1_MMR || mmap()        ;AND complement with 
+            IER1_MMR = :REG0:  || mmap()                ;IMR1 
+
+            if (!tc1) execute (AD_UNIT)
+                HWI_disable                   ;         End atomic
+        .endif
+                                                                            
+
+       .endif
+
+      .endm
+
+;# ======== C55_enableIMR0 ========
+;
+;  Enable interrupts using mask
+;  This macro sets the bit position of IMR to 1, according as 
+;  the MASK supplied. 
+;  IEMASK0       - Interrupt Enable mask
+;  REG0   - temporary register used to set IMR
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+C55_enableIMR0  .macro  IEMASK0, REG0
+        .if ($symlen(":IEMASK0:") == 0)
+            .emsg  "C55_enableIMR0 IEMASK0, and REG0 operands missing."
+        .elseif ($symlen(":REG0:") == 0)
+                .emsg  "C55_enableIMR0 REG0 operand missing."
+       .else
+        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+            tc1 = bit(ST1_55_MMR,#STBIT_INTM)|| mmap() ; Begin atomic
+            HWI_disable
+            mov #:IEMASK0, :REG0:
+            or IER0_MMR, :REG0:                 ;or mask with IMR0
+            mov :REG0:, IER0_MMR
+            xcc cond?, !tc1
+                HWI_enable                      ; End atomic
+cond?
+        .else
+            tc1 = bit(ST1_55_MMR,#STBIT_INTM)|| mmap()        ; Begin atomic
+            HWI_disable
+            :REG0: = #:IEMASK0:                         ;
+            :REG0: = :REG0: | IER0_MMR  || mmap()        ;OR the mask with 
+            IER0_MMR = :REG0:  || mmap()                 ;IMR0
+
+            if (!tc1) execute (AD_UNIT)
+                HWI_enable                    ;End atomic
+        .endif
+                                                                            
+
+       .endif
+       .endm
+
+;# ======== C55_enableIMR1 ========
+;
+;  Enable interrupts using mask
+;  This macro sets the bit position of IMR to 1, according as 
+;  the MASK supplied. 
+;  IEMASK1       - Interrupt Enable mask
+;  REG0   - temporary register used to set IMR
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+C55_enableIMR1  .macro  IEMASK1, REG0
+        .if ($symlen(":IEMASK1:") == 0)
+            .emsg  "C55_enableIMR1 IEMASK1, and REG0 operands missing."
+        .elseif ($symlen(":REG0:") == 0)
+                .emsg  "C55_enableIMR1 REG0  operand missing."
+       .else
+        .if(.MNEMONIC)  ; if ; MNEMONIC ; assembler
+            btst #STBIT_INTM, ST1_55_MMR, tc1    ;Begin atomic
+            HWI_disable
+            mov #:IEMASK1, :REG0:
+            or IER1_MMR, :REG0:                 ;or mask with IMR1
+            mov :REG0:, IER1_MMR
+            xcc cond?, !tc1
+                HWI_enable                      ; End atomic
+cond?
+        .else
+            tc1 = bit(ST1_55_MMR,#STBIT_INTM) || mmap()         ;Begin atomic
+            HWI_disable
+            :REG0: = #:IEMASK1:                           ;OR the mask with
+            :REG0: = :REG0: | IER1_MMR  || mmap()          ;IMR1
+            IER1_MMR = :REG0:  || mmap()                   ;
+
+            if (!tc1) execute (AD_UNIT)
+                HWI_enable                      ;End atomic
+        .endif
+        .endif
+        .endm
+;
+
+
+;# ======== C55_enableIER0 ========
+
+C55_enableIER0  .macro  IEMASK0, REG0
+
+        C55_enableIMR0 :IEMASK0:, :REG0:
+
+                .endm
+
+
+
+;# ======== C55_enableIER1 ========
+
+C55_enableIER1  .macro  IEMASK0, REG0
+
+        C55_enableIMR1 :IEMASK0:, :REG0:
+
+                .endm
+
+                
+
+;# ======== C55_disableIER0 ========
+
+C55_disableIER0  .macro  IEMASK0, REG0
+
+        C55_disableIMR0 :IEMASK0:, :REG0:
+
+                .endm           
+
+
+
+;# ======== C55_disableIER1 ========
+
+C55_disableIER1  .macro  IEMASK0, REG0
+
+        C55_disableIMR1 :IEMASK0:, :REG0:
+
+                .endm
+
+
+;# ======== C55_setBiosSTbits ========
+;
+; This macro sets st3, st2, st1 and st0 to the values expected by
+; BIOS environment 
+;
+;#
+;# Preconditions:
+;#   None
+;#
+;# Postconditions:
+;#   for st0: no change.
+;#   for st1:
+;#     braf = 0, m40 = 0, satd = 0, c16 = 0, frct = 0, c54cm = 0, asm = 0,
+;#     cpl = 1, sxmd = 1 
+;#   for st2:
+;#     rdm = 0, cdplc = 0, ar7lc=ar6lc=ar5lc=ar4lc=ar3lc=ar2lc=ar1lc=ar0lc=0
+;#     arms = 1
+;#   for st3:
+;#     sata = 0, sst = 0
+;#     smul = 1
+;#
+;
+
+        .asg    "st0_l,st1_l,st2_l,st3_l", C55_setBiosSTbits$regs
+C55_setBiosSTbits .macro dummy
+        CHK_void C55_setBiosSTbits, dummy
+
+        .if(.MNEMONIC)          ; mnemonic assembler
+
+          and #(C55_ST1_BIOS_ZERO_BIT_POS ^ 0xFFFF), ST1_55_MMR
+                ; masm55 has problems with ~k16 usage here & hence explicit use 
+                ; of complemented k16 here
+                                        ; BRAF = 0, bit 15
+                                        ; M40 = 0, bit 10
+                                        ; SATD = 0, bit 9
+                                        ; C16 = 0, bit 7
+                                        ; FRCT = 0, bit 6
+                                        ; C54CM = 0, bit 5
+                                        ; ASM = 0, bit 4-0
+
+          or #(C55_ST1_BIOS_ONE_BIT_POS), ST1_55_MMR
+                                        ; CPL = 1, bit 14
+                                        ; SXMD = 1, bit 8
+        
+          ;and #(~C55_ST2_BIOS_ZERO_BIT_POS), ST2_55_MMR
+                                        ; Worked around CPU_75. Use bset/bclr
+                                        ; instructions for writes to st0/st2
+          bclr #STBIT_RDM, st2_55       ; RDM = 0, bit 10
+          bclr #STBIT_CDPLC, st2_55     ; CDPLC =0, bit 8
+          bclr #STBIT_AR7LC, st2_55     ; AR7LC =0, bit 7
+          bclr #STBIT_AR6LC, st2_55     ; AR6LC =0, bit 6
+          bclr #STBIT_AR5LC, st2_55     ; AR5LC =0, bit 5
+          bclr #STBIT_AR4LC, st2_55     ; AR4LC =0, bit 4
+          bclr #STBIT_AR3LC, st2_55     ; AR3LC =0, bit 3
+          bclr #STBIT_AR2LC, st2_55     ; AR2LC =0, bit 2
+          bclr #STBIT_AR1LC, st2_55     ; AR1LC =0, bit 1
+          bclr #STBIT_AR0LC, st2_55     ; AR0LC =0, bit 0
+
+
+          bset #STBIT_ARMS, st2_55      ; ARMS = 1, bit 15
+
+          and #(~C55_ST3_BIOS_ZERO_BIT_POS), ST3_55_MMR
+                                        ; SATA = 0, bit 5
+                                        ; SST = 0, bit 0
+
+          bset #STBIT_SMUL, st3_55      ; SMUL = 1, bit 1
+
+        .else                   ; algebraic assembler
+
+          ST1_55_MMR = ST1_55_MMR & #(C55_NOT_ST1_BIOS_ZERO_BIT_POS) || mmap()
+                                        ; BRAF = 0, bit 15
+                                        ; M40 = 0, bit 10
+                                        ; SATD = 0, bit 9
+                                        ; C16 = 0, bit 7
+                                        ; FRCT = 0, bit 6
+                                        ; C54CM = 0, bit 5
+                                        ; ASM = 0, bit 4-0
+
+          ST1_55_MMR = ST1_55_MMR | #(C55_ST1_BIOS_ONE_BIT_POS) || mmap()
+                                        ; CPL = 1, bit 14
+                                        ; SXMD = 1, bit 8
+
+          ; ST2_55_MMR = ST2_55_MMR & #(~C55_ST2_BIOS_ZERO_BIT_POS) || mmap()
+                                        ; Worked around CPU_75. Use bit()
+                                        ; instructions for writes to st0, st2.
+          bit(st2, #STBIT_RDM)   = #0   ; RDM = 0, bit 10
+          bit(st2, #STBIT_CDPLC) = #0   ; CDPLC =0, bit 8
+          bit(st2, #STBIT_AR7LC) = #0   ; AR7LC =0, bit 7
+          bit(st2, #STBIT_AR6LC) = #0   ; AR6LC =0, bit 6
+          bit(st2, #STBIT_AR5LC) = #0   ; AR5LC =0, bit 5
+          bit(st2, #STBIT_AR4LC) = #0   ; AR4LC =0, bit 4
+          bit(st2, #STBIT_AR3LC) = #0   ; AR3LC =0, bit 3
+          bit(st2, #STBIT_AR2LC) = #0   ; AR2LC =0, bit 2
+          bit(st2, #STBIT_AR1LC) = #0   ; AR1LC =0, bit 1
+          bit(st2, #STBIT_AR0LC) = #0   ; AR0LC =0, bit 0
+
+          bit(st2, #STBIT_ARMS) = #1    ; ARMS = 1, bit 15
+
+
+          ST3_55_MMR = ST3_55_MMR & #(~C55_ST3_BIOS_ZERO_BIT_POS) || mmap()
+                                        ; SATA = 0, bit 5
+                                        ; SST = 0, bit 0
+
+          bit(st3, #STBIT_SMUL) = #1    ; SMUL = 1, bit 1
+
+        .endif
+
+        .endm
+
+
+;# ======== C55_setBiosSTbitsFast ========
+;
+; This macro sets st3, st2, st1 and st0 to the values expected by
+; BIOS environment. This macro replaces the use of C55_setBiosSTbits internally
+; in HWI_enter/exit, Dispatcher. Precondition INTM = 1 is important as the 
+; CPU_75 workaround has been removed.  This allows the sequence of operations
+; to be optimized by reducing pipeline stalls using bset/bclr operations.
+;
+;#
+;# Preconditions:
+;#   intm = 1
+;#
+;# Postconditions:
+;#   for st0: no change.
+;#   for st1:
+;#     braf = 0, m40 = 0, satd = 0, c16 = 0, frct = 0, c54cm = 0, asm = 0,
+;#     cpl = 1, sxmd = 1 
+;#   for st2:
+;#     rdm = 0, cdplc = 0, ar7lc=ar6lc=ar5lc=ar4lc=ar3lc=ar2lc=ar1lc=ar0lc=0
+;#     arms = 1
+;#   for st3:
+;#     sata = 0, sst = 0
+;#     smul = 1
+;#
+;
+
+        .asg    "st0_l,st1_l,st2_l,st3_l", C55_setBiosSTbitsFast$regs
+C55_setBiosSTbitsFast .macro dummy
+        CHK_void C55_setBiosSTbitsFast, dummy
+
+        .if(.MNEMONIC)          ; mnemonic assembler
+          and #(C55_NOT_ST1_BIOS_ZERO_BIT_POS ^ 0xFFFF), ST1_55_MMR
+                ; masm55 has problems with ~k16 usage here & hence explicit use 
+                ; of complemented k16 here
+                                        ; BRAF = 0, bit 15
+                                        ; M40 = 0, bit 10
+                                        ; SATD = 0, bit 9
+                                        ; C16 = 0, bit 7
+                                        ; FRCT = 0, bit 6
+                                        ; C54CM = 0, bit 5
+                                        ; ASM = 0, bit 4-0
+
+          bset #STBIT_ARMS, st2_55      ; ARMS = 1, bit 15
+          bset #STBIT_CPL, st1_55       ; CPL = 1, bit 14
+          bset #STBIT_SMUL, st3_55      ; SMUL = 1, bit 1
+          bset #STBIT_SXMD, st1_55      ; SXMD = 1, bit 8
+          bclr #STBIT_SATA, st3_55      ; SATA = 0, bit 5
+          bclr #STBIT_SST, st3_55       ; SST = 0, bit 0
+
+          .noremark 5601                ; Safe wrt CPU_75
+                                        ; st2 can be updated as it is made sure
+                                        ; that this macro is always called 
+                                        ; with interrupts disabled. This allows
+                                        ; the AND operation to be used instead 
+                                        ; of bclr instructions. This macro 
+                                        ; is currently used in HWI_enter/exit 
+                                        ; and CLK_F_isr. In all these places 
+                                        ; it is placed in interrupt protected 
+                                        ; region. This is an optimization and
+                                        ; care must be taken to use bclr if
+                                        ; the macro is used in future with 
+                                        ; interrupts enabled.
+
+          and #(~C55_ST2_BIOS_ZERO_BIT_POS), ST2_55_MMR
+                                        ; RDM = 0, bit 10
+                                        ; CDPLC = 0, bit 8
+                                        ; AR7LC = 0, bit 7
+                                        ; AR6LC = 0, bit 6
+                                        ; AR5LC = 0, bit 5
+                                        ; AR4LC = 0, bit 4
+                                        ; AR3LC = 0, bit 3
+                                        ; AR2LC = 0, bit 2
+                                        ; AR1LC = 0, bit 1
+                                        ; AR0LC = 0, bit0
+          .remark 5601                  ; Enable CPU_75 remark
+
+        .else                   ; algebraic assembler
+
+          ST1_55_MMR = ST1_55_MMR & #(C55_NOT_ST1_BIOS_ZERO_BIT_POS) || mmap()
+                                        ; BRAF = 0, bit 15
+                                        ; M40 = 0, bit 10
+                                        ; SATD = 0, bit 9
+                                        ; C16 = 0, bit 7
+                                        ; FRCT = 0, bit 6
+                                        ; C54CM = 0, bit 5
+                                        ; ASM = 0, bit 4-0
+
+          bit(st2, #STBIT_ARMS) = #1    ; ARMS = 1, bit 15
+          bit(st1, #STBIT_CPL)  = #1    ; CPL = 1, bit 14
+          bit(st3, #STBIT_SMUL) = #1    ; SMUL = 1, bit 1
+          bit(st1, #STBIT_SXMD) = #1    ; SXMD = 1, bit 8
+          bit(st3, #STBIT_SATA) = #0    ; SATA = 0, bit 5
+          bit(st3, #STBIT_SST)  = #0    ; SST = 0, bit 0
+
+          .noremark 5601                ; Safe wrt CPU_75
+                                        ; st2 can be updated as it is made sure
+                                        ; that this macro is always called
+                                        ; with interrupts disabled. This allows
+                                        ; the AND operation to be used instead
+                                        ; of bclr instructions. This macro
+                                        ; is currently used in HWI_enter/exit
+                                        ; and CLK_F_isr. In all these places
+                                        ; it is placed in interrupt protected
+                                        ; region. This is an optimization and
+                                        ; care must be taken to use bclr if
+                                        ; the macro is used in future with
+                                        ; interrupts enabled.
+
+          ST2_55_MMR = ST2_55_MMR & #(~C55_ST2_BIOS_ZERO_BIT_POS) || mmap()
+                                        ; RDM = 0, bit 10
+                                        ; CDPLC = 0, bit 8
+                                        ; AR7LC = 0, bit 7
+                                        ; AR6LC = 0, bit 6
+                                        ; AR5LC = 0, bit 5
+                                        ; AR4LC = 0, bit 4
+                                        ; AR3LC = 0, bit 3
+                                        ; AR2LC = 0, bit 2
+                                        ; AR1LC = 0, bit 1
+                                        ; AR0LC = 0, bit0
+          .remark 5601                  ; Enable CPU_75 remark
+
+        .endif
+
+        .endm
+
+;
+;# ======== C55_saveCContext ========
+; This macro  saves all register that the C compiler expects to
+; be saved by the caller (parent).
+;#
+;# Preconditions:
+;# None
+;# Postconditions:
+;#  The following registers are saved
+;#      xar0-xar4,t0-t1,ac[0-3][ghl]
+;#      brc0, brc1
+;#      brs1,csr
+;#      rsa0_h,rsa0_l
+;#      rea0_h,rea0_l,
+;#      rsa1_h,rsa1_l
+;#      rea1_h,rea1_l,
+;#      rptc.
+;#  Additional registers saved because of changed convention
+;#      bk03, bk47, bkc
+;#      bsa01, bsa23, bsa45, bsa67, bsac 
+;#      trn0, trn1
+;#      cdp_h, cdp_l
+;#  Since, the C context differs from BIOS context only in
+;#  the treatment of DP, internally DSP/BIOS doesn't 
+;#  distinguish between the two contexts.
+;
+        .asg    "tc1", C55_saveCContext$regs
+C55_saveCContext .macro  dummy
+        CHK_void C55_saveCContext,  dummy
+        C55_saveBiosContext
+   .endm
+
+;# ======== C55_restoreCContext ========
+; This macro  restores all register from stack that were saved
+; by C55SaveCCcontext
+;#
+;# Preconditions:
+;# None
+;# Postconditions:
+;#  The following registers are  restored
+;#      xar0-xar4,t0-t1,ac[0-3][ghl]
+;#      brc0, brc1
+;#      brs1,csr
+;#      rsa0_h,rsa0_l
+;#      rea0_h,rea0_l,
+;#      rsa1_h,rsa1_l
+;#      rea1_h,rea1_l,
+;#      rptc.
+;#  Additional registers saved because of changed convention
+;#      bk03, bk47, bkc
+;#      bsa01, bsa23, bsa45, bsa67, bsac
+;#      trn0, trn1
+;#      cdp_h, cdp_l
+;#  Since, the C context differs from BIOS context only in
+;#  the treatment of DP, internally DSP/BIOS doesn't
+;#  distinguish between the two contexts.
+;
+        .asg    "tc1", C55_restoreCContext$regs
+C55_restoreCContext .macro  dummy
+        CHK_void C55_restoreCContext, dummy
+        C55_restoreBiosContext
+   .endm
+   
+;
+;# ======== C55_saveBiosContext ========
+; This macro saves all register that BIOS expects to be saved.
+;
+;#
+;# Preconditions:
+;# None
+;# Postconditions:
+;#  The following registers are saved
+;#  C caller  preserved register.
+;#      xar0-xar4,t0-t1,ac[0-3][ghl]
+;#      brc0, brc1
+;#      brs1,csr
+;#      rsa0_h,rsa0_l
+;#      rea0_h,rea0_l,
+;#      rsa1_h,rsa1_l
+;#      rea1_h,rea1_l,
+;#      rptc.
+;#  Additional registers saved to form BIOS context
+;#      trn0,bk03,cdp_l,dp_h,dp_l,pdp, bk47,bkc
+;#      bsa01,bsa23, bsa45,bsa67,bsac,trn1
+;#      cdp_h
+;
+
+;
+;# !!!! Any changes to C55_saveBiosContext must !!!!
+;# !!!! be reflected in the C55_CContextSize    !!!!
+;
+
+    .if (_55Pb_)
+C55_CContextSize .set   178
+    .else ; (_55Pb_)
+C55_CContextSize .set   46
+    .endif
+
+        .asg    "tc1", C55_saveBiosContext$regs
+C55_saveBiosContext .macro  dummy
+    CHK_void C55_saveBiosContext, dummy
+    .if (_55Pb_)
+        push(rptc)
+        push(t0,t1)
+        push(brs1)
+        push(csr)
+        push(brc0)
+        push(brc1)
+
+        repeat(#4)
+            dbl(push(ac0))      ; push ac0-ac4
+                                ; ac5-ac7 are saved by child C func
+        repeat(#7)
+            dbl(push(ac8))      ; push ac8-ac15 (ac15 = trn0,trn1)
+
+        repeat(#4)
+            dbl(push(xar0))     ; push xar0-xar4
+                                ; xar5-xar7 are saved by child C func
+        repeat(#7)
+            dbl(push(xar8))     ; push xar8-xar15 (xar15 = xcdp)
+
+        repeat(#7)
+            push(ac8.g)         ; push ac8.g- ac15.g
+                                ; ac5.g-ac7.g are saved by child C func
+        repeat(#13)
+            push(pdp)           ; push ac4.6-ac0.g
+                                ; bk47,bk03,bkc,bofc,bof67,bof45
+                                ; bof23,bof01,pdp
+        repeat(#3)
+            dbl(push(rsa0))     ; push rea1,rea0,rsa1,rsa0
+
+    .else ; (_55Pb_)
+        .if(.MNEMONIC)                  ; if  MNEMONIC  assembler
+            pshboth xar0                                
+            pshboth xar1                                
+            pshboth xar2                
+            pshboth xar3        
+            pshboth xar4
+            psh t0,t1
+            psh AC0G_MMR
+            pshboth ac0
+            psh AC1G_MMR
+            pshboth ac1
+            psh AC2G_MMR
+            pshboth ac2
+            psh AC3G_MMR
+            pshboth ac3
+            psh BRS1_MMR
+            psh BRC1_MMR
+                                        ; The following six register
+                                        ; saves are moved below allowing
+                                        ; them to be used as latency 
+                                        ; slots for the small memory
+                                        ; model case.
+            .if (_55L_) | (_55H_)
+                psh TRN0_MMR
+                psh RPTC_MMR            ; rptc is saved first
+                                        ; as the repeat loop
+                                        ; below is going to
+                                        ; change its value
+                
+                psh BK03_MMR            ; save bk03
+                psh BRC0_MMR            ; save brc0     
+                psh CDP_MMR             ; save cdp
+                psh DPH_MMR             ; save dp_h
+        
+                .noremark 5573          ; Safe from CPU_43
+                                        ; Circular addressing mode is 
+                                        ; not used. Also, no preceding
+                                        ; BKxx or BOFxx updates 
+                                        ; preceding this instruction.
+                                        ; Hence, the workaround is not
+                                        ; required.
+                amov #dp_l, xar1
+                .remark 5573            ; Enable CPU_43 remark
+                rpt #(((rptc_l - dp_l) >> 1) -1)
+                        psh dbl(*ar1+)
+
+                ; saves the following
+                ; trashable registers
+                ; dp_l,pdp
+                ; bk47,bkc
+                ; bsa01,bsa23
+                ; bsa45,bsa67
+                ; bsac, bios
+                ; trn1, brc1
+                ; brs1,csr
+                ; rsa0_h,rsa0_l
+                ; rea0_h,rea0_l,
+                ; rsa1_h,rsa1_l
+                ; rea1_h,rea1_l,
+                ; Note that bios
+                ; register is saved
+                ; as it is present
+                ; between the address
+                ; of register dp
+                ; and rea.
+
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ; Note that the repeat instruction executes one more than
+                ; the number of iteration specified along with the 
+                ; instruction. The shift 1 enables to half the iteration
+                ; count of repeat loop.
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+            .else ;  (_55L_) | (_55H_)
+
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ; Interrupt protection logic.                               ;
+                ; Interrupts are turned off  to acheive TRUE small model    ;
+                ; The registers that are saved below are accessed as memory ;
+                ; addresses and these memory addresses reside in page 0     ;
+                ; However, in true small model data can be in any page      ;
+                ; The access to these registers in page 0 can corrupt the   ;
+                ; upper half of XAR. An interrupt occuring in the region    ;
+                ; where XAR upper part is 0, would make the ISR access the  ;
+                ; data from PAGE 0, where as the actual data can exists in  ;
+                ; any of the pages, leading  to incorrect access of data    ;
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                
+                .noremark 5650          ; Safe wrt CPU_68
+                btst #11, ST1_55_MMR, tc1 
+                .remark 5650            ; Switch remark on.
+                bset #STBIT_INTM, st1_55; Start Atomic
+                psh TRN0_MMR
+                psh RPTC_MMR            ; rptc is saved first
+                                        ; as the repeat loop
+                                        ; below is going to
+                                        ; change its value
+            
+                psh BK03_MMR            ; save bk03
+                psh BRC0_MMR            ; save brc0     
+                psh CDP_MMR             ; save cdp
+                psh DPH_MMR             ; save dp_h
+        
+                .noremark 5573          ; Safe from CPU_43
+                                        ; Circular addressing mode is
+                                        ; not used. Also, no preceding
+                                        ; BKxx or BOFxx updates
+                                        ; preceding this instruction.
+                                        ; Hence, the workaround is not
+                                        ; required.
+                amov #dp_l, xar1
+                .remark 5573            ; Enable CPU_43 remark.
+                rpt #(((rptc_l - dp_l) >> 1) -1)
+                psh dbl(*ar1+)          ; save the following
+                                        ; trashable registers
+                                        ; dp_l,pdp
+                                        ; bk47,bkc
+                                        ; bsa01,bsa23
+                                        ; bsa45,bsa67
+                                        ; bsac, bios
+                                        ; trn1, brc1
+                                        ; brs1,csr
+                                        ; rsa0_h,rsa0_l
+                                        ; rea0_h,rea0_l,
+                                        ; rsa1_h,rsa1_l
+                                        ; rea1_h,rea1_l,
+                                        ; Note that  bios
+                                        ; registers is saved
+                                        ; as it is present
+                                        ; between the address
+                                        ; of register dp
+                                        ; and rea.
+                mov xar2, xar1          ; restore the upper half
+                                        ; Switch remark off.
+                .noremark 5503,5505     ; Safe wrt CPU_84
+                xcc cond?, !tc1
+                bclr #STBIT_INTM, st1_55; End Atomic
+cond?
+                .remark 5503,5505       ; Switch remark on.
+
+            .endif ;  (_55L_) | (_55H_)
+
+            psh CDPH_MMR                ; save cdp_h
+        .else ; (.MNEMONIC)
+            pshboth(xar0)                               
+            pshboth(xar1)                               
+            pshboth(xar2)               
+            pshboth(xar3)       
+            pshboth(xar4)
+            push(t0,t1)
+            push(AC0G_MMR) || mmap()
+            pshboth(ac0)
+            push(AC1G_MMR) || mmap()
+            pshboth(ac1)
+            push(AC2G_MMR) || mmap()
+            pshboth(ac2)
+            push(AC3G_MMR) || mmap()
+            pshboth(ac3)
+            push(BRS1_MMR) || mmap()
+            push(BRC1_MMR) || mmap()
+                                        ; The following six register
+                                        ; saves are moved below allowing
+                                        ; them to be used as latency
+                                        ; slots for the small memory 
+                                        ; model case
+
+            .if (_55L_) | (_55H_)
+                                        ; rptc is saved first
+                                        ; as the repeat loop
+                                        ; below is going to
+                                        ; change its value
+                push(TRN0_MMR) || mmap()
+                push(RPTC_MMR) || mmap()
+                push(BK03_MMR) || mmap()
+                push(BRC0_MMR) || mmap()
+                push(CDP_MMR)  || mmap()
+                push(DPH_MMR)  || mmap()        
+                                        ; save bk03
+                                        ; save brc0     
+                                        ; save cdp
+                                        ; save dp_h
+
+                .noremark 5573          ; Safe from CPU_43
+                                        ; Circular addressing mode is
+                                        ; not used. Also, no preceding
+                                        ; BKxx or BOFxx updates
+                                        ; preceding this instruction.
+                                        ; Hence, the workaround is not
+                                        ; required.
+                xar1 = mar(*(#dp_l))    ; PARALLEL REMOVED
+                .remark 5573            ; Enable CPU_43 remark
+        
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ;Note that  the repeat instruction  executes one more than
+                ; the number of  iteration specified  along with the 
+                ; instruction.   The shift 1 enables  to half the  iteration
+                ; count of repeat loop.
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        
+                repeat(#(((rptc_l - dp_l) >> 1) -1))
+                        push(dbl(*ar1+)); save the following
+                                        ; caller 
+                                        ;perserved
+                                        ; register
+                                        ; dp_l,pdp
+                                        ; bk47,bkc
+                                        ; bsa01,bsa23
+                                        ; bsa45,bsa67
+                                        ; bsac, bios
+                                        ; trn1, brc1
+                                        ; brs1,csr
+                                        ; rsa0_h,rsa0_l
+                                        ; rea0_h,rea0_l,
+                                        ; rsa1_h,rsa1_l
+                                        ; rea1_h,rea1_l,
+                                        ; Note that bios
+                                        ; registers is 
+                                        ; saved  as it
+                                        ; is present 
+                                        ;between the
+                                        ; address  of
+                                        ; register dp
+                                        ; and rea.
+            .else
+
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ; Interrupt protection logic.                               ;
+                ; Interrupts are turned off  to acheive TRUE small model    ;
+                ; The registers that are saved below are accessed as memory ;
+                ; addresses and these memory addresses reside in page 0     ;
+                ; However, in true small model data can be in any page      ;
+                ; The access to these registers in page 0 can corrupt the   ;
+                ; upper half of XAR. An interrupt occuring in the region    ;
+                ; where XAR upper part is 0, would make the ISR access the  ;
+                ; data from PAGE 0, where as the actual data can exists in  ;
+                ; any of the pages, leading  to incorrect access of data    ;
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                
+                .noremark 5650          ; Safe wrt CPU_68
+                tc1 = bit(ST1_55_MMR,#STBIT_INTM)|| mmap()
+                .remark 5650            ; Switch remark on.
+                bit(st1,#STBIT_INTM) = #1 ; BEGIN ATOMIC
+                                        ; The six latency slots 
+                                        ; can be filled by the push 
+                                        ; operations
+
+                                        ; rptc is saved first
+                                        ; as the repeat loop
+                                        ; below is going to
+                                        ; change its value
+                push(TRN0_MMR) || mmap()
+                push(RPTC_MMR) || mmap()
+                push(BK03_MMR) || mmap()
+                push(BRC0_MMR) || mmap()
+                push(CDP_MMR)  || mmap()
+                push(DPH_MMR)  || mmap()        
+                                        ; save bk03
+                                        ; save brc0     
+                                        ; save cdp
+                                        ; save dp_h
+                
+                .noremark 5573          ; Safe from CPU_43
+                                        ; Circular addressing mode is
+                                        ; not used. Also, no preceding
+                                        ; BKxx or BOFxx updates
+                                        ; preceding this instruction.
+                                        ; Hence, the workaround is not
+                                        ; required.
+                xar1 = mar(*(#dp_l))    ; PARALLEL REMOVED
+                .remark 5573            ; Enable CPU_43 remark
+        
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ;Note that  the repeat instruction  executes one more than
+                ; the number of  iteration specified  along with the 
+                ; instruction.   The shift 1 enables  to half the  iteration
+                ; count of repeat loop.
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        
+                repeat(#(((rptc_l - dp_l) >> 1) -1))
+                push(dbl(*ar1+))        ; save the following
+                                        ; caller 
+                                        ;perserved
+                                        ; register
+                                        ; dp_l,pdp
+                                        ; bk47,bkc
+                                        ; bsa01,bsa23
+                                        ; bsa45,bsa67
+                                        ; bsac, bios
+                                        ; trn1, brc1
+                                        ; brs1,csr
+                                        ; rsa0_h,rsa0_l
+                                        ; rea0_h,rea0_l,
+                                        ; rsa1_h,rsa1_l
+                                        ; rea1_h,rea1_l,
+                                        ; Note that bios
+                                        ; registers is 
+                                        ; saved  as it
+                                        ; is present 
+                                        ;between the
+                                        ; address  of
+                                        ; register dp
+                                        ; and rea.
+                xar1  = xar2            ; restore the upper half
+
+                                        ; Switch remark off.
+                .noremark 5503,5505     ; Safe wrt CPU_84
+                if (!tc1) execute (AD_UNIT)               
+                    bit(st1, #STBIT_INTM) = #0  
+                                        ; End atomic
+                .remark 5503,5505       ; Switch remark on.
+
+            .endif
+
+            push (CDPH_MMR) || mmap()   ; save cdp_h
+        .endif ; (.MNEMONIC)
+    .endif ; (_55Pb_)
+    .endm
+
+;# ======== C55_restoreBiosContext ========
+; This macro restores all register from stack that were saved
+; by C55SaveBiosContext
+;#
+;# Preconditions:
+;# None
+;# Postconditions:
+;#  The following registers are restored
+;#  The following registers are saved
+;#  C caller  preserved register.
+;#      xar0-xar4,t0-t1,ac[0-3][ghl]
+;#      trn1, brc1
+;#      brs1,csr
+;#      rsa0_h,rsa0_l
+;#      rea0_h,rea0_l,
+;#      rsa1_h,rsa1_l
+;#      rea1_h,rea1_l,
+;#      rptc.
+;#  Additional registers saved to form BIOS context
+;#      trn0, bk03,cdp_l,dp_h,dp_l,pdp, bk47,bkc
+;#      bsa01,bsa23 , bsa45,bsa67,bsac
+;#      cdp_h
+;
+
+        .asg    "tc1", C55_restoreBiosContext$regs
+C55_restoreBiosContext .macro  dummy
+    CHK_void C55_restoreBiosContext, dummy
+    .if (_55Pb_)
+        repeat(#3)
+            rea1 = dbl(pop())   ; pop rea1,rea0,rsa1,rsa0
+
+        repeat(#13)
+            ac4.g = pop()       ; pop ac4.g-ac0.g
+                                ; bk47,bk03,bkc,bofc,bof67,bof45
+                                ; bof23,bof01,pdp
+        repeat(#7)
+            ac15.g = pop()      ; pop ac8.g- ac15.g
+                                ; ac5.g-ac7.g are saved by child C func
+        repeat(#7)
+            xar15 = dbl(pop())  ; pop xar8-xar15 (xar15 = xcdp)
+
+        repeat(#4)
+            xar4 = dbl(pop())   ; pop xar0-xar4
+                                ; xar5-xar7 are saved by child C func
+        repeat(#7)
+            ac15 = dbl(pop())   ; pop ac8-ac15 (ac15 = trn0,trn1)
+
+        repeat(#4)
+            ac4 = dbl(pop())    ; pop ac0-ac4
+                                ; ac5-ac7 are saved by child C func
+        brc1  = pop()
+        brc0  = pop()
+        csr   = pop()
+        brs1  = pop()
+        t0,t1 = pop()
+        rptc  = pop()
+
+    .else ; (_55Pb_)
+        .if(.MNEMONIC)                          ; if  MNEMONIC  assembler
+                                                ; The register restore is moved
+                                                ; down to use one of the latency
+                                                ; slots in setting INTM
+            .if (_55L_) | (_55H_)
+                pop CDPH_MMR                    ; restore cdp_h
+                   .noremark 5573               ; Safe from CPU_43
+                                                ; Circular addressing mode is
+                                                ; not used. Also, no preceding
+                                                ; BKxx or BOFxx updates
+                                                ; preceding this instruction.
+                                                ; Hence, the workaround is not
+                                                ; required.
+                amov #rea1_h, xar1
+                .remark 5573            ; Enable CPU_43 remark
+                rpt #(((rptc_l - dp_l) >> 1)-1) ; restore the
+                        pop dbl(*ar1-)          ; following
+                                                ;registers
+                                                ; rea1_l,rea1_h,
+                                                ; rsa1_l,rsa1_h
+                                                ; rea0_l,rea0_h,
+                                                ; rsa0_l,rsa0_h
+                                                ; csr,brs1
+                                                ; brc1,trn1
+                                                ; bios,bsac
+                                                ; bsa67,bsa45
+                                                ; bsa23,bsa01
+                                                ; bkc,bk47
+                                                ; pdp_l,dp_l
+            .else
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ; Interrupt protection logic.                               ;
+                ; Interrupts are turned off  to acheive TRUE small model    ;
+                ; The registers that are saved below are accessed as memory ;
+                ; addresses and these memory addresses reside in page 0     ;
+                ; However, in true small model data can be in any page      ;
+                ; The access to these registers in page 0 can corrupt the   ;
+                ; upper half of XAR. An interrupt occuring in the region    ;
+                ; where XAR upper part is 0, would make the ISR access the  ;
+                ; data from PAGE 0, where as the actual data can exists in  ;
+                ; any of the pages, leading  to incorrect access of data    ;
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                        
+                .noremark 5650                  ; Safe wrt CPU_68
+                btst #11, ST1_55_MMR, tc1 
+                .remark 5650                    ; Switch remark on.
+                bset #STBIT_INTM, st1_55        ; Start Atomic
+                pop CDPH_MMR                    ; restore cdp_h
+                nop                             ; 5 nops required for 
+                nop                             ; latency in disabling
+                nop                             ; interrupts
+                nop
+                nop
+                                                ; Note that the above 
+                                                ; nops are not present
+                                                ; as CPU_43 workaround.
+                   .noremark 5573               ; Safe from CPU_43
+                                                ; Circular addressing 
+                                                ; mode is not used. 
+                                                ; Also, no preceding
+                                                ; BKxx or BOFxx updates
+                                                ; preceding this 
+                                                ; instruction. Hence, 
+                                                ; the workaround is not
+                                                ; required.
+                amov #rea1_h, xar1
+                .remark 5573                    ; Enable CPU_43 remark  
+                rpt #(((rptc_l - dp_l) >> 1)-1) ; restore the
+                        pop dbl(*ar1-)          ; following
+                                                ;registers
+                                                ; rea1_l,rea1_h,
+                                                ; rsa1_l,rsa1_h
+                                                ; rea0_l,rea0_h,
+                                                ; rsa0_l,rsa0_h
+                                                ; csr,brs1
+                                                ; brc1,trn1
+                                                ; bios,bsac
+                                                ; bsa67,bsa45
+                                                ; bsa23,bsa01
+                                                ; bkc,bk47
+                                                ; pdp_l,dp_l
+                mov xar2, xar1                  ; restore the upper half
+                                                ; Switch remark off.
+                .noremark 5503,5505             ; Safe wrt CPU_84
+                xcc cond?, !tc1
+                        bclr #STBIT_INTM, st1_55; End Atomic
+cond?
+                .remark 5503,5505               ; Switch remark on.
+
+            .endif
+
+
+            pop DPH_MMR                         ; restore dp_h  
+            pop CDP_MMR                         ; restore cdp_l
+            pop BRC0_MMR                        ; restore brc0  
+            pop BK03_MMR                        ; respre bk03
+            pop RPTC_MMR                        ; restore rptc
+            pop TRN0_MMR                        ; restore trn0
+            pop BRC1_MMR
+            pop BRS1_MMR
+            popboth ac3                         ; restore ac3
+            pop AC3G_MMR
+            popboth ac2                         ; restore ac2
+            pop AC2G_MMR
+            popboth ac1                         ; restore ac1
+            pop AC1G_MMR
+            popboth ac0
+            pop AC0G_MMR
+            pop t0,t1                           ; restore t0,t1
+            popboth xar4                        ; restore xar4
+            popboth xar3                        ; restore xar3
+            popboth xar2                        ; restore xar2
+            popboth xar1                        ; restore xar1
+            popboth xar0                        ; restore xar0
+        .else ; (.MNEMONIC)
+                                                ; The register restore
+                                                ; is moved down to use 
+                                                ; one of the latency 
+                                                ; slots for the small
+                                                ; memory model case.
+            .if (_55L_) | (_55H_)
+                CDPH_MMR = pop() || mmap()      ; restore cdp_h
+                .noremark 5573                  ; Safe from CPU_43
+                                                ; Circular addressing 
+                                                ; mode is not used. 
+                                                ; Also, no preceding
+                                                ; BKxx or BOFxx updates
+                                                ; preceding this 
+                                                ; instruction. Hence, 
+                                                ; the workaround is not
+                                                ; required.
+                xar1 =  mar(*(#rea1_h))         ;mmap address of
+                .remark 5573                    ; Enable CPU_43 remark
+
+                repeat(#(((rptc_l - dp_l) >> 1)-1))
+                dbl(*ar1-) = pop()              ;restore the following
+                                                ; trashable registers
+                                                ; rea1_l,rea1_h,
+                                                ; rsa1_l,rsa1_h
+                                                ; rea0_l,rea0_h,
+                                                ; rsa0_l,rsa0_h
+                                                ; csr,brs1
+                                                ; brc1,trn1
+                                                ; bios,bsac
+                                                ; bsa67,bsa45
+                                                ; bsa23,bsa01
+                                                ; bkc,bk47
+                                                ; pdp_l,dp_l
+            .else ;  (_55L_) | (_55H_)
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                ; Interrupt protection logic.                               ;
+                ; Interrupts are turned off  to acheive TRUE small model    ;
+                ; The registers that are saved below are accessed as memory ;
+                ; addresses and these memory addresses reside in page 0     ;
+                ; However, in true small model data can be in any page      ;
+                ; The access to these registers in page 0 can corrupt the   ;
+                ; upper half of XAR. An interrupt occuring in the region    ;
+                ; where XAR upper part is 0, would make the ISR access the  ;
+                ; data from PAGE 0, where as the actual data can exists in  ;
+                ; any of the pages, leading  to incorrect access of data    ;
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                
+                .noremark 5650                  ; Safe wrt CPU_68
+                tc1 = bit(ST1_55_MMR,#STBIT_INTM)|| mmap()
+                .remark 5650                    ; Switch remark on.
+                bit(st1,#STBIT_INTM) = #1       ; BEGIN ATOMIC
+                CDPH_MMR = pop() || mmap()      ; restore cdp_h
+                nop                             ; 5 nops for latency 
+                nop                             ; in disabling
+                nop                             ; interrupts
+                nop
+                nop
+                                                ; Note that the above
+                                                ; nops are not present
+                                                ; as CPU_43 workaround
+                .noremark 5573                  ; Safe from CPU_43
+                                                ; Circular addressing 
+                                                ; mode is not used. 
+                                                ; Also, no preceding
+                                                ; BKxx or BOFxx updates
+                                                ; preceding this 
+                                                ; instruction. Hence,                                                           
+                                                ; the workaround is not
+                                                ; required.
+                xar1 =  mar(*(#rea1_h))         ; mmap address of
+                .remark 5573                    ; Enable CPU_43 remark
+
+                repeat(#(((rptc_l - dp_l) >> 1)-1))
+                dbl(*ar1-) = pop()              ; restore the following
+                                                ; trashable registers
+                                                ; rea1_l,rea1_h,
+                                                ; rsa1_l,rsa1_h
+                                                ; rea0_l,rea0_h,
+                                                ; rsa0_l,rsa0_h
+                                                ; csr,brs1
+                                                ; brc1,trn1
+                                                ; bios,bsac
+                                                ; bsa67,bsa45
+                                                ; bsa23,bsa01
+                                                ; bkc,bk47
+                                                ; pdp_l,dp_l
+                xar1  = xar2                    ; restore the upper half
+
+                                                ; Switch remark off.
+                .noremark 5503,5505             ; Safe wrt CPU_84
+                if (!tc1) execute (AD_UNIT)               
+                        bit(st1, #STBIT_INTM) = #0      
+                                                ; End atomic
+                .remark 5503,5505               ; Switch remark on.
+
+            .endif ;  (_55L_) | (_55H_)
+
+            DPH_MMR  = pop() || mmap()          ; restore dp_h  
+            CDP_MMR = pop() || mmap()           ; restore cdp_l
+            BRC0_MMR = pop() || mmap()          ; restore brc0  
+            BK03_MMR = pop() || mmap()          ; respre bk03
+
+
+            RPTC_MMR = pop() || mmap()
+            TRN0_MMR = pop() || mmap()
+            BRC1_MMR = pop() || mmap()
+            BRS1_MMR = pop() || mmap()
+            ac3 = popboth()
+            AC3G_MMR = pop() || mmap()
+            ac2 = popboth()
+            AC2G_MMR = pop() || mmap()
+            ac1 = popboth()
+            AC1G_MMR = pop() || mmap()
+            ac0 = popboth() 
+            AC0G_MMR = pop() || mmap()
+            t0,t1 = pop()
+            xar4 = popboth() 
+            xar3 = popboth() 
+            xar2 = popboth() 
+            xar1 = popboth() 
+            xar0 = popboth() 
+        .endif
+    .endif ; (_55Pb_)
+    .endm
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;                         Added for Turbo BIOS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; TURBO BIOS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+C55_AR0 .set C55_AR0_L  ; 01h
+C55_AR1 .set C55_AR1_L  ; 02h
+C55_AR2 .set C55_AR2_L  ; 04h
+C55_AR3 .set C55_AR3_L  ; 08h
+C55_AR4 .set C55_AR4_L  ; 10h
+C55_AR5 .set C55_AR5_L  ; 20h
+C55_AR6 .set C55_AR6_L  ; 40h
+C55_AR7 .set C55_AR7_L  ; 80h
+C55_T0  .set C55_T0_L   ; 100h
+C55_T1  .set C55_T1_L   ; 200h
+C55_T2  .set C55_T2_L   ; 400h
+C55_T3  .set C55_T3_L   ; 800h
+
+C55_AR04 .set C55_AR0|C55_AR1|C55_AR2|C55_AR3|C55_AR4
+C55_AR57 .set C55_AR5|C55_AR6|C55_AR7
+C55_AR07 .set C55_AR04|C55_AR57
+C55_T01 .set C55_T0|C55_T1
+C55_T23 .set C55_T2|C55_T3
+C55_T03 .set C55_T01|C55_T23
+C55_AR07T03 .set C55_AR07|C55_T03
+C55_REGMASK0 .set C55_AR07|C55_T03
+C55_BIOS_CTX_REGMASK0 .set C55_AR04|C55_T01
+
+C55_AC0L .set C55_AC0_L  ; 10h
+C55_AC0H .set C55_AC0_H  ; 20h
+C55_AC0G .set C55_AC0_G  ; 40h
+C55_AC1L .set C55_AC1_L  ; 80h
+C55_AC1H .set C55_AC1_H  ; 100h
+C55_AC1G .set C55_AC1_G  ; 200h
+C55_AC2L .set C55_AC2_L  ; 400h
+C55_AC2H .set C55_AC2_H  ; 800h
+C55_AC2G .set C55_AC2_G  ; 1000h
+C55_AC3L .set C55_AC3_L  ; 2000h
+C55_AC3H .set C55_AC3_H  ; 4000h
+C55_AC3G .set C55_AC3_G  ; 8000h
+
+C55_AC0 .set C55_AC0L|C55_AC0H|C55_AC0G
+C55_AC1 .set C55_AC1L|C55_AC1H|C55_AC1G
+C55_AC2 .set C55_AC2L|C55_AC2H|C55_AC2G
+C55_AC3 .set C55_AC3L|C55_AC3H|C55_AC3G
+C55_AC03 .set C55_AC0|C55_AC1|C55_AC2|C55_AC3
+C55_REGMASK1 .set C55_AC03
+C55_BIOS_CTX_REGMASK1 .set C55_AC03
+
+C55_IER0        .set C55_IMR0_L         ; 01h
+C55_IFR0        .set C55_IFR0_L         ; 02h
+C55_DBIER0      .set C55_DBIMR0_L       ; 04h
+C55_IER1        .set C55_IMR1_L         ; 08h
+C55_IFR1        .set C55_IFR1_L         ; 10h
+C55_DBIER1      .set C55_DBIMR1_L       ; 20h
+C55_ST0         .set C55_ST0_L          ; 40h
+C55_ST1         .set C55_ST1_L          ; 80h
+C55_ST2         .set C55_ST2_L          ; 100h
+C55_ST3         .set C55_ST3_L          ; 200h
+C55_TRN0        .set C55_TRN0_L         ; 800h
+C55_BK03        .set C55_BK03_L         ; 1000h
+C55_BRC0        .set C55_BRC0_L         ; 2000h
+C55_DPH         .set C55_DP_H           ; 4000h
+C55_CDPH        .set C55_CDP_H          ; 8000h
+
+C55_IER01 .set C55_IER0|C55_IER1
+C55_IFR01 .set C55_IFR0|C55_IFR1
+C55_DBIER01 .set C55_DBIER0|C55_DBIER1
+C55_IER01IFR01DBIER01 .set C55_IER01|C55_IFR01|C55_DBIER01
+C55_ST03 .set C55_ST0|C55_ST1|C55_ST2|C55_ST3
+C55_TRN0BK03BRC0DPHCDPH .set C55_TRN0|C55_BK03|C55_BRC0|C55_DPH|C55_CDPH
+C55_REGMASK2 .set C55_IER01IFR01DBIER01|C55_ST03|C55_TRN0BK03BRC0DPHCDPH
+C55_BIOS_CTX_REGMASK2 .set C55_TRN0BK03BRC0DPHCDPH 
+
+C55_DP          .set C55_DP_L           ; 01h
+C55_CDP         .set C55_CDP_L          ; 02h
+C55_DPH2        .set C55_MDP_L          ; 04h
+C55_PDP         .set C55_PDP_L          ; 20h
+C55_BK47        .set C55_BK47_L         ; 40h
+C55_BKC         .set C55_BKC_L          ; 80h
+C55_BSA01       .set C55_BOF01_L        ; 100h
+C55_BSA23       .set C55_BOF23_L        ; 200h
+C55_BSA45       .set C55_BOF45_L        ; 400h
+C55_BSA67       .set C55_BOF67_L        ; 800h
+C55_BSAC        .set C55_BOFC_L         ; 1000h
+C55_IVPD        .set C55_IVPD_L         ; 2000h
+C55_IVPH        .set C55_IVPH_L         ; 4000h
+C55_TRN1        .set C55_TRN1_L         ; 8000h
+
+C55_DPCDPDPH2PDP .set C55_DP|C55_CDP|C55_DPH2|C55_PDP
+C55_BK47C .set C55_BK47|C55_BKC
+C55_BSA07C .set C55_BSA01|C55_BSA23|C55_BSA45|C55_BSA67|C55_BSAC
+C55_IVPDH .set C55_IVPD|C55_IVPH
+C55_REGMASK3 .set C55_DPCDPDPH2PDP|C55_BK47C|C55_BSA07C|C55_IVPDH|C55_TRN1
+C55_BIOS_CTX_REGMASK3 .set C55_DPCDPDPH2PDP|C55_BK47C|C55_BSA07C|C55_TRN1
+
+C55_BRC1        .set C55_BRC1_L ; 01h
+C55_BRS1        .set C55_BRS1_L ; 02h                   
+C55_CSR         .set C55_CSR_L  ; 04h
+C55_RSA0H       .set C55_RSA0_H ; 08h
+C55_RSA0L       .set C55_RSA0_L ; 10h
+C55_REA0H       .set C55_REA0_H ; 20h
+C55_REA0L       .set C55_REA0_L ; 40h
+C55_RSA1H       .set C55_RSA1_H ; 80h
+C55_RSA1L       .set C55_RSA1_L ; 100h
+C55_REA1H       .set C55_REA1_H ; 200h
+C55_REA1L       .set C55_REA1_L ; 400h
+C55_RPTC        .set C55_RPTC_L ; 800h
+
+C55_BRC1BRS1CSR .set C55_BRC1|C55_BRS1|C55_CSR
+C55_RSA01HL .set C55_RSA0H|C55_RSA0L|C55_RSA1H|C55_RSA1L
+C55_REA01HL .set C55_REA0H|C55_REA0L|C55_REA1H|C55_REA1L
+C55_REGMASK4 .set C55_BRC1BRS1CSR|C55_RSA01HL|C55_REA01HL|C55_RPTC
+C55_BIOS_CTX_REGMASK4 .set C55_BRC1BRS1CSR|C55_RSA01HL|C55_REA01HL|C55_RPTC
+
+;
+;# ======== C55_saveRegGroup ========
+;  Save cpu registers by group.
+;  The registers that are to be saved are specified by a mask
+;
+;#
+;# Preconditions
+;#      none
+;#
+;# Postconditions
+;#      none
+;#
+;
+
+        .asg "C55_save$regs", C55_saveRegGroup$regs
+C55_saveRegGroup        .macro  groupId, mask
+    .if ($symcmp(":groupId:", "0") = 0)
+      C55_save mask, 0, 0, 0, 0
+    .endif
+
+    .if ($symcmp(":groupId:", "1") = 0)
+      C55_save 0, mask, 0, 0, 0
+    .endif
+
+    .if ($symcmp(":groupId:", "2") = 0)
+      C55_save 0, 0, mask, 0, 0
+    .endif
+
+    .if ($symcmp(":groupId:", "3") = 0)
+      C55_save 0, 0, 0, mask, 0
+    .endif
+
+    .if ($symcmp(":groupId:", "4") = 0)
+      C55_save 0, 0, 0, 0, mask
+    .endif
+        .endm
+
+;
+;# ======== C55_restoreRegGroup ========
+;  Restore cpu registers by group.
+;  The registers that are to be restored are specified by a mask
+;
+;#
+;# Preconditions
+;#      none
+;#
+;# Postconditions
+;#      none
+;#
+;
+
+        .asg "C55_restore$regs", C55_restoreRegGroup$regs
+C55_restoreRegGroup     .macro  groupId, mask
+    .if ($symcmp(":groupId:", "4") = 0)
+      C55_restore 0, 0, 0, 0, mask
+    .endif
+
+    .if ($symcmp(":groupId:", "3") = 0)
+      C55_restore 0, 0, 0, mask, 0
+    .endif
+
+    .if ($symcmp(":groupId:", "2") = 0)
+      C55_restore 0, 0, mask, 0, 0
+    .endif
+
+    .if ($symcmp(":groupId:", "1") = 0)
+      C55_restore 0, mask, 0, 0, 0
+    .endif
+
+    .if ($symcmp(":groupId:", "0") = 0)
+      C55_restore mask, 0, 0, 0, 0
+    .endif
+        .endm
+
+;
+;# ======== C55_saveBiosCdiffContext ========
+;  Save diff_context(BIOS, C).
+;
+;  where diff_context(BIOS, C) 
+;        = [BIOS context register set] - [C save-by-caller context register set]
+;        = {  }
+;
+;#
+;# Preconditions
+;#      none
+;#
+;# Postconditions
+;#      none
+;#
+;
+
+        .asg "", C55_saveBiosCdiffContext$regs
+C55_saveBiosCdiffContext        .macro
+    .if (.MNEMONIC)                     ; mnemonic assembler
+    .else                               ; algebraic assembler
+    .endif
+        .endm
+
+;
+;# ======== C55_restoreBiosCdiffContext ========
+;  Restore diff_context(BIOS, C).
+;
+;  where diff_context(BIOS, C) 
+;        = [BIOS context register set] - [C save-by-caller context register set]
+;        = {  }
+;
+
+;
+;#
+;# Preconditions
+;#      none
+;#
+;# Postconditions
+;#      none
+;#
+;
+
+        .asg "", C55_restoreBiosCdiffContext$regs
+C55_restoreBiosCdiffContext     .macro
+    .if (.MNEMONIC)             ; mnemonic assembler
+    .else                       ; algebraic assembler
+    .endif
+        .endm
+
+;
+;# ======== C55_doNothing ========
+;  an empty macro
+;
+;#
+;# Preconditions
+;#      none
+;#
+;# Postconditions
+;#      none
+;#
+;
+
+        .asg "", C55_doNothing$regs
+C55_doNothing   .macro
+        .endm
+
+; TURBO BIOS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        .endif          ; if C55_ is not defined
+

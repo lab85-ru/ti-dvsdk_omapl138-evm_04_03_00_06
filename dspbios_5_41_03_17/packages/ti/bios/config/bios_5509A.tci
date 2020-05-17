@@ -1,0 +1,18 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_5509A.tci ========
+ *  This file contains BIOS settings for c5509A.
+ *  Note: all memory addresses in this file are defined in words.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_5509.tci");
+
+/*
+ *  ======== bios.init5509A ========
+ *  BIOS initialization for the 5509A is same as for 5509
+ */
+bios.init5509A = bios.init5509;

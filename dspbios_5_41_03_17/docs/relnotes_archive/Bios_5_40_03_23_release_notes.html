@@ -1,0 +1,310 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>DSP/BIOS Release Notes</title><!-- For now, we use the doxygen style sheet -->
+
+
+<link href="" rel="stylesheet" type="text/css">
+<style type="text/css">
+</style>
+<style type="text/css">
+</style></head>
+<body>
+<table width="100%">
+<tbody>
+<tr>
+<td bgcolor="black" width="1"><a href="http://www.ti.com"> <img src="docs/tilogo.gif" border="0" height="54" width="222"></a></td>
+<td bgcolor="red"><img src="docs/titagline.gif" height="26" width="314"></td>
+</tr>
+</tbody>
+</table>
+<h1><a name="BIOS_TOP">DSP/BIOS 5.40.03.23 Patch
+Release Notes</a></h1>
+<p>
+This release note is divided into the following sections:
+</p>
+<p class="sections">
+<a href="#Introduction">Introduction</a>,
+<a href="#Documentation_Links">Documentation</a>,
+<a href="#Whats_New">What's New</a>,
+<a href="#Upgrading_And_Compatibility_Info">Upgrading And
+Compatibility Information</a>,
+<a href="#Host_Support">Host Support</a>,
+<a href="#Dependencies">Dependencies</a>,
+<a href="#Device_Support">Device Support</a>,
+<a href="#Validation">Validation Information</a>,
+<a href="#Known_Issues">Known Issues</a>,
+<a href="#Benchmarks">Benchmarks</a>,
+<a href="#Versioning">Versioning</a>,
+<a href="#Tech_Support_And_Prod_Updates">Technical Support
+And Product Updates</a>,
+</p>
+<hr>
+<h2><a name="Introduction">Introduction</a></h2>
+<p><span class="158560717-08092008">
+<p>DSP/BIOS 5.40.03.23 <span class="158560717-08092008"></span>is a Patch release.</p></span></p><ul><li>Major changes to integrate into CCSv4 (mostly removal of CCS 3.3 specific components).</li><li>Removal of&nbsp;xdctools folder from within BIOS installation.</li><li>Update to Gconf to be compatible with XDCtools in CCSv4.</li><li>Examples .c and .tcf files are provided for this release.</li><li>Kernel/Object View (KOV) has been replaced with Runtime Object Viewer (ROV).</li><li>New CCSv4 compatible RTA has been added.&nbsp;</li><li>ezdsp28335
+users are recommended to use f28335dspbios.gel file supplied with CCSv4
+to connect and load any BIOS example programs that require external
+memory.&nbsp;</li></ul>
+<br>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Documentation_Links">Documentation</a></h2>
+<p>
+The following documentation is provided with this release:</p><ul>
+<li><a href="docs/SetupGuide.html">DSP/BIOS Setup
+Guide</a></li>
+<li><a href="docs/spru423g.pdf">DSP/BIOS
+User's
+Guide</a></li>
+<li><a href="docs/spru007h.pdf">DSP/BIOS
+TConf User's
+Guide</a></li>
+<li><a href="docs/spru625j.pdf">DSP/BIOS
+C28x API Reference</a></li>
+<li><a href="docs/spru404o.pdf">DSP/BIOS
+C55x API Reference</a></li>
+<li><a href="docs/spru403p.pdf">DSP/BIOS
+C6x API Reference</a></li><li><a href="http://www-k.ext.ti.com/sc/technical-support/knowledgebase/dsp/dsp_help.htm">DSP
+KnowledgeBase</a></li>
+</ul>Release notes from previous releases are also available in the
+<a href="docs/relnotes_archive">release notes archive</a>
+directory. 
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Whats_New">What's New</a></h2>
+<ul><li>Defects Fixed:&nbsp;</li></ul><div style="margin-left: 40px;">SDOCM00060053 &nbsp;&nbsp;&nbsp;ROV LOG update needs to be optimized for LOG_printf() records<br>SDOCM00059935&nbsp;&nbsp;&nbsp; add bios help directory back to BIOS 5.4x so that gconf help works again<br>SDOCM00059937&nbsp;&nbsp;&nbsp; add examples for ezdsp5505 USB memory stick board<br>SDOCM00060051&nbsp;&nbsp;&nbsp; update examples (rename dsk5505 to evm5505; add evm6748 and evmOMAPL138)</div>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <ul>
+</ul>
+<ul type="disc">
+<ul></ul>
+</ul>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Upgrading_And_Compatibility_Info">Upgrading
+And Compatibility Information</a></h2>
+<p>DSP/BIOS is binary compatible with DSP/BIOS 5.33 (and all the way
+back to DSP/BIOS 5.21). Users do not need to recompile your source
+files or libraries when updating to BIOS 5.40. However users *must*
+rebuild their configuration since the generated linker .cmd file
+(&lt;prog&gt;cfg.cmd) is different. </p><p>Solaris host is no longer supported in this release.
+Customer-critical bug
+fixes to earlier releases will be available to Solaris users if
+required.</p>
+<p>DSP/BIOS 5.40 does not support TMS320C54xx devices. Users of
+such devices
+should continue use DSP/BIOS 5.31.xx earlier releases. For
+customer-critical
+54xx-related issues, TI will continue to provide fixes to earlier
+versions when
+needed.<br></p><h3>Compatibility Key Definitions<o:p></o:p></h3>
+<p>Compatibility keys are intentionally independent of Marketing
+product
+numbers and are intended to: <o:p></o:p></p>
+<ol start="1" type="1">
+<li class="MsoNormal" style="">Enable tooling to
+identify incompatibilities between components, and <o:p></o:p></li>
+<li class="MsoNormal" style="">Convey a level of
+compatibility between different releases to set end user expectations. <o:p></o:p></li>
+</ol>
+<p>Compatibility keys are composed of 3 comma-delimited numbers -
+M,S,R -
+where: <o:p></o:p></p>
+<ul type="disc">
+<li class="MsoNormal" style=""><b>M = Major</b>.
+A difference in M indicates a break in compatibility. <o:p></o:p></li>
+<li class="MsoNormal" style=""><b>S = Source</b>.
+A difference in S indicates source <span class="SpellE">compability</span>.
+That is, the user's source doesn't require change, but <i>does</i>
+require rebuilding. <o:p></o:p></li>
+<li class="MsoNormal" style=""><b>R = Radix</b>.
+A difference in R indicates an introduction of new features, but
+compatibility with previous interfaces has not broken. If libraries are
+provided by the package, an application must re-link with the new
+libraries, but not rebuild from source. </li>
+</ul>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Host_Support">Host Support</a></h2>
+<ul type="">
+<li>Supported Operating Systems</li>
+<ul type="circle">
+<li>Windows XP, Windows Vista</li>
+<li>Linux [RH4 and RH5]</li>
+</ul>
+</ul>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Dependencies">Dependencies</a></h2>
+<ul>
+<li>Required Software</li>
+<ul type="circle">
+<li>Code Composer Studio Version 4.0 or higher</li>
+</ul>
+<li>Required Hardware</li>
+<ul type="circle">
+<li>See Device Support Section below.</li>
+</ul>
+</ul>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Device_Support">Device Support</a></h2>
+<p>This release supports the following devices:</p><p></p> 
+<table style="font-family: Times New Roman,Times,serif; width: 758px; height: 941px;" border="0" cellpadding="5" cellspacing="5">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<th style="text-align: left;">Device</th>
+</tr>
+<tr>
+<td class="" style="text-align: center;" valign="middle"><b><br>
+</b></td>
+<td class="" align="left" valign="middle"><br>
+</td>
+</tr>
+<tr>
+<td style="text-align: center; height: 35px;" valign="middle"><b>28x</b></td>
+<td style="height: 35px;" align="left" valign="middle">F2801,
+F2806,&nbsp;F2808,&nbsp;F2810, F2811,&nbsp;F2812, F28232,
+F28234, F28235, F28332, F28334, F28335, F2802x, F2803x, F2834x</td>
+</tr>
+<tr>
+<td class="" align="left" valign="middle"></td>
+<td class="" style="vertical-align: middle; text-align: left;"><br>
+</td>
+</tr>
+<tr>
+<td style="text-align: center; height: 217px;" valign="middle"><b>55x</b></td>
+<td style="vertical-align: middle; text-align: left; font-family: Times New Roman,Times,serif; height: 217px;">5501,
+5502,&nbsp;5503, 5505, 5507, 5509A, DA255,&nbsp; DA295,
+DA300, 5510,
+5510A, 5561, DA255, DA295, DA300, OMAP1035,
+OMAP1510,&nbsp;OMAP1610, OMAP1710, OMAP5903, OMAP5905, OMAP5910,
+OMAP5912, OMAP5944,
+OMAP5946, OMAP5948, OMAP2320, OMAP2420, TNETV1050, TNETV1055</td>
+</tr>
+<tr>
+<td align="left" valign="middle"></td>
+<td align="left" valign="middle"></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="middle"><b>62x</b></td>
+<td align="left" valign="middle">6202, 6203,
+6203B, 6204, 6205, 6211, 6211B </td>
+</tr>
+<tr>
+<td align="left" valign="middle"></td>
+<td align="left" valign="middle"></td>
+</tr>
+<tr>
+<th>64x</th>
+<td> 6410, 6411, 6412, 6413, 6414, 6415, 6416, 6418, DM415,
+DM420, DM421, DM425, DM426, DM640, DM641, DM642, DRI300 </td>
+</tr>
+<tr>
+<td align="left" valign="middle"></td>
+<td align="left" valign="middle"></td>
+</tr>
+<tr>
+<td style="text-align: center; font-weight: bold;" valign="middle">64x+</td>
+<td align="left" valign="middle">6421,
+6424, 6428, 6452, 6454, 6455, 6474, DM6431, DM6433, DM6435, DM6437, DM6441,
+DM6443, DM6446, DM6467,&nbsp; DM357, DM647, DM648, TCI6482,
+&nbsp;DRA402,
+DRA404, DRA406,&nbsp; DRA414, DRA416,&nbsp;DRA442, DRA444,
+DRA446,
+F761990,
+OMAP2420,&nbsp;OMAP2430,&nbsp;OMAP2431,&nbsp;OMAP2530,&nbsp;OMAP2531,&nbsp;OMAP3425,&nbsp;OMAP3430,&nbsp;OMAP3525,
+&nbsp;OMAP3530, TCI6482, TCI6484, TCI6486, TCI6487, TCI6488,
+TCI6486,&nbsp; TNETV2685<br>
+</td>
+</tr>
+<tr>
+<td align="left" valign="middle"></td>
+<td align="left" valign="middle"><br>
+</td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="middle"><b>67x</b></td>
+<td align="left" valign="middle">6701, 6711,
+6711 - 250, 6712, 6713, 6713 - 300<br>
+</td>
+</tr>
+<tr>
+<td align="left" valign="middle"></td>
+<td align="left" valign="middle"></td>
+</tr>
+<tr>
+<th>67x+</th>
+<td>6722, 6726, 6727, DA700, DA705, DA707, DA710</td>
+</tr>
+<tr>
+<td align="left" valign="middle"></td>
+<td align="left" valign="middle"><br>
+</td>
+</tr><tr><td><span style="font-weight: bold;">674x</span></td><td>OMAPL137, OMAPL138, DA830, 6747, 6748</td></tr>
+</tbody>
+</table>&nbsp;<br>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Validation">Validation Information</a></h2>
+<p>This release was built using the following components: </p>
+<ul>
+<li>C28x &nbsp;Code Generation Tools version 5.2.1</li>
+<li>C55x Code Genereation Tools version 3.3.2</li>
+<li>C6x Code Generation Tools version 6.1.14 (except 674x)</li><li>C674x Code Generation Tools version 6.1.5</li>
+</ul>
+<p>This release was validated using the following components: </p>
+<ul>
+<li>CCSv4</li>
+<li>C28x &nbsp;Code Generation Tools version&nbsp; 5.2.1</li>
+<li>C55x Code Genereation Tools version&nbsp;4.2.2</li>
+<li>C6x Code Generation Tools version&nbsp;6.1.9</li>
+</ul>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Known_Issues">Known Issues</a></h2>
+<h3>The following issues are known to affect this release: </h3><div style="margin-left: 40px;">SDOCM00058846&nbsp;&nbsp;&nbsp; BIOS 5.40 ROV view should use hex for MEM end address<br>SDOCM00058656&nbsp;&nbsp;&nbsp; BIOS 5 ROV - LOG view should use RTA decoder<br>SDOCM00058389&nbsp;&nbsp;&nbsp; Stairstep RTA example does not run correctly for simulator<br>SDOCM00058088&nbsp;&nbsp;&nbsp; BIOS 5 RTA - Primus simulator requires reset in between loads<br>SDOCM00058087&nbsp;&nbsp;&nbsp; BIOS 5 RTA - On primus simulator, fails if RTA already open<br>SDOCM00057506&nbsp;&nbsp;&nbsp; BIOS 5 RTA control panel should separate STS and CPU Load<br>SDOCM00057326&nbsp;&nbsp;&nbsp; BIOS 5 RTA - Support LOG_printf4<br>SDOCM00056732&nbsp;&nbsp;&nbsp; BIOS 5 RTA - CPU Load broken on 55x simulator<br>SDOCM00056731&nbsp;&nbsp;&nbsp; BIOS 5 RTA - Over XDS560, RTDX fails if RTA is open when program loaded<br>SDOCM00056730&nbsp;&nbsp;&nbsp; BIOS 5 RTA Over USB or 510USB, RTDX fails after 2nd time program is loaded<br>SDOCM00054997&nbsp;&nbsp;&nbsp; RTA stops streaming for the stairstep example on 64P targets when program reloaded<br></div><br><span style="font-weight: bold;"></span><ul>
+</ul>
+<b><b><a href="#BIOS_TOP">back to top</a>
+</b>
+</b><hr>
+<h2><b><b><a name="Benchmarks">Benchmarks</a></b></b></h2>
+<ul>
+<li><b><b><a href="packages/ti/bios/benchmarks/html/Results.html">DSP/BIOS
+Benchmarks</a></b></b></li>
+</ul>
+<p><b><b> </b></b></p>
+<b><b><a href="#BIOS_TOP">back to top</a>
+</b>
+</b><hr>
+<h2><b><b><a name="Versioning">Versioning</a></b></b></h2><p><font face="Times New Roman" size="3"><span style="font-size: 12pt;">All 
+releases&nbsp;have 4 digits (<b><span style="font-weight: bold;">M.mm.pp.bb</span></b>). This includes GA and 
+pre-releases (engineering, EA, beta, etc.). Pre-releases are denoted with 
+a&nbsp;suffix (e.g. 5.40.00.17-eng or</span></font><font face="Times New Roman" size="3"><span style="font-size: 12pt;"> 5.40.00.17</span></font><font face="Times New Roman" size="3"><span style="font-size: 12pt;">-beta). <o:p></o:p></span></font></p>
+<p><font face="Times New Roman" size="3"><span style="font-size: 12pt;">This 
+product's version follows a version format, <b><span style="font-weight: bold;">M.mm.pp.bb</span></b>, where <b><span style="font-weight: bold;">M</span></b> is a single digit Major number, <b><span style="font-weight: bold;">mm</span></b> is 2 digit minor number, <b><span style="font-weight: bold;">pp</span></b> is a 2 digit patch number, and <b><span style="font-weight: bold;">b</span></b> is an unrestricted set of digits used as 
+an incrementing build counter. <o:p></o:p></span></font></p>
+<p><font face="Times New Roman" size="3"><span style="font-size: 12pt;">To support 
+multiple side-by-side installations of the product, the product version is 
+encoded in the top level directory, ex. <b><span style="font-weight: bold;">bios_5_40_00_17</span></b>. 
+<o:p></o:p></span></font></p>
+<p><font face="Times New Roman" size="3"><span style="font-size: 12pt;">Subsequent 
+releases of patch upgrades will be identified by the patch number, ex. BIOS 5.40.01.18 with directory <b><span style="font-weight: bold;">bios_5_40_01_18</span></b>. Typically, these patches 
+only include critical bug fixes. <o:p></o:p></span></font></p>
+<p><font face="Times New Roman" size="3"><span style="font-size: 12pt;">Please note 
+that version numbers and compatibility keys are NOT the same. For an explanation 
+of compatibility keys, please refer to the 'Upgrade and Compatibility 
+Information' section. <o:p></o:p></span></font></p><b><b><a href="#BIOS_TOP">back to top</a>
+</b>
+</b><hr>
+<h2><b><b><a name="Tech_Support_And_Prod_Updates"></a>Technical
+Support And Product Updates</b></b></h2>
+<ul>
+<li>Please contact softwaresupport@ti.com for
+technical
+support.</li>
+</ul>
+<b><b><a href="#BIOS_TOP">back to top</a>
+</b>
+</b><hr>
+<p>Last updated: July 31, 2009 <b><b> </b></b></p>
+</body></html></body>
+</html>

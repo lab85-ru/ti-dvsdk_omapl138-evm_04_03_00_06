@@ -1,0 +1,88 @@
+#   ============================================================================
+#   @file   COMPONENT
+#
+#   @path   $(DSPLINK)/gpp/src/osal/Linux/
+#
+#   @desc   This file contains information to build a component.
+#
+#   @ver    1.65.01.05_eng
+#   ============================================================================
+#   Copyright (C) 2002-2009, Texas Instruments Incorporated - http://www.ti.com/
+#
+#   This program is free software; you can redistribute it and/or modify it
+#   under the terms of the GNU General Public License as published by the
+#   Free Software Foundation version 2.
+#   
+#   This program is distributed "as is" WITHOUT ANY WARRANTY of any kind,
+#   whether express or implied; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+#   General Public License for more details.
+#   ============================================================================
+
+
+#   ============================================================================
+#   Generic information about the component
+#   ============================================================================
+
+COMP_NAME       := OSAL
+COMP_PATH       := $(TI_DSPLINK_GPPROOT)$(DIRSEP)src$(DIRSEP)osal
+COMP_TYPE       := LIB
+COMP_TARGET     := osal.o
+COMP_MEMSPACE   := KRNL
+
+
+#   ============================================================================
+#   Header file(s) exported from this component
+#   ============================================================================
+
+EXP_HEADERS     := \
+    dpc.h       \
+    isr.h       \
+    kfile.h     \
+    mem.h       \
+    prcs.h      \
+    sync.h      \
+    print.h     \
+    osal.h      \
+    $(TI_DSPLINK_GPPOS)$(DIRSEP)mem_os.h \
+    $(TI_DSPLINK_GPPOS)$(DIRSEP)user.h
+
+ifeq ($(TI_DSPLINK_USE_NOTIFY), 1)
+    EXP_HEADERS += notify_knl.h 
+endif
+
+#   ============================================================================
+#   User specified additional command line options for the compiler
+#   ============================================================================
+
+USR_CC_FLAGS    :=
+
+USR_CC_DEFNS    := -D__KERNEL__ -DMODULE -DTRACE_KERNEL
+
+
+#   ============================================================================
+#   User specified additional command line options for the linker
+#   ============================================================================
+
+USR_LD_FLAGS    :=
+
+
+#   ============================================================================
+#   Standard libraries of GPP OS required during linking
+#   ============================================================================
+
+STD_LIBS        :=
+
+
+#   ============================================================================
+#   User specified libraries required during linking
+#   ============================================================================
+
+USR_LIBS        :=
+
+
+#   ============================================================================
+#   Target file(s) exported from this module
+#   ============================================================================
+
+EXP_TARGETS     :=

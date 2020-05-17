@@ -1,0 +1,89 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== rta.h62 ========
+;
+;
+
+        .if ($isdefed("RTA_") = 0)    ; prevent multiple includes of this file
+RTA_    .set    1
+
+        .include chk.h62
+
+        .global RTA_F_getlog
+        .global RTA_F_getsts
+        .global RTA_F_readblk
+        .global RTA_F_writeword
+        .global RTA_F_resetmem
+        .global RTA_F_dispatch
+        .global RTA_F_andn
+        .global RTA_F_or
+
+        .global RTA_D_fromHost
+        .global RTA_D_toHost
+        .global RTA_D_logval
+        .global RTA_D_stsval
+
+;
+;# ======== RTA_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", RTA_config$regs
+RTA_config      .macro
+        .endm
+ 
+;
+;# ======== RTA_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", RTA_end$regs
+RTA_end .macro
+        .endm
+ 
+;
+;# ======== RTA_init ========
+;  Runtime initialization for RTA 
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", RTA_init$regs
+RTA_init .macro
+        .endm
+
+;
+;# ======== RTA_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg "", RTA_startup$regs
+RTA_startup .macro 
+        .endm
+
+        .endif          ; if RTA_ is not defined

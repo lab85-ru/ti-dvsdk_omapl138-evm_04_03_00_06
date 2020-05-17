@@ -1,0 +1,12 @@
+diff -Naur gstreamer-ti-svnr919_ori/gstreamer_ti/ti_build/ticodecplugin/src/gsttidisplaysink2.c gstreamer-ti-svnr919_new/gstreamer_ti/ti_build/ticodecplugin/src/gsttidisplaysink2.c
+--- gstreamer-ti-svnr919_ori/gstreamer_ti/ti_build/ticodecplugin/src/gsttidisplaysink2.c	2011-12-13 22:43:56.508899468 +0530
++++ gstreamer-ti-svnr919_new/gstreamer_ti/ti_build/ticodecplugin/src/gsttidisplaysink2.c	2011-12-13 22:50:01.756086000 +0530
+@@ -61,7 +61,7 @@
+   #define DEFAULT_NUM_BUFS          3
+   #define MAX_NUM_BUFS              16
+   #define MIN_NUM_BUFS              3
+-  #define DEFAULT_DEVICE            "/dev/video1"
++  #define DEFAULT_DEVICE            "/dev/video7"
+   #define DEFAULT_MMAP_BUFFER       FALSE
+   #define DEFAULT_DMA_COPY          TRUE
+   #define SINK_CAPS	 GST_VIDEO_CAPS_YUV("UYVY")

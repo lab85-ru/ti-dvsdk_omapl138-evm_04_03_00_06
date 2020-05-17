@@ -1,0 +1,406 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== obj.h62 ========
+;
+;
+
+        .if ($isdefed("OBJ_") = 0)  ; prevent multiple includes of this file
+OBJ_    .set    1
+
+        .include std.h62
+
+        .asg    3, OBJ_HDRSIZE
+
+
+OBJ_SEM         .set    0
+OBJ_SWI         .set    1
+OBJ_TSK         .set    2
+OBJ_MBX         .set    3
+OBJ_SIO         .set    4
+OBJ_DEV         .set    5
+OBJ_BUF         .set    6
+
+OBJ_MODULES     .set    7
+OBJ_KEY         .set    0abc0h          ; key for type check
+OBJ_DEADKEY     .set    0deadh          ; indicates object has been deleted
+
+;
+;# ======== OBJ_config ========
+;  Static configuration of the OBJ module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", OBJ_config$regs
+OBJ_config      .macro
+
+
+        .asg    "_OBJ_table + 0 * STD_TARGWORDMAUS",    OBJ_TAB_SEM
+        .asg    "_OBJ_table + 2 * STD_TARGWORDMAUS",    OBJ_TAB_SWI
+        .asg    "_OBJ_table + 4 * STD_TARGWORDMAUS",    OBJ_TAB_TSK
+        .asg    "_OBJ_table + 6 * STD_TARGWORDMAUS",    OBJ_TAB_MBX
+        .asg    "_OBJ_table + 8 * STD_TARGWORDMAUS",    OBJ_TAB_SIO
+        .asg    "_OBJ_table + 10 * STD_TARGWORDMAUS",   OBJ_TAB_DEV
+        .asg    "_OBJ_table + 12 * STD_TARGWORDMAUS",   OBJ_TAB_BUF
+
+        .asg OBJ_TAB_SEM, OBJ_sem$next
+        .asg OBJ_TAB_SWI, OBJ_swi$next
+        .asg OBJ_TAB_TSK, OBJ_tsk$next
+        .asg OBJ_TAB_MBX, OBJ_mbx$next
+        .asg OBJ_TAB_SIO, OBJ_sio$next
+        .asg OBJ_TAB_DEV,  OBJ_dev$next
+        .asg OBJ_TAB_BUF,  OBJ_buf$next
+
+        .asg OBJ_TAB_SEM, OBJ_sem$prev
+        .asg OBJ_TAB_SWI, OBJ_swi$prev
+        .asg OBJ_TAB_TSK, OBJ_tsk$prev
+        .asg OBJ_TAB_MBX, OBJ_mbx$prev
+        .asg OBJ_TAB_SIO, OBJ_sio$prev
+        .asg OBJ_TAB_DEV, OBJ_dev$prev
+        .asg OBJ_TAB_BUF, OBJ_buf$prev
+
+        .asg    1,      SEM$sernum
+        .asg    1,      SWI$sernum
+        .asg    1,      TSK$sernum
+        .asg    1,      MBX$sernum
+        .asg    1,      SIO$sernum
+        .asg    1,      DEV$sernum
+        .asg    1,      BUF$sernum
+
+        .endm
+
+;
+;# ======== OBJ_init ========
+;  Runtime initialization of the OBJ module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", OBJ_init$regs
+OBJ_init        .macro
+        .endm
+
+;
+;# ======== OBJ_startup ========
+;#
+;# Runtime initialization, a member of SPOX_start, called from the
+;# .sXX file.
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", OBJ_startup$regs
+OBJ_startup        .macro
+        .endm
+
+;
+;#  ======== OBJ_Obj ========
+;
+;# This macro is not called directly by the generated .sXX file, but instead
+;# provides a static version of OBJ_create(), useable by the static versions
+;# of other XXX_create() functions.
+;#
+;# Preconditions:
+;#      Memory section must be specified by the client
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", OBJ_create$regs
+OBJ_Obj .macro name, type, size
+
+;
+;  OBJ_SEM 
+;
+
+        .if :type: == OBJ_SEM
+
+            .if SEM$NUMOF != SEM$sernum
+                ; next points to next object
+                .word   :name: + :size: * STD_TARGWORDMAUS
+            .else
+                .word OBJ_TAB_SEM               ; next points back to OBJ_table
+            .endif
+
+            .word       OBJ_sem$prev            ; previous object or OBJ_table
+
+            .word       :type: | OBJ_KEY
+
+            ;
+            ; For next obj, this one is prev
+            ;
+            .asg ":name:$obj", OBJ_sem$prev
+
+            .if SEM$sernum = 1                  ; first TSK Obj
+                ;
+                ; If this is the first element, queue head will point to this
+                ;
+                .asg ":name:$obj", OBJ_sem$next
+            .endif
+
+            .eval       SEM$sernum+1, SEM$sernum
+
+;
+;  OBJ_SWI
+;
+ 
+        .elseif :type: == OBJ_SWI
+ 
+            .if SWI$NUMOF != SWI$sernum         ; if not the last SWI Obj
+                ; next points to next SWI Obj
+                .word   :name: + :size: * STD_TARGWORDMAUS
+            .else
+                .word   OBJ_TAB_SWI             ; next points back to OBJ_table
+            .endif
+         
+            .word       OBJ_swi$prev            ; previous object or OBJ_table
+
+            .word       :type: | OBJ_KEY
+
+            ;
+            ; For next obj, this one is prev
+            ;
+            .asg        ":name:$obj", OBJ_swi$prev
+
+            .if SWI$sernum = 1                  ; first SWI Obj
+                ;
+                ; If this is the first element, queue head will point to this
+                ;
+                .asg ":name:$obj", OBJ_swi$next  ; "next" field of OBJ_table
+            .endif
+
+            .eval       SWI$sernum+1, SWI$sernum
+
+
+;
+;  OBJ_TSK 
+;
+
+        .elseif :type: == OBJ_TSK
+
+            .if TSK$NUMOF != TSK$sernum         ; if not the last TSK Obj
+                ; next points to next TSK Obj
+                .word   :name: + :size: * STD_TARGWORDMAUS
+            .else
+                .word   OBJ_TAB_TSK             ; next points back to OBJ_table
+            .endif
+        
+            .word       OBJ_tsk$prev            ; previous object or OBJ_table
+
+            .word       :type: | OBJ_KEY
+
+            ;
+            ; For next obj, this one is prev
+            ;
+            .asg        ":name:$obj", OBJ_tsk$prev
+
+            .if TSK$sernum = 1                  ; first TSK Obj
+                ;
+                ; If this is the first element, queue head will point to this
+                ;
+                .asg ":name:$obj", OBJ_tsk$next ; "next" field of OBJ_table
+            .endif
+
+            .eval       TSK$sernum+1, TSK$sernum
+
+;
+;  OBJ_MBX 
+;
+        .elseif :type: == OBJ_MBX
+
+            .if MBX$NUMOF != MBX$sernum         ; if not the last MBX Obj
+                ; next points to next object
+                .word   :name: + :size: * STD_TARGWORDMAUS
+            .else
+                .word   OBJ_TAB_MBX             ; next points back to OBJ_table
+            .endif
+        
+            .word       OBJ_mbx$prev            ; previous object or OBJ_table
+
+            .word       :type: | OBJ_KEY
+
+            ;
+            ; For next obj, this one is prev
+            ;
+            .asg        ":name:$obj", OBJ_mbx$prev
+
+            .if MBX$sernum = 1                  ; first MBX Obj
+                ;
+                ; If this is the first element, queue head will point to this
+                ;
+                .asg ":name:$obj", OBJ_mbx$next
+            .endif
+
+            .eval       MBX$sernum+1, MBX$sernum
+
+;
+;  OBJ_SIO 
+;
+        .elseif :type: == OBJ_SIO
+
+            .if (SIO$NUMOF != SIO$sernum)
+                ; next points to next object
+                .word   :name: + :size: * STD_TARGWORDMAUS
+            .else
+                .word   OBJ_TAB_SIO             ; next points back to OBJ_table
+            .endif
+
+            .word       OBJ_sio$prev            ; previous object or OBJ_table
+
+            .word       :type: | OBJ_KEY
+
+            ;
+            ; For next obj, this one is prev
+            ;
+            .asg ":name:$obj", OBJ_sio$prev
+
+            .if SIO$sernum = 1                  ; first SIO Obj
+                ;
+                ; If this is the first element, queue head will point to this
+                ;
+                .asg ":name:$obj", OBJ_sio$next
+            .endif
+
+            .eval       SIO$sernum+1, SIO$sernum
+
+;
+;  OBJ_DEV 
+;
+        .elseif :type: == OBJ_DEV
+           
+            ; DEV_Device entry in OBJ table is sum of all the DEV_Device entry
+            ; that get created. These entries are created from UDEV, DGN, DHL
+            ; DPI and DIO. 
+            ; Sum of devices is provided by DEV$NUMDEVICES symbol(from cfg.xx)
+
+            .if DEV$NUMDEVICES != DEV$sernum
+                ; next points to next object
+                .word   :name: + :size: * STD_TARGWORDMAUS
+            .else
+                .word   OBJ_TAB_DEV             ; next points back to OBJ_table
+            .endif
+
+            .word       OBJ_dev$prev            ; previous object or OBJ_table
+
+            .word       :type: | OBJ_KEY
+
+            ;
+            ; For next obj, this one is prev
+            ;
+            ; Below assignment is different from other OBJ modules. 
+            ; This is because in case of OBJ_DEV OBJ_cinitObj is passed
+            ; with :name:$obj itself. For example 'DGN_printData$obj', Note
+            ; that here we can't pass 'DGN_printData' to this macro
+            ; Because 'DGN_printData' is a string allocated in .const section
+            ; by driver macro(DGN_Obj). But this OBJ header needs to point
+            ; wherever DEV_Device, i.e., 'DGN_printData$obj' is allocated and
+            ; not string 'DGN_printData'
+
+            .asg ":name:", OBJ_dev$prev
+
+            .if DEV$sernum = 1                  ; first DEV_Device Obj
+                ;
+                ; If this is the first element, queue head will point to this
+                ;
+                .asg ":name:", OBJ_dev$next
+            .endif
+
+            .eval       DEV$sernum+1, DEV$sernum
+
+
+;
+;  OBJ_BUF 
+;
+        .elseif :type: == OBJ_BUF
+
+            .if (BUF$NUMOF != BUF$sernum)
+                ; next points to next object
+                .word   :name: + :size: * STD_TARGWORDMAUS
+            .else
+                .word   OBJ_TAB_BUF             ; next points back to OBJ_table
+            .endif
+
+            .word       OBJ_buf$prev            ; previous object or OBJ_table
+
+            .word       :type: | OBJ_KEY
+
+            ;
+            ; For next obj, this one is prev
+            ;
+            .asg ":name:$obj", OBJ_buf$prev
+
+            .if BUF$sernum = 1                  ; first BUF Obj
+                ;
+                ; If this is the first element, queue head will point to this
+                ;
+                .asg ":name:$obj", OBJ_buf$next
+            .endif
+            
+            .eval       BUF$sernum+1, BUF$sernum
+        
+        .else
+
+            .emsg "OBJ_Obj: :name: passed invalid type :type:"
+
+        .endif
+
+        .endm
+
+;
+;# ======== OBJ_end ========
+;  Static initialization, invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", OBJ_end$regs
+OBJ_end .macro
+
+        ;
+        ;  We only need the OBJ_table if any of the objects in the modules
+        ;  below are created in the configuration, or if they can be created
+        ;  dynamically (requires heaps).
+        ;
+        .if (MEM_gNumHeap > 0) | MBX$ | SEM$ | SIO$ | TSK$ | DEV$NUMDEVICES | BUF$
+
+         .global _OBJ_table
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   OBJ_MODULES * STD_TARGWORDMAUS * 2
+        .word   _OBJ_table
+        .word   OBJ_sem$next, OBJ_sem$prev
+        .word   OBJ_swi$next, OBJ_swi$prev
+        .word   OBJ_tsk$next, OBJ_tsk$prev
+        .word   OBJ_mbx$next, OBJ_mbx$prev
+        .word   OBJ_sio$next, OBJ_sio$prev
+        .word   OBJ_dev$next, OBJ_dev$prev
+        .word   OBJ_buf$next, OBJ_buf$prev
+
+        .endif
+
+        .endm
+
+        .endif          ; if OBJ_ is not defined

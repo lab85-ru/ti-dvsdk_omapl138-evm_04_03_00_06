@@ -1,0 +1,12 @@
+Package: ti-tisdk-docs-wiki
+Version: 1.0-r0.6
+Description: Recipe to fetch wiki pages from internal wiki and generate PDF
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI
+Architecture: da850-omapl138-evm
+OE: ti-tisdk-docs-wiki
+Homepage: unknown
+Build: install/d0bd439
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/ti/ti-tisdk-docs-wiki.bb

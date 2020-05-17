@@ -1,0 +1,7 @@
+/usr/bin/libpng-config
+/usr/include/png.h
+/usr/lib/libpng.so
+/usr/include/pngconf.h
+/usr/bin/libpng12-config
+/usr/lib/pkgconfig/libpng.pc
+/usr/lib/libpng.la

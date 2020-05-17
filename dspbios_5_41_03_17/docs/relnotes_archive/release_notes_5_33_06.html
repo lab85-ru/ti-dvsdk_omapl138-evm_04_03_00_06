@@ -1,0 +1,503 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>DSP/BIOS Release Notes</title><!-- For now, we use the doxygen style sheet -->
+
+
+<link href="" rel="stylesheet" type="text/css">
+<style type="text/css">
+</style>
+<style type="text/css">
+</style></head>
+<body>
+<table width="100%">
+<tbody>
+<tr>
+<td bgcolor="black" width="1"><a href="http://www.ti.com"> <img src="docs/tilogo.gif" border="0" height="54" width="222"></a></td>
+<td bgcolor="red"><img src="docs/titagline.gif" height="26" width="314"></td>
+</tr>
+</tbody>
+</table>
+<h1><a name="BIOS_TOP">DSP/BIOS&nbsp;<span class="158560717-08092008">5.33.06</span>
+Release Notes</a></h1>
+<p>
+This release note is divided into the following sections:
+</p>
+<p class="sections">
+<a href="#Introduction">Introduction</a>,
+<a href="#Documentation_Links">Documentation</a>,
+<a href="#Whats_New">What's New</a>,
+<a href="#Upgrading_And_Compatibility_Info">Upgrading And
+Compatibility Information</a>,
+<a href="#Host_Support">Host Support</a>,
+<a href="#Dependencies">Dependencies</a>,
+<a href="#Device_Support">Device Support</a>,
+<a href="#Validation">Validation Information</a>,
+<a href="#Known_Issues">Known Issues</a>,
+<a href="#Benchmarks">Benchmarks</a>,
+<a href="#Versioning">Versioning</a>,
+<a href="#Tech_Support_And_Prod_Updates">Technical Support
+And Product Updates</a>,
+</p>
+<hr>
+<h2><a name="Introduction">Introduction</a></h2>
+<p><span class="158560717-08092008">
+<p>DSP/BIOS 5.33.06<span class="158560717-08092008"></span> is a patch release<span class="158560717-08092008"></span>:</p></span></p><ul><li>Examples added for evm6748 and evmOMAPL138</li><li>Minor bug fixes as listed below</li></ul>
+Please read the Setup Guide for help installing and setting
+up your environment to use DSP/BIOS&nbsp;<span class="158560717-08092008">5.33.06</span>.
+<br>
+<br>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Documentation_Links">Documentation</a></h2>
+<p>
+The following documentation is provided with this release: </p>
+<ul>
+<li><a href="docs/SetupGuide.html">DSP/BIOS Setup
+Guide</a></li>
+<li><a href="docs/spru423f.pdf">DSP/BIOS
+User's
+Guide</a></li>
+<li><a href="xdctools/docs/Bios_Tconf_User_Guide.pdf">DSP/BIOS
+TConf User's
+Guide</a></li><li><a href="docs/spraa98b.pdf">DSP/BIOS Power Management for OMAP3430</a></li>
+<li><a href="docs/spru625i.pdf">DSP/BIOS
+C28x API Reference</a></li>
+<li><a href="docs/spru404n.pdf">DSP/BIOS
+C55x API Reference</a></li>
+<li><a href="docs/spru403o.pdf">DSP/BIOS
+C6x API Reference</a></li>
+<li><a href="packages/ti/bios/help/doc/cc_c28xat.hlp">DSP/BIOS
+C28x Tutorial</a></li>
+<li><a href="packages/ti/bios/help/doc/cc_c55xat.hlp">DSP/BIOS
+C55x Tutorial</a></li>
+<li><a href="packages/ti/bios/help/doc/cc_c6xat.hlp">DSP/BIOS
+C6x Tutorial</a></li>
+<li><a href="http://www-k.ext.ti.com/sc/technical-support/knowledgebase/dsp/dsp_help.htm">DSP
+KnowledgeBase</a></li>
+</ul>
+Additional release note documentation:<br><ul>
+
+<li><a href="xdctools/xdctools_3_15_02_62_release_notes.html">XDC
+Tools (Tconf) Package</a></li>
+</ul>
+<p>Release notes from previous releases are also available in the
+<a href="docs/relnotes_archive">release notes archive</a>
+directory. </p>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Whats_New">What's New</a></h2>
+<div style="margin-left: 40px;"><span style="font-weight: bold;">Defects Fixed:</span>&nbsp;<br>Id&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;Headline<br>SDOCM00060349&nbsp;&nbsp;&nbsp; update evm6747 and evmOMAPL137 example common.tci to enable MAR bits for external SDRAM<br>SDOCM00060021&nbsp;&nbsp;&nbsp; update TI license in the installer and provide license manifest file(s)<br>SDOCM00059934&nbsp;&nbsp;&nbsp; add PWRM framework (w/o setpoints or sleep) for 6748 devices<br>SDOCM00059875&nbsp;&nbsp;&nbsp; Kernel Object View results in message "DSP/BIOS not initialized" <font style="color: black;" color="#008000">on 2802x and 2803x devices</font><br>SDOCM00059580&nbsp;&nbsp;&nbsp;&nbsp;<font style="color: black;" color="#008000">BIOS&nbsp;boot file is not setting&nbsp;RNDF32=1 for 283xx 
+devices&nbsp;(affects floating point rounding)</font><br>SDOCM00059448&nbsp;&nbsp;&nbsp; Execute permissions for Tconf and other utilities are disabled on the Linux version<br>SDOCM00057896&nbsp;&nbsp;&nbsp;
+remove xdc/package-related stuff from BIOS 5.33's ti.platforms packages
+to avoid conflicts with newer XDC build flows<br>SDOCM00057273&nbsp;&nbsp;&nbsp; SEM_new() macro (still) cannot be used in a control block without curly {}'s<br>SDOCM00057151&nbsp;&nbsp;&nbsp; add examples for evm6748 and evmOMAPL138<br>SDOCM00057093&nbsp;&nbsp;&nbsp;
+add evm5505 platform, rename dsk5505 examples to evm5505<br>SDOCM00057092&nbsp;&nbsp;&nbsp; update evm6748 to enable MAR registers by default<br>SDOCM00054787&nbsp;&nbsp;&nbsp; need to fix SDOCM00053330 (PRD delay/overflow problem) for 55x<br>SDOCM00054422&nbsp;&nbsp;&nbsp; update BIOS 5.x&nbsp; to use XDC 3.15.02 for the &lt;bios&gt;/xdctools directory<br></div><ul>
+
+</ul>
+<ul type="disc">
+<ul></ul>
+</ul>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Upgrading_And_Compatibility_Info">Upgrading
+And Compatibility Information</a></h2>
+<p>DSP/BIOS is binary compatible with DSP/BIOS 5.32 (and all the way
+back to DSP/BIOS 5.21). Users do not need to recompile your source
+files or libraries when updating to BIOS 5.33. However users *must*
+rebuild their configuration since the generated linker .cmd file
+(&lt;prog&gt;cfg.cmd) is different. </p><p>Solaris host is no longer supported in this release.
+Customer-critical bug
+fixes to earlier releases will be available to Solaris users if
+required.</p>
+<p>DSP/BIOS 5.33 does not support TMS320C54xx devices. Users of
+such devices
+should continue use DSP/BIOS 5.31.xx earlier releases. For
+customer-critical
+54xx-related issues, TI will continue to provide fixes to earlier
+versions when
+needed.<br></p><h3>Compatibility Key Definitions<o:p></o:p></h3>
+<p>Compatibility keys are intentionally independent of Marketing
+product
+numbers and are intended to: <o:p></o:p></p>
+<ol start="1" type="1">
+<li class="MsoNormal" style="">Enable tooling to
+identify incompatibilities between components, and <o:p></o:p></li>
+<li class="MsoNormal" style="">Convey a level of
+compatibility between different releases to set end user expectations. <o:p></o:p></li>
+</ol>
+<p>Compatibility keys are composed of 3 comma-delimited numbers -
+M,S,R -
+where: <o:p></o:p></p>
+<ul type="disc">
+<li class="MsoNormal" style=""><b>M = Major</b>.
+A difference in M indicates a break in compatibility. <o:p></o:p></li>
+<li class="MsoNormal" style=""><b>S = Source</b>.
+A difference in S indicates source <span class="SpellE">compability</span>.
+That is, the user's source doesn't require change, but <i>does</i>
+require rebuilding. <o:p></o:p></li>
+<li class="MsoNormal" style=""><b>R = Radix</b>.
+A difference in R indicates an introduction of new features, but
+compatibility with previous interfaces has not broken. If libraries are
+provided by the package, an application must re-link with the new
+libraries, but not rebuild from source. </li>
+</ul>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Host_Support">Host Support</a></h2>
+<ul type="">
+<li>Supported Operating Systems</li>
+<ul type="circle">
+<li>Windows XP, Windows Vista</li>
+<li>Linux [RH3 and RH4]</li>
+</ul>
+</ul>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Dependencies">Dependencies</a></h2>
+<ul>
+<li>Required Software</li>
+<ul type="circle">
+<li>Code Composer Studio Version 3.3 or higher</li>
+</ul>
+<li>Required Hardware</li>
+<ul type="circle">
+<li>See Device Support Section below.</li>
+</ul>
+</ul>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Device_Support">Device Support</a></h2>
+<p>This release supports the following devices: </p>
+<table style="font-family: Times New Roman,Times,serif; width: 619px; height: 900px;" border="0" cellpadding="5" cellspacing="5">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+<th style="text-align: left;">Device</th>
+</tr>
+<tr>
+<td class="" style="text-align: center;" valign="middle"><b><br>
+</b></td>
+<td class="" align="left" valign="middle"><br>
+</td>
+</tr>
+<tr>
+<td style="text-align: center; height: 35px;" valign="middle"><b>28x</b></td>
+<td style="height: 35px;" align="left" valign="middle">F2801,
+F2806,&nbsp;F2808,&nbsp;F2810, F2811,&nbsp;F2812, F28232,
+F28234, F28235, F28332, F28334, F28335, F2802x, F2803x, F2834x</td>
+</tr>
+<tr>
+<td class="" align="left" valign="middle"></td>
+<td class="" style="vertical-align: middle; text-align: left;"><br>
+</td>
+</tr>
+<tr>
+<td style="text-align: center; height: 217px;" valign="middle"><b>55x</b></td>
+<td style="vertical-align: middle; text-align: left; font-family: Times New Roman,Times,serif; height: 217px;">5501,
+5502,&nbsp;5503, 5505, 5507, 5509A, DA255,&nbsp; DA295,
+DA300, 5510,
+5510A, 5561, DA255, DA295, DA300, OMAP1035,
+OMAP1510,&nbsp;OMAP1610, OMAP1710, OMAP5903, OMAP5905, OMAP5910,
+OMAP5912, OMAP5944,
+OMAP5946, OMAP5948, OMAP2320, OMAP2420, TNETV1050, TNETV1055</td>
+</tr>
+<tr>
+<td align="left" valign="middle"></td>
+<td align="left" valign="middle"></td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="middle"><b>62x</b></td>
+<td align="left" valign="middle">6202, 6203,
+6203B, 6204, 6205, 6211, 6211B </td>
+</tr>
+<tr>
+<td align="left" valign="middle"></td>
+<td align="left" valign="middle"></td>
+</tr>
+<tr>
+<th>64x</th>
+<td> 6410, 6411, 6412, 6413, 6414, 6415, 6416, 6418, DM415,
+DM420, DM421, DM425, DM426, DM640, DM641, DM642, DRI300 </td>
+</tr>
+<tr>
+<td align="left" valign="middle"></td>
+<td align="left" valign="middle"></td>
+</tr>
+<tr>
+<td style="text-align: center; font-weight: bold;" valign="middle">64x+</td>
+<td align="left" valign="middle">6421,
+6424, 6428, 6452, 6454, 6455, 6474, DM6431, DM6433, DM6435, DM6437, DM6441,
+DM6443, DM6446, DM6467,&nbsp; DM357, DM647, DM648, TCI6482,
+&nbsp;DRA402,
+DRA404, DRA406,&nbsp; DRA414, DRA416,&nbsp;DRA442, DRA444,
+DRA446,
+F761990,
+OMAP2420,&nbsp;OMAP2430,&nbsp;OMAP2431,&nbsp;OMAP2530,&nbsp;OMAP2531,&nbsp;OMAP3425,&nbsp;OMAP3430,&nbsp;OMAP3525,
+&nbsp;OMAP3530, TCI6482, TCI6484, TCI6486, TCI6487, TCI6488,
+TCI6486,&nbsp; TNETV2685<br>
+</td>
+</tr>
+<tr>
+<td align="left" valign="middle"></td>
+<td align="left" valign="middle"><br>
+</td>
+</tr>
+<tr>
+<td style="text-align: center;" valign="middle"><b>67x</b></td>
+<td align="left" valign="middle">6701, 6711,
+6711 - 250, 6712, 6713, 6713 - 300<br>
+</td>
+</tr>
+<tr>
+<td align="left" valign="middle"></td>
+<td align="left" valign="middle"></td>
+</tr>
+<tr>
+<th>67x+</th>
+<td>6722, 6726, 6727, DA700, DA705, DA707, DA710</td>
+</tr>
+<tr>
+<td align="left" valign="middle"></td>
+<td align="left" valign="middle"><br>
+</td>
+</tr><tr><td><span style="font-weight: bold;">674x</span></td><td>OMAPL137, OMAPL138, DA830, 6747, 6748</td></tr>
+</tbody>
+</table>
+<br>
+&nbsp;<br>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Validation">Validation Information</a></h2>
+<p>This release was built using the following components: </p>
+<ul>
+<li>C28x &nbsp;Code Generation Tools version 5.0.0B2</li>
+<li>C55x Code Genereation Tools version 3.3.2</li>
+<li>C6x Code Generation Tools version 6.0.14 (except 674x)</li><li>C674x Code Generation Tools version 6.1.5</li>
+</ul>
+<p>This release was validated using the following components: </p>
+<ul>
+<li>CCS 3.3</li>
+<li>C28x &nbsp;Code Generation Tools version 5.0.0 and 5.1.0</li>
+<li>C55x Code Genereation Tools version 3.3.2, 4.1.2, and 4.2.2</li>
+<li>C6x Code Generation Tools version 6.0.14 and 6.1.5</li>
+</ul>
+<a href="#BIOS_TOP">back to top</a>
+<hr>
+<h2><a name="Known_Issues">Known Issues</a></h2>
+<h3>The following issues are known to affect this release: </h3>
+<big>&nbsp;<font size="2"><big><b>Please
+check the following link for additional information when
+upgrading from 4.90 to 5.x --
+<a href="http://www-k.ext.ti.com/SRVS/CGI-BIN/WEBCGI.EXE/,/?St=27,E=0000000000006654954,K=7392,Sxi=8,Case=obj%2852425%29">Knowledge
+base with known 4.90 to 5.x upgrade issues</a></b></big></font>&nbsp;</big>
+<ul>
+<li><span style="font-weight: bold;">Problems with 6.1.x Codegen Tools and older c6x devices </span>-- Cleanup
+of generated .cmd files to be compatible with new and legacy linkers
+(5.1.x/28x, 4.2.x/55x, and 6.1.x/6x). The generated *cfg.cmd files have
+been updated to use RUN_START/RUN_END syntax (instead of '.=') to
+generate symbols where necessary. Prior to this change, there were some
+comaptibility problems with old/new linkers for 28x and 55x. Note that
+the 6.1.x linker will still generate a warning for 62x, 64x, and 67x
+applications. This warning does not occur for 64x+, 67x+ or 674x
+targets. Until this issue is resolved we recommend using 6.0.x tools
+when using DSP/BIOS 5.33 for 62x, 64x, or 67x. This issue is tracked by
+SDSCM00027852.</li></ul><ul><li><big><font size="2"><big><b>Davinci
+1.x IDMA0 problem workaround --</b> A custom version of
+the HWI dispatcher was created to&nbsp; work around an IDMA0/MMR
+problem in rev 1.x DM644x devices (see SPRZ241 - "TMS320DM6446 Digital
+Media System-on-chip Silicon Errata" for more information about this
+errata).&nbsp; This errata is only present in Rev 1.x DM644x
+devices and is not present on other 64x+ devices. </big></font>
+</big>
+<div><big> <font size="2"><big>The
+HWI dispatcher has been updated to poll the IDMA0 status register and
+wait for IDMA0 transfer to complete before calling the actual
+ISR.&nbsp; This will ensure that the ISR will not reference an MMR
+register while the IDMA0 is active.&nbsp; This will also ensure
+that an asynchronous task switch will not occur while the IDMA0 is
+active.&nbsp; This may affect interrupt response time, but should
+not be a problem in most applications since IDMA0 jobs are usually
+fairly short.&nbsp; This workaround is only supported by the HWI
+dispatcher&nbsp;<span class="078521418-14062006">(</span>the
+HWI_enter/exit macros do not contain the workaround).</big></font></big></div>
+<div><big> <font size="2"><big>&nbsp;A
+hidden configuration parameter (bios.GBL.USEIDMA0DISPATCHER)&nbsp;<span class="078521418-14062006">is </span>used to select
+this alternate version of the dispatcher.&nbsp; This parameter has
+default value 'true' for DM644x and DM42x configurations.&nbsp;
+This parameter has default value 'false' for all other 64x+
+configurations.&nbsp; The user can set this parameter to 'false' if
+they do not want this workaround used in their Davinci applications
+(e.g., if their application is not using IDMA0 and/or they know that
+that their ISRs do not reference MMR registers).</big></font></big></div>
+</li>
+<li><big>
+</big>
+<p style="text-align: left;" align="center"><big><font size="2"><big><b>Memory
+heap issue when updating&nbsp; existing configuration files </b>--
+Prior versions of the configuration tool allowed for an inconsistent
+memory heap configuration.&nbsp;&nbsp; The tool allowed users
+to enable heaps when no heaps were actually configured and the default
+for bios.MEM.MALLOCSEG and bios.MEM.SEGZERO were still set to
+'MEM_NULL'.&nbsp; This was causing problems in applications since
+malloc() and MEM_alloc() were failing even when user thought they had
+configured BIOS for dynamic memory allocation.&nbsp; The
+configuration tool is now checking to make sure that configurations
+that have heaps also have bios.MEM.MALLOCSEG and bios.MEM.SEGZERO set
+to a valid heap.&nbsp; Update from existing projects might yield an
+error message.&nbsp; The work around is to either remove the
+'bios.enableMemoryHeaps(prog);' line from your configuration, or to add
+a heap and set bios.MEM.MALLOCSEG and bios.MEM.SEGZERO
+accordingly.&nbsp; See the
+ti/bios/examples/common/evmDM6446_common.tci file (or others) for an
+example of how to do this.</big></font></big>
+</p>
+</li>
+<li><big><font size="2"><big><b>Gconf
+uses wrong parameters when more than one pjt is opened and they share
+the same .tcf file </b></big></font><font face="" size="2"><big>-- When
+more than one CCS project
+(.pjt file) share the same .tcf file, and two or more of the projects
+are opened in CCS, opening a .tcf from one of the projects will launch
+GConf using the DspBiosBuilder builder parameters defined for the most
+recently opened project. This may result in incorrect base seed
+properties and import file paths in the .tcf file being edited. To
+workaround, do not share .tcf files between projects. This is tracked
+by SDSCM00003834</big></font>
+</big></li>
+</ul>
+<ul>
+<li><big><font size="2"><big><b>BIOS
+RTA has problems
+reading data in stop mode for some 64x+ devices </b></big></font>
+<big><font size="2">-- <big>Currently,
+stop mode reads will only work for DaVinci. This is tracked by
+SDSCM00010400</big> </font></big>
+</big></li>
+<br>
+<li><big><font size="2"><big><b>DSP/BIOS
+examples
+that are using RTA halt when run every other time on
+DSK5510/DSK5509A via XDS560</b> -- This is tracked by
+SDSCM00005820.</big> </font></big>
+</li>
+<br>
+<li><big><font size="2"><big><b>CCS
+window closes on
+refreshing KOV Window when it receives illegal
+values</b> -- KOV will crash if Module Objects have illegal
+values. For e.g if a dynamic task has a bad name, KOV will try to print
+the illegal name and crash. This is tracked by
+SDSCM00006694. </big> </font></big>
+</li>
+<br>
+<li><big><font size="2"><big><b>KOV
+window shows wrong names for dynamic objects --
+</b>This
+is tracked by
+SDSCM00007151.</big> </font></big>
+</li>
+<br>
+<li><big><font size="2"><big><b>KOV
+displays wrong names for memory sections --
+</b>This is tracked by SDSCM00004917.</big> </font></big>
+</li>
+<br>
+<li><big><font size="2"><big><b>Incorrect
+platform name in Tconf User's Guide in
+"Create New Platform"
+section -- </b>
+The spru0007h.pdf
+document contains the correct instructions for creating a new platform
+using the Tconf's User's Guide, the help files were not updated to
+reflect the same naming convention. This is tracked by SDSCM00003471.</big>
+</font></big>
+</li>
+<br>
+<li><big><font size="2"><big><b>RTDX
+tutorial examples do not all execute as
+expected&nbsp; when
+run on TCI6482 simulator little endian -- </b>
+This is tracked by SDSCM00010736.</big> </font></big>
+</li>
+<br>
+<li><big><font size="2"><big><b>RTDX
+Hot-Connect does not work for C64P -- </b></big></font><big><big><font size="2"><big>This is tracked by
+SDSSCM00011954</big></font></big></big><font size="2"> </font></big>
+</li>
+<br>
+<li><big><font size="2"><big><b>RTDX size_t problem with 55 Huge -- </b>dsk5505 hostio example RTA problems when using huge model. This is tracked by<b> </b>SDSCM00027957.</big></font></big></li></ul><ul><li><big><font size="2"><big><b>DSP/BIOS
+RTA Control Panel does not update values correctly when using comma
+decimal separator in Windows -- </b>The RTA Control Panel
+does not work&nbsp;as expected when&nbsp;using Windows Regional
+Settings where ',' is used instead of '.' for the decimal
+separator.&nbsp; Only workaround is to use Regional Settings where
+'.' is the decimal separator, or use default 1 second update
+rate.<b>&nbsp;</b>This is tracked by SDSCM00017755.</big><b>
+</b></font></big>
+</li>
+<br>
+<li><b><big><font size="2"><big><b>HWI_isHwi()
+documentation has
+contradictory statement -- </b></big></font></big></b><big><font size="2"><big>In
+previous versions of DSP/BIOS, " calling HWI_isHWI() from main()
+resulted in TRUE. This is no longer the case;"&nbsp; main() is
+identified as part of the TSK context.</big></font></big><b><big><font size="2"><big>&nbsp;</big></font></big></b><big><font size="2"><big>This is tracked by
+SDSCM00020436.</big></font></big><b><big><font size="2"><big>
+</big> </font></big></b></li>
+</ul>
+<ul>
+
+<li><b><b><big><font size="2"><big><b>Some
+of the help files in BIOS
+5.32 refers to BIOS 5.31</b> -- </big></font></big></b></b><big><font size="2"><big>This
+is tracked by SDSCM00020437.</big></font></big><b><b><big><font size="2"><big>
+</big> </font></big></b></b></li>
+</ul>
+<ul>
+</ul>
+<b><b><a href="#BIOS_TOP">back to top</a>
+</b>
+</b><hr>
+<h2><b><b><a name="Benchmarks">Benchmarks</a></b></b></h2>
+<ul>
+<li><b><b><a href="packages/ti/bios/benchmarks/html/Results.html">DSP/BIOS
+Benchmarks</a></b></b></li>
+</ul>
+<p><b><b> </b></b></p>
+<b><b><a href="#BIOS_TOP">back to top</a>
+</b>
+</b><hr>
+<h2><b><b><a name="Versioning">Versioning</a></b></b></h2>
+<p>This product's version follows a version format,<b><b> <b>M.mm.pp.bb</b>,
+</b></b>where<b><b> <b>M</b> </b></b>is a single digit Major number,<b><b> <b>mm</b></b></b>
+is 2 digit minor number,<b><b> <b>pp</b> </b></b>is a 2 digit patch
+number, and<b><b> <b>b</b> </b></b>is an unrestricted set of digits used
+as an incrementing build counter.<b><b> </b></b></p>
+<p>To support multiple side-by-side installations of the
+product,
+the product version is encoded in the top level directory, ex.<b><b> <b>bios_5_33</b>.
+</b></b></p>
+<p>Subsequent releases of patch upgrades will be
+identified by
+the patch number, ex. BIOS 5.33.03 with directory<b><b> <b>bios_5_33_03</b></b></b>.
+Typically, these patches only include critical bug fixes.<b><b> </b></b></p>
+<p>Please note that version numbers and compatibility
+keys are
+NOT the same. For an explanation of compatibility keys, please refer to
+the 'Upgrade and Compatibility Information' section.<b><b> </b></b></p>
+<b><b><a href="#BIOS_TOP">back to top</a>
+</b>
+</b><hr>
+<h2><b><b><a name="Tech_Support_And_Prod_Updates"></a>Technical
+Support And Product Updates</b></b></h2>
+<ul>
+<li>Please contact softwaresupport@ti.com for
+technical
+support.</li>
+</ul>
+<b><b><a href="#BIOS_TOP">back to top</a>
+</b>
+</b><hr>
+<p>Last updated: July 18, 2009<b><b> </b></b></p>
+</body></html>

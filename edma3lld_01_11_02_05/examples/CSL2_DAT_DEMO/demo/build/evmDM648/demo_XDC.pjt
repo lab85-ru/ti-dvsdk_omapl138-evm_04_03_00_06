@@ -1,0 +1,71 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Tool="XDC"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\..\dat_edma3LLD\csl2_dat.c"
+Source="..\..\..\dat_edma3LLD\csl2_dat_edma3lld.c"
+Source="..\..\bios_adapter\dat_edma3lld_biosadapter.c"
+Source="demo_XDC.cfg"
+Source="demo_XDC.tcf"
+Source="..\..\src\main.c"
+Source="xdcpaths.dat"
+
+[Generated Files]
+Source="demo_XDCcfg.s62"
+Source="demo_XDCcfg_c.c"
+Source="xdcconfig\cfg.c"
+Source="xdcconfig\linker.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-g -@"=$(Proj_dir)/xdcconfig/compiler.opt" -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\dat_edma3LLD\" -i"$(Proj_dir)\..\..\..\csl2_legacy_include\" -d"_DEBUG" -mv6400+
+
+["Compiler" Settings: "Release"]
+Options=-@"=$(Proj_dir)/xdcconfig/compiler.opt" -pdr -o3 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\dat_edma3LLD\" -i"$(Proj_dir)\..\..\..\csl2_legacy_include\" -d"_RELEASE" -ms0 -mv6400+
+
+["DspBiosBuilder" Settings: "Debug"]
+Options=-Dconfig.importPath="%BIOS_INSTALL_DIR%/packages/ti/bios/examples/common;"
+
+["DspBiosBuilder" Settings: "Release"]
+Options=-Dconfig.importPath="%BIOS_INSTALL_DIR%/packages/ti/bios/examples/common;"
+
+["Linker" Settings: "Debug"]
+Options=-c -m".\bin\Debug\demo_XDC.map" -o".\bin\Debug\demo_XDC.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\rtdx\lib\c6000" -l"log8.a64P"
+
+["Linker" Settings: "Release"]
+Options=-c -m".\bin\Release\demo_XDC.map" -o".\bin\Release\demo_XDC.out" -w -x -i"%BIOS_INSTALL_DIR%\packages\ti\rtdx\lib\c6000" -l"log8.a64P"
+
+["XDC" Settings: "Debug"]
+Options=--xdcpathsfile="xdcpaths.dat" -tti.targets.C64P -pti.platforms.evmDM648 -rdebug --tcf -Dconfig.importPath="$(Proj_dir)\.." -w
+
+["XDC" Settings: "Release"]
+Options=--xdcpathsfile="xdcpaths.dat" -tti.targets.C64P -pti.platforms.evmDM648 -rrelease --tcf -Dconfig.importPath="$(Proj_dir)\.." -w
+
+["demo_XDC.tcf" Settings: "Debug"]
+ExcludeFromBuild=true
+
+["demo_XDC.tcf" Settings: "Release"]
+ExcludeFromBuild=true
+
+["xdcpaths.dat" Settings: "Debug"]
+ExcludeFromBuild=true
+
+["xdcpaths.dat" Settings: "Release"]
+ExcludeFromBuild=true
+
+["xdcconfig\linker.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["xdcconfig\linker.cmd" Settings: "Release"]
+LinkOrder=1
+

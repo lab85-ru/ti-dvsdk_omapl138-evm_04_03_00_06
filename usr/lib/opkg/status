@@ -1,0 +1,329 @@
+Package: ti-codec-engine-src
+Version: 2_26_02_11-r57a
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938079
+Auto-Installed: yes
+
+Package: ti-cgt6x-src
+Version: 6_1_14-r4
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938047
+Auto-Installed: yes
+
+Package: ti-xdctools-src
+Version: 3_16_03_36-r2
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938102
+Auto-Installed: yes
+
+Package: ti-board-utilities-omapl138
+Version: 03.20.00.14-r2.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938034
+Auto-Installed: yes
+
+Package: ti-tisdk-setup
+Version: 1.0-r34.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938017
+Auto-Installed: yes
+
+Package: libc6
+Version: 2.9-r7.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938034
+Auto-Installed: yes
+
+Package: ti-tisdk-loadmodule
+Version: 1.0-r3.6
+Depends: update-rc.d
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938103
+Auto-Installed: yes
+
+Package: task-arago-toolchain-tisdk-graphics-host
+Version: 1.0-r8.6
+Depends: matrix-gui-e-src
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938105
+
+Package: ti-tisdk-mksdboot
+Version: 1.0-r37.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938017
+Auto-Installed: yes
+
+Package: linux-davinci-src
+Version: 2.6.37-psp03.21.00.04.sdk-r57
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938034
+Auto-Installed: yes
+
+Package: ti-dspbios-src
+Version: 5_41_03_17-r1
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938052
+Auto-Installed: yes
+
+Package: ti-dsp-benchmark-src
+Version: 1_00_00_02-r1
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938072
+Auto-Installed: yes
+
+Package: ti-dsplink-src
+Version: 1_65_01_05_eng-r57i
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938054
+Auto-Installed: yes
+
+Package: ti-codecs-omapl138-src
+Version: 4_02_00_00-r57d
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938105
+Auto-Installed: yes
+
+Package: gstreamer-ti-src
+Version: svnr919-r93+r57
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938103
+Auto-Installed: yes
+
+Package: ti-dm365mm-module-src
+Version: 01_00_03-r57b
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938105
+Auto-Installed: yes
+
+Package: ti-biosutils-src
+Version: 1_02_02-r1
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938052
+Auto-Installed: yes
+
+Package: am-benchmarks-src
+Version: 1.3-r2+svnr66
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938035
+Auto-Installed: yes
+
+Package: ti-xdais-src
+Version: 6_26_01_03-r2
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938080
+Auto-Installed: yes
+
+Package: ti-linuxutils-src
+Version: 2_26_02_05-r57d
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938081
+Auto-Installed: yes
+
+Package: ti-tisdk-docs-wiki
+Version: 1.0-r0.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938035
+Auto-Installed: yes
+
+Package: task-arago-toolchain-tisdk-bsp-host
+Version: 1.0-r43.6
+Recommends: ti-tisdk-licenses-src, u-boot-src, ti-tisdk-setup, ti-tisdk-mksdboot, linux-davinci-src, pinmux-utility, ti-board-utilities-omapl138, ti-linux-driver-examples-omapl-src, ti-tisdk-docs-hardcopy, ti-tisdk-docs-wiki
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938035
+
+Package: ti-c6run-src
+Version: 0_98_03_03-r3
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938081
+Auto-Installed: yes
+
+Package: ti-c6accel-src
+Version: 1_01_00_07-r12
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938071
+Auto-Installed: yes
+
+Package: task-arago-toolchain-tisdk-multimedia-host
+Version: 1.0-r30.6
+Recommends: ti-framework-components-src, ti-codec-engine-src, ti-linuxutils-src, ti-xdctools-src, ti-dmai-src, ti-xdais-src, gstreamer-ti-src, ti-tisdk-loadmodule, ti-codecs-omapl138-src, ti-dm365mm-module-src
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938105
+
+Package: matrix-gui-e-src
+Version: 1.3-r24.16
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938105
+Auto-Installed: yes
+
+Package: ti-dmai-src
+Version: 2_20_00_15-r2
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938102
+Auto-Installed: yes
+
+Package: ti-framework-components-src
+Version: 2_26_00_01-r1
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938075
+Auto-Installed: yes
+
+Package: ti-tisdk-licenses-src
+Version: 1.0-r3
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938015
+Auto-Installed: yes
+
+Package: am-sysinfo-src
+Version: 1.0-r1+svnr6
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938035
+Auto-Installed: yes
+
+Package: task-arago-toolchain-tisdk-addons-host
+Version: 1.0-r13.6
+Depends: am-sysinfo-src, am-benchmarks-src, am-sysinfo-src, am-benchmarks-src
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938035
+
+Package: ti-linux-driver-examples-omapl-src
+Version: psp03.20.00.13-r3
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938034
+Auto-Installed: yes
+
+Package: update-rc.d
+Version: 0.7-r2.6
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938103
+Auto-Installed: yes
+
+Package: ti-biospsp-src
+Version: 01_30_01-r2
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938069
+Auto-Installed: yes
+
+Package: ti-edma3lld-src
+Version: 01_11_02_05-r2
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938055
+Auto-Installed: yes
+
+Package: pinmux-utility
+Version: 1.1.4.0-r1.0.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938034
+Auto-Installed: yes
+
+Package: task-arago-toolchain-tisdk-dsp-host
+Version: 1.0-r16.6
+Recommends: ti-cgt6x-src, ti-dspbios-src, ti-biosutils-src, ti-dsplink-src, ti-edma3lld-src, ti-biospsp-src, ti-audio-soc-example-src, ti-c6accel-src, ti-dsp-benchmark-src, ti-framework-components-src, ti-codec-engine-src, ti-xdais-src, ti-c6run-src, ti-dsp-benchmark-src
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938081
+
+Package: ti-tisdk-docs-hardcopy
+Version: 4.03-r6.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938035
+Auto-Installed: yes
+
+Package: ti-tisdk-makefile
+Version: 1.0-r103.6
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938105
+
+Package: ti-audio-soc-example-src
+Version: 1_00_00_03-r6
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938069
+Auto-Installed: yes
+
+Package: u-boot-src
+Version: 2010.12-psp03.21.00.04.sdk-r0
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938017
+Auto-Installed: yes
+

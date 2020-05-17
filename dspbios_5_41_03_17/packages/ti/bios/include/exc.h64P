@@ -1,0 +1,23 @@
+;
+;  ======== exc.h64P ========
+;
+;
+
+	.if ($isdefed("EXC_") = 0)    ; prevent multiple includes of this file
+EXC_	.set	1
+
+EXC_TSRCXMMASK	.set	0x000000C0
+EXC_TSRCXMSV	.set	0x00000000
+EXC_TSRCXMUS	.set	0x00000040
+
+EXC_NUMSYSCALLS	.set	2
+EXC_SYSCALLPRIV	.set	0
+EXC_SYSCALLHOOK	.set	1
+
+	.global	_EXC_exceptionHandler
+	.global	_EXC_dispatch
+	.global	_EXC_returnPtr
+	.global _EXC_sysTrapTable
+
+	.endif		; if EXC_ is not defined
+

@@ -1,0 +1,155 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== clk5509.h55 ========
+;
+
+        .if ($isdefed("CLK5509_") = 0)   ; prevent multiple includes of this file
+CLK5509_        .set    1
+        
+        .mmregs
+
+_CLK_MAXPER             .set         0ffffh     ; Maximum clock period
+                                                ; This  is the value
+                                                ; set to PRD, when
+                                                ; callibration  is
+                                                ; done.
+
+; Set maximum Pre-Scalar Counter (PSC) mask
+_CLK_MAX_PSC_MASK       .set         0000fh   ; Maximum clock prescalar
+
+;  BIT POSITIONS OF TLB,ARB and  TSS in the TCR register
+_CLK_TLB_POS    .set    10      ; bit pos of TLB
+_CLK_TSS_POS    .set    4       ; bit pos of TSS
+_CLK_ARB_POS    .set    5       ; bit pos of ARB
+
+_CLK_O_TIM      .set    0       ; offset for TIM register
+_CLK_O_PRD      .set    1       ; offset for PRD register
+_CLK_O_TCR      .set    2       ; offset for TCR register
+_CLK_O_PRSC     .set    3       ; offset for PRSC register
+
+ .asg "(CLK_REGS + _CLK_O_TIM)",  _CLK_TIM_REG          ; Addr of TIM reg
+ .asg "(CLK_REGS + _CLK_O_PRD)",  _CLK_PRD_REG          ; Addr of PRD reg
+ .asg "(CLK_REGS + _CLK_O_TCR)",  _CLK_TCR_REG          ; Addr of TCR reg
+ .asg "(CLK_REGS + _CLK_O_PRSC)", _CLK_PRSC_REG         ; Addr of PRSC reg
+        
+;
+;# ======== CLK_config ========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+        .asg    "", CLK_config$regs
+CLK_config .macro   _imr0tintmask, _imr1tintmask, _intbit, _timerimrmask, _regs, _timerimr, _timerifr, _timernum, _usetimer, _microsecs, _tcr, _tddr, _tddrhigh, _prd, _prdhigh, _countspms, _countspmshigh, _timefxn, _hookfxn, _clkdiv, _calibDiv, _calibMult, _htimediv, _htimemult, _ltimediv, _ltimemult, _htimePerLtime
+
+    ; only expand if the CLK module is configured by the user
+    .if (CLK$ = 1)
+        ; Initializing two variables here _CLK_DFLTMICROSECS will always hold
+        ; the default microseconds value as specified in the cdb file
+        ; _CLK_D_microseconds will hold the new microseconds value after the
+        ; the timer is reprogrammed.
+        ; C55_cinitFloat expects floating point constant, we do it here itself
+        ; rather than in biosdata.s55
+        ; These two variables are declared in C file clk_data.c
+
+        .ref _CLK_DFLTMICROSECS
+        .ref _CLK_D_microseconds
+        .ref _CLK_htimePerLtime
+             
+        C55_cinitHeader CINITALIGN,isClkAligned, _CLK_D_microseconds, FLOATSIZE, DATAPAGE
+        C55_cinitBegin  isClkAligned
+        C55_cinitFloat  :_microsecs:
+        C55_cinitEnd    isClkAligned
+
+        C55_cinitHeader CINITALIGN,isClkAligned, _CLK_DFLTMICROSECS, FLOATSIZE, DATAPAGE
+        C55_cinitBegin  isClkAligned
+        C55_cinitFloat  :_microsecs:
+        C55_cinitEnd    isClkAligned
+
+        C55_cinitHeader CINITALIGN,isClkAligned, _CLK_htimePerLtime, LONGSIZE, DATAPAGE
+        C55_cinitBegin  isClkAligned
+        C55_cinitLong   :_htimePerLtime:
+        C55_cinitEnd    isClkAligned
+    .else
+        .wmsg "CLK Clock Services are not available"
+    .endif
+    .endm
+
+;
+;# ======== CLK_startup ========
+;  Start the C55x timers.
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    prd (Timer Period Register) = CLK_PRD.
+;#    prsc(Timer prescale Register) = (0x000f & CLK_TDDR)
+;#    tcr (Timer Control Register)= CLK_TCR (Timer is started).
+;#    Timer interrupt enable is set in interrupt enable register.
+;#
+;# Dependencies:
+;#    This routine must be called after all other routines that use the
+;#    timer and before interrupts are globally enabled.
+;
+    .asg    "tc1, :_CLK_setup$regs:, :_CLK_stop$regs:, :_CLK_start$regs:, :_CLK_enable$regs:", CLK_startup$regs
+CLK_startup       .macro
+    .mmregs
+    .if ((CLK$ = 1) & (CLK_USETIMER = 1))       ; if CLK enabled
+    .ref _CLK_stop
+    .ref _CLK_start
+    call _CLK_stop
+    call _CLK_start
+    .endif                                      ; if CLK enabled
+    .endm
+
+;
+;# ======== CLK_readCount ========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+        .asg    "ac0", CLK_readCount$regs
+CLK_readCount .macro type
+    .if ($symcmp(":type:", "signed") == 0)
+        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+            mov port(#_CLK_TIM_REG), ac0
+        .else
+            ac0 = *port(#_CLK_TIM_REG)
+        .endif
+    .else
+        .if(.MNEMONIC); if ; MNEMONIC ; assembler
+            mov uns(port(#_CLK_TIM_REG)), ac0
+        .else
+            ac0 = uns(*port(#_CLK_TIM_REG))
+        .endif
+    .endif
+    .endm
+
+;
+;# ======== CLK_ackIsr========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+        .asg    "", CLK_ackIsr$regs
+CLK_ackIsr .macro
+        .endm
+
+
+        .endif                                  ; CLK5509_ defined

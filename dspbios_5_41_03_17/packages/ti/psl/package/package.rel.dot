@@ -1,0 +1,40 @@
+digraph dependencies {
+    label="\nPackage ti.psl Dependency Graph";
+    size="7.5,10";
+    rankdir=LR;
+    ranksep=".75";
+    concentrate="true";
+    node [fixedsize=true, width=1.5, style=filled, color=black];
+    node [font=Helvetica, fontsize=12, fillcolor=lightgrey];
+    ti_psl [shape=record,label="ti.psl|5, 0, 0, 0", URL="package.rel.xml"];
+    node [fontsize=10, fillcolor=white];
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+    xdc_bld [shape=record,label="xdc.bld|1, 0, 0, 0", URL="../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-d21/Solaris/packages/xdc/bld/package/package.rel.svg"];
+    ti_psl -> xdc_bld;
+    ti_targets [shape=record,label="ti.targets|1, 0, 0, 0", URL="../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-d21/Solaris/packages/ti/targets/package/package.rel.svg"];
+    ti_psl -> ti_targets;
+    xdc_rts [shape=record,label="xdc.rts|1, 0, 0, 0", URL="../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-d21/Solaris/packages/xdc/rts/package/package.rel.svg"];
+    ti_psl -> xdc_rts;
+    xdc [shape=record,label="xdc|1, 1, 0, 0", URL="../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-d21/Solaris/packages/xdc/package/package.rel.svg"];
+    ti_psl -> xdc;
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+    xdc_bld -> xdc;
+}

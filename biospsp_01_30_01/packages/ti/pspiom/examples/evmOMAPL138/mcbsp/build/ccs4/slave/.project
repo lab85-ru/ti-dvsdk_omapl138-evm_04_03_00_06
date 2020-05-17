@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>mcbspSampleSlave</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.rtsc.xdctools.buildDefinitions.XDC.xdcNature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>mcbspSample.tci</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/mcbsp/build/mcbspSample.tci</locationURI>
+		</link>
+		<link>
+			<name>mcbspsample.tcf</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/mcbsp/build/mcbspsample.tcf</locationURI>
+		</link>
+		<link>
+			<name>mcbspSampleSlave_io.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/mcbsp/src/mcbspSampleSlave_io.c</locationURI>
+		</link>
+		<link>
+			<name>mcbspSampleSlave_main.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/examples/evmOMAPL138/mcbsp/src/mcbspSampleSlave_main.c</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

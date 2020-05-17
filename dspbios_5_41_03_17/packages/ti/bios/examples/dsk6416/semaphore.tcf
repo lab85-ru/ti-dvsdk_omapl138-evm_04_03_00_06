@@ -1,0 +1,76 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  All rights reserved. Property of Texas Instruments Incorporated.
+ *  Restricted rights to use, duplicate or disclose this code are
+ *  granted through contract.
+ *
+ */
+/*
+ *  ======== semaphore.tcf ========
+ *  Configuration script used to generate the example's configuration files
+ */
+
+utils.loadPlatform("ti.platforms.dsk6416");
+
+bios.enableRealTimeAnalysis(prog);
+bios.enableMemoryHeaps(prog);
+bios.enableRtdx(prog);
+bios.enableTskManager(prog);
+
+/*
+ * Enable heaps in IRAM and define label SEG0 for heap usage.
+ */
+bios.IRAM.createHeap      = true;
+bios.IRAM.enableHeapLabel = true;
+bios.IRAM["heapLabel"]    = prog.extern("SEG0");
+bios.IRAM.heapSize        = 0x8000;
+bios.MEM.BIOSOBJSEG = prog.get("IRAM");
+bios.MEM.MALLOCSEG = prog.get("IRAM");
+
+/* Increase the buffer size of the LOG_system LOG object */
+
+bios.LOG_system.bufLen = 512;
+
+/* Create a trace LOG object for printing basic program output.  */
+
+var trace = bios.LOG.create("trace");
+trace.bufLen = 256;
+
+/* Create a SEM object for synchronizing message sending */
+
+var sem = bios.SEM.create("sem");
+sem.count = 0;
+
+/* Create a TSK object and map it to the initTask function */
+
+var initTsk = bios.TSK.create("initTsk");
+initTsk.priority = 15;
+initTsk["fxn"] = prog.extern("initTask");
+
+/* Create a TSK object and map it to the reader0 function */
+
+var reader0 = bios.TSK.create("reader0");
+reader0.priority = 2;
+reader0["fxn"] = prog.extern("reader");
+
+/* Create three TSK objects and map them to the writer functions */
+
+var writer0 = bios.TSK.create("writer0");
+writer0.priority = 1;
+writer0["fxn"] = prog.extern("writer");
+writer0.arg0 = 0;
+
+var writer1 = bios.TSK.create("writer1");
+writer1.priority = 1;
+writer1["fxn"] = prog.extern("writer");
+writer1.arg0 = 1;
+
+var writer2 = bios.TSK.create("writer2");
+writer2.priority = 1;
+writer2["fxn"] = prog.extern("writer");
+writer2.arg0 = 2;
+// !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+
+if (config.hasReportedError == false) {
+    prog.gen();
+}

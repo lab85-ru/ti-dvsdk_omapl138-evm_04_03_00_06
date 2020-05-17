@@ -1,0 +1,191 @@
+#!/bin/bash
+#---------------------------------------------------------------------------
+# This is a wrapper script for TI cl6x 6.1.x using the C6RunApp build system
+#---------------------------------------------------------------------------
+#
+#############################################################################
+#                                                                           #
+#   Copyright (C) 2010 Texas Instruments Incorporated                       #
+#     http://www.ti.com/                                                    #
+#                                                                           #
+#############################################################################
+#
+#############################################################################
+#                                                                           #
+#  Redistribution and use in source and binary forms, with or without       #
+#  modification, are permitted provided that the following conditions       #
+#  are met:                                                                 #
+#                                                                           #
+#    Redistributions of source code must retain the above copyright         #
+#    notice, this list of conditions and the following disclaimer.          #
+#                                                                           #
+#    Redistributions in binary form must reproduce the above copyright      #
+#    notice, this list of conditions and the following disclaimer in the    #
+#    documentation and/or other materials provided with the                 #
+#    distribution.                                                          #
+#                                                                           #
+#    Neither the name of Texas Instruments Incorporated nor the names of    #
+#    its contributors may be used to endorse or promote products derived    #
+#    from this software without specific prior written permission.          #
+#                                                                           #
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS      #
+#  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT        #
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR    #
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT     #
+#  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,    #
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT         #
+#  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,    #
+#  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY    #
+#  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      #
+#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE    #
+#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.     #
+#                                                                           #
+#############################################################################
+
+
+# Specify version number of tool
+VERSION=1.0.0.0
+
+# Get working directory from which this script was called
+CURR_WORK_DIR=`pwd`
+
+# Attempt to get name and path of this script
+ABSPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+PROGNAME=`basename $ABSPATH` # strip off path
+PROGDIR=`dirname $ABSPATH`
+
+# Edit this to point to a debug file name if you need build feedback
+DEBUGOUT=/dev/null
+
+# Check if there are no command-line inputs
+if [ $# -eq 0 ]; then
+  echo "$PROGNAME: no input files"
+  exit 1
+fi
+
+# Disable copying of generated files into their respective directories by default
+DO_AUTOCOPY='0'
+
+# Removal of generated files is disabled by default
+DO_REMOVE='0'
+
+
+###########################################################################
+# Generate and execute Rules.sh to get certain enviroment variables       #
+###########################################################################
+
+source ${PROGDIR}/Rules.sh
+C6RUN_INSTALL_DIR=${PROGDIR}/..
+
+ 
+###########################################################################
+# Loop to collect stub source files. This is the main body of this tool.  #
+###########################################################################
+while [ "$1" ]
+do 
+case $1 in
+# Don't produce anything but remove generated files from given source
+--remove )
+    DO_REMOVE='1'
+    ;;
+# Enable copying of generated files into their respective directories
+--autocopy )
+    DO_AUTOCOPY='1'
+    ;;
+# Sources are collected (c files)
+*.c )
+  if [ ! -e $1 ]; then
+    echo "$PROGNAME: $1: No such file or directory"
+  else
+    SOURCES="$1 ${SOURCES}"
+    FILENAME="${1##*/}"
+    GPP_STUBS="${FILENAME%.*}.gpp_stub.c ${GPP_STUBS}"
+    DSP_STUBS="${FILENAME%.*}.dsp_stub.c ${DSP_STUBS}"
+    DSP_INCS="${FILENAME%.*}.include.h ${DSP_INCS}"
+    TRANS_UNITS="${FILENAME}.001t.tu ${TRANS_UNITS}"
+  fi
+  
+	;;
+# Anything else is ignored
+* )
+  ;;
+esac
+shift
+done 
+
+
+##################################################
+# Post Modification/Checking of compiler options #
+##################################################
+
+# Make sure some sources were supplied
+if [ -z "$SOURCES" ]; then
+  if [ -z "$OBJECTS" ]; then
+    echo "$PROGNAME: no input files"
+    exit 1
+  fi
+fi
+
+
+##################################################
+# The actual stub generation step                #
+##################################################
+
+# Get arrays of sources, objects, etc.
+SOURCES_ARR=( ${SOURCES} )
+GPP_STUBS_ARR=( ${GPP_STUBS} )
+DSP_STUBS_ARR=( ${DSP_STUBS} )
+DSP_INCS_ARR=( ${DSP_INCS} )
+TRANS_UNITS_ARR=( ${TRANS_UNITS} )
+
+# If requested, perform removal of generated files and exit without doing anything further
+if [ $DO_REMOVE = '1' ]; then
+  RPC_DIR="${PROGDIR}/../rpc"
+  for i in $(seq 0 $((${#SOURCES_ARR[*]} - 1)))
+  do
+    rm "$RPC_DIR/gpp_sources/`basename ${SOURCES_ARR[$i]}`"
+    rm "$RPC_DIR/gpp/`basename ${GPP_STUBS_ARR[$i]}`"
+    rm "$RPC_DIR/dsp/`basename ${DSP_STUBS_ARR[$i]}`"
+    rm "$RPC_DIR/include/`basename ${DSP_INCS_ARR[$i]}`"
+  done
+  exit 1
+fi 
+
+# Generation of stubs
+if [ ! -z "$SOURCES" ]; then
+  for i in $(seq 0 $((${#SOURCES_ARR[*]} - 1)))
+  do
+    echo "Executing GCC to get translation unit..." >> $DEBUGOUT
+    echo "${CSTOOL_PREFIX}gcc -std=gnu99 -fdump-translation-unit -c -o _temp_.o ${SOURCES_ARR[$i]}" >> $DEBUGOUT
+    ${CSTOOL_PREFIX}gcc -std=gnu99 -fdump-translation-unit -c -o _temp_.o ${SOURCES_ARR[$i]}
+    echo "Cleaning up temp object file..." >> $DEBUGOUT
+    echo "rm -Rf _temp_.o" >> $DEBUGOUT
+    rm -Rf _temp_.o
+    if [ -e ${TRANS_UNITS_ARR[$i]} ]; then
+      echo "Calling RPC stub generation utility." >> $DEBUGOUT
+      echo "perl ${C6RUN_INSTALL_DIR}/bin/perl/dsprpcposix-rpcgen.pl ${TRANS_UNITS_ARR[$i]} ${SOURCES_ARR[$i]} ${DSP_STUBS_ARR[$i]} ${GPP_STUBS_ARR[$i]} ${DSP_INCS_ARR[$i]}" >> $DEBUGOUT
+      perl ${C6RUN_INSTALL_DIR}/bin/perl/dsprpcposix-rpcgen.pl ${TRANS_UNITS_ARR[$i]} ${SOURCES_ARR[$i]} ${DSP_STUBS_ARR[$i]} ${GPP_STUBS_ARR[$i]} ${DSP_INCS_ARR[$i]}
+      echo "Cleaning up GCC translation unit file..." >> $DEBUGOUT
+      echo "rm -Rf ${TRANS_UNITS_ARR[$i]}" >> $DEBUGOUT
+      rm -Rf ${TRANS_UNITS_ARR[$i]}
+    else
+      echo "$PROGNAME: translational unit ${TRANS_UNITS_ARR[$i]} not found."
+      exit 1
+    fi
+  done
+fi
+
+# Perform file copying if requested
+if [ $DO_AUTOCOPY = '1' ]; then
+  RPC_DIR="${PROGDIR}/../rpc"
+  for i in $(seq 0 $((${#SOURCES_ARR[*]} - 1)))
+  do
+    cp ${SOURCES_ARR[$i]} "$RPC_DIR/gpp_sources"
+    cp ${GPP_STUBS_ARR[$i]} "$RPC_DIR/gpp"
+    cp ${DSP_STUBS_ARR[$i]} "$RPC_DIR/dsp"
+    cp ${DSP_INCS_ARR[$i]} "$RPC_DIR/include"
+  done
+fi 
+
+exit $?
+

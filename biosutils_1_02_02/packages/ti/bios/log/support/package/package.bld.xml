@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.bios.log.support" version="1, 0, 2, 02">
+    <units>
+        <module name="LogAux"/>
+        <module name="LogTrack"/>
+    </units>
+    <sources>
+        <srcFile name="LogTrack.c"/>
+        <srcFile name="LogAux.c"/>
+        <srcFile name="package/package_ti.bios.log.support.c"/>
+    </sources>
+    <configurations>
+    </configurations>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="lib/logsupport.a64P.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/logsupport/LogTrack.o64P.dep" src="LogTrack.c"/>
+        <srcFile name="package/lib/lib/logsupport/LogAux.o64P.dep" src="LogAux.c"/>
+        <srcFile name="package/lib/lib/logsupport/package/package_ti.bios.log.support.o64P.dep" src="package/package_ti.bios.log.support.c"/>
+        <srcFile name="lib/logsupport.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/logsupport/LogTrack.o674.dep" src="LogTrack.c"/>
+        <srcFile name="package/lib/lib/logsupport/LogAux.o674.dep" src="LogAux.c"/>
+        <srcFile name="package/lib/lib/logsupport/package/package_ti.bios.log.support.o674.dep" src="package/package_ti.bios.log.support.c"/>
+        <srcFile name="lib/logsupport.a64.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/logsupport/LogTrack.o64.dep" src="LogTrack.c"/>
+        <srcFile name="package/lib/lib/logsupport/LogAux.o64.dep" src="LogAux.c"/>
+        <srcFile name="package/lib/lib/logsupport/package/package_ti.bios.log.support.o64.dep" src="package/package_ti.bios.log.support.c"/>
+        <srcFile name="package/rel/ti_bios_log_support.tar.dep" src="package/rel/ti_bios_log_support.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.C64P"
+            version="ti.targets.C64P{1,0,6.0,14"
+            platform="ti.platforms.sim6xxx:TMS320CDM420"
+            isa="64P"
+            suffix="64P"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.0.14/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+        <target name="ti.targets.C674"
+            version="ti.targets.C674{1,0,6.1,5"
+            platform="ti.platforms.evmOMAPL137"
+            isa="674"
+            suffix="674"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.1.5/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+        <target name="ti.targets.C64"
+            version="ti.targets.C64{1,0,6.0,14"
+            platform="ti.platforms.sim6xxx:TMS320C6416"
+            isa="64"
+            suffix="64"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.0.14/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    <library name="lib/logsupport"
+        pname="lib/logsupport.a64P"
+        profile="release"
+        target="ti.targets.C64P"/>
+    <library name="lib/logsupport"
+        pname="lib/logsupport.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    <library name="lib/logsupport"
+        pname="lib/logsupport.a64"
+        profile="release"
+        target="ti.targets.C64"/>
+    </libraries>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_bios_log_support"
+        pname="../../../../../exports/ti_bios_log_support.tar"
+        label="default"
+        relScript="/db/toolsrc/library/toolsC51/packages/tisb/release/filters/copyright.rel">
+        <file name="LogTrack.xdc"/>
+        <file name="package/package.ext.xml"/>
+        <file name="LogTrack.c"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package.xs"/>
+        <file name="lib/logsupport.a64P"/>
+        <file name="LogTrack.h"/>
+        <file name="package/package.rel.dot"/>
+        <file name="package.xdc"/>
+        <file name="lib/logsupport.a64"/>
+        <file name="LogAux.c"/>
+        <file name="lib/logsupport.a674"/>
+        <file name="LogAux.xdc"/>
+        <file name="LogTrack.tci"/>
+        <file name="LogAux.h"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.bld.xml"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="package.bld"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

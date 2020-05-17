@@ -1,0 +1,40 @@
+#
+#  ======== makefile,55x ========
+#
+#  This "top level" make file can be used with GNU's make utility
+#  to (re)build the c5000 PSL configuration libraries
+#
+#  To (re)build from scratch type the following:
+#	gmake -f makefile,55x clean
+#	gmake -f makefile,55x
+#
+#  subdirs = 	list of all 55x sub-directories containing a makefile
+#  submake = 	a definition to perform a sub-make with an embedded new
+#		line.  Do not remove the blank line!  This line is required
+#		to ensure that the $(foreach ...) function used below 
+#		generates a separate line for each sub-directory
+#  makeall = 	recursive sub-make for each directory defined in $(subdirs)
+#
+
+subdirs = $(dir $(wildcard *5*/makefile))
+
+define submake
+
+$(MAKE) -C $(var) $@
+endef
+
+makeall = $(foreach var,$(subdirs),$(submake))
+
+all:
+	@echo
+	@echo making all files in the directories $(subdirs) ...
+	+@$(makeall)
+	@echo
+
+clean::
+	@echo
+	@echo "cleaning $(subdirs) ..."
+	@echo
+	@$(makeall)
+	@echo
+

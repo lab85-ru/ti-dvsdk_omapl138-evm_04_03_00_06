@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/am_benchmarks/!svn/ver/65/trunk/armv7a/dhrystone/Debug
+END
+objects.mk
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/am_benchmarks/!svn/ver/65/trunk/armv7a/dhrystone/Debug/objects.mk
+END
+sources.mk
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/am_benchmarks/!svn/ver/65/trunk/armv7a/dhrystone/Debug/sources.mk
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/am_benchmarks/!svn/ver/65/trunk/armv7a/dhrystone/Debug/makefile
+END
+subdir.mk
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/am_benchmarks/!svn/ver/65/trunk/armv7a/dhrystone/Debug/subdir.mk
+END

@@ -1,0 +1,585 @@
+#!/bin/bash
+#---------------------------------------------------------------------------
+# This is a wrapper script for TI cl6x using the C6RunLib build system
+#---------------------------------------------------------------------------
+#
+#############################################################################
+#                                                                           #
+#   Copyright (C) 2010 Texas Instruments Incorporated                       #
+#     http://www.ti.com/                                                    #
+#                                                                           #
+#############################################################################
+#
+#############################################################################
+#                                                                           #
+#  Redistribution and use in source and binary forms, with or without       #
+#  modification, are permitted provided that the following conditions       #
+#  are met:                                                                 #
+#                                                                           #
+#    Redistributions of source code must retain the above copyright         #
+#    notice, this list of conditions and the following disclaimer.          #
+#                                                                           #
+#    Redistributions in binary form must reproduce the above copyright      #
+#    notice, this list of conditions and the following disclaimer in the    #
+#    documentation and/or other materials provided with the                 #
+#    distribution.                                                          #
+#                                                                           #
+#    Neither the name of Texas Instruments Incorporated nor the names of    #
+#    its contributors may be used to endorse or promote products derived    #
+#    from this software without specific prior written permission.          #
+#                                                                           #
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS      #
+#  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT        #
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR    #
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT     #
+#  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,    #
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT         #
+#  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,    #
+#  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY    #
+#  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      #
+#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE    #
+#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.     #
+#                                                                           #
+#############################################################################
+
+# Specify version number of tool
+VERSION=1.1.0.0
+
+# Get working directory from which this script was called
+CURR_WORK_DIR=`pwd`
+
+# Attempt to get name and path of this script
+ABSPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+PROGNAME=`basename $ABSPATH` # strip off path
+PROGDIR=`dirname $ABSPATH`
+
+# Select release mode libraries as default
+DEBUG_OR_RELEASE=Release
+
+# Default all log data to not be kept
+DEBUGOUT=/dev/null
+
+# Check if there are no command-line inputs
+if [ $# -eq 0 ]; then
+  echo "$PROGNAME: no input files"
+  exit 1
+fi
+
+# Default executable output name (matches GCC default)
+OUT_FILENAME="a.out"
+OUT_PATH="$PWD"
+OUT_FILENAME_GIVEN="FALSE"
+LINK="TRUE"
+
+
+###########################################################################
+# Execute environment.sh to get certain enviroment variables              #
+###########################################################################
+
+C6RUN_INSTALL_DIR=${PROGDIR}/..
+unset DSP_CFLAGS
+source ${C6RUN_INSTALL_DIR}/c6run-environment.sh
+
+
+###########################################################################
+# Set default compiler and linker options for both ARM and DSP            #
+###########################################################################
+
+# Default applied options for TI c6000 compiler
+CL6X_CCARGS="${DSP_CFLAGS} -c -q --gcc --display_error_number"
+
+# Default applied options for ARM gcc cross-compiler
+GNU_CCARGS="${CFLAGS} -g -std=gnu99 \
+  -Wall -Wdeclaration-after-statement -Wno-trigraphs \
+  -fPIC -fno-strict-aliasing -fno-common -fno-omit-frame-pointer"
+
+  
+###########################################################################
+# Top-level functions for displaying help and version info                #
+###########################################################################
+
+showusage() {
+  cat <<END_OF_HELP
+Usage: $PROGNAME [options] file...
+Options:
+  --help                   Display this information
+  --target-help            Display target specific command line options
+  -E                       Preprocess only; do not compile, assemble or link
+  -S                       Compile only; do not assemble or link
+  -c                       Compile and assemble, but do not link
+  -o <file>                Place the output into <file>
+END_OF_HELP
+}
+
+showtargetusage() {
+  cat <<END_OF_TARGET_HELP
+The following options are target specific:
+  --C6Run:debug            Build app with debug versions of libraries
+  --C6Run:release          Build app with release versions of libraries
+END_OF_TARGET_HELP
+}
+
+showversion() {
+  echo "c6runlib-cc (TI C6Run Project) $VERSION"
+  echo "Copyright (C) 2010 Texas Instruments, Inc."
+  echo "This program is free software, licensed under the terms of"
+  echo "the New BSD License.  This program has absolutely no warranty."
+  echo
+}
+
+ 
+###########################################################################
+# For loop to change gcc options to cl6x options. This is the main body   #
+# of this tool.                                                           #
+###########################################################################
+while [ "$1" ]
+do 
+case $1 in
+# Display help
+--help )
+  showusage
+  exit 0
+  ;;
+--target-help )
+  showtargetusage
+  exit 0
+  ;;
+# Display version info  
+-v | --version )
+  showversion
+  #${CODEGEN_INSTALL_DIR}/bin/cl6x -version 2>&1 | grep "Compiler"
+  exit 0
+  ;;
+
+# C6Run specific options
+--C6Run:* )
+  C6RUN_OPTION="`echo ${1#*C6Run:} | tr '[:upper:]' '[:lower:]'`"
+  case $C6RUN_OPTION in
+    debug )
+      DEBUG_OR_RELEASE=Debug
+      CL6X_CCARGS="$CL6X_CCARGS -g -d"_DEBUG" --no_compress"
+      DEBUGOUT=debug.$PROGNAME.log
+      if [ -e $DEBUGOUT ]; then
+        rm -Rf $DEBUGOUT
+      fi
+    ;;
+    release )
+      DEBUG_OR_RELEASE=Release
+      DEBUGOUT=/dev/null
+    ;;
+    replace_malloc )
+    ;;
+    no_replace_malloc )
+    ;;
+  esac
+  ;;
+
+# Compile only but do not link
+-c )
+  # Don't need to add this to CL6X_CCARGS, as it is already there
+  LINK="FALSE"
+  ;;
+# Skip assembly
+-S )
+  CL6X_CCARGS="$CL6X_CCARGS -n"
+  LINK="FALSE"
+  ;;
+# Pre-process only
+-E )
+  CL6X_CCARGS="$CL6X_CCARGS -ppo"
+  LINK="FALSE"  
+  ;;
+
+# Specify output filename
+-o* )
+  OUT_FILENAME=${1#-o}
+  if [ -z "$OUT_FILENAME" ]; then
+    OUT_FILENAME=$2
+    shift
+  fi
+  OUT_PATH=${OUT_FILENAME%/*}
+  OUT_NAME=${OUT_FILENAME##*/}
+  if [ "$OUT_PATH" = "$OUT_FILENAME" ]; then
+    OUT_PATH=.
+  fi
+  OUT_FILENAME_GIVEN="TRUE"
+  ;;
+
+# Supported Target Chip Platforms
+-mcpu=* )
+  # Ignore (since this info is determined by platform config)
+  ;;
+# Support C674x floating point architecture
+-march=* )
+  # Ignore (since this info is determined by platform config)
+  ;;
+-mtune=* )
+  # Ignore
+  ;;
+-mv* )
+  # Ignore (and don't pass to cl6x since this info is determined by platform config)
+  ;;
+
+# Directory options
+-I* )
+  DIR="${1#-I}"
+  if [ -z "$DIR" ]; then
+    DIR=$2
+    shift
+  fi
+  CL6X_CCARGS="$CL6X_CCARGS --include_path=${DIR}"
+  GNU_CCARGS="$GNU_CCARGS -I${DIR}"
+  PP_OPTS="$PP_OPTS -I${DIR}"
+  ;;
+-iquote* )
+  DIR="${1#-iquote}"
+  if [ -z "$DIR" ]; then
+    DIR=$2
+    shift
+  fi
+  CL6X_CCARGS="$CL6X_CCARGS --include_path=${DIR}"
+  GNU_CCARGS="$GNU_CCARGS -iquote${DIR}"
+  PP_OPTS="$PP_OPTS -iquote${DIR}"
+  ;;
+
+  
+# Preprocessor options
+-D* )
+  DEFINEVAL="${1#-D}"
+  if [ -z "$DEFINEVAL" ]; then
+    DEFINEVAL=$2
+    shift
+  fi  
+  CL6X_CCARGS="$CL6X_CCARGS --define=${DEFINEVAL}"
+  GNU_CCARGS="$GNU_CCARGS -D${DEFINEVAL}"
+  PP_OPTS="$PP_OPTS -D${DEFINEVAL}"
+  ;;
+-U* )
+  DEFINEVAL="${1#-U}"
+  if [ -z "$DEFINEVAL" ]; then
+    DEFINEVAL=$2
+    shift
+  fi  
+  CL6X_CCARGS="$CL6X_CCARGS --undefine=${DEFINEVAL}"
+  GNU_CCARGS="$GNU_CCARGS -U${DEFINEVAL}"
+  PP_OPTS="$PP_OPTS -U${DEFINEVAL}"
+  ;;
+-M | -MM )
+  CL6X_CCARGS="$CL6X_CCARGS --preproc_dependency"
+  ;;
+-C | -CC )
+  CL6X_CCARGS="$CL6X_CCARGS --preproc_with_comments"
+  ;;
+-undef )
+  ;;
+-include* )
+  FILE="${1#-include}"
+  if [ -z "$FILE" ]; then
+    FILE=$2
+    shift
+  fi    
+  CL6X_CCARGS="$CL6X_CCARGS --preinclude=${FILE}"
+  GNU_CCARGS="$GNU_CCARGS -include ${FILE}"
+  PP_OPTS="$PP_OPTS -include ${FILE}"
+  ;;
+
+
+# Debug and Optimization options
+-g | -O0 | -O1 | -O2 | -O3 )  
+  CL6X_CCARGS="$CL6X_CCARGS $1"
+  GNU_CCARGS="$GNU_CCARGS $1"
+  ;;
+-O )
+  CL6X_CCARGS="$CL6X_CCARGS -O1"
+  GNU_CCARGS="$GNU_CCARGS $1"  
+  ;;
+
+# Warning and diagnostic options
+-w )
+  CL6X_CCARGS="$CL6X_CCARGS --no_warnings"
+  ;;
+# FIXME - Add appropriate warnings if any
+-W | -Wextra )
+  CL6X_CCARGS="$CL6X_CCARGS"
+  ;;
+-Wall )
+  CL6X_CCARGS="$CL6X_CCARGS --display_error_number --verbose_diagnostics"
+  ;;
+
+# Optimization options
+-fno-inline )
+  CL6X_CCARGS="$CL6X_CCARGS --no_inlining"
+  ;;
+-finline-limit=* )
+  LIMIT=`echo $1 | sed -e 's/^-finline-limit=\(.*\)/\1/'`
+  CL6X_CCARGS="$CL6X_CCARGS --auto_inline=$LIMIT"
+  ;;
+
+# Ignore these gcc optimization options
+-fno-default-inline | -fno-defer-pop | -fforward-propagate | -fomit-frame-pointer \
+| -foptimize-sibling-calls | -finline-small-functions | -findirect-inlining \
+| -finline-functions | -finline-functions-called-once | -fearly-inlining | -fipa-sra \
+| -fkeep-inline-functions | -fkeep-static-consts | -fmerge-constants \
+| -fmerge-all-constants | -fmodulo-sched | -fmodulo-sched-allow-regmoves| -fno-branch-count-reg \
+| -fno-function-cse | -fno-zero-initialized-in-bss | -fmudflap | -fmudflapth | -fmudflapir \
+| -fthread-jumps | -fsplit-wide-types | -fcse-follow-jumps | -fcse-skip-blocks | -frerun-cse-after-loop \
+| -fgcse | -fgcse-lm | -fgcse-sm | -fgcse-las | -fgcse-after-reload | -funsafe-loop-optimizations \
+| -fcrossjumping | -fauto-inc-dec | -fdce | -fdse | -fif-conversion | -fif-conversion2 \
+| -fdelete-null-pointer-checks | -fexpensive-optimizations | -foptimize-register-move \
+| -fregmove | -fira-algorithm=* | -fira-region=* | -fira-coalesce | -fno-ira-share-save-slots \
+| -fno-ira-share-spill-slots | -fira-verbose=* | -fdelayed-branch | -fschedule-insns | -fschedule-insns2 \
+| -fno-sched-interblock | -fno-sched-spec | -fsched-pressure | -fsched-spec-load | -fsched-spec-load-dangerous \
+| -fsched-stalled-insns | -fsched-stalled-insns=* | -fsched-stalled-insns-dep | -fsched-stalled-insns-dep=* \
+| -fsched2-use-superblocks | -fsched-group-heuristic | -fsched-critical-path-heuristic | -fsched-spec-insn-heuristic \
+| -fsched-rank-heuristic | -fsched-last-insn-heuristic | -fsched-dep-count-heuristic | -fsched2-use-traces \
+| -freschedule-modulo-scheduled-loops | -fselective-scheduling | -fselective-scheduling2 \
+| -fsel-sched-pipelining | -fsel-sched-pipelining-outer-loops | -fcaller-saves | -fconserve-stack \
+| -ftree-reassoc | -ftree-pre | -ftree-forwprop | -ftree-fre | -ftree-phiprop | -ftree-copy-prop \
+| -fipa-pure-const | -fipa-reference | -fipa-struct-reorg | -fipa-pta | -fipa-cp | -fipa-cp-clone \
+| -fipa-matrix-reorg | -ftree-sink | -ftree-ccp | -ftree-switch-conversion | -ftree-dce \
+| -ftree-builtin-call-dce | -ftree-dominator-opts | -ftree-dse | -ftree-ch | -ftree-loop-optimize \
+| -ftree-loop-linear | -floop-interchange | -floop-strip-mine | -floop-block | -fgraphite-identity \
+| -floop-parallelize-all | -fcheck-data-deps | -ftree-loop-distribution | -ftree-loop-im \
+| -ftree-loop-ivcanon | -fivopts | -ftree-parallelize-loops=* | -ftree-pta | -ftree-sra \
+| -ftree-copyrename | -ftree-ter | -ftree-vectorize | -ftree-vect-loop-version | -fvect-cost-model \
+| -ftree-vrp | -ftracer | -funroll-loops | -funroll-all-loops | -fsplit-ivs-in-unroller \
+| -fvariable-expansion-in-unroller | -fpredictive-commoning | -fprefetch-loop-arrays | -fno-peephole \
+| -fno-peephole2 | -fno-guess-branch-probability | -freorder-blocks | -freorder-blocks-and-partition \
+| -freorder-functions | -fstrict-aliasing | -fstrict-overflow | -falign-functions | -falign-functions=* \
+| -falign-labels | -falign-labels=* | -falign-loops | -falign-loops=* | -falign-jumps | -falign-jumps=* \
+| -funit-at-a-time | -fno-toplevel-reorder | -fweb | -fwhole-program | -fcprop-registers | -fprofile-correction \
+| -fprofile-dir=* | -fprofile-generate | -fprofile-generate=* | -fprofile-use | -fprofile-use=* \
+| -ffloat-store | -fexcess-precision=* | -ffast-math | -fno-math-errno | -funsafe-math-optimizations \
+| -fassociative-math | -freciprocal-math | -ffinite-math-only | -fno-signed-zeros | -fno-trapping-math \
+| -frounding-math | -fsignaling-nans | -fsingle-precision-constant | -fcx-limited-range | -fcx-fortran-rules \
+| -fbranch-probabilities | -fprofile-values | -fvpt | -frename-registers | -ftracer | -funroll-loops \
+| -funroll-all-loops | -fpeel-loops | -fmove-loop-invariants | -funswitch-loops | -ffunction-sections \
+| -fdata-sections | -fbranch-target-load-optimize | -fbranch-target-load-optimize2 | -fbtr-bb-exclusive \
+| -fstack-protector | -fstack-protector-all | -fsection-anchors )
+  ;;
+
+# Ignore these GCC warning options
+-Wmissing-prototypes | -Wmissing-declarations | -Wmissing-field-initializers \
+| -Wstrict-prototypes | -Wwrite-strings | -Winline | -Wno-uninitialized   \
+| -Wno-format | -Wno-trigraphs | -Wno-unused | -Wno-pointer-sign )
+  ;;  
+
+# Ignore these other gcc options
+-msoft-float | -ffreestanding | -nostdinc  \
+| -fno-inline-functions | -finhibit-size-directive | -fno-exceptions   \
+| -fno-builtin | -fexceptions | -pipe   \
+| --param | max-inline-insns=* \
+| -frename-registers | -falign-functions=* | -fno-strict-aliasing   \
+| -fno-common | -ffixed-r13 | -mb-step | -traditional       \
+| -mpreferred-stack-boundary=2 | -fplugin=* | -fplugin-arg* | -malign-functions=*   \
+| -malign-jumps=* | -malign-loops=* | -gstabs )
+  ;;
+
+# Sources are collected (c/cpp files, assembly files, linear assembly files)
+*.c | *.cpp | *.s | *.sa )
+  if [ ! -e $1 ]; then
+    echo "$PROGNAME: $1: No such file or directory"
+  else
+    SOURCE="$1 ${SOURCE}"
+  fi
+  ;;
+# Object files are collected
+*.o | *.lib | *.obj | *.a )
+  if [ ! -e $1 ]; then
+    echo "$PROGNAME: $1: No such file or directory"
+  else
+    OBJECTSFROMFILE="$OBJECTSFROMFILE $1"
+  fi
+  ;;
+
+#Input option files are collected
+@* )
+  CL6X_CCARGS="$CL6X_CCARGS -$1"
+  ;;
+# All other options are passed as is
+-* )
+  CL6X_CCARGS="$CL6X_CCARGS $1"
+  ;;
+# Anything else is ignored
+* )
+  ;;
+esac
+shift
+done 
+
+
+##################################################
+# Post Modification/Checking of compiler options #
+##################################################
+
+# Make sure some sources were supplied
+if [ -z "$SOURCE" ]; then
+  echo "$PROGNAME: no input files"
+  exit 1
+fi
+
+# Update C6000 Compiler flags with standard header file locations
+CL6X_CCARGS="$CL6X_CCARGS -I${CODEGEN_INSTALL_DIR}/include"
+CL6X_CCARGS="$CL6X_CCARGS -I${C6RUN_INSTALL_DIR}/include"
+
+# Update cl6x and GCC PP_OPTS to define buffer argument type defines as empty
+PP_OPTS="$PP_OPTS -DINBUF= -DOUTBUF= -DINOUTBUF= -DNONE="
+CL6X_CCARGS="$CL6X_CCARGS -DINBUF= -DOUTBUF= -DINOUTBUF= -DNONE="
+
+# Update C6000 Compiler flags with RPC/Posix header file locations
+CL6X_CCARGS="$CL6X_CCARGS -I${C6RUN_INSTALL_DIR}/include -I${C6RUN_INSTALL_DIR}/include/c6run -I${C6RUN_INSTALL_DIR}/include/c6run/rpc -I${C6RUN_INSTALL_DIR}/include/c6run/dsp"
+
+# Update GCC Compiler flags with RPC header file locations
+GNU_CCARGS="$GNU_CCARGS -I${C6RUN_INSTALL_DIR}/include -I${C6RUN_INSTALL_DIR}/include/c6run -I${C6RUN_INSTALL_DIR}/include/c6run/rpc -I${C6RUN_INSTALL_DIR}/include/c6run/gpp"
+
+
+##################################################
+# Actual compilation/linking steps               #
+##################################################
+
+# Get arrays of sources
+SOURCES_ARR=( ${SOURCE} )
+
+if [ $LINK = "TRUE" ]; then
+  echo "$PROGNAME: cannot perform linking step, only compilation or assembly."
+  exit 1
+else
+  # We are not linking
+  if [ ! -z "$OBJECTSFROMFILE" ]; then
+    # but we have input object files on the command line
+    arr_obj=( ${OBJECTSFROMFILE} )
+    for FILE in ${OBJECTSFROMFILE}; do
+      echo "$PROGNAME: $FILE:  linker input file unused because linking not done"
+    done
+    exit 1
+  fi
+  
+  # and we have no object files specified on the command-line
+  if [ $OUT_FILENAME_GIVEN = "TRUE" ]; then
+    # and output file name is given
+    if [ ${#SOURCES_ARR[*]} -ne 1 ]; then
+      # and if our input source file array consists of more than one item
+      echo "$PROGNAME: cannot specify -o with -c or -S with multiple files"
+      $retVal=1
+    else
+      # and if our input source file array consists of exactly one item
+      IN_NAME=${SOURCE##*/}
+      GPP_SOURCE_STUBS="${OUT_PATH}/${OUT_NAME%.*}.gpp_stub.${IN_NAME##*.}"
+      DSP_SOURCE_STUBS="${OUT_PATH}/${OUT_NAME%.*}.dsp_stub.${IN_NAME##*.}"
+      GPP_OBJECT_STUBS="${OUT_PATH}/${OUT_NAME%.*}.gpp_stub.${OUT_NAME##*.}"
+      DSP_OBJECT_STUBS="${OUT_PATH}/${OUT_NAME%.*}.dsp_stub.${OUT_NAME##*.}"
+      OUT_FILENAME="${OUT_PATH}/${OUT_NAME}"
+      
+      echo "Compiling user source for DSP." >> $DEBUGOUT
+      echo "  ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_CCARGS} --output_file=${OUT_FILENAME} ${SOURCE}" >> $DEBUGOUT
+      ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_CCARGS} --output_file=${OUT_FILENAME} ${SOURCE}
+      retVal=$?      
+    fi
+  else
+    # and output file name is not given, so compile all sources to current directory
+    for SRC in $SOURCE; do
+      IN_NAME=${SRC##*/}
+      GPP_SOURCE_STUBS="${OUT_PATH}/${IN_NAME%.*}.gpp_stub.c ${GPP_SOURCE_STUBS}"
+      DSP_SOURCE_STUBS="${OUT_PATH}/${IN_NAME%.*}.dsp_stub.c ${DSP_SOURCE_STUBS}"
+      GPP_OBJECT_STUBS="${OUT_PATH}/${IN_NAME%.*}.gpp_stub.o ${GPP_OBJECT_STUBS}"
+      DSP_OBJECT_STUBS="${OUT_PATH}/${IN_NAME%.*}.dsp_stub.o ${DSP_OBJECT_STUBS}"
+      OUT_FILENAME="${OUT_PATH}/${IN_NAME%.*}.o ${OUT_FILENAME}"
+    done
+    echo "Compiling user sources for DSP." >> $DEBUGOUT
+    echo "  ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_CCARGS} -eo=o -ea=s -el=sa --obj_directory=${OUT_PATH} ${SOURCE}" >> $DEBUGOUT
+    ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_CCARGS} -eo=o -ea=s -el=sa --obj_directory=${OUT_PATH} ${SOURCE}
+    retVal=$?
+  fi
+
+  if [ $retVal -ne 0 ]; then
+    exit $retVal
+  fi
+   
+  # Get arrays of output stub source and object names, etc.
+  OBJECTS_ARR=( ${OUT_FILENAME} )
+  GPP_SOURCE_STUBS_ARR=( ${GPP_SOURCE_STUBS} )
+  DSP_SOURCE_STUBS_ARR=( ${DSP_SOURCE_STUBS} )
+  GPP_OBJECT_STUBS_ARR=( ${GPP_OBJECT_STUBS} )
+  DSP_OBJECT_STUBS_ARR=( ${DSP_OBJECT_STUBS} )
+
+  # Generate and build DSP-side and GPP-side stubs
+  for i in $(seq 0 $((${#SOURCES_ARR[*]} - 1)))
+  do
+    DIRNAME=${SOURCES_ARR[$i]}
+    DIRNAME=${DIRNAME%/*}
+    if [ ${DIRNAME} == ${SOURCES_ARR[$i]} ]; then
+      SOURCE_DIR_INCLUDE=-I.
+    else
+      SOURCE_DIR_INCLUDE=-I${DIRNAME}
+    fi
+    
+    # Generate stub files
+    PP_OPTS_LOCAL="$PP_OPTS ${SOURCE_DIR_INCLUDE}"
+    echo -n "${PP_OPTS_LOCAL}" > ${C6RUN_INSTALL_DIR}/lib/perl/pp_opts.txt
+    echo "Calling RPC stub generation utility." >> $DEBUGOUT
+    echo "  C6RUN_INSTALL_DIR=${C6RUN_INSTALL_DIR} perl ${C6RUN_INSTALL_DIR}/lib/perl/c6runlib-rpcgen.pl ${SOURCES_ARR[$i]} ${OBJECTS_ARR[$i]} GPP2DSP ${DEBUG_OR_RELEASE}" >> $DEBUGOUT
+    C6RUN_INSTALL_DIR=${C6RUN_INSTALL_DIR} perl ${C6RUN_INSTALL_DIR}/lib/perl/c6runlib-rpcgen.pl ${SOURCES_ARR[$i]} ${OBJECTS_ARR[$i]} GPP2DSP ${DEBUG_OR_RELEASE}
+    retVal=$?
+    if [ $retVal -ne 0 ]; then
+      exit $retVal
+    fi
+
+    # Compile GPP-side stub
+    if [ -e ${GPP_SOURCE_STUBS_ARR[$i]} ]; then
+      echo "Compiling GPP-side C stub file ${GPP_SOURCE_STUBS_ARR[$i]} ..." >> $DEBUGOUT
+      echo "  ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}gcc ${GNU_CCARGS} ${SOURCE_DIR_INCLUDE} -c -o ${GPP_OBJECT_STUBS_ARR[$i]} ${GPP_SOURCE_STUBS_ARR[$i]}" >> $DEBUGOUT
+      ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}gcc ${GNU_CCARGS} ${SOURCE_DIR_INCLUDE} -c -o ${GPP_OBJECT_STUBS_ARR[$i]} ${GPP_SOURCE_STUBS_ARR[$i]}
+      retVal=$?
+      if [ $retVal -ne 0 ]; then
+        exit $retVal
+      fi
+    else
+      echo "GPP stub file, ${GPP_SOURCE_STUBS_ARR[$i]}, is missing."
+      exit 1;
+    fi
+
+    # Compile DSP-side stub    
+    if [ -e ${DSP_SOURCE_STUBS_ARR[$i]} ]; then
+      echo "Compiling DSP-side C stub file ${OUT_PATH}/${DSP_SOURCE_STUBS_ARR[$i]} ..." >> $DEBUGOUT
+      echo "  ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_CCARGS} --diag_suppress=225 ${SOURCE_DIR_INCLUDE} --output_file=${DSP_OBJECT_STUBS_ARR[$i]} ${DSP_SOURCE_STUBS_ARR[$i]}" >> $DEBUGOUT
+      ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_CCARGS} --diag_suppress=225 ${SOURCE_DIR_INCLUDE} --output_file=${DSP_OBJECT_STUBS_ARR[$i]} ${DSP_SOURCE_STUBS_ARR[$i]}
+      retVal=$?
+      if [ $retVal -ne 0 ]; then
+        exit $retVal
+      fi
+    else
+      echo "DSP stub file, ${DSP_SOURCE_STUBS_ARR[$i]}, is missing."
+      exit 1;
+    fi
+    
+    rm -Rf ${C6RUN_INSTALL_DIR}/lib/perl/pp_opts.txt
+  done
+
+
+  # Clean up all the GPP-side and DSP-side stub files (compiled up above)
+  if [ ${DEBUG_OR_RELEASE} != "Debug" ]; then
+    for i in $(seq 0 $((${#GPP_SOURCE_STUBS_ARR[*]} - 1)))
+    do
+      echo "Cleaning up temp C stub file..." >> $DEBUGOUT
+      echo "rm -Rf ${GPP_SOURCE_STUBS_ARR[$i]}" >> $DEBUGOUT
+      rm -Rf ${GPP_SOURCE_STUBS_ARR[$i]} 
+    done
+    for i in $(seq 0 $((${#DSP_SOURCE_STUBS_ARR[*]} - 1)))
+    do
+      echo "Cleaning up temp C stub file..." >> $DEBUGOUT
+      echo "rm -Rf ${DSP_SOURCE_STUBS_ARR[$i]}" >> $DEBUGOUT
+      rm -Rf ${DSP_SOURCE_STUBS_ARR[$i]} 
+    done
+  fi
+  
+  # At this point we have the following components generated:
+  #   1) C6000 object files for all source files provided
+  #   2) ARM-side stub object files (compiled from auto-generated source) 
+  #      corresponding with every input source file
+  #   3) DSP-side stub object files (compiled from auto-generated source) 
+  #      corresponding with every input source file
+  #   4) Text file containing a list of function names that are being 
+  #      remoted to the DSP
+fi
+
+exit $retVal

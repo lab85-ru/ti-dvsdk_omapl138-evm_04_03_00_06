@@ -1,0 +1,11 @@
+/*
+ * ======== VPIF Configuration ========
+ */
+/* Add Vpif driver to DEV table */ 
+bios.UDEV.create("VPIF0");
+bios.UDEV.instance("VPIF0").fxnTableType = "IOM_Fxns";
+bios.UDEV.instance("VPIF0").initFxn = prog.extern("userVpif0Init");
+bios.UDEV.instance("VPIF0").params = prog.extern("vpifParams");
+bios.UDEV.instance("VPIF0").fxnTable = prog.extern("Vpif_IOMFXNS");
+bios.UDEV.instance("VPIF0").deviceId = 0x0;
+

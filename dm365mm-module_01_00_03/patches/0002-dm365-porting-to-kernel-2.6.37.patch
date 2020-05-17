@@ -1,0 +1,53 @@
+diff -Naur dm365mm_01_00_03_ori/module/dm365mmap.c dm365mm_01_00_03_new/module/dm365mmap.c
+--- dm365mm_01_00_03_ori/module/dm365mmap.c	2011-11-20 12:50:08.088224404 +0530
++++ dm365mm_01_00_03_new/module/dm365mmap.c	2011-11-20 12:06:47.752224365 +0530
+@@ -48,6 +48,9 @@
+ /*#define ASQINT_ENABLE*/
+ /*#define MJCPCLK_ENABLE*/
+ 
++#define init_MUTEX(sem)               sema_init(sem, 1)
++#define init_MUTEX_LOCKED(sem)        sema_init(sem, 0)
++
+ typedef struct _edma_params {
+     unsigned long src;
+     unsigned long dst;
+@@ -86,16 +89,21 @@
+ static struct class *dm365mmap_class;
+ #endif
+ 
+-static DECLARE_MUTEX(dm365mmap_reply_mutex);
++static DEFINE_SEMAPHORE(dm365mmap_reply_mutex);
+ static struct completion edmacompletion;
+ 
+ /* Forward declaration of system calls */
++#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,36)
+ static int ioctl(struct inode *inode, struct file *filp, unsigned int cmd,
+                  unsigned long args);
++#else
++static int ioctl(struct file *filp, unsigned int cmd,
++		                 unsigned long args);
++#endif
+ static int mmap(struct file *filp, struct vm_area_struct *vma);
+ static int open(struct inode *inode, struct file *filp);
+ static int release(struct inode *inode, struct file *filp);
+-static struct file_operations dm365mmap_fxns = { ioctl: ioctl, mmap: mmap, open: open, release:release
++static struct file_operations dm365mmap_fxns = { unlocked_ioctl: ioctl, mmap: mmap, open: open, release:release
+ };
+ 
+ #ifdef MJCPCLK_ENABLE
+@@ -135,10 +143,13 @@
+     }
+     return 0;
+ }
+-
+-
++#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,36)
+ static int ioctl(struct inode *inode, struct file *filp, unsigned int cmd,
+                  unsigned long args)
++#else
++static int ioctl(struct file *filp, unsigned int cmd,
++		                 unsigned long args)
++#endif
+ {
+     unsigned int __user *argp = (unsigned int __user *) args;
+     edma_params edmaparams;

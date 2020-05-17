@@ -1,0 +1,34 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="M:\Rajshekar_JPEG_Encoder\codecs_video\jpeg\encoder\Source\Client\Build\"
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Tool="XDC"
+Config="FILE_IO"
+
+[Source Files]
+Source="..\Test\Src\alg_create.c"
+Source="..\Test\Src\alg_malloc.c"
+Source="..\Test\Src\ijpegenc.c"
+Source="..\Test\Src\TestAppConfigParser.c"
+Source="..\Test\Src\TestAppEncoder.c"
+Source="..\Test\Src\tsc_h.asm"
+Source="JPEGEncApp.cmd"
+
+["Compiler" Settings: "FILE_IO"]
+Options=-g -fr"$(Proj_dir)\Obj" -fs"$(Proj_dir)\Obj" -ft"$(Proj_dir)\Obj" -fb"$(Proj_dir)\Obj" -ff"$(Proj_dir)\Obj" -i".\..\..\..\Inc" -i".\..\..\Test\Inc" -i"$(Install_dir)\bios_5_31_02\packages" -i"$(Install_dir)\framework_components_2_20_01\fctools\packages" -i"$(Install_dir)\framework_components_2_20_01\packages\ti\sdo\fc\utils\api" -d"C6000" -d"_DEBUG" -d"CHIP_DM642" -d"DMTESTBENCH" -mv6400
+
+["Linker" Settings: "FILE_IO"]
+Options=-cr -heap0xE000 -m".\Map\TestAppEncoder.map" -o".\Out\TestAppEncoder.out" -w -x -i".\..\..\..\lib" -i"$(Install_dir)\bios_5_21\packages\ti\bios\lib" -l"rts6400.lib" -l"biosDM420.a64P" -l"dmjpge_tigem.l64P"
+
+["..\Test\Src\tsc_h.asm" Settings: "FILE_IO"]
+Options="Compiler" +{-as -oi256 -i"$(Proj_dir)\..\Test\Inc" -i"$(Proj_dir)\..\..\Inc" -i"$(Proj_dir)\..\..\..\Csp\Csl\include" -i"$(Install_dir)\c6000\csl" -i"$(Install_dir)\c6000\xdais\src\api" -i"$(Install_dir)\c6000\xdais\include" -d"CHIP_DAVINCI" -d"TIMER" -d"ENABLE_CACHE" -d"NO_L1DRAM" -mt -ml3 -mv6400+} -{-fs"$(Proj_dir)\Obj" -ff"$(Proj_dir)\Obj" -i".\..\..\Test\Inc" -d"C6000" -d"_DEBUG" -d"CHIP_DM642" -d"DMTESTBENCH" -mv6400}
+
+["JPEGEncApp.cmd" Settings: "FILE_IO"]
+LinkOrder=1
+

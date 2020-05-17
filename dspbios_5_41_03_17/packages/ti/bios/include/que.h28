@@ -1,0 +1,139 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== que.h28 ========
+;
+;
+
+        .if ($isdefed("QUE_") = 0)  ; prevent multiple includes of this file
+QUE_    .set    1
+
+        .include std.h28
+        .include cinit.h28
+
+
+
+ .asg   4,      QUE_ELEMSIZE
+isQueAligned .set  2
+
+QUE_Obj       .struct
+next    DataPtr  1
+prev    DataPtr  1
+endPad .align isQueAligned      
+QUE_A_OBJSIZE  .endstruct
+;
+;# ======== C28_cinitQue ========
+; Create the value section for que  records
+;
+;  Parameters
+;  name:                The value for next and previous  pointers
+;#
+; 
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+QUE_cinitObj  .macro  nextValue, prevValue
+        .if ($symlen(":prevValue:") = 0)        ; if no  prevValue
+                .asg  ":nextValue:", prevValue  ; make prev and
+                                                ; next same
+        .endif
+         C28_cinitBegin         isQueAligned
+         C28_cinitDataPtr       :nextValue:
+         C28_cinitDataPtr       :prevValue:
+         C28_cinitEnd           isQueAligned
+        .endm
+
+
+;
+;# ======== QUE_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", QUE_Obj$regs
+QUE_Obj .macro cflag, name, id
+
+        .global :name:
+        ; Set blocking bit as 1 here, for SDSsq31971
+        C28_allocateObject   isQueAligned, :name:, QUE_A_OBJSIZE , ".que", 1
+        C28_cinitHeader  1, isQueAligned, :name:, QUE_A_OBJSIZE
+        QUE_cinitObj  :name:
+        .endm
+
+;
+;# ======== QUE_config ========
+;  Static configuration of the QUE module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", QUE_config$regs
+QUE_config      .macro
+        .endm
+
+;
+;# ======== QUE_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", QUE_end$regs
+QUE_end .macro
+        .endm
+
+;
+;# ======== QUE_init ========
+;  Runtime initialization of the QUE module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", QUE_init$regs
+QUE_init        .macro
+        .endm
+
+;
+;# ======== QUE_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", QUE_startup$regs
+QUE_startup        .macro
+        .endm
+
+        .endif          ; if QUE_ is not defined

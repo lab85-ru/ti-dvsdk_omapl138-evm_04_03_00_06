@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_DA808.tci ========
+ *  This file contains BIOS settings for DA808.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_6747.tci");
+
+/*
+ *  ======== bios.initDA808 ========
+ *  BIOS initialization for the DA808 is same as for 6747 
+ */
+bios.initDA808 = bios.init6747;

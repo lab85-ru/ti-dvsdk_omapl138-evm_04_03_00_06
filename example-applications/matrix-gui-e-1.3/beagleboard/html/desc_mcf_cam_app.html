@@ -1,0 +1,93 @@
+<!--                                                                           -->
+<!--                                                                           -->
+<!-- {module name} desc_mcf_cam_app						-->
+<!--                                                                           -->
+<!-- {module description} Description for Leopard Imaging MT9T111 camera stream-->
+<!--                                                                           -->
+<!-- Copyright (C) {YEAR} Texas Instruments Incorporated - http://www.ti.com/  -->
+<!--                                                                           -->
+<!--                                                                           -->
+<!--  Redistribution and use in source and binary forms, with or without       -->
+<!--  modification, are permitted provided that the following conditions       -->
+<!--  are met:                                                                 -->
+<!--                                                                           -->
+<!--    Redistributions of source code must retain the above copyright         -->
+<!--    notice, this list of conditions and the following disclaimer.          -->
+<!--                                                                           -->
+<!--    Redistributions in binary form must reproduce the above copyright      -->
+<!--    notice, this list of conditions and the following disclaimer in the    -->
+<!--    documentation and/or other materials provided with the                 -->
+<!--    distribution.                                                          -->
+<!--                                                                           -->
+<!--    Neither the name of Texas Instruments Incorporated nor the names of    -->
+<!--    its contributors may be used to endorse or promote products derived    -->
+<!--    from this software without specific prior written permission.          -->
+<!--                                                                           -->
+<!--  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS      -->
+<!--  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT        -->
+<!--  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR    -->
+<!--  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT     -->
+<!--  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,    -->
+<!--  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT         -->
+<!--  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,    -->
+<!--  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY    -->
+<!--  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      -->
+<!--  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE    -->
+<!--  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.     -->
+<!--                                                                           -->
+<!--                                                                           -->
+<head>
+  <title>Camera</title>
+  <link rel="stylesheet" href="/usr/share/matrix/html/matrix.css" />
+</head>
+
+<body>
+  <div class="topBar">
+    <object>
+    </object>
+  </div>
+  <div class="topBar">
+    <object type="image/svg+xml" data="/usr/share/matrix/images/tex.svg" >
+    <img src="/usr/share/matrix/images/tex.svg" />
+  </div>
+  <div id="header">Camera Application</div>
+  <div class="topBar">
+    <object type="application/x-matrix" >
+      <param name="iconName" value="/usr/share/matrix/images/multi-icon.png" />
+      <param name="appName" value="Close" />
+    </object>
+  </div>
+  <div class="topBar">
+    <object>
+    </object>
+  </div>
+
+<h1> Camera Streaming Application </h1>
+
+<p>
+This application demonstrates streaming of 8-bit UYVY 4:2:2 data from Leopard Imaging LI-3M02 daughter card with MT9T111 sensor. Here, driver allocated buffers are used to capture data from the sensor and display to any active display device (LCD/DVI/TV) in VGA resolution (640x480)
+</p>
+<h2> 
+Media Controller Framework has been apopted on 2.6.37 kernel, using this:</h2>
+<p>- Media device topology is exposed to userspace and connected through pads
+</p>
+<p>- Links can be activated/deactivated from userspace
+</p>
+<p>- Each block parameters can be accessed through read/write/ioctl calls
+</p>
+<p>- Image streaming parameters can be configured at each pad
+</p>
+
+  <div class="run">
+    <object type="application/x-matrix" >
+      <param name="iconName" value="/usr/share/matrix/images/run-icon.png" />
+      <param name="appName" value="Description" />
+    </object>
+  </div>
+
+<center>
+<img src="/usr/share/matrix/images/sensor_MC_arch.png" />
+</center>
+
+</body>
+</html>

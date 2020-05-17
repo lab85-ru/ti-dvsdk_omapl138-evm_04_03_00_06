@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>vpifedc</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.rtsc.xdctools.buildDefinitions.XDC.xdcNature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>Adv7343.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/platforms/evmOMAPL138/vpifedc/src/Adv7343.c</locationURI>
+		</link>
+		<link>
+			<name>CodecInterface.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/platforms/evmOMAPL138/vpifedc/src/CodecInterface.c</locationURI>
+		</link>
+		<link>
+			<name>Tvp5147.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/platforms/evmOMAPL138/vpifedc/src/Tvp5147.c</locationURI>
+		</link>
+		<link>
+			<name>Mt9t001.c</name>
+			<type>1</type>
+			<locationURI>BIOS5PSP_INSTALL_DIR/packages/ti/pspiom/platforms/evmOMAPL138/vpifedc/src/Mt9t001.c</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

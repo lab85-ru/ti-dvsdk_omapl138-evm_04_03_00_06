@@ -1,0 +1,194 @@
+.bd B 3
+.TH lnk6x 1 "Mar 24, 2010" "TI Tools" "TI Code Generation Tools"
+.SH NAME
+lnk6x - ELF Linker
+.SH SYNOPSIS
+.B lnk6x
+[
+.I options
+] [
+.I file(s)
+]
+.SH DESCRIPTION
+The ELF Linker creates executable modules by combining ELF object files.  For more information on using the linker, see the 
+.B Assembly Language Tools User's Guide
+
+.SH OPTIONS
+The following options are accepted by this tool:
+.SS General Options:
+.SS
+.TP
+-a
+Produce an absolute, executable object file (default)
+.TP
+-abs
+Produce absolute listing file
+.TP
+--args=size
+Set C argc/argv memory size
+.TP
+-b
+Disable type merging in symbolic debugging information
+.TP
+-c
+Link using ROM autoinitialization model
+.TP
+-cr
+Link using RAM autoinitialization model
+.TP
+--default_order
+Don't use scn size in alloc ordering heuristics
+.TP
+--define=name=value
+Pre-define preprocessor macro _name_ to _value_
+.TP
+--diag_error=id
+Treat diagnostic <id> as error
+.TP
+--diag_remark=id
+Treat diagnostic <id> as remark
+.TP
+--diag_suppress=id
+Suppress diagnostic <id>
+.TP
+--diag_warning=id
+Treat diagnostic <id> as warning
+.TP
+--disable_auto_rts
+Disable automatic RTS selection
+.TP
+--disable_pp
+This disables preprocessing of linker command files.
+.TP
+--display_error_number
+Emit diagnostic identifier numbers
+.TP
+-e=symbol
+Specify the program entry point for the output module
+.TP
+-f=value
+Set default fill value for holes in output sections
+.TP
+-g=symbol
+Don't make global symbol static if -h is specified
+.TP
+--generate_dead_funcs_list[=fname]
+Create a list of routines and sections that are dead (never referenced) in file fname. Default file name is dead_funcs.txt
+.TP
+--globalize=pattern
+The option '--localize=l_pattern' makes the symbols matching the l_pattern hidden. The '--globalilze=g_pattern' option excludes symbols matchin g_pattern from symbol localization provided g_pattern is more restrictive than l_pattern. 
+.TP
+-h
+Make all global symbols static
+.TP
+--heap=size
+Specify heap size for C/C++ dynamic memory allocation [Same as -heap]
+.TP
+-heap=size
+Specify heap size for C/C++ dynamic memory allocation [Same as --heap]
+.TP
+--help
+Display usage information.  Followed by another option, will display detailed information on that option. [Same as -help]
+.TP
+-help
+Display usage information.  Followed by another option, will display detailed information on that option. [Same as --help]
+.TP
+--hide=pattern
+Hide the symbols matching the pattern by changing the name to empty string
+.TP
+-i=dir
+Alter the library-search algorithm to look in dir before looking in the default location.  This option must appear before the -l option.
+.TP
+--issue_remarks
+Issue remarks
+.TP
+-j
+Disable conditional linking; ignore .clink directives
+.TP
+-k
+Ignore alignment flags specified in input sections
+.TP
+-l=file
+Include library file or command file as input
+.TP
+--localize=pattern
+Given a symbol name pattern, make all the symbols matching this pattern local
+.TP
+-m=file
+Produce listing of input and output sections in <file>
+.TP
+--mapfile_contents=attribute
+Enable the display of <attribute> or disable with no<attribute> in the linker generated map file.  Multiple attributes can be specified by separating them with commas (e.g. --mapfile_contents=sections,nosymbols).  Type --mapfile_contents=help for a list of attributes
+.TP
+--no_demangle
+Don't demangle symbol names in diagnostics
+.TP
+--no_warnings
+Suppress warnings
+.TP
+-o=file
+Full filename of the output file.
+.TP
+-priority
+Search libraries in priority order
+.TP
+-r
+Produce a relocatable output module
+.TP
+-s
+Strip symbol table and line number entries
+.TP
+-scanlibs
+Check whether symbol definitions that are pulled into the link are duplicated in any of the libraries included in the build.  This information is typically ignored as the linker will pull in the first definition it encounters.
+.TP
+--set_error_limit=count
+Set error limit to <count>
+.TP
+--stack=size
+Set C system stack size [Same as -stack]
+.TP
+-stack=size
+Set C system stack size [Same as --stack]
+.TP
+--strict_compatibility[=off,on]
+Strict compatibility checking (Default:on)
+.TP
+--symbol_map=refname=defname
+Symbol mapping allows a symbol reference to be resolved by a symbol with different name. Symbol mapping allows functions to be overridden with alternate definitions. This feature can be used to patch in alternate implementations, which provide patches (bug fixes) or alternate functionality. For example, the option --symbol_map='foo=foo_patch' makes the linker resolve any references to foo by the definition foo_patch.
+.TP
+--trampolines[=off,on]
+Generate far call trampolines (Default:on)
+.TP
+-u=sym
+Add <sym> to symbol table as an unresolved symbol
+.TP
+--undefine=name
+Undefine preprocessor macro _name_
+.TP
+--unhide=pattern
+The option --hide=hide_pattern makes the symbols matching the hide_pattern hidden. The --unhide=unhide_pattern option excludes symbols matchin unhide_pattern from symbol hiding provided unhide_pattern is more restrictive than hide_pattern. 
+.TP
+--verbose_diagnostics
+Verbose diagnostics
+.TP
+-w
+Warn if an unspecified output section is created
+.TP
+-x
+Reread libraries; resolve backward references
+.TP
+-xml_link_info=file
+Produce detailed link information data-base in <file>
+.SH EXIT STATUS
+The following error values are returned:
+.PD 0
+.TP 10
+.B 0
+Successful completion.
+.TP
+.B >0
+Unsuccessful completion; an error occured.
+.PD
+.SH COPYRIGHT
+.TP
+Copyright (c) 2010, Texas Instruments, Inc.

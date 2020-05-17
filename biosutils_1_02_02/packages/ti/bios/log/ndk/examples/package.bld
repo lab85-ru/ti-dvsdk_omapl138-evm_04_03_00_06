@@ -1,0 +1,195 @@
+/* 
+ * Copyright (c) 2009, Texas Instruments Incorporated
+ * All rights reserved.
+ *
+ * Use of this software is controlled by the terms and conditions found in
+ * the New BSD Software License Agreement, which is reproduced in its
+ * entirity below.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * *  Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * *  Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
+ */
+
+/* specify files to export into tar file */
+Pkg.otherFiles = [
+    "package.bld",
+    "package.xdc",
+    "package.xs",
+    "common/logserverexample.c",
+    "common/logserverstacksetup.c",
+    "common/logserverexample.tci",
+    "evmdm642/dm642init.c",
+    "evmdm642/logserverexample.cfg",
+    "evmdm642/logserverexample.pjt",
+    "evmdm642/logserverexample.tcf",
+    "evmdm642/logserverexamplecfg.cmd",
+    "evmdm642/dm642common.tci",
+    "evmdm642/logserverexample.x64",
+    "evmdm6437/evmdm6437init.c",
+    "evmdm6437/logserverexample.pjt",
+    "evmdm6437/logserverexample.tcf",
+    "evmdm6437/logserverexamplecfg.cmd",
+    "evmdm6437/dm6437common.tci",
+    "evmdm6437/logserverexample.x64P",
+];
+
+/* get package references and directories */
+var biosPkg = xdc.loadPackage('ti.bios');
+
+/*
+ *  Since the NDK is not "RTSC consumable," it isn't possible to use
+ *  "xdc.loadPackage('ti.ndk')" at this time.  This must currently be worked
+ *  around by setting the NDK package base variable as a path that's relative to
+ *  the BIOS pkg base.
+ *
+ *  This will be fixed once the NDK is made to be RTSC consumable.
+ */
+var ndkPkgBase = biosPkg.packageBase + "../ndk";
+
+var cslPkg = xdc.loadPackage('ti.csl');
+var cslPkgBase = cslPkg.packageBase;
+var bslPkg = xdc.loadPackage('bsl');
+var bslPkgBase = bslPkg.packageBase;
+var utilsPkgBase = biosPkg.packageBase + "../../../src/ti/bios/utils";
+var supportPkgBase = biosPkg.packageBase + "../../../src/ti/bios/log/support";
+
+/* source files common to all platforms */
+var COMMONSRCS = ["common/logserverexample.c", "common/logserverstacksetup.c"];
+
+/* common libraries for C64 architecture */
+var COMMONLIBS64 = ndkPkgBase + "/lib/c6400/miniPrintf.lib " +
+        ndkPkgBase + "/lib/c6400/netctrl.lib " +
+        ndkPkgBase + "/lib/c6400/nettool.lib " +
+        ndkPkgBase + "/lib/c6400/os.lib " +
+        ndkPkgBase + "/lib/c6400/stack.lib " +
+        ndkPkgBase + "/lib/c6400/hal/hal_ser_stub.lib " +
+        ndkPkgBase + "/lib/c6400/hal/hal_timer_bios.lib ";
+
+/* common libraries for the EVMDM642 platform */
+var EVMDM642LIBS = bslPkgBase + "/lib/c6000/evmdm642bsl.lib " +
+        ndkPkgBase + "/lib/hal/evmdm642/hal_eth_dm642.lib " +
+        ndkPkgBase + "/lib/hal/evmdm642/hal_userled_dm642.lib " +
+        cslPkgBase + "/lib/c6000/cslDM642.lib";
+
+/* common libraries for C64P architecture */
+var COMMONLIBS64P = ndkPkgBase + "/lib/c64plus/hal/hal_ser_stub.lib " +
+        ndkPkgBase + "/lib/c64plus/hal/hal_timer_bios.lib " +
+        ndkPkgBase + "/lib/c64plus/miniPrintf.lib " +
+        ndkPkgBase + "/lib/c64plus/netctrl.lib " +
+        ndkPkgBase + "/lib/c64plus/nettool.lib " +
+        ndkPkgBase + "/lib/c64plus/os.lib " +
+        ndkPkgBase + "/lib/c64plus/stack.lib ";
+
+/* common libraries for the EVMDM6437 platform */
+var EVMDM6437LIBS = bslPkgBase + "/lib/c6000/evmdm6437bsl.lib " +
+        ndkPkgBase + "/lib/hal/evmdm6437/hal_eth_dm64lc.lib " +
+        ndkPkgBase + "/lib/hal/evmdm6437/hal_userled_dm6437.lib ";
+
+var platformFiles = {
+    "evmdm642": {
+          copts:   [ " -mv6400" ],
+          incs:    [ " -mr1 -d\"CHIP_DM642\" -dEVMDM642 -mv6400" ],
+          srcs:    [ "evmdm642/dm642init.c" ],
+          libs:    [COMMONLIBS64 + EVMDM642LIBS],
+    },
+    "evmdm6437": {
+          copts:   [ " -mv6400+" ],
+           incs:    [ " -d\"CHIP_DM643\" -mv6400+" ],
+           srcs:    [ "evmdm6437/evmdm6437init.c" ],
+           libs:    [COMMONLIBS64P + EVMDM6437LIBS],
+    },
+}
+
+var buildDirs = {
+    "C64":              ["evmdm642"],
+    "C64P":             ["evmdm6437"],
+}
+
+/* Define "LOGSERVER_DEBUG" for debug builds */
+var DEBUG_COPTS = (buildmode == "debug") ? " -dLOGSERVER_DEBUG": "";
+
+var COMMON_COPTS  = "" + DEBUG_COPTS;
+
+/* set up include paths */
+var BINC    = " -I" + biosPkg.packageBase + "include"
+            + " -I./include"
+            + " -I" + cslPkg.packageBase + "include/c6000"
+            + " -I" + bslPkg.packageBase + "include/c6000"
+            + " -I" + ndkPkgBase + "/inc"
+            + " -I" + ndkPkgBase + "/inc/nettools"
+            + " -I" + ndkPkgBase + "/example/tools"
+            + " -I" + ndkPkgBase + "/example/tools/common/cgi"
+            + " -I" + ndkPkgBase + "/example/tools/common/console"
+            + " -I" + ndkPkgBase + "/example/network/client/common/webdata";
+
+var LOPTS = "";
+
+var TCONFOPTS = " -Dconfig.importPath=\""
+        + biosPkg.packageBase + ";"
+        + utilsPkgBase + ";"
+        + supportPkgBase + ";"
+        + biosPkg.packageBase + "../..;" /* imports directory */
+        + ndkPkgBase + "/inc/tci;./common\"";
+
+/* Build the examples */
+for (var i = 0; i < Build.targets.length; i++) {
+    var targ = Build.targets[i];
+
+    for (var j in buildDirs[targ.name]) {
+        var currPlat = buildDirs[targ.name][j];
+
+        print("building for platform: " + currPlat);
+        
+        /* create the executable */
+        var exe = Pkg.addExecutable(currPlat
+                + "/logserverexample", targ, targ.platform,
+                {
+                aopts: BINC,
+                copts: COMMON_COPTS + platformFiles[currPlat].copts + BINC +
+                        platformFiles[currPlat].incs,
+                tcopts: TCONFOPTS,
+                profile: buildmode,
+                cfgScript: currPlat + "/logserverexample.tcf",
+                lopts: LOPTS + platformFiles[currPlat].libs,
+                }
+                );
+
+        /* add the sources to the executable */
+        exe.addObjects((platformFiles[currPlat].srcs).concat(COMMONSRCS));
+    }
+}
+
+/*
+ *  ======== package.bld ========
+ *  This file is required to build the ti.bios.log.ndk package.
+ *
+ */
+/*
+ *  @(#) ti.bios.log.ndk.examples; 1, 0, 2, 02,34; 5-23-2009 17:29:16; /db/vtree/library/trees/biosutils/biosutils-c02x/src/
+ */
+

@@ -1,0 +1,9 @@
+Package: ti-xdais-src
+Version: 6_26_01_03-r2
+Description: Patched sources for ti-xdais
+Section: devel
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: da850-omapl138-evm
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/xdais/6_26_01_03/exports/xdais_6_26_01_03.tar.gz;name=xdaistarball

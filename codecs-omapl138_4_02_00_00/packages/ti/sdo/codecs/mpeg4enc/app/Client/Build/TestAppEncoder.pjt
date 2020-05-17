@@ -1,0 +1,29 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir="D:\1.1_Release_Prep\Release Related\100_V_MPEG4_E_1_10_00\OMAP2430_SP_001\Client\Build\"
+ProjectType=Executable
+CPUFamily=TMS320C64XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Tool="XDC"
+Config="mp4venc"
+
+[Source Files]
+Source="..\..\..\lib\mp4venc_ti.l64P"
+Source="..\Test\Src\alg_control.c"
+Source="..\Test\Src\alg_create.c"
+Source="..\Test\Src\alg_malloc.c"
+Source="..\Test\Src\bios_rts.c"
+Source="..\Test\Src\TestAppConfigParser.c"
+Source="..\Test\Src\TestAppEncoder.c"
+Source="mp4vencApp.cmd"
+
+["Compiler" Settings: "mp4venc"]
+Options=-g -q -fr"$(Proj_dir)\Obj" -fs"$(Proj_dir)\Obj" -i"$(Install_dir)\framework_components_2_20_01\packages\ti\sdo\fc\dman3" -i"$(Install_dir)\framework_components_2_20_01\fctools\packages" -i"$(Install_dir)\bios_5_31_08\packages" -i"$(Install_dir)\bios_5_31_08\packages\ti\bios\include" -i"..\Inc" -i"..\..\..\Inc" -i"$(Install_dir)\framework_components_2_20_01\packages\ti\sdo\fc\utils\api" -i"$(Install_dir)\bios_5_31_08\packages\ti\bios\include" -i"$(Install_dir)\framework_components_2_20_01\fctools\packages\ti\xdais" -d"DAVINCI_DSP_ONLY" -d"_D1" -d"C6000" -d"_RTS_MODE" -d"SCENECHANGEDETECT" -d"SETUP_DAVINCI" -mw -mh -ml3 -mr1 -mv6400+
+
+["Linker" Settings: "mp4venc"]
+Options=-q -c -m"$(Proj_dir)\Map\mp4vencApp.map" -o"$(Proj_dir)\Out\mp4vencApp.out" -w -x -i"$(Install_dir)\framework_components_2_20_01\packages\ti\sdo\fc\dman3" -i"$(Install_dir)\bios_5_31_08\packages\ti\bios\lib" -i"$(Install_dir)\C6000\cgtools\lib" -i"..\..\..\lib" -i"$(Install_dir)\framework_components_2_20_01\packages\ti\sdo\fc\dman3\lib\release" -l"dman3.a64P" -l"rts64plus.lib" -l"biosDM420.a64P"
+

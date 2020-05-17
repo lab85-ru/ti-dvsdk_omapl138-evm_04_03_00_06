@@ -1,0 +1,106 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  All rights reserved. Property of Texas Instruments Incorporated.
+ *  Restricted rights to use, duplicate or disclose this code are
+ *  granted through contract.
+ *
+ */
+/*
+ *  ======== stairstep.tcf ========
+ *  Configuration script used to generate the example's configuration files
+ */
+
+utils.loadPlatform("ti.platforms.evmDM6467");
+
+bios.enableRealTimeAnalysis(prog);
+bios.enableMemoryHeaps(prog);
+bios.enableRtdx(prog);
+bios.enableTskManager(prog);
+
+/*
+ * Enable heaps in IRAM and define label SEG0 for heap usage.
+ */
+
+ 
+bios.IRAM.createHeap      = true;
+bios.IRAM.enableHeapLabel = true;
+bios.IRAM["heapLabel"]    = prog.extern("SEG0");
+bios.IRAM.heapSize        = 0x2000;
+bios.MEM.BIOSOBJSEG = prog.get("IRAM");
+bios.MEM.MALLOCSEG = prog.get("IRAM");
+
+/*
+ *  The following statements will enable the MAR bits for MAR 128 to MAR 143. 
+ *  This will make the external memory range (0x80000000-0x8FFFFFFF) cacheable.
+ */
+
+bios.GBL.C64PLUSCONFIGURE = 1;
+bios.GBL.C64PLUSMAR128to159 = 0x0000ffff;
+
+
+/*
+ *  When using the ARM with DSP, the ARM will share Timer 1 with the DSP.
+ *  The ARM needs to enable power to Timer 1, program the timer for "32-bit unchainded" mode
+ *  and take it out of reset.  The BIOS CLK should be driven with Timer 1 and not reset
+ *  the timer.
+ *
+ *  In most production ARM+DSP systems we recommend removing these 2
+ *  lines and sharing Timer1 with the Arm.  This will free up Timer0 for use by the
+ *  application.
+ *
+ *  The workaround below is used to make the DSP-side applications work "out of the box"
+ *  without any need for coordination with the ARM OS.
+ */
+
+bios.CLK.TIMERSELECT = "Timer 0";      /* Select Timer 0 to drive BIOS CLK */
+bios.CLK.RESETTIMER = true;          /* Take the selected timer our of reset */
+
+/*
+ *  Create a trace LOG object for printing basic program output. 
+ */
+
+trace = bios.LOG.create("trace");
+trace.bufLen = 256;
+trace.logType = "circular";
+
+/*  Call LOAD_init() before BIOS_start */
+bios.GBL.CALLUSERINITFXN = true;
+bios.GBL.USERINITFXN = prog.extern("LOAD_init", "C");
+
+
+/*
+ * ======== loadPrd ========
+ */
+var loadPrd = bios.PRD.create("loadPrd");
+loadPrd.fxn = prog.extern("load");
+loadPrd.mode = "continuous";
+loadPrd.period = 10;
+
+/*
+ * ======== stepPrd ========
+ */
+var stepPrd = bios.PRD.create("stepPrd");
+stepPrd.fxn = prog.extern("step");
+stepPrd.mode = "continuous";
+stepPrd.period = 10000;
+
+bios.PRD_swi.priority = 1;
+
+/*
+ * ======== loadIdl ========
+ */
+var loadIdl = bios.IDL.create("loadIdl");
+loadIdl.fxn = prog.extern("LOAD_idlefxn");
+loadIdl.calibration = 1;
+
+/*
+ * ======== sts0 ========
+ */
+var sts0 = bios.STS.create("sts0");
+sts0.unitType = "High resolution time based"
+
+// !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
+
+if (config.hasReportedError == false) {
+    prog.gen();
+}

@@ -1,0 +1,114 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== clkC6000.h62 ========
+;
+; 
+
+        .if ($isdefed("CLKC6000_") = 0)   
+                ; prevent multiple includes of this file
+CLKC6000_       .set    1
+
+        .include chk.h62
+        .include std.h62
+
+; timer control register masks
+CLK_CLKSRC      .set    210h            ; set source to CPU/4, PWID=1 
+CLK_HOLD        .set    0ffffff7fh      ; mask /HLD=0
+CLK_MAXPER      .set    0ffffffffh      ; Maximum clock period (for loop
+                                        ; overhead calculation)
+CLK_START       .set    080c0h          ; set GO=1,/HLD=1
+                                        ; EMULATION bit set to 1. On 62, 67,
+                                        ; this is NOP. On 64, it suspends timer.
+CLK_TSTATBIT    .set    0800h           ; timer control reg mask, TSTAT=1
+
+
+
+;
+;# ======== CLK_ackIsr ========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+        .asg    "", CLK_ackIsr$regs
+CLK_ackIsr      .macro
+        .endm
+
+
+;
+;# ======== CLK_startup ========
+;  Start the C6x timer
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      Timer Period register = CLK_PRD.
+;#      Timer is started.
+;#      Timer interrupt enable is set in IER.
+;#
+;# Dependencies:
+;#      This routine must be called after any other routines that use the
+;#      timer and before interrupts are globally enabled.
+;
+        .asg "a0,a1,b1,b2,ier", CLK_startup$regs
+CLK_startup     .macro
+        ; only expand if the CLK module is configured by the user and he/she
+        ; asks to use the timer
+        .if ((CLK$ = 1) & (CLK_USETIMER = 1))
+            .ref _CLK_start
+            .ref _CLK_stop
+
+            mvkl _CLK_stop, b1
+            mvkh _CLK_stop, b1
+            b b1
+            mvkl clk_stop_ret, b3
+            mvkh clk_stop_ret, b3
+            nop 3
+clk_stop_ret:
+            mvkl _CLK_start, b1
+            mvkh _CLK_start, b1
+            b b1
+            mvkl clk_start_ret, b3
+            mvkh clk_start_ret, b3
+            nop 3
+clk_start_ret:
+
+            .if $isdefed("_64_")
+            .if CLK_HIRESREGS != CLK_REGS
+
+                .global CLK_HIRESREGS
+
+                mvkl CLK_HIRESREGS,a0   ; get address to Timer Control register
+||              mvkl CLK_CLKSRC,b2
+                mvkh CLK_HIRESREGS,a0
+||              mvkh CLK_CLKSRC,b2
+                stw b2,*a0        ; write /HLD=0 and CLKSRC=1 to Timer Control
+
+                ; set the period
+                mvk -1, a1
+                stw a1, *a0[1]
+
+                ; start timer
+                ldw *a0, a1
+                mvkl CLK_START,b1       ; get start mask
+                mvkh CLK_START,b1       ; get start mask
+                nop 2
+                or b1,a1,a1             ; set GO=1 and /HLD=1
+                stw a1,*a0              ; write to Timer Control to start timer
+
+            .endif      ; CLK_HIRESREGS != CLK_REGS
+            .endif      ; _64_
+
+        .endif
+
+        .endm
+
+        .endif          ; if CLKC6000_ is not defined

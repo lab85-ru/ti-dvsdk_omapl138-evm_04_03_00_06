@@ -1,0 +1,586 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== tsk.h62 ========
+;
+;
+        .if ($isdefed("TSK_") = 0)  ; prevent multiple includes of this file
+TSK_    .set    1
+
+        .include std.h62
+        .include obj.h62
+        .include knl.h62
+        .include sts.h62
+
+        .eval   21,     TSK_CORESIZE
+        .eval   TSK_CORESIZE+OBJ_HDRSIZE, TSK_OBJSIZE
+
+        .eval   24,     TSK_USEDSTACK
+
+;
+;# ======== TSK_config ========
+;  Static configuration of the TSK module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", TSK_config$regs
+TSK_config      .macro _stacksize, _stackseg, _priority, _createfxn, _deletefxn, _exitfxn, _switchfxn, _readyfxn, _num_hooks
+
+        ;; If MEM_gNumHeap then put in an err value in for TSK$stackseg
+        .if (MEM_gNumHeap == 0)
+                .asg    "-1", TSK$stackseg
+        .else 
+            .if ($symcmp(":_stackseg:", "MEM_NULL") == 0)
+                .asg    "-1", TSK$stackseg
+            .else
+                .asg    ":_stackseg:$idx", TSK$stackseg
+            .endif
+        .endif
+
+        .ref    :_createfxn:, :_deletefxn:, :_exitfxn:
+
+        .if $isname(":_switchfxn:")
+            .ref        :_switchfxn:
+        .endif
+
+        .if $isname(":_readyfxn:")
+            .ref :_readyfxn:
+        .endif
+
+        .global _TSK_exit
+
+        ;
+        ; Initialize counter for use in TSK_Obj
+        ;
+        .eval 0, TSK$strCount
+
+        .eval   :_num_hooks:, TSK$num_hooks
+
+        .endm
+
+
+;
+;# ======== TSK_end ========
+;  Invoked at the end of all other configuration
+;  declarations.  This needs to come after MEM_Obj macro calls.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", TSK_end$regs
+TSK_end .macro
+
+        ; expand only if TSK is enabled.
+        .if (TSK$ == 1)
+
+;
+; The following two .cinit sets make configured values readable
+; in the established SPOX manner, e.g., TSK->STACKSIZE.
+;
+;
+
+        .global _TSK_config
+        .global _TSK
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word 8 * STD_TARGWORDMAUS
+        .word _TSK_config
+        .word TSK$stackseg
+        .word TSK_PRIORITY
+        .word TSK_STACKSIZE     ; This shall be interpreted as number of MAU's
+        .word TSK_VCREATEFXN
+        .word TSK_VDELETEFXN
+        .word TSK_VEXITFXN
+        .word TSK_SWITCHFXN
+        .word TSK_READYFXN
+
+        .align  STD_TARGALIGN
+        .word   1 * STD_TARGWORDMAUS
+        .word   _TSK
+        .word   _TSK_config
+
+        ;
+        ; The startup stack will be borrowed from the idle task's stack.  The
+        ; startup stack must begin beyond the portion of the stack that is
+        ; statically initialized, so the __STACK_SIZE will be decremented by
+        ; that amount.
+        ;
+;       .def    __stack, __STACK_SIZE
+
+;__stack                .set    TSK_idle$stack
+;__STACK_SIZE   .set    TSK_idle$stklen - (TSK_USEDSTACK * STD_TARGWORDMAUS)
+
+        .endif          ; if (TSK$ == 1)
+
+        .endm
+
+;
+;# ======== TSK_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", TSK_Obj$regs
+TSK_Obj .macro cflag, name, id, fxn, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, autostack, manstack, stacksize, stackseg, priority, envp, exitflag, tskname, statReg, order, filter, maxformat, sumformat, avgformat, filtmaxmult, filtsummult, unittype
+
+        .global :fxn:
+        .global :name:
+
+        .global :name:$tsk      ; generate symbol for vbd/rta
+:name:$tsk .set 0
+        .global :name:$pri      ; generate priority symbol for vbd/rta
+:name:$pri .set :priority:
+        .global :name:$ord      ; generate order symbol for vbd/rta
+:name:$ord .set :order:
+
+        .if :tskname:
+                .sect   ".const"
+TSK$:name:      .string ":name:",0      ; null-terminated name string
+        .endif
+
+:name:$obj      .usect  ".tsk", OBJ_HDRSIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+:name:          .usect  ".tsk", TSK_CORESIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+        .if     TSK$num_hooks > 0
+:name:$env      .usect  ".tsk", TSK$num_hooks * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+        .endif
+
+:name:$stklen   .set    :stacksize:
+
+        .if     :autostack:
+            ;
+            ; Reserve space for automatically allocated stack
+            ;
+:name:$stack    .usect ".:name:$stk", :stacksize:, STD_TARGALIGN
+                .global :name:$stack, :name:$stackname
+                .asg    ":name:$stack", :name:$stackname
+        .else
+            .if ($symcmp(":manstack:", "null") == 0)
+                .emsg "TSK :name: manually allocated stack cannot be null"
+            .else
+                .asg    ":manstack:", :name:$stackname
+            .endif
+        .endif
+
+        ;
+        ; stkptr for the idle stack is used by the IDL_F_stub function
+        ;
+        .global :name:$stkptr
+
+        .if :autostack:
+:name:$stkptr   .set :name:$stackname + :stacksize: - STD_TARGALIGN - (TSK_USEDSTACK * STD_TARGWORDMAUS)
+        .else
+                .asg "(:name:$stackname + :stacksize: - STD_TARGALIGN - (TSK_USEDSTACK * STD_TARGWORDMAUS))", :name:$stkptr
+        .endif
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   TSK_OBJSIZE * STD_TARGWORDMAUS, :name:$obj
+
+        OBJ_Obj :name:, OBJ_TSK, (TSK_CORESIZE + TSK$num_hooks) ; allocates 3 words
+
+        .word   :name:, :name:                  ; kobj.ready
+        .word   :name:+2*STD_TARGWORDMAUS, :name:+2*STD_TARGWORDMAUS    ; kobj.alarm
+        .word   :name:+4*STD_TARGWORDMAUS, :name:+4*STD_TARGWORDMAUS    ; kobj.setpri
+
+        ;
+        ; GCONF gives priority of 0ffffffffh for -1, so we need to translate
+        ; since the assembler treats 0ffffffffh as unsigned
+        ;
+        .if :priority: = 0ffffffffh
+            .eval       -1, local_priority
+        .else
+            .eval       :priority:, local_priority
+        .endif
+
+        .if local_priority < 0
+            ;
+            ;  KNL_queues[3] is _KNL_inactive queue. All terminated and
+            ;  negative priority tasks go here.
+            ;
+            .word       _KNL_queues+3*2*STD_TARGWORDMAUS        ; kobj.queue = _KNL_inactive
+            .word       local_priority          ; kobj.priority
+            .word       0                       ; kobj.mask
+        .else
+            ;
+            ; KNL_priority[priority]
+            ;
+            .word       _KNL_queues+(local_priority+4)*2*STD_TARGWORDMAUS
+
+            .word       local_priority          ; kobj.priority
+            .word       1<<local_priority       ; kobj.mask
+        .endif
+
+        .word   :name:$stkptr           ; kobj.sp
+
+        .word   0                       ; kobj.timeout
+        .word   0                       ; kobj.mode
+
+        .if GBL_ENABLEINST
+            .word       :name:$sts      ; kobj.sts
+        .else
+            .word       0
+        .endif
+
+        .short  0                       ; kobj.signalled
+        .align  STD_TARGWORDMAUS
+
+        ;
+        ;  stack - This field is only used by TSK_checkstacks to
+        ;  verify that the task stack is still valid.  It always
+        ;  points to the top (lowest address) of the task's stack.
+        ;
+        .word   :name:$stackname
+        .word   :stacksize:
+        .if ($symcmp(":stackseg:", "MEM_NULL") == 0)
+            .word       -1
+        .else
+            .word       :stackseg:              
+        .endif
+
+
+        ;
+        ;  Set up pointer to task's name or NULL
+        ;
+        .if     :tskname:
+                .word   TSK$:name:              ; name
+        .else
+                .word   0
+        .endif
+
+        .if     TSK$num_hooks == 0
+            .word       :envp:                  ; environ
+        .else
+            .word       :name:$env
+        .endif
+
+        .word   0                       ; errno
+        .short  :exitflag:
+        .align  STD_TARGWORDMAUS                        ; short followed by word could misalign
+
+        ; End of TSK_Obj structure;
+
+        .if GBL_ENABLEINST
+            .global :name:$sts$filtsummult      ; generate symbol for sum mult
+:name:$sts$filtsummult .set     :filtsummult:
+            .global :name:$sts$filtmaxmult      ; generate symbol for max mult
+:name:$sts$filtmaxmult .set     :filtmaxmult:
+
+            STS_Obj 1, :name:$sts, 0, 0, :filter:, ":maxformat:", ":sumformat:", ":avgformat:", -1, :unittype:, -1, -1, -1, 0
+        .endif
+
+        .if $symcmp(":fxn:", "_SYS_nop") = 0
+            .wmsg "Task :name: is being created to run :fxn:"
+        .endif
+
+        .if     TSK$num_hooks > 0
+            .asg        0, h$index
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       TSK$num_hooks * STD_TARGWORDMAUS
+            .word       :name:$env
+            ;
+            ; Create cinit entry for all HOOKS (SDSsq37326).
+            ; Previously just the KNL hook was getting cinited with
+            ; a configuration paramter.  Now all user-level hooks
+            ; get cinited to 0, so a HOOK_getenv before a HOOK_setenv
+            ; will return a known value.
+            ;
+            .loop
+                .if (h$index == HOOK$knl_index)
+                    .word       :envp:
+                .else
+                    .word       0
+                .endif
+
+                .eval   h$index + 1, h$index
+                .if (h$index == TSK$num_hooks)
+                    .break
+                .endif
+            .endloop
+        .endif
+
+
+        ;
+        ; generate a cinit record that will initialize the tasks's stack
+        ;
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+
+        ;
+        ; :name:$stkptr points one word *below* stack frame, so add 1 word
+        ; to the base address of the cinit record
+        ;
+        .word   TSK_USEDSTACK * STD_TARGWORDMAUS, :name:$stkptr + (1 * STD_TARGWORDMAUS)
+
+        .word   0
+        .word   :statReg:
+        .word   _KNL_exit
+        .word   0
+        .word   KNL_glue
+        ;
+        ; TSK_USEDSTACK is the total number of words in the startup
+        ; stack.  There are 15 words that are set explicitly, leaving
+        ; TSK_USEDSTACK - 15 words for which we need to leave space here.
+        ;
+
+        ; The .space directive for the C6x indicates bytes
+
+        .space  (TSK_USEDSTACK - 15) * STD_TARGWORDMAUS ; 4 bytes per word
+
+        .eval   TSK$strCount, strCount$save
+
+        .eval $symlen(":arg0:"),arglen
+        .if $symcmp(":arg0(1):","'") = 0 & $symcmp(":arg0(arglen):","'") = 0
+            .word       TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .word :arg0:
+        .endif
+
+        .eval $symlen(":arg1:"),arglen
+        .if $symcmp(":arg1(1):","'") = 0 & $symcmp(":arg1(arglen):","'") = 0
+            .word       TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .word :arg1:
+        .endif
+
+        .eval $symlen(":arg2:"),arglen
+        .if $symcmp(":arg2(1):","'") = 0 & $symcmp(":arg2(arglen):","'") = 0
+            .word       TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .word :arg2:
+        .endif
+
+        .eval $symlen(":arg3:"),arglen
+        .if $symcmp(":arg3(1):","'") = 0 & $symcmp(":arg3(arglen):","'") = 0
+            .word       TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .word :arg3:
+        .endif
+
+        .eval $symlen(":arg4:"),arglen
+        .if $symcmp(":arg4(1):","'") = 0 & $symcmp(":arg4(arglen):","'") = 0
+            .word       TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .word :arg4:
+        .endif
+
+        .eval $symlen(":arg5:"),arglen
+        .if $symcmp(":arg5(1):","'") = 0 & $symcmp(":arg5(arglen):","'") = 0
+            .word       TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .word :arg5:
+        .endif
+
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+;  Be careful with this little island of non-arg code!
+
+        .word   :fxn:
+        .word   _TSK_exit
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+        .eval $symlen(":arg6:"),arglen
+        .if $symcmp(":arg6(1):","'") = 0 & $symcmp(":arg6(arglen):","'") = 0
+            .word       TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .word :arg6:
+        .endif
+
+        .eval $symlen(":arg7:"),arglen
+        .if $symcmp(":arg7(1):","'") = 0 & $symcmp(":arg7(arglen):","'") = 0
+            .word       TSK$string:TSK$strCount:
+            .eval       TSK$strCount+1, TSK$strCount
+        .else
+            .word :arg7:
+        .endif
+
+        ;
+        ; Create a record to fill unused portion of stack with stackstamp
+        ; Format: sequence of 3 words; <count, address, fill-value>
+        ;
+        .sect ".gblinit"
+        .word   ((:name:$stkptr - :name:$stackname) / STD_TARGWORDMAUS) + 1     ; count
+        .word   :name:$stackname
+        .word   0xbebebebe 
+
+
+        ;
+        ; Finally, let :name: point to the right location
+        ;
+        .asg ":name:$base + OBJ_HDRSIZE * STD_TARGWORDMAUS", :name:
+
+        ;
+        ; Conditionally set up strings for arguments
+        ;
+        .eval   strCount$save, TSK$strCount
+
+        .eval $symlen(":arg0:"),arglen
+        .if $symcmp(":arg0(1):","'") = 0 & $symcmp(":arg0(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg0(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg1:"),arglen
+        .if $symcmp(":arg1(1):","'") = 0 & $symcmp(":arg1(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg1(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg2:"),arglen
+        .if $symcmp(":arg2(1):","'") = 0 & $symcmp(":arg2(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg2(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg3:"),arglen
+        .if $symcmp(":arg3(1):","'") = 0 & $symcmp(":arg3(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg3(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg4:"),arglen
+        .if $symcmp(":arg4(1):","'") = 0 & $symcmp(":arg4(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg4(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg5:"),arglen
+        .if $symcmp(":arg5(1):","'") = 0 & $symcmp(":arg5(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg5(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg6:"),arglen
+        .if $symcmp(":arg6(1):","'") = 0 & $symcmp(":arg6(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg6(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .eval $symlen(":arg7:"),arglen
+        .if $symcmp(":arg7(1):","'") = 0 & $symcmp(":arg7(arglen):","'") = 0
+            .sect ".const"
+TSK$string:TSK$strCount:        .string ":arg7(2,arglen-2):",0
+            .eval TSK$strCount+1, TSK$strCount
+        .endif
+
+        .endm
+
+
+;
+;# ======== TSK_init ========
+;  Runtime initialization of the TSK module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", TSK_init$regs
+TSK_init        .macro
+
+        ; only expand if the TSK module is configured
+        .if (TSK$ = 1)
+
+            .global _TSK_init
+            .global _TSK_setup
+
+            mvkl        _TSK_init, a4
+            mvkh        _TSK_init, a4
+            b           a4
+            mvkl        tskinit?, b3
+            mvkh        tskinit?, b3
+            nop         3
+
+tskinit?:
+            .if TSK$NUMOF != 0
+
+                mvkl    _TSK_setup, a4
+                mvkh    _TSK_setup, a4
+                b       a4
+                mvkl    tskstup?, b3      ; return address
+                mvkh    tskstup?, b3
+                nop     3
+            .else
+                .emsg "There must be at least one task defined under TSK."
+            .endif
+
+tskstup?:
+
+        .endif
+
+        .endm
+
+
+;
+;# ======== TSK_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", TSK_startup$regs
+TSK_startup        .macro
+
+        ; only expand if the TSK module is configured
+        .if (TSK$ = 1)
+
+            .global _TSK_startup
+
+            .if TSK$NUMOF != 0
+
+                mvkl _TSK_startup, a4
+                mvkh _TSK_startup, a4
+                b    a4
+                mvkl tskstup?, b3      ; return address
+                mvkh tskstup?, b3
+                nop  3
+
+            .endif
+
+tskstup?:
+        .endif
+        .endm
+
+        .endif          ; if TSK_ is not defined

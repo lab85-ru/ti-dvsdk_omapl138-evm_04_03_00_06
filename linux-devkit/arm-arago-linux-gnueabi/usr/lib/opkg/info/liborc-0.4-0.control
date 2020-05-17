@@ -1,0 +1,13 @@
+Package: liborc-0.4-0
+Version: 0.4.10-r0.6
+Description: ORC orc-0.4 library
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: orc
+Architecture: armv5te
+OE: orc
+Homepage: http://code.entropywave.com/projects/orc/
+Build: install/d0bd439
+Depends: libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Source: http://code.entropywave.com/download/orc/orc-0.4.10.tar.gz;name=orc

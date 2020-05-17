@@ -1,0 +1,57 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C67XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Debug"
+Config="iDebug"
+Config="iRelease"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\nandSample_io.c"
+Source="..\..\src\nandSample_main.c"
+Source="..\nandSample.tcf"
+Source="..\nandSamplecfg.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Compiler" Settings: "iDebug"]
+Options=-g -pdr -fr"$(Proj_dir)\iDebug" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Compiler" Settings: "iRelease"]
+Options=-pdr -o2 -fr"$(Proj_dir)\iRelease" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-pdr -o2 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Linker" Settings: "Debug"]
+Options=-c -m"$(Proj_dir)\..\..\bin\Debug\nandSample.map" -o"$(Proj_dir)\..\..\bin\Debug\nandSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -l"..\nandSample_Debug.cmd"
+
+["Linker" Settings: "iDebug"]
+Options=-c -m"$(Proj_dir)\..\..\bin\iDebug\nandSample.map" -o"$(Proj_dir)\..\..\bin\iDebug\nandSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -l"..\nandSample_iDebug.cmd"
+
+["Linker" Settings: "iRelease"]
+Options=-c -m"$(Proj_dir)\..\..\bin\iRelease\nandSample.map" -o"$(Proj_dir)\..\..\bin\iRelease\nandSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -l"..\nandSample_iRelease.cmd"
+
+["Linker" Settings: "Release"]
+Options=-c -m"$(Proj_dir)\..\..\bin\Release\nandSample.map" -o"$(Proj_dir)\..\..\bin\Release\nandSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -l"..\nandSample_Release.cmd"
+
+["nandSamplecfg.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["nandSamplecfg.cmd" Settings: "iDebug"]
+LinkOrder=1
+
+["nandSamplecfg.cmd" Settings: "iRelease"]
+LinkOrder=1
+
+["nandSamplecfg.cmd" Settings: "Release"]
+LinkOrder=1
+

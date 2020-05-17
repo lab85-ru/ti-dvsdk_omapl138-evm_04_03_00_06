@@ -1,0 +1,9 @@
+Package: ti-dspbios-src
+Version: 5_41_03_17-r1
+Description: Patched sources for ti-dspbios
+Section: devel
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI
+Architecture: all
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/bios/dspbios/5_41_03_17/exports/bios_setuplinux_5_41_03_17.bin;name=biosbin

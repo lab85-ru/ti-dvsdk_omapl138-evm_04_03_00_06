@@ -1,0 +1,61 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C67XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Debug"
+Config="iDebug"
+Config="iRelease"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\rasterSample_io.c"
+Source="..\..\src\rasterSample_main.c"
+Source="..\rasterSample.tcf"
+Source="..\rasterSamplecfg.cmd"
+
+[Generated Files]
+Source="..\rasterSamplecfg.s62"
+Source="..\rasterSamplecfg_c.c"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Compiler" Settings: "iDebug"]
+Options=-g -pdr -fr"$(Proj_dir)\iDebug" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Compiler" Settings: "iRelease"]
+Options=-pdr -o2 -fr"$(Proj_dir)\iRelease" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-pdr -o2 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Linker" Settings: "Debug"]
+Options=-c -m"$(Proj_dir)\..\..\bin\Debug\rasterSample.map" -o"$(Proj_dir)\..\..\bin\Debug\rasterSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -i"%BIOS_INSTALL_DIR%\packages\ti\pscl\lib" -i"%BIOS_INSTALL_DIR%\packages\ti\pmi\lib" -l"..\rasterSample_Debug.cmd"
+
+["Linker" Settings: "iDebug"]
+Options=-c -m"$(Proj_dir)\..\..\bin\iDebug\rasterSample.map" -o"$(Proj_dir)\..\..\bin\iDebug\rasterSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -i"%BIOS_INSTALL_DIR%\packages\ti\pscl\lib" -i"%BIOS_INSTALL_DIR%\packages\ti\pmi\lib" -l"..\rasterSample_iDebug.cmd"
+
+["Linker" Settings: "iRelease"]
+Options=-c -m"$(Proj_dir)\..\..\bin\iRelease\rasterSample.map" -o"$(Proj_dir)\..\..\bin\iRelease\rasterSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -i"%BIOS_INSTALL_DIR%\packages\ti\pscl\lib" -i"%BIOS_INSTALL_DIR%\packages\ti\pmi\lib" -l"..\rasterSample_iRelease.cmd"
+
+["Linker" Settings: "Release"]
+Options=-c -m"$(Proj_dir)\..\..\bin\Release\rasterSample.map" -o"$(Proj_dir)\..\..\bin\Release\rasterSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -i"%BIOS_INSTALL_DIR%\packages\ti\pscl\lib" -i"%BIOS_INSTALL_DIR%\packages\ti\pmi\lib" -l"..\rasterSample_Release.cmd"
+
+["rasterSamplecfg.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["rasterSamplecfg.cmd" Settings: "iDebug"]
+LinkOrder=1
+
+["rasterSamplecfg.cmd" Settings: "iRelease"]
+LinkOrder=1
+
+["rasterSamplecfg.cmd" Settings: "Release"]
+LinkOrder=1
+

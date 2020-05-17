@@ -1,0 +1,57 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C67XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Config="Debug"
+Config="iDebug"
+Config="iRelease"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\mmcsdSample_io.c"
+Source="..\..\src\mmcsdSample_main.c"
+Source="..\mmcsdSample.tcf"
+Source="..\mmcsdSamplecfg.cmd"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"Mmcsd_GPIO_CDWP_ENABLE" -mv6740
+
+["Compiler" Settings: "iDebug"]
+Options=-g -pdr -fr"$(Proj_dir)\iDebug" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"Mmcsd_GPIO_CDWP_ENABLE" -mv6740
+
+["Compiler" Settings: "iRelease"]
+Options=-pdr -o2 -fr"$(Proj_dir)\iRelease" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"Mmcsd_GPIO_CDWP_ENABLE" -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-pdr -o2 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -d"Mmcsd_GPIO_CDWP_ENABLE" -mv6740
+
+["Linker" Settings: "Debug"]
+Options=-c -m"$(Proj_dir)\..\..\bin\Debug\mmcsdSample.map" -o"$(Proj_dir)\..\..\bin\Debug\mmcsdSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -l"..\mmcsdSample_Debug.cmd"
+
+["Linker" Settings: "iDebug"]
+Options=-c -m"$(Proj_dir)\..\..\bin\iDebug\mmcsdSample.map" -o"$(Proj_dir)\..\..\bin\iDebug\mmcsdSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -l"..\mmcsdSample_iDebug.cmd"
+
+["Linker" Settings: "iRelease"]
+Options=-c -m"$(Proj_dir)\..\..\bin\iRelease\mmcsdSample.map" -o"$(Proj_dir)\..\..\bin\iRelease\mmcsdSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -l"..\mmcsdSample_iRelease.cmd"
+
+["Linker" Settings: "Release"]
+Options=-c -m"$(Proj_dir)\..\..\bin\Release\mmcsdSample.map" -o"$(Proj_dir)\..\..\bin\Release\mmcsdSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\..\" -l"..\mmcsdSample_Release.cmd"
+
+["mmcsdSamplecfg.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["mmcsdSamplecfg.cmd" Settings: "iDebug"]
+LinkOrder=1
+
+["mmcsdSamplecfg.cmd" Settings: "iRelease"]
+LinkOrder=1
+
+["mmcsdSamplecfg.cmd" Settings: "Release"]
+LinkOrder=1
+

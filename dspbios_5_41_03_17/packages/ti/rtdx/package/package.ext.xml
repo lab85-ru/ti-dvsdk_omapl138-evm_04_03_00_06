@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/release.dtd -->
+<release name="" label="" date="" buildCount="">
+<package name="ti.rtdx"
+    version="2, 0, 0, 5"/>
+<imports>
+</imports>
+<references>
+    <targetRoot base="/db/toolsrc/library/vendors2005/ti/arm/4.5.0/Linux/"
+        trgs="ti.targets.arm.Arm9t,ti.targets.arm.Arm9,ti.targets.arm.M3_big_endian,ti.targets.arm.M3">
+        <file name="include/assert.h"/>
+        <file name="include/limits.h"/>
+        <file name="include/linkage.h"/>
+        <file name="include/stdarg.h"/>
+        <file name="include/stddef.h"/>
+        <file name="include/stdint.h"/>
+        <file name="include/stdlib.h"/>
+        <file name="include/string.h"/>
+    </targetRoot>
+    <package name="xdc.services.intern.xsr"
+        version="1, 0, 0">
+        <file name="java/package.jar"/>
+        <file name="package/xdc.services.intern.xsr.sch"/>
+    </package>
+    <package name="ti.targets.nda"
+        version="1, 0, 0, 0">
+        <file name="package.xs"/>
+        <file name="package/ti.targets.nda.sch"/>
+    </package>
+    <targetRoot base="/db/toolsrc/library/vendors2005/ti/c6x/6.1.5/Linux/"
+        trgs="ti.targets.C674">
+        <file name="include/assert.h"/>
+        <file name="include/c6x.h"/>
+        <file name="include/limits.h"/>
+        <file name="include/linkage.h"/>
+        <file name="include/stdarg.h"/>
+        <file name="include/stddef.h"/>
+        <file name="include/stdint.h"/>
+        <file name="include/stdio.h"/>
+        <file name="include/stdlib.h"/>
+        <file name="include/string.h"/>
+    </targetRoot>
+    <package name="xdc.bld"
+        version="1, 0, 1">
+        <file name="BuildEnvironment.xs"/>
+        <file name="Executable.xs"/>
+        <file name="ITarget.xs"/>
+        <file name="ITargetFilter.xs"/>
+        <file name="Library.xs"/>
+        <file name="PackageContents.xs"/>
+        <file name="Repository.xs"/>
+        <file name="Script.xs"/>
+        <file name="Utils.xs"/>
+        <file name="_gen.xs"/>
+        <file name="package.xs"/>
+        <file name="package/xdc.bld.sch"/>
+    </package>
+    <package name="xdc.services.intern.cmd"
+        version="1, 0, 0, 0">
+        <file name="java/package.jar"/>
+        <file name="package/xdc.services.intern.cmd.sch"/>
+    </package>
+    <package name="xdc.services.spec"
+        version="1, 0, 0, 0">
+        <file name="java/package.jar"/>
+        <file name="package/xdc.services.spec.sch"/>
+    </package>
+    <package name="xdc.shelf"
+        version="1, 0, 0, 0">
+        <file name="java/antlr.jar"/>
+        <file name="java/js.jar"/>
+        <file name="java/junit.jar"/>
+        <file name="java/tar.jar"/>
+        <file name="java/xbean.jar"/>
+        <file name="package/xdc.shelf.sch"/>
+    </package>
+    <package name="xdc.services.global"
+        version="1, 0, 0">
+        <file name="Clock.xs"/>
+        <file name="java/package.jar"/>
+        <file name="package/xdc.services.global.sch"/>
+    </package>
+    <package name="tisb.release.filters"
+        version="1, 0, 0, 0">
+        <file name="libvers.xdt"/>
+    </package>
+    <targetRoot base="/db/toolsrc/library/vendors2005/ti/c55/lead3v3.2.2/Linux/"
+        trgs="ti.targets.C55_huge,ti.targets.C55_large">
+        <file name="include/assert.h"/>
+        <file name="include/limits.h"/>
+        <file name="include/linkage.h"/>
+        <file name="include/stdarg.h"/>
+        <file name="include/stddef.h"/>
+        <file name="include/stdint.h"/>
+        <file name="include/stdio.h"/>
+        <file name="include/stdlib.h"/>
+        <file name="include/string.h"/>
+    </targetRoot>
+    <package name="xdc.corevers"
+        version="16, 0, 1, 0">
+        <file name="package/xdc.corevers.sch"/>
+    </package>
+    <package name="xdc.services.intern.gen"
+        version="1, 0, 0, 0">
+        <file name="java/package.jar"/>
+        <file name="package/xdc.services.intern.gen.sch"/>
+    </package>
+    <package name="ti.targets.arm"
+        version="1, 0, 1, 0">
+        <file name="package.xs"/>
+        <file name="package/ti.targets.arm.sch"/>
+        <file name="std.h"/>
+    </package>
+    <targetRoot base="/db/toolsrc/library/vendors2005/ti/arm/4.5.0A08023/Linux/"
+        trgs="ti.targets.TMS470,ti.targets.arm.Arm7,ti.targets.arm.Arm7_big_endian,ti.targets.TMS470_big_endian">
+        <file name="include/assert.h"/>
+        <file name="include/limits.h"/>
+        <file name="include/linkage.h"/>
+        <file name="include/stdarg.h"/>
+        <file name="include/stddef.h"/>
+        <file name="include/stdint.h"/>
+        <file name="include/stdlib.h"/>
+        <file name="include/string.h"/>
+    </targetRoot>
+    <package name="xdc"
+        version="1, 1, 1, 0">
+        <file name="IPackage.xdc"/>
+        <file name="IPackage.xs"/>
+        <file name="om2.xs"/>
+        <file name="package.xs"/>
+        <file name="package/xdc.sch"/>
+        <file name="recap.xs"/>
+        <file name="std.h"/>
+        <file name="template.xs"/>
+        <file name="xdc.tci"/>
+        <file name="xmlgen.xs"/>
+        <file name="xmlgen2.xs"/>
+    </package>
+    <targetRoot base="/db/toolsrc/library/vendors2005/ti/c28/5.0.0B2/Linux/"
+        trgs="ti.targets.C28_float,ti.targets.C28_large">
+        <file name="include/assert.h"/>
+        <file name="include/cstdlib"/>
+        <file name="include/limits.h"/>
+        <file name="include/linkage.h"/>
+        <file name="include/stdarg.h"/>
+        <file name="include/stddef.h"/>
+        <file name="include/stdint.h"/>
+        <file name="include/stdlib.h"/>
+        <file name="include/string.h"/>
+    </targetRoot>
+    <package name="ti.targets"
+        version="1, 0, 2, 0">
+        <file name="ITarget.xs"/>
+        <file name="package.xs"/>
+        <file name="package/ti.targets.sch"/>
+        <file name="std.h"/>
+    </package>
+    <targetRoot base="/db/toolsrc/library/vendors2005/ti/c6x/6.0.16/Linux/"
+        trgs="ti.targets.C67P,ti.targets.C64P_big_endian,ti.targets.C64P,ti.targets.C62_big_endian,ti.targets.C62,ti.targets.C64,ti.targets.C67,ti.targets.C67P_big_endian,ti.targets.C67_big_endian,ti.targets.C64_big_endian">
+        <file name="include/assert.h"/>
+        <file name="include/c6x.h"/>
+        <file name="include/limits.h"/>
+        <file name="include/linkage.h"/>
+        <file name="include/stdarg.h"/>
+        <file name="include/stddef.h"/>
+        <file name="include/stdint.h"/>
+        <file name="include/stdio.h"/>
+        <file name="include/stdlib.h"/>
+        <file name="include/string.h"/>
+    </targetRoot>
+    <package name="ti.rtdx.build"
+        version="">
+        <file name="common.bld"/>
+    </package>
+    <xdcRoot base="/db/rtree/install/trees/products/xdcprod-j49/product/Linux/xdctools_3_10_02/">
+        <file name="/packages/xdc/package.xdc"/>
+        <file name="include/utils.tci"/>
+    </xdcRoot>
+</references>
+<orphans>
+    <file name="/db/vtree/library/trees/rtdxtc/rtdxtc-e06x/src/config.bld"/>
+</orphans>
+</release>

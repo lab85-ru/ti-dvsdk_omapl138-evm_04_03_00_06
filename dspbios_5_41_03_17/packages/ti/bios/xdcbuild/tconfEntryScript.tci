@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+environment[ "config.scriptName" ] = environment[ "config.userScriptName" ];
+load( environment[ "config.scriptName" ] );
+
+var programName = environment[ "config.programName" ];
+var dependencyRule = programName + "cfg.h : ";  
+for (var i in utils.loadedFiles) {
+    dependencyRule += utils.loadedFiles[i].replace( /\\/g, "/" ) + " ";
+}
+
+var depedencyFile = new java.io.FileWriter( programName + "cfg.dep" );
+depedencyFile.write( dependencyRule + "\n" );
+depedencyFile.flush();
+depedencyFile.close();

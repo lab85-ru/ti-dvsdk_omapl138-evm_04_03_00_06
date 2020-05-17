@@ -1,0 +1,262 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== mem.h28 ========
+;
+;
+
+        .if ($isdefed("MEM_") = 0)  ; prevent multiple includes of this file
+MEM_    .set    1
+
+        .include cinit.h28
+        .include std.h28
+
+isMemsegAligned .set  2
+
+MEM_Segment .struct
+base    DataPtr 1 ;             /* Base of the segment MAU granular */
+len     sizep   1 ;             /* Size of the segment MAU granular */
+space   Int     1 ;             /* x, y or p memory */
+endpad  .align  isMemsegAligned ;
+MEM_A_SEGMENTSIZE   .endstruct  
+
+;
+;# ======== MEM_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+    .asg    "", MEM_Obj$regs
+MEM_Obj    .macro cflag, name, id, _len, _iHeap, _iSegZero, _iHeapId
+
+    .if :cflag: == 1
+
+      .asg -1, idxVal    ; default index value
+    
+      .if    :_len:
+
+        .if :_iHeap:
+
+            .global :name:$B  ; heap base (cfg.cmd28 supplies as word addr!)
+            .global :name:$L  ; heap length (cfg.cmd28 supplies as #of Bytes)
+
+            ;
+            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            ; Define an entry in _MEM_memtab[] (allocated out of bss in
+            ; MEM_config.
+            ; The following block must match the MEM_Segment structure
+            ; in mem.h.
+            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+            ;
+
+
+            .sect ".cinit"
+            .align STD_TARGALIGN
+            .if    $symcmp(":name:", ":_iSegZero:") == 0
+                C28_cinitHeader CINITALIGN, isMemsegAligned,_MEM_memtab,MEM_A_SEGMENTSIZE
+                  .eval 0, idxVal
+                C28_cinitBegin          isMemsegAligned
+                C28_cinitDataPtr        :name:$B        ; word address of base
+                C28_cinitsizep          :name:$L        ; size = (#bytes/2)
+                C28_cinitInt            0x1
+                C28_cinitEnd            isMemsegAligned
+            .else
+                C28_cinitHeader CINITALIGN, isMemsegAligned,_MEM_memtab + MEM_tabIdx*(MEM_A_SEGMENTSIZE) ,MEM_A_SEGMENTSIZE
+                  .eval MEM_tabIdx, idxVal      ; assign meaningful 
+                                                ; index
+                                                ;value
+                  .eval MEM_tabIdx + 1, MEM_tabIdx
+                                                 ; post-increment macro
+                                                 ; variable for next pass
+                C28_cinitBegin          isMemsegAligned
+                C28_cinitDataPtr        :name:$B        ; word address of base
+                C28_cinitsizep          :name:$L        ; size = (#bytes/2)
+                C28_cinitInt            0x1
+                C28_cinitEnd            isMemsegAligned
+            .endif
+
+
+          ;
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ; create array index variable (using the segment's
+          ; name)
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ; 
+
+:name:    .usect  ".ebss", 1 * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+                C28_cinitHeader CINITALIGN, isIntAligned,:name: ,INTSIZE
+                C28_cinitBegin isIntAligned
+                C28_cinitInt  idxVal
+                C28_cinitEnd  isIntAligned
+
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                  ; create array index variable (using the user heap id)
+                  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+                .if $symcmp(":_iHeapId:", "segment_name") != 0
+                    .global :_iHeapId:
+:_iHeapId:          .set :name:
+                .endif
+
+:name:$idx .set    idxVal                       ; used by MEM_config
+
+        .else
+:name: .set -1                                  ; To satisfy assignment 
+                                                ; of C alias in *cfg.cmd
+                                                ; file.
+
+        .endif                                  ; .if :iHeap:
+
+      .endif                                    ; .if :_len:
+
+    .endif                                      ; .if :cflag: == 1
+
+    .endm
+
+;
+;# ======== MEM_config ========
+;  Called within configuration file (prior to MEM_init)
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+
+    .asg    "", MEM_config$regs
+MEM_config    .macro _gNumHeap, _segzero, _mallocseg
+
+    ;
+    ; Proceed only if there are heaps declared.
+    ;
+    .if :_gNumHeap:
+        .global _MEM                    ; Pointer to configuration 
+                                        ; parameters
+        .global _MEM_memtab             ; Array of memory heaps
+        .global __MEM_NUMSEGMENTS       ; Number of memory heaps
+
+        ;
+        ; The following two .ebss/.cinit sets make configured values 
+        ; readable  in the established SPOX manner, e.g.,
+        ; MEM->MALLOCSEG.
+        ;
+
+        ; Allocate and initialize  MEM_config
+
+        ; Set blocking bit as 0 here, no C macro interface
+        ; safe for SDSsq31971
+        C28_allocateObject   isIntAligned , MEM_config, INTSIZE, .mem, 0
+        C28_cinitHeader CINITALIGN, isIntAligned, MEM_config,INTSIZE
+        C28_cinitBegin  isIntAligned
+        ;; If MALLOCSEG = MEM_NULL then put in an err value in for MALLOCSEG$idx
+        .if ($symcmp(":_mallocseg:", "MEM_NULL") == 0)
+                C28_cinitInt       -1
+        .else
+                C28_cinitInt    :_MALLOCSEG:$idx
+        .endif
+        C28_cinitEnd  isIntAligned
+
+
+        ;  initialize   _MEM
+
+        C28_cinitHeader CINITALIGN, isDataPtrAligned, _MEM, DATAPTRSIZE
+        C28_cinitBegin  isDataPtrAligned
+        C28_cinitDataPtr  MEM_config
+        C28_cinitEnd    isDataPtrAligned
+
+
+        ;
+        ; This declares space for the array of configured heaps, the
+        ; .cinit  parts are defined for each task in MEM_Obj.  This
+        ; space has to be  reserved NOW, before the MEM_Obj macro is
+        ; called and the elements  of the table are defined.
+        ;
+
+_MEM_memtab  .usect  ".ebss", :_gNumHeap: * MEM_A_SEGMENTSIZE, STD_TARGWORDMAUS, isMemsegAligned
+
+        ;
+        ; Set MEM_tabIdx to 1 if _segzero is set to a MEM segment other then
+        ; MEM_NULL because the MEM segment will in the 0th place.
+        ; If _segzero is MEM_NULL then set MEM_tabIdx to 0 since MEM_NULL is
+        ; only a place holder and not a real MEM segment with a heap.
+        ;
+        .if $symcmp("MEM_NULL", ":_segzero:") == 0
+            .asg    0, MEM_tabIdx        ; Index into MEM_memtab
+        .else
+            .asg    1, MEM_tabIdx        ; Index into MEM_memtab
+        .endif
+
+    ;
+    ;  _MEM_memtab needs to be set to zero if no heap are defined
+    ;
+    .else
+    .global _MEM_memtab
+_MEM_memtab .set 00h
+
+    .endif        ; .if :_gNumHeap:
+
+    .endm
+
+;
+;# ======== MEM_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+    .asg    ":MEM_Obj$regs:", MEM_end$regs
+MEM_end    .macro
+    .endm
+
+
+;
+;# ======== MEM_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+    .asg    "", MEM_startup$regs
+MEM_startup        .macro
+    .endm
+
+;
+;# ======== MEM_init ========
+;  Runtime initialization for MEM
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", MEM_init$regs
+MEM_init .macro
+
+        ; only expand if dyanmic memory heaps on configured by the user
+        .if (MEM_gNumHeap > 0)
+                .global _MEM_init
+                        lcr _MEM_init
+        .endif          
+
+        .endm
+
+        .endif          ; if MEM_ is not defined

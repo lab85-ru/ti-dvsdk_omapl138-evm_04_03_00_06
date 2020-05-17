@@ -1,0 +1,158 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== rtdx.h28 ========
+;
+;
+
+        .if ($isdefed("RTDX_") = 0)  ; prevent multiple includes of this file
+RTDX_   .set    1
+
+        .include std.h28
+        .include cinit.h28
+
+isRtdxAligned   .set 2
+
+;
+;  ======== RTDX defs ========
+;
+RTDX_JTAGMODE .set      0
+RTDX_HSRTDXMODE .set    1
+RTDX_SIMMODE .set       2
+
+
+;
+;# ======== RTDX_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", RTDX_Obj$regs
+RTDX_Obj  .macro cflag, name, id, chanmode
+        .endm
+
+;
+;# ======== RTDX_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", RTDX_config$regs
+RTDX_config     .macro _usertdx, _usertexecution, _rtdxtype, _bufseg, _bufsize
+
+        .global RTDX_MODE
+
+            .if ($symcmp(":_rtdxtype:", "JTAG") = 0)
+RTDX_MODE .set  RTDX_JTAGMODE
+            .elseif ($symcmp(":_rtdxtype:", "HSRTDX") = 0)
+RTDX_MODE .set  RTDX_HSRTDXMODE
+            .elseif ($symcmp(":_rtdxtype:", "Simulator") = 0)
+RTDX_MODE .set  RTDX_SIMMODE
+            .endif
+
+        .if(RTDX_USERTDX = 1)
+            .global _RTDX_Buffer, _RTDX_Buffer_Start, _RTDX_Buffer_End
+
+            ; reserve uninitialized space for RTDX buffer
+        ; Set blocking bit as 0 here, since it is buffer, for SDSsq31971
+        C28_allocateObject isRtdxAligned, _RTDX_Buffer, _bufsize, ".rtdx_data", 0
+
+        ;; RTDX_Buffer_Start and RTDX_Buffer_End data allocation is in 
+        ;; rtdx_data.c. For ROMming RTDX library.
+
+
+        C28_cinitHeader CINITALIGN, isDataPtrAligned, _RTDX_Buffer_Start, DATAPTRSIZE
+        C28_cinitBegin          isDataPtrAligned
+        C28_cinitDataPtr        _RTDX_Buffer
+        C28_cinitEnd            isDataPtrAligned
+
+        
+        C28_cinitHeader CINITALIGN, isDataPtrAligned, _RTDX_Buffer_End, DATAPTRSIZE
+        C28_cinitBegin          isDataPtrAligned
+        C28_cinitDataPtr        _RTDX_Buffer + _bufsize - 1
+        C28_cinitEnd            isDataPtrAligned
+
+        .else
+        ; When RTDX is not used following symbols needs to be set to zero
+        ; because these symbols are used in biosdata.s55 to cinitialize
+        ; Change was done for ELVIS# implementation.
+        .global _RTDX_Buffer_Read
+        .global _RTDX_Buffer_Write
+        .global _RTDX_Poll
+_RTDX_Buffer_Read       .set 0
+_RTDX_Buffer_Write      .set 0
+_RTDX_Poll              .set 0
+
+        .endif
+        .endm
+
+;
+;# ======== RTDX_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", RTDX_end$regs
+RTDX_end        .macro
+        .endm
+
+
+;
+;# ======== RTDX_init ========
+;
+;  Note: ideally we would put RTDX initialization calls here.  Currently
+;  RTDX initialization is done via the .pinit section, and a new auto_init
+;  routine.  If we add the direct calls here we don't need pinit; but using
+;  the current rtdx.lib we get double initialization, which causes double
+;  atexit() registration. 
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#
+        .asg    "", RTDX_init$regs
+RTDX_init .macro
+        .if(GBL_ENABLEINST = 0)
+                .global RTA_fromHost$buf
+RTA_fromHost$buf        .usect ".ebss", 8, 0, 0
+        .endif
+        .endm
+
+
+;# ======== RTDX_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#      none
+;#
+        .asg    "", RTDX_startup$regs
+RTDX_startup        .macro
+        .endm
+
+        .endif          ; if RTDX_ is not defined

@@ -1,0 +1,313 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== clk.h55 ========
+;
+
+    .if ($isdefed("CLK_") = 0)   ; prevent multiple includes of this file
+CLK_    .set    1
+
+        .mmregs
+        ;
+        ;  ======== CLK_Obj ========
+        ;
+        .include chk.h55
+        .include cinit.h55
+        .include c55.h55
+        .include fxn.h55
+        .include gbl.h55
+        .include pwrm.h55
+
+isClkAligned    .set    LONGALIGN
+
+CLK_Obj  .struct
+fxn             CodePtr   1       ; function to execute
+endPad          .align  isClkAligned    
+CLK_A_OBJSIZE   .endstruct
+
+CINIT_CLK_O_FXN .set    CLK_A_OBJSIZE
+CLK_BASE        .set    CLK_Obj.fxn
+CLK_O_FXN       .set    CLK_Obj.fxn - CLK_BASE
+
+        .global _CLK_isr, CLK_F_isr, _CLK_itime, CLK_F_itime
+        .global _CLK_getshtime, _CLK_getfhtime
+        .global _CLK_getltime
+        .global _CLK_reti, _CLK_run, _CLK_dispRun, CLK_F_dispRun
+        .global _CLK_measure, _CLK_stop, _CLK_reconfig, _CLK_start
+        .global _CLK_wdogdisable
+        .global _CLK_gethtime, _CLK_getprd, _CLK_countspms, _CLK_htimePerLtime
+
+        ; DEFINED BY CONFIG TOOL
+        .global CLK_TCR, CLK_COUNTSPMS, CLK_COUNTSPMSHIGH
+        .global CLK_PRD, CLK_PRDHIGH, CLK_TIMEFXN, CLK_HOOKFXN, CLK_TDDR 
+        .global CLK_A_TABBEG, CLK_A_TABLEN, CLK_A_TABEND, CLK_TDDRHIGH
+        .global CLK_F_gethtime
+        ; Based on the configuration, the linker's  command 
+        ; file will use either _CLK_getshtime  or ; _CLK_getfhtime to
+        ; replace CLK_F_gethtime
+
+        .global CLK_D_idletime, CLK_D_tabbeg, CLK_D_isrhook, CLK_D_timefxn
+        .global IDL_D_tabbeg
+        .global  CLK_R_timh, CLK_R_timl
+
+        .global CLK_REGS, CLK_TIMERIMR, CLK_TIMERIFR, CLK_INTBIT
+        .global CLK_HTIMEDIV, CLK_HTIMEMULT, CLK_CALDIV, CLK_CALMULT
+        .global CLK_LTIMEDIV, CLK_LTIMEMULT
+        ; CLK_REGS is generated based on the global REGS field of CLK ObjectMgr 
+        ; in clk.cdb. For Generic 55x, CLK_REGS is 0x01000
+        .global CLK_TIMERIMRMASK
+
+    .if ($isdefed("GBL_CLKTYPE") != 0)
+CLKTYPE_DA300   .set    300
+
+        .if (GBL_CLKTYPE == 5561)
+            .include clk5561.h55
+        .elseif (GBL_CLKTYPE == 5502)
+            .include clk5502.h55
+        .elseif (GBL_CLKTYPE == 5505)
+            .include clk5505.h55
+        .elseif (GBL_CLKTYPE == 1510)
+            .include clk1510.h55
+        .elseif (GBL_CLKTYPE == 5509)
+            .include clk5509.h55
+        .elseif (GBL_CLKTYPE == 2420)
+            .include clk2420.h55
+        .elseif (GBL_CLKTYPE == 5599)
+            .include clkRYUJIN.h55
+        .elseif (GBL_CLKTYPE == CLKTYPE_DA300)
+            .include clkDA300.h55
+        .elseif (GBL_CLKTYPE == 2320)
+            .include clk2320.h55
+        .else
+            .emsg "No platform specific header file found"
+        .endif
+
+    .endif
+;
+;# ======== CLK_Obj ========
+;  Allocate a clock fxn object and initialize all fields.
+;
+;  Note that all clock objects are allocated in a distinguished section
+;  named ".clk"; this insures that all objs are contiguous (this is
+;  required by the implementation of CLK_F_run())
+;
+;  Parameters:
+;       name    - name of clock object
+;       fxn     - function to call
+;
+;  fxn is called at clock isr level
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", CLK_Obj$regs
+CLK_Obj  .macro cflag, name, id, fxn
+        CHK_nargs "CLK_Obj", fxn
+        .if ($symcmp(":CHK_status:", "error") = 0)
+                .emsg "CLK_Obj parameter error."
+        .endif
+
+
+        .if (:cflag: = 0)
+            .mexit
+        .endif
+
+        .global :name:
+
+        .if ($symcmp(":fxn:", "0") != 0)
+                .global fxn
+        .endif
+
+ 
+; allocate all CLK objs contiguously in ".clk"
+:name:  .tag    CLK_Obj                         ; declare name as having
+                                                ; type  CLK_Obj
+
+        C55_allocateObject isClkAligned, :name:, CLK_A_OBJSIZE, .clk    
+        C55_cinitHeader CINITALIGN, isClkAligned, :name: , CLK_A_OBJSIZE, DATAPAGE 
+        C55_cinitBegin  isClkAligned
+        C55_cinitCodePtr  :fxn: 
+        C55_cinitEnd    isClkAligned
+        .endm
+
+;
+;# ======== CLK_countspms ========
+;  Get the timer counts per millisecond.
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#   ac0 = CLK_COUNTSPMS     
+;#
+        .ref _CLK_D_countspms
+
+        .asg    "ac0_g, ac0_h, ac0_l", CLK_countspms$regs
+CLK_countspms    .macro
+        .noremark 5673                          ; Switched off assembler remark
+                                                ; 5673 corresponding to CPU_89.
+
+        .if (.MNEMONIC)                         ; if .MNEMONIC assembler
+            mov dbl(*(#_CLK_D_countspms)), ac0  ; move the spms value to ac0
+        .else
+            ac0 = dbl(*(_CLK_D_countspms))      ; move the spms value to ac0
+        .endif                                  ; endif .MNEMONIC
+        
+        .remark 5673                            ; Switched on assembler remark
+                                                ; 5673 corresponding to CPU_89.
+        .endm
+
+;
+;# ======== CLK_end ========
+;  Invoked at the end of all other configuration declarations.
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+    .asg    ":CLK_Obj$regs:", CLK_end$regs
+CLK_end .macro
+        .if (CLK$NUMOF != 0)
+                CLK_Obj     1,CLK_NULL,-1,0     ; NULL terminate clock
+        .endif
+        .endm
+
+;
+;# ======== CLK_gethtime ========
+;  This operation returns a full 32 bit time value where each unit
+;  represents a duration equal to the CLKOUT cycle of the C55xx's timer
+;  If there is a prescalar value, each unit would be scaled by that value.
+;#
+;# Preconditions:
+;#      intm = 1
+;#      frct = 0
+;#      sxmd = 0
+;#
+;# Postconditions:
+;#      ac0 = htime
+;#
+;#
+;
+;  NOTE: the following register used statement assumes 
+;  _CLK_getfhtime$regs is  a subset of _CLK_getshtime$regs.
+;
+        .asg    ":_CLK_getshtime$regs:", CLK_gethtime$regs
+CLK_gethtime    .macro    opcode
+        .if (.MNEMONIC)                 ; if .MNEMONIC assembler
+                CHK_domain CLK_getfhtime, opcode, "call,b", "call"
+                .asg ":CHK_status:", opcode
+                :opcode: CLK_F_gethtime
+                ; CLK_F_gethtime is assigned in the command file
+                ; generated by the linker.
+        .else                           ; if ALGEBRAIC assembler
+                CHK_domain CLK_getfhtime, opcode, "call,goto", "call"
+                .asg ":CHK_status:", opcode
+                :opcode: CLK_F_gethtime
+                ;CLK_F_gethtime is assigned in the command file
+                ; generated by the linker.
+        .endif                          ; endif .MNEMONIC assembler 
+        .endm
+
+;
+;# ======== CLK_getltime ========
+;  Return the number of timer interrupts that have occurred.
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    ac0 = CLK_R_timh::CLK_R_timl
+;#
+;
+    .asg    "ac0_g,ac0_h,ac0_l", CLK_F_getltime$regs
+CLK_getltime    .macro  dummy
+        CHK_domain CLK_getltime, opcode, "call,goto", "call"
+        .asg ":CHK_status:", opcode
+        .if (.MNEMONIC)                 ; if .MNEMONIC assembler
+                mov dbl(*(#CLK_R_timh)), ac0
+        .else
+                ac0 = dbl(*(#CLK_R_timh))
+        .endif                          ; endif  .MNEMONIC assembler
+        .endm
+
+;
+;# ======== CLK_getprd ========
+;  Get period register value
+;
+;#
+;# Preconditions:
+;#    none
+;# Postconditions:
+;#    ac0 = _CLK_D_prd
+;#
+;
+    .ref _CLK_D_prd
+    .asg "ac0_g,ac0_h,ac0_l", CLK_getprd$regs
+CLK_getprd .macro
+        .if (.MNEMONIC) ; if .MNEMONIC assembler
+            mov dbl(*(#_CLK_htimePerLtime)), ac0 
+        .else
+            ac0 = dbl(*(#_CLK_htimePerLtime))
+        .endif
+
+        .endm
+
+;
+;# ======== CLK_init ========
+;  Runtime initialization of the C55x timer
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+;# Dependencies:
+;#    none
+;#
+;
+        .asg    "", CLK_init$regs
+CLK_init    .macro
+        .if ((CLK$ = 1) & (CLK_USETIMER = 1))
+        ; only expand if the CLK module  is configured by the
+        ; user and asks to use the  timer
+        .endif
+        .endm
+
+;
+;# ======== CLK_itime ========
+;  This function calls the configured time function to retrieve
+;  a time value.
+;
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#    ac0 = time value
+;#
+;
+    .asg    ":CLK_F_itime$regs:", CLK_itime$regs
+CLK_itime    .macro    opcode
+        .if (.MNEMONIC) ; if .MNEMONIC assembler
+                CHK_domain CLK_itime, opcode, "call,goto","call"
+                .asg ":CHK_status:", opcode
+                :opcode: CLK_F_itime
+        .else                           ; if ALGEBRAIC assembler
+                CHK_domain CLK_itime, opcode, "call,b","call"
+                .asg ":CHK_status:", opcode
+                :opcode: CLK_F_itime
+        .endif                          ; endif .MNEMONIC
+        .endm
+
+        .endif          ; CLK_ defined

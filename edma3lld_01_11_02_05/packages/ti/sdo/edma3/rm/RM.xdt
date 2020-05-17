@@ -1,0 +1,76 @@
+%%{
+/******************************************************************************
+**+-------------------------------------------------------------------------+**
+**|                            ****                                         |**
+**|                            ****                                         |**
+**|                            ******o***                                   |**
+**|                      ********_///_****                                  |**
+**|                      ***** /_//_/ ****                                  |**
+**|                       ** ** (__/ ****                                   |**
+**|                           *********                                     |**
+**|                            ****                                         |**
+**|                            ***                                          |**
+**|                                                                         |**
+**|         Copyright (c) 1998-2006 Texas Instruments Incorporated          |**
+**|                        ALL RIGHTS RESERVED                              |**
+**|                                                                         |**
+**| Permission is hereby granted to licensees of Texas Instruments          |**
+**| Incorporated (TI) products to use this computer program for the sole    |**
+**| purpose of implementing a licensee product based on TI products.        |**
+**| No other rights to reproduce, use, or disseminate this computer         |**
+**| program, whether in part or in whole, are granted.                      |**
+**|                                                                         |**
+**| TI makes no representation or warranties with respect to the            |**
+**| performance of this computer program, and specifically disclaims        |**
+**| any responsibility for any damages, special or consequential,           |**
+**| connected with the use of this program.                                 |**
+**|                                                                         |**
+**+-------------------------------------------------------------------------+**
+******************************************************************************/
+
+/** \file       RM.xdt
+    \brief      Template file for the Resource Manager for generating internal
+                data structures.
+
+    (C) Copyright 2006, Texas Instruments, Inc
+
+ */
+
+%%}
+
+
+
+
+/* Resource Manager Internal Header Files */
+#include <ti/sdo/edma3/rm/src/edma3resmgr.h>
+
+/**
+ * Maximum Resource Manager Instances supported by the EDMA3 Package.
+ * USE THE SAME VALUE FOR BOTH THE #DEFINE AND CONST UNSIGNED INT BELOW.
+ */
+% var max_rm_instances = this.edma3_max_rm_instances;
+
+/**
+ * Maximum Resource Manager Instances supported by the EDMA3 Package.
+ * This #define is needed for array declarations.
+ */
+#define MAX_EDMA3_RM_INSTANCES `max_rm_instances`
+
+/* This const is required to access this constant in other header files */
+const unsigned int EDMA3_MAX_RM_INSTANCES = `max_rm_instances`;
+
+EDMA3_RM_InstanceInitConfig userInstInitConfigArray[EDMA3_MAX_EDMA3_INSTANCES][MAX_EDMA3_RM_INSTANCES];
+EDMA3_RM_Instance resMgrInstanceArray[EDMA3_MAX_EDMA3_INSTANCES][MAX_EDMA3_RM_INSTANCES];
+
+
+/* These pointers will be used to refer the above mentioned arrays. */
+EDMA3_RM_Instance *resMgrInstance = (EDMA3_RM_Instance *)resMgrInstanceArray;
+EDMA3_RM_InstanceInitConfig *userInitConfig = (EDMA3_RM_InstanceInitConfig *)userInstInitConfigArray;
+
+/* Pointer to the above mentioned 2-D arrays, used for address calculation purpose */
+EDMA3_RM_Instance *ptrRMIArray = (EDMA3_RM_Instance *)resMgrInstanceArray;
+EDMA3_RM_InstanceInitConfig *ptrInitCfgArray = (EDMA3_RM_InstanceInitConfig *)userInstInitConfigArray;
+
+
+
+

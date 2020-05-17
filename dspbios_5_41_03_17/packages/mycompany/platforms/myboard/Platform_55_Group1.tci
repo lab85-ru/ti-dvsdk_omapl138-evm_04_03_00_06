@@ -1,0 +1,82 @@
+/*
+ *  Copyright (c) 2010 by Texas Instruments and others.
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *
+ *  Contributors:
+ *      Texas Instruments - initial implementation
+ *
+ * */
+
+/*
+ *  ======== Platform_55_Group1.tci ========
+ *
+ */
+
+/*  PLEASE DO NOT REMOVE THE NEXT TWO LINES. THEY ARE USED BY GCONF.
+ *  !NAME! mycompany.platforms.myboard
+ *  !DESCRIPTION 55XX!  MyBoard with 4 MBytes of external memory
+ *
+ *  The "NAME" comment communicates the logical name of the platform to the
+ *  Graphical Config Tool (Gconf). This logical name must match the physical
+ *  directory where this Platform.tci file is located.
+ *
+ *  The "DESCRIPTION" comment specifies the tab in the Gconf File->New dialog,
+ *  and gives a text description of the platform displayed in that dialog.
+ *  The specified tab name does not need to be changed, while the text
+ *  description should be edited to describe your board.
+ */
+
+/*
+ * The array of memory objects 'mem_ext' defines off-chip memories accessible to
+ * the DSP. If there are no such memories, the array should be left empty.
+ * The property 'name' defines the name which you will use in your configuration
+ * to refer to this memory.
+ * The properties 'base' and 'len' are the address of the first byte and the
+ * size of the memory object in MAUs.
+ * The property 'space' determines if the memory is "code", "data", "code/data"
+ * or in some cases "io".
+ */
+var mem_ext = [];
+
+mem_ext[0] = {
+    comment: "This object defines space for the DSP's off-chip memory",
+    name: "EXT",
+    base: 0x010000,
+    len:  0x3f0000,
+    space: "code/data"
+};
+
+var device_regs = {
+    /* The register st3_55 contains the bit MP/MC which impacts configuration,
+     * i.e. memory map. The value 0x40 for st3_55 sets MP/MC to 1. Other bits
+     * are disregarded in BIOS configuration.
+     */
+    st3_55: 0x40,
+    /* clkmd defines the behavior of the clock generator */
+    clkmd: 0x1,
+    /* pllm multiplies input clock source */
+    pllm: 0x000f,
+    /* plldiv0 divides input clock source */
+    plldiv0: 0x8000
+};
+
+/* The structure 'params' is described in detail in the Tconf User's Guide,
+ * chapter "Tconf Platform Files". The Guide (SPRU007G) is located in
+ * the xdctools/doc directory. 
+ */
+var params = {
+    clockRate: 300,
+    catalogName: "ti.catalog.c5500",
+    deviceName: "5502",
+    regs: device_regs,
+    mem: mem_ext
+};
+
+utils.loadPlatform("ti.platforms.generic", params);
+/*
+ *  @(#) mycompany.platforms.myboard; 1, 0, 0,157; 2-8-2010 11:04:29; /db/ztree/library/trees/platform/platform-k29x/src/
+ */
+

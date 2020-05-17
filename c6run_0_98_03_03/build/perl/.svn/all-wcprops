@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/perl
+END
+setup_dsp_memory_map.pl
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/perl/setup_dsp_memory_map.pl
+END
+linker_cmd_prep.pl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/perl/linker_cmd_prep.pl
+END
+setup_bios5_tcf.pl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/perl/setup_bios5_tcf.pl
+END
+setup_loadmodules_scripts.pl
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/perl/setup_loadmodules_scripts.pl
+END
+setup_bios6_bld.pl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/perl/setup_bios6_bld.pl
+END
+lib_path_update.pl
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/build/perl/lib_path_update.pl
+END

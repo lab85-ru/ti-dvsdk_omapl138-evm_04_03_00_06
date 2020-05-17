@@ -1,0 +1,16 @@
+%/*
+% *  Copyright 2010 by Texas Instruments Incorporated.
+% *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+% */
+%%{
+    var rtsLib = prog.build.target.rootDir + "/lib";
+    var biosLib = (new java.io.File(this.packageBase)).getCanonicalPath()
+	+ "/lib";
+    var biosCmd = environment["config.programName"] + "cfg.cmd";
+%%}
+/* define the library search paths */
+-i"`biosLib`"
+-i"`rtsLib`"
+
+/* include the bios generated linker command file */
+"`biosCmd`"

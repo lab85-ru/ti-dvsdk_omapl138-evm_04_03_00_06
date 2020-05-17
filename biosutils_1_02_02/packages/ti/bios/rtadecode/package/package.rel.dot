@@ -1,0 +1,46 @@
+digraph dependencies {
+    label="\nPackage ti.bios.rtadecode Dependency Graph";
+    size="7.5,10";
+    rankdir=LR;
+    ranksep=".75";
+    concentrate="true";
+    node [fixedsize=true, width=1.5, style=filled, color=black];
+    node [font=Helvetica, fontsize=12, fillcolor=lightgrey];
+    ti_bios_rtadecode [shape=record,label="ti.bios.rtadecode|", URL="package.rel.xml"];
+    node [fontsize=10, fillcolor=white];
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+    xdc [shape=record,label="xdc|1, 1, 0, 0", URL="../../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-d29/Solaris/packages/xdc/package/package.rel.svg"];
+    ti_bios_rtadecode -> xdc;
+    xdc_bld [shape=record,label="xdc.bld|1, 0, 0, 0", URL="../../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-d29/Solaris/packages/xdc/bld/package/package.rel.svg"];
+    ti_bios_rtadecode -> xdc_bld;
+    gnu_targets [shape=record,label="gnu.targets|1, 0, 0, 0", URL="../../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-d29/Solaris/packages/gnu/targets/package/package.rel.svg"];
+    ti_bios_rtadecode -> gnu_targets;
+    ti_targets [shape=record,label="ti.targets|1, 0, 0, 0", URL="../../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-d29/Solaris/packages/ti/targets/package/package.rel.svg"];
+    ti_bios_rtadecode -> ti_targets;
+    microsoft_targets [shape=record,label="microsoft.targets|1, 0, 0, 0", URL="../../../../../../../../../toolsrc/library/vendors2005/xdc/xdcdist-d29/Solaris/packages/microsoft/targets/package/package.rel.svg"];
+    ti_bios_rtadecode -> microsoft_targets;
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+    xdc_bld -> xdc;
+
+    edge [style=solid, color=blue]
+
+    edge [style=solid, color=lightgrey]
+}

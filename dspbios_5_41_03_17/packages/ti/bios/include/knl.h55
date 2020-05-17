@@ -1,0 +1,165 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== knl.h55 ========
+;
+;
+
+        .if ($isdefed("KNL_") = 0)  ; prevent multiple includes of this file
+KNL_    .set    1
+        .include  "cinit.h55"
+        .include  "gbl.h55"
+        .include  "que.h55"
+
+;
+; Warning! KNL_SWIMASK and KNL_CURMASK must match their counterparts in knl.h
+;
+
+isKnlAligned .set  isDataPtrAligned
+
+KNL_SWIMASK     .set 0x1        ; priority mask of KNL_swi 
+KNL_CURMASK     .set 0x2        ; SWI_D_curmask value when inside the kernel
+
+        .global _KNL_exit
+        .global KNL_glue
+
+        .global _KNL_inactive
+        .global _KNL_queues
+
+KNL_Obj         .struct
+ready           .tag    QUE_Obj         ; ready/semaphore queue elem 
+alarm           .tag    QUE_Obj         ; alarm queue elem 
+setpri          .tag    QUE_Obj         ; setpri queue elem
+queue           DataPtr 1               ; task's ready queue 
+priority        Int     1               ; task priority 
+mask            Int     1               ; 1 << priority 
+reg_sp          DataPtr 1               ; current stack pointer 
+timeout         Int     1               ; timeout value 
+mode            Int     1               ; KNL_BLOCKED, KNL_READY,... 
+sts             DataPtr 1               ; KNL statistics object
+signalled       Int     1               ; pending task waken up by sem or timeout 
+endPad          .align  isKnlAligned
+KNL_A_OBJSIZE   .endstruct
+
+
+KNL_BASE        .set    KNL_Obj.ready
+KNL_O_READY     .set    KNL_Obj.ready-KNL_BASE
+KNL_O_ALARM     .set    KNL_Obj.alarm-KNL_BASE
+KNL_O_SETPRI    .set    KNL_Obj.setpri-KNL_BASE
+KNL_O_QUEUE     .set    KNL_Obj.queue -KNL_BASE
+KNL_O_PRIORITY  .set    KNL_Obj.priority-KNL_BASE
+KNL_O_MASK      .set    KNL_Obj.mask-KNL_BASE
+KNL_O_SP        .set    KNL_Obj.reg_sp-KNL_BASE
+KNL_O_TIMEOUT   .set    KNL_Obj.timeout-KNL_BASE
+KNL_O_MODE      .set    KNL_Obj.mode-KNL_BASE
+KNL_O_STS       .set    KNL_Obj.sts-KNL_BASE
+KNL_O_SIGNALLED   .set  KNL_Obj.signalled-KNL_BASE
+
+; 
+; This structure is used  during semaphore creation.
+;
+
+isKnljobAligned .set  LONGALIGN
+KNL_Job    .struct
+wList           .tag    QUE_Obj ; KNL_wList queue 
+wCount          Int             ; number of posts when on KNL_wList 
+fxn             CodePtr         ; function that services the job 
+endPad          .align  isKnljobAligned 
+KNL_A_JOBSIZE .endstruct
+
+
+
+;
+;# ======== KNL_cinitObj  ========
+;  Create a Knl  object's cinit value section
+;
+;  ready                - The ready queue this task  would hang on
+;  alarm                - The alarm queue this task would hang on
+;  setpri               - The set priority queue this task would hang on
+;  priority             - The priority of the task
+;  stkptr               - The stack pointer value
+;  stsptr               - statistic object
+;
+;  Note: PIP probe functionality is *not* implemented for this target
+;
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+KNL_cinitObj    .macro  ready, alarm, setpri, priority, stkPtr, stsPtr
+        C55_cinitBegin isKnlAligned
+        QUE_cinitObj    ready                   ; kobj.ready.prev
+        QUE_cinitObj    alarm                   ; kobj.ready.alarm
+        QUE_cinitObj    setpri                  ; kobj.setpri
+
+        ;
+        ; GCONF gives priority of 0ffffffffh for -1, so we need to
+        ; translate  since the assembler treats 0ffffffffh as unsigned
+        ;
+
+        .if :priority: = 0ffffh
+            .eval       -1, local_priority
+        .else
+            .eval       :priority:, local_priority
+        .endif
+
+        .if :priority:  == 0ffffh               ; KNL_queues[3] is _KNL_inactive
+                C55_cinitDataPtr _KNL_queues+3*QUE_A_OBJSIZE 
+                                                ; kobj.queue = _KNL_inactive
+                                                ; queue. All terminated
+                                                ; and  negative priority
+                                                ; tasks go  here.
+                C55_cinitInt    local_priority  ; kobj.priority
+                C55_cinitInt    0               ; kobj.mask
+
+        .else                                   ; if non negative priority 
+                C55_cinitDataPtr _KNL_queues+(local_priority+4)*QUE_A_OBJSIZE
+                C55_cinitInt    local_priority  ; kobj.priority
+                C55_cinitInt    1<< local_priority; kobj.mask
+        .endif
+                C55_cinitDataPtr stkPtr         ; reg_sp value
+                C55_cinitInt    0               ; kobj.timeout
+                C55_cinitInt    0               ; kobj.mode
+
+        .if GBL_ENABLEINST
+            C55_cinitDataPtr    stsPtr                  ; kobj.sts
+        .else
+            C55_cinitDataPtr    0
+        .endif
+        C55_cinitInt    0                               ; kobj.signalled
+        C55_cinitEnd isKnlAligned
+        .endm
+
+
+;# ======== Knljob_cinitObj ========
+;  Create a Knljob  object's cinit value section
+;
+;  parameters:
+;  queValue             - Que for hanging all the  sems
+;  countValue           - number  of posts when on KNL_wList
+;  fxnJob               - function that services this job
+;
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+KNLJOB_cinitObj         .macro   queValue, countValue, fxnJob
+
+        C55_cinitBegin          isKnljobAligned
+        QUE_cinitObj            queValue
+        C55_cinitInt            countValue
+        C55_cinitCodePtr        fxnJob  
+        C55_cinitEnd            isKnljobAligned
+
+        
+        .endm
+
+        .endif          ; if KNL_ is not defined

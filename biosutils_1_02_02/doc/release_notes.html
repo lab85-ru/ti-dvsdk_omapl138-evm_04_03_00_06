@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+    
+    
+    <title>DSP/BIOS Utilities Release Notes</title><!-- For now, we use the doxygen style sheet --><link href="" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+	p { font: 12pt/14pt Verdana }
+	ul { font: 12pt/14pt Helvetica }
+</style><style type="text/css">
+	.sections a { font:Italic }
+</style></head>
+
+
+<body>
+<table width="100%">
+<tbody><tr>
+  <td bgcolor="black" width="1"><a href="http://www.ti.com">
+  <img src="tilogo.gif" border="0" height="54" width="222"></a></td>
+  <td bgcolor="red"><img src="titagline.gif" height="26" width="314"></td>
+</tr>
+</tbody></table>
+
+
+
+
+<h1><a name="BIOS_TOP">DSP/BIOS Utilities 1.02.02 Release Notes</a></h1>
+
+<p>
+This release note is divided into the following sections:
+</p>
+<p class="sections">
+<a href="#Introduction">Introduction</a>,
+<a href="#Documentation_Links">Documentation Links</a>,
+<a href="#Whats_New">What's New</a>,
+<a href="#Upgrading_And_Compatibility_Info">Upgrading And Compatibility Information</a>,
+<a href="#Device_Support">Device Support</a>,
+<a href="#Validation">Validation Information</a>,
+<a href="#Known_Issues">Known Issues</a>,
+<a href="#Defect_Fixes">Defect Fixes</a>,
+<a href="#Benchmarks">Benchmarks</a>,
+<a href="#Tech_Support_And_Prod_Updates">Technical Support And Product Updates</a>,
+</p>
+
+<hr>
+
+<h2><a name="Introduction">Introduction</a></h2>
+
+<p>
+The DSP/BIOS Utilities Product provides a set of tools that is
+complimentary to the DSP/BIOS real time operating system. The DSP/BIOS
+Utilities consists of the following packages:</p>
+<ul>
+    <li>ti.bios.utils: The utils package contains the following module:</li>
+    <ul type="circle">
+        <li>Load:</li>
+        <ul type="square">
+            <li>Used for computing and returning the CPU load of the DSP.</li>
+        </ul>
+    </ul>
+    <li>ti.bios.log.support: The log support package contains the following
+    modules:</li>
+    <ul type="circle">
+        <li>LogTrack:</li>
+        <ul type="square">
+            <li>Supports tracking of CPU load, user values residing in Target
+            memory, and dynamic task creation via DSP/BIOS message logs.</li>
+        </ul>
+        <li>LogAux:</li>
+        <ul type="square">
+            <li>Provides an API set that is supplementary to DSP/BIOS log,
+            which gives the user more control over DSP/BIOS logs.  This includes
+            APIs for:</li>
+            <ul type="circle">
+                <li>Enabling or disabling a set of DSP/BIOS logs.</li>
+                <li>Flushing and discarding data from a set of DSP/BIOS
+                    logs.</li>
+                <li>Reading raw DSP/BIOS log data from Target memory.</li>
+            </ul>
+        </ul>
+    </ul>
+    <li>ti.bios.log.ndk: The log ndk package contains the following module:</li>
+    <ul type="circle">
+        <li>LogServerCgi:</li>
+        <ul type="square">
+            <li>Provides a CGI (Common Gateway Interface) command set used to
+            access the DSP/BIOS logs via an internet connection.  The following
+            CGI functionality is supported for accessing DSP/BIOS logs via
+            internet connection:</li>
+            <ul type="circle">
+                <li>Enabling or disabling a set of DSP/BIOS logs.</li>
+                <li>Flushing and discarding data from a set of DSP/BIOS
+                logs.</li>
+                <li>Reading and writing a word of data to Target memory.</li>
+                <li>Getting the DSP clock speed.</li>
+                <li>Setting up to four addresses of user values, which will be
+                printed out to a DSP/BIOS log.</li>
+                <li>Capturing the entire contents for a set of logs in the
+                program.</li>
+                <li>Streaming the contents of a set of logs indefinitely.</li>
+            </ul>
+        </ul>
+    </ul>
+    <li>ti.bios.rtadecode</li>
+    <ul type="circle">
+        <li>The rtadecode package provides a program which decodes DSP/BIOS
+        RTA data from the DSP.</li>
+        <li>The rtadecode program can be used to process the binary log data
+        that is read using the ti.bios.log.support and ti.bios.log.ndk packages.        </li>
+        <li>The rtadecode program will print out information about the BIOS
+        LOG_printf() statements in the program, such as the format string.</li>
+    </ul>
+</ul>
+
+<a href="#BIOS_TOP">back to top</a>
+
+<hr>
+<h2><a name="Documentation_Links">Documentation Links</a></h2>
+
+<p>
+The following documentation is available in this release:
+</p>
+
+<ul>
+	<li><a href="BIOS_Log_Server_Setup.pdf">BIOS Log Server Setup Guide</a></li>
+	<li><a href="../packages/xdoc/index.html">XDOC documentation</a></li>
+</ul>
+
+<a href="#BIOS_TOP">back to top</a>
+
+<hr>
+<h2><a name="Whats_New">What's New</a></h2>
+<ul>
+        <li>Source code is now provided with this product.</li><li>This product is covered under the terms and conditions found in the New BSD Software License Agreement. </li><li>Rebuilt with DSP/BIOS 5.33.05.</li>
+        
+</ul>
+
+<a href="#BIOS_TOP">back to top</a>
+
+<hr>
+<h2><a name="Upgrading_And_Compatibility_Info">Upgrading And Compatibility Information</a></h2>
+
+<p>
+If the user is using DSP/BIOS 5.31.02 or earlier, then the examples will not
+work due to the removal of the call to TRC_disable() in the main() function
+of the logserverexample.c file.&nbsp;</p><p>Support of DSP/BIOS 5.33.05 has not affected compatibility of this product. &nbsp;This product will work with 5.32-5.33.0x.</p>
+
+<a href="#BIOS_TOP">back to top</a>
+
+<hr>
+<h2><a name="Device_Support">Device Support</a></h2>
+
+<p>
+This release supports the following Devices:
+<br>&nbsp;<br>
+
+<table border="1">
+	
+	<tbody><tr> 	
+	<td>&nbsp;</td>
+	<th>Runtime Model</th>
+    	</tr>
+
+	<tr> 
+	<th>64xx</th>
+	<td>Little Endian</td>
+
+	</tr><tr> 
+	<th>64xx+</th>
+     	<td>Little Endian</td>
+
+	</tr><tr> 
+	<th>674x</th>
+     	<td>Little Endian</td>
+	
+</tr></tbody></table>
+
+<a href="#BIOS_TOP">back to top</a>
+
+</p><hr>
+<h2><a name="Validation">Validation Information</a></h2>
+
+<p>
+This release was built and validated against using the following components:
+</p>
+
+<ul>
+    <li>
+        C64x and C64x+ Code Generation Tools version 6.0.14</li>
+    <li>
+        C674x Code Generation Tools version 6.1.5</li>
+    <li>
+        DSP/BIOS 5.33.05</li>
+    <li>
+        NDK 1.92</li>
+</ul>
+
+<h3>C64x+</h3>
+
+<ul>
+    <li>
+        Tested using the EVMDM6437 board via XDS560 emulator.
+    </li>
+</ul>
+
+<h3>C64x</h3>
+
+<ul>
+    <li>
+        None.
+    </li>
+</ul>
+
+<h3>C674x</h3>
+
+<ul>
+    <li>
+        None.
+    </li>
+</ul>
+
+<a href="#BIOS_TOP">back to top</a>
+
+<hr>
+<h2><a name="Known_Issues">Known Issues</a></h2>
+
+<h3>The following issues are known to affect this release:</h3>
+<ul>
+    <li>Workaround required for defect SDSCM00013785.</li>
+    <ul type="circle">
+        <li>The disabling of CLK logging is required in order to work around
+        the overwrite of the B31 register in DSP/BIOS 5.31.02.</li>
+	<li>The following function call must be added to the user's main()
+	function in order to work around this issue:
+	TRC_disable(TRC_LOGCLK);</li>
+	<li>This bug has been fixed in DSP/BIOS 5.31.04.</li>
+    </ul>
+</ul>
+
+<a href="#BIOS_TOP">back to top</a>
+
+<hr>
+<h2><a name="Defect_Fixes">Defect Fixes</a></h2>
+
+<ul type="circle">
+    <li>SDOCM00057331 -- BIOS Utilities need to be released under the BSD license.</li>
+</ul>
+
+<a href="#BIOS_TOP">back to top</a>
+
+<hr>
+<h2><a name="Benchmarks">Benchmarks</a></h2>
+
+<h3>None.</h3>
+<ul>
+</ul>
+
+<a href="#BIOS_TOP">back to top</a>
+
+<hr>
+<h2><a name="Tech_Support_And_Prod_Updates"></a>Technical Support And Product Updates</h2>
+
+<ul>
+<li>Please contact softwaresupport@ti.com for technical support.</li>
+</ul>
+
+<a href="#BIOS_TOP">back to top</a>
+
+<hr>
+
+<p>
+Last updated: May 22, 2009
+</p>
+</body></html>

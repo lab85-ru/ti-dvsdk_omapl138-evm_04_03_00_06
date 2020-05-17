@@ -1,0 +1,74 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_TNETV107X.tci ========
+ *  This file contains BIOS settings for TNETV107X (DaVinci).
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_DM420.tci");
+
+/*
+ *  ======== bios.initTNETV107X ========
+ *  BIOS initialization for the TNETV107X is same as for DM420
+ */
+
+bios.initTNETV107X = function (prog, baseseed)
+{
+    /*
+     *  Find configuration seed files to load
+     */
+    if (baseseed == null) {
+	baseseed = "ti/bios/config/cdb/cdm420.cdb";
+    }
+
+    var seed = utils.findSeed(baseseed);
+    if (seed != null) {
+	try {
+	    prog.load(seed);
+	}
+	catch (e) {
+	    throw new Error ("Can't load configuration seed '" + seed + "' : "
+		+ e);
+	}
+    }
+    else {
+	throw new Error ("Can't find configuration seed: " + baseseed);
+
+    }
+
+    prog.module("ISRC").instance("Timer_0").iIntrSelectNum = 4;
+    prog.module("ISRC").instance("Timer_1").iIntrSelectNum = 6;
+    prog.module("HWI").instance("HWI_INT14").interruptSelectNumber = 4;
+    prog.module("CLK").TIMER0BASE = 0x08086500;
+    prog.module("CLK").TIMER1BASE = 0x08086600;
+    prog.module("CLK").TIMERSELECT = "Timer 1";
+    /* enable specification of Input Clock Rate */
+    prog.module("CLK").SPECIFYRATE = true;
+    prog.module("CLK").INPUTCLK = 100.0;
+
+    /* set CLKOUT to be the value of cpu.clockRate. */
+    bios.internal.setClkout(prog);
+
+    /* Set endian mode based on build options */
+    if (prog.build.target.model.endian != null) {
+        if (prog.build.target.model.endian != "little") {
+	    print("Warning: '" + prog.build.target.model.endian +
+	        "' endian mode" + " is not supported on '" +
+	        prog.cpu.deviceName + "' device.")
+        }
+    }
+
+    prog.module("GBL").ENDIANMODE = prog.build.target.model.endian;
+    
+    /* Use HWI dispatcher with IDMA0 workaround */
+    prog.module("GBL").USEIDMA0DISPATCHER = true;
+
+    /* initialize the default memory segments for DM420 */
+    bios.internal.setupMemoryDM420(prog);
+
+    /* initialize some memory map registers */
+    bios.internal.initializeRegisterMap(prog);
+}

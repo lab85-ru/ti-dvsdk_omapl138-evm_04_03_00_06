@@ -1,0 +1,379 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== hst.h55 ========
+;
+;
+
+        .if ($isdefed("HST_") = 0)      ; prevent multiple includes of this file
+HST_    .set    1
+
+        .include std.h55
+        .include cinit.h55
+
+        .include chk.h55
+        .include lnk.h55
+        .include rta.h55
+
+        .global LNK_D_fromHostMask
+        .global LNK_D_dataReadyMask
+
+isRtchanAligned .set  LONGALIGN ; Enforced assuming simplicity of
+                                ; target code. May require to change
+                                ; after debug with host. NOT required
+                                ; by "C" convention.
+
+RTCHAN_Obj        .struct         ; This structure has *NO* alignment constraint
+enabled         Int     1 ; rtdx channel enabled flag
+kount           Int     1 ; rtdx data transfer count
+busy            Int     1 ; rtdx channel busy/free status
+pfWhenDone      CodePtr 1 ; rtdx pfWhenDone function pointer
+next            DataPtr 1 ; rtdx next data pointer
+endPad          .align  isRtchanAligned
+RTCHAN_A_OBJSIZE  .endstruct
+
+RTDX_BASE       .set    RTCHAN_Obj.enabled
+RTDX_O_ENABLED  .set    RTCHAN_Obj.enabled - RTDX_BASE
+RTDX_O_COUNT    .set    RTCHAN_Obj.kount - RTDX_BASE
+RTDX_O_BUSY     .set    RTCHAN_Obj.busy - RTDX_BASE
+
+;  !!!!!!!!!!!!!!!!  WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+;
+;  If the host link type is DSP/BIOS LINK,
+;  the RTCHAN_Obj is redefined as follows:
+;
+;  biosLinkChnlNbr  Int 1     ; the associated DSP/BIOS LINK channel number
+;  kount            Int 1     ; nbr of words
+;  iomode           Int 1     ; channel I/O Mode 0:output, 1:input
+;
+;  !!!!!!!!!!!!!!!!  WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+BIOSLINK_BASE     .set  RTDX_BASE
+BIOSLINK_O_CHNL   .set  RTDX_O_ENABLED
+BIOSLINK_O_COUNT  .set  RTDX_O_COUNT
+BIOSLINK_O_IOMODE .set  RTDX_O_BUSY
+
+isHstAligned    .set LONGALIGN    ; HST Objects should start on even address
+HST_Obj         .struct   ; HST Channel Object, must align to Even Address
+chanId          Int     1 ; HST Channel ID
+                          ; should see a pad word here for large_model
+pipHandle       DataPtr 1 ; HST Pipe Handle
+pad0            .align  isRtchanAligned
+rtdxChan        .tag    RTCHAN_Obj
+endPad          .align  isHstAligned
+                          ; end-arround padding if reqd. to even Objsize
+HST_A_OBJSIZE   .endstruct
+
+HST_RTDXENABLED .set 01010h    ; mask used by RTDX to indicate if an
+                               ; individual channel is enabled
+
+;
+;  ======== HST OFFSETS ========
+;
+
+HST_BASE        .set    HST_Obj.chanId
+HST_O_CHANID    .set    HST_Obj.chanId - HST_BASE
+HST_O_PIPHANDLE .set    HST_Obj.pipHandle - HST_BASE
+HST_O_RTDXCHAN  .set    HST_Obj.rtdxChan - HST_BASE
+
+HST_O_BIOSLINKCHNL .set HST_O_RTDXCHAN
+
+;
+;# ======== HST_Obj ========
+;  Allocate a host object and initialize all fields.
+;
+;       name    - name of host object
+;       id      - host channel #
+;       mode    - mode (input or output)
+;       buf     - preallocated buffer (or <NULL> if HST_Obj should create)
+;       framesize - size of pipe frame (words)
+;       numframes - number of frames in pipe.
+;       biosLinkChnlNbr - if the communication link type is "BIOSLINK",
+;                         which BIOSLINK channel number is used for
+;                         to map HST channel.
+;       stsflg  - currently not used
+;       fxn     - notify function
+;       arg0    - argument to notify function
+;       arg1    - argument to notify function
+;       lnktype - communication link type (rtdx, dsm, none etc.,)
+;
+        .asg    ":GBL_Obj$regs:,:PIP_Obj$regs:", HST_Obj$regs
+HST_Obj .macro  cflag, name, id, mode, buf, framesize, numframes, biosLinkChnlNbr, stsflg, fxn, arg0, arg1, lnktype, align
+
+        .if (:cflag: = 0)
+            .mexit
+        .endif
+
+        .global :name:$hst      ; create symbol for hst names for vbd/rta
+:name:$hst .set 0
+ 
+        CHK_nargs "HST_Obj", lnktype 
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "HST_Obj lnktype error"
+        .endif
+
+        CHK_domain HST_Obj, mode, "output,input", "output"
+        .asg ":CHK_status:", mode
+        .if ($symcmp(":mode:", "error") = 0)
+            .emsg "HST_Obj mode error"
+        .endif
+
+        .global :name:      ; The HST Obj name
+        .global :name:$buf  ; The HST Obj's buffer
+        .global :name:$framesize
+
+:name:$framesize .set   :framesize:
+
+        .global :name:$mode
+        .if ($symcmp(":mode:", "output") = 0)
+:name:$mode .set        1
+        .else
+:name:$mode .set        0
+        .endif
+        .global :name:$id
+:name:$id .set  :id:
+
+        ;----------------------------------------------------------------
+        ; Allocate buffer space (if not supplied) from section ".hst:id:"
+        ;
+        .if ($symcmp(":buf:", "<NULL>") = 0)
+            GBL_Obj :name:$buf, :framesize:*:numframes:, .hst:id:, "noalign", -1,1
+            .asg    :name:$buf, buf
+        .endif
+
+        ;----------------------------------------------------------------
+        ; Ascertain which end of HST channel (reader/writer) user wants
+        ; to log/accumulate statistics on. For HST pipe opened in INPUT
+        ; mode (ie., Host->Target), stsType is set to "reader". For
+        ; HST pipe opened in OUTPUT mode (ie., Target->Host), stsType
+        ; is set to "writer". This stsType is passed as argument to PIP
+        ; create macro later on.
+        ;
+        .if (stsflg == 0)
+            .asg "none",stsType
+        .else
+            .if ($symcmp(":mode:","input") == 0)
+                .asg "reader",stsType
+            .else
+                .asg "writer",stsType
+            .endif
+        .endif
+
+        ;----------------------------------------------------------------
+        ; Different underlying LNK drivers would need different size of
+        ; basic HST channel object. Ascertain the configured size and
+        ; remember by storing this as 1st header element in the table
+        ; of all configured HST_Objs
+        ;
+        .asg    HST$hstCount, chanId
+
+        .var HST_OBJLEN
+        .if ($symcmp(":lnktype:","RTDX") == 0 | HST_BIOSLINK == 1)
+          .asg HST_A_OBJSIZE, HST_OBJLEN  ; include RTDX channel entries
+                                          ; If the host link type is DSP/BIOS
+                                          ; LINK, the RTCHAN_Obj is used.
+                                          ; Please look at the above comment
+                                          ; block for structure redefinition.
+        .else
+               .asg HST_O_RTDXCHAN, HST_OBJLEN ; exclude any channel entries!!
+        .endif
+
+        .if chanId = 0
+        ;----------------------------------------------------------------
+        ; Allocate a slot to hold HST_Obj size and cinit it,
+        ; ahead of inserting the very first HST_Obj entry in table of
+        ; all configured HST_Objs.
+        ; NOTE: Following definition is synonymous with HST_A_TABBEG.
+        ;       Since series of HST_Obj entries that follow this <size>
+        ;       record are themselves aligned to even address, we'd
+        ;       see a dummy pad word immediately ahead of 1st HST_Obj
+        ;       and immediately following the <size> at HST_A_TABBEG
+        ;
+:name:$objsize  .usect ".hst", STD_TARGWORDMAUS * 1,0,2
+          .sect ".cinit"
+          .field STD_TARGWORDMAUS * 1
+          .field :name:$objsize, 24 
+          .field DATAPAGE, 8 
+          .field HST_OBJLEN
+        .endif
+
+        C55_allocateObject isHstAligned, :name:, HST_OBJLEN, ".hst"
+        .if ($symcmp(":lnktype:","RTDX") == 0)
+             .global :name:$rtdx
+:name:$rtdx  .set :name: + HST_O_RTDXCHAN ; set symbolic ref. to rtdxChannel
+        .endif
+
+        .if (HST_BIOSLINK == 1)
+            .global :name:$bioslink
+:name:$bioslink  .set :name: + HST_O_RTDXCHAN ; set symbolic reference
+                                              ; to BIOSLINK Channel Object
+                                              ; The symbol is used by RTA
+                                              ; host side tools. 
+            .global :name:$bioslinkchnlid
+:name:$bioslinkchnlid .set   biosLinkChnlNbr
+        .endif
+
+        C55_cinitHeader CINITALIGN, isHstAligned, :name:, HST_OBJLEN, DATAPAGE
+        C55_cinitBegin  isHstAligned
+        C55_cinitInt        (1<<:chanId:)  ; HST Channel ID
+        C55_cinitDataPtr  :name:$pipe    ; HST Pipe Handle
+
+        .if ($symcmp(":lnktype:","RTDX") == 0)
+            .if ($symcmp(":mode:","output") == 0)
+                C55_cinitInt     01010h         ; enabled = RTDX_CHAN_ENABLED
+                C55_cinitCodePtr 0              ; pfWhenDone
+                C55_cinitDataPtr 0              ; next
+                C55_cinitInt     0              ; this is for padding
+                C55_cinitInt     0              ; this is for padding
+            .else
+                C55_cinitInt     01010h         ; enabled = RTDX_CHAN_ENABLED
+                C55_cinitInt     0              ; rtdx transfer count 
+                C55_cinitInt     0              ; rtdx channel busy flag
+                C55_cinitCodePtr 0              ; pfWhenDone
+                C55_cinitDataPtr 0              ; next
+            .endif
+        .else
+; 
+;  Please check the above comment block to find how BIOSLINK
+;  redefines RTCHAN_Obj structure for its usage.
+;
+            .if (HST_BIOSLINK == 1)
+                C55_cinitInt      biosLinkChnlNbr  ; bioslink channel id 
+                C55_cinitInt      0                ; kount 
+                C55_cinitInt      :name:$mode      ; channel I/O mode 
+            .endif
+        .endif
+
+        C55_cinitEnd    isHstAligned
+
+        .if ($symcmp(":mode:","output") == 0)
+          PIP_Obj 1, :name:$pipe, -1, :name:$buf, framesize, numframes, :stsType:, fxn, arg0, arg1, iRTA_F_or, LNK_D_dataReadyMask, (1<<:chanId:), :align:
+        .endif
+ 
+        .if ($symcmp(":mode:","input") == 0)
+          PIP_Obj 1, :name:$pipe, -1, :name:$buf, framesize, numframes, :stsType:, iRTA_F_or, LNK_D_fromHostMask, (1<<:chanId:), fxn, arg0, arg1, :align:
+        .endif
+
+        .eval HST$hstCount + 1, HST$hstCount
+
+        .endm
+
+;
+;# ======== HST_config ========
+;  Invoked by configuration file prior to creating any objects via
+;  HST_Obj.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", HST_config$regs
+HST_config .macro _rtdx, _dsm, _none, _bioslink, _maxframeset, _maxframeallowed, _dsmbufseg, _dsmmemsize, _chnldrvname, _bioslinkdevice
+        .asg    0, HST$hstCount
+        .asg    HST$hstCount, chanId
+
+        .sect ".printf"
+        .global _HST_HOST_CHANNEL_DRIVER
+_HST_HOST_CHANNEL_DRIVER .byte ":_chnldrvname:" ; Used by host tools to find 
+                    .byte 0                     ; the host channel driver name 
+
+        .if(HST$ != 0)
+            LNK_config _dsm, _dsmbufseg, _dsmmemsize, _bioslink, _bioslinkdevice
+  ; do any reqd LNK config
+        .endif
+
+        .endm
+
+;
+;# ======== HST_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", HST_end$regs
+HST_end .macro
+        .endm
+
+;
+;# ======== HST_getpipe ========
+;  Get address of PIP associated with HST channel
+;#
+;#  Preconditions:
+;#      [x]ar0 = address of the host channel object
+;#
+;#  Postconditions:
+;#      [x]ar0 = address of the PIP object
+;#
+;
+        .asg    "xar0", HST_getpipe$regs
+HST_getpipe     .macro dummy
+        CHK_void HST_getpipe, dummy
+
+        .if  (.MNEMONIC)                        ; if  MNEMONIC assembler
+                .if  (_55L_) | (_55H_)  
+                        mov dbl(*ar0(#HST_O_PIPHANDLE)), xar0
+                .else
+                        mov *ar0(#HST_O_PIPHANDLE), ar0
+                .endif                          ; endif Large model
+        .else                                   ; elseif ALGEBRAIC
+                .if  (_55L_) | (_55H_)  
+                         xar0 =  dbl(*ar0(#HST_O_PIPHANDLE))
+                .else
+                        ar0 = *ar0(#HST_O_PIPHANDLE)
+                .endif                          ; endif Large model
+        .endif                                  ; endif MNEMONIC
+        .endm
+
+;
+;# ======== HST_init ========
+;  Runtime initialization for HST
+;
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#    they vary with the LNK implementation. For RTDX HST_init must
+;#    follow HWI_init so that the IER bit set by HST_init (needed for
+;#    the RTDX reserved interrupt) is not wiped out by HWI_init.
+;#
+        .asg "LNK_init$regs", HST_init$regs
+HST_init  .macro
+        .if(HST$ != 0)
+            LNK_init                    ; do any reqd LNK initialization 
+        .endif
+
+        .endm
+
+;
+;# ======== HST_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#      none
+;#
+;
+        .asg "", HST_startup$regs
+HST_startup  .macro
+        .endm
+
+        .endif          ; if HST_ is not defined

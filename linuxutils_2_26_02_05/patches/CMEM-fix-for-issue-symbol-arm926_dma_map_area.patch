@@ -1,0 +1,31 @@
+diff -Naur linuxutils_2_26_02_05_ori/packages/ti/sdo/linuxutils/cmem/src/module/cmemk.c linuxutils_2_26_02_05_new/packages/ti/sdo/linuxutils/cmem/src/module/cmemk.c
+--- linuxutils_2_26_02_05_ori/packages/ti/sdo/linuxutils/cmem/src/module/cmemk.c	2011-07-12 23:32:14.000000000 +0530
++++ linuxutils_2_26_02_05_new/packages/ti/sdo/linuxutils/cmem/src/module/cmemk.c	2011-11-18 21:12:30.072223292 +0530
+@@ -2374,7 +2374,8 @@
+ module_init(cmem_init);
+ module_exit(cmem_exit);
+ 
+-#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,34)
++//#if LINUX_VERSION_CODE < KERNEL_VERSION(2,6,34)
++#if 1
+ 
+ /*
+  * The following assembly functions were taken from
+@@ -2396,6 +2397,17 @@
+  */
+ #define CACHE_DLINESIZE 32
+ 
++asm("\n \
++        .global arm926_dma_map_area\n \
++arm926_dma_map_area:\n \
++        add     r1, r1, r0\n \
++@        cmp     r2, #DMA_TO_DEVICE\n \
++        cmp     r2, #1\n \
++        beq     arm926_dma_clean_range\n \
++        bcs     arm926_dma_inv_range\n \
++        b       arm926_dma_flush_range\n \
++");
++
+ /*
+  *      dma_inv_range(start, end)
+  *

@@ -1,0 +1,73 @@
+SECTIONS
+{
+    GROUP: 
+    { 
+    .text:_M4H3DEC_TI_decodeFrame   
+    .text:_M4H3DEC_TI_QDMA_open   
+    .text:_M4H3DEC_TI_resetBitStream   
+    .text:_M4H3DEC_TI_convertToLittleEndian   
+    .text:_M4H3DEC_TI_initializeDecoderObject   
+    .text:_M4H3DEC_TI_decodeStreamHeader   
+    .text:_M4H3DEC_TI_byteAlignBitStream   
+    .text:_M4H3DEC_TI_decodeSequenceHeader   
+    .text:_M4H3DEC_TI_byteAlignedShowBits    
+    .text:_M4H3DEC_TI_decodeVisualObjectHeader   
+    .text:_M4H3DEC_TI_decodeVOLHeader   
+    .text:_M4H3DEC_TI_scanToRSHeader   
+    .text:_M4H3DEC_TI_getBitStreamIndex   
+    .text:_M4H3DEC_TI_decodeNextFrame   
+    .text:_M4H3DEC_TI_decodeGOVHeader   
+    .text:_M4H3DEC_TI_decodeVOPHeader   
+    .text:_M4H3DEC_TI_getCurRefBufs   
+    .text:_M4H3DEC_TI_initConcealStruct   
+    .text:_M4H3DEC_TI_decodeIVOP   
+    .text:_M4H3DEC_TI_initializeVldTables   
+    .text:_M4H3DEC_TI_initializePacketObjects   
+    .text:_M4H3DEC_TI_resetAcdcPredictors   
+    .text:_M4H3DEC_TI_resetLeftAcdcPredictors   
+    .text:_M4H3DEC_TI_decodeIMB   
+    .text:_M4H3DEC_TI_IntraDCSwitch_Decision   
+    .text:_M4H3DEC_TI_vldIMB_ASP   
+    .text:_M4H3DEC_TI_applyAcPrediction   
+    .text:_M4H3DEC_TI_UpdateLeftDCAC_1   
+    .text:_M4H3DEC_TI_UpdateUpperDCAC   
+    .text:_M4H3DEC_TI_idct_8x8   
+    .text:_M4H3DEC_TI_fieldtoframe   
+    .text:_M4H3DEC_TI_saturatePixels   
+    .text:_M4H3DEC_TI_QDMA_copy2D2D_sep_linked  
+    .text:_M4H3DEC_TI_QDMA_wait   
+    .text:_M4H3DEC_TI_QDMA_copy2D1D_linked   
+    .text:_M4H3DEC_TI_QDMA_close   
+    .text:_M4H3DEC_TI_decodePVOP   
+    .text:_M4H3DEC_TI_resetBB   
+    .text:_M4H3DEC_TI_resetRefWindow   
+    .text:_M4H3DEC_TI_resetMvArray   
+    .text:_M4H3DEC_TI_decodeMbHeaderP   
+    .text:_M4H3DEC_TI_decodeMV   
+    .text:_M4H3DEC_TI_predictMV   
+    .text:_M4H3DEC_TI_saveBBSnapshot   
+    .text:_M4H3DEC_TI_updateBoundingBox   
+    .text:_M4H3DEC_TI_updateChromaBoundingBox   
+    .text:_M4H3DEC_TI_interpolateQpel   
+    .text:_M4H3DEC_TI_pred   
+    .text:_M4H3DEC_TI_addError   
+    .text:_M4H3DEC_TI_saturateIMB   
+    .text:_M4H3DEC_TI_mcAiZero   
+    .text:_M4H3DEC_TI_interpolateQpel4MV   
+    .text:_M4H3DEC_TI_horizontalPaddingChroma   
+    .text:_M4H3DEC_TI_horizontalPaddingLuma   
+    .text:_M4H3DEC_TI_vldPMB_ASP   
+    .text:_M4H3DEC_TI_resetTopPredictorMB   
+    .text:_M4H3DEC_TI_decodeBVOP   
+    .text:_M4H3DEC_TI_decodeMBHeaderB   
+    .text:_M4H3DEC_TI_decodeMV_B   
+    .text:_M4H3DEC_TI_updateBoundingBox_BVOP   
+    .text:_M4H3DEC_TI_updateChromaBoundingBox_BVOP   
+    .text:_M4H3DEC_TI_addError_BVOP   
+    .text:_M4H3DEC_TI_clipMV   
+    .text:_M4H3DEC_TI_pred_BVOP   
+ 
+} > `this.MPEG4DEC.codeSection`
+
+
+}

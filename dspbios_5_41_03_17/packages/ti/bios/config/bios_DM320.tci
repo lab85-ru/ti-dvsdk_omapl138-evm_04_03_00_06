@@ -1,0 +1,105 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_DM320.tci ========
+ *  This file contains BIOS settings for DM320.
+ *  The chip configuration settings are based on the document TMS320DM320 
+ *  Technical Reference Manual v1.1. All addresses are in words, since for c54x
+ *  words are smallest addressable units.
+ *
+ */
+
+/*
+ *  ======== bios.internal.setupMemoryDM320 ========
+ *  This function is the top-level function that will remove all MEM segments
+ *  from the cdb file.  It will take your physical memory map from calling
+ *  getMemoryMap() and create MEM instances in cdb.
+ *  It will then set sections to the default segment specified and fix up
+ *  the length and/or base of MEM segments if needed.
+ *
+ *  It checks whether the OVLY bit is set or not to determine default segments.
+ *  if OVLY = 1, then P_DARAM exists so set it as the default code section.
+ *  Otherwise, randomly select a code section as the default.
+ */
+bios.internal.setupMemoryDM320 = function (prog)
+{
+    var OVLYBITMASK = 0x0020;	// OVLY bit position in PMST register
+
+    if (prog.cpu.registers.pmst & OVLYBITMASK) {
+	bios.initializeMemory(prog, "P_DARAM", "D_DARAM");
+
+	/* fix the BIOS MEM objects up */
+	var ddaram  = prog.module("MEM").instance("D_DARAM");
+	ddaram.base = 0x00000080;
+	ddaram.len  = 0x00003f80;
+
+	var pdaram  = prog.module("MEM").instance("P_DARAM");
+	/* If the base is increased to 0x4000 before len is decreased to 0x3f80
+	 * their sum is > 0x8000, and then P_DARAM becomes an illegal segment 
+	 * for MEM.BIOSNORPTSEG.
+	 */
+	pdaram.len  = 0x00003f80;
+	pdaram.base = 0x00004000;
+    }
+    else {
+	bios.initializeMemory(prog);
+    }
+
+    /* fix the bios MEM segments */
+    var scratchRam  = prog.module("MEM").instance("D_SPRAM");
+    scratchRam.base = 0x00000060;
+    scratchRam.len  = 0x0000001a;
+
+    /*
+     * VECT needs to be placed in code space below 0x8000 so that its
+     * on the OVLY page and visible to code running in extended space.
+     * The len does not need to change.
+     */
+    var vect = prog.module("MEM").instance("VECT");
+    vect.base = 0x7f80;
+}
+
+/*
+ *  ======== bios.initDM320 ========
+ *  BIOS initialization for the DM320
+ */
+bios.initDM320 = function (prog, baseseed)
+{
+    /*
+     *  Find configuration seed files to load
+     */
+    if (baseseed == null) {
+	baseseed = "ti/bios/config/cdb/c54xx.cdb";
+    }
+
+    var seed = utils.findSeed(baseseed);
+    if (seed != null) {
+	try {
+	    prog.load(seed);
+	}
+	catch (e) {
+	    throw new Error ("Can't load configuration seed '" 
+                             + seed + "' : " + e);
+	}
+    }
+    else {
+	throw new Error ("Can't find configuration seed :"
+                         + baseseed);
+    }
+
+    /* Set CHIPTYPE to "other" since there is no CSL support for it. */
+    prog.module("GBL").CHIPTYPE = "other";
+
+    /* set CLKOUT to be the value of cpu.clockRate. */
+    bios.internal.setClkout(prog);
+
+    bios.internal.setupMemoryDM320(prog);
+
+    /* initialize some memory map registers */
+    bios.internal.initializeRegisterMap(prog);
+    
+    /* set the call model in GBL to what has been specified in the build */
+    prog.module("GBL").CALLMODEL = prog.build.target.model.codeModel;
+}

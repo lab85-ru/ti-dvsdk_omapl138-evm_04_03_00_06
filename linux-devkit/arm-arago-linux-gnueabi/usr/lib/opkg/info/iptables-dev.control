@@ -1,0 +1,14 @@
+Package: iptables-dev
+Version: 1.4.9.1-r7.1.6
+Description: iptables network filtering tools
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2+
+Architecture: armv5te
+OE: iptables
+Homepage: http://www.netfilter.org/
+Build: install/d0bd439
+Depends: iptables (= 1.4.9.1-r7.1.6), iptables
+Recommends: libnfnetlink-dev, libc6-dev, libgcc1-dev, iptables-dev
+Source: http://netfilter.org/projects/iptables/files/iptables-1.4.9.1.tar.bz2;name=iptables-1.4.9.1

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--  This file conforms to the DTD xdc/bld/release.dtd -->
+<release name="ti_psl" label="default" date="1190669467089" buildCount="2">
+<package name="ti.psl"
+    version="5, 0, 0, 0"/>
+<imports>
+</imports>
+<references>
+    <package name="xdc.bld"
+        version="1, 0, 0, 0">
+        <file name="BuildEnvironment.xs"/>
+        <file name="Executable.xs"/>
+        <file name="ITarget.xs"/>
+        <file name="Library.xs"/>
+        <file name="PackageContents.xs"/>
+        <file name="Repository.xs"/>
+        <file name="Utils.xs"/>
+        <file name="_gen.xs"/>
+        <file name="package.xs"/>
+        <file name="package/xdc.bld.sch"/>
+    </package>
+    <targetRoot base="/db/toolsrc/library/vendors2005/ti/c55/lead3v2.77/Solaris/"
+        trgs="ti.targets.C55,ti.targets.C55_large">
+        <file name="include/access.h"/>
+        <file name="include/float.h"/>
+        <file name="include/linkage.h"/>
+        <file name="include/math.h"/>
+        <file name="include/mathf.h"/>
+        <file name="include/mathl.h"/>
+        <file name="include/setjmp.h"/>
+        <file name="include/stdarg.h"/>
+        <file name="include/stddef.h"/>
+        <file name="include/stdint.h"/>
+        <file name="include/stdlib.h"/>
+        <file name="include/string.h"/>
+        <file name="include/unaccess.h"/>
+    </targetRoot>
+    <xdcRoot base="/db/toolsrc/library/vendors2005/xdc/xdcdist-d21/Solaris/">
+        <file name="include/utils.tci"/>
+    </xdcRoot>
+    <package name="ti.targets"
+        version="1, 0, 0, 0">
+        <file name="ITarget.xs"/>
+        <file name="package.xs"/>
+        <file name="package/ti.targets.sch"/>
+        <file name="std.h"/>
+    </package>
+    <package name="xdc.rts"
+        version="1, 0, 0, 0">
+        <file name="Error.h"/>
+        <file name="IHeap.h"/>
+        <file name="IModule.h"/>
+        <file name="ISystemProvider.h"/>
+        <file name="Memory.h"/>
+        <file name="System.h"/>
+        <file name="package/internal/Error.xdc.h"/>
+        <file name="package/internal/Memory.xdc.h"/>
+        <file name="package/internal/System.xdc.h"/>
+        <file name="package/package.defs.h"/>
+        <file name="std.h"/>
+        <file name="xdc.h"/>
+    </package>
+    <package name="xdc"
+        version="1, 1, 0, 0">
+        <file name="IPackage.xdc"/>
+        <file name="IPackage.xs"/>
+        <file name="om2.xs"/>
+        <file name="package.xs"/>
+        <file name="package/xdc.sch"/>
+        <file name="std.h"/>
+        <file name="xdc.tci"/>
+    </package>
+</references>
+<orphans>
+    <file name="/db/ztree/library/trees/psl-c03x/src/config.bld"/>
+</orphans>
+</release>

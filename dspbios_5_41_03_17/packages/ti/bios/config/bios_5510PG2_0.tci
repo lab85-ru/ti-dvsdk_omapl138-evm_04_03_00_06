@@ -1,0 +1,20 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_5510PG2_0.tci ========
+ *  This file contains BIOS settings for c5510.
+ *
+ */
+
+/*
+ *  ======== bios.init5510PG2_0 ========
+ *  BIOS initialization for the C5510PG2_0.
+ */
+bios.init5510PG2_0 = function (prog, baseseed)
+{
+    utils.importFile("ti/bios/config/bios_5510.tci");
+
+    bios.init5510(prog, baseseed);
+}

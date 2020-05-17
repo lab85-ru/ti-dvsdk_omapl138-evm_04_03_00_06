@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="ti.bios.utils" version="2, 0, 2, 02">
+    <units>
+        <module name="Load"/>
+    </units>
+    <sources>
+        <srcFile name="c64p_getltime.s64P"/>
+        <srcFile name="Load.c"/>
+        <srcFile name="package/package_ti.bios.utils.c"/>
+    </sources>
+    <configurations>
+    </configurations>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/package.cfg.dep" src="package.xdc"/>
+        <srcFile name="lib/utils.a64P.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/utils/c64p_getltime.o64P.dep" src="c64p_getltime.s64P"/>
+        <srcFile name="package/lib/lib/utils/package/package_ti.bios.utils.o64P.dep" src="package/package_ti.bios.utils.c"/>
+        <srcFile name="package/lib/lib/utils/Load.o64P.dep" src="Load.c"/>
+        <srcFile name="lib/utils.a674.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/utils/c64p_getltime.o674.dep" src="c64p_getltime.s64P"/>
+        <srcFile name="package/lib/lib/utils/package/package_ti.bios.utils.o674.dep" src="package/package_ti.bios.utils.c"/>
+        <srcFile name="package/lib/lib/utils/Load.o674.dep" src="Load.c"/>
+        <srcFile name="lib/utils.a64.mak" src="package.bld"/>
+        <srcFile name="package/lib/lib/utils/package/package_ti.bios.utils.o64.dep" src="package/package_ti.bios.utils.c"/>
+        <srcFile name="package/lib/lib/utils/Load.o64.dep" src="Load.c"/>
+        <srcFile name="package/rel/ti_bios_utils,src.tar.dep" src="package/rel/ti_bios_utils,src.xdc.inc"/>
+        <srcFile name="package/rel/ti_bios_utils.tar.dep" src="package/rel/ti_bios_utils.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.C64P"
+            version="ti.targets.C64P{1,0,6.0,14"
+            platform="ti.platforms.sim6xxx:TMS320CDM420"
+            isa="64P"
+            suffix="64P"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.0.14/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+        <target name="ti.targets.C674"
+            version="ti.targets.C674{1,0,6.1,5"
+            platform="ti.platforms.evmOMAPL137"
+            isa="674"
+            suffix="674"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.1.5/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+        <target name="ti.targets.C64"
+            version="ti.targets.C64{1,0,6.0,14"
+            platform="ti.platforms.sim6xxx:TMS320C6416"
+            isa="64"
+            suffix="64"
+            rootDir="/db/toolsrc/library/tools/vendors/ti/c6x/6.0.14/Linux"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    <library name="lib/utils"
+        pname="lib/utils.a64P"
+        profile="release"
+        target="ti.targets.C64P"/>
+    <library name="lib/utils"
+        pname="lib/utils.a674"
+        profile="release"
+        target="ti.targets.C674"/>
+    <library name="lib/utils"
+        pname="lib/utils.a64"
+        profile="release"
+        target="ti.targets.C64"/>
+    </libraries>
+    <executables>
+    </executables>
+    <tests>
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="ti_bios_utils,src"
+        pname="../../../../exports/ti_bios_utils,src.tar"
+        label="undefined"
+        relScript="/db/toolsrc/library/toolsC51/packages/tisb/release/filters/copyright.rel">
+        <file name="package.bld"/>
+        <file name="c64p.h"/>
+        <file name="Load.c"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="Load.tci"/>
+        <file name="package/package.rel.dot"/>
+        <file name="Load.h"/>
+        <file name="package.xdc"/>
+        <file name="Load.xdc"/>
+        <file name="c64p_getltime.s64P"/>
+        <file name="package/package.bld.xml"/>
+        <file name="package/package.ext.xml"/>
+        <file name="package/build.cfg"/>
+        <file name="libvers.xdt"/>
+        <file name="package.xs"/>
+    </release>
+    <release name="ti_bios_utils"
+        pname="../../../../exports/ti_bios_utils.tar"
+        label="default"
+        relScript="/db/toolsrc/library/toolsC51/packages/tisb/release/filters/copyright.rel">
+        <file name="Load.c"/>
+        <file name="package/package.ext.xml"/>
+        <file name="Load.h"/>
+        <file name="package/package.xdc.inc"/>
+        <file name="package.xs"/>
+        <file name="lib/utils.a64P"/>
+        <file name="lib/utils.a64"/>
+        <file name="package/package.rel.dot"/>
+        <file name="c64p.h"/>
+        <file name="package.xdc"/>
+        <file name="libvers.xdt"/>
+        <file name="c64p_getltime.s64P"/>
+        <file name="lib/utils.a674"/>
+        <file name="Load.tci"/>
+        <file name="package/package_ti.bios.utils.c"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.bld.xml"/>
+        <file name="package/package.cfg.xdc.inc"/>
+        <file name="package.bld"/>
+        <file name="Load.xdc"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>

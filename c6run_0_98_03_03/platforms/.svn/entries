@@ -1,0 +1,73 @@
+10
+
+dir
+559
+https://gforge.ti.com/svn/dspeasy/tags/0_98_03_03/platforms
+https://gforge.ti.com/svn/dspeasy
+
+
+
+2011-11-15T23:30:50.323318Z
+559
+moridinga
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+45344177-7d80-4b9a-b297-7cb5e146308c
+
+omapl138_syslink
+dir
+
+omap3530_syslink
+dir
+
+dm6446
+dir
+
+beagleboard
+dir
+
+dm3730_syslink
+dir
+
+TI816x_coff
+dir
+
+TI814x
+dir
+
+hawkboard
+dir
+
+omapl137
+dir
+
+beagleboard_syslink
+dir
+
+TI816x
+dir
+
+omapl138
+dir
+
+omap3530
+dir
+
+dm6467t
+dir
+
+dm3730
+dir
+

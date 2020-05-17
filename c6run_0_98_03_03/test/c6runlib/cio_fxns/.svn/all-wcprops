@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/cio_fxns
+END
+main.c
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/cio_fxns/main.c
+END
+cio_fxns.c
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/cio_fxns/cio_fxns.c
+END
+readme.txt
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/cio_fxns/readme.txt
+END
+Makefile
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/cio_fxns/Makefile
+END
+cio_fxns.h
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/test/c6runlib/cio_fxns/cio_fxns.h
+END

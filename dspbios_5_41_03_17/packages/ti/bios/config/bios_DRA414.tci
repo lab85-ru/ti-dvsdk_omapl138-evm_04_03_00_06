@@ -1,0 +1,17 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_DRA414.tci ========
+ *  This file contains BIOS settings for DRA414 (Jacinto 2).
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_DRA406.tci");
+
+/*
+ *  ======== bios.initDRA414 ========
+ *  BIOS initialization for the DRA414 is same as for DRA406
+ */
+bios.initDRA414 = bios.initDRA406;

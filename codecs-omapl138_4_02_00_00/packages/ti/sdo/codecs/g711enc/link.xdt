@@ -1,0 +1,19 @@
+SECTIONS
+{
+% if (this.G711ENC.dataSection) { 
+    .const:_G711_TII_CODER_version  > `this.G711ENC.dataSection`
+%}
+% if (this.G711ENC.codeSection) { 
+    .text:_G711ENC_TII_numAlloc  > `this.G711ENC.codeSection`
+    .text:_G711ENC_TII_initObj  > `this.G711ENC.codeSection`
+    .text:_G711ENC_TII_init  > `this.G711ENC.codeSection`
+    .text:_G711ENC_TII_g711Encode  > `this.G711ENC.codeSection`
+    .text:_G711ENC_TII_g711Control  > `this.G711ENC.codeSection`
+    .text:_G711ENC_TII_alloc  > `this.G711ENC.codeSection`
+    .text:_G711ENC_TII_free  > `this.G711ENC.codeSection`
+    .text:_G711ENC_TII_exit  > `this.G711ENC.codeSection`
+    .text:_G711_TII_Encoder  > `this.G711ENC.codeSection`
+%}
+
+
+}

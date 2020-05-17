@@ -1,0 +1,13 @@
+Package: ti-board-utilities-omapl138
+Version: 03.20.00.14-r2.6
+Description: TI UBL and Serial Boot and Flashing board utilites
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI
+Architecture: da850-omapl138-evm
+OE: ti-board-utilities-omapl138
+Homepage: unknown
+Build: install/d0bd439
+Depends: libc6 (>= 2.9)
+Source: http://sourceforge.net/projects/dvflashutils/files/OMAP-L138/v2.30/OMAP-L138_FlashAndBootUtils_2_30.tar.gz;name=serialflasher http://software-dl.ti.com/dsps/dsps_public_sw/psp/LinuxPSP/DaVinci_03_20/03_20_00_14//exports/DaVinci-PSP-SDK-03.20.00.14.tgz;name=psprelease

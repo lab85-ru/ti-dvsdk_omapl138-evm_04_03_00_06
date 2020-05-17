@@ -1,0 +1,201 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== sem.h28 ========
+;
+;
+
+        .if ($isdefed("SEM_") = 0)    ; prevent multiple includes of this file
+SEM_    .set    1
+
+        .include cinit.h28
+        .include gbl.h28
+        .include knl.h28
+        .include obj.h28
+        .include std.h28
+
+
+isSemAligned .set  2
+SEM_Obj .struct
+job             .tag     KNL_Job        ; handles interrupt-level
+                                        ; posting 
+Kount           Int                     ; semaphore value 
+pad0            .align  isQueAligned
+pendQ           .tag    QUE_Obj         ; tasks wait here 
+name    DataPtr 1       ; name
+ .if ($isdefed("PRIORITY") = 1)
+type            Int                     ; bit mask SEM_PRIORITY (0x1)
+                                        ; or SEM_FIFO (0x0) 
+ .endif
+endpad          .align   isSemAligned;
+SEM_A_OBJSIZE   .endstruct
+
+SEM_BASE        .set            SEM_Obj.job
+SEM_O_COUNT     .set            SEM_Obj.Kount - SEM_BASE
+SEM_O_PENDQ     .set            SEM_Obj.pendQ - SEM_BASE
+SEM_CORESIZE    .set            SEM_A_OBJSIZE
+
+ .eval  OBJ_HDRSIZE+SEM_CORESIZE, SEM_OBJSIZE
+
+;
+;# ======== SEM_config ========
+;  Static configuration of the SEM module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SEM_config$regs
+SEM_config      .macro
+
+        .global __SEM_dopost
+        .endm
+
+;
+;# ======== SEM_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", SEM_Obj$regs
+SEM_Obj .macro cflag, name, id, _count
+
+        .global :name:
+
+        .global __SEM_dopost
+
+                                        
+                                                ; allocate space for
+                                                ; sem including the
+                                                ; Obj header structure.
+
+        ; Set blocking bit as 1 here, for SDSsq31971
+        C28_allocateObject   isSemAligned, :name:$obj, SEM_OBJSIZE , ".sem", 1
+        
+:name:  .set    :name:$obj + OBJ_HDRSIZE                ; Get the semaphore
+                                                ; address.
+        C28_cinitHeader CINITALIGN , isSemAligned, :name:$obj ,SEM_OBJSIZE 
+        OBJ_cinitObj :name:, OBJ_SEM, SEM_CORESIZE      ; A label for this object,
+                                                ; ":name:", will be set
+                                                ; in OBJ_Obj
+
+        SEM_cinitObj  :name:, :_count:
+
+        ;
+      ; Check if SEM obj linked list next field is correct in OBJ_TABLE
+      ;
+        OBJ_cinitBlockPatch :name:, OBJ_SEM
+        .endm
+
+;
+;# ======== SEM_init ========
+;  Runtime initialization of the SEM module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SEM_init$regs
+SEM_init        .macro
+
+        ; only expand if the SEM module is configured
+        .if (SEM$ = 1)
+        .endif
+
+        .endm
+
+;
+;# ======== SEM_core ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", SEM_core$regs
+SEM_cinitObj    .macro  name, _count
+
+        .global __SEM_dopost
+        C28_cinitBegin  isSemAligned
+        KNLJOB_cinitObj 0, 0, __SEM_dopost      
+        C28_cinitInt    :_count:                ; SEM.count
+        QUE_cinitObj    :name: + SEM_O_PENDQ
+        C28_cinitDataPtr 0                      ; name
+        .if ($isdefed("PRIORITY") = 1)
+            C28_cinitInt 0                      ; SEM.priority
+        .endif  
+        C28_cinitEnd    isSemAligned
+
+        .endm
+
+;
+;# ======== SEM_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", SEM_startup$regs
+SEM_startup        .macro
+
+        .if     SEM$NUMOF != 0
+        .endif
+        .endm
+
+;
+;# ======== SEM_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SEM_end$regs
+SEM_end .macro
+        .endm
+
+
+        .endif          ; if SEM_ is not defined
+
+;# ======== SEM_core ========
+;# This macro exists till all object with embedded SEM;s
+;# use SEM_cinitObj
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", SEM_core$regs
+SEM_core        .macro  name, _count
+        SEM_cinitObj    name, _count
+
+ .endm

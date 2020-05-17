@@ -1,0 +1,248 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== dio.h62 ========
+;
+;
+
+        .if ($isdefed("DIO_") = 0) ; prevent multiple includes of this file
+DIO_    .set    1
+
+        .include std.h62
+        .include dev.h62
+        .include sem.h62
+        .include que.h62
+
+        .asg    5, DIO_OBJSIZE
+
+;
+;# ======== DIO_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DIO_Obj$regs
+DIO_Obj .macro cflag, name, id, _fxnsTable, _initFxn, _device, _chanParams
+
+        .sect   ".const"
+DIO_:name:      .string "/:name:",0             ; Set up string "/<devName>"
+
+:name:$ctrl     .string "/:_device:",0          ; Control String
+        
+SIO_:name:$params  .usect ".dio", 2 * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+        
+        ;
+        ;  Allocate and initialize DIO_Params object.
+        ;  Create symbol SIO_:name:$params for this object.
+        ;  The params field in DEV_Obj will be set to SIO_:name:$params.
+        ;  This is done in SIO_Obj.
+        ;
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   2 * STD_TARGWORDMAUS
+        .word   SIO_:name:$params
+        .word   :name:$ctrl
+        .word   :_chanParams:
+
+        ;
+        ; This adds an entry to the device table, DEV_devtab, and the init
+        ; table, DEV_devinit.
+        ;
+        .global :_fxnsTable:
+        DEV_addDevice DIO_:name:, :_fxnsTable:, 0, SIO_:name:$params, :_initFxn:, DEV_SIOTYPE, 0
+
+        .endm
+
+;
+;# ======== DIO_config ========
+;  Static configuration of the DIO module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DIO_config$regs
+DIO_config      .macro _static, _numTskBase, _numSwiBase
+        .if (:_static:)
+            .if (:_numTskBase: != 0)
+                .global _DIO_NUMTSKSTATIC  ; Number of Static TSK DIO objects
+                .global _DIO_TSKTABLE      ; Table of DIO objects for TSK.
+
+                .eval DIO_OBJSIZE * :_numTskBase:, DIO_TABLESIZE
+
+;
+;  Allocate space for DIO_NUMTSKSTATIC value.
+;  This value is used in Static TSK version of DIO.
+;  Allocate space for TSK DIO table
+;
+_DIO_NUMTSKSTATIC       .usect ".dio", 1 * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+_DIO_TSKTABLE           .usect ".dio", DIO_TABLESIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+                ;
+                ;  initialize DIO_NUMTSKSTATIC.
+                ;
+                .sect ".cinit"
+                .align STD_TARGALIGN
+                .word 1 * STD_TARGWORDMAUS
+                .word _DIO_NUMTSKSTATIC
+                .word :_numTskBase:
+            
+                .eval   0, count
+
+                .loop
+
+                    ;
+                    ;  Initialize the TSK DIO table.
+                    ;
+                    .sect ".cinit"
+                    .align STD_TARGALIGN
+                    .word DIO_OBJSIZE * STD_TARGWORDMAUS
+                    .word _DIO_TSKTABLE + DIO_OBJSIZE * :count: * STD_TARGWORDMAUS
+                    .word 0                     ; fxns
+                    .word 0                     ; chanp
+                    .word dio:count:$complete   ; complete
+                    .word 0                     ; ready
+                    .word 0                     ; extra word for union
+
+                    ;  create the complete SEM object
+                    DIO_semObject dio:count:$complete, 0
+
+                    .eval count + 1, count
+                    .break (count == :_numTskBase:)
+                .endloop
+            .endif      ; .if (:_numTskBase: != 0)
+
+            .if (:_numSwiBase: != 0)
+                .global _DIO_NUMCBSTATIC  ; Number of Cb Static DIO objects.
+                .global _DIO_CBTABLE      ; Table of DIO objects for Callback.
+
+                .eval DIO_OBJSIZE * :_numSwiBase:, DIO_TABLESIZE
+
+;
+;  Allocate space for DIO_NUMCBSTATIC value
+;  This value is used in Static Callback version of DIO.
+;  Allocate space for Callback DIO Table
+;
+_DIO_NUMCBSTATIC        .usect ".dio", 1 * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+_DIO_CBTABLE            .usect ".dio", DIO_TABLESIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+                ;
+                ;  initialize DIO_NUMCBSTATIC.
+                ;
+                .sect ".cinit"
+                .align STD_TARGALIGN
+                .word 1 * STD_TARGWORDMAUS
+                .word _DIO_NUMCBSTATIC
+                .word :_numSwiBase:
+        
+                .eval   0, count
+
+                .loop
+                    
+                    ;
+                    ;  Initialize the Callback DIO table.
+                    ;
+                    .sect ".cinit"
+                    .align STD_TARGALIGN
+                    .word DIO_OBJSIZE * STD_TARGWORDMAUS
+                    .word _DIO_CBTABLE + DIO_OBJSIZE * :count: * STD_TARGWORDMAUS
+                    .word 0                     ; fxns
+                    .word 0                     ; chanp
+                    .word 0                     ; context.cb.fxn
+                    .word 0                     ; context.cb.arg0
+                    .word 0                     ; context.cb.arg1
+                
+                    .eval count + 1, count
+                    .break (count == :_numSwiBase:)
+                .endloop
+            .endif      ; .if (:_numSiBase: != 0)
+        .endif          ; .if (:_static:)
+
+        .endm
+
+;
+;# ======== DIO_end ========
+;  Invoked at the end of all other configuration declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DIO_end$regs
+DIO_end .macro
+        .endm
+
+;
+;# ======== DIO_init ========
+;  Runtime initialization of the DIO module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DIO_init$regs
+DIO_init        .macro
+        .endm
+
+;
+;# ======== DIO_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", DIO_startup$regs
+DIO_startup        .macro
+        .endm
+
+;
+;# ======== DIO_startup ========
+;  Use to create SEM objects for DIO objects using TSK
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+
+DIO_semObject   .macro name, _count
+
+        .global :name:
+
+:name:     .usect  ".dio", SEM_CORESIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+        .sect ".cinit"
+        .align STD_TARGALIGN
+        .word SEM_CORESIZE * STD_TARGWORDMAUS
+        .word :name:
+
+        ; A label for this object, ":name:", will be set in OBJ_Obj
+
+        SEM_core :name:, :_count:             ; allocates 7 words
+
+        .endm
+
+        .endif          ; if DIO_ is not defined

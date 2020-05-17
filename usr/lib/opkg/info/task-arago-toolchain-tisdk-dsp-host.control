@@ -1,0 +1,13 @@
+Package: task-arago-toolchain-tisdk-dsp-host
+Version: 1.0-r16.6
+Description: Task to build and install source (or development) packages on host
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: task-arago-toolchain-tisdk-dsp-host
+Homepage: unknown
+Build: install/d0bd439
+Recommends: ti-cgt6x-src, ti-dspbios-src, ti-biosutils-src, ti-dsplink-src, ti-edma3lld-src, ti-biospsp-src, ti-audio-soc-example-src, ti-c6accel-src, ti-dsp-benchmark-src, ti-framework-components-src, ti-codec-engine-src, ti-xdais-src, ti-c6run-src, ti-dsp-benchmark-src
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-dsp-host.bb

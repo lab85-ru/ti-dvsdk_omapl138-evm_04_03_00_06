@@ -1,0 +1,31 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Library
+CPUFamily=TMS320C67XX
+Tool="Archiver"
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\CodecInterface.c"
+Source="..\..\src\Adv7343.c"
+Source="..\..\src\Tvp5147.c"
+Source="..\..\src\Mt9t001.c"
+
+["Archiver" Settings: "Debug"]
+Options=-r -o"..\..\lib\Debug\ti.pspiom.platforms.evm6748.vpifedc.a674"
+
+["Archiver" Settings: "Release"]
+Options=-r -o"..\..\lib\Release\ti.pspiom.platforms.evm6748.vpifedc.a674"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -mo -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-pdr -o2 -mo -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -d"PSP_DISABLE_INPUT_PARAMETER_CHECK" -d"NDEBUG" -mv6740
+

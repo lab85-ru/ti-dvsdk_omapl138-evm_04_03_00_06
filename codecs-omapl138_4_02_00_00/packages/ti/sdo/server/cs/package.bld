@@ -1,0 +1,33 @@
+/*
+ *  ======== package.bld ========
+ */
+
+Pkg.attrs.exportAll = true;
+Pkg.attrs.exportExe = true;
+
+/* Uncomment this to build the server with debug support */
+//Pkg.attrs.profile = "debug";
+
+/* bin/ is a generated directory that 'xdc clean' should remove */
+Pkg.generatedFiles.$add("bin/");
+
+var fullName = Pkg.name;
+var serverName = fullName.substring(fullName.lastIndexOf('.')+ 1);
+
+Pkg.uses = ["ti/bios/include"];
+
+for (var i = 0; i < Build.targets.length; i++) {
+    var targ = Build.targets[i];
+
+    print("building for target " + targ.name + " ...");
+
+    Pkg.addExecutable("bin/" + serverName, targ, "ti.platforms.evmOMAPL138",
+        {
+//            tcopts: "-Dxdc.cfg.check.fatal=false",
+            cfgScript: "server.tcf",
+            lopts: "-l link.cmd",
+        }).
+        addObjects( [
+            "main.c",
+        ] );
+}

@@ -1,0 +1,13 @@
+Package: glibc-dbg
+Version: 2.9-r7.6
+Description: Version 1.0-r7 of package external-toolchain-arago
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: LGPLv2.1+
+Architecture: armv5te
+OE: external-toolchain-arago
+Homepage: unknown
+Build: install/d0bd439
+Recommends: glibc-dbg, libgcc-dbg, libstdc++-dbg, libsegfault-dbg, glibc-extra-nss-dbg, glibc-thread-db-dbg
+Source: file://SUPPORTED

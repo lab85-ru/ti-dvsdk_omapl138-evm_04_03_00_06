@@ -1,0 +1,42 @@
+; Code Composer Project File, Version 2.0 (do not modify or remove this line)
+
+[Project Settings]
+ProjectDir=""
+ProjectType=Executable
+CPUFamily=TMS320C67XX
+Tool="Compiler"
+Tool="CustomBuilder"
+Tool="DspBiosBuilder"
+Tool="Linker"
+Tool="XDC"
+Config="Debug"
+Config="Release"
+
+[Source Files]
+Source="..\..\src\uppSample_io.c"
+Source="..\..\src\uppSample_main.c"
+Source="..\uppSample.tcf"
+Source="..\uppSamplecfg.cmd"
+
+[Generated Files]
+Source="..\uppSamplecfg.s62"
+Source="..\uppSamplecfg_c.c"
+
+["Compiler" Settings: "Debug"]
+Options=-g -pdr -fr"$(Proj_dir)\Debug" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Compiler" Settings: "Release"]
+Options=-pdr -o2 -fr"$(Proj_dir)\Release" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -mv6740
+
+["Linker" Settings: "Debug"]
+Options=-c -m"$(Proj_dir)\..\..\bin\Debug\uppSample.map" -o"$(Proj_dir)\..\..\bin\Debug\uppSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -i"%BIOS_INSTALL_DIR%\packages\ti\pmi\lib" -i"%BIOS_INSTALL_DIR%\packages\ti\pscl\lib" -l"..\uppSample_Debug.cmd"
+
+["Linker" Settings: "Release"]
+Options=-c -m"$(Proj_dir)\..\..\bin\Release\uppSample.map" -o"$(Proj_dir)\..\..\bin\Release\uppSample.out" -w -x -i"%EDMA3LLD_BIOS5_INSTALLDIR%\packages" -i"$(Proj_dir)\..\..\..\..\..\..\..\" -i"%BIOS_INSTALL_DIR%\packages\ti\pmi\lib" -i"%BIOS_INSTALL_DIR%\packages\ti\pscl\lib" -l"..\uppSample_Release.cmd"
+
+["uppSamplecfg.cmd" Settings: "Debug"]
+LinkOrder=1
+
+["uppSamplecfg.cmd" Settings: "Release"]
+LinkOrder=1
+

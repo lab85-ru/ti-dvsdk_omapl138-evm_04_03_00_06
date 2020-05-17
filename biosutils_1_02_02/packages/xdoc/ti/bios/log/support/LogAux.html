@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>module ti.bios.log.support.LogAux</title>
+<meta name="description" content="LogAux module">
+<link rel="stylesheet" type="text/css" href="../../../../xdoc.css" />
+</head>
+<body><div id="xdocWrapper"><div id="xdocContent">
+<table class="xdocHdr"><tr>
+<td class="xdocHdrTitle"><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">module</span> <span class="xdoc-id">ti.bios.log.support.</span><span class="xdoc-id">LogAux</span></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../../ti/bios/log/support/package.html" title="package ti.bios.log.support"><img class="xdocHdrArrow" src="../../../../Arrow_up.png"/></a></td>
+<td class="xdocHdrArrow">
+<a class="xdocHdrLink" href="../../../../ti/bios/log/support/LogTrack.html" title="module LogTrack"><img class="xdocHdrArrow" src="../../../../Arrow_right.png"/></a></td>
+</table>
+<div class=xdocHdrIndex><a class=xdocHdrIndex title="right-click to capture" href="../../../../index.html#ti/bios/log/support/LogAux.html">index URL</a></div>
+<p class="xdocHdrSummary">LogAux module</p>
+<ul class="xdocToc">
+<li class="xdocToc"><a class="xdocToc" href="#meta-synop">XDCscript usage</a></li>
+<li class="xdocToc"><a class="xdocToc" href="#spec-synop">XDCspec declarations</a></li>
+<li class="xdocToc"><a class="xdocToc" href="#xdocElems">Individual elements</a></li>
+<li class="xdocToc"><a class="xdocToc" href="#xdoc-desc">Additional documentation</a></li>
+</ul>
+<div class="xdocBrief">
+The LogAux module provides an API set that is auxiliary to BIOS log.  This
+  API gives the user a degree of control over how the BIOS logs are used, and
+  allows the user to obtain data from BIOS logs in a format that can be read
+  by the RTA decoder.
+[&nbsp;<a class="xdocBrief" href="#xdoc-desc">more</a>&nbsp;...&nbsp;]
+</div>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id">XDCspec</span></tt> summary</td>
+<td class="xdocLabelRight">sourced in <span class="xdocLabelFile">ti/bios/log/support/LogAux.xdc</span></td>
+</tr></table>
+<div class="xdocSynX">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">module</span> <go><span class="xdoc-id">LogAux</span></go> {<b>&nbsp;&nbsp;...</b>
+</div>
+</div>
+<span id='meta-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id-meta2">XDCscript</span></tt> usage</td>
+<td class="xdocLabelRight">meta-domain</td>
+</tr></table>
+<div class="xdocSynM">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">var</span> LogAux = <span class="xdoc-kw3">xdc.useModule</span>(<span class="xdoc-id">'ti.bios.log.support.LogAux'</span>);
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+</div>
+<span id='spec-synop'></span>
+<table class="xdocLabel"><tr>
+<td class="xdocLabelLeft"><tt><span class="xdoc-id">XDCspec</span></tt> declarations</td>
+<td class="xdocLabelRight">sourced in <span class="xdocLabelFile">ti/bios/log/support/LogAux.xdc</span></td>
+</tr></table>
+<div class="xdocSynX">
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">package</span> <a class="xdoc-link" href="../../../../ti/bios/log/support/package.html" title="ti.bios.log.support">ti.bios.log.support</a>;
+</div>
+<div class="xdocSynSpacer">&nbsp;</div>
+<div class="xdocSynCode">
+<tt></tt><span class="xdoc-kw1">metaonly </span><span class="xdoc-kw1">module</span> <go><span class="xdoc-id">LogAux</span></go> {
+</div>
+<div class="xdocSynCode">
+<tt></tt>}
+</div>
+</div>
+<span id="xdoc-desc"></span>
+<span id="xdoc-sect-1"></span>
+<div class="xdocSect">DETAILS</div>
+<div class="xdocText">The LogAux module provides an API set that is auxiliary to BIOS log.  This
+  API gives the user a degree of control over how the BIOS logs are used, and
+  allows the user to obtain data from BIOS logs in a format that can be read
+  by the RTA decoder.</div>
+<div class="xdocText">In order to use the LogAux module, it is necessary to call the module's
+  init() function, which should be called during program startup:</div>
+<div class="xdocText"><PRE class="Example">  LogAux_init()
+</PRE></div>
+<div class="xdocText">The LogAux module's init() function could be called from the user's main()
+  function, for example.</div>
+<div class="xdocText">The LogAux module provides the following features for accessing and
+  controlling BIOS logs:</div>
+<div class="xdocText"><UL><LI> Enabling and Disabling a set of BIOS logs.
+</LI><LI> Flushing a set of BIOS logs (log data is discarded, not returned).
+</LI><LI> Reading raw log data from Target memory and copying it into a buffer for
+</LI><LI> for a set of BIOS logs.  The LogAux module will also "remember" which log
+    and what position it left off on previously in between reads.
+  
+</LI></UL></div>
+<div class="xdocText">The set of logs that each API will affect is determined by a 32-bit log mask
+  that is passed to the API.  Each bit in this log mask corresponds to a BIOS
+  log ID.  Only logs that are set by the log mask will be affected by the
+  LogAux APIs.</div>
+<div class="xdocText">Order Of Log Data Sent By The LogAux Module</div>
+<div class="xdocText"><UL><LI> Data for the ti_bios_log_create log is always sent first (if it is
+    enabled).
+</LI><LI> After all data of the ti_bios_log_create log is sent, the data of all
+    remaing, enabled logs in the system will follow.
+</LI><LI> The order of the data of these remaing logs is sent based on the order
+    in which these logs are stored in Target memory.  (See the program's
+    generated map file to find the ordering of the BIOS LOG objects in
+    memory.
+</LI></UL></div>
+<div class="xdocText">Using The LogAux Module To Read BIOS Logs</div>
+<div class="xdocText">Log data may be read by using the LogAux_read() API.  However, this API has
+  both a prerequisite - LogAux_open(), as well as a postrequisite -
+  LogAux_close().  In order to read the BIOS log data, the function call flow
+  must be as follows:
+    1. call LogAux_open() once.
+    2. make one or many calls to LogAux_read().
+    3. call LogAux_close() once.</div>
+<div id="xdocElems">
+</div>
+<div id="xdocDate">generated on Sat, 23 May 2009 00:29:50 GMT</div>
+</div></div></body>
+</html>

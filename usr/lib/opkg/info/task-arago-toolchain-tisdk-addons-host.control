@@ -1,0 +1,13 @@
+Package: task-arago-toolchain-tisdk-addons-host
+Version: 1.0-r13.6
+Description: Task to install sources for additional utilities/demos for SDKs
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: task-arago-toolchain-tisdk-addons-host
+Homepage: unknown
+Build: install/d0bd439
+Depends: am-sysinfo-src, am-benchmarks-src, am-sysinfo-src, am-benchmarks-src
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-addons-host.bb

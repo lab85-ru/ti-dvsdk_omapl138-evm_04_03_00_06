@@ -1,0 +1,467 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== clk.h62 ========
+;
+; 
+
+        .if ($isdefed("CLK_") = 0)   ; prevent multiple includes of this file
+CLK_    .set    1
+
+        .include chk.h62
+        .include std.h62
+
+CLK_DM420 .set 420      ; Note: these values must match what is generated
+CLK_DA700 .set 700      ;       in the configuration files for GBL_CLKTYPE
+CLK_C6000 .set 6000
+CLK_2430  .set 2430
+CLK_3430  .set 3430
+CLK_C6424 .set 6424
+CLK_TCI6482 .set 6482
+CLK_TCI6486 .set 6486
+CLK_TCI6488 .set 6488
+CLK_DRA442 .set 442
+CLK_DM6467 .set 6467
+CLK_F761990 .set 761990
+CLK_C6747 .set 6747
+
+
+        .if ($isdefed("GBL_CLKTYPE"))
+            .if (GBL_CLKTYPE == CLK_DM420 | GBL_CLKTYPE == CLK_C6424)
+                .include clkDM420.h62
+            .elseif (GBL_CLKTYPE == CLK_TCI6482 | GBL_CLKTYPE == CLK_DM6467)
+                .include clkDM420.h62
+            .elseif (GBL_CLKTYPE == CLK_TCI6486 | GBL_CLKTYPE == CLK_TCI6488)
+                .include clkDM420.h62
+            .elseif (GBL_CLKTYPE == CLK_F761990)
+                .include clkDM420.h62
+            .elseif (GBL_CLKTYPE == CLK_C6747)
+                .include clkDM420.h62
+            .elseif (GBL_CLKTYPE == CLK_DA700)
+                .include clkDA700.h62
+            .elseif (GBL_CLKTYPE == CLK_C6000)
+                .include clkC6000.h62
+            .elseif (GBL_CLKTYPE == CLK_DRA442)
+                .include clkDA700.h62
+            .elseif (GBL_CLKTYPE == CLK_2430 | GBL_CLKTYPE == CLK_3430)
+                .include clk2430.h64P
+            .endif
+        .else
+GBL_CLKTYPE .set 0xffffffff     ; set GBL_CLKTYPE so its defined.
+                                ; required when building library.
+        .endif
+
+
+;
+;  ======== CLK_Obj ========
+;
+CLK_Obj         .struct
+fxn     .word   1       ; function to execute
+CLK_A_OBJSIZE   .endstruct
+
+        .global _CLK_measure, CLK_gethtime
+
+        .global CLK_F_isr, CLK_F_itime, _CLK_F_itime
+        .global CLK_F_getshtime, CLK_F_getfhtime, CLK_F_getltime
+        .global CLK_F_rete, CLK_R_time
+
+                                ; defined by config tool
+        .global CLK_INTBIT, CLK_REGS, CLK_COUNTSPMS
+        .global CLK_TIMEFXN, CLK_HOOKFXN
+        .global CLK_A_TABBEG, CLK_A_TABLEN, CLK_A_TABEND
+        .global CLK_HTIMEDIV, CLK_HTIMEMULT, CLK_CALDIV, CLK_CALMULT
+        .global CLK_LTIMEDIV, CLK_LTIMEMULT
+
+        .global CLK_F_gethtime  ; Based on the configuration, the linker's 
+                                ; command file will use either CLK_F_getshtime
+                                ; or CLK_F_getfhtime to replace CLK_F_gethtime
+
+        .global CLK_D_idletime, CLK_D_tabbeg
+        .global IDL_D_tabbeg
+        .global _CLK_D_prd, _CLK_D_countspms
+
+;
+;# ======== CLK_Obj ========
+;  Allocate a clock fxn object and initialize all fields.
+;
+;  Note that all clock objects are allocated in a distinguished section
+;  named ".clk"; this insures that all objs are contiguous (this is
+;  required by the implementation of CLK_F_run())
+;
+;  Parameters:
+;       name    - name of clock object
+;       fxn     - function to call
+;
+;  fxn is called at clock isr level
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", CLK_Obj$regs
+CLK_Obj         .macro cflag, name, id, fxn
+        CHK_nargs "CLK_Obj", fxn
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "CLK_OBJ parameter error."
+        .endif
+
+        .var fxnlen
+        .eval $symlen(":fxn:"),fxnlen
+
+        .if (:cflag: = 0)
+            .mexit
+        .endif
+
+        .global :name:
+
+        .if ($symcmp(":fxn:", "0") != 0)
+        .global fxn
+        .endif
+
+:name:  .tag    CLK_Obj         ; declare name as having type CLK_Obj
+
+; allocate all CLK objs contiguously in ".clk"
+:name:  .usect ".clk", STD_TARGWORDMAUS * 1, STD_TARGWORDMAUS
+
+        .sect ".cinit"
+
+        .align  8
+
+        .field  STD_TARGWORDMAUS * 1
+
+        .field  :name:    
+
+        .field  :fxn:           ; fxn
+
+        .endm
+
+;
+;# ======== CLK_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", CLK_config$regs
+        .ref _CLK_DFLTMICROSECS
+        .ref _CLK_D_microseconds
+        .ref _CLK_htimePerLtime
+
+        .if STD_TMS320C6400PLUS
+        .if (GBL_CLKTYPE == CLK_TCI6486 | GBL_CLKTYPE == CLK_TCI6488)
+CLK_config      .macro _intbit, _regs, _initcorenum, _timernum, _usetimer, _enablehtime, _microsecs, _tcr, _tddr, _tddrhigh, _prd, _prdhigh, _countspms, _countspmshigh, _timefxn, _hookfxn, _calibDiv, _calibMult, _htimediv, _htimemult, _ltimediv, _ltimemult, _inputclk, _resettimer, _timmode, _htimePerLtime
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_DFLTMICROSECS
+        .float  :_microsecs:
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_D_microseconds
+        .float  :_microsecs:
+        
+        .ref  _CLK_inputClock
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_inputClock
+        .float  :_inputclk:
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_htimePerLtime
+        .word   :_htimePerLtime:
+
+        .endm
+
+        .else           ; all 64P that is not TCI6486 or TCI6488
+CLK_config      .macro _intbit, _regs, _timernum, _usetimer, _enablehtime, _microsecs, _tcr, _tddr, _tddrhigh, _prd, _prdhigh, _countspms, _countspmshigh, _timefxn, _hookfxn, _calibDiv, _calibMult, _htimediv, _htimemult, _ltimediv, _ltimemult, _inputclk, _resettimer, _timmode, _htimePerLtime
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_DFLTMICROSECS
+        .float  :_microsecs:
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_D_microseconds
+        .float  :_microsecs:
+        
+        .ref  _CLK_inputClock
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_inputClock
+        .float  :_inputclk:
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_htimePerLtime
+        .word   :_htimePerLtime:
+
+        .if (GBL_CLKTYPE == CLK_2430 | GBL_CLKTYPE == CLK_3430)
+_CLK_gptimer_enablemask .usect  ".far", 4, 4
+            .global _CLK_gptimer_enablemask
+
+            .sect ".cinit"
+            .align 8
+            .field 4
+            .field _CLK_gptimer_enablemask
+            .field :_intbit:
+        .endif
+        .endm
+        .endif          ; endif for (GBL_CLKTYPE == CLK_TCI6486 | CLK_TCI6488)
+
+        .else           ; other than 6400PLUS
+        .if (GBL_CLKTYPE == CLK_DA700)
+CLK_config      .macro _intbit, _regs, _timernum, _postinitfxn, _conondebug, _startboth,  _usetimer, _microsecs, _tcr, _tddr, _tddrhigh, _prd, _prdhigh, _countspms, _countspmshigh, _timefxn, _hookfxn, _calibDiv, _calibMult, _htimediv, _htimemult, _ltimediv, _ltimemult, _htimePerLtime
+        .asg :_postinitfxn:, POSTINITFXN
+        .asg :_conondebug:, CONONDEBUG
+        .asg :_startboth:, STARTBOTH
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_DFLTMICROSECS
+        .float  :_microsecs:
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_D_microseconds
+        .float  :_microsecs:
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_htimePerLtime
+        .word   :_htimePerLtime:
+
+        .endm
+
+        .else           ; other than CLK_DA700
+
+        .if $isdefed("_64_")
+
+CLK_config      .macro _intbit, _regs, _timernum, _usetimer, _microsecs, _tcr, _tddr, _tddrhigh, _prd, _prdhigh, _countspms, _countspmshigh, _timefxn, _hookfxn, _calibDiv, _calibMult, _htimediv, _htimemult, _ltimediv, _ltimemult, _htimePerLtime, _hiResRegs
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_DFLTMICROSECS
+        .float  :_microsecs:
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_D_microseconds
+        .float  :_microsecs:
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_htimePerLtime
+        .word   :_htimePerLtime:
+
+        .endm
+
+        .else           ; other than C64x
+
+CLK_config      .macro _intbit, _regs, _timernum, _usetimer, _microsecs, _tcr, _tddr, _tddrhigh, _prd, _prdhigh, _countspms, _countspmshigh, _timefxn, _hookfxn, _calibDiv, _calibMult, _htimediv, _htimemult, _ltimediv, _ltimemult, _htimePerLtime
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_DFLTMICROSECS
+        .float  :_microsecs:
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_D_microseconds
+        .float  :_microsecs:
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS,_CLK_htimePerLtime
+        .word   :_htimePerLtime:
+
+        .endm
+        .endif          ; endif for _64_
+        .endif          ; endif for (GBL_CLKTYPE == CLK_DA700)
+        .endif          ; endif for STD_TMS320C6400PLUS
+
+;
+;# ======== CLK_gethtime ========
+;
+;  This operation returns a 32-bit time value.
+;
+;#
+;# Preconditions:
+;#      Interrupts are disabled
+;#      Timer period reg != 0xffffffff
+;#
+;# Postconditions:
+;#      a4 = high resolution time value
+;#
+;
+        .if STD_TMS320C6400PLUS
+        .asg "b4,a4", CLK_gethtime$regs
+
+CLK_gethtime    .macro  
+        mvc TSCL, b4
+        mv b4, a4
+        .endm
+        
+        .else
+        .asg "b3,:CLK_F_getshtime$regs:", CLK_gethtime$regs
+
+        ; NOTE: the register used statement assumes CLK_F_getfhtime$regs is
+        ; a subset of CLK_F_getshtime$regs.
+
+CLK_gethtime    .macro
+        mvkl CLK_F_gethtime,b3          ; changed to FAR call.
+        mvkh CLK_F_gethtime,b3
+        b b3
+        mvkl geth?,b3
+        mvkh geth?,b3
+        nop 3
+geth?:
+
+        ; Note: CLK_F_gethtime is not explicitly defined in clk.s62, the
+        ; linker's command file will use either CLK_F_getshtime or
+        ; CLK_F_getfhtime to replace CLK_F_gethtime based on the configuration.
+
+        .endm
+        .endif          ; endif for STD_TMS320C6400PLUS
+
+;
+;# ======== CLK_countspms ========
+;  Get the timer counts per millisecond.
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      a4 = CLK_COUNTSPMS
+;#
+        .asg    "a4", CLK_countspms$regs
+CLK_countspms   .macro
+        mvkl _CLK_D_countspms, a4
+        mvkh _CLK_D_countspms, a4
+        ldw *a4, a4
+        nop 4
+
+        .endm
+
+;
+;# ======== CLK_end ========
+;  Invoked at the end of all other configuration declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    ":CLK_Obj$regs:", CLK_end$regs
+CLK_end .macro
+        .if (CLK$NUMOF != 0)
+            CLK_Obj     1,CLK_null,-1,0 ; NULL terminate clock isr fxn table
+        .endif
+
+        .endm
+
+;
+;# ======== CLK_getltime ========
+;  Return the number of timer interrupts that have occurred.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      a4 = low resolution time value
+;#
+;
+        .asg "a4", CLK_getltime$regs
+CLK_getltime    .macro 
+        mvkl CLK_R_time, a4
+        mvkh CLK_R_time, a4
+        ldw *a4, a4
+        nop 4
+
+        .endm
+
+;
+;# ======== CLK_getprd ========
+;  Get period register value
+;
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#      a4 = *_CLK_htimePerLtime.
+;
+        .asg "a4", CLK_getprd$regs
+CLK_getprd .macro
+        mvkl _CLK_htimePerLtime,a4
+        mvkh _CLK_htimePerLtime,a4
+        ldw *a4, a4
+        nop 4
+
+        .endm
+;
+
+;
+;# ======== CLK_init ========
+;  Runtime initialization of the C6x timer
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;# Dependencies:
+;#      none
+;#
+;
+        .asg "", CLK_init$regs
+CLK_init .macro
+
+        .if STD_TMS320C6400PLUS
+            .if (CLK_ENABLEHTIME)
+                mvc a0, TSCL            ; this will enable counter,
+            .endif                      ; written value is ignored.
+        .endif
+
+        ; only expand if the CLK module is configured by the user and he/she/it
+        ; asks to use the timer
+        .if ((CLK$ = 1) & (CLK_USETIMER = 1))
+        .endif
+
+        .endm
+
+
+;# ======== CLK_itime ========
+;  This function calls the configured time function to retrieve
+;  a time value.
+;
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#      a4 = time value
+;#
+;
+        .asg "b3,:CLK_F_itime$regs:", CLK_itime$regs
+CLK_itime .macro
+        mvkl CLK_F_itime,b3             ; changed to FAR call
+        mvkh CLK_F_itime,b3
+        b b3
+        mvkl itime?,b3
+        mvkh itime?,b3
+        nop 3
+itime?:
+        .endm
+
+        .endif          ; if CLK_ is not defined

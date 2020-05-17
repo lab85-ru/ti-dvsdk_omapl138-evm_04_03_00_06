@@ -1,0 +1,144 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== gio.h28 ========
+;
+;
+
+        .if ($isdefed("GIO_") = 0)  ; prevent multiple includes of this file
+GIO_    .set    1
+
+        .include cinit.h28
+        .include std.h28
+
+;
+;# ======== GIO_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", GIO_Obj$regs
+GIO_Obj .macro
+        .endm
+
+;
+;# ======== GIO_config ========
+;  Static configuration of the GIO module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GIO_config$regs
+GIO_config      .macro _createfxn, _deletefxn, _pendfxn, _postfxn
+
+        .if (GIO$ = 1)
+
+isIomconfigAligned      .set    2
+GIO_config      .struct
+createFxn       CodePtr 1 ;
+deleteFxn       CodePtr 1 ;
+pendFxn         CodePtr 1 ;
+postFxn         CodePtr 1 ;
+GIO_A_CONFIGSIZE  .endStruct
+
+            ;
+            ; Allocate GIO$configObject
+            ;
+            .global GIO$config
+            C28_allocateObject   isIomconfigAligned, GIO$config,  GIO_A_CONFIGSIZE, .gio, 0
+            ;
+            ; Initialize GIO$config object
+            ;
+            C28_cinitHeader CINITALIGN, isIomconfigAligned, GIO$config , GIO_A_CONFIGSIZE
+            C28_cinitBegin      isIomconfigAligned
+            C28_cinitCodePtr    :_createfxn:
+            C28_cinitCodePtr    :_deletefxn:
+            C28_cinitCodePtr    :_pendfxn:
+            C28_cinitCodePtr    :_postfxn:
+            C28_cinitEnd                isIomconfigAligned
+
+            ;
+            ; Allocate space for _GIO
+            ;
+            .global _GIO
+            C28_allocateObject   isDataPtrAligned, _GIO, DATAPTRSIZE, .ebss, 0
+
+            ;
+            ; Initialize _GIO
+            ;
+
+            C28_cinitHeader CINITALIGN, isDataPtrAligned, _GIO , DATAPTRSIZE
+            C28_cinitBegin  isDataPtrAligned
+            C28_cinitDataPtr GIO$config
+            C28_cinitEnd    isDataPtrAligned
+
+        .endif
+
+        .endm
+
+;
+;# ======== GIO_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GIO_end$regs
+GIO_end .macro
+        .endm
+
+;
+;# ======== GIO_init ========
+;  Runtime initialization of the GIO module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", GIO_init$regs
+GIO_init        .macro
+
+        ; only expand if the GIO module is configured
+        .if (GIO$ = 1)
+        .endif
+
+        .endm
+
+;
+;# ======== GIO_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", GIO_startup$regs
+GIO_startup        .macro
+        .endm
+
+        .endif          ; if GIO_ is not defined

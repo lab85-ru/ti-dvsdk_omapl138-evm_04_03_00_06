@@ -1,0 +1,428 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== clk.h28 ========
+;
+
+    .if ($isdefed("CLK_") = 0)   ; prevent multiple includes of this file
+CLK_    .set    1
+        ;
+        ;  ======== CLK_Obj ========
+        ;
+        .include chk.h28
+        .include cinit.h28
+        .include c28.h28
+        .include fxn.h28
+        .include gbl.h28
+isClkAligned    .set    2
+
+CLK_Obj         .struct
+fxn             CodePtr   1       ; function to execute
+endPad          .align  isClkAligned    
+CLK_A_OBJSIZE   .endstruct
+
+CINIT_CLK_O_FXN .set    CLK_A_OBJSIZE
+
+CLK_BASE        .set    CLK_Obj.fxn
+CLK_O_FXN       .set    CLK_Obj.fxn - CLK_BASE
+
+
+        .global CLK_F_isr, CLK_F_itime, _CLK_itime
+        .global CLK_F_getshtime, CLK_F_getfhtime 
+        .global CLK_F_getltime, _CLK_getltime
+        .global CLK_F_rete, CLK_F_run
+
+        ; DEFINED BY CONFIG TOOL
+        .global CLK_TCR, CLK_COUNTSPMS, CLK_COUNTSPMSHIGH
+        .global CLK_TIMEFXN, CLK_HOOKFXN 
+        .global CLK_A_TABBEG, CLK_A_TABLEN, CLK_A_TABEND
+        .global CLK_F_gethtime          ; Based on the
+                                        ; configuration, the
+                                        ; linker's  command 
+                                        ; file will use either
+                                        ; CLK_F_getshtime  or
+                                        ; CLK_F_getfhtime to
+                                        ; replace CLK_F_gethtime
+
+        .global CLK_D_idletime, CLK_D_tabbeg, CLK_D_isrhook, CLK_D_timefxn
+        .global IDL_D_tabbeg
+        .global  CLK_R_timh, CLK_R_timl
+
+        .global CLK_REGS,CLK_TIMERIMR, CLK_TIMERIFR, CLK_INTBIT
+        .global CLK_TIMERIMRMASK
+        .global CLK_HTIMEDIV, CLK_HTIMEMULT, CLK_CALDIV, CLK_CALMULT
+        .global CLK_LTIMEDIV, CLK_LTIMEMULT
+        .global CLK_FREERUN
+        .global _CLK_D_prd, _CLK_D_tddr, _CLK_htimePerLtime
+ 
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        ; TIMER CONSTANTS for C28x Timer                       ;        
+        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;CLK_HOLD_OR_MASK          .set         00010h   ; mask TSS = 1
+CLK_MAXPER                .set     0xffffffff   ; Maximum clock period
+                                                ; This  is the value
+                                                ; set to PRD, when
+                                                ; callibration  is
+                                                ; done.
+
+;CLK_RELOAD_OR_MASK        .set         00020h   ; mask ARB = 1
+;CLK_START_AND_MASK        .set         0ffefh   ; mask TSS = 0
+CLK_FREE_MASK             .set         0x0c00   ; mask FREE & SOFT = 1 
+
+
+;  BIT POSITIONS OF TLB,ARB and  TSS in the TCR register
+CLK_TLB_POS              .set           10      ; bit pos of TLB
+CLK_TSS_POS              .set           4       ; bit pos of TSS
+CLK_ARB_POS              .set           5       ; bit pos of ARB
+CLK_TIE_POS              .set           14      ; bit pos of TIE
+SELINT14_BIT_POS         .set           0       ; bit position of SELINT4
+
+; Offsets of Timer registers
+CLK_O_TIM                 .set          0       ; offset for TIM register
+CLK_O_PRD                 .set          2       ; offset for PRD register
+CLK_O_TCR                 .set          4       ; offset for TCR register
+CLK_O_TDDR                .set          6       ; offset for PRSC register
+
+        .asg "(CLK_REGS + CLK_O_TIM)", CLK_TIM_REG      ; Add of TIM reg
+        .asg "(CLK_REGS + CLK_O_PRD)", CLK_PRD_REG      ; Add of PRD reg
+        .asg "(CLK_REGS + CLK_O_TCR)", CLK_TCR_REG      ; Add of TCR reg
+        .asg "(CLK_REGS + CLK_O_TDDR)", CLK_TDDR_REG    ; Add of TDDR reg
+
+;
+;# ======== CLK_Obj ========
+;  Allocate a clock fxn object and initialize all fields.
+;
+;  Note that all clock objects are allocated in a distinguished section
+;  named ".clk"; this insures that all objs are contiguous (this is
+;  required by the implementation of CLK_F_run())
+;
+;  Parameters:
+;       name    - name of clock object
+;       fxn     - function to call
+;
+;  fxn is called at clock isr level
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", CLK_Obj$regs
+CLK_Obj         .macro cflag, name, id, fxn
+        CHK_nargs "CLK_Obj", fxn
+        .if ($symcmp(":CHK_status:", "error") = 0)
+            .emsg "CLK_OBJ parameter error."
+        .endif
+
+
+        .if (:cflag: = 0)
+            .mexit
+        .endif
+
+        .global :name:
+
+        .if ($symcmp(":fxn:", "0") != 0)
+            .global fxn
+        .endif
+
+ 
+; allocate all CLK objs contiguously in ".clk"
+:name:  .tag    CLK_Obj                 ; declare name as having
+                                        ; type  IDL_Obj
+
+        ; Set blocking bit as 0 here, since we need to keep CLK_Obj contiunous 
+        ; address and we don't have C macro interface to access
+        ; CLK macro so it is safe SDSsq31971
+        C28_allocateObject isClkAligned, :name:, CLK_A_OBJSIZE, .clk, 0 
+        C28_cinitHeader CINITALIGN, isClkAligned, :name: , CLK_A_OBJSIZE
+        C28_cinitBegin  isClkAligned
+        C28_cinitCodePtr  :fxn: 
+        C28_cinitEnd    isClkAligned
+        .endm
+;
+;# ======== CLK_config ========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+        .asg    "", CLK_config$regs
+CLK_config .macro   _regs, _timernum, _freerun, _usetimer, _microsecs, _tcr, _tddr, _tddrhigh, _prd, _prdhigh, _countspms, _countspmshigh, _timefxn, _hookfxn, _calibDiv, _calibMult, _htimediv, _htimemult, _ltimediv, _ltimemult, _htimePerLtime
+
+    .if (CLK$ = 1)                      ; only expand if the CLK module 
+                                        ; is configured by the user
+        ; Initializing two variables here _CLK_DFLTMICROSECS will always hold
+        ; the default microseconds value as specified in the cdb file
+        ; _CLK_D_microseconds will hold the new microseconds value after the
+        ; the timer is reprogrammed.
+        ; C28_cinitFloat expects floating point constant, we do it here itself
+        ; rather than in biosdata.s28
+        ; These two variables are declared in C file clk_data.c
+
+        .ref _CLK_DFLTMICROSECS
+        .ref _CLK_D_microseconds
+        .ref _CLK_htimePerLtime
+             
+        C28_cinitHeader CINITALIGN,isClkAligned, _CLK_D_microseconds, FLOATSIZE
+        C28_cinitBegin  isClkAligned
+        C28_cinitFloat  :_microsecs:
+        C28_cinitEnd    isClkAligned
+
+        C28_cinitHeader CINITALIGN,isClkAligned, _CLK_DFLTMICROSECS, FLOATSIZE
+        C28_cinitBegin  isClkAligned
+        C28_cinitFloat  :_microsecs:
+        C28_cinitEnd    isClkAligned
+
+        C28_cinitHeader CINITALIGN,isClkAligned, _CLK_htimePerLtime, LONGSIZE
+        C28_cinitBegin  isClkAligned
+        C28_cinitLong   :_htimePerLtime:
+        C28_cinitEnd    isClkAligned
+
+        .else
+            .wmsg "CLK Clock Services are not available"
+        .endif
+    .endm
+
+;
+;# ======== CLK_countspms ========
+;  Get the timer counts per millisecond.
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#   acc = *_CLK_D_countspms     
+;#
+        .asg    "acc, xar0", CLK_countspms$regs
+CLK_countspms    .macro
+        .ref    _CLK_D_countspms
+        movl    xar0, #_CLK_D_countspms         ; xar0 = #_CLK_D_countspms
+        movl    acc, *xar0                      ; acc = *(#_CLK_D_countspms)
+    .endm
+
+;
+;# ======== CLK_end ========
+;  Invoked at the end of all other configuration declarations.
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+    .asg    ":CLK_Obj$regs:", CLK_end$regs
+CLK_end .macro
+        .if (CLK$NUMOF != 0)
+            CLK_Obj     1,CLK_NULL,-1,0         ; NULL terminate clock
+        .endif
+    .endm
+
+;
+;# ======== CLK_gethtime ========
+;
+;  This operation returns a full 32-bit time value, where each unit
+;  represents a duration equal to the CLKOUT cycle of the C28x's
+;  timer. 
+;  (there is a 16-bit prescaler register, tddr, that can increase this
+;  period by as much as a factor of 32768). 
+;  
+; 
+;  Specifically, this operation loads the accumulator a with the value:
+;
+;   ac0 = (CLK_R_timh * 2^16 + CLK_R_timl) * (prd + 1) + (prd + 1 - tim), 
+;
+;  where prd and tim are the memory mapped timer registers of the C28x
+;  and CLK_R_timh::CLK_R_timl is a counter incremented by CLK_F_isr
+;  every time tim decrements to 0 (when TINT is triggered).
+; 
+;  The factor prd + 1 - tim in the above formula is considering the fact
+;  that
+;  Since accumulator a is 32-bits wide and we are accumulating a
+;  full 32-bit count of the number of CLKOUT cycles in it,
+;  the maximum duration representable by accumulator a is just
+;
+;         (2^32 - 1) * (time for a CLKOUT cycle)
+;  
+;  For example, if time for a CLKOUT cycle is 50 nanoseconds
+;  the maximum duration representable by accumulator a is 
+;
+;        4294967295 * 50 ns = 214.75 sec. 
+;
+;  This max duration is independent of the setting of the prd register. 
+;
+;  Note that we are accumulating the number of timer interrupts (TINTs)
+;  in the registers CLK_R_timh::CLK_R_timl, not accumulator ac0.
+;
+;#
+;# Preconditions:
+;#      intm = 1
+;#
+;# Postconditions:
+;#      ac0 = (2^16 * CLK_R_timh + CLK_R_timl) * (prd + 1) + (prd + 1 - tim),
+;#
+;#      where prd and tim are timer registers of
+;#      the C28x.
+;#
+;
+;  NOTE: the following register used statement assumes 
+;  CLK_F_getfhtime$regs is  a subset of CLK_F_getshtime$regs.
+;
+        .asg    ":CLK_F_getshtime$regs:", CLK_gethtime$regs
+CLK_gethtime    .macro    opcode
+        CHK_domain CLK_getfhtime, opcode, "lcr,lb", "lcr"
+        .asg ":CHK_status:", opcode
+        :opcode: CLK_F_gethtime         ; CLK _F_gethtime
+                                        ; is assigned in
+                                        ; the command file
+                                        ; generated by the 
+                                        ; linker.
+    .endm
+
+;
+;# ======== CLK_getltime ========
+;  Return the number of timer interrupts that have occurred.
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    acc = CLK_R_timh::CLK_R_timl
+;#
+;
+        .asg    "acc, xar0 ", CLK_F_getltime$regs
+CLK_getltime    .macro dummy
+        CHK_domain CLK_getltime, opcode, "call,goto", "call"
+        .asg ":CHK_status:", opcode
+        movl    xar0, #CLK_R_timh       ; xar0 = #CLK_R_timh
+        movl    acc, *xar0              ; acc = dbl(*(#CLK_R_timh))
+   .endm
+
+;
+;# ======== CLK_getprd ========
+;  Get period register value
+;
+;#
+;# Preconditions:
+;#    none
+;# Postconditions:
+;#    acc = CLK_PRD.
+;#
+;
+        .asg "acc, xar0", CLK_getprd$regs
+CLK_getprd .macro
+        movl    xar0, #_CLK_htimePerLtime       ; xar0 = #_CLK_D_prd
+        movl    acc, *xar0                      ; acc = *(#_CLK_D_prd)
+   .endm
+
+;
+;# ======== CLK_init ========
+;  Runtime initialization of the C28x timer
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+;# Dependencies:
+;#    none
+;#
+;
+        .asg    "", CLK_init$regs
+CLK_init    .macro
+        .if ((CLK$ = 1) & (CLK_USETIMER = 1))   ; only expand if the
+                                                ; CLK module  is
+                                                ; configured by the
+                                                ; user and asks to
+                                                ; use the  timer
+        .endif
+    .endm
+
+;
+;# ======== CLK_itime ========
+;  This function calls the configured time function to retrieve
+;  a time value.
+;
+;#
+;# Preconditions:
+;#
+;# Postconditions:
+;#    acc = time value
+;#
+;
+        .asg    ":CLK_F_itime$regs:", CLK_itime$regs
+CLK_itime    .macro    opcode
+        CHK_domain CLK_itime, opcode, "lcr,lb","lcr"
+        .asg ":CHK_status:", opcode
+        :opcode: CLK_F_itime
+    .endm
+
+
+;
+;# ======== CLK_startup ========
+;  Start the C28x timer
+;
+;#
+;# Preconditions:
+;#    none
+;#    tss = 1                   ; timer is stopped
+;# Postconditions:
+;#    prd (Timer Period Register) = CLK_PRD.
+;#    prsc(Timer prescale Register) = (0xffff & CLK_TDDR)
+;#    tcr (Timer Control Register)= CLK_TCR (Timer is started).
+;#    TIE  = 1 (Bit in timer control register)
+;#    imr = imr | 0x0008 (Timer interrupt enable is set in imr).
+;#
+;# Dependencies:
+;#    This routine must be called after all other routines that use the
+;#    timer and before interrupts are globally enabled.
+;
+        .asg    "ier,xar0", CLK_startup$regs
+CLK_startup       .macro
+    ; only expand if the CLK module is configured by the user and he/she/it
+    ; asks to use the timer
+    .if ((CLK$ = 1) & (CLK_USETIMER = 1))
+        movl    xar1, #CLK_TCR_REG              ; xar1 = TIMER2TCR
+        tset    *xar1, #CLK_TSS_POS             ; Stop the timer
+        movl    xar0, #CLK_TIM_REG              ; xar0 = TIMER2TIM
+        
+        movl    xar4, #_CLK_D_prd               ; CLK_D_prd may be 32b
+        movl    xar5, *xar4                     ; xar5 = *(_CLK_D_prd)
+        
+        movl     *xar0++, xar5                  ; TIMER2TIM:TIMH = _CLK_D_prd
+        movl     *xar0, xar5                    ; TIMER2PRD:PRDH = _CLK_D_prd
+     
+        movl    xar0, #CLK_TDDR_REG             ; xar0 = TIMER2TDDR
+        movl    xar4, #_CLK_D_tddr
+        movl    acc, *xar4                      ; al = prescaler value
+        and     al, #0x00ff                     ; lower byte    
+        mov     *xar0++, al                     ; TDDR = lower byte
+        movl    acc, *xar4                      ; al = prescaler value
+        lsr     al, #8                          ; high byte 
+        mov     *xar0, al                       ; TDDR = high byte
+        tset    *xar1, #CLK_TIE_POS             ; TIE = 1
+        and     ifr, #0xdfff                    ; clear 14th timer
+                                                ; interrupt flag in IFR
+        or      ier, #0x2000                    ; Enable the 14th timer
+                                                ; interrupt
+        .if (CLK_FREERUN = 1)
+        or      *xar1, #CLK_FREE_MASK           ; Set free run
+        .endif
+        tset    *xar1, #CLK_ARB_POS             ; Set the auto 
+                                                ; reload bit
+        tclr    *xar1, #CLK_TSS_POS             ; Start the timer
+    .endif
+
+    .endm
+
+    .endif                                      ; if CLK_ is not defined

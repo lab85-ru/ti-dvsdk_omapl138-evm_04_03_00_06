@@ -1,0 +1,9 @@
+Package: ti-linuxutils-src
+Version: 2_26_02_05-r57d
+Description: Patched sources for ti-linuxutils
+Section: devel
+Priority: Optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2,BSD
+Architecture: da850-omapl138-evm
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/linuxutils/2_26_02_05/exports/linuxutils_2_26_02_05.tar.gz file://CMEM-fix-for-issue-symbol-arm926_dma_map_area.patch

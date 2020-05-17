@@ -1,0 +1,271 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== dio.h55 ========
+;
+;
+
+        .if ($isdefed("DIO_") = 0) ; prevent multiple includes of this file
+DIO_    .set    1
+
+        .include std.h55
+        .include cinit.h55
+        .include dev.h55
+        .include sem.h55
+        .include que.h55
+
+
+
+DIO_Params              .struct
+name            DataPtr 1
+chanParams      DataPtr 1
+DIO_A_PARAMSSIZE        .endstruct
+
+
+        .eval DIO_A_PARAMSSIZE, DIO_IPARSIZE
+
+dioParamsAligned        .set    isDataPtrAligned
+
+
+;
+;  This struct contains the larger part of the union of DIO_Obj in dio.h.
+;  Since there is no way to express the union, the larger part of the union
+;  is use to allocate sufficient memory to handle all cases.
+;
+DIO_Obj .struct
+fxns            DataPtr 1
+hChan           DataPtr 1
+cbFxn           CodePtr 1
+arg0            Arg     1
+arg1            Arg     1
+DIO_A_OBJSIZE   .endstruct
+
+        .eval   DIO_A_OBJSIZE, DIO_OBJSIZE
+
+dioObjAligned           .set    isCodePtrAligned        ; dioObjAligned may have CodePtr element
+        
+
+;
+;# ======== DIO_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DIO_Obj$regs
+DIO_Obj .macro cflag, name, id, _fxnsTable, _initFxn, _device,_chanParams
+
+        .sect   ".const"
+DIO_:name:      .string "/:name:",0     ; Set up string "/<devName>"
+
+:name:$ctrl     .string "/:_device:", 0 ; Control String
+
+        ;
+        ;  Allocate and initialize DIO_Params object.
+        ;  Create symbol SIO_:name:$params for this object.
+        ;  The params field in DEV_Obj will be set to SIO_:name:$params.
+        ;  This is done in SIO_Obj.
+        ;
+        C55_allocateObject dioParamsAligned, SIO_:name:$params, DIO_IPARSIZE, ".dio"
+        C55_cinitHeader CINITALIGN, dioParamsAligned, SIO_:name:$params, DIO_IPARSIZE, DATAPAGE
+        C55_cinitBegin  dioParamsAligned
+        C55_cinitDataPtr :name:$ctrl
+        C55_cinitDataPtr :_chanParams:
+        C55_cinitEnd    dioParamsAligned 
+
+        ;
+        ; This adds an entry to the device table, DEV_devtab, and the init
+        ; table, DEV_devinit.
+        ;
+        .global :_fxnsTable:
+        DEV_addDevice DIO_:name:, :_fxnsTable:, 0, SIO_:name:$params, :_initFxn:, DEV_SIOTYPE, 0
+
+        .endm
+
+;
+;# ======== DIO_config ========
+;  Static configuration of the DIO module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DIO_config$regs
+DIO_config      .macro _static, _numTskBase, _numSwiBase
+        .if (:_static:)
+            .if (:_numTskBase: != 0)
+                .global _DIO_NUMTSKSTATIC  ; Number of Static TSK DIO objects
+                .global _DIO_TSKTABLE      ; Table of DIO objects for TSK.
+
+                .eval   DIO_OBJSIZE * :_numTskBase:, DIO_TABLESIZE
+
+                ;
+                ;  Allocate and initialize the DIO_NUMTSKSTATIC value.
+                ;  This value is used in Static TSK version of DIO.
+                ;
+                C55_allocateObject 1, _DIO_NUMTSKSTATIC, INTSIZE, ".dio"
+                C55_cinitHeader  CINITALIGN, 1, _DIO_NUMTSKSTATIC, INTSIZE , DATAPAGE
+                C55_cinitBegin  1
+                C55_cinitInt    :_numTskBase:  
+                C55_cinitEnd    1 
+
+                ;
+                ;  Allocate the TSK DIO table
+                ;
+                C55_allocateObject dioObjAligned, _DIO_TSKTABLE, DIO_TABLESIZE, ".dio"
+                .eval 0, kount
+
+                .loop
+
+                    ;
+                    ;  Initialize the TSK DIO table.
+                    ;  Note:  This initialization does not match the DIO_Obj
+                    ;         struct above because this is the other fields
+                    ;         in the union. Its vital that this matches the
+                    ;         DIO_Obj in dio.h
+                    ;
+                    C55_cinitHeader  CINITALIGN, dioObjAligned, _DIO_TSKTABLE + DIO_OBJSIZE * :kount:, DIO_OBJSIZE, DATAPAGE
+                    C55_cinitBegin      dioObjAligned
+                    C55_cinitDataPtr    0                       ; fxns
+                    C55_cinitDataPtr    0                       ; chanp
+                    C55_cinitDataPtr    dio:kount:$complete     ; complete
+                    C55_cinitDataPtr    0                       ; ready
+                    C55_cinitLong       0       ; extra word for union
+                        
+                    C55_cinitEnd        dioObjAligned
+
+                    ; create the complete SEM object
+                    DIO_semObject dio:kount:$complete, 0
+
+                    .eval kount + 1, kount
+                    .break (kount == :_numTskBase:)
+                .endloop
+            .endif      ; .if (:_numTskBase: != 0)
+
+            .if (:_numSwiBase: != 0)
+                .global _DIO_NUMCBSTATIC  ; Number of Cb Static DIO objects.
+                .global _DIO_CBTABLE      ; Table of DIO objects for Callback.
+
+                .eval DIO_OBJSIZE * :_numSwiBase:, DIO_TABLESIZE
+
+                ;
+                ;  Allocate and initialize the DIO_NUMCBSTATIC value
+                ;  This value is used in Static Callback version of DIO.
+                ;
+                C55_allocateObject 1, _DIO_NUMCBSTATIC, INTSIZE, ".dio"
+                C55_cinitHeader  CINITALIGN, 1, _DIO_NUMCBSTATIC, INTSIZE, DATAPAGE
+                C55_cinitBegin  1
+                C55_cinitInt    :_numSwiBase:  
+                C55_cinitEnd    1 
+
+                ;
+                ;  Allocate the Callback DIO Table
+                ;
+                C55_allocateObject dioObjAligned, _DIO_CBTABLE, DIO_TABLESIZE, ".dio"
+                .eval 0, kount
+
+                .loop
+
+                    ;
+                    ;  Initialize the Callback DIO Table
+                    ;
+                    C55_cinitHeader  CINITALIGN, dioObjAligned, _DIO_CBTABLE + DIO_OBJSIZE * :kount:, DIO_OBJSIZE, DATAPAGE
+                    C55_cinitBegin      dioObjAligned
+                    C55_cinitDataPtr    0               ; fxns
+                    C55_cinitDataPtr    0               ; chanp
+                    C55_cinitCodePtr    0               ; context.cb.fxn
+                    C55_cinitArg        0               ; context.cb.arg0
+                    C55_cinitArg        0               ; context.cb.arg1
+                    C55_cinitEnd        dioObjAligned
+                    
+                    .eval kount + 1, kount
+                    .break (kount == :_numSwiBase:)
+                .endloop
+            .endif      ; .if (:_numSwiBase: != 0)
+        .endif          ; .if (:_static:)
+
+        .endm
+
+;
+;# ======== DIO_end ========
+;  Invoked at the end of all other configuration declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DIO_end$regs
+DIO_end .macro
+        .endm
+
+;
+;# ======== DIO_init ========
+;  Runtime initialization of the DIO module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DIO_init$regs
+DIO_init        .macro
+        .endm
+
+;
+;# ======== DIO_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", DIO_startup$regs
+DIO_startup        .macro
+        .endm
+
+;
+;# ======== DIO_semObject ========
+;  Use to create SEM objects for DIO objects using TSK
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SEM_Obj$regs
+DIO_semObject .macro name, _count
+
+        .global :name:
+
+        ; allocate space for sem including the Obj header structure.
+
+        C55_allocateObject   isSemAligned, :name:, SEM_CORESIZE , ".dio"
+
+        C55_cinitHeader CINITALIGN, isSemAligned, :name:, SEM_CORESIZE, DATAPAGE
+
+        SEM_cinitObj  :name:, :_count:
+
+        .endm
+
+        .endif          ; if DIO_ is not defined

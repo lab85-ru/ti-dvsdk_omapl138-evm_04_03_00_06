@@ -1,0 +1,503 @@
+#!/bin/bash
+#---------------------------------------------------------------------------
+# This is a specialized archiver wrapper for using the C6RunLib build system
+#---------------------------------------------------------------------------
+#
+#############################################################################
+#                                                                           #
+#   Copyright (C) 2010 Texas Instruments Incorporated                       #
+#     http://www.ti.com/                                                    #
+#                                                                           #
+#############################################################################
+#
+#############################################################################
+#                                                                           #
+#  Redistribution and use in source and binary forms, with or without       #
+#  modification, are permitted provided that the following conditions       #
+#  are met:                                                                 #
+#                                                                           #
+#    Redistributions of source code must retain the above copyright         #
+#    notice, this list of conditions and the following disclaimer.          #
+#                                                                           #
+#    Redistributions in binary form must reproduce the above copyright      #
+#    notice, this list of conditions and the following disclaimer in the    #
+#    documentation and/or other materials provided with the                 #
+#    distribution.                                                          #
+#                                                                           #
+#    Neither the name of Texas Instruments Incorporated nor the names of    #
+#    its contributors may be used to endorse or promote products derived    #
+#    from this software without specific prior written permission.          #
+#                                                                           #
+#  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS      #
+#  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT        #
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR    #
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT     #
+#  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,    #
+#  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT         #
+#  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,    #
+#  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY    #
+#  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT      #
+#  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE    #
+#  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.     #
+#                                                                           #
+#############################################################################
+
+# Specify version number of tool
+VERSION=1.1.0.0
+
+# Get working directory from which this script was called
+CURR_WORK_DIR=`pwd`
+
+# Attempt to get name and path of this script
+ABSPATH="$(cd "${0%/*}" 2>/dev/null; echo "$PWD"/"${0##*/}")"
+PROGNAME=`basename $ABSPATH` # strip off path
+PROGDIR=`dirname $ABSPATH`
+
+# Select release mode libraries as default
+DEBUG_OR_RELEASE=Release
+
+# Default all log data to not be kept
+DEBUGOUT=/dev/null
+
+# Default to not replace the GLIBC malloc routines
+USE_C6RUN_MALLOC=FALSE
+
+# Default to not save the unstripped DSP executable
+SAVE_DSP_IMAGE=FALSE
+
+# Default archive filename
+ARCHIVE_FILENAME="_UNDEFINED_"
+
+
+###########################################################################
+# Execute environment.sh to get certain enviroment variables              #
+###########################################################################
+
+C6RUN_INSTALL_DIR=${PROGDIR}/..
+unset DSP_CFLAGS
+source ${C6RUN_INSTALL_DIR}/c6run-environment.sh
+
+
+###########################################################################
+# Set default compiler and linker options for both ARM and DSP            #
+###########################################################################
+
+# Default applied options for TI c6000 compiler/linker
+CL6X_CCARGS="${DSP_CFLAGS} -c -q --gcc --display_error_number -eo=o -ea=s -el=sa"
+CL6X_LNKARGS="--run_linker -c -q -w --priority --display_error_number --diag_suppress=10063 --diag_suppress=10247"
+
+# Default applied options for ARM gcc cross-compiler
+GNU_CCARGS="${CFLAGS} -std=gnu99 \
+  -Wall -Wdeclaration-after-statement -Wno-trigraphs \
+  -fPIC -fno-strict-aliasing -fno-common -fno-omit-frame-pointer"
+# Default applied options for ARM GNU archiver
+GNU_ARARGS=
+
+
+#####################################################################
+# Top-level functions for displaying help and version info          #
+#####################################################################
+
+showusage() {
+  echo "Usage: c6runlib-ar [-]{dpqrtx}[cfosSuvV] [--C6Run:<debug|release>] archive-file file..."
+  echo " commands:"
+  echo "  d            - delete file(s) from the archive"
+  echo "  p            - print file(s) found in the archive"
+  echo "  q[f]         - quick append file(s) to the archive"
+  echo "  r[f][u]      - replace existing or insert new file(s) into the archive"
+  echo "  t            - display contents of archive"
+  echo "  x[o]         - extract file(s) from the archive"
+  echo " command specific modifiers:"
+  echo "  [f]          - truncate inserted file names"
+  echo "  [o]          - preserve original dates"
+  echo "  [u]          - only replace files that are newer than current archive contents"
+  echo " generic modifiers:"
+  echo "  [c]          - do not warn if the library had to be created"
+  echo "  [s]          - create an archive index (cf. ranlib)"
+  echo "  [S]          - do not build a symbol table"
+  echo "  [v]          - be verbose"
+  echo "  [V]          - display the version number"
+  echo "  @<file>      - read options from <file>"
+  echo " C6Run options:"
+  echo "  [--C6Run:<debug|release>]     - Select use of debug or release mode"
+  echo "                                  (release is the default)" 
+  echo "  [--C6Run:<replace_malloc|"
+  echo "            no_replace_malloc>] - Enable replacing of all memory allocation"
+  echo "                                  calls in this ARM process to get heap memory"
+  echo "                                  from the shared CMEM region (no_replace_malloc"
+  echo "                                  is the default)"
+  echo "  [--C6Run:save_dsp_image]      - Keep DSP executable image (with full symbolic "
+  echo "                                  debug information) and map file. File is saved"
+  echo "                                  same name and lcoation as output archive, but "
+  echo "                                  with '.dsp_image.out' extension."
+  echo ""
+  echo "c6runlib-ar: supported targets: TICOFF-C6000-LE"
+}
+
+showversion() {
+  echo "TI C6RunLib ar $VERSION"
+  echo "This program is free software, licensed under the terms of"
+  echo "the New BSD License.  This program has absolutely no warranty."
+  echo
+}
+
+
+#####################################################################
+# Begin command-line analysis/parsing                               #
+#####################################################################
+
+# Check if there are no command-line inputs
+if [ $# -eq 0 ]; then
+  showusage
+  exit 0
+fi
+
+# Get commands
+ARCHIVE_COMMAND="$1"
+shift
+
+CMD_CNT=${#ARCHIVE_COMMAND}
+for i in `seq 0 $CMD_CNT`
+do
+  LETTER=${ARCHIVE_COMMAND:$i:1}
+  if [ ! $LETTER = "-" ]; then
+    NEW_COMMAND="$NEW_COMMAND -$LETTER"
+  fi
+done
+ARCHIVE_COMMAND=$NEW_COMMAND
+
+# Get C6Run specific options
+while [ "$1" ]
+do 
+case $1 in
+# C6Run specific options
+--C6Run:* )
+  C6RUN_OPTION="`echo ${1#*C6Run:} | tr '[:upper:]' '[:lower:]'`"
+  case $C6RUN_OPTION in
+    debug )
+      DEBUG_OR_RELEASE=Debug
+      DEBUGOUT=debug.$PROGNAME.log
+      if [ -e $DEBUGOUT ]; then
+        rm -Rf $DEBUGOUT
+      fi
+    ;;
+    release )
+      DEBUG_OR_RELEASE=Release
+      DEBUGOUT=/dev/null
+    ;;
+    replace_malloc )
+      USE_C6RUN_MALLOC=TRUE
+    ;;
+    no_replace_malloc )
+      USE_C6RUN_MALLOC=FALSE
+    ;;
+    save_dsp_image )
+      SAVE_DSP_IMAGE=TRUE
+    ;;
+  esac
+  ;;
+# Anything else is treated as either the output archive name or
+# an input object or library file
+* )
+  # Get archive filename if it has not yet been set
+  if [ $ARCHIVE_FILENAME = "_UNDEFINED_" ]; then
+    ARCHIVE_FILENAME="$1"
+  else
+    if [ ! -e $1 ]; then
+      echo "$PROGNAME: $1: No such file or directory"
+    else
+      # Scan for object files produced by c6runlic-cc that
+      # are intended to be exported for remote procedures
+      OBJ_FILENAME_MINUS_EXT=${1%.*}
+      OBJ_FILENAME_EXT=${1##*.}      
+      if [ -e ${OBJ_FILENAME_MINUS_EXT}.gpp_stub.${OBJ_FILENAME_EXT} -a -e ${OBJ_FILENAME_MINUS_EXT}.fxn_list.txt ]; then
+        OBJECTS="${OBJECTS} $1"
+        GPP_STUB_OBJECTS="${GPP_STUB_OBJECTS} ${OBJ_FILENAME_MINUS_EXT}.gpp_stub.${OBJ_FILENAME_EXT}"
+        DSP_STUB_OBJECTS="${DSP_STUB_OBJECTS} ${OBJ_FILENAME_MINUS_EXT}.dsp_stub.${OBJ_FILENAME_EXT}"        
+        FXNLIST_FILES="${FXNLIST_FILES} ${OBJ_FILENAME_MINUS_EXT}.fxn_list.txt"
+        SYMREFS_CMDS="${SYMREFS_CMDS} ${OBJ_FILENAME_MINUS_EXT}.sym_refs.txt"
+        SYMREFS_SRCS="${SYMREFS_SRCS} ${OBJ_FILENAME_MINUS_EXT}.sym_refs.c"
+        SYMREFS_OBJS="${SYMREFS_OBJS} ${OBJ_FILENAME_MINUS_EXT}.sym_refs.o"
+      else
+        OTHER_OBJECTS="${OTHER_OBJECTS} $1"
+      fi
+    fi
+  fi
+esac
+shift
+done
+
+
+###########################################################################
+# Check for multiple operation options (should only be one)               #
+###########################################################################
+COMMAND_OPERATION=""
+COMMAND_MODIFIERS=""
+set -- $ARCHIVE_COMMAND
+while [ "$1" ]
+do 
+case $1 in
+# Display version info  
+-r | -x | -d | -p | -q | -t )
+  if [ "$COMMAND_OPERATION" = "" ]; then
+    COMMAND_OPERATION="${1#-}"
+    GNU_ARARGS="${GNU_ARARGS}${COMMAND_OPERATION#-}"
+  else
+    echo "$PROGNAME: two different operation options specified"
+	  exit 0
+  fi
+	;;
+# Check for command modifiers
+-c | -s | -S | -v | -V | -f | -u | -o )
+	COMMAND_MODIFIERS="$COMMAND_MODIFIERS $1"
+	;;
+* )
+    echo "$PROGNAME: unknown option"
+  ;;
+esac
+shift
+done 
+
+
+###########################################################################
+# Parse command modifiers
+###########################################################################
+WARNING_ON_CREATE="TRUE"
+VERBOSE="FALSE"
+for i in $COMMAND_MODIFIERS
+do
+case $i in
+-c )
+  WARNING_ON_CREATE="FALSE"
+  GNU_ARARGS="${GNU_ARARGS}${i#-}"
+  ;;
+-s | -S | -o | -f )
+  GNU_ARARGS="${GNU_ARARGS}${i#-}"
+  ;;
+-V )
+  showversion
+  exit 0
+  ;;
+-v )
+  VERBOSE="TRUE"
+  GNU_ARARGS="${GNU_ARARGS}${i#-}"
+  ;;
+esac
+done
+
+
+###########################################################################
+# Check to see if archive filename exists
+###########################################################################
+if [ $ARCHIVE_FILENAME = "_UNDEFINED_" ]; then
+  showusage
+  exit 1
+fi
+
+for i in $COMMAND_OPERATION
+do
+case $i in
+-x | -d | -p | -t )
+  if [ ! -e $ARCHIVE_FILENAME ]; then
+    echo "$PROGNAME: $ARCHIVE_FILENAME: No such file or directory"
+  fi
+  ;;
+-r | -q )
+  if [ ! -e $ARCHIVE_FILENAME ]; then
+    if [ "$WARNING_ON_CREATE" = "TRUE" ]; then
+      echo "$PROGNAME: creating $ARCHIVE_FILENAME"
+    fi
+    # If no objects provided, create archive and bug out
+    if [ -z "$OBJECTS" ]; then
+      touch $ARCHIVE_FILENAME
+      exit 0
+    fi
+  fi
+  ;;
+esac
+done
+
+
+##################################################
+# Post Modification/Checking of compiler options #
+##################################################
+
+# Update the C6000 Linker flags with standard library locations
+CL6X_LNKARGS="$CL6X_LNKARGS -I${CODEGEN_INSTALL_DIR}/lib"
+
+# Setup the C6RunLib lib names and linker command file for DSP side linking
+DSP_IMGCFILE="_dsp_program_data_.c"
+DSP_IMGOBJ="_dsp_program_data_.o"
+if [ ${DEBUG_OR_RELEASE} != "Debug" ]; then
+  DSP_C6RUNLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libc6run.a"
+  DSP_OSLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libos.a"
+  DSP_IPCLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libipc.a"
+  DSP_SMLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libsm.a"  
+  DSP_LINKSCRIPT="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/c6rund.cmd"  
+  DSP_MAINLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libc6run_main.a"  
+  GPP_C6RUNLIB="${C6RUN_INSTALL_DIR}/lib/c6run_gpp/libc6run.a"
+  GPP_MAINLIB="${C6RUN_INSTALL_DIR}/lib/c6run_gpp/libc6run_main.a"
+  GPP_MALLOCLIB="${C6RUN_INSTALL_DIR}/lib/c6run_gpp/libc6run_malloc.a"
+else
+  DSP_C6RUNLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libc6rund.a"
+  DSP_OSLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libosd.a"
+  DSP_IPCLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libipcd.a"
+  DSP_SMLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libsmd.a"  
+  DSP_LINKSCRIPT="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/c6run.cmd"  
+  DSP_MAINLIB="${C6RUN_INSTALL_DIR}/lib/c6run_dsp/libc6run_maind.a"  
+  GPP_C6RUNLIB="${C6RUN_INSTALL_DIR}/lib/c6run_gpp/libc6rund.a"
+  GPP_MAINLIB="${C6RUN_INSTALL_DIR}/lib/c6run_gpp/libc6run_maind.a"
+  GPP_MALLOCLIB="${C6RUN_INSTALL_DIR}/lib/c6run_gpp/libc6run_mallocd.a"
+fi
+
+# Setup array variables used
+FXNLIST_FILES_ARR=( ${FXNLIST_FILES} )
+SYMREFS_CMDS_ARR=( ${SYMREFS_CMDS} )
+SYMREFS_SRCS_ARR=( ${SYMREFS_SRCS} )
+SYMREFS_OBJS_ARR=( ${SYMREFS_OBJS} )
+
+ 
+###########################################################################
+# Generate DSP-side linker command files that force symbol references     #
+###########################################################################
+
+for i in $(seq 0 $((${#FXNLIST_FILES_ARR[*]} - 1)))
+do
+  cat ${FXNLIST_FILES_ARR[$i]} | perl -w -n -e 'chomp; print "-u _${_}_stub ";' > ${SYMREFS_CMDS_ARR[$i]}
+done
+
+
+##################################################
+# Actual DSP-side linking steps                  #
+##################################################
+
+# Execute the DSP Linker
+echo "Linking DSP side executable..." >> $DEBUGOUT
+CL6X_LNKARGS="${CL6X_LNKARGS} --output_file=${ARCHIVE_FILENAME}.dsp_image.out --map_file=${ARCHIVE_FILENAME}.dsp_image.map"
+echo "  ${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_LNKARGS} ${DSP_MAINLIB} ${DSP_STUB_OBJECTS} ${OBJECTS} ${OTHER_OBJECTS} --library=${DSP_C6RUNLIB} --library=${DSP_IPCLIB} --library=${DSP_OSLIB} ${DSP_LINKSCRIPT} ${SYMREFS_CMDS} --library=libc.a" >> $DEBUGOUT
+${CODEGEN_INSTALL_DIR}/bin/cl6x ${CL6X_LNKARGS} ${DSP_MAINLIB} ${DSP_STUB_OBJECTS} ${OBJECTS} ${OTHER_OBJECTS} --library=${DSP_C6RUNLIB} --library=${DSP_IPCLIB} --library=${DSP_OSLIB} ${DSP_LINKSCRIPT} ${SYMREFS_CMDS} --library=libc.a >> $DEBUGOUT
+retVal=$?
+if [ $retVal -ne 0 ]; then
+  exit $retVal
+fi
+
+# Keep a copy of the full DSP image (with symbolic debug info) if desired
+if [ $SAVE_DSP_IMAGE = "TRUE" ]; then
+  cp ${ARCHIVE_FILENAME}.dsp_image.out ${ARCHIVE_FILENAME}.dsp
+else
+  mv ${ARCHIVE_FILENAME}.dsp_image.out ${ARCHIVE_FILENAME}.dsp
+  rm -Rf ${ARCHIVE_FILENAME}.dsp_image.map
+fi
+  
+# Convert the binary DSP program to a C file and then object file
+# for embedding into the GPP executable
+echo "Converting DSP executable to C array..." >> $DEBUGOUT
+echo "  ${CODEGEN_INSTALL_DIR}/bin/strip6x ${ARCHIVE_FILENAME}.dsp" >> $DEBUGOUT
+${CODEGEN_INSTALL_DIR}/bin/strip6x ${ARCHIVE_FILENAME}.dsp
+retVal=$?
+if [ $retVal -ne 0 ]; then
+  exit $retVal
+fi
+echo "  Using od and sed to generate C file of DSP image data." >> $DEBUGOUT
+echo "const unsigned char _dsp_program_data_[] = {" > ${DSP_IMGCFILE}
+od -txC -v ${ARCHIVE_FILENAME}.dsp | \
+  sed -e "s/^[0-9]*//" -e "s/ \([0-9a-f][0-9a-f]\)/0x\1,/g" -e"\$d" | \
+  sed -e"\$s/,$/};/" >> ${DSP_IMGCFILE}
+linecount=`wc -l < ${DSP_IMGCFILE}`
+echo "" >> ${DSP_IMGCFILE}
+echo "const unsigned int _dsp_program_data_size_ = ($linecount - 1) * 16;" >> ${DSP_IMGCFILE}
+echo "Converting DSP executable data array to ARM object file..." >> $DEBUGOUT
+echo "  ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}gcc ${GNU_CCARGS} -c -o ${DSP_IMGOBJ} ${DSP_IMGCFILE}" >> $DEBUGOUT
+${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}gcc ${GNU_CCARGS} -c -o ${DSP_IMGOBJ} ${DSP_IMGCFILE}
+retVal=$?
+if [ $retVal -ne 0 ]; then
+  exit $retVal
+fi
+
+
+###########################################################################
+# Generate ARM-side object files that provide absolute references for DSP #
+# function addresses                                                      #
+###########################################################################
+
+# Generate symbol table file from final DSP image
+echo "" >> $DEBUGOUT
+echo "Generate symbol table file from final DSP image..." >> $DEBUGOUT
+echo "  ${CODEGEN_INSTALL_DIR}/bin/nm6x -fg ${ARCHIVE_FILENAME}.dsp > _temp_symbol_table_.dsp.txt" >> $DEBUGOUT
+${CODEGEN_INSTALL_DIR}/bin/nm6x -fg ${ARCHIVE_FILENAME}.dsp > _temp_symbol_table_.dsp.txt
+retVal=$?
+if [ $retVal -ne 0 ]; then
+  exit $retVal
+fi
+
+# Generate symbol reference sources for setting function addresses at link time
+echo "" >> $DEBUGOUT
+echo "Generate symbol reference sources for setting function addresses at link time..." >> $DEBUGOUT
+for i in $(seq 0 $((${#FXNLIST_FILES_ARR[*]} - 1)))
+do
+  echo "  perl ${C6RUN_INSTALL_DIR}/lib/perl/c6runlib-fxnaddrgen.pl ${FXNLIST_FILES_ARR[$i]} _temp_symbol_table_.dsp.txt ${SYMREFS_SRCS_ARR[$i]}" >> $DEBUGOUT
+  perl ${C6RUN_INSTALL_DIR}/lib/perl/c6runlib-fxnaddrgen.pl ${FXNLIST_FILES_ARR[$i]} _temp_symbol_table_.dsp.txt ${SYMREFS_SRCS_ARR[$i]}
+  retVal=$?
+  if [ $retVal -ne 0 ]; then
+    exit $retVal
+  fi
+done
+
+# Compile the symbol reference sources for the ARM
+echo "" >> $DEBUGOUT
+echo "Compile the symbol reference sources for the ARM..." >> $DEBUGOUT
+for i in $(seq 0 $((${#SYMREFS_SRCS_ARR[*]} - 1)))
+do
+  echo "  ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}gcc ${GNU_CCARGS} -c -o ${SYMREFS_OBJS_ARR[$i]} ${SYMREFS_SRCS_ARR[$i]}" >> $DEBUGOUT
+  ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}gcc ${GNU_CCARGS} -c -o ${SYMREFS_OBJS_ARR[$i]} ${SYMREFS_SRCS_ARR[$i]}  
+  retVal=$?
+  if [ $retVal -ne 0 ]; then
+    exit $retVal
+  fi
+done
+
+# Delete the stripped DSP image file now that we are done with it
+rm -Rf ${ARCHIVE_FILENAME}.dsp
+
+
+##################################################
+# Actual ARM-side library generation             #
+##################################################
+
+echo "Extracting C6Run GPP backend library to take objects for final library..." >> $DEBUGOUT
+rm -rf _temp_lib_objs_
+mkdir -p _temp_lib_objs_
+cd _temp_lib_objs_
+${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}ar x ${GPP_C6RUNLIB}
+if [ ${USE_C6RUN_MALLOC} == "TRUE" ]; then
+  ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}ar x ${GPP_MALLOCLIB}
+fi
+cd ..
+
+echo "Creating final GPP library..." >> $DEBUGOUT
+echo "  ${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}ar ${GNU_ARARGS} ${ARCHIVE_FILENAME} ${GPP_STUB_OBJECTS} ${DSP_IMGOBJ} ${SYMREFS_OBJS} _temp_lib_objs_/*" >> $DEBUGOUT
+${ARM_TOOLCHAIN_PATH}/bin/${ARM_TOOLCHAIN_PREFIX}ar ${GNU_ARARGS} ${ARCHIVE_FILENAME} ${GPP_STUB_OBJECTS} ${DSP_IMGOBJ} ${SYMREFS_OBJS} _temp_lib_objs_/*
+retVal=$?
+
+
+# Remove/cleanup leftover files
+if [ ${DEBUG_OR_RELEASE} != "Debug" ]; then
+
+  # Remove the temp DSP symbol table file
+  #echo "Removing intermediate build files, ." >> $DEBUGOUT  
+  rm -Rf _temp_symbol_table_.dsp.txt
+  rm -Rf ${SYMREFS_SRCS}
+  rm -Rf ${SYMREFS_CMDS}
+  
+  echo "Removing intermediate DSP files (${DSP_IMGCFILE}, )." >> $DEBUGOUT
+  rm -Rf ${DSP_IMGCFILE}
+  rm -Rf ${DSP_IMGOBJ}
+  
+  # Removing the intermediate object files 
+  rm -Rf ${SYMREFS_OBJS}
+fi
+
+# Remove temp object files
+rm -Rf _temp_lib_objs_
+
+exit $retVal

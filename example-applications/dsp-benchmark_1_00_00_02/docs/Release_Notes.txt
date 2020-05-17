@@ -1,0 +1,66 @@
+###################################################################
+DSP Benchmark demo Version 01.00.00.01
+
+Release Notes
+September 2010
+Build ID: 01.00.00.01
+License: TI BSD
+###################################################################
+
+The release note is divided into the following sections:
+ Description
+ Package Contents
+ Device Supported
+ Dependencies
+
+-------------
+Description
+-------------
+DSP benchmark demo is a demonstration of perforance of the C674X DSP on the OMAPL138 platform.
+This demo aims at showcasing the DSP as an accelerator for an ARM user to improve performance.
+
+-----------------------------
+PACKAGE CONTENT
+-----------------------------
+This software package contains the following subdirectories
+
+docs : Contains documentation of C6Accel Installation & Usage guide, Reference API guide and Advance user guide
+         and benchmarking information
+
+dsp_benchmark_app - Contains demp application that displays DSP only performance and 
+                    the performance of the DSP when called from the ARM using C6Accel
+
+ReadMe.txt : Top level ReadMe file
+
+Rules.make: Toplevel Rules.make file  to set path to dependencies
+
+Makefile : Top level Makefile to build the package 
+
+---------------
+Dependencies
+---------------
+
+* C6Accel
+* Codec Engine
+* DSP BIOS
+* DSPLINK
+* Linux Utils
+* Framework compoenents 
+
+---------------------------
+Devices Supported
+---------------------------
+* OMAPL138
+
+----------------------------
+Issues fixed
+----------------------------
+* Display editted to suit output on LCD
+* Make files modified to support only omapl138 platform.
+* Demo does not require carriage return to display complete output on the LCD.
+
+----------------------------
+Known Issues
+----------------------------
+* DSP only benchmarks are displayed for DSP running at 300MHz only
+

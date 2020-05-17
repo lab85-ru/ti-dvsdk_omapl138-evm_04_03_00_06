@@ -1,0 +1,26 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== bios.h55 ========
+;
+        .mmregs
+
+        .include chk.h55
+        .include clk.h55
+        .include fxn.h55
+        .include gbl.h55
+        .include hst.h55
+        .include hwi.h55
+        .include idl.h55
+        .include log.h55
+        .include mem.h55
+        .include pip.h55
+        .include prd.h55
+        .include sts.h55
+        .include swi.h55
+        .include trc.h55
+
+        .global BIOS_init       ; BIOS initialization function
+        .global BIOS_start      ; BIOS start function

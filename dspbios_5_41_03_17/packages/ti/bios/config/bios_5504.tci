@@ -1,0 +1,16 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_5504.tci ========
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_5505.tci");
+
+/*
+ *  ======== bios.init5504 ========
+ *  BIOS initialization for the 5504 is same as for 5505
+ */
+bios.init5504 = bios.init5505;

@@ -1,0 +1,35 @@
+
+    Here is a brief description of each PSL Configuration Library:
+
+1) PSL_cfg_c5503.a55L: 
+   This is the PSL configuration library for the c5503 chip.
+
+2) PSL_cfg_c5509.a55L:
+   This is the PSL configuration library for the c5509 chip. 
+
+3) PSL_cfg_c5509a.a55L: 
+   This is the PSL configuration library for the c5509a chip.
+
+4) PSL_cfg_c5510.a55L:
+   This is the PSL configuration library for the c5510 chip. 
+    
+5) PSL_cfg_dsk5510.a55L:
+   This is the PSL configuration library for the dsk5510 board.
+
+6) PSL_cfg_evm5509a.a55L:
+   This is the PSL configuration library for the evm5509a board.
+
+
+    Modify these libraries to create a custom PSL configuration.
+
+    To build an individual library, navigate into the psl_cfg_gmake/<board> 
+    directory and run the command:
+
+    gmake
+
+    (Note: you must first set up the common/config.mak file.) If you wish 
+to build all c55x libraies navigate to the ti/psl/psl_cfg_gamke directory, 
+run the command:
+
+    gmake -f makefile,55x
+

@@ -1,0 +1,113 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== sys.h62 ========
+;
+;
+
+        .if ($isdefed("SYS_") = 0)  ; prevent multiple includes of this file
+SYS_    .set    1
+
+        .include std.h62
+
+;
+;# ======== SYS_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", SYS_Obj$regs
+SYS_Obj .macro
+        .endm
+
+;
+;# ======== SYS_config ========
+;  Static configuration of the SYS module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SYS_config$regs
+SYS_config      .macro _abortfxn, _errorfxn, _exitfxn, _putcfxn
+        .global SYS$config
+
+SYS$config:     .usect  ".sys",4 * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   4 * STD_TARGWORDMAUS
+        .word   SYS$config
+        .word   :_abortfxn:
+        .word   :_errorfxn:
+        .word   :_exitfxn:
+        .word   :_putcfxn:
+
+        .endm
+
+;
+;# ======== SYS_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SYS_end$regs
+SYS_end .macro
+        .endm
+
+;
+;# ======== SYS_init ========
+;  Runtime initialization of the SYS module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SYS_init$regs
+SYS_init        .macro
+
+        ; only expand if the SYS module is configured
+        .if (SYS$ = 1)
+        .endif
+
+        .endm
+
+;
+;# ======== SYS_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", SYS_startup$regs
+SYS_startup        .macro
+        .endm
+
+        .endif          ; if SYS_ is not defined
+    

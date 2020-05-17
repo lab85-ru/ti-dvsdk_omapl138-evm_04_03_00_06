@@ -1,0 +1,222 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== dev.h62 ========
+;
+;
+
+        .if ($isdefed("DEV_") = 0)  ; prevent multiple includes of this file
+DEV_    .set    1
+
+        .include std.h62
+        .include obj.h62
+DEV_SIOTYPE             .set    0
+DEV_IOMTYPE             .set    1
+DEV_OTHERTYPE           .set    2
+
+        .asg    8, DEV_FRAMESIZE
+        .asg    6, DEV_DEVSIZE
+
+        .eval OBJ_HDRSIZE + DEV_DEVSIZE, DEV_ENTRYSIZE
+;
+;# ======== DEV_config ========
+;  Static configuration of the DEV module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DEV_config$regs
+DEV_config      .macro 
+        .asg    0,      DEV$initCount
+        .endm
+
+;
+;# ======== DEV_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DEV_Obj$regs
+DEV_Obj .macro cflag, name, id
+        .endm
+
+;
+;# ======== DEV_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", DEV_startup$regs
+DEV_startup        .macro
+        .endm
+
+;
+;# ======== DEV_init ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", DEV_init$regs
+DEV_init        .macro
+        .if DEV$NUMDEVICES != 0
+
+            .global     _DEV_init
+
+            mvkl        _DEV_init, a4
+            mvkh        _DEV_init, a4
+            b           a4
+            mvkl        devinit?, b3
+            mvkh        devinit?, b3
+            nop 3
+devinit?:
+
+        .endif
+
+        .endm
+
+;
+;# ======== DEV_end ========
+;  Invoked at the end of all other configuration declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DEV_end$regs
+DEV_end .macro
+
+;
+;  We reserve uninitialized space for the initialization table
+;  (_DEV_devinit). This is a table that contains pointers to all the
+;  initialization routines for all the devices.
+;
+
+        .if (DEV$NUMDEVICES > 0)        ; expand only if devices are configured.
+
+        .global _DEV_devinit
+        .global _DEV_D_devinit          ; init pointer to _DEV_devinit
+
+        .bss    _DEV_devinit, DEV$initCount * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   1 * STD_TARGWORDMAUS
+        .word   _DEV_D_devinit
+        .word   _DEV_devinit
+
+;
+; __DEV_NUMINITFXNS keeps track of the number of initialization routines for
+; device drivers that need to be called at initialization.
+;
+        .global __DEV_NUMINITFXNS
+        .global __DEV_D_NUMINITFXNS     ; init pointer to DEV_NUMINITFXNS
+
+        .bss    __DEV_NUMINITFXNS, 1 * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   1 * STD_TARGWORDMAUS
+        .word   __DEV_NUMINITFXNS
+        .word   DEV$initCount
+
+        .align  STD_TARGALIGN
+        .word   1 * STD_TARGWORDMAUS
+        .word   __DEV_D_NUMINITFXNS
+        .word   __DEV_NUMINITFXNS
+
+        .endif          ; .if (DEV$NUMDEVICES > 0)
+
+        .endm
+
+;
+;# ======== DEV_addDevice ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+DEV_addDevice   .macro _name, _fxns, _devid, _params, _initfxn, _type, _hdev
+
+        .global :_name:$obj
+        .global :_name:$device 
+:_name:$obj     .usect  ".devtable", DEV_ENTRYSIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+:_name:$device .set :_name:$obj + (OBJ_HDRSIZE * STD_TARGWORDMAUS)
+
+  ; :_name:$device points to begining of DEV_Device entry. Note that
+  ; :_name: can't be used here because :_name: is a string already 
+  ; allocated in const by Obj's that call this macro. 
+  ; So :_name: cannot be redefined to point to this DEV_Device entry.
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   DEV_ENTRYSIZE * STD_TARGWORDMAUS
+        .word   :_name:$obj
+
+        OBJ_Obj :_name:$obj, OBJ_DEV, DEV_ENTRYSIZE     ;Cinitialized 3 words 
+        .word  :_name:
+        .word  :_fxns:
+        .word  :_devid:
+        .word  :_params:
+        .word  :_type:
+        .word  :_hdev:
+
+        ;
+        ; Prevent multiple appearances of a driver Dxx_init function in the
+        ; _DEV_devinit table even when there are  multiple occurrences of
+        ; different devices for the same driver. DXX_init should be only called
+        ; once!
+        ;
+        ; Only add to _DEV_devinit real functions. Do not add 0's.
+        .if ($isname(":_initfxn:") = 1)
+          .if ($isdefed("DEV$:_initfxn:") = 0)
+DEV$:_initfxn:  .set    1
+
+            .global     :_initfxn:
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       STD_TARGWORDMAUS
+            .word       _DEV_devinit + DEV$initCount * STD_TARGWORDMAUS
+            .word       :_initfxn:
+
+            ;
+            ; increment DEV$initCount for use by the next call of this macro and
+            ; DEV_end. DEV$initCount keep track of the size of _DEV_devinit.
+            ;
+            .eval       DEV$initCount+1,DEV$initCount
+
+          .endif        ; endif ($isdefed(DEV$:_initfxn:) = 0)
+        .endif          ; endif ($isname(":_initfxn:") = 1)
+
+        .endm
+
+        .endif          ; .if ($isdefed("DEV_") = 0)

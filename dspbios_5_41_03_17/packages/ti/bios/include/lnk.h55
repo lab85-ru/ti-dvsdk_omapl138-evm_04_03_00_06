@@ -1,0 +1,111 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== lnk.h55 ========
+;
+;
+
+        .if ($isdefed("LNK_") = 0)  ; prevent multiple includes of this file
+LNK_    .set    1
+
+        .include  std.h55
+
+        .asg    "", LNK_Obj$regs
+
+        .mmregs
+
+        .global LNK_F_init, LNK_F_dataPump
+
+;
+;# ======== LNK_config ========
+;  Invoked by configuration file prior to creating any objects via
+;  LNK_Obj.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LNK_config$regs
+LNK_config      .macro _dsm, _dsmbufseg, _dsmmemsize, _bioslink, _bioslinkdevice
+
+        .if (_dsm = 1)
+          ;---- allocate uninitialized out/in buffers for DSM type driver
+        .ref LNK_dspFrameRequestMask, LNK_dspFrameReadyMask
+        .global LNK_outputBuf, LNK_inputBuf
+LNK_outputBuf   .usect ".dsm", _dsmmemsize, STD_TARGWORDMAUS
+LNK_inputBuf    .usect ".dsm", _dsmmemsize, STD_TARGWORDMAUS
+        .mexit
+
+        .endif
+
+        .if (:_bioslink: = 1)
+; set up a "/<devName>" string for DSP/BIOS LINK used device name 
+        .sect ".const"
+        .global _HST_BIOSLINK_devName
+_HST_BIOSLINK_devName .byte "/:_bioslinkdevice:  " ; Used by LNK running on
+                                         ; BIOSLINK LNK. There are two trailing
+                                         ; spaces are reserved intentionally.
+                                         ; They are used to concatenate device
+                                         ; name with channel number. Hence; 
+                                         ; DO NOT DELETE them to save memory.
+                 .byte 0                    
+
+        .mexit
+
+        .endif
+
+        .endm
+
+;
+;# ======== LNK_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LNK_end$regs
+LNK_end .macro
+        .endm
+
+;
+;# ======== LNK_init ========
+;  Runtime initialization for LNK
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LNK_init$regs
+LNK_init        .macro
+        call LNK_F_init 
+        .endm
+
+;
+;# ======== LNK_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg "", LNK_startup$regs
+LNK_startup  .macro
+        .endm
+
+        .endif          ; if LNK_ is not defined
+

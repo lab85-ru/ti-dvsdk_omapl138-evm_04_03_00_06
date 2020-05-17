@@ -1,0 +1,15 @@
+Credit to George Mock for the CIO Over DSPLink implementation
+
+Credit to Yaman Umuroglu for his work on remote procedure calls from the 
+  DSP to the ARM (dsp-rpc-posix GSoC project).
+  
+Credit to Karl Wechsler for info on calculating DSP load under DSP/Bios
+  and SysBios.
+
+Credit to Orlando Perdomo for multi-threaded test case.
+
+Credit to Geoff Holt for better way to reference the remote function addresses
+  on the DSP. Also credit for ideas on async function calling.
+  
+Credit to André Wiedbrauk for improved way to detect if function is defined
+  or not in the pre-processed C file.

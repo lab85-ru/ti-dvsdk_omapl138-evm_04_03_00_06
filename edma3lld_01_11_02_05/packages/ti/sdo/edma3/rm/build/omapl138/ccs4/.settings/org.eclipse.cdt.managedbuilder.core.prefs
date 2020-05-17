@@ -1,0 +1,15 @@
+#Mon Oct 12 14:06:48 IST 2009
+com.ti.ccstudio.buildDefinitions.C6000.Debug.1959717925/internalBuilder/enabled=false
+com.ti.ccstudio.buildDefinitions.C6000.Debug.1959717925/internalBuilder/ignoreErr=true
+com.ti.ccstudio.buildDefinitions.C6000.Default.1285405782/internalBuilder/enabled=false
+com.ti.ccstudio.buildDefinitions.C6000.Default.1285405782/internalBuilder/ignoreErr=true
+com.ti.ccstudio.buildDefinitions.C6000.Default.2005159683/internalBuilder/enabled=false
+com.ti.ccstudio.buildDefinitions.C6000.Default.2005159683/internalBuilder/ignoreErr=true
+com.ti.ccstudio.buildDefinitions.C6000.Release.1471358361/internalBuilder/enabled=false
+com.ti.ccstudio.buildDefinitions.C6000.Release.1471358361/internalBuilder/ignoreErr=true
+eclipse.preferences.version=1
+environment/project=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<environment/>\r\n
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Debug.1959717925=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<environment/>\r\n
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Default.1285405782=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<environment/>\r\n
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Default.2005159683=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<environment/>\r\n
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Release.1471358361=<?xml version\="1.0" encoding\="UTF-8"?>\r\n<environment/>\r\n

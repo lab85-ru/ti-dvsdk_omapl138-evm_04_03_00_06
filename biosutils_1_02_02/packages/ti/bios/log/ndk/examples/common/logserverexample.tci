@@ -1,0 +1,107 @@
+/* 
+ * Copyright (c) 2009, Texas Instruments Incorporated
+ * All rights reserved.
+ *
+ * Use of this software is controlled by the terms and conditions found in
+ * the New BSD Software License Agreement, which is reproduced in its
+ * entirity below.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * *  Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * *  Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * *  Neither the name of Texas Instruments Incorporated nor the names of
+ *    its contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+ * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+ * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+ * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * 
+ */
+/*
+ *  ======== logserverexample.tci ========
+ *  Generic BIOS settings for the example.
+ */
+
+/* The following DSP/BIOS Features are enabled.  */
+bios.enableMemoryHeaps(prog);
+bios.enableRealTimeAnalysis(prog);
+bios.enableRtdx(prog);
+bios.enableTskManager(prog);
+
+bios.tskNdkStackSetup = bios.TSK.create("tskNdkStackSetup");
+bios.tskNdkStackSetup.fxn = prog.extern("Stack_run");
+bios.tskNdkStackSetup.stackSize = 0x1000;
+bios.tskNdkStackSetup.priority = 0x5;
+
+bios.LOG.instance("LOG_system").bufLen = 262144;
+
+var trace = bios.LOG.create( "trace" );
+trace.comment = "default LOG object for application messages";
+trace.logType = "circular";
+trace.bufLen = 4096;
+
+var logTrace = bios.LOG.create( "logTrace" );
+logTrace.comment = "default LOG object for application messages";
+logTrace.logType = "circular";
+logTrace.bufLen = 4096;
+
+var logTest = bios.LOG.create( "logTest" );
+logTest.logType = "circular";
+logTest.bufLen = 2048;
+
+var logTracePrd = bios.PRD.create("logTracePrd");
+logTracePrd.period = 10;    /* 10ms, for default 1ms PRD frequency */
+logTracePrd.fxn = prog.extern("logTracePrdfxn");
+
+var logTestPrd = bios.PRD.create("logTestPrd");
+logTestPrd.period = 10;
+logTestPrd.fxn = prog.extern("logTestPrdfxn");
+
+/* Create three TSKs of different priority */
+
+var task0 = bios.TSK.create("task0");
+task0.priority = 15;
+task0["fxn"] = prog.extern("task");
+task0.arg0 = 0;
+task0.arg1 = 10;
+
+var task1 = bios.TSK.create("task1");
+task1.priority = 14;
+task1["fxn"] = prog.extern("task");
+task1.arg0 = 1;
+task1.arg1 = 20;
+
+var task2 = bios.TSK.create("task2");
+task2.priority = 13;
+task2["fxn"] = prog.extern("task");
+task2.arg0 = 2;
+task2.arg1 = 30;
+
+/* Check that stack size is big enough for the application */
+if (bios.MEM.STACKSIZE < 0x1000) {
+    bios.MEM.STACKSIZE += 0x1000;
+}
+
+/*
+ */
+/*
+ *  @(#) ti.bios.log.ndk.examples; 1, 0, 2, 02,34; 5-23-2009 17:29:16; /db/vtree/library/trees/biosutils/biosutils-c02x/src/
+ */
+

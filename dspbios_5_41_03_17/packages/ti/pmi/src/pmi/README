@@ -1,0 +1,11 @@
+The PMI libraries are built using the corresponding source files:
+
+pmi_ctl_evm6748.a674: pmi_i2c.c, pmi_volt6748evm.c
+
+pmi_ctl_null.a674: pmi_voltnull.c
+
+pmi_shared_evm6748.a674: pmi_i2c.c, pmi_shared_volt6748evm.c
+
+pmi.a674: pmi_ms.c, pmi_init.c, pmi_pll.c, pmi_slp.c, pmi_idle.s64P, 
+          pmi_onchip.s64P, pmi_relock1.c
+

@@ -1,0 +1,220 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+  <HEAD>
+    <LINK href="benchstyle.css" rel="stylesheet" type="text/css"> 
+  <TITLE>DSP/BIOS Benchmarks</TITLE>
+  </HEAD>
+<BODY>
+<H1>Version: C64XX functional simulator</H1>
+benchmarks
+@(#)DSP/BIOS_Benchmarks 5,2,4,5 10-02-2007 (bench-h11)
+<H1>Timing Benchmarks</H1>
+<TABLE>
+<TR>
+<TD>Benchmark</TD><TD>Cycles</TD>
+<TR>
+<TD>Interrupt latency</TD><TD>87</TD>
+</TR>
+<TR>
+<TD>HWI_enable</TD><TD>16</TD>
+</TR>
+<TR>
+<TD>HWI_disable</TD><TD>24</TD>
+</TR>
+<TR>
+<TD>HWI_dispatch: Interrupt prolog for calling C function</TD><TD>64</TD>
+</TR>
+<TR>
+<TD>HWI_dispatch: Interrupt epilog following C function call</TD><TD>64</TD>
+</TR>
+<TR>
+<TD>SEM_ipost: Hardware interrupt to blocked task</TD><TD>568</TD>
+</TR>
+<TR>
+<TD>SWI_post: Hardware interrupt to software interrupt</TD><TD>192</TD>
+</TR>
+<TR>
+<TD>SWI_enable</TD><TD>72</TD>
+</TR>
+<TR>
+<TD>SWI_disable</TD><TD>24</TD>
+</TR>
+<TR>
+<TD>SWI_post: Post software interrupt again</TD><TD>32</TD>
+</TR>
+<TR>
+<TD>SWI_post: Post software interrupt, no context switch</TD><TD>56</TD>
+</TR>
+<TR>
+<TD>SWI_post: Post software interrupt, context switch</TD><TD>120</TD>
+</TR>
+<TR>
+<TD>TSK_enable</TD><TD>88</TD>
+</TR>
+<TR>
+<TD>TSK_disable</TD><TD>48</TD>
+</TR>
+<TR>
+<TD>TSK_create: Create a task, no context switch</TD><TD>664</TD>
+</TR>
+<TR>
+<TD>TSK_create: Create a task, context switch</TD><TD>760</TD>
+</TR>
+<TR>
+<TD>TSK_delete</TD><TD>424</TD>
+</TR>
+<TR>
+<TD>TSK_setpri: Set a task priority, no context switch</TD><TD>272</TD>
+</TR>
+<TR>
+<TD>TSK_setpri: Lower the current task own priority, context switch</TD><TD>368</TD>
+</TR>
+<TR>
+<TD>TSK_setpri: Raise a ready task priority, context switch</TD><TD>368</TD>
+</TR>
+<TR>
+<TD>TSK_yield</TD><TD>232</TD>
+</TR>
+<TR>
+<TD>SEM_post: Post a semaphore, no waiting task</TD><TD>32</TD>
+</TR>
+<TR>
+<TD>SEM_post: Post a semaphore, no context switch</TD><TD>184</TD>
+</TR>
+<TR>
+<TD>SEM_post: Post a semaphore, context switch</TD><TD>264</TD>
+</TR>
+<TR>
+<TD>SEM_pend: Pend on a semphore, no context switch</TD><TD>24</TD>
+</TR>
+<TR>
+<TD>SEM_pend: Pend on a semphore, context switch</TD><TD>232</TD>
+</TR>
+<TR>
+<TD>MBX_post: Post a mailbox, no tasks waiting</TD><TD>112</TD>
+</TR>
+<TR>
+<TD>MBX_post: Post a mailbox, no context switch</TD><TD>272</TD>
+</TR>
+<TR>
+<TD>MBX_post: Post a mailbox, context switch</TD><TD>424</TD>
+</TR>
+<TR>
+<TD>MBX_pend: Pend on a mailbox, no context switch</TD><TD>120</TD>
+</TR>
+<TR>
+<TD>MBX_pend: Pend on a mailbox, context switch</TD><TD>248</TD>
+</TR>
+<TR>
+<TD>LCK_post: Post a lock, no ownership relinquishment</TD><TD>16</TD>
+</TR>
+<TR>
+<TD>LCK_post: Post a lock, no context switch</TD><TD>32</TD>
+</TR>
+<TR>
+<TD>LCK_post: Post a lock, context switch</TD><TD>280</TD>
+</TR>
+<TR>
+<TD>LCK_pend: Pend on a self-owned lock</TD><TD>32</TD>
+</TR>
+<TR>
+<TD>LCK_pend: Pend on a lock, no context switch</TD><TD>40</TD>
+</TR>
+<TR>
+<TD>LCK_pend: Pend on a lock, context switch</TD><TD>240</TD>
+</TR>
+<TR>
+<TD>CLK_gethtime</TD><TD>64</TD>
+</TR>
+<TR>
+<TD>CLK_getltime</TD><TD>16</TD>
+</TR>
+<TR>
+<TD>LOG_event</TD><TD>24</TD>
+</TR>
+<TR>
+<TD>LOG_printf</TD><TD>32</TD>
+</TR>
+<TR>
+<TD>STS_add</TD><TD>24</TD>
+</TR>
+<TR>
+<TD>STS_delta</TD><TD>16</TD>
+</TR>
+<TR>
+<TD>STS_set</TD><TD>16</TD>
+</TR>
+<TR>
+<TD>MEM_alloc: Memory allocated on first block</TD><TD>208</TD>
+</TR>
+<TR>
+<TD>MEM_alloc: Memory allocated on second block</TD><TD>216</TD>
+</TR>
+<TR>
+<TD>MEM_alloc: Memory allocated on third block</TD><TD>224</TD>
+</TR>
+<TR>
+<TD>MEM_alloc: Memory allocated on fourth block</TD><TD>240</TD>
+</TR>
+<TR>
+<TD>MEM_free: Memory coalesces no block</TD><TD>216</TD>
+</TR>
+<TR>
+<TD>MEM_free: Memory coalesces one block</TD><TD>224</TD>
+</TR>
+<TR>
+<TD>MEM_free: Memory coalesces two blocks</TD><TD>232</TD>
+</TR>
+<TR>
+<TD>PIP_alloc</TD><TD>104</TD>
+</TR>
+<TR>
+<TD>PIP_free</TD><TD>96</TD>
+</TR>
+<TR>
+<TD>PIP_get</TD><TD>104</TD>
+</TR>
+<TR>
+<TD>PIP_put</TD><TD>96</TD>
+</TR>
+<TR>
+<TD>PIP_peek</TD><TD>24</TD>
+</TR>
+<TR>
+<TD>QUE_dequeue</TD><TD>8</TD>
+</TR>
+<TR>
+<TD>QUE_empty</TD><TD>0</TD>
+</TR>
+<TR>
+<TD>QUE_enqueue</TD><TD>8</TD>
+</TR>
+<TR>
+<TD>QUE_get</TD><TD>16</TD>
+</TR>
+<TR>
+<TD>QUE_insert</TD><TD>8</TD>
+</TR>
+<TR>
+<TD>QUE_put</TD><TD>8</TD>
+</TR>
+<TR>
+<TD>QUE_remove</TD><TD>8</TD>
+</TR>
+<TR>
+<TD>MSGQ_alloc</TD><TD>112</TD>
+</TR>
+<TR>
+<TD>MSGQ_put</TD><TD>56</TD>
+</TR>
+<TR>
+<TD>MSGQ_get with messages</TD><TD>56</TD>
+</TR>
+<TR>
+<TD>MSGQ_get with no messages</TD><TD>72</TD>
+</TR>
+<TR>
+<TD>MSGQ_free</TD><TD>56</TD>
+</TR>
+</TABLE>
+</BODY></HTML>

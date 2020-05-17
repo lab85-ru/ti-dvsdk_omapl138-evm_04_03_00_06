@@ -1,0 +1,11 @@
+*.o
+.depend
+*.map
+*.sres
+*.cmd
+*.order
+*.builtin
+*.ko
+*.mod.c
+*.lo
+*.m4

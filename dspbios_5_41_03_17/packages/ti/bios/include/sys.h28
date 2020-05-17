@@ -1,0 +1,126 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== sys.h28 ========
+;
+;
+
+        .if ($isdefed("SYS_") = 0)  ; prevent multiple includes of this file
+SYS_    .set    1
+
+        .include cinit.h28
+        .include std.h28
+
+;
+;# ======== SYS_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", SYS_Obj$regs
+SYS_Obj .macro
+        .endm
+
+;
+;# ======== SYS_config ========
+;  Static configuration of the SYS module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SYS_config$regs
+SYS_config      .macro _abortfxn, _errorfxn, _exitfxn, _putcfxn
+
+
+isSysconfigAligned      .set    2
+SYS_config      .struct
+abortFxn        CodePtr 1 ;
+errorFxn        CodePtr 1 ;
+exitFxn         CodePtr 1 ;
+putcFxn         CodePtr 1 ;
+SYS_A_CONFIGSIZE  .endStruct
+
+        ;
+        ; Allocate SYS$configObject
+        ;
+        .global SYS$config
+        C28_allocateObject   isSysconfigAligned, SYS$config,  SYS_A_CONFIGSIZE, ".sys", 0
+        ;
+        ; Initialize SYS$config object
+        ;
+        C28_cinitHeader CINITALIGN, isSysconfigAligned, SYS$config , SYS_A_CONFIGSIZE
+        C28_cinitBegin  isSysconfigAligned
+        C28_cinitCodePtr        :_abortfxn:
+        C28_cinitCodePtr        :_errorfxn:
+        C28_cinitCodePtr        :_exitfxn:
+        C28_cinitCodePtr        :_putcfxn:
+        C28_cinitEnd            isSysconfigAligned
+
+        .endm
+
+;
+;# ======== SYS_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SYS_end$regs
+SYS_end .macro
+        .endm
+
+;
+;# ======== SYS_init ========
+;  Runtime initialization of the SYS module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", SYS_init$regs
+SYS_init        .macro
+
+        ; only expand if the SYS module is configured
+        .if (SYS$ = 1)
+        .endif
+
+        .endm
+
+;
+;# ======== SYS_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", SYS_startup$regs
+SYS_startup        .macro
+        .endm
+
+        .endif          ; if SYS_ is not defined

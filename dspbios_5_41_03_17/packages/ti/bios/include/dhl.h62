@@ -1,0 +1,193 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== dhl.h62 ========
+;
+;
+
+        .if ($isdefed("DHL_H62") = 0)  ; prevent multiple includes of this file
+DHL_H62 .set    1
+
+        .include std.h62
+
+        .include dev.h62
+        .include gbl.h62
+        .include hst.h62
+        .include sem.h62
+        .include sio.h62
+
+        .eval SEM_CORESIZE + 11, DHL_OBJSIZE
+
+;
+;# ======== DHL_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+
+        .asg    "", DHL_Obj$regs
+DHL_Obj .macro cflag, name, id, hstchannel, mode, devid
+
+        .global _DHL_FXNS
+
+        ;
+        ;  This label matches SIO_:_device:$params in sio.h62
+        ;
+SIO_:name:$params       .set    0       ; No DHL_Params (needed for SIO)
+
+        ;
+        ;  Set up string "/<devName>"
+        ;
+        .sect   ".const"
+DHL_:name:      .byte   "/:name:", 0
+
+        ;
+        ;  This adds an entry to the device table, DEV_devtab,
+        ;  and init table DEV_devinit
+        ;
+        DEV_addDevice DHL_:name:, _DHL_FXNS, :devid:, 0, FXN_F_nop, DEV_SIOTYPE, 0
+
+        ;
+        ; Create a DHL object
+        ;
+        .global :name:
+:name:  .usect  ".dhl", DHL_OBJSIZE * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   DHL_OBJSIZE * STD_TARGWORDMAUS
+        .word :name:
+        ;
+        ;  SEM_Obj is first field of DHL_Obj, therefore we can pass :name:
+        ;  to SEM_core macro (it uses :name: to initialize pend queue)
+        ;
+        SEM_core :name:, 0              ; done semaphore
+        .word   0                       ; nested
+        .word   :hstchannel:            ; hst channel
+        .word   0                       ; ready
+        .word   0                       ; device
+        .word   0                       ; curptrBuf
+        .word   0                       ; countBuf
+        .word   0                       ; curptrFrm
+        .word   0                       ; countFrm
+        .word   0                       ; started
+        .word   :devid:                 ; devid
+        .if $symcmp("input", ":mode:") = 0
+            .word       SIO_INPUT       ; mode
+        .else
+            .word       SIO_OUTPUT      ; mode
+        .endif
+
+        ;
+        ;  Add pointer to DHL object to __DHL_tab
+        ;
+        .sect   ".cinit"
+        .align  STD_TARGALIGN
+        .word   STD_TARGWORDMAUS
+        .word   __DHL_tab + DHL$count * STD_TARGWORDMAUS
+        .word   :name:
+
+        ;
+        ;  Increment DHL$count form next call of this macro
+        ;
+        .eval   DHL$count + 1, DHL$count
+
+        .endm
+
+;
+;# ======== DHL_config ========
+;  Static configuration of the DHL module
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DHL_config$regs
+DHL_config      .macro _enabled
+
+        .global _DHL_notify
+
+        .asg    0, DHL$count
+
+        .endm
+
+;
+;# ======== DHL_end ========
+;  Invoked at the end of all other configuration declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DHL_end$regs
+DHL_end .macro
+
+        ; expand only if there are DHL devices configured.
+        .if (DHL$count > 0)
+
+            .global  __DHL_tab
+        .bss    __DHL_tab, DHL$count * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+            .global  __DHL_numof
+        .bss    __DHL_numof, 1 * STD_TARGWORDMAUS, STD_TARGWORDMAUS
+
+            .sect       ".cinit"
+            .align      STD_TARGALIGN
+            .word       1 * STD_TARGWORDMAUS
+            .word       __DHL_numof
+            .word       DHL$count
+
+        .endif
+
+        .endm
+
+;
+;# ======== DHL_init ========
+;  Runtime initialization of the DHL module
+;
+;#
+;# Preconditions: 
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", DHL_init$regs
+DHL_init        .macro
+        .endm
+
+;
+;# ======== DHL_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", DHL_startup$regs
+DHL_startup        .macro
+        .if     DHL$NUMOF != 0
+
+        .endif
+        .endm
+
+        .endif          ; if DHL_H62 is not defined
+

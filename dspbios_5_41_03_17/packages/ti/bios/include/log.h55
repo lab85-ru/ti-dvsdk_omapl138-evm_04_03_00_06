@@ -1,0 +1,529 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+
+;  ======== log.h55 ========
+;
+
+
+    .if ($isdefed("LOG_") = 0)  ; prevent multiple includes of this file
+LOG_    .set    1
+
+    .include std.h55
+    .include chk.h55
+    .include cinit.h55
+    .include gbl.h55
+    .include trc.h55
+
+isLogAligned    .set    isDataPtrAligned
+
+;
+;  ======== LOG Event IDs ========
+;
+
+LOG_PRDBEGIN    .set    0
+LOG_PRDEND      .set    1
+LOG_SWIPOST     .set    2
+LOG_SWIBEGIN    .set    3
+LOG_SWIEND      .set    4
+LOG_PRDTICK     .set    5       ; logged for each PRD_F_tick
+LOG_CLKINT      .set    6       ; logged for each CLK interrupt
+LOG_HWIBEGIN    .set    7
+LOG_USRMSG      .set    8
+LOG_USRERR      .set    9
+LOG_SEMPOST     .set    14      
+
+;
+; ======== Value used in log.s55 =======
+;
+
+LOG_ZERO_VAL    .set    0
+
+;
+; ========  Determine source of LOG_printf call, C or ASM   =======
+;
+
+LOG_ASM_CALL    .set    0x1
+LOG_C_CALL      .set    0x2
+
+;
+; ======== LOG Enable bits ========
+;
+
+LOG_ENABLETARG    .set    0001H        ; set and cleared by target
+LOG_ENABLEHOST    .set    0002H        ; set and cleared by host
+
+;
+; ======== LOG_Obj ========
+;  The LOG object structure definition
+;
+
+LOG_Obj         .struct
+bufend  DataPtr 1               ; end address of trace buffer
+flag    Int     1               ; flag == 0 <=> trace enabled
+seqnum  Int     1               ; sequence number
+curptr  DataPtr 1               ; address of trace event to be written next
+lenmask Int     1               ; length of buffer - 1
+bufbeg  DataPtr 1               ; base address of trace buffer
+endPad  .align  isLogAligned
+LOG_A_OBJSIZE   .endstruct
+
+LOG_BASE        .set    LOG_Obj.bufend
+
+LOG_O_BUFEND    .set    LOG_Obj.bufend-LOG_BASE
+LOG_O_FLAG      .set    LOG_Obj.flag-LOG_BASE
+LOG_O_SEQNUM    .set    LOG_Obj.seqnum-LOG_BASE
+LOG_O_CURPTR    .set    LOG_Obj.curptr-LOG_BASE
+LOG_O_LENMASK   .set    LOG_Obj.lenmask-LOG_BASE
+LOG_O_BUFBEG    .set    LOG_Obj.bufbeg-LOG_BASE
+
+;
+; ======== LOG_Event ========
+;  The LOG event structure definition
+;
+
+LOG_Event       .struct
+    .if  (_55L_) | (_55H_)  
+pad     Int   1            ; In large mode the first 16 bits are to be ignored.
+    .endif                      
+seq     Int    1           ; event sequence number
+val1    Args   1           ; arbitrary word value
+val2    Args   1           ; ditto
+val3    Args   1           ; ditto
+LOG_A_EVENTSIZE .endstruct
+
+;
+; ======== LOG_NOOP ========
+;  Define this symbol to "compile out" all LOG macros
+;
+;  LOG_NOOP       .set 1       ; Note: LOG_NOOP is defined when uncommented
+;
+
+;
+;  Assert that LOG_Events have size equal to a power of two
+;
+    .if ((LOG_A_EVENTSIZE - 1) & LOG_A_EVENTSIZE) != 0
+        .emsg "LOG_A_EVENTSIZE must be a power of 2"
+    .endif
+ 
+    .global LOG_F_event, LOG_F_reset
+    .global LOG_D_system
+    .global LOG_system
+
+    ; this needs to be a .ref to reforce symbols to be defined for VBD
+    .ref LOG_A_TABBEG, LOG_A_TABEND, LOG_A_TABLEN
+;
+;# ======== LOG_Obj ========
+;  Allocate a LOG object and properly initialize all fields.
+;
+;  Parameters:
+;    bufseg - segment where the buffer of this log land up.
+;    buflen - length of the buffer in words (must be power of 2)
+;    mode   - if mode == "fixed", the buffer is treated as a fixed length buffer
+;             otherwise events continuously wrap within the buffer.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg ":GBL_Obj$regs:", LOG_Obj$regs
+LOG_Obj .macro cflag, name, id, bufseg, buflen, mode, type, format
+        CHK_domain LOG_Obj, mode, "circular,fixed", "circular"
+        .asg ":CHK_status:", mode
+        .if ($isdefed("LOG_NOOP") = 1)
+            .mexit
+        .elseif ($symcmp(":mode:", "error") = 0)
+            .emsg "LOG_Obj mode error."
+        .endif
+
+        .global :name:$buf
+        .global :name:$size
+        .global :name:$datatype
+
+        .if ($symcmp(":type:", "system") = 0)    ; if (type == "system")
+:name:$datatype .set    0
+        .elseif ($symcmp(":type:", "printf") = 0)    ; if (type == "printf")
+:name:$datatype .set    1
+        .elseif ($symcmp(":type:", "raw data") = 0)   ; if (type == "raw data")
+:name:$datatype .set    2
+
+        .global :name:$fmtstr
+
+        ; place ":format:" string into .printf section and create symbol for it
+        .sect ".printf"
+:name:$fmtstr   .string ":format:"
+        .byte   0               ; place null character at end of string
+        .endif
+
+        .var bufbeg
+        .var flag
+        .if ((:cflag: != 0) & (:buflen: > 0))
+          .if (((:buflen: - 1) & :buflen:) != 0)
+            .emsg "The LOG :name: buffer size must be a power of 2"
+          .endif
+
+          .asg 0, flag  ; enable LOG
+          .asg ":name:$buf", bufbeg
+
+                        ; place log buffers into .log0, .log1, etc. sections
+           
+          GBL_Obj :bufbeg:, buflen, ".:name:$buf", "noalign", -1, 1
+
+:name:$size .set        :buflen:
+
+        .else
+            .asg 1, flag; disable LOG
+            .asg 0, bufbeg
+:name:$buf  .set 0
+:name:$size .set 0
+        .endif
+
+                        ; place all LOG objects in ".log"
+        .global :name:  ; make name globally visible
+        .global :name:$log
+
+:name:$log .set 0
+
+:name:  .tag    LOG_Obj ; declare name as having type LOG_Obj
+
+                                        ;Allocate and initialize log object
+        C55_allocateObject isLogAligned, :name:, LOG_A_OBJSIZE, .log    
+
+        C55_cinitHeader CINITALIGN, isLogAligned, :name:, LOG_A_OBJSIZE,DATAPAGE
+        C55_cinitBegin  isLogAligned
+        .if ($symcmp(":mode:", "fixed") = 0)    ; if (mode == "fixed")
+            C55_cinitDataPtr :bufbeg:+(:buflen: * STD_TARGWORDMAUS) 
+        .else                                   ; else bufend = 0
+            C55_cinitDataPtr 0
+        .endif
+
+        C55_cinitInt  :flag:                            ; flag
+        C55_cinitInt  0                                 ; seqnum = 0
+        C55_cinitDataPtr  :bufbeg:                      ; curptr
+        C55_cinitInt  (:buflen: * STD_TARGWORDMAUS)-1   ; lenmask (= buflen-1)
+        C55_cinitDataPtr   :bufbeg:                     ; bufbeg
+        C55_cinitEnd    isLogAligned
+
+        .endm
+
+;
+;#  ======== LOG_config ========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+    .asg    "", LOG_config$regs
+LOG_config    .macro _enabled
+    .endm
+
+;
+;# ======== LOG_disable ========
+;  To disable a log
+;#
+;#  Preconditions:
+;#      xar0  = address of the LOG object
+;#
+;#  Postconditions:
+;#      none
+;#
+
+        .asg    "", LOG_disable$regs
+LOG_disable    .macro 
+        .if (.MNEMONIC)                   ; if ; MNEMONIC ; assembler
+                mov #1, *ar0(#LOG_O_FLAG) ; flag = 1 to disable the log
+        .else
+                *ar0(#LOG_O_FLAG)  = #1   ; flag = 1 to disable the log
+        .endif
+        .endm
+
+;
+;# ======== LOG_enable ========
+;  To enable a log
+;#
+;#  Preconditions :
+;#      xar0 = address of the LOG object
+;#
+;#  Postconditions:
+;#      none
+;#
+
+        .asg    "", LOG_enable$regs
+LOG_enable    .macro 
+        .if (.MNEMONIC)                  ; if ; MNEMONIC ; assembler
+                mov #0, *ar0(#LOG_O_FLAG) ; flag = 0 to enable the log
+        .else
+                *ar0(#LOG_O_FLAG)  = #0   ; flag = 0 to enable the log
+        .endif
+
+        .endm
+
+;
+;# ======== LOG_end ========
+;  Invoked at the end of all other configuration
+;  declarations.
+
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", LOG_end$regs
+LOG_end .macro
+        .endm
+
+;
+;# ======== LOG_error ========
+;  Write user error event to system log.
+;#
+;#  Preconditions :
+;#    xar1 = val1, second arguement for LOG_error macro
+;#
+;#  Postconditions:
+;#      none
+;#
+                .asg "xar0,xar2,xar3,:LOG_F_event$regs:", LOG_error$regs
+LOG_error      .macro  format, section
+        CHK_nargs LOG_error, "format"
+
+        .sect   ".printf"               ; put format string in
+strem?  .byte   ":format:"              ; .printf section 
+        .byte   0                       ; '\0' terminate format  string
+
+        .if ($symlen(section) != 0)     ; if section is specified,
+                .sect ":section:"       ; change to  that section
+        .else
+                .sect ".text"
+        .endif
+        .if (.MNEMONIC)                  ; if ; MNEMONIC ; assembler
+                                        ; is used
+
+                .if  (_55L_) | (_55H_)  
+                        mov  dbl(*(#LOG_D_system)), xar0
+                                                ; 1st argument  
+                        amov #LOG_USRERR, xar3          ; 4th = LOG_USRERR
+                .else
+                        mov *abs16(#LOG_D_system), ar0  
+                        amov #LOG_USRERR, ar3           ; 4th = LOG_USRERR
+                .endif
+                                                ; 1st argument  
+                                                ; 2nd arg passed
+                                                ;by user
+                amov #strem?, xar2              ; 3rd arg = format
+
+        .else                                   ; if algebriac assembler
+
+                .if  (_55L_) | (_55H_)
+                        xar0 = dbl(*(#LOG_D_system))
+                                                ; 1st argument  
+                        xar3 = #LOG_USRERR      ; 4th = LOG_USRERR
+                .else
+                        ar0 = *abs16(#LOG_D_system)
+                        ar3 = #LOG_USRERR       ; 4th = LOG_USRERR
+                .endif 
+                                                ; 2nd arg passed by user
+                        xar2  = #strem?         ; 3rd arg = format
+                                                ; 1st argument  
+                                                ; 2nd arg passed by user
+        .endif                                  ; NMEMONIC assembler
+        call LOG_F_event 
+    .endm
+
+;
+;# ======== LOG_event ========
+;
+;  Write event to trace buffer
+;#
+;#  Preconditions :
+;#      xar0 = address of the LOG object, first arguement for LOG_event
+;#      xar1 = val1, second arguement for LOG_event macro
+;#      xar2 = val2, third  arguemnt for LOG_event macro
+;#      xar3 = val3, fourth arguement for LOG_event macro 
+;#
+;#  Postconditions:
+;#    none
+;#
+
+    .asg    ":LOG_F_event$regs:", LOG_event$regs
+LOG_event    .macro  opcode
+        .if ($isdefed("LOG_NOOP") = 1)
+                .mexit        ; if LOG compiled out, exit macro now
+        .endif
+        .if (.MNEMONIC)                  ; if  MNEMONIC  assembler
+                CHK_domain LOG_event, opcode,"b,call", "call"
+                .asg ":CHK_status:", opcode
+                :opcode:  LOG_F_event    
+        .else
+                CHK_domain LOG_event, opcode, "goto,call", "call"
+                .asg ":CHK_status:", opcode
+                :opcode:  LOG_F_event    
+        .endif
+                .endm
+
+;
+;# ======== LOG_init ========
+;  Runtime initialization for LOG
+;
+;#
+;# Postconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+    .asg    "", LOG_init$regs
+LOG_init    .macro
+    .endm
+
+;
+;# ======== LOG_message ========
+;  Write user message event to system log if TRC_GBLHOST and
+;  TRC_GBLTARG are enabled.
+;#
+;#  Preconditions:
+;#    xar1 = val1, second argument for LOG_event macro
+;#     
+;#
+;#
+;#  Postconditions:
+;#      none
+;#
+                .asg "xar0,xar2,xar3:TRC_query$regs:,:LOG_F_event$regs:", LOG_message$regs
+LOG_message      .macro  format, section
+        CHK_nargs LOG_message, "format"
+
+        .global  strmsg?
+        .sect ".printf"                 ; put format string in
+strmsg?  .byte ":format:"               ; .printf section
+        .byte   0                       ; '\0' terminate format
+                                        ; string
+
+        .if ($symlen(section) != 0)     ; if section is specified,
+                .sect ":section:"       ; change to  that section
+        .else
+                .sect ".text"
+         .endif
+        .if (.MNEMONIC)                 ; if ; MNEMONIC ; assembler
+
+                                                ; Check if enabled
+                TRC_query TRC_GBLHOST|TRC_GBLTARG 
+                bcc logem?,  t0 != #0           ; exit if TRC
+                                                ; is  not
+                                                ; enabled.
+                .if  (_55L_) | (_55H_)
+                                                ; 1st argument  
+                        mov  dbl(*(#LOG_D_system)), xar0
+                        amov #LOG_USRMSG, xar3          ; 4th = LOG_USRMSG
+                .else
+                                                ; 1st argument  
+                        mov *abs16(#LOG_D_system), ar0  
+                        amov #LOG_USRMSG, ar3           ; 4th = LOG_USRMSG
+                .endif
+                                                ; 2nd arg passed
+                                                ;by user
+                amov #strmsg?, xar2             ; 3rd arg = format
+
+        .else                                   ; if ALGEBRAIC
+
+                TRC_query TRC_GBLHOST|TRC_GBLTARG; Check if enabled
+                if  (t0 != #0) goto logem?
+                .if (_55L_) | (_55H_)
+                                                ;xar0 = &LOG_system
+                        xar0 = dbl(*(#LOG_D_system))
+                        xar3 = #LOG_USRMSG      ; 4th = LOG_USRMSG
+                .else
+                                                ; ar0 = &LOG_system
+                        ar0 = *abs16(#LOG_D_system)
+                        ar3 = #LOG_USRMSG      ; 4th = LOG_USRMSG
+                .endif
+                                                ; 2nd arg is passed by user
+                        xar2  = #strmsg?        ; 3rd arg = format
+
+        .endif                                  ;NMEMONIC assembler     
+        call LOG_F_event 
+
+logem?: 
+        .endm
+
+;
+;# ======== LOG_printf ========
+;#
+;# Preconditions :
+;#      xar0 = address of the LOG object
+;#      xar1 = val1
+;#      xar2 = val2
+;#
+;# Postconditions:
+;#    none
+;#
+;# Constraints and Calling Environment:
+;#    LOG_printf (even the C version) supports 0, 1, or 2 arguments
+;#    after the format string. 
+;#    The format string address is put in x/ar3 as val3 for LOG_F_event
+;#    x/ar1,x/ar2 must be appropriately filled 
+
+    .asg    "LOG_F_event$regs:", LOG_printf$regs
+LOG_printf      .macro  format, section
+    CHK_nargs LOG_printf, "format"
+
+    .sect    ".printf"
+str?    .byte    ":format:"
+        .byte    0                      ; '\0' terminate printf string
+
+        .if ($symlen(":section:") != 0) ; if section is specified,
+                                        ; change to  that section
+                .sect ":section:"
+        .else
+                .sect ".text"
+        .endif
+        .if (.MNEMONIC)                 ; if ; MNEMONIC ; assembler
+                amov #str?, xar3                ; string is the 4 arguement
+        .else                           ; if ALGEBRIAC assember
+                xar3 = #str?            
+        .endif
+        call LOG_F_event                  
+
+    .endm
+
+
+;
+;# ======== LOG_reset ========
+;  Reset the fields of a log to their initial value
+;  and set each word in log buffer to 0xffff
+;#
+;# Preconditions :
+;#      xar0  = address of the LOG object
+;#
+;# Postconditions:
+;#    none
+;#
+    .asg ":LOG_F_reset$regs:", LOG_reset$regs
+LOG_reset    .macro
+        call LOG_F_reset
+
+    .endm
+
+;
+;# ======== LOG_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+    .asg    "", LOG_startup$regs
+LOG_startup        .macro
+    .endm
+
+    .endif        ; if LOG_ is not defined

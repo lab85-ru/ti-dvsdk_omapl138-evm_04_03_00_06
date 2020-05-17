@@ -1,0 +1,91 @@
+;
+;  Copyright 2010 by Texas Instruments Incorporated.
+;  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+;
+;
+;  ======== isrc.h55 ========
+;  Assembly language ISRC macros for C55
+;
+;
+
+        .if ($isdefed("ISRC_") = 0)    ; prevent multiple includes of this file
+ISRC_   .set    1
+
+
+;
+;# ======== ISRC_config ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", ISRC_config$regs
+ISRC_config     .macro
+        .endm
+
+;
+;# ======== ISRC_Obj ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", ISRC_Obj$regs
+ISRC_Obj        .macro  cflag, name, id
+        .endm
+
+;
+;# ======== ISRC_init ========
+;  Runtime initialization for HW ISRs
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+;
+        .asg    "", ISRC_init$regs
+ISRC_init       .macro
+        .endm
+
+;
+;# ======== ISRC_startup ========
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", ISRC_startup$regs
+ISRC_startup        .macro
+        .endm
+
+;
+;#  ======== ISRC_end ========
+;  Invoked by confend.s55 at the end of all other configuration
+;  declarations.
+;
+;#
+;# Preconditions:
+;#      none
+;#
+;# Postconditions:
+;#      none
+;#
+        .asg    "", ISRC_end$regs
+ISRC_end .macro
+        .endm
+
+
+        .endif  ; ISRC_ not defined

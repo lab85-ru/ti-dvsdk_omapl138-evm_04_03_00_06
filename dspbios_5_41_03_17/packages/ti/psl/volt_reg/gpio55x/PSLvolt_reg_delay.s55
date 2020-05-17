@@ -1,0 +1,51 @@
+;
+;  Copyright 2007 by Texas Instruments Incorporated.
+;  All rights reserved. Property of Texas Instruments Incorporated.
+;  Restricted rights to use, duplicate or disclose this code are
+;  granted through contract.
+;
+;  @(#) PSL 5,1,0 09-24-2007 (psl-c03)
+;
+;-----------------------------------------------------------------------------
+; PSLvolt_reg_delay_C5510.s55
+; 
+;
+; This file contains a delay loop to cover the latency incurred
+; in a voltage scaling operation.
+;-----------------------------------------------------------------------------
+
+
+;******************************************************************************
+; _PSL_gpioVoltScaleDelay
+;
+; Delay the number of cycles specified by AC0.
+;
+; Parameters:
+;     AC0 - 32-bit unsigned value that specifies the number of cycles to
+;           delay.
+;
+;******************************************************************************
+   .global _PSL_gpioVoltScaleDelay      
+_PSL_gpioVoltScaleDelay
+
+   ; Delay the number of cycles specified by AC0.  Since the loop below
+   ; requires 8 cycles, divide AC0 by 8 before entering the loop.  Note 
+   ; that a repeat loop cannot be used since the cycle count is 32-bits.
+   SFTL AC0,#-3,AC0
+   
+   ; Since the above is an integer division, add 1 to AC0 to compenstate.
+   ; As a result, the loop below may actually execute a max of 8 cycles
+   ; extra. 
+   ADD #1,AC0
+L1:
+   SUB #1,AC0       ; 1 cycle
+   NOP              ; 1 cycle
+                    ; Add 1 cycle NOP to make loop 8 cycles (a power of 2) so 
+                    ; that the divide above can be done via a logical shift.
+   BCC L1,AC0 != 0  ; 6 cycles when condition is TRUE
+   RET
+
+
+
+   .end
+

@@ -1,0 +1,13 @@
+Package: libmodplug0
+Version: 0.8.7-r1.6
+Description: Library for reading mod-like audio files.
+Section: libs
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPL
+Architecture: armv5te
+OE: libmodplug
+Homepage: http://modplug-xmms.sf.net
+Build: install/d0bd439
+Depends: libstdc++6 (>= 4.3.3), libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Source: http://downloads.sourceforge.net/modplug-xmms/libmodplug-0.8.7.tar.gz

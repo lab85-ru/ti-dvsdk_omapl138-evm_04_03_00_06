@@ -1,0 +1,9 @@
+// DO NOT MOVE OR DELETE THIS LINE [JavaScript xdcpaths]
+// Note: Use /FORWARD/ slashes for all directories!
+
+//Root directory for the EDMA3 installation directory
+//User should modify this variable to point it to the ROOT directory
+//of EDMA installation directory.
+edma3InstallDir = "U:/git-work/edma3/edma3-lld-bios5";
+
+xdcpaths = edma3InstallDir + "/packages";

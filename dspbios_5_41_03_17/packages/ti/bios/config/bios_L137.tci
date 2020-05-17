@@ -1,0 +1,23 @@
+/*
+ *  Copyright 2010 by Texas Instruments Incorporated.
+ *  @(#) DSP/BIOS_Kernel 5,2,5,28 02-10-2010 (cuda-u28)
+ */
+/*
+ *  ======== bios_L137.tci ========
+ *  This file contains BIOS settings for OMAPL137.
+ *
+ */
+
+utils.importFile("ti/bios/config/bios_6747.tci");
+
+/*
+ *  ======== bios.initL137 ========
+ *  BIOS initialization for the L137 is same as for 6747 except that
+ *  we do not reset the timer by default (timer is shared with Arm).
+ */
+bios.initL137 = function (prog, baseseed)
+{
+    bios.init6747(prog, baseseed);
+
+    prog.module("CLK").RESETTIMER = false;
+}

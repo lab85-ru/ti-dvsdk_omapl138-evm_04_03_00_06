@@ -1,0 +1,139 @@
+;
+;  ======== clk2430.h62 ========
+;
+; 
+
+	.if ($isdefed("CLK2430_") = 0) ; prevent multiple includes
+CLK2430_	.set	1
+
+	.global CLK_INTBIT, CLK_REGS, CLK_PRD, CLK_TDDR, CLK_TIMERNUM
+	.global _CLK_gptimer
+
+;2430 CLK Register struct - WARNING! should match struct in _clk2430.h
+CLK_2430Regs    .struct
+tidr		.int
+dummy1		.int
+dummy2		.int
+dummy3		.int
+tiocp_cfg	.int
+tistat		.int
+tisr		.int
+tier		.int
+twer		.int
+tclr		.int
+tcrr		.int
+tldr		.int
+ttgr		.int
+twps		.int
+tmar		.int
+tcar1		.int
+tsisr		.int
+tcar2		.int
+    .endstruct
+
+
+CLK2430_STOPTIMER	.set	0x0
+CLK2430_STARTTIMER	.set	0x1
+CLK2430_AUTORELOAD	.set	0x2
+CLK2430_SOFTRESET	.set	0x2
+CLK2430_OVF_IT_FLAG	.set    0x2
+
+;
+; The default is that all interrupt mask bits are enabled after reset.
+; The mask bits need to be cleared in order for IVA2 (DSP) to receive external
+; asynchronous events (interrupts) from the MPU (ARM).
+; Here we are defining the address of the clear register and also the
+; bit mask to clear MIRQCLR6 which is the GPTimer5. MIRQCLR7 is set to GPTimer6,
+; MIRQCLR8 to GPTimer7, and MIRQCLR9 to GPTimer8.  The bitmask for these other
+; GPTimers can be obtained by shifting Timer5 bitmask to the left by
+; CLK_TIMERNUM.
+;
+; Note: Its important that we keep CLK_TIMERNUM=0 associated with GPTimer5 and
+; so on for this to work.
+;
+CLK2430_WUGEN_MEVTCLR0	.set	0x01C21070  ; interrupt mask bit clear register.
+CLK2430_WUGEN_TIMER5BIT	.set	0x40	    ; bitmask for GPTimer5.
+
+	.global _CLK_gptimer
+
+_CLK_gptimer	.tag	CLK_2430Regs
+
+
+
+;
+;# ======== CLK_ackIsr ========
+;
+;#
+;# Preconditions:
+;#    none
+;#
+;# Postconditions:
+;#    none
+;#
+	.asg    "a2,b3", CLK_ackIsr$regs
+CLK_ackIsr	.macro
+
+	mvkl	CLK2430_OVF_IT_FLAG, a2
+||	mvkl	_CLK_gptimer.tisr, b3
+	mvkh	CLK2430_OVF_IT_FLAG, a2
+||	mvkh	_CLK_gptimer.tisr, b3
+	stw	a2, *b3
+
+	.endm
+
+;
+;# ======== CLK_startup ========
+;  The Timer is put into dual 32-bit chained mode.  TIM12 is configured as
+;  a general purpose timer using TIM1/TIM2 register pair and controls the
+;  interrupt and timer output.  TIM34 is configured as a 32-bit pre-scalar
+;  to the TIM12 using its TIM3/TIM4 register pair.  When both TIM12 and TIM34
+;  match PRD12 and PRD34, a timer interrupt is generated on the next cycle of
+;  the timer clock.
+;#
+;# Preconditions:
+;#	none
+;#
+;# Postconditions:
+;#	Timer Period register = CLK_PRD.
+;#	Timer Prescalar register = CLK_TDDR.
+;#    	Timer is started.
+;#	Timer interrupt enable is set in IER.
+;#
+;# Dependencies:
+;#	This routine must be called after any other routines that use the
+;#	timer and before interrupts are globally enabled.
+;
+	.asg "a4,b1", CLK_startup$regs
+CLK_startup	.macro
+
+_CLK_gptimer	.equ	CLK_REGS
+    	; only expand if the CLK module is configured by the user and he/she
+    	; asks to use the timer
+    	.if ((CLK$ = 1) & (CLK_USETIMER = 1))
+		.ref	_CLK_start
+		.ref	_CLK_stop
+
+		mvkl	CLK2430_WUGEN_MEVTCLR0, b1
+||		mvkl	CLK2430_WUGEN_TIMER5BIT, a4
+		mvkh	CLK2430_WUGEN_MEVTCLR0, b1
+||		mvkh	CLK2430_WUGEN_TIMER5BIT, a4
+		shl 	a4, CLK_TIMERNUM, a4
+		stw 	a4, *b1
+
+		mvkl 	_CLK_stop, b1
+		mvkh 	_CLK_stop, b1
+		b 	b1
+		addkpc	clk_stop_ret, b3, 4
+
+clk_stop_ret:
+		mvkl	_CLK_start, b1
+		mvkh 	_CLK_start, b1
+		b 	b1
+		addkpc	clk_start_ret, b3, 4
+
+clk_start_ret:
+    	.endif	; .if ((CLK$ = 1) & (CLK_USETIMER = 1))
+
+    	.endm
+
+    	.endif		; if CLK2430_ is not defined

@@ -1,0 +1,12 @@
+Package: gdb-cross-sdk
+Version: 7.2-r9.0.6
+Description: gdb - GNU debugger
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv3
+Architecture: i686-armv5te-sdk
+OE: gdb-cross-sdk
+Homepage: http://www.gnu.org/software/gdb/
+Build: install/d0bd439
+Source: ftp://ftp.gnu.org/gnu/gdb/gdb-7.2.tar.gz file://gdb-6.8-fix-compile-karmic.patch file://gdb-fix-sim-ppc.patch

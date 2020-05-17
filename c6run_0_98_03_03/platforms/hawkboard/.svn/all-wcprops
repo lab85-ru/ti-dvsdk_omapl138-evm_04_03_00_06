@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/hawkboard
+END
+loadmodules.sh
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/hawkboard/loadmodules.sh
+END
+platform.tci
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/hawkboard/platform.tci
+END
+unloadmodules.sh
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/hawkboard/unloadmodules.sh
+END
+DSPLINK_CFG_update.c
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/hawkboard/DSPLINK_CFG_update.c
+END
+platform.mak
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/dspeasy/!svn/ver/559/tags/0_98_03_03/platforms/hawkboard/platform.mak
+END

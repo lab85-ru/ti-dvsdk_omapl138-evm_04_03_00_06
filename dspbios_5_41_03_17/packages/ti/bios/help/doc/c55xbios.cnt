@@ -1,0 +1,755 @@
+:Base c55xbios.hlp
+:Title TMS320C55x DSP/BIOS Help
+:Index DSP/BIOS Tutorial=cc_c55xat.hlp
+1 DSP/BIOS 5.32
+2 What is DSP/BIOS?=BIOS_Configuration_Overview
+2 Getting Help and Info About DSP/BIOS=Help_on_DSPBIOS
+2 Overview Q&A
+3 What are the Benefits of Using DSP/BIOS?=What_are_the_benefits_of_using_DSP_BIOS
+3 What is Real-Time Analysis?=What_is_real_time_analysis
+3 How Big is DSP/BIOS?=How_big_is_DSP_BIOS
+3 How is DSP/BIOS Distributed?=How_is_DSP_BIOS_distributed
+3 How Can I Use a Different Verion of DSP/BIOS?=DSPBIOS_Version
+3 What Boards and Simulators Does DSP/BIOS Support?=With_what_boards_and_simulators_can_DSP_BIOS_run
+3 Does DSP/BIOS Support Multi-Core or Multi-Processor DSPs?=Does_DSP_BIOS_support_multi_core_or_multi_processor_DSPs
+3 Can I Use DSP/BIOS with UNIX?=Can_I_use_DSP_BIOS_with_Unix
+3 How Does DSP/BIOS Fit the eXpress DSP Software Initiative?=How_does_DSP_BIOS_fit_within_the_eXpress_DSP_software_initiative
+2 DSP/BIOS 5.32 Tutorial
+3 About this Tutorial=BAT_Top@cc_c55xat.hlp
+3 What is DSP/BIOS?=BAT_Whatis@cc_c55xat.hlp
+3 Learning More About DSP/BIOS=More_on_DSPBIOS@cc_c55xat.hlp
+3 Creating a Simple DSP/BIOS Application
+4 Overview=Lesson2@cc_c55xat.hlp
+4 Creating the Project=CCS_L2_S1@cc_c55xat.hlp
+4 Creating a DSP/BIOS Configuration=CCS_L2_S2@cc_c55xat.hlp
+4 Extending the Configuration=CCS_L2_S2b@cc_c55xat.hlp
+4 Saving the Configuration=CCS_L2_S2c@cc_c55xat.hlp
+4 Examining the Clk Source Code=CCS_L2_S8b@cc_c55xat.hlp
+4 Building the Project=CCS_L2_S9@cc_c55xat.hlp
+4 Testing the Program=CCS_L2_S10@cc_c55xat.hlp
+4 Things to Try=CCS_L2_more@cc_c55xat.hlp
+3 Scheduling Multiple Tasks
+4 Overview=Lesson4@cc_c55xat.hlp
+4 Creating the Project=CCS_L4_S1@cc_c55xat.hlp
+4 Creating the Configuration=CCS_L4_S2@cc_c55xat.hlp
+4 Adding Tasks and a Semaphore=CCS_L4_S2b@cc_c55xat.hlp
+4 Saving the Configuration=CCS_L4_S2c@cc_c55xat.hlp
+4 Examining the Mutex Source Code=CCS_L4_S3@cc_c55xat.hlp
+4 Building the Project=CCS_L4_S4@cc_c55xat.hlp
+4 Testing the Program=CCS_L4_S5@cc_c55xat.hlp
+4 Understanding Execution Graph Results=BAT_R_Mutex5eg@cc_c55xat.hlp
+4 Things to Try=CCS_L4_more@cc_c55xat.hlp
+3 Debugging Program Behavior
+4 Overview=Lesson3@cc_c55xat.hlp
+4 Opening the Project=CCS_L3_S1@cc_c55xat.hlp
+4 Examining the Volume Source Code=CCS_L3_S2@cc_c55xat.hlp
+4 Understanding the Configuration=CCS_L3_S3b@cc_c55xat.hlp
+4 Viewing Thread Execution with the Execution Graph=CCS_L3_S4@cc_c55xat.hlp
+4 Changing and Viewing the Load=CCS_L3_S5@cc_c55xat.hlp
+4 Analyzing Thread Statistics=CCS_L3_S6@cc_c55xat.hlp
+4 Adding Explicit STS Instrumentation=CCS_L3_S7@cc_c55xat.hlp
+4 Viewing Explicit Instrumentation=CCS_L3_S8@cc_c55xat.hlp
+4 Modifying the Configuration=CCS_L4a_S2@cc_c55xat.hlp
+4 Editing the Source Code Again=CCS_L4a_S3@cc_c55xat.hlp
+4 Changing the Processing Load=CCS_L4a_S4@cc_c55xat.hlp
+4 Modifying Software Interrupt Priorities=CCS_L4a_S5@cc_c55xat.hlp
+4 Things to Try=CCS_L3_more@cc_c55xat.hlp
+3 Monitoring Interrupts
+4 Overview=Lesson5@cc_c55xat.hlp
+4 Opening and Examining the Project=CCS_L5_S1@cc_c55xat.hlp
+4 Examining the Configuration=CCS_L5_S2@cc_c55xat.hlp
+4 Examining the Latency Source Code=CCS_L5_S3@cc_c55xat.hlp
+4 Testing the Program=CCS_L5_S4@cc_c55xat.hlp
+4 Modifying the Program=CCS_L5_S5@cc_c55xat.hlp
+4 Things to Try=CCS_L5_more@cc_c55xat.hlp
+3 Choosing Thread Types
+4 Introduction=BAT_Threads@cc_c55xat.hlp
+4 Overview=BAT_T_Types@cc_c55xat.hlp
+4 Thread Type Characteristics=BAT_T_Types2@cc_c55xat.hlp
+4 Thread Selection Questions=BAT_T_Types_Q1@cc_c55xat.hlp
+4 About Threads and Multi-Threading=BAT_T_Types1@cc_c55xat.hlp
+2 API Modules
+3 Overview=API_Overview
+3 DSP/BIOS Modules=DSPBIOS_Modules
+3 Function Callability Table=Function_Callability_Table
+3 Error Codes=Error_Codes
+3 How to ...
+4 Follow Naming Conventions=Follow_Naming_Conventions
+4 Include DSP/BIOS Module Header Files=Include_DSP_BIOS_Module_Header_Files
+4 Use DSP/BIOS Datatypes=Use_DSP_BIOS_Datatypes
+4 Understand the Startup Sequence=Understand_the_Startup_Sequence
+4 Create Objects Dynamically=Create_Objects_Dynamically
+4 Delete Objects Dynamically=Delete_Objects_Dynamically
+4 Reference Objects Created Statically=Reference_Objects_Created_with_Configuration_Tool
+4 Reference Objects Created Dynamically=Reference_Objects_Created_Dynamically
+4 Choose a Compilation Model=Working_with_Different_Compilation_Models
+4 Optimize Application Performance=Optimizing_Application_Performance
+4 Minimize Program Code Size=Minimizing_Program_Memory_Use
+4 Reduce Memory Fragmentation=Reducing_Memory_Fragmentation
+4 Use C with DSP/BIOS=Using_C_with_DSP_BIOS
+4 Use C++ with DSP/BIOS=Using_C___with_DSP_BIOS
+4 Use Assembly Language with DSP/BIOS=Assembly_Language_Interface
+4 Write an ISR in C=Writing_an_ISR_in_C
+4 Write an ISR in Assembly=Write_an_ISR_in_Assembly
+4 Use Both C and Assembly Language=Using_Both_C_and_Assembly_Language
+4 Gather Statistics=Gathering_Statistics
+4 Control Explicit Instrumentation=Controlling_Explicit_Instrumentation
+4 Disable Hardware Interrupts=Disabling_Hardware_Interrupts
+4 Post a SWI Thread=Posting_a_SWI_Thread
+4 Understand TSK Thread States=Understanding_TSK_Thread_States
+4 Choose a Thread Synchronization Method=Choosing_a_Thread_Synchronization_Method
+4 Choose an I/O Model=Choosing_an_I_O_Model
+4 Create a Device Driver=Creating_a_Device_Driver
+4 Halt Program Execution=Halting_Program_Execution
+4 Handle Errors=Handling_Errors
+4 Choose a Thread Type
+5 Overview=BAT_T_Types
+5 Thread Type Characteristics=BAT_T_Types2
+5 Thread Selection Questions=BAT_T_Types_Q1
+5 About Threads and Multi-Threading=BAT_T_Types1
+3 Reference
+4 Module Descriptions
+5 ATM Module=BIOSHELP_ATM_MODULE
+5 BUF Module=BIOSHELP_BUF_MODULE
+5 C55 Module=BIOSHELP_C55_MODULE
+5 CLK Module=BIOSHELP_CLK_MODULE
+5 DEV Module=BIOSHELP_UDEV_MODULE
+5 GBL Module=BIOSHELP_GBL_MODULE
+5 GIO Module=BIOSHELP_GIO_MODULE
+5 HOOK Module=BIOSHELP_HOOK_MODULE
+5 HST Module=BIOSHELP_HST_MODULE
+5 HWI Module=BIOSHELP_HWI_MODULE
+5 IDL Module=BIOSHELP_IDL_MODULE
+5 LCK Module=BIOSHELP_LCK_MODULE
+5 LOG Module=BIOSHELP_LOG_MODULE
+5 MBX Module=BIOSHELP_MBX_MODULE
+5 MEM Module=BIOSHELP_MEM_MODULE
+5 MSGQ Module=BIOSHELP_MSGQ_MODULE
+5 PIP Module=BIOSHELP_PIP_MODULE
+5 POOL Module=BIOSHELP_POOL_MODULE
+5 PRD Module=BIOSHELP_PRD_MODULE
+5 PWRM Module=BIOSHELP_PWRM_MODULE
+5 QUE Module=BIOSHELP_QUE_MODULE
+5 RTDX Module=BIOSHELP_RTDX_MODULE
+5 SEM Module=BIOSHELP_SEM_MODULE
+5 SIO Module=BIOSHELP_SIO_MODULE
+5 STS Module=BIOSHELP_STS_MODULE
+5 SWI Module=BIOSHELP_SWI_MODULE
+5 SYS Module=BIOSHELP_SYS_MODULE
+5 TRC Module=BIOSHELP_TRC_MODULE
+5 TSK Module=BIOSHELP_TSK_MODULE
+4 Manager Properties
+5 BUF Manager Properties=BIOSHELP_BUF_GLOBAL
+5 CLK Manager Properties=BIOSHELP_CLK_GLOBAL
+5 DEV Manager Properties=BIOSHELP_UDEV_GLOBAL
+5 GBL Manager Properties=BIOSHELP_GBL_GLOBAL
+5 GIO Manager Properties=BIOSHELP_GIO_GLOBAL
+5 HOOK Manager Properties=BIOSHELP_HOOK_GLOBAL
+5 HST Manager Properties=BIOSHELP_HST_GLOBAL
+5 HWI Manager Properties=BIOSHELP_HWI_GLOBAL
+5 IDL Manager Properties=BIOSHELP_IDL_GLOBAL
+5 LCK Manager Properties=BIOSHELP_LCK_GLOBAL
+5 LOG Manager Properties=BIOSHELP_LOG_GLOBAL
+5 MBX Manager Properties=BIOSHELP_MBX_GLOBAL
+5 MEM Manager Properties=BIOSHELP_MEM_GLOBAL
+5 MSGQ Manager Properties=BIOSHELP_MSGQ_GLOBAL
+5 PIP Manager Properties=BIOSHELP_PIP_GLOBAL
+5 POOL Manager Properties=BIOSHELP_POOL_GLOBAL
+5 PRD Manager Properties=BIOSHELP_PRD_GLOBAL
+5 PWRM Manager Properties=BIOSHELP_PWRM_GLOBAL
+5 QUE Manager Properties=BIOSHELP_QUE_GLOBAL
+5 RTDX Manager Properties=BIOSHELP_RTDX_GLOBAL
+5 SEM Manager Properties=BIOSHELP_SEM_GLOBAL
+5 SIO Manager Properties=BIOSHELP_SIO_GLOBAL
+5 STS Manager Properties=BIOSHELP_STS_GLOBAL
+5 SWI Manager Properties=BIOSHELP_SWI_GLOBAL
+5 SYS Manager Properties=BIOSHELP_SYS_GLOBAL
+5 TSK Manager Properties=BIOSHELP_TSK_GLOBAL
+4 Object Properties
+5 BUF Object Properties=BIOSHELP_BUF_INSTANCE
+5 CLK Object Properties=BIOSHELP_CLK_INSTANCE
+5 DEV Object Properties=BIOSHELP_UDEV_INSTANCE
+5 HOOK Object Properties=BIOSHELP_HOOK_INSTANCE
+5 HST Object Properties=BIOSHELP_HST_INSTANCE
+5 HWI Object Properties=BIOSHELP_HWI_INSTANCE
+5 IDL Object Properties=BIOSHELP_IDL_INSTANCE
+5 LOG Object Properties=BIOSHELP_LOG_INSTANCE
+5 LCK Object Properties=BIOSHELP_LCK_INSTANCE
+5 MBX Object Properties=BIOSHELP_MBX_INSTANCE
+5 MEM Object Properties=BIOSHELP_MEM_INSTANCE
+5 PIP Object Properties=BIOSHELP_PIP_INSTANCE
+5 PRD Object Properties=BIOSHELP_PRD_INSTANCE
+5 QUE Object Properties=BIOSHELP_QUE_INSTANCE
+5 SEM Object Properties=BIOSHELP_SEM_INSTANCE
+5 SIO Object Properties=BIOSHELP_SIO_INSTANCE
+5 STS Object Properties=BIOSHELP_STS_INSTANCE
+5 SWI Object Properties=BIOSHELP_SWI_INSTANCE
+5 SYS Object Properties=BIOSHELP_SYS_INSTANCE
+5 TSK Object Properties=BIOSHELP_TSK_INSTANCE
+4 Functions
+5 std.h and stdlib.h Functions=BIOSHELP_C_LIBRARY_STDLIB
+5 ATM
+6 ATM_andi=BIOSHELP_ATM_ANDI
+6 ATM_andu=BIOSHELP_ATM_ANDU
+6 ATM_cleari=BIOSHELP_ATM_CLEARI
+6 ATM_clearu=BIOSHELP_ATM_CLEARU
+6 ATM_deci=BIOSHELP_ATM_DECI
+6 ATM_decu=BIOSHELP_ATM_DECU
+6 ATM_inci=BIOSHELP_ATM_INCI
+6 ATM_incu=BIOSHELP_ATM_INCU
+6 ATM_ori=BIOSHELP_ATM_ORI
+6 ATM_oru=BIOSHELP_ATM_ORU
+6 ATM_seti=BIOSHELP_ATM_SETI
+6 ATM_setu=BIOSHELP_ATM_SETU
+5 BUF
+6 BUF_alloc=BIOSHELP_BUF_ALLOC
+6 BUF_create=BIOSHELP_BUF_CREATE
+6 BUF_delete=BIOSHELP_BUF_DELETE
+6 BUF_free=BIOSHELP_BUF_FREE
+6 BUF_maxbuff=BIOSHELP_BUF_MAXBUFF
+6 BUF_stat=BIOSHELP_BUF_STAT
+5 C55
+6 C55_disableIER=BIOSHELP_C55_DISABLE
+6 C55_enableIER=BIOSHELP_C55_ENABLE
+6 C55_plug=BIOSHELP_C55_PLUG
+5 CLK
+6 CLK_countspms=BIOSHELP_CLK_COUNTSPMS
+6 CLK_cpuCyclesPerHtime=BIOSHELP_CLK_CPUCYCLESPERHTIME
+6 CLK_cpuCyclesPerLtime=BIOSHELP_CLK_CPUCYCLESPERLTIME
+6 CLK_gethtime=BIOSHELP_CLK_GETHTIME
+6 CLK_getltime=BIOSHELP_CLK_GETLTIME
+6 CLK_getprd=BIOSHELP_CLK_GETPRD
+6 CLK_reconfig=BIOSHELP_CLK_RECONFIG
+6 CLK_start=BIOSHELP_CLK_START
+6 CLK_stop=BIOSHELP_CLK_STOP
+5 DEV
+6 DEV_createDevice=BIOSHELP_UDEV_CREATEDEVICE
+6 DEV_deleteDevice=BIOSHELP_UDEV_DELETEDEVICE
+6 DEV_match=BIOSHELP_UDEV_MATCH
+5 GBL
+6 GBL_getClkin=BIOSHELP_GBL_GETCLKIN
+6 GBL_getFrequency=BIOSHELP_GBL_GETFREQUENCY
+6 GBL_getProcId=BIOSHELP_GBL_GETPROCID
+6 GBL_getVersion=BIOSHELP_GBL_GETVERSION
+6 GBL_setFrequency=BIOSHELP_GBL_SETFREQUENCY
+6 GBL_setProcId=BIOSHELP_GBL_SETPROCID
+5 GIO
+6 GIO_abort=BIOSHELP_GIO_ABORT
+6 GIO_control=BIOSHELP_GIO_CONTROL
+6 GIO_create=BIOSHELP_GIO_CREATE
+6 GIO_delete=BIOSHELP_GIO_DELETE
+6 GIO_flush=BIOSHELP_GIO_FLUSH
+6 GIO_new=BIOSHELP_GIO_NEW
+6 GIO_read=BIOSHELP_GIO_READ
+6 GIO_submit=BIOSHELP_GIO_SUBMIT
+6 GIO_write=BIOSHELP_GIO_WRITE
+5 HOOK
+6 HOOK_getenv=BIOSHELP_HOOK_GETENV
+6 HOOK_setenv=BIOSHELP_HOOK_SETENV
+5 HST
+6 HST_getpipe=BIOSHELP_HST_GETPIPE
+5 HWI
+6 HWI_disable=BIOSHELP_HWI_DISABLE
+6 HWI_dispatchPlug=BIOSHELP_HWI_DISPATCHPLUG
+6 HWI_enable=BIOSHELP_HWI_ENABLE
+6 HWI_enter=BIOSHELP_HWI_ENTER
+6 HWI_exit=BIOSHELP_HWI_EXIT
+6 HWI_isHWI=BIOSHELP_HWI_ISHWI
+6 HWI_restore=BIOSHELP_HWI_RESTORE
+5 IDL
+6 IDL_run=BIOSHELP_IDL_RUN
+5 LCK
+6 LCK_create=BIOSHELP_LCK_CREATE
+6 LCK_delete=BIOSHELP_LCK_DELETE
+6 LCK_pend=BIOSHELP_LCK_PEND
+6 LCK_post=BIOSHELP_LCK_POST
+5 LOG
+6 LOG_disable=BIOSHELP_LOG_DISABLE
+6 LOG_enable=BIOSHELP_LOG_ENABLE
+6 LOG_error=BIOSHELP_LOG_ERROR
+6 LOG_event=BIOSHELP_LOG_EVENT
+6 LOG_message=BIOSHELP_LOG_MESSAGE
+6 LOG_printf=BIOSHELP_LOG_PRINTF
+6 LOG_reset=BIOSHELP_LOG_RESET
+5 MBX
+6 MBX_create=BIOSHELP_MBX_CREATE
+6 MBX_delete=BIOSHELP_MBX_DELETE
+6 MBX_pend=BIOSHELP_MBX_PEND
+6 MBX_post=BIOSHELP_MBX_POST
+5 MEM
+6 MEM_alloc=BIOSHELP_MEM_ALLOC
+6 MEM_calloc=BIOSHELP_MEM_CALLOC
+6 MEM_define=BIOSHELP_MEM_DEFINE
+6 MEM_free=BIOSHELP_MEM_FREE
+6 MEM_getBaseAddress=BIOSHELP_MEM_GETBASEADDRESS
+6 MEM_increaseTableSize=BIOSHELP_MEM_INCREASETABLESIZE
+6 MEM_redefine=BIOSHELP_MEM_REDEFINE
+6 MEM_stat=BIOSHELP_MEM_STAT
+6 MEM_undefine=BIOSHELP_MEM_UNDEFINE
+6 MEM_valloc=BIOSHELP_MEM_VALLOC
+5 MSGQ
+6 MSGQ_alloc=BIOSHELP_MSGQ_ALLOC
+6 MSGQ_close=BIOSHELP_MSGQ_CLOSE
+6 MSGQ_count=BIOSHELP_MSGQ_COUNT
+6 MSGQ_free=BIOSHELP_MSGQ_FREE
+6 MSGQ_get=BIOSHELP_MSGQ_GET
+6 MSGQ_getDstQueue=BIOSHELP_MSGQ_GETDSTQUEUE
+6 MSGQ_getMsgId=BIOSHELP_MSGQ_GETMSGID
+6 MSGQ_getMsgSize=BIOSHELP_MSGQ_GETMSGSIZE
+6 MSGQ_getSrcQueue=BIOSHELP_MSGQ_GETSRCQUEUE
+6 MSGQ_locate=BIOSHELP_MSGQ_LOCATE
+6 MSGQ_locateAsync=BIOSHELP_MSGQ_LOCATEASYNC
+6 MSGQ_open=BIOSHELP_MSGQ_OPEN
+6 MSGQ_put=BIOSHELP_MSGQ_PUT
+6 MSGQ_release=BIOSHELP_MSGQ_RELEASE
+6 MSGQ_setErrorHandler=BIOSHELP_MSGQ_SETERRORHANDLER
+6 MSGQ_setMsgId=BIOSHELP_MSGQ_SETMSGID
+6 MSGQ_setSrcQueue=BIOSHELP_MSGQ_SETSRCQUEUE
+5 PIP
+6 PIP_alloc=BIOSHELP_PIP_ALLOC
+6 PIP_free=BIOSHELP_PIP_FREE
+6 PIP_get=BIOSHELP_PIP_GET
+6 PIP_getReaderAddr=BIOSHELP_PIP_GETREADERADDR
+6 PIP_getReaderNumFrames=BIOSHELP_PIP_GETREADERNUMFRAMES
+6 PIP_getReaderSize=BIOSHELP_PIP_GETREADERSIZE
+6 PIP_getWriterAddr=BIOSHELP_PIP_GETWRITERADDR
+6 PIP_getWriterNumFrames=BIOSHELP_PIP_GETWRITERNUMFRAMES
+6 PIP_getWriterSize=BIOSHELP_PIP_GETWRITERSIZE
+6 PIP_peek=BIOSHELP_PIP_PEEK
+6 PIP_put=BIOSHELP_PIP_PUT
+6 PIP_reset=BIOSHELP_PIP_RESET
+6 PIP_setWriterSize=BIOSHELP_PIP_SETWRITERSIZE
+5 PRD
+6 PRD_getticks=BIOSHELP_PRD_GETTICKS
+6 PRD_start=BIOSHELP_PRD_START
+6 PRD_stop=BIOSHELP_PRD_STOP
+6 PRD_tick=BIOSHELP_PRD_TICK
+5 PWRM
+6 PWRM_changeSetpoint=BIOSHELP_PWRM_CHANGESETPOINT
+6 PWRM_configure=BIOSHELP_PWRM_CONFIGURE
+6 PWRM_getCapabilities=BIOSHELP_PWRM_GETCAPABILITIES
+6 PWRM_getCurrentSetpoint=BIOSHELP_PWRM_GETCURRENTSETPOINT
+6 PWRM_getNumSetpoints=BIOSHELP_PWRM_GETNUMSETPOINTS
+6 PWRM_getSetpointInfo=BIOSHELP_PWRM_GETSETPOINTINFO
+6 PWRM_getTransitionLatency=BIOSHELP_PWRM_GETTRANSITIONLATENCY
+6 PWRM_idleClocks=BIOSHELP_PWRM_IDLECLOCKS
+6 PWRM_registerNotify=BIOSHELP_PWRM_REGISTERNOTIFY
+6 pwrmNotifyFxn=BIOSHELP_PWRM_NOTIFYFXN
+6 PWRM_releaseDependency=BIOSHELP_PWRM_RELEASEDEPENDENCY
+6 PWRM_setDependency=BIOSHELP_PWRM_SETDEPENDENCY
+6 PWRM_sleepDSP=BIOSHELP_PWRM_SLEEPDSP
+6 PWRM_unregisterNotify=BIOSHELP_PWRM_UNREGISTERNOTIFY
+5 QUE
+6 QUE_create=BIOSHELP_QUE_CREATE
+6 QUE_delete=BIOSHELP_QUE_DELETE
+6 QUE_dequeue=BIOSHELP_QUE_DEQUEUE
+6 QUE_empty=BIOSHELP_QUE_EMPTY
+6 QUE_enqueue=BIOSHELP_QUE_ENQUEUE
+6 QUE_get=BIOSHELP_QUE_GET
+6 QUE_head=BIOSHELP_QUE_HEAD
+6 QUE_insert=BIOSHELP_QUE_INSERT
+6 QUE_new=BIOSHELP_QUE_NEW
+6 QUE_next=BIOSHELP_QUE_NEXT
+6 QUE_prev=BIOSHELP_QUE_PREV
+6 QUE_put=BIOSHELP_QUE_PUT
+6 QUE_remove=BIOSHELP_QUE_REMOVE
+5 RTDX
+6 RTDX_channelBusy=BIOSHELP_RTDX_CHANNELBUSY
+6 RTDX_CreateInputChannel=BIOSHELP_RTDX_CREATEINPUTCHANNEL
+6 RTDX_CreateOutputChannel=BIOSHELP_RTDX_CREATEOUTPUTCHANNEL
+6 RTDX_disableInput=BIOSHELP_RTDX_DISABLEINPUT
+6 RTDX_disableOutput=BIOSHELP_RTDX_DISABLEOUTPUT
+6 RTDX_enableInput=BIOSHELP_RTDX_ENABLEINPUT
+6 RTDX_enableOutput=BIOSHELP_RTDX_ENABLEOUTPUT
+6 RTDX_isInputEnabled=BIOSHELP_RTDX_ISINPUTENABLED
+6 RTDX_isOutputEnabled=BIOSHELP_RTDX_ISOUTPUTENABLED
+6 RTDX_read=BIOSHELP_RTDX_READ
+6 RTDX_readNB=BIOSHELP_RTDX_READNB
+6 RTDX_sizeofInput=BIOSHELP_RTDX_SIZEOFINPUT
+6 RTDX_write=BIOSHELP_RTDX_WRITE
+5 SEM
+6 SEM_count=BIOSHELP_SEM_COUNT
+6 SEM_create=BIOSHELP_SEM_CREATE
+6 SEM_delete=BIOSHELP_SEM_DELETE
+6 SEM_new=BIOSHELP_SEM_NEW
+6 SEM_pend=BIOSHELP_SEM_PEND
+6 SEM_pendBinary=BIOSHELP_SEM_PENDBINARY
+6 SEM_post=BIOSHELP_SEM_POST
+6 SEM_postBinary=BIOSHELP_SEM_POSTBINARY
+6 SEM_reset=BIOSHELP_SEM_RESET
+5 SIO
+6 SIO_bufsize=BIOSHELP_SIO_BUFSIZE
+6 SIO_create=BIOSHELP_SIO_CREATE
+6 SIO_ctrl=BIOSHELP_SIO_CTRL
+6 SIO_delete=BIOSHELP_SIO_DELETE
+6 SIO_flush=BIOSHELP_SIO_FLUSH
+6 SIO_get=BIOSHELP_SIO_GET
+6 SIO_idle=BIOSHELP_SIO_IDLE
+6 SIO_issue=BIOSHELP_SIO_ISSUE
+6 SIO_put=BIOSHELP_SIO_PUT
+6 SIO_ready=BIOSHELP_SIO_READY
+6 SIO_reclaim=BIOSHELP_SIO_RECLAIM
+6 SIO_reclaimx=BIOSHELP_SIO_RECLAIMX
+6 SIO_segid=BIOSHELP_SIO_SEGID
+6 SIO_select=BIOSHELP_SIO_SELECT
+6 SIO_staticbuf=BIOSHELP_SIO_STATICBUF
+5 STS
+6 STS_add=BIOSHELP_STS_ADD
+6 STS_delta=BIOSHELP_STS_DELTA
+6 STS_reset=BIOSHELP_STS_RESET
+6 STS_set=BIOSHELP_STS_SET
+5 SWI
+6 SWI_andn=BIOSHELP_SWI_ANDN
+6 SWI_andnHook=BIOSHELP_SWI_ANDNHOOK
+6 SWI_create=BIOSHELP_SWI_CREATE
+6 SWI_dec=BIOSHELP_SWI_DEC
+6 SWI_delete=BIOSHELP_SWI_DELETE
+6 SWI_disable=BIOSHELP_SWI_DISABLE
+6 SWI_enable=BIOSHELP_SWI_ENABLE
+6 SWI_getattrs=BIOSHELP_SWI_GETATTRS
+6 SWI_getmbox=BIOSHELP_SWI_GETMBOX
+6 SWI_getpri=BIOSHELP_SWI_GETPRI
+6 SWI_inc=BIOSHELP_SWI_INC
+6 SWI_isSWI=BIOSHELP_SWI_ISSWI
+6 SWI_or=BIOSHELP_SWI_OR
+6 SWI_orHook=BIOSHELP_SWI_ORHOOK
+6 SWI_post=BIOSHELP_SWI_POST
+6 SWI_raisepri=BIOSHELP_SWI_RAISEPRI
+6 SWI_restorepri=BIOSHELP_SWI_RESTOREPRI
+6 SWI_self=BIOSHELP_SWI_SELF
+6 SWI_setattrs=BIOSHELP_SWI_SETATTRS
+5 SYS
+6 SYS_abort=BIOSHELP_SYS_ABORT
+6 SYS_atexit=BIOSHELP_SYS_ATEXIT
+6 SYS_error=BIOSHELP_SYS_ERROR
+6 SYS_exit=BIOSHELP_SYS_EXIT
+6 SYS_printf=BIOSHELP_SYS_PRINTF
+6 SYS_putchar=BIOSHELP_SYS_PUTCHAR
+6 SYS_sprintf=BIOSHELP_SYS_SPRINTF
+6 SYS_vprintf=BIOSHELP_SYS_VPRINTF
+6 SYS_vsprintf=BIOSHELP_SYS_VSPRINTF
+5 TRC
+6 TRC_disable=BIOSHELP_TRC_DISABLE
+6 TRC_enable=BIOSHELP_TRC_ENABLE
+6 TRC_query=BIOSHELP_TRC_QUERY
+5 TSK
+6 TSK_checkstacks=BIOSHELP_TSK_CHECKSTACKS
+6 TSK_create=BIOSHELP_TSK_CREATE
+6 TSK_delete=BIOSHELP_TSK_DELETE
+6 TSK_deltatime=BIOSHELP_TSK_DELTATIME
+6 TSK_disable=BIOSHELP_TSK_DISABLE
+6 TSK_enable=BIOSHELP_TSK_ENABLE
+6 TSK_exit=BIOSHELP_TSK_EXIT
+6 TSK_getenv=BIOSHELP_TSK_GETENV
+6 TSK_geterr=BIOSHELP_TSK_GETERR
+6 TSK_getname=BIOSHELP_TSK_GETNAME
+6 TSK_getpri=BIOSHELP_TSK_GETPRI
+6 TSK_getsts=BIOSHELP_TSK_GETSTS
+6 TSK_isTSK=BIOSHELP_TSK_ISTSK
+6 TSK_itick=BIOSHELP_TSK_ITICK
+6 TSK_self=BIOSHELP_TSK_SELF
+6 TSK_setenv=BIOSHELP_TSK_SETENV
+6 TSK_seterr=BIOSHELP_TSK_SETERR
+6 TSK_setpri=BIOSHELP_TSK_SETPRI
+6 TSK_settime=BIOSHELP_TSK_SETTIME
+6 TSK_sleep=BIOSHELP_TSK_SLEEP
+6 TSK_stat=BIOSHELP_TSK_STAT
+6 TSK_tick=BIOSHELP_TSK_TICK
+6 TSK_time=BIOSHELP_TSK_TIME
+6 TSK_yield=BIOSHELP_TSK_YIELD
+4 Device Drivers
+5 DEV Module=BIOSHELP_UDEV_MODULE
+5 Built-in Drivers=BIOSHELP_UDEV_GLOBAL
+5 DGN Driver=BIOSHELP_DGN_DRIVER
+5 DGS Driver=BIOSHELP_DGS_DRIVER
+5 DHL Driver=BIOSHELP_DHL_DRIVER
+5 DIO Driver Adapter=BIOSHELP_DIO_ADAPTER
+5 DNL Driver=BIOSHELP_DNL_DRIVER
+5 DOV Driver=BIOSHELP_DOV_DRIVER
+5 DPI Driver=BIOSHELP_DPI_DRIVER
+5 DST Driver=BIOSHELP_DST_DRIVER
+5 DTR Driver=BIOSHELP_DTR_DRIVER
+5 Dxx_close=BIOSHELP_DXX_CLOSE
+5 Dxx_ctrl=BIOSHELP_DXX_CTRL
+5 Dxx_idle=BIOSHELP_DXX_IDLE
+5 Dxx_init=BIOSHELP_DXX_INIT
+5 Dxx_issue=BIOSHELP_DXX_ISSUE
+5 Dxx_open=BIOSHELP_DXX_OPEN
+5 Dxx_reclaim=BIOSHELP_DXX_RECLAIM
+4 Register Preservation
+5 Overview=c55regco_rtf_1085350
+5 Details=c55regco_rtf_1090525
+5 Status Registers=c55regco_rtf_1090560
+4 DSP/BIOS for OMAP 2320
+5 Overview=c55_omaa_rtf_1082824
+5 Building DSP/BIOS Applications=c55_omaa_rtf_1090549
+4 DSP/BIOS for OMAP 2420
+5 Overview=c55_omap_rtf_1082824
+5 Building DSP/BIOS Applications=c55_omap_rtf_1090549
+5 CLK Module
+6 Overview=c55_omap_rtf_1090653
+6 Static Configuration=c55_omap_rtf_1090993
+6 GEL Configuration=c55_omap_rtf_1090761
+5 HWI Module
+6 Overview=c55_omap_rtf_1090705
+6 Level 2 Interrupt Controller Base Address=c55_omap_rtf_1091849
+6 Level 2 Interrupt Objects and Properties=c55_omap_rtf_1091853
+6 HWI_dispatchPlug API=c55_omap_rtf_1091371
+6 HWI_enter and HWI_exit APIs=c55_omap_rtf_1091449
+5 C55 Module
+6 Overview=c55_omap_rtf_1090722
+6 C55_plug API=c55_omap_rtf_1091590
+6 New APIs=c55_omap_rtf_1092426
+5 Usage Examples
+6 Overview=c55_omap_rtf_1092729
+6 Installing and Enabling a Single Level 2 Interrupt=c55_omap_rtf_1092753
+6 Installing and Enabling Multiple Level 2 Interrupts=c55_omap_rtf_1092792
+6 Enabling an L2 Interrupt Using "interrupt" Keyword=c55_omap_rtf_1092841
+6 Assembly Language ISR Using HWI_enter, HWI_exit=c55_omap_rtf_1092878
+6 Statically Configuring a Level 2 Interrupt=c55_omap_rtf_1092916
+2 Graphical Configuration
+3 Overview=Configuration_Tool_Help_Index
+3 What is a DSP/BIOS Configuration?=What_is_a_DSP_BIOS_Configuration_File_
+3 Graphical vs. Text Editing of Tconf Configurations=Graphical_vs__Text_Based_Configuration
+3 What's New?=What_s_New_for_DSP_BIOS_Configuration
+3 How to ...
+4 List of "How to" topics=How_to_topic_list
+4 Working with Files
+4 Overview=Creating_a_New_Program_Configuration
+5 Create a New Configuration=BIOSHELP_FILE_NEW
+5 Open a Configuration=HID_FILE_OPEN
+5 Save a Configuration=Saving_a_Configuration
+4 Working with Objects
+5 Choose Static or Dynamic Object Creation=Choosing_Static_or_Dynamic_Object_Creation
+5 Enabling and Disabling DSP/BIOS Features=Enabling_and_Disabling_DSP_BIOS_Features
+5 Create an Object=Creating_an_Object
+5 Delete an Object=Deleting_DSP_BIOS_Objects
+5 Rename an Object=Renaming_DSP_BIOS_Objects
+5 Set Global Properties=Setting_Global_Properties
+5 Set Manager Properties=Setting_Properties_of_a_Module_Manager
+5 Set Object Properties=Setting_Properties_of_a_DSP_BIOS_Object
+5 Find a Module in the Hierarchy=DSPBIOS_Manager_Hierarchy
+5 View Dependencies=Viewing_and_Removing_Configuration_Dependencies
+4 Threads
+5 Reference C Functions and Assembly Macros=BIOSHELP_Underscores
+5 Set Software Interrupt Priorities=BIOS_Priority_Levels
+5 Set Task Priorities=Setting_Task_Priority_Levels
+5 Set Order of CLK, PRD, and IDL Functions=Set_Execution_Order_of_CLK_PRD_and_IDL_Functions
+5 View Priorities or Properties=Viewing_Thread_Priorities
+5 Create Event Handlers=Creating_Event_Handlers
+5 Set Clock and Periodic Function Rates=Setting_Clock_and_Periodic_Function_Rates
+4 Instrumentation
+5 Determine Appropriate Log Length=Determining_Appropriate_Log_Lengths
+5 Change Statistics Units and Operations=Changing_Statistics_Units_and_Operations
+4 Input/Output
+5 Configure Device Drivers=Configuring_Device_Drivers
+5 Inserting DHL Objects=Inserting_DHL_Objects
+5 Inserting SIO Objects=Inserting_SIO_Objects
+5 Configuring SIO Streams=Configuring_SIO_Streams
+4 Performance and Resource Usage
+5 Optimize Application Performance=Optimizing_Application_Performance
+5 Minimize Program Size=Minimizing_DSP_BIOS_Program_Size
+5 Minimize Data Memory Use=Minimizing_Program_Memory_Use
+5 Customize Memory Sections=Customizing_Memory_Sections
+5 Estimate Stack Usage=Estimating_Stack_Usage
+5 Estimating the Idle Loop Instruction Count=Estimating_the_Idle_Loop_Instruction_Count
+5 Reusing Startup Space=Reusing_Startup_Space
+4 Configurations and Projects
+5 Generated Configuration Files=Generating_Program_Configuration_Files
+5 Add DSP/BIOS Files to a Project=Adding_DSP_BIOS_Files_to_a_Project
+5 Change Generated File Names=BIOSHELP_GENFILE_NAMING
+5 Use a Custom Linker Command File=Using_a_Custom_Linker_Command_File
+4 Working with Platform Files
+5 Selecting a Platform=BIOSHELP_FILE_NEW
+5 Creating a New Platform=AFX_HIDD_PLATFORM_SETUP_PROPPAGE1
+3 Reference
+4 Menus
+5 File menu=menu_file
+5 Edit menu=menu_edit
+5 View menu=menu_view
+5 Object menu=menu_object
+5 Help menu=menu_help
+5 Shortcut menu=menu_view
+4 Manager Properties
+5 BUF Manager Properties=BIOSHELP_BUF_GLOBAL
+5 CLK Manager Properties=BIOSHELP_CLK_GLOBAL
+5 DEV Manager Properties=BIOSHELP_UDEV_GLOBAL
+5 GBL Manager Properties=BIOSHELP_GBL_GLOBAL
+5 GIO Manager Properties=BIOSHELP_GIO_GLOBAL
+5 HST Manager Properties=BIOSHELP_HST_GLOBAL
+5 HWI Manager Properties=BIOSHELP_HWI_GLOBAL
+5 IDL Manager Properties=BIOSHELP_IDL_GLOBAL
+5 LCK Manager Properties=BIOSHELP_LCK_GLOBAL
+5 LOG Manager Properties=BIOSHELP_LOG_GLOBAL
+5 MBX Manager Properties=BIOSHELP_MBX_GLOBAL
+5 MEM Manager Properties=BIOSHELP_MEM_GLOBAL
+5 MSGQ Manager Properties=BIOSHELP_MSGQ_GLOBAL
+5 PIP Manager Properties=BIOSHELP_PIP_GLOBAL
+5 POOL Manager Properties=BIOSHELP_POOL_GLOBAL
+5 PRD Manager Properties=BIOSHELP_PRD_GLOBAL
+5 PWRM Manager Properties=BIOSHELP_PWRM_GLOBAL
+5 QUE Manager Properties=BIOSHELP_QUE_GLOBAL
+5 RTDX Manager Properties=BIOSHELP_RTDX_GLOBAL
+5 SEM Manager Properties=BIOSHELP_SEM_GLOBAL
+5 SIO Manager Properties=BIOSHELP_SIO_GLOBAL
+5 STS Manager Properties=BIOSHELP_STS_GLOBAL
+5 SWI Manager Properties=BIOSHELP_SWI_GLOBAL
+5 SYS Manager Properties=BIOSHELP_SYS_GLOBAL
+5 TSK Manager Properties=BIOSHELP_TSK_GLOBAL
+4 Object Properties
+5 BUF Object Properties=BIOSHELP_BUF_INSTANCE
+5 CLK Object Properties=BIOSHELP_CLK_INSTANCE
+5 DEV Object Properties=BIOSHELP_UDEV_INSTANCE
+5 HST Object Properties=BIOSHELP_HST_INSTANCE
+5 HWI Object Properties=BIOSHELP_HWI_INSTANCE
+5 IDL Object Properties=BIOSHELP_IDL_INSTANCE
+5 LOG Object Properties=BIOSHELP_LOG_INSTANCE
+5 LCK Object Properties=BIOSHELP_LCK_INSTANCE
+5 MBX Object Properties=BIOSHELP_MBX_INSTANCE
+5 MEM Object Properties=BIOSHELP_MEM_INSTANCE
+5 PIP Object Properties=BIOSHELP_PIP_INSTANCE
+5 PRD Object Properties=BIOSHELP_PRD_INSTANCE
+5 QUE Object Properties=BIOSHELP_QUE_INSTANCE
+5 SEM Object Properties=BIOSHELP_SEM_INSTANCE
+5 SIO Object Properties=BIOSHELP_SIO_INSTANCE
+5 STS Object Properties=BIOSHELP_STS_INSTANCE
+5 SWI Object Properties=BIOSHELP_SWI_INSTANCE
+5 SYS Object Properties=BIOSHELP_SYS_INSTANCE
+5 TSK Object Properties=BIOSHELP_TSK_INSTANCE
+4 Built-in Objects and Functions
+5 Default DSP/BIOS Objects=Default_DSPBIOS_Objects
+5 Default IDL Objects=Default_IDL_Objects
+5 Built-in Functions Used by DSP/BIOS Objects=Builtin_Functions_Used_by_DSPBIOS_Objects
+5 Memory Segment Names=Memory_Segment_Names
+3 Troubleshooting
+4 Open Script Failed Error=BIOSHELP_TCF_ERROR1
+4 Errors Generated by Tconf Script=BIOSHELP_TCF_ERROR2
+4 Filenames and Locations for Configuration Files=Filenames_and_Locations_for_Configuration_Files
+4 Files Not Created When Configuration Saved=Files_Not_Created_when_Configuration_Saved
+4 Object Cannot be Deleted=If_Error_About_Object_Dependencies_Occurs
+4 Application Stack Size Message=If_Warning_About_Application_Stack_Size_Occurs
+4 Visual Linker Settings Override Configuration=If_Visual_Linker
+4 Getting Context-Sensitive Help=Getting_Context_Sensitive_Help_in_the_Configuration_Tool
+2 Tconf Configuration
+3 DSP/BIOS Configuration Roadmap=TCONF_ROADMAP
+3 How to ...
+4 Creating
+5 Creating TCFs with the Configuration Tool=TCONF_GCONF_OVERVIEW
+5 Creating TCFs with a Text Editor=TCONF_CREATEFIRST
+4 Running
+5 Running a Tconf Script=TCONF_RUNNING
+5 Tconf Operation Modes=TCONF_MODES
+5 Command Line Mode=TCONF_CMDLINEMODE
+5 The GUI Debugger=TCONF_DBGMODE
+5 Interactive Tconf=TCONF_INTERACTIVEMODE
+4 Naming
+4 Generated Files=TCONF_GENFILES
+5 Configuration Coding Guidelines=TCONF_CODE_GUIDELINES
+5 Object and Property Naming and Referencing=TCONF_NAMING
+5 Module and Instance Property Names=TCONF_NAMING_PROPERTIES
+5 Namespace Management=TCONF_NAMING_NAMESPACE
+5 Property Types=TCONF_TYPES
+3 Graphical Tool Integration
+4 Overview=TCONF_GCONF_INTEGRATION
+4 Limitations=TCONF_GCONF_INTEGRATION_LIMITS
+4 Prog.gen() Method=TCONF_GCONF_PROGGEN
+4 Insertion Marker=TCONF_GCONF_INSERTIONMARKER
+4 Menu Operations and Tconf=TCONF_GCONF_MENU_OPERATIONS
+4 Gconf.ini File=TCONF_GCONF_INIFILE
+4 Gconf Command Line=TCONF_GCONF_COMMANDLINE
+4 Error Handling=TCONF_GCONF_ERRORS
+3 Platform Specification
+4 Using TI-Supplied Platform Files=TCONF_PLAT_TI
+4 Referencing a Platform File with utils.loadPlatform()=TCONF_PLAT_LOADPLATFORM
+4 Creating New Platform Definitions=AFX_HIDD_PLATFORM_SETUP_PROPPAGE1
+4 Setting Platform Params=TCONF_PLAT_PARAMS
+4 Memory Configuration
+5 Platform Memory Configurations=TCONF_MEMCFG_1
+5 Deprecated Platform Memory Configurations=TCONF_MEMCFG_2
+5 Device Memory Configurations=TCONF_MEMCFG_3
+4 Example Custom Platform Files
+5 Example for 'C5510=TCONF_PLAT_EX5510
+5 Example for OMAP 1510=TCONF_PLAT_EX1510
+3 Reference
+4 Command Line
+5 The tconf Command-Line Utility=TCONF_CMDLINE
+5 Environment Array Variables=TCONF_ENVVARS
+5 Argument Array Variables=TCONF_ARGARRAY
+4 Object Model
+5 Overview=TCONF_TCOM_MODEL
+5 Target Content Object Model Quick Reference=TCONF_TCOM_REF
+5 Config Class=TCONF_TCOM_CONFIG
+5 Board Class=TCONF_TCOM_BOARD
+5 Cpu Class=TCONF_TCOM_CPU
+5 Program Class=TCONF_TCOM_PROGRAM
+5 Memory Class=TCONF_TCOM_MEMORY
+5 Extern Class=TCONF_TCOM_EXTERN
+5 Module Class=TCONF_TCOM_MODULE
+5 Instance Class=TCONF_TCOM_INSTANCE
+4 Methods
+5 Methods for Loading Other Scripts=TCONF_LOAD_METHODS
+5 Enabling DSP/BIOS Components=TCONF_ENABLE_BIOS
+5 File Manipulation with Java=TCONF_FILEMANIP
+5 The print() Method=TCONF_PRINT_METHOD
+4 Error Handling
+5 Overview=TCONF_ERROR_HANDLING
+5 More About Errors=TCONF_ERRORS_MORE
+5 More About Exceptions=TCONF_EXCEPTIONS_MORE
+4 JavaScript Topics
+5 JavaScript Language Highlights=TCONF_JAVASCRIPT_1
+5 Common Misconceptions About JavaScript=TCONF_JAVASCRIPT_MYTHS
+5 JavaScript and Java References=TCONF_JAVASCRIPT_REFS
+4 Conversion Topics
+5 Converting from CDB Configurations=TCONF_CVT
+5 The cdb2tcf Utility=TCONF_CDB2TCF
+5 Example for Base Seed Conversion=TCONF_CVT_EX
+5 Converting a Custom Base Seed=TCONF_CVT_CUSTOM
+5 Changes to the loadPlatform() Method=TCONF_CVT_LOADPLAT_CHANGES
+5 New Memory Configurations and Names=TCONF_CVT_OLDMEM
+2 DSP/BIOS Real-Time Analysis
+3 Overview of Analysis Tools=PLUGIN_Overview
+3 Analysis Tools by API Module=PLUGIN_menu_view
+3 How to ...
+4 View CPU Load Graph=View_CPU_load_graph
+4 View Thread Execution Graph=View_thread_execution_graph
+4 View Execution Graph Details=PLUGIN_VIEW_SYSTEM_LOG_DETAILS
+4 Control and Monitor Host Channels=Control_and_monitor_host_channels
+4 View Log Messages=View_log_messages
+4 Write Log Messages to a File=Write_log_messages_to_a_file
+4 View and Interpret Statistics Units=View_and_interpret_statistics
+4 Disable Logging and Statistics=Enable_or_Disable_Logging_and_Statistics
+4 Set Target Polling Rates=Set_target_polling_rates
+4 View System Information=View_system_information
+4 View Task Information=View_task_information
+4 View Mailbox Information=View_mailbox_information
+4 View Message Queue Information=View_msgq_information
+4 View Semaphore Information=View_semaphore_information
+4 View Memory Section Usage=View_memory_section_usage
+4 View Software Interrupt Information=View_software_interrupt_information
+4 Measure DSP/BIOS Overhead=Performance_Measurement_Techniques
+4 Measure Interrupt Latency=Measure_interrupt_latency
+4 Detect Stack Overflow=Detect_stack_overflow
+4 Keep Tools from Affecting Real-Time Behavior=Keep_tools_from_affecting_real_time_behavior
+4 Arrange Tool Windows=Arrange_tool_windows
+4 Use with Profiler=Using_DSP_BIOS_Tools_with_Profiler
+4 Use with Tools that Halt the Target=Using_DSP_BIOS_Tools_with_Tools_that_Halt_the_Target
+4 Get Context-Sensitive Help=Get_context_sensitive_help
+3 Reference
+4 CPU Load Graph=PLUGIN_VIEW_CPU_LOAD
+4 Execution Graph=PLUGIN_VIEW_SYSTEM_LOG
+4 Host Channel Control=PLUGIN_VIEW_HST_CHANNELS
+4 Message Log=PLUGIN_VIEW_LOG_DATA
+4 Statistics View=PLUGIN_VIEW_STS_DATA
+4 RTA Control Panel=PLUGIN_VIEW_TRACE_STATE
+4 Kernel/Object View=PLUGIN_KERNEL_OBJECT_VIEW
+3 Troubleshooting
+4 Statistics, Graph, or Log Not Updating=Statistics_or_log_not_updating
+4 Kernel/Object View Not Updating=Kernel_Object_View_not_updating
+4 Messages Missing from Log=Messages_Missing_from_Log
+4 Real-time Behavior Affected by Instrumentation=Real_time_behavior_affected_by_instrumentation
+4 Takes Too Long to Open and Organize DSP/BIOS Tools=Takes_too_long_to_open_and_organize_DSP_BIOS_tools
+4 Not Enough Room on Screen to See all DSP/BIOS Tools=Not_enough_room_on_screen_to_see_all_DSP_BIOS_tools
+4 Units Not Shown in Statistics View=Units_not_shown_in_Statistics_View
+4 Sequence of Events Too Short in Execution Graph=Sequence_of_events_too_short_in_Execution_Graph
+4 Names of Objects Do Not Match Program=Names_in_Kernel_Object_View_dont_match_program
+4 Invalid Thread State Transition Message Appears=Invalid_Thread_State_Transition

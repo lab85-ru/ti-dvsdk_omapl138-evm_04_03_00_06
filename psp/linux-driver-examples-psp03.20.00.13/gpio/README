@@ -1,0 +1,16 @@
+GPIO sample module (gpio_test.c)
+________________________________
+
+This is a sample kernel module, that is used to test GPIO kernel APIs.
+
+To compile the module change to the examples/gpio and issue
+
+make -C <kernel directory> M=`pwd` ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi-
+
+For more information on compiling kernel module refer to Documentation/kbuild/modules.txt in kernel tree.
+
+To run the module, at the DUT command prompt issue:
+
+insmod gpio_test.ko
+
+

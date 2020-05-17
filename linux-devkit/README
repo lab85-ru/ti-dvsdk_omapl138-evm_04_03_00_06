@@ -1,0 +1,5 @@
+For best results in using this cross-compilation toolchain,
+please source the "environment-setup" script as follows:
+  $ . ./environment-setup
+or:
+  $ . /installed/path/environment-setup
