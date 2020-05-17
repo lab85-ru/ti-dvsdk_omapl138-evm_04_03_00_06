@@ -1,0 +1,13 @@
+Package: am-sysinfo
+Version: 1.0-r1+svnr6.6
+Description: AM SysInfo
+Section: system
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: armv5te
+OE: am-sysinfo
+Homepage: https://gforge.ti.com/gf/project/am_sysinfo/
+Build: install/d0bd439
+Depends: libc6 (>= 2.9)
+Source: svn://gforge.ti.com/svn/am_sysinfo/;module=trunk;proto=https;user=anonymous;pswd=''

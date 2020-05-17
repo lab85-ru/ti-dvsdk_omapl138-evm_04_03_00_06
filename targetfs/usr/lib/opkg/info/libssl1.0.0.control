@@ -1,0 +1,13 @@
+Package: libssl1.0.0
+Version: 1.0.0d-r14.0.6
+Description: Secure Socket Layer (SSL) binary and related cryptographic tools.
+Section: libs/network
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: openssl
+Architecture: armv5te
+OE: openssl
+Homepage: http://www.openssl.org/
+Build: install/d0bd439
+Depends: libcrypto1.0.0 (>= 1.0.0d), libc6 (>= 2.9)
+Source: http://www.openssl.org/source/openssl-1.0.0d.tar.gz;name=src file://configure-targets.patch file://shared-libs.patch file://debian.patch file://oe-ldflags.patch file://libdeps-first.patch file://engines-install-in-libdir-ssl.patch

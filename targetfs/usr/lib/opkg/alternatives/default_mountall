@@ -1,0 +1,3 @@
+/etc/default/mountall
+mountall.busybox 50
+mountall.util-linux-ng 100

@@ -1,0 +1,13 @@
+Package: libnl-route2
+Version: 1:2.0-r5.0.6
+Description: libnl is a library for applications dealing with netlink sockets
+Section: libs/network
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: LGPL
+Architecture: armv5te
+OE: libnl
+Homepage: http://www.infradead.org/~tgr/libnl/
+Build: install/d0bd439
+Depends: libnl2 (>= 2.0), libc6 (>= 2.9)
+Source: http://www.infradead.org/~tgr/libnl/files/libnl-2.0.tar.gz file://fix-pc-file.patch file://fix-pktloc-dep-race.patch

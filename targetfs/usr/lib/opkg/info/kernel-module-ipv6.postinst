@@ -1,0 +1,11 @@
+#!/bin/sh
+if [ -n "$D" ]; then
+	arm-arago-linux-gnueabi-depmod-2.6 -A -b $D -F /datalocal/DVSDK43_HPDL380G7/arago-tmp/sysroots/da850-omapl138-evm-arago-linux-gnueabi/kernel/System.map-2.6.37 2.6.37
+else
+	depmod -a 2.6.37
+	update-modules || true
+fi
+
+if [ x"$D" = "x" ]; then
+	modprobe ipv6 || true
+fi

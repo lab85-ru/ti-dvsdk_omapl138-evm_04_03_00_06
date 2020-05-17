@@ -1,0 +1,13 @@
+Package: libgstrtp-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Description: gstreamer gstrtp-0.10 library
+Section: multimedia
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: LGPL
+Architecture: armv5te
+OE: gst-plugins-base
+Homepage: http://www.gstreamer.net/
+Build: install/d0bd439
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-0.10.30.tar.bz2;name=archive file://ivorbis-thumb.patch file://make382.patch

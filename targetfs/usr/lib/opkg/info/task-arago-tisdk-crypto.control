@@ -1,0 +1,13 @@
+Package: task-arago-tisdk-crypto
+Version: 1.0-r15.6
+Description: Task to install crypto packages into target FS
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: task-arago-tisdk-crypto
+Homepage: unknown
+Build: install/d0bd439
+Depends: openssl, wpa-supplicant, dropbear, openssh-sftp-server, openssl-misc, hostap-daemon, ti-wifi-utils, wireless-tools, htop, netperf, iw, linux-firmware-wl12xx, wpa-gui-e, crda, softap-udhcpd-config, ti-compat-wireless-wl12xx, wl1271-bluetooth
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-tisdk-crypto.bb

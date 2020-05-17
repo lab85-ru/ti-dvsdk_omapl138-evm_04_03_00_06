@@ -1,0 +1,14 @@
+Package: gstreamer-ti
+Version: svnr919-r93+r57.6
+Description: GSTREAMER Plugin (gstreamer-ti) for TI ARM/DSP processors
+Section: multimedia
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: LGPL
+Architecture: da850-omapl138-evm
+OE: gstreamer-ti
+Homepage: https://gforge.ti.com/gf/project/gstreamer_ti/
+Build: install/d0bd439
+Depends: libgstvideo-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Recommends: ti-codecs-omapl138-server, ti-cmem-module, ti-dsplink-module, ti-tisdk-loadmodule
+Source: svn://gforge.ti.com/svn/gstreamer_ti/trunk;module=gstreamer_ti;proto=https;user=anonymous;pswd='' file://0001-Introducing-TIDmaiVideoSink-version-2.-rename-it-to-.patch;striplevel=4 file://0002-set-maxInterFrameInterval-params-needed-by-ittiam-co.patch;striplevel=4 file://0003-update-omapl138-cfg-to-use-cs.674.patch;striplevel=4 file://change-display-node-as-per-latest-psp.patch;striplevel=4

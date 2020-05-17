@@ -1,0 +1,13 @@
+Package: kernel-module-autofs4
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Description: autofs4 kernel module
+Section: kernel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: da850-omapl138-evm
+OE: linux-davinci
+Homepage: unknown
+Build: install/d0bd439
+Depends: update-modules, kernel-2.6.37
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 file://defconfig file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch file://0003-AM18xx-WL1271-Enable-BT.patch file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch file://0006-Add-wlan-and-BT-config-switches.patch file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch file://uio_pruss.patch

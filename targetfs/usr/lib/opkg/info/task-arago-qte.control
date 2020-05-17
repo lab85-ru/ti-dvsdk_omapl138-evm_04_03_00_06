@@ -1,0 +1,13 @@
+Package: task-arago-qte
+Version: 1.0-r8.6
+Description: Task to add Qt/Embedded and basic plugins
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: all
+OE: task-arago-qte
+Homepage: unknown
+Build: install/d0bd439
+Depends: qt4-embedded, qt4-embedded-plugin-mousedriver-tslib, qt4-embedded-plugin-gfxdriver-gfxtransformed
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-qte.bb

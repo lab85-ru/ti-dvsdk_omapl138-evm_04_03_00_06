@@ -1,0 +1,13 @@
+Package: cppstub
+Version: 1.0-r4.6
+Description: C++ stub to link against libstdc++
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: armv5te
+OE: cppstub
+Homepage: unknown
+Build: install/d0bd439
+Depends: libstdc++6 (>= 4.3.3), libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Source: file://cppstub.cpp

@@ -1,0 +1,13 @@
+Package: ti-dm365mm-module
+Version: 01_00_03-r57b.6
+Description: User space DMA module for DM365
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: da850-omapl138-evm
+OE: ti-dm365mm-module
+Homepage: unknown
+Build: install/d0bd439
+Depends: kernel-2.6.37, update-modules
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/dvsdk/DVSDK_3_10/latest/exports/dm365mm_01_00_03.tar.gz;name=dm365mmtarball file://0001-Update-to-use-EVENTQ-1.patch file://0002-dm365-porting-to-kernel-2.6.37.patch

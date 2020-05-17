@@ -1,0 +1,3 @@
+/usr/bin/mesg
+mesg.sysvinit 200
+mesg.util-linux-ng 100

@@ -1,0 +1,5 @@
+/usr/bin/psplash-write
+/etc/init.d/psplash
+/etc/default/psplash
+/etc/default/splashfuncs
+/usr/bin/splash-write

@@ -1,0 +1,2 @@
+	update-alternatives --remove swapoff swapon.util-linux-ng
+	update-alternatives --remove swapon swapon.util-linux-ng

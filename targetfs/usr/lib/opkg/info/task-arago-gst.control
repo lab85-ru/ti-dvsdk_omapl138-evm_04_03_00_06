@@ -1,0 +1,13 @@
+Package: task-arago-gst
+Version: 1.0-r21.6
+Description: Task to add base gstreamer and TI plugins
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: task-arago-gst
+Homepage: unknown
+Build: install/d0bd439
+Depends: gstreamer, gst-plugins-base, gst-plugins-good, gst-plugins-bad, gst-plugins-ugly, gst-plugins-base-meta, gst-plugins-good-meta, gst-plugins-bad-meta, gst-plugins-ugly-meta
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-gst.bb

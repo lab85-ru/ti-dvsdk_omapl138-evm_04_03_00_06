@@ -1,0 +1,14 @@
+Package: matrix-gui-e
+Version: 1.3-r24.16.6
+Description: Matrix GUI for Qt Embedded
+Section: multimedia
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: da850-omapl138-evm
+OE: matrix-gui-e
+Homepage: https://gforge.ti.com/gf/project/matrix_gui/
+Build: install/d0bd439
+Depends: matrix-gui-common, update-rc.d, libpng12-0 (>= 1.2.44), libfreetype6 (>= 2.4.3), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libqtwebkite4 (>= 4.6.3), libphonone4 (>= 4.6.3), libqtdbuse4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Recommends: qt4-embedded-plugin-mousedriver-tslib, qt4-embedded-fonts
+Source: svn://gforge.ti.com/svn/matrix_gui/;module=trunk;proto=https;user=anonymous;pswd=''

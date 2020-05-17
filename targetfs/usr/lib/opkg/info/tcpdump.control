@@ -1,0 +1,13 @@
+Package: tcpdump
+Version: 4.1.1-r1.6
+Description: A sophisticated network protocol analyzer
+Section: console/network
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: armv5te
+OE: tcpdump
+Homepage: http://www.tcpdump.org/
+Build: install/d0bd439
+Depends: libpcap (>= 1.1.1), libc6 (>= 2.9)
+Source: http://www.tcpdump.org/release/tcpdump-4.1.1.tar.gz file://tcpdump_configure_no_-O2.patch file://0001-minimal-IEEE802.15.4-allowed.patch file://ipv6-cross.patch file://configure.patch

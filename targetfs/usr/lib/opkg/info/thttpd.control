@@ -1,0 +1,13 @@
+Package: thttpd
+Version: 2.25b-r8-arago1.6
+Description: A simple, small, portable, fast, and secure HTTP server.
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: FreeBSD
+Architecture: armv5te
+OE: thttpd
+Homepage: http://www.acme.com/software/thttpd/
+Build: install/d0bd439
+Depends: update-rc.d, libc6 (>= 2.9)
+Source: http://www.acme.com/software/thttpd/thttpd-2.25b.tar.gz file://install.patch file://acinclude.m4 file://init file://htpasswd_shared.diff file://htpasswd_getline.diff

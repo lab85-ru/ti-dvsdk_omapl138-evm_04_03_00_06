@@ -1,0 +1,13 @@
+Package: task-arago-tisdk-multimedia
+Version: 1.0-r36.6
+Description: Task to install multimedia binaries on da850-omapl138-evm
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: task-arago-tisdk-multimedia
+Homepage: unknown
+Build: install/d0bd439
+Depends: ti-dmai-apps, ti-codec-engine-examples, ti-data, task-arago-gst, gstreamer-ti, ti-tisdk-loadmodule
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-tisdk-multimedia.bb

@@ -1,0 +1,13 @@
+Package: gst-plugins-bad-meta
+Version: 0.10.20-r11.1-arago3.6
+Description: gst-plugins-bad meta package
+Section: multimedia
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: LGPL
+Architecture: armv5te
+OE: gst-plugins-bad
+Homepage: http://www.gstreamer.net/
+Build: install/d0bd439
+Depends: gst-plugins-bad, gst-plugins-bad-apps, libgstsignalprocessor-0.10-0, libgstphotography-0.10-0, libgstbasevideo-0.10-0, gst-plugin-liveadder, gst-plugin-frei0r, gst-plugin-pcapparse, gst-plugin-id3tag, gst-plugin-festival, gst-plugin-valve, gst-plugin-invtelecine, gst-plugin-legacyresample, gst-plugin-dtmf, gst-plugin-faac, gst-plugin-videomeasure, gst-plugin-mve, gst-plugin-h264parse, gst-plugin-dataurisrc, gst-plugin-asfmux, gst-plugin-sndfile, gst-plugin-vmnc, gst-plugin-subenc, gst-plugin-rtpmux, gst-plugin-dvdspu, gst-plugin-jpegformat, gst-plugin-speed, gst-plugin-videosignal, gst-plugin-segmentclip, gst-plugin-cdxaparse, gst-plugin-cog, gst-plugin-ivfparse, gst-plugin-modplug, gst-plugin-qtmux, gst-plugin-adpcmenc, gst-plugin-mpeg4videoparse, gst-plugin-debugutilsbad, gst-plugin-scaletempoplugin, gst-plugin-pnm, gst-plugin-shm, gst-plugin-gaudieffects, gst-plugin-nuvdemux, gst-plugin-mxf, gst-plugin-selector, gst-plugin-coloreffects, gst-plugin-videomaxrate, gst-plugin-rawparse, gst-plugin-tta, gst-plugin-camerabin, gst-plugin-siren, gst-plugin-audioparsersbad, gst-plugin-geometrictransform, gst-plugin-nsf, gst-plugin-stereo, gst-plugin-faad, gst-plugin-mpegvideoparse, gst-plugin-mpegdemux, gst-plugin-fbdevsink, gst-plugin-adpcmdec, gst-plugin-mpegpsmux, gst-plugin-autoconvert, gst-plugin-sdpelem, gst-plugin-aiff, gst-plugin-dccp, gst-plugin-vcdsrc, gst-plugin-alsaspdif, gst-plugin-mpegtsmux, gst-plugin-dvb, gst-plugin-hdvparse, gst-plugin-bayer, gst-plugin-freeze
+Source: http://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-0.10.20.tar.bz2;name=archive

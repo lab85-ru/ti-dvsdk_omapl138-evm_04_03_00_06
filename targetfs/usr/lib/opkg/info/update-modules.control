@@ -1,0 +1,13 @@
+Package: update-modules
+Version: 1.0-r10.6
+Description: Script to manage module configuration files
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: all
+OE: update-modules
+Homepage: unknown
+Build: install/d0bd439
+Depends: module-init-tools-depmod
+Source: file://update-modules

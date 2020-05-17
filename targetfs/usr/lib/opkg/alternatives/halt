@@ -1,0 +1,4 @@
+/sbin/halt
+../bin/busybox 50
+halt.sysvinit 200
+halt.util-linux-ng 10

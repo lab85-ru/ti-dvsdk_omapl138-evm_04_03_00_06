@@ -1,0 +1,3 @@
+/usr/bin/renice
+../../bin/busybox 50
+renice.util-linux-ng 100

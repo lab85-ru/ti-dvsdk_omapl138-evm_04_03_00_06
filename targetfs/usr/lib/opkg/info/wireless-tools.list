@@ -1,0 +1,7 @@
+/sbin/iwpriv
+/sbin/iwspy
+/etc/network/if-pre-up.d/zzz-wireless
+/sbin/iwlist
+/sbin/iwgetid
+/sbin/iwconfig
+/etc/network/if-pre-up.d/wireless-tools

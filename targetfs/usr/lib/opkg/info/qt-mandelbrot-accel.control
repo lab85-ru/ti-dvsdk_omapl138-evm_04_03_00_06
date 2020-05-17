@@ -1,0 +1,14 @@
+Package: qt-mandelbrot-accel
+Version: 4.6-r2.6
+Description: Qt Embedded TI DSP Fractal Demo
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License:  
+Architecture: da850-omapl138-evm
+OE: qt-mandelbrot-accel
+Homepage: unknown
+Build: install/d0bd439
+Depends: libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Recommends: qt4-embedded-plugin-mousedriver-tslib
+Source: file://mandelbrot-v4.6.tar.gz file://qt-mandelbrot-accel-Add-DSP-acceleration.patch file://exit.png

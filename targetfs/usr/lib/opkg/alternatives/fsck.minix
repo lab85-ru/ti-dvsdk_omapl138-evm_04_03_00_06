@@ -1,0 +1,3 @@
+/sbin/fsck.minix
+../bin/busybox 50
+fsck.minix.util-linux-ng 100

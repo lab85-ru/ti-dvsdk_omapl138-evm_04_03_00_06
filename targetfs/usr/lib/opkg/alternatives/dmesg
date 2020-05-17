@@ -1,0 +1,3 @@
+/bin/dmesg
+busybox 50
+dmesg.util-linux-ng 100

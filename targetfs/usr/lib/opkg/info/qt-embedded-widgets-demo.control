@@ -1,0 +1,14 @@
+Package: qt-embedded-widgets-demo
+Version: 1.2-r1.6
+Description: Qt Catalog Embedded Widget Demo
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: Embedded Widgets Demo License Agreement
+Architecture: armv5te
+OE: qt-embedded-widgets-demo
+Homepage: https://gforge.ti.com/gf/project/qt-emb-demos/
+Build: install/d0bd439
+Depends: libqtsvge4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Recommends: qt4-embedded-plugin-mousedriver-tslib
+Source: https://gforge.ti.com/gf/download/frsrelease/342/3644/qt-embedded-widget-demo-v1.2.tar.gz

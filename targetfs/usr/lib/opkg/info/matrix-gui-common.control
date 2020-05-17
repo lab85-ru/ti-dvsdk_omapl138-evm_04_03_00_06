@@ -1,0 +1,13 @@
+Package: matrix-gui-common
+Version: 1.4-r10.17.6
+Description: Common files for all versions of Matrix GUI
+Section: multimedia
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: da850-omapl138-evm
+OE: matrix-gui-common
+Homepage: https://gforge.ti.com/gf/project/matrix_gui/
+Build: install/d0bd439
+Recommends: am-sysinfo
+Source: svn://gforge.ti.com/svn/matrix_gui/;module=trunk;proto=https;user=anonymous;pswd='' file://integrate-wifi-demos-with-omapl138-from-amsdk.patch;striplevel=2 file://integrate-wifi-demos-with-dm3730-from-amsdk.patch;striplevel=2 file://work-around-for-gst-mpeg4-dec-demo.patch;striplevel=2 file://chameleon-man-fix-in-dm3730.patch;striplevel=2

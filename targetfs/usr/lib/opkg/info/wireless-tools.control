@@ -1,0 +1,13 @@
+Package: wireless-tools
+Version: 29-r5.6
+Description: Tools for the Linux Standard Wireless Extension Subsystem
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPL
+Architecture: armv5te
+OE: wireless-tools
+Homepage: http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/Tools.html
+Build: install/d0bd439
+Depends: libc6 (>= 2.9)
+Source: http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/wireless_tools.29.tar.gz file://man.patch file://shared_lib_ldflags.patch file://wireless-tools.if-pre-up file://zzz-wireless.if-pre-up

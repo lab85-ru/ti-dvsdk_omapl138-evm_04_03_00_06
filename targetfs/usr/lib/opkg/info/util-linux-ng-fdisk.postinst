@@ -1,0 +1,1 @@
+	update-alternatives --install /sbin/fdisk fdisk fdisk.util-linux-ng 100

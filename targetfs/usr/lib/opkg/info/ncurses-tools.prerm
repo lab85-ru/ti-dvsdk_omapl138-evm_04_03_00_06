@@ -1,0 +1,4 @@
+if [ "ncurses" = "ncurses" ]; then
+                update-alternatives --remove clear clear.ncurses
+                update-alternatives --remove reset reset.ncurses
+        fi

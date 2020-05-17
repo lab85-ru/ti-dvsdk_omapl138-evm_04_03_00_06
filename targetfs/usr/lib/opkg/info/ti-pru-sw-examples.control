@@ -1,0 +1,13 @@
+Package: ti-pru-sw-examples
+Version: 1.00.00-r1+svnr31.6
+Description: PRU sw example applications
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: armv5te
+OE: ti-pru-sw-examples
+Homepage: https://gforge.ti.com/gf/project/pru_sw/
+Build: install/d0bd439
+Depends: libc6 (>= 2.9)
+Source: svn://gforge.ti.com/svn/pru_sw/;module=trunk;proto=https;user=anonymous;pswd=''

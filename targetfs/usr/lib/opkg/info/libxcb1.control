@@ -1,0 +1,13 @@
+Package: libxcb1
+Version: 1.6-r4.1.6
+Description: XCB: an X protocol C binding
+Section: x11/libs
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT-X
+Architecture: armv5te
+OE: libxcb
+Homepage: http://xcb.freedesktop.org
+Build: install/d0bd439
+Depends: libpthread-stubs0 (>= 0.2), libxau6 (>= 1.0.6), libxdmcp6 (>= 1.1.0), libc6 (>= 2.9)
+Source: http://xcb.freedesktop.org/dist/libxcb-1.6.tar.bz2 file://configure_git.patch

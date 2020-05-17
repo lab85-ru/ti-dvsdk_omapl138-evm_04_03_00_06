@@ -1,0 +1,15 @@
+Package: opkg
+Version: 0.1.8+svnr609-r5.6
+Description: Opkg Package Manager
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: armv5te
+OE: opkg
+Homepage: unknown
+Build: install/d0bd439
+Depends: libopkg0 (>= 0.1.8+svnr609), libc6 (>= 2.9)
+Provides: update-alternatives
+Replaces: opkg-nogpg, opkg-nogpg-nocurl
+Source: svn://opkg.googlecode.com/svn;module=trunk;proto=http file://configure

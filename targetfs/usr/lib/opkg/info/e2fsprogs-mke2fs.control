@@ -1,0 +1,13 @@
+Package: e2fsprogs-mke2fs
+Version: 1.41.14-r30.6
+Description: EXT2 Filesystem Utilities
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2+|LGPLv2+|NewBSD|MIT
+Architecture: armv5te
+OE: e2fsprogs
+Homepage: http://e2fsprogs.sf.net
+Build: install/d0bd439
+Depends: libext2fs2 (>= 1.41.14), libcom-err2 (>= 1.41.14), libblkid1 (>= 2.18), libuuid1 (>= 2.18), libe2p2 (>= 1.41.14), libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Source: http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.41.14.tar.gz file://llseek-uclibc.patch

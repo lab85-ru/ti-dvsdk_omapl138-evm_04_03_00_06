@@ -1,0 +1,3 @@
+/sbin/mkfs.minix
+../bin/busybox 50
+mkfs.minix.util-linux-ng 100

@@ -1,0 +1,13 @@
+Package: libcom-err2
+Version: 1.41.14-r30.6
+Description: EXT2 Filesystem Utilities
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2+|LGPLv2+|NewBSD|MIT
+Architecture: armv5te
+OE: e2fsprogs
+Homepage: http://e2fsprogs.sf.net
+Build: install/d0bd439
+Depends: libc6 (>= 2.9)
+Source: http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.41.14.tar.gz file://llseek-uclibc.patch

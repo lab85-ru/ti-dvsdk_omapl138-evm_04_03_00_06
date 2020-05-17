@@ -1,0 +1,12 @@
+Package: softap-udhcpd-config
+Version: 1.0-r0.6
+Description: Configuration files for SoftAP with udhcpd
+Section: console/network
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2+
+Architecture: armv5te
+OE: softap-udhcpd-config
+Homepage: http://udhcp.busybox.net/
+Build: install/d0bd439
+Source: file://udhcpd.conf

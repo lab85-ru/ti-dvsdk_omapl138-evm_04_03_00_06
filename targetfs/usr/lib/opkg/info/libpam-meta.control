@@ -1,0 +1,13 @@
+Package: libpam-meta
+Version: 1.1.1-r2.6
+Description: libpam meta package
+Section: libs
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: armv5te
+OE: libpam
+Homepage: http://kernel.org/pub/linux/libs/pam
+Build: install/d0bd439
+Depends: pam-plugin-filter, pam-plugin-rhosts, pam-plugin-namespace, pam-plugin-debug, pam-plugin-xauth, pam-plugin-tally2, pam-plugin-env, pam-plugin-deny, pam-plugin-echo, pam-plugin-unix, pam-plugin-time, pam-plugin-faildelay, pam-plugin-mail, pam-plugin-localuser, pam-plugin-issue, pam-plugin-lastlog, pam-plugin-nologin, pam-plugin-securetty, pam-plugin-umask, pam-plugin-succeed-if, pam-plugin-exec, pam-plugin-mkhomedir, pam-plugin-limits, pam-plugin-warn, pam-plugin-group, pam-plugin-permit, pam-plugin-tally, pam-plugin-timestamp, pam-plugin-loginuid, pam-plugin-wheel, pam-plugin-rootok, pam-plugin-motd, pam-plugin-keyinit, pam-plugin-stress, pam-plugin-pwhistory, pam-plugin-access, pam-plugin-shells, pam-plugin-listfile, pam-plugin-ftp
+Source: http://kernel.org/pub/linux/libs/pam/library/Linux-PAM-1.1.1.tar.bz2 file://pam-nodocs.patch file://define-HAVE_DBM.patch

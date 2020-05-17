@@ -1,0 +1,3 @@
+/sbin/shutdown
+shutdown.sysvinit 200
+shutdown.util-linux-ng 10

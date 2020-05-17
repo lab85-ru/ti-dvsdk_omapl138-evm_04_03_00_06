@@ -1,0 +1,13 @@
+Package: iproute2
+Version: 2.6.35.1-r4.0.6
+Description: kernel routing and traffic control utilities
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: armv5te
+OE: iproute2
+Homepage: http://linux-net.osdl.org/index.php/Iproute2
+Build: install/d0bd439
+Depends: libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Source: git://git.kernel.org/pub/scm/linux/kernel/git/shemminger/iproute2.git;protocol=git file://configure-cross.patch

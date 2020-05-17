@@ -1,0 +1,1 @@
+update-alternatives --install /usr/sbin/readprofile readprofile readprofile.util-linux-ng 100

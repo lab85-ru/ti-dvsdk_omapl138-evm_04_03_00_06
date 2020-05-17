@@ -1,0 +1,577 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>Compliance and Performance Test Report</TITLE></HEAD>
+<BODY>
+
+<STYLE TYPE="text/css">
+<!--
+.indented
+   {
+   padding-left: 25pt;
+   padding-right: 25pt;
+   }
+-->
+</STYLE>
+
+<TABLE BORDER="1" WIDTH="100%">
+  <TR>
+    <TD COLSPAN="2">
+      <CENTER><FONT SIZE="+2"><B>TMS320 DSP Algorithm Interoperability Standard</B></FONT></CENTER><BR>
+      <CENTER><FONT SIZE="+1"><B>QualiTI <a href="#compliance">Compliance</a> and <a href="#performance">Performance</a> Testing</B></font></CENTER><BR>
+    </TD>
+  </TR>
+  <TR>
+    <TD><B>Date</B></TD><TD>Tue Aug 11 2009 19:35:23 GMT+0530 (GMT+05:30)</TD>
+  </TR>
+
+  <TR>
+    <TD><B>Vendor</B></TD><TD>TI</TD>
+  </TR>
+
+  <TR>
+    <TD><B>Algorithm</B></TD><TD>H264VENC</TD>
+  </TR>
+
+  <TR>
+    <TD><B>Architecture</B></TD><TD>C64P</TD>
+  </TR>
+  <TR>
+    <TD COLSPAN="2">
+
+      <B>Algorithm Base Directory:</B><BR>
+
+      &nbsp;&nbsp;&nbsp;E:\test\REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02\100_V_H264AVC_E_02_02\DM6446_BP_001\Lib<BR>
+
+<BR>
+      <B>Algorithm Archive(s):</B><BR>
+
+      &nbsp;&nbsp;&nbsp;.\h264venc_ti.l64P<BR>
+<BR>
+      <B>Header File(s):</B><BR>
+<BR>
+    </TD>
+
+  </TR>
+
+
+      <TR>
+        <TD COLSPAN="2">
+        <a name=compliance>
+          <FONT SIZE="+1"><BR><br><CENTER><B>Compliance Test Report</B></CENTER><BR><br></font>
+        </a>
+        </TD>
+      </TR>
+
+      <TR>
+        <TD><B>Test Results</B></TD>
+        <td>
+        <font color="#00A000">PASS: 6</font><br>
+        <font color="#FF0000"><B>FAIL: 0</b></font>
+        &nbsp;&nbsp;&nbsp; 
+        
+        <br>
+        Skipped: 0<br>
+        Not apply: 0<br>
+        <b>Total: 6</b><br>
+        </td>
+      </TR>
+      <TR>
+
+        <TD COLSPAN="2">
+            <B>Test Notes</B><BR>
+            &nbsp;&nbsp;&nbsp;This report has been generated with QualiTI Version 6.10.01 - the XDAIS compliance and performance test suite. <BR><BR>
+
+
+        </TD>
+      </TR>
+
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rules 8, 9 and 10">XDAIS Rules 8, 9, 10: Namespace compliance</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">(Rule 8) All external definitions must be either API identifiers or API and vendor prefixed.<br><br>(Rule 9) All undefined references must refer either to the operations specified in Appendix B (a subset of C runtime support library functions and a subset of the DSP/BIOS HWI API functions), or TI's DSPLIB or IMGLIB functions or other XDAIS-compliant modules.<br><br>(Rule 10) All modules must follow the eXpressDSP naming conventions for those external declarations disclosed to the client.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rules 8, 9 and 10">XDAIS Rules 8, 9 and 10 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 12">XDAIS Rule 12: IALG interface implementation</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All algorithms must implement the IALG interface.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 12">XDAIS Rule 12 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 13+">XDAIS Rule 13+: correct linker section names</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">Each of the IALG methods implemented by an algorithm must be independently relocatable.<br><br>Additional rule: there should be no non-standard linker sections. (Standard linker sections are: ".cinit", ".switch", ".far", ".text", ".const", ".bss", ".pinit".)</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 13+">XDAIS Rule 13+ execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 15">XDAIS Rule 15: library filename extension</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">Each XDAIS-compliant algorithm must be packaged in an archive which has a name that follows a uniform naming convention.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 15">XDAIS Rule 15 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 25">XDAIS Rule 25: All C6x algorithms must be supplied in little-endian format</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All C6x algorithms must be supplied in little-endian format.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 25">XDAIS Rule 25 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 26">XDAIS Rule 26: All static/global data must be far on c6x</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All C6x algorithms must access all static and global data as far data.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 26">XDAIS Rule 26 execution log</a><br>
+        </TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="2">
+        <a name=performance>
+          <FONT SIZE="+1"><BR><br><CENTER><B>Performance Test Report</B></CENTER><BR><br></font>
+        </a>
+        </TD>
+      </TR>
+
+      <TR>
+        <TD><B>Test Results</B></TD>
+        <td>
+        <font color="#00A000">PASS: 2</font><br>
+        <font color="#FF0000"><B>FAIL: 0</b></font>
+        &nbsp;&nbsp;&nbsp; 
+        
+        <br>
+        Skipped: 0<br>
+        Not apply: 0<br>
+        <b>Total: 2</b><br>
+        </td>
+      </TR>
+      <TR>
+
+        <TD COLSPAN="2">
+            <B>Test Notes</B><BR>
+            &nbsp;&nbsp;&nbsp;This report has been generated with QualiTI Version 6.10.01 - the XDAIS compliance and performance test suite. <BR><BR>
+
+
+        </TD>
+      </TR>
+
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 20">XDAIS Rule 20: must declare worst-case stack requirements</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All algorithms must characterize their worst-case stack space memory requirements (including alignment).</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Performance test completed. Calculated Worst Case Stack is 2232 bytes.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 20">XDAIS Rule 20 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rules 21, 22">XDAIS Rules 21, 22: must characterize static data & program memory requirements</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All algorithms must characterize their static data & program memory requirements</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Performance test completed. CODE, DATA & UDATA sections characterized<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rules 21, 22">XDAIS Rules 21, 22 execution log</a><br>
+        </TD>
+      </TR>
+</TABLE>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<hr>
+<a name="log XDAIS Rules 8, 9 and 10">Test execution log for <b>XDAIS Rules 8, 9 and 10:</b></a><br>
+<PRE>
+Running test 'XDAIS Rules 8, 9 and 10'
+Extracting names of global symbols defined by the algorithm...
+ Running command:&gt; "D:\CCStudio_v3.2\C6000\cgtools\bin\nm6x.exe" -g E:\test\REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02\100_V_H264AVC_E_02_02\DM6446_BP_001\Lib\.\h264venc_ti.l64P | "D:\xdais_6_10_01\packages\ti\xdais\qualiti\bin\grep\grep.exe" " [TBCU] "
+                   (from "C:\Documents and Settings\x0088155\Local Settings\Temp\qualiti_runcmd_55661.sh"
+  00007720 B _H264VENC_TI_DYNAMICPARAMS
+  00007798 B _H264VENC_TI_IALG
+  000077c4 B _H264VENC_TI_IDMA3
+  00007798 B _H264VENC_TI_IH264VENC
+  000083c0 T _H264VENC_TI_activate
+  00006940 T _H264VENC_TI_alloc
+  00028440 T _H264VENC_TI_control
+  000093e0 T _H264VENC_TI_deactivate
+  000299e0 T _H264VENC_TI_encode
+  000344c0 T _H264VENC_TI_exit
+  00005fe0 T _H264VENC_TI_free
+  00008b20 T _H264VENC_TI_init
+  00000020 T _H264VENC_TI_initObj
+  000097a0 T _H264VENC_TI_numAlloc
+  000076e0 B _IH264VENC_PARAMS
+Verifying that all global symbols are named XXX_TI_xxx ...
+and that no blacklisted external references are made
+Found symbol 'IH264VENC_PARAMS', that's okay.
+
+</PRE>
+<a href="#XDAIS Rules 8, 9 and 10">back</a>
+<hr>
+<a name="log XDAIS Rule 12">Test execution log for <b>XDAIS Rule 12:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 12'
+Extracting names of global BSS data symbols...
+ Running command:&gt; "D:\CCStudio_v3.2\C6000\cgtools\bin\nm6x.exe" -g E:\test\REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02\100_V_H264AVC_E_02_02\DM6446_BP_001\Lib\.\h264venc_ti.l64P | "D:\xdais_6_10_01\packages\ti\xdais\qualiti\bin\grep\grep.exe" " [BD] "
+                   (from "C:\Documents and Settings\x0088155\Local Settings\Temp\qualiti_runcmd_55662.sh"
+  00007720 B _H264VENC_TI_DYNAMICPARAMS
+  00007798 B _H264VENC_TI_IALG
+  000077c4 B _H264VENC_TI_IDMA3
+  00007798 B _H264VENC_TI_IH264VENC
+  00004c28 D _H264VENC_TI_version
+  000076e0 B _IH264VENC_PARAMS
+Verifying that objects 'H264VENC_TI_IALG' and 'H264VENC_TI_IH264VENC' are defined...
+Data object 'H264VENC_TI_IALG' found.
+Data object 'H264VENC_TI_IH264VENC' found.
+
+</PRE>
+<a href="#XDAIS Rule 12">back</a>
+<hr>
+<a name="log XDAIS Rule 13+">Test execution log for <b>XDAIS Rule 13+:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 13+'
+Extracting names of all sections in which all algorithms' symbols are...
+ Running command:&gt; "D:\Qualiti\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header E:\test\REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02\100_V_H264AVC_E_02_02\DM6446_BP_001\Lib\.\h264venc_ti.l64P | "D:\Qualiti\cg_xml\bin\sectti.exe" --csv
+                   (from "C:\Documents and Settings\x0088155\Local Settings\Temp\qualiti_runcmd_55663.sh"
+  Reading from stdin ...
+  Library,Filename,Section,Type,Size
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.const:H264VENC_TI_dSect1,DATA,3347
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.far:H264VENC_TI_uSect1,UDATA,576
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:H264VENC_TI_cSect1,CODE,153312
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__neqf,CODE,64
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__push_rts,CODE,32
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__renormd,CODE,128
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__fltuf,CODE,64
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_dmaGetChannels,CODE,192
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_scaledwn_4h4v,CODE,384
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__remli,CODE,64
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_vectmin,CODE,800
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_alloc,CODE,672
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__gtrd,CODE,224
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_activate,CODE,224
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__lssf,CODE,128
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__pop_rts,CODE,32
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_halfsearch,CODE,640
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__frcaddd,CODE,512
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_dmaGetChannelCnt,CODE,32
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_vectmin_weighted,CODE,480
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_strcpy,CODE,96
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__geqd,CODE,192
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__leqf,CODE,128
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_free,CODE,832
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__call_stub,CODE,64
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_MV_fractionalPel,CODE,3648
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_dmaChangeChannels,CODE,32
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.cinit,DATA,632
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__eqld,CODE,128
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_sad_halfpel,CODE,2400
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_sad_quartpel,CODE,5184
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__cmpd,CODE,224
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_numAlloc,CODE,32
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__geqf,CODE,128
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__addd,CODE,544
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__mpyd,CODE,608
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__cvtfd,CODE,96
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_mad_hx16,CODE,608
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:___isnanf,CODE,32
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_mad_4x4,CODE,448
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_mad_hx16_skip,CODE,1024
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__fixfu,CODE,128
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_RC_CSME2_frameskip,CODE,128
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__eqlf,CODE,64
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__divul,CODE,416
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_deactivate,CODE,96
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__neqd,CODE,160
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__divf,CODE,1280
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__frcmpyd,CODE,256
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__cmpf,CODE,128
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__remul,CODE,64
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_initObj,CODE,7616
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__lssd,CODE,224
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__fltud,CODE,64
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_dmaInit,CODE,64
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text,DATA,144
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__addf,CODE,768
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__divli,CODE,160
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_init,CODE,160
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__leqd,CODE,192
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__gtrf,CODE,128
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__divu,CODE,192
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.switch,DATA,80
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__divi,CODE,224
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__frcmpyf_div,CODE,160
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__remu,CODE,160
+  E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__fixdu,CODE,128
+Verifying that IALG functions are in separate sections,
+i.e. that there exist sections that match regexp /\.text:.*[aA]lloc.*/,
+and also that there are no non-standard sections.
+
+</PRE>
+<a href="#XDAIS Rule 13+">back</a>
+<hr>
+<a name="log XDAIS Rule 15">Test execution log for <b>XDAIS Rule 15:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 15'
+Verifying that the extension for library ".\h264venc_ti.l64P" is ".l64P"
+Verifying that the file ".\h264venc_ti.l64P" is really a library, and not a partially linked object file or something like that.
+ Running command:&gt; "D:\Qualiti\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header E:\test\REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02\100_V_H264AVC_E_02_02\DM6446_BP_001\Lib\.\h264venc_ti.l64P | "D:\xdais_6_10_01\packages\ti\xdais\qualiti\bin\grep\grep.exe" "&lt;archive&gt;"
+                   (from "C:\Documents and Settings\x0088155\Local Settings\Temp\qualiti_runcmd_55664.sh"
+  &lt;archive&gt;
+
+</PRE>
+<a href="#XDAIS Rule 15">back</a>
+<hr>
+<a name="log XDAIS Rule 20">Test execution log for <b>XDAIS Rule 20:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 20'
+Using call_graph on ofd output to find out worst case stack...
+ Running command:&gt; "D:\Qualiti\cg_xml\utils\ofd6x.exe" -xg --xml_indent=0 --obj_display=none,header,optheader,symbols --dwarf_display=none,dinfo  E:\test\REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02\100_V_H264AVC_E_02_02\DM6446_BP_001\Lib\.\h264venc_ti.l64P | "D:\Qualiti\cg_xml\bin\call_graph.exe" --stack_max
+                   (from "C:\Documents and Settings\x0088155\Local Settings\Temp\qualiti_runcmd_55665.sh"
+  Reading from stdin ...
+  _H264VENC_TI_encode : wcs = 2232
+Extracting worst case stack from a stdout line that ends with ': wcs = &lt;num&gt;'
+Calculated worst case stack is 2232 bytes.
+
+</PRE>
+<a href="#XDAIS Rule 20">back</a>
+<hr>
+<a name="log XDAIS Rules 21, 22">Test execution log for <b>XDAIS Rules 21, 22:</b></a><br>
+<PRE>
+Running test 'XDAIS Rules 21, 22'
+Using sectti on ofd output to find static data & program memory requirements...
+ Running command:&gt; "D:\Qualiti\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header E:\test\REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02\100_V_H264AVC_E_02_02\DM6446_BP_001\Lib\.\h264venc_ti.l64P | "D:\Qualiti\cg_xml\bin\sectti.exe"
+                   (from "C:\Documents and Settings\x0088155\Local Settings\Temp\qualiti_runcmd_55666.sh"
+  Reading from stdin ...
+  ====================================================================
+  REPORT FOR LIBRARY: E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P
+  ====================================================================
+  
+  
+  ************************************************************
+  REPORT FOR FILE: h264venc_ti_plink.o64P
+  ************************************************************
+                            Name : Size (dec)  Size (hex)  Type
+  ------------------------------ : ----------  ----------  ----
+       .const:H264VENC_TI_dSect1 :       3347  0x00000d13  DATA 
+         .far:H264VENC_TI_uSect1 :        576  0x00000240  UDATA
+        .text:H264VENC_TI_cSect1 :     153312  0x000256e0  CODE 
+                    .text:__neqf :         64  0x00000040  CODE 
+                .text:__push_rts :         32  0x00000020  CODE 
+                 .text:__renormd :        128  0x00000080  CODE 
+                   .text:__fltuf :         64  0x00000040  CODE 
+  .text:_H264VENC_TI_dmaGetChannels :        192  0x000000c0  CODE 
+  .text:_H264VENC_TI_scaledwn_4h4v :        384  0x00000180  CODE 
+                   .text:__remli :         64  0x00000040  CODE 
+      .text:_H264VENC_TI_vectmin :        800  0x00000320  CODE 
+        .text:_H264VENC_TI_alloc :        672  0x000002a0  CODE 
+                    .text:__gtrd :        224  0x000000e0  CODE 
+     .text:_H264VENC_TI_activate :        224  0x000000e0  CODE 
+                    .text:__lssf :        128  0x00000080  CODE 
+                 .text:__pop_rts :         32  0x00000020  CODE 
+   .text:_H264VENC_TI_halfsearch :        640  0x00000280  CODE 
+                 .text:__frcaddd :        512  0x00000200  CODE 
+  .text:_H264VENC_TI_dmaGetChannelCnt :         32  0x00000020  CODE 
+  .text:_H264VENC_TI_vectmin_weighted :        480  0x000001e0  CODE 
+                   .text:_strcpy :         96  0x00000060  CODE 
+                    .text:__geqd :        192  0x000000c0  CODE 
+                    .text:__leqf :        128  0x00000080  CODE 
+         .text:_H264VENC_TI_free :        832  0x00000340  CODE 
+               .text:__call_stub :         64  0x00000040  CODE 
+  .text:_H264VENC_TI_MV_fractionalPel :       3648  0x00000e40  CODE 
+  .text:_H264VENC_TI_dmaChangeChannels :         32  0x00000020  CODE 
+                          .cinit :        632  0x00000278  DATA 
+                    .text:__eqld :        128  0x00000080  CODE 
+  .text:_H264VENC_TI_sad_halfpel :       2400  0x00000960  CODE 
+  .text:_H264VENC_TI_sad_quartpel :       5184  0x00001440  CODE 
+                    .text:__cmpd :        224  0x000000e0  CODE 
+     .text:_H264VENC_TI_numAlloc :         32  0x00000020  CODE 
+                    .text:__geqf :        128  0x00000080  CODE 
+                    .text:__addd :        544  0x00000220  CODE 
+                    .text:__mpyd :        608  0x00000260  CODE 
+                   .text:__cvtfd :         96  0x00000060  CODE 
+     .text:_H264VENC_TI_mad_hx16 :        608  0x00000260  CODE 
+                 .text:___isnanf :         32  0x00000020  CODE 
+      .text:_H264VENC_TI_mad_4x4 :        448  0x000001c0  CODE 
+  .text:_H264VENC_TI_mad_hx16_skip :       1024  0x00000400  CODE 
+                   .text:__fixfu :        128  0x00000080  CODE 
+  .text:_H264VENC_TI_RC_CSME2_frameskip :        128  0x00000080  CODE 
+                    .text:__eqlf :         64  0x00000040  CODE 
+                   .text:__divul :        416  0x000001a0  CODE 
+   .text:_H264VENC_TI_deactivate :         96  0x00000060  CODE 
+                    .text:__neqd :        160  0x000000a0  CODE 
+                    .text:__divf :       1280  0x00000500  CODE 
+                 .text:__frcmpyd :        256  0x00000100  CODE 
+                    .text:__cmpf :        128  0x00000080  CODE 
+                   .text:__remul :         64  0x00000040  CODE 
+      .text:_H264VENC_TI_initObj :       7616  0x00001dc0  CODE 
+                    .text:__lssd :        224  0x000000e0  CODE 
+                   .text:__fltud :         64  0x00000040  CODE 
+      .text:_H264VENC_TI_dmaInit :         64  0x00000040  CODE 
+                           .text :        144  0x00000090  DATA 
+                    .text:__addf :        768  0x00000300  CODE 
+                   .text:__divli :        160  0x000000a0  CODE 
+         .text:_H264VENC_TI_init :        160  0x000000a0  CODE 
+                    .text:__leqd :        192  0x000000c0  CODE 
+                    .text:__gtrf :        128  0x00000080  CODE 
+                    .text:__divu :        192  0x000000c0  CODE 
+                         .switch :         80  0x00000050  DATA 
+                    .text:__divi :        224  0x000000e0  CODE 
+             .text:__frcmpyf_div :        160  0x000000a0  CODE 
+                    .text:__remu :        160  0x000000a0  CODE 
+                   .text:__fixdu :        128  0x00000080  CODE 
+  
+  ------------------------------------------------------------
+  Totals by section type
+  ------------------------------------------------------------
+    Uninitialized Data :        576  0x00000240
+      Initialized Data :       4203  0x0000106b
+                  Code :     187392  0x0002dc00
+
+</PRE>
+<a href="#XDAIS Rules 21, 22">back</a>
+<hr>
+<a name="log XDAIS Rule 25">Test execution log for <b>XDAIS Rule 25:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 25'
+Using ofd output to parse for endianness attribute...
+ Running command:&gt; "D:\Qualiti\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,header E:\test\REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02\100_V_H264AVC_E_02_02\DM6446_BP_001\Lib\.\h264venc_ti.l64P | "D:\xdais_6_10_01\packages\ti\xdais\qualiti\bin\grep\grep.exe" "&lt;endian&gt;"
+                   (from "C:\Documents and Settings\x0088155\Local Settings\Temp\qualiti_runcmd_55667.sh"
+  &lt;endian&gt;little&lt;/endian&gt;
+
+</PRE>
+<a href="#XDAIS Rule 25">back</a>
+<hr>
+<a name="log XDAIS Rule 26">Test execution log for <b>XDAIS Rule 26:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 26'
+Extracting names of all used sections to see if there is a '.bss' in there.
+[Using output generated by the command from test 'XDAIS Rule 13+"]:
+Running command:&gt; "D:\Qualiti\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header E:\test\REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02\100_V_H264AVC_E_02_02\DM6446_BP_001\Lib\.\h264venc_ti.l64P | "D:\Qualiti\cg_xml\bin\sectti.exe" --csv
+                  (from "C:\Documents and Settings\x0088155\Local Settings\Temp\qualiti_runcmd_55663.sh"
+Reading from stdin ...
+Library,Filename,Section,Type,Size
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.const:H264VENC_TI_dSect1,DATA,3347
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.far:H264VENC_TI_uSect1,UDATA,576
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:H264VENC_TI_cSect1,CODE,153312
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__neqf,CODE,64
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__push_rts,CODE,32
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__renormd,CODE,128
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__fltuf,CODE,64
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_dmaGetChannels,CODE,192
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_scaledwn_4h4v,CODE,384
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__remli,CODE,64
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_vectmin,CODE,800
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_alloc,CODE,672
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__gtrd,CODE,224
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_activate,CODE,224
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__lssf,CODE,128
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__pop_rts,CODE,32
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_halfsearch,CODE,640
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__frcaddd,CODE,512
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_dmaGetChannelCnt,CODE,32
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_vectmin_weighted,CODE,480
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_strcpy,CODE,96
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__geqd,CODE,192
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__leqf,CODE,128
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_free,CODE,832
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__call_stub,CODE,64
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_MV_fractionalPel,CODE,3648
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_dmaChangeChannels,CODE,32
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.cinit,DATA,632
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__eqld,CODE,128
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_sad_halfpel,CODE,2400
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_sad_quartpel,CODE,5184
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__cmpd,CODE,224
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_numAlloc,CODE,32
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__geqf,CODE,128
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__addd,CODE,544
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__mpyd,CODE,608
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__cvtfd,CODE,96
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_mad_hx16,CODE,608
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:___isnanf,CODE,32
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_mad_4x4,CODE,448
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_mad_hx16_skip,CODE,1024
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__fixfu,CODE,128
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_RC_CSME2_frameskip,CODE,128
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__eqlf,CODE,64
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__divul,CODE,416
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_deactivate,CODE,96
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__neqd,CODE,160
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__divf,CODE,1280
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__frcmpyd,CODE,256
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__cmpf,CODE,128
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__remul,CODE,64
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_initObj,CODE,7616
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__lssd,CODE,224
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__fltud,CODE,64
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_dmaInit,CODE,64
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text,DATA,144
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__addf,CODE,768
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__divli,CODE,160
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:_H264VENC_TI_init,CODE,160
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__leqd,CODE,192
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__gtrf,CODE,128
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__divu,CODE,192
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.switch,DATA,80
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__divi,CODE,224
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__frcmpyf_div,CODE,160
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__remu,CODE,160
+E:/test/REL.100.V.H264AVC.E.BP.C64XPLUS.02.02.00.02/100_V_H264AVC_E_02_02/DM6446_BP_001/Lib/./h264venc_ti.l64P,h264venc_ti_plink.o64P,.text:__fixdu,CODE,128
+[end of reused output]
+
+Verifying that there are no '.bss' sections in the output
+
+</PRE>
+<a href="#XDAIS Rule 26">back</a>
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</BODY>
+</HTML>
+
+
+
+

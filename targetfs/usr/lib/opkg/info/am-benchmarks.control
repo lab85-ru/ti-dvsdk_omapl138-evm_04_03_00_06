@@ -1,0 +1,13 @@
+Package: am-benchmarks
+Version: 1.3-r2+svnr66.6
+Description: AM Benchmarks
+Section: system
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: armv5te
+OE: am-benchmarks
+Homepage: https://gforge.ti.com/gf/project/am_benchmarks/
+Build: install/d0bd439
+Depends: libc6 (>= 2.9)
+Source: svn://gforge.ti.com/svn/am_benchmarks/;module=trunk;proto=https;user=anonymous;pswd=''

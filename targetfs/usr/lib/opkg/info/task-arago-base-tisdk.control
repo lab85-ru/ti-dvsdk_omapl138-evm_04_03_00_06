@@ -1,0 +1,13 @@
+Package: task-arago-base-tisdk
+Version: 1.0-r5.6
+Description: Additional packages beyond console packages shared by TI SDKs
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: task-arago-base-tisdk
+Homepage: unknown
+Build: install/d0bd439
+Depends: dbus, dbus-x11, libexpat1, libglib-2.0-0, libxml2, libpcre0, iptables, iperf, psplash-ti, u-boot
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-base-tisdk.bb

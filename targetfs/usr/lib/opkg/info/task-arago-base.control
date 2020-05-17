@@ -1,0 +1,13 @@
+Package: task-arago-base
+Version: 1.0-r14.6
+Description: Basic task to get a device booting
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: all
+OE: task-arago-base
+Homepage: unknown
+Build: install/d0bd439
+Depends: base-files, base-passwd, busybox, initscripts, modutils-initscripts, netbase, update-alternatives, module-init-tools, alsa-lib, alsa-utils-aplay, mtd-utils, curl, arago-feed-configs, initscript-telnetd, devmem2, ethtool, tcpdump
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-base.bb

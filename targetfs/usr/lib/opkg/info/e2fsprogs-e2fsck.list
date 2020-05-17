@@ -1,0 +1,5 @@
+/sbin/fsck.ext4dev.e2fsprogs
+/sbin/fsck.ext2.e2fsprogs
+/sbin/fsck.ext3.e2fsprogs
+/sbin/fsck.ext4.e2fsprogs
+/sbin/e2fsck.e2fsprogs

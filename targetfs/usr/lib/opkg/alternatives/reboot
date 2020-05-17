@@ -1,0 +1,4 @@
+/sbin/reboot
+../bin/busybox 50
+reboot.sysvinit 200
+reboot.util-linux-ng 10

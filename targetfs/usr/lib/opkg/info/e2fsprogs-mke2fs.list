@@ -1,0 +1,5 @@
+/sbin/mkfs.ext2.e2fsprogs
+/sbin/mke2fs.e2fsprogs
+/sbin/mkfs.ext3.e2fsprogs
+/sbin/mkfs.ext4.e2fsprogs
+/sbin/mkfs.ext4dev.e2fsprogs

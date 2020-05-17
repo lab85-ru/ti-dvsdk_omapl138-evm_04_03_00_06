@@ -1,0 +1,6 @@
+	test -x /sbin/pivot_root.util-linux-ng && \
+	update-alternatives --remove pivot_root pivot_root.util-linux-ng
+
+	for i in dmesg kill more halt hwclock mkswap reboot shutdown sln mkfs.minix fsck.minix hexdump setsid chrt last logger mesg renice wall vipw vigr blockdev chfn newgrp chsh login cal script flock uuidd; do
+		update-alternatives --remove $i $i.util-linux-ng
+	done

@@ -1,0 +1,3 @@
+/sbin/hwclock
+../bin/busybox 50
+hwclock.util-linux-ng 10

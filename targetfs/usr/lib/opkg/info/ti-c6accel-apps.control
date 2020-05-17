@@ -1,0 +1,13 @@
+Package: ti-c6accel-apps
+Version: 1_01_00_07-r12.6
+Description: TI C6Accel - DSP Software Libraries on ARM
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI TSPA
+Architecture: da850-omapl138-evm
+OE: ti-c6accel
+Homepage: https://gforge01.dal.design.ti.com/gf/project/dsplib4arm/
+Build: install/d0bd439
+Depends: ti-cmem-module, ti-dsplink-module, libc6 (>= 2.9)
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/c6000/web/c6accel/latest/exports//c6accel_1_01_00_07_Linux-x86_Setup.bin;name=c6accelbin

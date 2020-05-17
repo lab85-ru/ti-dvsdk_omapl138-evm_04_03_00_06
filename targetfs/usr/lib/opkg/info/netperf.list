@@ -1,0 +1,3 @@
+/usr/bin/netperf
+/usr/sbin/netserver
+/etc/init.d/netperf

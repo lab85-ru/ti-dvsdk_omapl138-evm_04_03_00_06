@@ -1,0 +1,3 @@
+/usr/bin/wall
+wall.sysvinit 200
+wall.util-linux-ng 100

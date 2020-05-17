@@ -1,0 +1,1 @@
+update-alternatives --remove readprofile readprofile.util-linux-ng 100

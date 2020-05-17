@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>Compliance and Performance Test Report</TITLE></HEAD>
+<BODY>
+
+<STYLE TYPE="text/css">
+<!--
+.indented
+   {
+   padding-left: 25pt;
+   padding-right: 25pt;
+   }
+-->
+</STYLE>
+
+<TABLE BORDER="1" WIDTH="100%">
+  <TR>
+    <TD COLSPAN="2">
+      <CENTER><FONT SIZE="+2"><B>TMS320 DSP Algorithm Interoperability Standard</B></FONT></CENTER><BR>
+      <CENTER><FONT SIZE="+1"><B>QualiTI <a href="#compliance">Compliance</a> and <a href="#performance">Performance</a> Testing</B></font></CENTER><BR>
+    </TD>
+  </TR>
+  <TR>
+    <TD><B>Date</B></TD><TD>Fri Dec 05 2008 17:53:15 GMT+0530 (GMT+05:30)</TD>
+  </TR>
+
+  <TR>
+    <TD><B>Vendor</B></TD><TD>TI</TD>
+  </TR>
+
+  <TR>
+    <TD><B>Algorithm</B></TD><TD>H264VDEC</TD>
+  </TR>
+
+  <TR>
+    <TD><B>Architecture</B></TD><TD>C64P</TD>
+  </TR>
+  <TR>
+    <TD COLSPAN="2">
+
+      <B>Algorithm Base Directory:</B><BR>
+
+      &nbsp;&nbsp;&nbsp;E:\DaVinci_Codebase_XDM1.0\Codec_N_RTSC_Packgs\CodecPackages\REL_100_V_H264AVC_D_BP_DM6446_2_00_002\100_V_H264AVC_D_2_00\DM644x_BP_001<BR>
+
+<BR>
+      <B>Algorithm Archive(s):</B><BR>
+
+      &nbsp;&nbsp;&nbsp;.\lib\h264vdec_ti.l64P<BR>
+<BR>
+      <B>Header File(s):</B><BR>
+<BR>
+    </TD>
+
+  </TR>
+
+
+      <TR>
+        <TD COLSPAN="2">
+        <a name=compliance>
+          <FONT SIZE="+1"><BR><br><CENTER><B>Compliance Test Report</B></CENTER><BR><br></font>
+        </a>
+        </TD>
+      </TR>
+
+      <TR>
+        <TD><B>Test Results</B></TD>
+        <td>
+        <font color="#00A000">PASS: 6</font><br>
+        <font color="#FF0000"><B>FAIL: 0</b></font>
+        &nbsp;&nbsp;&nbsp; 
+        
+        <br>
+        Skipped: 0<br>
+        Not apply: 0<br>
+        <b>Total: 6</b><br>
+        </td>
+      </TR>
+      <TR>
+
+        <TD COLSPAN="2">
+            <B>Test Notes</B><BR>
+            &nbsp;&nbsp;&nbsp;This report has been generated with QualiTI Version 6.10.01 - the XDAIS compliance and performance test suite. <BR><BR>
+
+
+        </TD>
+      </TR>
+
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rules 8, 9 and 10">XDAIS Rules 8, 9, 10: Namespace compliance</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">(Rule 8) All external definitions must be either API identifiers or API and vendor prefixed.<br><br>(Rule 9) All undefined references must refer either to the operations specified in Appendix B (a subset of C runtime support library functions and a subset of the DSP/BIOS HWI API functions), or TI's DSPLIB or IMGLIB functions or other XDAIS-compliant modules.<br><br>(Rule 10) All modules must follow the eXpressDSP naming conventions for those external declarations disclosed to the client.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rules 8, 9 and 10">XDAIS Rules 8, 9 and 10 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 12">XDAIS Rule 12: IALG interface implementation</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All algorithms must implement the IALG interface.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 12">XDAIS Rule 12 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 13+">XDAIS Rule 13+: correct linker section names</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">Each of the IALG methods implemented by an algorithm must be independently relocatable.<br><br>Additional rule: there should be no non-standard linker sections. (Standard linker sections are: ".cinit", ".switch", ".far", ".text", ".const", ".bss", ".pinit".)</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 13+">XDAIS Rule 13+ execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 15">XDAIS Rule 15: library filename extension</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">Each XDAIS-compliant algorithm must be packaged in an archive which has a name that follows a uniform naming convention.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 15">XDAIS Rule 15 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 25">XDAIS Rule 25: All C6x algorithms must be supplied in little-endian format</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All C6x algorithms must be supplied in little-endian format.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 25">XDAIS Rule 25 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 26">XDAIS Rule 26: All static/global data must be far on c6x</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All C6x algorithms must access all static and global data as far data.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 26">XDAIS Rule 26 execution log</a><br>
+        </TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="2">
+        <a name=performance>
+          <FONT SIZE="+1"><BR><br><CENTER><B>Performance Test Report</B></CENTER><BR><br></font>
+        </a>
+        </TD>
+      </TR>
+
+      <TR>
+        <TD><B>Test Results</B></TD>
+        <td>
+        <font color="#00A000">PASS: 2</font><br>
+        <font color="#FF0000"><B>FAIL: 0</b></font>
+        &nbsp;&nbsp;&nbsp; 
+        
+        <br>
+        Skipped: 0<br>
+        Not apply: 0<br>
+        <b>Total: 2</b><br>
+        </td>
+      </TR>
+      <TR>
+
+        <TD COLSPAN="2">
+            <B>Test Notes</B><BR>
+            &nbsp;&nbsp;&nbsp;This report has been generated with QualiTI Version 6.10.01 - the XDAIS compliance and performance test suite. <BR><BR>
+
+
+        </TD>
+      </TR>
+
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 20">XDAIS Rule 20: must declare worst-case stack requirements</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All algorithms must characterize their worst-case stack space memory requirements (including alignment).</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Performance test completed. Calculated Worst Case Stack is 6272 bytes.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 20">XDAIS Rule 20 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rules 21, 22">XDAIS Rules 21, 22: must characterize static data & program memory requirements</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All algorithms must characterize their static data & program memory requirements</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Performance test completed. CODE, DATA & UDATA sections characterized<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rules 21, 22">XDAIS Rules 21, 22 execution log</a><br>
+        </TD>
+      </TR>
+</TABLE>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<hr>
+<a name="log XDAIS Rules 8, 9 and 10">Test execution log for <b>XDAIS Rules 8, 9 and 10:</b></a><br>
+<PRE>
+Running test 'XDAIS Rules 8, 9 and 10'
+Extracting names of global symbols defined by the algorithm...
+ Running command:&gt; "D:\CCStudio_v3.3\C6000\cgtools\bin\nm6x.exe" -g E:\DaVinci_Codebase_XDM1.0\Codec_N_RTSC_Packgs\CodecPackages\REL_100_V_H264AVC_D_BP_DM6446_2_00_002\100_V_H264AVC_D_2_00\DM644x_BP_001\.\lib\h264vdec_ti.l64P | "E:\XDAIS_QualiTI_Tools\xdais_6_10_01\packages\ti\xdais\qualiti\bin\grep\grep.exe" " [TBCU] "
+                   (from "C:\Documents and Settings\x0080819\Local Settings\Temp\qualiti_runcmd_39579.sh"
+  000024f8 B _H264VDEC_TI_IALG
+  0000256c B _H264VDEC_TI_IDMA3
+  000024f8 B _H264VDEC_TI_IH264VDEC
+  0000a720 T _H264VDEC_TI_activate
+  00004a00 T _H264VDEC_TI_algreset
+  00009a40 T _H264VDEC_TI_alloc
+  000092a0 T _H264VDEC_TI_control
+  0000a7a0 T _H264VDEC_TI_deactivate
+  00006ae0 T _H264VDEC_TI_decode
+  0000a820 T _H264VDEC_TI_exit
+  0000a640 T _H264VDEC_TI_free
+  00081380 T _H264VDEC_TI_init
+  00009ec0 T _H264VDEC_TI_initObj
+  0000a860 T _H264VDEC_TI_numAlloc
+  00002548 B _IH264VDEC_PARAMS
+  00000000 U __cmpd
+  00000000 U __divd
+  00000000 U __divi
+  00000000 U __divu
+  00000000 U __fixdu
+  00000000 U __fltid
+  00000000 U __fltud
+  00000000 U __mpyd
+  00000000 U __remi
+  00000000 U __remu
+  00000000 U __strasgi_64plus
+  00000000 U __subd
+  00000000 U _memcpy
+  00000000 U _memset
+Verifying that all global symbols are named XXX_TI_xxx ...
+and that no blacklisted external references are made
+Found symbol 'IH264VDEC_PARAMS', that's okay.
+
+</PRE>
+<a href="#XDAIS Rules 8, 9 and 10">back</a>
+<hr>
+<a name="log XDAIS Rule 12">Test execution log for <b>XDAIS Rule 12:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 12'
+Extracting names of global BSS data symbols...
+ Running command:&gt; "D:\CCStudio_v3.3\C6000\cgtools\bin\nm6x.exe" -g E:\DaVinci_Codebase_XDM1.0\Codec_N_RTSC_Packgs\CodecPackages\REL_100_V_H264AVC_D_BP_DM6446_2_00_002\100_V_H264AVC_D_2_00\DM644x_BP_001\.\lib\h264vdec_ti.l64P | "E:\XDAIS_QualiTI_Tools\xdais_6_10_01\packages\ti\xdais\qualiti\bin\grep\grep.exe" " [BD] "
+                   (from "C:\Documents and Settings\x0080819\Local Settings\Temp\qualiti_runcmd_39580.sh"
+  000024f8 B _H264VDEC_TI_IALG
+  0000256c B _H264VDEC_TI_IDMA3
+  000024f8 B _H264VDEC_TI_IH264VDEC
+  00002548 B _IH264VDEC_PARAMS
+Verifying that objects 'H264VDEC_TI_IALG' and 'H264VDEC_TI_IH264VDEC' are defined...
+Data object 'H264VDEC_TI_IALG' found.
+Data object 'H264VDEC_TI_IH264VDEC' found.
+
+</PRE>
+<a href="#XDAIS Rule 12">back</a>
+<hr>
+<a name="log XDAIS Rule 13+">Test execution log for <b>XDAIS Rule 13+:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 13+'
+Extracting names of all sections in which all algorithms' symbols are...
+ Running command:&gt; "D:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header E:\DaVinci_Codebase_XDM1.0\Codec_N_RTSC_Packgs\CodecPackages\REL_100_V_H264AVC_D_BP_DM6446_2_00_002\100_V_H264AVC_D_2_00\DM644x_BP_001\.\lib\h264vdec_ti.l64P | "D:\cg_xml\bin\sectti.exe" --csv
+                   (from "C:\Documents and Settings\x0080819\Local Settings\Temp\qualiti_runcmd_39581.sh"
+  Reading from stdin ...
+  Library,Filename,Section,Type,Size
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.const:H264VDEC_TI_dSect1,DATA,4649
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.far:H264VDEC_TI_uSect1,UDATA,9592
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:H264VDEC_TI_cSect1,CODE,465856
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_alloc,CODE,1152
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_exit,CODE,32
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_free,CODE,224
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_initObj,CODE,1152
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_algreset,CODE,8416
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_moved,CODE,32
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_numAlloc,CODE,32
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_activate,CODE,128
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_decode,CODE,5504
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_control,CODE,1952
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_deactivate,CODE,128
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.switch,DATA,764
+  E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.cinit,DATA,9332
+Verifying that IALG functions are in separate sections,
+i.e. that there exist sections that match regexp /\.text:.*[aA]lloc.*/,
+and also that there are no non-standard sections.
+
+</PRE>
+<a href="#XDAIS Rule 13+">back</a>
+<hr>
+<a name="log XDAIS Rule 15">Test execution log for <b>XDAIS Rule 15:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 15'
+Verifying that the extension for library ".\lib\h264vdec_ti.l64P" is ".l64P"
+Verifying that the file ".\lib\h264vdec_ti.l64P" is really a library, and not a partially linked object file or something like that.
+ Running command:&gt; "D:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header E:\DaVinci_Codebase_XDM1.0\Codec_N_RTSC_Packgs\CodecPackages\REL_100_V_H264AVC_D_BP_DM6446_2_00_002\100_V_H264AVC_D_2_00\DM644x_BP_001\.\lib\h264vdec_ti.l64P | "E:\XDAIS_QualiTI_Tools\xdais_6_10_01\packages\ti\xdais\qualiti\bin\grep\grep.exe" "&lt;archive&gt;"
+                   (from "C:\Documents and Settings\x0080819\Local Settings\Temp\qualiti_runcmd_39582.sh"
+  &lt;archive&gt;
+
+</PRE>
+<a href="#XDAIS Rule 15">back</a>
+<hr>
+<a name="log XDAIS Rule 20">Test execution log for <b>XDAIS Rule 20:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 20'
+Using call_graph on ofd output to find out worst case stack...
+ Running command:&gt; "D:\cg_xml\utils\ofd6x.exe" -xg --xml_indent=0 --obj_display=none,header,optheader,symbols --dwarf_display=none,dinfo  E:\DaVinci_Codebase_XDM1.0\Codec_N_RTSC_Packgs\CodecPackages\REL_100_V_H264AVC_D_BP_DM6446_2_00_002\100_V_H264AVC_D_2_00\DM644x_BP_001\.\lib\h264vdec_ti.l64P | "D:\cg_xml\bin\call_graph.exe" --stack_max
+                   (from "C:\Documents and Settings\x0080819\Local Settings\Temp\qualiti_runcmd_39583.sh"
+  Reading from stdin ...
+  The function which uses the most stack also makes no direct function calls.
+  The max stack size is almost certainly too low.  Please view the online
+  documentation with the command 'perldoc call_graph.pl' for possible
+  explanations.
+  _H264MPVDEC_TI_slice_data_P : wcs = 6272
+Extracting worst case stack from a stdout line that ends with ': wcs = &lt;num&gt;'
+Calculated worst case stack is 6272 bytes.
+
+</PRE>
+<a href="#XDAIS Rule 20">back</a>
+<hr>
+<a name="log XDAIS Rules 21, 22">Test execution log for <b>XDAIS Rules 21, 22:</b></a><br>
+<PRE>
+Running test 'XDAIS Rules 21, 22'
+Using sectti on ofd output to find static data & program memory requirements...
+ Running command:&gt; "D:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header E:\DaVinci_Codebase_XDM1.0\Codec_N_RTSC_Packgs\CodecPackages\REL_100_V_H264AVC_D_BP_DM6446_2_00_002\100_V_H264AVC_D_2_00\DM644x_BP_001\.\lib\h264vdec_ti.l64P | "D:\cg_xml\bin\sectti.exe"
+                   (from "C:\Documents and Settings\x0080819\Local Settings\Temp\qualiti_runcmd_39584.sh"
+  Reading from stdin ...
+  ====================================================================
+  REPORT FOR LIBRARY: E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P
+  ====================================================================
+  
+  
+  ************************************************************
+  REPORT FOR FILE: h264vdec_ti_plink.l64P
+  ************************************************************
+                            Name : Size (dec)  Size (hex)  Type
+  ------------------------------ : ----------  ----------  ----
+       .const:H264VDEC_TI_dSect1 :       4649  0x00001229  DATA 
+         .far:H264VDEC_TI_uSect1 :       9592  0x00002578  UDATA
+        .text:H264VDEC_TI_cSect1 :     465856  0x00071bc0  CODE 
+        .text:_H264VDEC_TI_alloc :       1152  0x00000480  CODE 
+         .text:_H264VDEC_TI_exit :         32  0x00000020  CODE 
+         .text:_H264VDEC_TI_free :        224  0x000000e0  CODE 
+      .text:_H264VDEC_TI_initObj :       1152  0x00000480  CODE 
+     .text:_H264VDEC_TI_algreset :       8416  0x000020e0  CODE 
+        .text:_H264VDEC_TI_moved :         32  0x00000020  CODE 
+     .text:_H264VDEC_TI_numAlloc :         32  0x00000020  CODE 
+     .text:_H264VDEC_TI_activate :        128  0x00000080  CODE 
+       .text:_H264VDEC_TI_decode :       5504  0x00001580  CODE 
+      .text:_H264VDEC_TI_control :       1952  0x000007a0  CODE 
+   .text:_H264VDEC_TI_deactivate :        128  0x00000080  CODE 
+                         .switch :        764  0x000002fc  DATA 
+                          .cinit :       9332  0x00002474  DATA 
+  
+  ------------------------------------------------------------
+  Totals by section type
+  ------------------------------------------------------------
+    Uninitialized Data :       9592  0x00002578
+      Initialized Data :      14745  0x00003999
+                  Code :     484608  0x00076500
+
+</PRE>
+<a href="#XDAIS Rules 21, 22">back</a>
+<hr>
+<a name="log XDAIS Rule 25">Test execution log for <b>XDAIS Rule 25:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 25'
+Using ofd output to parse for endianness attribute...
+ Running command:&gt; "D:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,header E:\DaVinci_Codebase_XDM1.0\Codec_N_RTSC_Packgs\CodecPackages\REL_100_V_H264AVC_D_BP_DM6446_2_00_002\100_V_H264AVC_D_2_00\DM644x_BP_001\.\lib\h264vdec_ti.l64P | "E:\XDAIS_QualiTI_Tools\xdais_6_10_01\packages\ti\xdais\qualiti\bin\grep\grep.exe" "&lt;endian&gt;"
+                   (from "C:\Documents and Settings\x0080819\Local Settings\Temp\qualiti_runcmd_39585.sh"
+  &lt;endian&gt;little&lt;/endian&gt;
+
+</PRE>
+<a href="#XDAIS Rule 25">back</a>
+<hr>
+<a name="log XDAIS Rule 26">Test execution log for <b>XDAIS Rule 26:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 26'
+Extracting names of all used sections to see if there is a '.bss' in there.
+[Using output generated by the command from test 'XDAIS Rule 13+"]:
+Running command:&gt; "D:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header E:\DaVinci_Codebase_XDM1.0\Codec_N_RTSC_Packgs\CodecPackages\REL_100_V_H264AVC_D_BP_DM6446_2_00_002\100_V_H264AVC_D_2_00\DM644x_BP_001\.\lib\h264vdec_ti.l64P | "D:\cg_xml\bin\sectti.exe" --csv
+                  (from "C:\Documents and Settings\x0080819\Local Settings\Temp\qualiti_runcmd_39581.sh"
+Reading from stdin ...
+Library,Filename,Section,Type,Size
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.const:H264VDEC_TI_dSect1,DATA,4649
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.far:H264VDEC_TI_uSect1,UDATA,9592
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:H264VDEC_TI_cSect1,CODE,465856
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_alloc,CODE,1152
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_exit,CODE,32
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_free,CODE,224
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_initObj,CODE,1152
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_algreset,CODE,8416
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_moved,CODE,32
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_numAlloc,CODE,32
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_activate,CODE,128
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_decode,CODE,5504
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_control,CODE,1952
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.text:_H264VDEC_TI_deactivate,CODE,128
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.switch,DATA,764
+E:/DaVinci_Codebase_XDM1.0/Codec_N_RTSC_Packgs/CodecPackages/REL_100_V_H264AVC_D_BP_DM6446_2_00_002/100_V_H264AVC_D_2_00/DM644x_BP_001/./lib/h264vdec_ti.l64P,h264vdec_ti_plink.l64P,.cinit,DATA,9332
+[end of reused output]
+
+Verifying that there are no '.bss' sections in the output
+
+</PRE>
+<a href="#XDAIS Rule 26">back</a>
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</BODY>
+</HTML>
+
+
+
+

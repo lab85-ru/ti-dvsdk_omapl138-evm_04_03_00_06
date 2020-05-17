@@ -1,0 +1,13 @@
+Package: ti-codec-engine-examples
+Version: 2_26_02_11-r57a.6
+Description: Codec Engine for TI ARM/DSP processors
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: da850-omapl138-evm
+OE: ti-codec-engine
+Homepage: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ce
+Build: install/d0bd439
+Depends: ti-cmem-module, ti-dsplink-module, libc6 (>= 2.9)
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/ce/2_26_02_11/exports/codec_engine_2_26_02_11,lite.tar.gz;name=cetarball file://0001-switch-to-arago-tool-chain.patch

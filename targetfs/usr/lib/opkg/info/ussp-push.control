@@ -1,0 +1,13 @@
+Package: ussp-push
+Version: 0.11-r1.6
+Description: OBEX object pusher
+Section: console
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: armv5te
+OE: ussp-push
+Homepage: http://www.xmailserver.org/ussp-push.html
+Build: install/d0bd439
+Depends: libopenobex1 (>= 1.5), libusb-0.1-4 (>= 0.1.3), libusb-1.0-0 (>= 1.0.8), libc6 (>= 2.9), bluez4 (>= 4.89)
+Source: http://www.xmailserver.org/ussp-push-0.11.tar.gz file://hci_remote_name.patch

@@ -1,0 +1,13 @@
+Package: task-arago-tisdk-graphics
+Version: 1.0-r12.6
+Description: Task to install graphics binaries on da850-omapl138-evm
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: task-arago-tisdk-graphics
+Homepage: unknown
+Build: install/d0bd439
+Depends: task-arago-qte, qt4-embedded-plugin-phonon-backend-gstreamer, qt4-embedded-plugin-imageformat-gif, qt4-embedded-plugin-imageformat-jpeg, libxml2, matrix-gui-e, qt-embedded-widgets-demo
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-tisdk-graphics.bb

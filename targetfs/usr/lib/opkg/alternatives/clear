@@ -1,0 +1,3 @@
+/usr/bin/clear
+../../bin/busybox 50
+clear.ncurses 100

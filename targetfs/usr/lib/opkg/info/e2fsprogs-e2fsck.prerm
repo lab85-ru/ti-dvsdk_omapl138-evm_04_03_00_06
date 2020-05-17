@@ -1,0 +1,5 @@
+	update-alternatives --remove e2fsck e2fsck.e2fsprogs
+	update-alternatives --remove fsck.ext2 fsck.ext2.e2fsprogs
+	update-alternatives --remove fsck.ext3 fsck.ext3.e2fsprogs
+	update-alternatives --remove fsck.ext4 fsck.ext4.e2fsprogs
+	update-alternatives --remove fsck.ext4dev fsck.ext4dev.e2fsprogs

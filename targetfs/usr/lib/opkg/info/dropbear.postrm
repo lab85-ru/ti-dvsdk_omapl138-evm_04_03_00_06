@@ -1,0 +1,18 @@
+	if [ -f "/etc/dropbear/dropbear_rsa_host_key" ]; then
+		rm /etc/dropbear/dropbear_rsa_host_key
+	fi
+	if [ -f "/etc/dropbear/dropbear_dss_host_key" ]; then
+		rm /etc/dropbear/dropbear_dss_host_key
+	fi
+	update-alternatives --remove ssh /usr/bin/dropbearmulti
+	update-alternatives --remove scp /usr/bin/dropbearmulti
+if test "x$D" != "x"; then
+	OPT="-r $D"
+else
+	OPT=""
+fi
+if test "$1" = "remove" -o "$1" = "purge"; then
+	if ! test -e "/etc/init.d/dropbear"; then
+		update-rc.d $OPT dropbear remove
+	fi
+fi

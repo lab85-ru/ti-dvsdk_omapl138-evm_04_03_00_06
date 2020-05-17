@@ -1,0 +1,13 @@
+Package: ti-dsp-benchmark-apps
+Version: 1_00_00_02-r1.6
+Description: TI DSP Benchmark applications
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI TSPA
+Architecture: da850-omapl138-evm
+OE: ti-dsp-benchmark
+Homepage: http://software-dl.ti.com/dsps/dsps_public_sw/c6000/web/c6accel/latest/index_FDS.html
+Build: install/d0bd439
+Depends: ti-cmem-module, ti-dsplink-module, libc6 (>= 2.9)
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/c6000/web/c6accel/latest/exports//dsp_benchmark_demo_1_00_00_02_Linux-x86_Setup.bin;name=dspbenchmarksbin

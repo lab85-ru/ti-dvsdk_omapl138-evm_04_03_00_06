@@ -1,0 +1,13 @@
+Package: ti-linux-driver-examples-omapl
+Version: psp03.20.00.13-r3.6
+Description: Linux dirver examples/test application of OMAP_L138 
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI BSD
+Architecture: da850-omapl138-evm
+OE: ti-linux-driver-examples-omapl
+Homepage:  
+Build: install/d0bd439
+Depends: libc6 (>= 2.9)
+Source: ftp://nemo.sc.ti.com/pub/int-packages/omapl138-linux-driver-examples-psp03.20.00.13.tar.gz;name=linuxexamplestarball

@@ -1,0 +1,12 @@
+Package: alsa-states
+Version: 0.2.0-r23-arago1.6
+Description: Alsa Scenario Files
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: alsa-state
+Homepage: unknown
+Build: install/d0bd439
+Source: file://asound.conf file://asound.state file://alsa-state

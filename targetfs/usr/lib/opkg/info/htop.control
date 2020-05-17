@@ -1,0 +1,13 @@
+Package: htop
+Version: 0.9-r0.6
+Description: htop process monitor
+Section: console/utils
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: armv5te
+OE: htop
+Homepage: http://htop.sf.net
+Build: install/d0bd439
+Depends: ncurses-terminfo, libncurses5 (>= 5.9), libtinfo5 (>= 5.9), libc6 (>= 2.9)
+Source: http://downloads.sourceforge.net/htop/htop-0.9.tar.gz file://remove-proc-test.patch

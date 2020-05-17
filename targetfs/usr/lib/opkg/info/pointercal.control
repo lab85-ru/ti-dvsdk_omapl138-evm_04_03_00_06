@@ -1,0 +1,12 @@
+Package: pointercal
+Version: 0.0-r22.6
+Description: Touchscreen calibration data
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: pointercal
+Homepage: unknown
+Build: install/d0bd439
+Source: file://pointercal

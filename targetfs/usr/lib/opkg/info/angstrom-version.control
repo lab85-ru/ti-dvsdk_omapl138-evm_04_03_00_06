@@ -1,0 +1,12 @@
+Package: angstrom-version
+Version: 1:2011.06-r7.6
+Description: Version 2011.06-r7 of package angstrom-version
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: angstrom-version
+Homepage: unknown
+Build: install/d0bd439
+Source: file://lsb_release

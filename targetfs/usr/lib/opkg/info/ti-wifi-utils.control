@@ -1,0 +1,13 @@
+Package: ti-wifi-utils
+Version: 0.0-r3+gitr0+268dbf03091b632c2697eb8028e90fe40513a9d8.6
+Description: The calibrator and other useful utilities for TI wireless solution based on wl12xx driver
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI-BSD
+Architecture: armv5te
+OE: ti-wifi-utils
+Homepage: unknown
+Build: install/d0bd439
+Depends: libnl2 (>= 2.0), libnl-genl2 (>= 2.0), libc6 (>= 2.9)
+Source: git://github.com/gxk/ti-utils.git;protocol=git

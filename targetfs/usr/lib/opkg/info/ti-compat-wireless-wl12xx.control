@@ -1,0 +1,13 @@
+Package: ti-compat-wireless-wl12xx
+Version: 0.20110517r3m1rc2-r57.6
+Description: ti compat-wireless drivers
+Section: kernel/modules
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: da850-omapl138-evm
+OE: ti-compat-wireless-wl12xx
+Homepage: https://gforge.ti.com/gf/project/ecs_nlcp/
+Build: install/d0bd439
+Depends: kernel-2.6.37, update-modules
+Source: https://gforge.ti.com/gf/download/frsrelease/555/4629/ti-compat-wireless-wl12xx-2011-05-17-r3-m1-rc2.tgz file://0001-wl12xx_sdio-enable-wowlan-only-if-enable_irq_wake-su.patch file://0002-ti-compat-wireless-enable-uapsd-configuration.patch file://0003-mac80211-don-t-start-the-dynamic-ps-timer-if-not-associated.patch

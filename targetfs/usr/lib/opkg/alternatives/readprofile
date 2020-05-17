@@ -1,0 +1,3 @@
+/usr/sbin/readprofile
+../../bin/busybox 50
+readprofile.util-linux-ng 100

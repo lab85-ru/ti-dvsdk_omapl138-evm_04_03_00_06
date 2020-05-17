@@ -1,0 +1,2 @@
+	update-alternatives --remove chattr chattr.e2fsprogs
+	update-alternatives --remove uuidd uuidd.e2fsprogs

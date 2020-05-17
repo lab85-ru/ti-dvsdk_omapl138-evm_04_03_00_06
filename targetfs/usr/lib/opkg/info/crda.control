@@ -1,0 +1,13 @@
+Package: crda
+Version: 1.1.1-r3.6
+Description: Wireless Central Regulatory Domain Agent
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: ISC
+Architecture: armv5te
+OE: crda
+Homepage: http://wireless.kernel.org/en/developers/Regulatory/CRDA
+Build: install/d0bd439
+Depends: udev, libgcrypt11 (>= 1.4.1), libc6 (>= 2.9), libnl-genl2 (>= 2.0), libnl2 (>= 2.0), libnl-nf2 (>= 2.0), libnl-route2 (>= 2.0)
+Source: http://wireless.kernel.org/download/crda/crda-1.1.1.tar.bz2;name=crda http://wireless.kernel.org/download/wireless-regdb/regulatory.bins/2011.04.28-regulatory.bin;name=reg

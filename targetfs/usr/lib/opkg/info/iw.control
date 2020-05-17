@@ -1,0 +1,13 @@
+Package: iw
+Version: 0.9.20-r3.6
+Description: nl80211 based CLI configuration utility for wireless devices
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: armv5te
+OE: iw
+Homepage: http://linuxwireless.org/en/users/Documentation/iw
+Build: install/d0bd439
+Depends: libnl-genl2 (>= 2.0), libnl2 (>= 2.0), libnl-nf2 (>= 2.0), libnl-route2 (>= 2.0), libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Source: http://wireless.kernel.org/download/iw/iw-0.9.20.tar.bz2 file://kill-git-version-check.patch

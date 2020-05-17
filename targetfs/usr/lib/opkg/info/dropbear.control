@@ -1,0 +1,14 @@
+Package: dropbear
+Version: 0.51-r7.0.6
+Description: Dropbear is a lightweight SSH and SCP implementation
+Section: console/network
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: armv5te
+OE: dropbear
+Homepage: http://matt.ucc.asn.au/dropbear/dropbear.html
+Build: install/d0bd439
+Depends: update-rc.d, libc6 (>= 2.9), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Provides: ssh, sshd
+Source: http://matt.ucc.asn.au/dropbear/dropbear-0.51.tar.bz2 file://urandom-xauth-changes-to-options.h.patch file://configure.patch file://fix-2kb-keys.patch file://allow-nopw.patch;apply=no file://init file://default file://no-host-lookup.patch

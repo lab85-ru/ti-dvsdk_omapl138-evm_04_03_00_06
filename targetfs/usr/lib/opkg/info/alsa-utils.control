@@ -1,0 +1,12 @@
+Package: alsa-utils
+Version: 1.0.24.2-r0.6
+Description: ALSA Utilities
+Section: console/utils
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: armv5te
+OE: alsa-utils
+Homepage: http://www.alsa-project.org
+Build: install/d0bd439
+Source: ftp://ftp.alsa-project.org/pub/utils/alsa-utils-1.0.24.2.tar.bz2 file://remove-xmlto.patch

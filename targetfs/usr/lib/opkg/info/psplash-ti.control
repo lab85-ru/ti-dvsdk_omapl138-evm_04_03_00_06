@@ -1,0 +1,15 @@
+Package: psplash-ti
+Version: 0.0+svnr422--arago1.6
+Description: Userspace framebuffer boot logo based on usplash.
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2+
+Architecture: armv5te
+OE: psplash-ti
+Homepage: http://projects.o-hand.com/psplash
+Build: install/d0bd439
+Depends: psplash-support, update-rc.d, libc6 (>= 2.9)
+Provides: virtual-psplash
+Conflicts: exquisite
+Source: svn://svn.o-hand.com/repos/misc/trunk;module=psplash;proto=http file://psplash-18bpp.patch file://logo-math.patch file://0001-configurability-for-rev-422.patch file://psplash-poky-img.h file://psplash-bar-img.h file://psplash-default file://splashfuncs file://psplash-init

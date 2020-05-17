@@ -1,0 +1,1 @@
+	update-alternatives --remove fsck fsck.util-linux-ng

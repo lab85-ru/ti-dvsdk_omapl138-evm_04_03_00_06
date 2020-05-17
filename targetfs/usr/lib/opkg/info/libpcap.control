@@ -1,0 +1,13 @@
+Package: libpcap
+Version: 1.1.1-r1.6
+Description: Network Packet Capture Library
+Section: libs/network
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: armv5te
+OE: libpcap
+Homepage: http://www.tcpdump.org/
+Build: install/d0bd439
+Depends: libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Source: http://www.tcpdump.org/release/libpcap-1.1.1.tar.gz file://ieee80215-arphrd.patch

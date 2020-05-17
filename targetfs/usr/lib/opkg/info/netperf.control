@@ -1,0 +1,13 @@
+Package: netperf
+Version: 2.4.4-r3.6
+Description: Network performance benchmark including tests for TCP, UDP, sockets, ATM and more.
+Section: console/network
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: netperf
+Architecture: armv5te
+OE: netperf
+Homepage: http://www.netperf.org/
+Build: install/d0bd439
+Depends: update-rc.d, libc6 (>= 2.9)
+Source: ftp://ftp.netperf.org/netperf/archive/netperf-2.4.4.tar.bz2 file://cpu_set.patch file://vfork.patch file://init

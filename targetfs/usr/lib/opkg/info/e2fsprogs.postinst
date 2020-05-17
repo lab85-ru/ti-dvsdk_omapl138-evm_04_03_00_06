@@ -1,0 +1,2 @@
+	update-alternatives --install /usr/bin/chattr chattr chattr.e2fsprogs 100
+	update-alternatives --install /sbin/uuidd uuidd uuidd.e2fsprogs 10

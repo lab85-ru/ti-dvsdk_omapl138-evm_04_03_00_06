@@ -1,0 +1,12 @@
+#!/bin/sh
+update-alternatives --remove psplash /usr/bin/psplash.psplash-ti
+if test "x$D" != "x"; then
+	OPT="-r $D"
+else
+	OPT=""
+fi
+if test "$1" = "remove" -o "$1" = "purge"; then
+	if ! test -e "/etc/init.d/psplash"; then
+		update-rc.d $OPT psplash remove
+	fi
+fi

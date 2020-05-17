@@ -1,0 +1,1 @@
+	ln -sf /usr/share/ti/ti-codecs-server/*.x674 /usr/share/ti/ti-dmai-apps/

@@ -1,0 +1,14 @@
+Package: task-arago-tisdk-bsp
+Version: 1.0-r20.6
+Description: Task to install Board Support Package binaries on da850-omapl138-evm
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: task-arago-tisdk-bsp
+Homepage: unknown
+Build: install/d0bd439
+Depends: ti-linux-driver-examples-omapl, bluez4, bluez4-agent, libasound-module-bluez, bluez-hcidump, libopenobex1, openobex-apps, obexftp, ussp-push
+Recommends: kernel-modules, kernel-image-2.6.37, kernel-vmlinux, u-boot
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-tisdk-bsp.bb

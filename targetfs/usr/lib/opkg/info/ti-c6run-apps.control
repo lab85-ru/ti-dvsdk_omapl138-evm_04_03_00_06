@@ -1,0 +1,13 @@
+Package: ti-c6run-apps
+Version: 0_98_03_03-r3.6
+Description: TI C6Run - DSP Code Development for ARM/Linux Users
+Section: devel
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: da850-omapl138-evm
+OE: ti-c6run
+Homepage: https://gforge.ti.com/gf/project/dspeasy/
+Build: install/d0bd439
+Depends: ti-cmem-module, ti-dsplink-module, libc6 (>= 2.9)
+Source: svn://gforge.ti.com/svn/dspeasy/;module=tags/0_98_03_03;proto=https;user=anonymous;pswd=''

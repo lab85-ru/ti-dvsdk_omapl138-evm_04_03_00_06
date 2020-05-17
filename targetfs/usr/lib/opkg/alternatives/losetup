@@ -1,0 +1,3 @@
+/sbin/losetup
+../bin/busybox 50
+losetup.util-linux-ng 100

@@ -1,0 +1,661 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+<HEAD><TITLE>Compliance and Performance Test Report</TITLE></HEAD>
+<BODY>
+
+<STYLE TYPE="text/css">
+<!--
+.indented
+   {
+   padding-left: 25pt;
+   padding-right: 25pt;
+   }
+-->
+</STYLE>
+
+<TABLE BORDER="1" WIDTH="100%">
+  <TR>
+    <TD COLSPAN="2">
+      <CENTER><FONT SIZE="+2"><B>TMS320 DSP Algorithm Interoperability Standard</B></FONT></CENTER><BR>
+      <CENTER><FONT SIZE="+1"><B>QualiTI <a href="#compliance">Compliance</a> and <a href="#performance">Performance</a> Testing</B></font></CENTER><BR>
+    </TD>
+  </TR>
+  <TR>
+    <TD><B>Date</B></TD><TD>Mon Apr 12 2010 17:27:14 GMT+0530 (IST)</TD>
+  </TR>
+
+  <TR>
+    <TD><B>Vendor</B></TD><TD>TI</TD>
+  </TR>
+
+  <TR>
+    <TD><B>Algorithm</B></TD><TD>MPEG2VDEC</TD>
+  </TR>
+
+  <TR>
+    <TD><B>Architecture</B></TD><TD>C64P</TD>
+  </TR>
+  <TR>
+    <TD COLSPAN="2">
+
+      <B>Algorithm Base Directory:</B><BR>
+
+      &nbsp;&nbsp;&nbsp;C:\release_packages\REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00\100_V_MPEG2_D_02_00\C64XPLUS_MP_001\Lib<BR>
+
+<BR>
+      <B>Algorithm Archive(s):</B><BR>
+
+      &nbsp;&nbsp;&nbsp;.\mpeg2vdec_ti.l64P<BR>
+<BR>
+      <B>Header File(s):</B><BR>
+<BR>
+    </TD>
+
+  </TR>
+
+
+      <TR>
+        <TD COLSPAN="2">
+        <a name=compliance>
+          <FONT SIZE="+1"><BR><br><CENTER><B>Compliance Test Report</B></CENTER><BR><br></font>
+        </a>
+        </TD>
+      </TR>
+
+      <TR>
+        <TD><B>Test Results</B></TD>
+        <td>
+        <font color="#00A000">PASS: 6</font><br>
+        <font color="#FF0000"><B>FAIL: 0</b></font>
+        &nbsp;&nbsp;&nbsp; 
+        
+        <br>
+        Skipped: 0<br>
+        Not apply: 0<br>
+        <b>Total: 6</b><br>
+        </td>
+      </TR>
+      <TR>
+
+        <TD COLSPAN="2">
+            <B>Test Notes</B><BR>
+            &nbsp;&nbsp;&nbsp;This report has been generated with QualiTI Version 6.20 - the XDAIS compliance and performance test suite. <BR><BR>
+
+
+        </TD>
+      </TR>
+
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rules 8, 9 and 10">XDAIS Rules 8, 9, 10: Namespace compliance</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">(Rule 8) All external definitions must be either API identifiers or API and vendor prefixed.<br><br>(Rule 9) All undefined references must refer either to the operations specified in Appendix B (a subset of C runtime support library functions and a subset of the DSP/BIOS HWI API functions), or TI's DSPLIB or IMGLIB functions or other XDAIS-compliant modules.<br><br>(Rule 10) All modules must follow the eXpressDSP naming conventions for those external declarations disclosed to the client.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rules 8, 9 and 10">XDAIS Rules 8, 9 and 10 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 12">XDAIS Rule 12: IALG interface implementation</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All algorithms must implement the IALG interface.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 12">XDAIS Rule 12 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 13+">XDAIS Rule 13+: correct linker section names</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">Each of the IALG methods implemented by an algorithm must be independently relocatable.<br><br>Additional rule: there should be no non-standard linker sections. (Standard linker sections are: ".cinit", ".switch", ".far", ".text", ".const", ".bss", ".pinit".)</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 13+">XDAIS Rule 13+ execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 15">XDAIS Rule 15: library filename extension</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">Each XDAIS-compliant algorithm must be packaged in an archive which has a name that follows a uniform naming convention.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 15">XDAIS Rule 15 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 25">XDAIS Rule 25: All C6x algorithms must be supplied in little-endian format</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All C6x algorithms must be supplied in little-endian format.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 25">XDAIS Rule 25 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 26">XDAIS Rule 26: All static/global data must be far on c6x</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All C6x algorithms must access all static and global data as far data.</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Test passed.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 26">XDAIS Rule 26 execution log</a><br>
+        </TD>
+      </TR>
+      <TR>
+        <TD COLSPAN="2">
+        <a name=performance>
+          <FONT SIZE="+1"><BR><br><CENTER><B>Performance Test Report</B></CENTER><BR><br></font>
+        </a>
+        </TD>
+      </TR>
+
+      <TR>
+        <TD><B>Test Results</B></TD>
+        <td>
+        <font color="#00A000">PASS: 2</font><br>
+        <font color="#FF0000"><B>FAIL: 0</b></font>
+        &nbsp;&nbsp;&nbsp; 
+        
+        <br>
+        Skipped: 0<br>
+        Not apply: 0<br>
+        <b>Total: 2</b><br>
+        </td>
+      </TR>
+      <TR>
+
+        <TD COLSPAN="2">
+            <B>Test Notes</B><BR>
+            &nbsp;&nbsp;&nbsp;This report has been generated with QualiTI Version 6.20 - the XDAIS compliance and performance test suite. <BR><BR>
+
+
+        </TD>
+      </TR>
+
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rule 20">XDAIS Rule 20: must declare worst-case stack requirements</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All algorithms must characterize their worst-case stack space memory requirements (including alignment).</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Performance test completed. Calculated Worst Case Stack is 1280 bytes.<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rule 20">XDAIS Rule 20 execution log</a><br>
+        </TD>
+      <TR>
+        <TD COLSPAN="2">
+          <b><a name="XDAIS Rules 21, 22">XDAIS Rules 21, 22: must characterize static data & program memory requirements</a></b><br><br>
+
+          <B>Report: </B> <font color="#008080"><B>Passed</B></font><BR><BR>
+
+          <B>Test Description: </B><P CLASS="indented">All algorithms must characterize their static data & program memory requirements</p>
+          <B>Test Status Details: </B>
+          <P CLASS="indented">Performance test completed. CODE, DATA & UDATA sections characterized<BR></p>
+          <B>Test Execution Log: </b><a href="#log XDAIS Rules 21, 22">XDAIS Rules 21, 22 execution log</a><br>
+        </TD>
+      </TR>
+</TABLE>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<hr>
+<a name="log XDAIS Rules 8, 9 and 10">Test execution log for <b>XDAIS Rules 8, 9 and 10:</b></a><br>
+<PRE>
+Running test 'XDAIS Rules 8, 9 and 10'
+Extracting names of global symbols defined by the algorithm...
+ Running command:&gt; "C:\CCStudio_v3.3\C6000\cgtools\bin\nm6x.exe" -g C:\release_packages\REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00\100_V_MPEG2_D_02_00\C64XPLUS_MP_001\Lib\.\mpeg2vdec_ti.l64P | "C:\xdais_7_00_00_04\packages\ti\xdais\qualiti\bin\grep\grep.exe" " [TBCU] "
+                   (from "C:\Documents and Settings\x0106955\Local Settings\Temp\qualiti_runcmd_62020.sh"
+  0001fc78 B _IMPEG2VDEC_PARAMS
+  0001fc0c B _MPEG2VDEC_TI_IALG
+  0001fc94 B _MPEG2VDEC_TI_IDMA3
+  0001fc0c B _MPEG2VDEC_TI_IMPEG2VDEC
+  00021780 T _MPEG2VDEC_TI_activate
+  0001ec40 T _MPEG2VDEC_TI_alloc
+  000172e0 T _MPEG2VDEC_TI_control
+  000217a0 T _MPEG2VDEC_TI_deactivate
+  000115a0 T _MPEG2VDEC_TI_decode
+  000217c0 T _MPEG2VDEC_TI_exit
+  0001f3e0 T _MPEG2VDEC_TI_free
+  000217e0 T _MPEG2VDEC_TI_init
+  0001fce0 T _MPEG2VDEC_TI_initObj
+  00021820 T _MPEG2VDEC_TI_numAlloc
+  00000000 U __remi
+  00000000 U _memcpy
+Verifying that all global symbols are named XXX_TI_xxx ...
+and that no blacklisted external references are made
+Found symbol 'IMPEG2VDEC_PARAMS', that's okay.
+
+</PRE>
+<a href="#XDAIS Rules 8, 9 and 10">back</a>
+<hr>
+<a name="log XDAIS Rule 12">Test execution log for <b>XDAIS Rule 12:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 12'
+Extracting names of global BSS data symbols...
+ Running command:&gt; "C:\CCStudio_v3.3\C6000\cgtools\bin\nm6x.exe" -g C:\release_packages\REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00\100_V_MPEG2_D_02_00\C64XPLUS_MP_001\Lib\.\mpeg2vdec_ti.l64P | "C:\xdais_7_00_00_04\packages\ti\xdais\qualiti\bin\grep\grep.exe" " [BD] "
+                   (from "C:\Documents and Settings\x0106955\Local Settings\Temp\qualiti_runcmd_62021.sh"
+  0001fc78 B _IMPEG2VDEC_PARAMS
+  0001fc0c B _MPEG2VDEC_TI_IALG
+  0001fc94 B _MPEG2VDEC_TI_IDMA3
+  0001fc0c B _MPEG2VDEC_TI_IMPEG2VDEC
+Verifying that objects 'MPEG2VDEC_TI_IALG' and 'MPEG2VDEC_TI_IMPEG2VDEC' are defined...
+Data object 'MPEG2VDEC_TI_IALG' found.
+Data object 'MPEG2VDEC_TI_IMPEG2VDEC' found.
+
+</PRE>
+<a href="#XDAIS Rule 12">back</a>
+<hr>
+<a name="log XDAIS Rule 13+">Test execution log for <b>XDAIS Rule 13+:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 13+'
+Extracting names of all sections in which all algorithms' symbols are...
+ Running command:&gt; "C:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header C:\release_packages\REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00\100_V_MPEG2_D_02_00\C64XPLUS_MP_001\Lib\.\mpeg2vdec_ti.l64P | "C:\cg_xml\bin\sectti.exe" --csv
+                   (from "C:\Documents and Settings\x0106955\Local Settings\Temp\qualiti_runcmd_62022.sh"
+  Reading from stdin ...
+  Library,Filename,Section,Type,Size
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.const:MPEG2VDEC_TI_dSect1,DATA,16005
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.far:MPEG2VDEC_TI_uSect1,UDATA,363
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_cSect1,CODE,55008
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_doIdct,CODE,224
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.cinit,DATA,2995
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_intraVldRleDqMpeg1,CODE,608
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_interVldRleDqMpeg1,CODE,1216
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getDCchrom,CODE,384
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getDClum,CODE,384
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_getintrablock,CODE,256
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_doDecBlkMpeg1,CODE,224
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.switch,DATA,168
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_macroblock_modes_generic,CODE,480
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_begin_bbox,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_end_bbox,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_TransferClubbedYUVBuffer,CODE,2720
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_getMBs_mpeg2_with_concealment_mv,CODE,6144
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_getpicture,CODE,2208
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_macroblock_modes_mpg1,CODE,512
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getMV,CODE,768
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getDMV,CODE,256
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_motionVector,CODE,704
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_getMBs_mpeg1,CODE,8224
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocomOnePicLower,CODE,160
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocomLower,CODE,448
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getPMBtype,CODE,64
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getIMBtype,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getDMBtype,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getBMBtype,CODE,64
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_exit:_MPEG2VDEC_TI_exit,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_reset:_MPEG2VDEC_TI_reset,CODE,320
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_numAlloc:_MPEG2VDEC_TI_numAlloc,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_mem_init:_MPEG2VDEC_TI_mem_init,CODE,864
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_moved:_MPEG2VDEC_TI_moved,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_initObj:_MPEG2VDEC_TI_initObj,CODE,320
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_alloc:_MPEG2VDEC_TI_alloc,CODE,512
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_free:_MPEG2VDEC_TI_free,CODE,416
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_deactivate:_MPEG2VDEC_TI_deactivate,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_activate:_MPEG2VDEC_TI_activate,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_zeroOutArgs,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_getFlushframe,CODE,928
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_error,CODE,256
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_endian_swap_buffer,CODE,224
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_decode:_MPEG2VDEC_TI_decode,CODE,9504
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_control:_MPEG2VDEC_TI_control,CODE,4032
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_init:_MPEG2VDEC_TI_init,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_Debug_ref_dump_Y,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_Debug_ref_dump_UV,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_Debug_MC_dump_Y,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_Debug_MC_dump_UV,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_skip_mb8,CODE,96
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_skip_mb,CODE,96
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hsvs8,CODE,576
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hsvs,CODE,576
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hsvn8,CODE,256
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hsvn,CODE,224
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hnvs8,CODE,736
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hnvs,CODE,384
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hnvn8,CODE,1792
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hnvn,CODE,224
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getDMV_f,CODE,96
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_motionVector_f,CODE,800
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_calcMV,CODE,160
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:dmaInit:_MPEG2VDEC_TI_dmaInit,CODE,64
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:dmaGetChannels:_MPEG2VDEC_TI_dmaGetChannels,CODE,160
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:dmaGetChannelCnt:_MPEG2VDEC_TI_dmaGetChannelCnt,CODE,32
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:dmaChangeChannels:_MPEG2VDEC_TI_dmaChangeChannels,CODE,64
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_startpara,CODE,1472
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_post_seq_header_initializations,CODE,1120
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_new_sequence_initializations,CODE,288
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_initbits,CODE,64
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_InitBitstreamPointers,CODE,64
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_wait_id,CODE,224
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_wait,CODE,256
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_open,CODE,352
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D2D_sep_linked,CODE,608
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D2D_sep,CODE,256
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D2D_linked_int_tcc,CODE,608
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D2D_linked,CODE,576
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D2D,CODE,256
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D1D_linked_int_tcc,CODE,608
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D1D_linked,CODE,608
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D1D,CODE,256
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy1D2D_linked_int_tcc,CODE,608
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy1D2D_linked,CODE,608
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy1D2D,CODE,256
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy1D1D_linked_int_tcc,CODE,608
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy1D1D_linked,CODE,544
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy1D1D,CODE,256
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_close,CODE,160
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_clear_stats,CODE,96
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_busy,CODE,96
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_calc_DMV,CODE,288
+  C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_yuvtobt835,CODE,1568
+Verifying that IALG functions are in separate sections,
+i.e. that there exist sections that match regexp /\.text:.*[aA]lloc.*/,
+and also that there are no non-standard sections.
+
+</PRE>
+<a href="#XDAIS Rule 13+">back</a>
+<hr>
+<a name="log XDAIS Rule 15">Test execution log for <b>XDAIS Rule 15:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 15'
+Verifying that the extension for library ".\mpeg2vdec_ti.l64P" is ".l64P"
+Verifying that the file ".\mpeg2vdec_ti.l64P" is really a library, and not a partially linked object file or something like that.
+ Running command:&gt; "C:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header C:\release_packages\REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00\100_V_MPEG2_D_02_00\C64XPLUS_MP_001\Lib\.\mpeg2vdec_ti.l64P | "C:\xdais_7_00_00_04\packages\ti\xdais\qualiti\bin\grep\grep.exe" "&lt;archive&gt;"
+                   (from "C:\Documents and Settings\x0106955\Local Settings\Temp\qualiti_runcmd_62023.sh"
+  &lt;archive&gt;
+
+</PRE>
+<a href="#XDAIS Rule 15">back</a>
+<hr>
+<a name="log XDAIS Rule 20">Test execution log for <b>XDAIS Rule 20:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 20'
+Using call_graph on ofd output to find out worst case stack...
+ Running command:&gt; "C:\cg_xml\utils\ofd6x.exe" -xg --xml_indent=0 --obj_display=none,header,optheader,symbols --dwarf_display=none,dinfo  C:\release_packages\REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00\100_V_MPEG2_D_02_00\C64XPLUS_MP_001\Lib\.\mpeg2vdec_ti.l64P | "C:\cg_xml\bin\call_graph.exe" --stack_max
+                   (from "C:\Documents and Settings\x0106955\Local Settings\Temp\qualiti_runcmd_62024.sh"
+  Reading from stdin ...
+  The function which uses the most stack also makes no direct function calls.
+  The max stack size is almost certainly too low.  Please view the online
+  documentation with the command 'perldoc call_graph.pl' for possible
+  explanations.
+  _MPEG2VDEC_TI_getMBs_mpeg1 : wcs = 1280
+Extracting worst case stack from a stdout line that ends with ': wcs = &lt;num&gt;'
+Calculated worst case stack is 1280 bytes.
+
+</PRE>
+<a href="#XDAIS Rule 20">back</a>
+<hr>
+<a name="log XDAIS Rules 21, 22">Test execution log for <b>XDAIS Rules 21, 22:</b></a><br>
+<PRE>
+Running test 'XDAIS Rules 21, 22'
+Using sectti on ofd output to find static data & program memory requirements...
+ Running command:&gt; "C:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header C:\release_packages\REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00\100_V_MPEG2_D_02_00\C64XPLUS_MP_001\Lib\.\mpeg2vdec_ti.l64P | "C:\cg_xml\bin\sectti.exe"
+                   (from "C:\Documents and Settings\x0106955\Local Settings\Temp\qualiti_runcmd_62025.sh"
+  Reading from stdin ...
+  ====================================================================
+  REPORT FOR LIBRARY: C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P
+  ====================================================================
+  
+  
+  ************************************************************
+  REPORT FOR FILE: mpeg2vdec_ti_plink.o64P
+  ************************************************************
+                            Name : Size (dec)  Size (hex)  Type
+  ------------------------------ : ----------  ----------  ----
+      .const:MPEG2VDEC_TI_dSect1 :      16005  0x00003e85  DATA 
+        .far:MPEG2VDEC_TI_uSect1 :        363  0x0000016b  UDATA
+       .text:MPEG2VDEC_TI_cSect1 :      55008  0x0000d6e0  CODE 
+      .text:_MPEG2VDEC_TI_doIdct :        224  0x000000e0  CODE 
+                          .cinit :       2995  0x00000bb3  DATA 
+  .text:_MPEG2VDEC_TI_intraVldRleDqMpeg1 :        608  0x00000260  CODE 
+  .text:_MPEG2VDEC_TI_interVldRleDqMpeg1 :       1216  0x000004c0  CODE 
+               .text:_getDCchrom :        384  0x00000180  CODE 
+                 .text:_getDClum :        384  0x00000180  CODE 
+  .text:_MPEG2VDEC_TI_getintrablock :        256  0x00000100  CODE 
+  .text:_MPEG2VDEC_TI_doDecBlkMpeg1 :        224  0x000000e0  CODE 
+                         .switch :        168  0x000000a8  DATA 
+  .text:_MPEG2VDEC_TI_macroblock_modes_generic :        480  0x000001e0  CODE 
+  .text:_MPEG2VDEC_TI_begin_bbox :         32  0x00000020  CODE 
+    .text:_MPEG2VDEC_TI_end_bbox :         32  0x00000020  CODE 
+  .text:_TransferClubbedYUVBuffer :       2720  0x00000aa0  CODE 
+  .text:_MPEG2VDEC_TI_getMBs_mpeg2_with_concealment_mv :       6144  0x00001800  CODE 
+  .text:_MPEG2VDEC_TI_getpicture :       2208  0x000008a0  CODE 
+  .text:_MPEG2VDEC_TI_macroblock_modes_mpg1 :        512  0x00000200  CODE 
+                    .text:_getMV :        768  0x00000300  CODE 
+                   .text:_getDMV :        256  0x00000100  CODE 
+  .text:_MPEG2VDEC_TI_motionVector :        704  0x000002c0  CODE 
+  .text:_MPEG2VDEC_TI_getMBs_mpeg1 :       8224  0x00002020  CODE 
+  .text:_MPEG2VDEC_TI_mocomOnePicLower :        160  0x000000a0  CODE 
+  .text:_MPEG2VDEC_TI_mocomLower :        448  0x000001c0  CODE 
+               .text:_getPMBtype :         64  0x00000040  CODE 
+               .text:_getIMBtype :         32  0x00000020  CODE 
+               .text:_getDMBtype :         32  0x00000020  CODE 
+               .text:_getBMBtype :         64  0x00000040  CODE 
+  .text:MPEG2VDEC_TI_exit:_MPEG2VDEC_TI_exit :         32  0x00000020  CODE 
+  .text:MPEG2VDEC_TI_reset:_MPEG2VDEC_TI_reset :        320  0x00000140  CODE 
+  .text:MPEG2VDEC_TI_numAlloc:_MPEG2VDEC_TI_numAlloc :         32  0x00000020  CODE 
+  .text:MPEG2VDEC_TI_mem_init:_MPEG2VDEC_TI_mem_init :        864  0x00000360  CODE 
+  .text:MPEG2VDEC_TI_moved:_MPEG2VDEC_TI_moved :         32  0x00000020  CODE 
+  .text:MPEG2VDEC_TI_initObj:_MPEG2VDEC_TI_initObj :        320  0x00000140  CODE 
+  .text:MPEG2VDEC_TI_alloc:_MPEG2VDEC_TI_alloc :        512  0x00000200  CODE 
+  .text:MPEG2VDEC_TI_free:_MPEG2VDEC_TI_free :        416  0x000001a0  CODE 
+  .text:MPEG2VDEC_TI_deactivate:_MPEG2VDEC_TI_deactivate :         32  0x00000020  CODE 
+  .text:MPEG2VDEC_TI_activate:_MPEG2VDEC_TI_activate :         32  0x00000020  CODE 
+  .text:_MPEG2VDEC_TI_zeroOutArgs :         32  0x00000020  CODE 
+  .text:_MPEG2VDEC_TI_getFlushframe :        928  0x000003a0  CODE 
+       .text:_MPEG2VDEC_TI_error :        256  0x00000100  CODE 
+  .text:_MPEG2VDEC_TI_endian_swap_buffer :        224  0x000000e0  CODE 
+  .text:MPEG2VDEC_TI_decode:_MPEG2VDEC_TI_decode :       9504  0x00002520  CODE 
+  .text:MPEG2VDEC_TI_control:_MPEG2VDEC_TI_control :       4032  0x00000fc0  CODE 
+  .text:MPEG2VDEC_TI_init:_MPEG2VDEC_TI_init :         32  0x00000020  CODE 
+  .text:_MPEG2VDEC_TI_Debug_ref_dump_Y :         32  0x00000020  CODE 
+  .text:_MPEG2VDEC_TI_Debug_ref_dump_UV :         32  0x00000020  CODE 
+  .text:_MPEG2VDEC_TI_Debug_MC_dump_Y :         32  0x00000020  CODE 
+  .text:_MPEG2VDEC_TI_Debug_MC_dump_UV :         32  0x00000020  CODE 
+  .text:_MPEG2VDEC_TI_mocom_p_skip_mb8 :         96  0x00000060  CODE 
+  .text:_MPEG2VDEC_TI_mocom_p_skip_mb :         96  0x00000060  CODE 
+  .text:_MPEG2VDEC_TI_mocom_p_hsvs8 :        576  0x00000240  CODE 
+  .text:_MPEG2VDEC_TI_mocom_p_hsvs :        576  0x00000240  CODE 
+  .text:_MPEG2VDEC_TI_mocom_p_hsvn8 :        256  0x00000100  CODE 
+  .text:_MPEG2VDEC_TI_mocom_p_hsvn :        224  0x000000e0  CODE 
+  .text:_MPEG2VDEC_TI_mocom_p_hnvs8 :        736  0x000002e0  CODE 
+  .text:_MPEG2VDEC_TI_mocom_p_hnvs :        384  0x00000180  CODE 
+  .text:_MPEG2VDEC_TI_mocom_p_hnvn8 :       1792  0x00000700  CODE 
+  .text:_MPEG2VDEC_TI_mocom_p_hnvn :        224  0x000000e0  CODE 
+                 .text:_getDMV_f :         96  0x00000060  CODE 
+  .text:_MPEG2VDEC_TI_motionVector_f :        800  0x00000320  CODE 
+      .text:_MPEG2VDEC_TI_calcMV :        160  0x000000a0  CODE 
+  .text:dmaInit:_MPEG2VDEC_TI_dmaInit :         64  0x00000040  CODE 
+  .text:dmaGetChannels:_MPEG2VDEC_TI_dmaGetChannels :        160  0x000000a0  CODE 
+  .text:dmaGetChannelCnt:_MPEG2VDEC_TI_dmaGetChannelCnt :         32  0x00000020  CODE 
+  .text:dmaChangeChannels:_MPEG2VDEC_TI_dmaChangeChannels :         64  0x00000040  CODE 
+   .text:_MPEG2VDEC_TI_startpara :       1472  0x000005c0  CODE 
+  .text:_MPEG2VDEC_TI_post_seq_header_initializations :       1120  0x00000460  CODE 
+  .text:_MPEG2VDEC_TI_new_sequence_initializations :        288  0x00000120  CODE 
+    .text:_MPEG2VDEC_TI_initbits :         64  0x00000040  CODE 
+  .text:_MPEG2VDEC_TI_InitBitstreamPointers :         64  0x00000040  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_wait_id :        224  0x000000e0  CODE 
+   .text:_MPEG2VDEC_TI_QDMA_wait :        256  0x00000100  CODE 
+   .text:_MPEG2VDEC_TI_QDMA_open :        352  0x00000160  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy2D2D_sep_linked :        608  0x00000260  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy2D2D_sep :        256  0x00000100  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy2D2D_linked_int_tcc :        608  0x00000260  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy2D2D_linked :        576  0x00000240  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy2D2D :        256  0x00000100  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy2D1D_linked_int_tcc :        608  0x00000260  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy2D1D_linked :        608  0x00000260  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy2D1D :        256  0x00000100  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy1D2D_linked_int_tcc :        608  0x00000260  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy1D2D_linked :        608  0x00000260  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy1D2D :        256  0x00000100  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy1D1D_linked_int_tcc :        608  0x00000260  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy1D1D_linked :        544  0x00000220  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_copy1D1D :        256  0x00000100  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_close :        160  0x000000a0  CODE 
+  .text:_MPEG2VDEC_TI_QDMA_clear_stats :         96  0x00000060  CODE 
+   .text:_MPEG2VDEC_TI_QDMA_busy :         96  0x00000060  CODE 
+                 .text:_calc_DMV :        288  0x00000120  CODE 
+  .text:_MPEG2VDEC_TI_yuvtobt835 :       1568  0x00000620  CODE 
+  
+  ------------------------------------------------------------
+  Totals by section type
+  ------------------------------------------------------------
+    Uninitialized Data :        363  0x0000016b
+      Initialized Data :      19168  0x00004ae0
+                  Code :     117952  0x0001ccc0
+
+</PRE>
+<a href="#XDAIS Rules 21, 22">back</a>
+<hr>
+<a name="log XDAIS Rule 25">Test execution log for <b>XDAIS Rule 25:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 25'
+Using ofd output to parse for endianness attribute...
+ Running command:&gt; "C:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,header C:\release_packages\REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00\100_V_MPEG2_D_02_00\C64XPLUS_MP_001\Lib\.\mpeg2vdec_ti.l64P | "C:\xdais_7_00_00_04\packages\ti\xdais\qualiti\bin\grep\grep.exe" "&lt;endian&gt;"
+                   (from "C:\Documents and Settings\x0106955\Local Settings\Temp\qualiti_runcmd_62026.sh"
+  &lt;endian&gt;little&lt;/endian&gt;
+
+</PRE>
+<a href="#XDAIS Rule 25">back</a>
+<hr>
+<a name="log XDAIS Rule 26">Test execution log for <b>XDAIS Rule 26:</b></a><br>
+<PRE>
+Running test 'XDAIS Rule 26'
+Extracting names of all used sections to see if there is a '.bss' in there.
+[Using output generated by the command from test 'XDAIS Rule 13+"]:
+Running command:&gt; "C:\cg_xml\utils\ofd6x.exe" -x --xml_indent=0 --obj_display=none,sections,header C:\release_packages\REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00\100_V_MPEG2_D_02_00\C64XPLUS_MP_001\Lib\.\mpeg2vdec_ti.l64P | "C:\cg_xml\bin\sectti.exe" --csv
+                  (from "C:\Documents and Settings\x0106955\Local Settings\Temp\qualiti_runcmd_62022.sh"
+Reading from stdin ...
+Library,Filename,Section,Type,Size
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.const:MPEG2VDEC_TI_dSect1,DATA,16005
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.far:MPEG2VDEC_TI_uSect1,UDATA,363
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_cSect1,CODE,55008
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_doIdct,CODE,224
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.cinit,DATA,2995
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_intraVldRleDqMpeg1,CODE,608
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_interVldRleDqMpeg1,CODE,1216
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getDCchrom,CODE,384
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getDClum,CODE,384
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_getintrablock,CODE,256
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_doDecBlkMpeg1,CODE,224
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.switch,DATA,168
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_macroblock_modes_generic,CODE,480
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_begin_bbox,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_end_bbox,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_TransferClubbedYUVBuffer,CODE,2720
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_getMBs_mpeg2_with_concealment_mv,CODE,6144
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_getpicture,CODE,2208
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_macroblock_modes_mpg1,CODE,512
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getMV,CODE,768
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getDMV,CODE,256
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_motionVector,CODE,704
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_getMBs_mpeg1,CODE,8224
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocomOnePicLower,CODE,160
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocomLower,CODE,448
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getPMBtype,CODE,64
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getIMBtype,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getDMBtype,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getBMBtype,CODE,64
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_exit:_MPEG2VDEC_TI_exit,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_reset:_MPEG2VDEC_TI_reset,CODE,320
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_numAlloc:_MPEG2VDEC_TI_numAlloc,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_mem_init:_MPEG2VDEC_TI_mem_init,CODE,864
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_moved:_MPEG2VDEC_TI_moved,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_initObj:_MPEG2VDEC_TI_initObj,CODE,320
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_alloc:_MPEG2VDEC_TI_alloc,CODE,512
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_free:_MPEG2VDEC_TI_free,CODE,416
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_deactivate:_MPEG2VDEC_TI_deactivate,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_activate:_MPEG2VDEC_TI_activate,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_zeroOutArgs,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_getFlushframe,CODE,928
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_error,CODE,256
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_endian_swap_buffer,CODE,224
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_decode:_MPEG2VDEC_TI_decode,CODE,9504
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_control:_MPEG2VDEC_TI_control,CODE,4032
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:MPEG2VDEC_TI_init:_MPEG2VDEC_TI_init,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_Debug_ref_dump_Y,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_Debug_ref_dump_UV,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_Debug_MC_dump_Y,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_Debug_MC_dump_UV,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_skip_mb8,CODE,96
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_skip_mb,CODE,96
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hsvs8,CODE,576
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hsvs,CODE,576
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hsvn8,CODE,256
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hsvn,CODE,224
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hnvs8,CODE,736
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hnvs,CODE,384
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hnvn8,CODE,1792
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_mocom_p_hnvn,CODE,224
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_getDMV_f,CODE,96
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_motionVector_f,CODE,800
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_calcMV,CODE,160
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:dmaInit:_MPEG2VDEC_TI_dmaInit,CODE,64
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:dmaGetChannels:_MPEG2VDEC_TI_dmaGetChannels,CODE,160
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:dmaGetChannelCnt:_MPEG2VDEC_TI_dmaGetChannelCnt,CODE,32
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:dmaChangeChannels:_MPEG2VDEC_TI_dmaChangeChannels,CODE,64
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_startpara,CODE,1472
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_post_seq_header_initializations,CODE,1120
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_new_sequence_initializations,CODE,288
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_initbits,CODE,64
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_InitBitstreamPointers,CODE,64
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_wait_id,CODE,224
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_wait,CODE,256
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_open,CODE,352
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D2D_sep_linked,CODE,608
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D2D_sep,CODE,256
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D2D_linked_int_tcc,CODE,608
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D2D_linked,CODE,576
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D2D,CODE,256
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D1D_linked_int_tcc,CODE,608
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D1D_linked,CODE,608
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy2D1D,CODE,256
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy1D2D_linked_int_tcc,CODE,608
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy1D2D_linked,CODE,608
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy1D2D,CODE,256
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy1D1D_linked_int_tcc,CODE,608
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy1D1D_linked,CODE,544
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_copy1D1D,CODE,256
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_close,CODE,160
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_clear_stats,CODE,96
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_QDMA_busy,CODE,96
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_calc_DMV,CODE,288
+C:/release_packages/REL.100.V.MPEG2.D.MP.C64XPLUS.02.00.02.00/100_V_MPEG2_D_02_00/C64XPLUS_MP_001/Lib/./mpeg2vdec_ti.l64P,mpeg2vdec_ti_plink.o64P,.text:_MPEG2VDEC_TI_yuvtobt835,CODE,1568
+[end of reused output]
+
+Verifying that there are no '.bss' sections in the output
+
+</PRE>
+<a href="#XDAIS Rule 26">back</a>
+<hr>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+</BODY>
+</HTML>
+
+
+
+

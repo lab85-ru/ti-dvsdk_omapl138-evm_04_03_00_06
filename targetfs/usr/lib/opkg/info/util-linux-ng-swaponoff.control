@@ -1,0 +1,14 @@
+Package: util-linux-ng-swaponoff
+Version: 2.18-r36.0.6
+Description: Util-linux-ng is a suite of essential utilities for any Linux system.
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPL
+Architecture: armv5te
+OE: util-linux-ng
+Homepage: unknown
+Build: install/d0bd439
+Depends: libblkid1 (>= 2.18), libuuid1 (>= 2.18), libc6 (>= 2.9)
+Provides: util-linux-swaponoff
+Source: http://kernel.org/pub/linux/utils/util-linux-ng/v2.18/util-linux-ng-2.18.tar.bz2;name=archive file://uclibc-compile.patch file://util-linux-ng-replace-siginterrupt.patch file://fdiskbsdlabel.h-nios2.patch file://uclibc-nolargefile.patch

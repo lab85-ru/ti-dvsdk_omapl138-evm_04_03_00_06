@@ -1,0 +1,14 @@
+Package: task-arago-console
+Version: 1.0-r15.6
+Description: Extended task to get more basic and console apps
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: all
+OE: task-arago-console
+Homepage: unknown
+Build: install/d0bd439
+Depends: alsa-conf, alsa-conf-base, alsa-server, alsa-utils, alsa-utils-aconnect, alsa-utils-alsaconf, alsa-utils-alsactl, alsa-utils-alsamixer, alsa-utils-amixer, alsa-utils-iecset, alsa-utils-midi, alsa-utils-speakertest, alsa-state, tslib-conf, tslib-calibrate, tslib-tests, ncurses, ncurses-terminfo, ncurses-tools, e2fsprogs, e2fsprogs-e2fsck, e2fsprogs-mke2fs, dosfstools, util-linux-ng-fdisk, fbset, usbutils, i2c-tools, iproute2, libz1, libpng12-0, libjpeg8, libjpeg-tools, libfreetype6, thttpd, cppstub
+Recommends: kernel-modules
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-console.bb

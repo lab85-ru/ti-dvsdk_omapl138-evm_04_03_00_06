@@ -1,0 +1,9 @@
+/lib/modules/2.6.37/updates/drivers/net/wireless/wl1251/wl1251_sdio.ko
+/lib/modules/2.6.37/updates/compat/compat.ko
+/lib/modules/2.6.37/updates/drivers/net/wireless/wl1251/wl1251.ko
+/lib/modules/2.6.37/updates/net/wireless/cfg80211.ko
+/lib/modules/2.6.37/updates/drivers/net/wireless/wl12xx/wl12xx.ko
+/lib/modules/2.6.37/updates/drivers/net/wireless/wl12xx/wl12xx_sdio.ko
+/lib/modules/2.6.37/updates/drivers/net/wireless/wl1251/wl1251_spi.ko
+/lib/modules/2.6.37/updates/drivers/net/wireless/wl12xx/wl12xx_spi.ko
+/lib/modules/2.6.37/updates/net/mac80211/mac80211.ko

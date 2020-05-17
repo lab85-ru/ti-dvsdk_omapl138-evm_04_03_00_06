@@ -1,0 +1,2 @@
+	update-alternatives --install /sbin/swapoff swapoff swapon.util-linux-ng 100
+	update-alternatives --install /sbin/swapon swapon swapon.util-linux-ng 100

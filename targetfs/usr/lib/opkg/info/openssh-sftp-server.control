@@ -1,0 +1,13 @@
+Package: openssh-sftp-server
+Version: 5.6p1-r9.0.6
+Description: Secure rlogin/rsh/rcp/telnet replacement (OpenSSH) Ssh (Secure Shell) is a program for logging into a remote machine and for executing commands on a remote machine. It provides secure encrypted communications between two untrusted hosts over an insecure network.  X11 connections and arbitrary TCP/IP ports can also be forwarded over the secure channel. It is intended as a replacement for rlogin, rsh and rcp, and can be used to provide applications with a secure communication channel.
+Section: console/network
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: armv5te
+OE: openssh
+Homepage: http://www.openssh.org/
+Build: install/d0bd439
+Depends: libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Source: ftp://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-5.6p1.tar.gz file://sshd_config file://ssh_config file://init file://openssh-5.2-sftp-server-nolibcrypto.patch

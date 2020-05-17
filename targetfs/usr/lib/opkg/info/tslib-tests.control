@@ -1,0 +1,13 @@
+Package: tslib-tests
+Version: 1.0+gitr0+5f48c7b878862b67ba61-r28.5.6
+Description: tslib is a plugin-based flexible touchscreen access library.
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: LGPLv2
+Architecture: armv5te
+OE: tslib
+Homepage: http://tslib.berlios.de/
+Build: install/d0bd439
+Depends: libts-1.0-0 (>= 1.0+gitr0+5f48c7b878862b67ba61), libc6 (>= 2.9)
+Source: git://github.com/kergoth/tslib.git;protocol=git file://0001-relax-EV_VERSION-check-fail-only-if-version-of-runni.patch file://ts.conf file://ts.conf-collie-2.4 file://ts.conf-simpad-2.4 file://tslib.sh

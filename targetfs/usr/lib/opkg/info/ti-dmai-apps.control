@@ -1,0 +1,13 @@
+Package: ti-dmai-apps
+Version: 1:2_20_00_15-r2.6
+Description: Davinci Multimedia Application Interface (DMAI) for TI ARM/DSP processors
+Section: multimedia
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: BSD
+Architecture: da850-omapl138-evm
+OE: ti-dmai
+Homepage: https://gforge.ti.com/gf/project/dmai/
+Build: install/d0bd439
+Depends: ti-codecs-omapl138-server, ti-cmem-module, ti-dsplink-module, ti-dm365mm-module
+Source: svn://gforge.ti.com/svn/dmai/;module=tags/TAG_2_20_00_15;proto=https;user=anonymous;pswd='' file://doxygen_templates.tar.gz file://arago-tdox file://0001-dmai-porting-to-kernel-2.6.37.patch file://add-media-controller-support-dev-node-change.patch

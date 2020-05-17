@@ -1,0 +1,12 @@
+Package: linux-firmware-wl12xx
+Version: 0.r3m1rc2-r1+gitrc2e530abf58116fbc4eb3baedeb5b3ed092b2c8a-arago1.6
+Description: Firmware files for use with Linux kernel
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: TI TSPA
+Architecture: all
+OE: linux-firmware
+Homepage: unknown
+Build: install/d0bd439
+Source: https://gforge.ti.com/gf/download/frsrelease/557/4631/ti-linux-firmware-wl12xx-r3-m1-rc2.tar.gz

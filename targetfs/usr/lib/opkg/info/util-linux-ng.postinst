@@ -1,0 +1,35 @@
+	update-alternatives --install /bin/dmesg dmesg dmesg.util-linux-ng 100
+	update-alternatives --install /bin/kill kill kill.util-linux-ng 100
+	update-alternatives --install /bin/more more more.util-linux-ng 100
+	update-alternatives --install /sbin/mkswap mkswap mkswap.util-linux-ng 100
+	test -x /sbin/pivot_root.util-linux-ng && \
+	update-alternatives --install /sbin/pivot_root pivot_root pivot_root.util-linux-ng 100
+	update-alternatives --install /sbin/sln sln sln.util-linux-ng 100
+	update-alternatives --install /sbin/mkfs.minix mkfs.minix mkfs.minix.util-linux-ng 100
+	update-alternatives --install /sbin/fsck.minix fsck.minix fsck.minix.util-linux-ng 100
+	update-alternatives --install /usr/bin/hexdump hexdump hexdump.util-linux-ng 100
+	update-alternatives --install /usr/bin/last last last.util-linux-ng 100
+	update-alternatives --install /usr/bin/logger logger logger.util-linux-ng 100
+	update-alternatives --install /usr/bin/mesg mesg mesg.util-linux-ng 100
+	update-alternatives --install /usr/bin/renice renice renice.util-linux-ng 100
+	update-alternatives --install /usr/bin/wall wall wall.util-linux-ng 100
+	update-alternatives --install /usr/bin/chfn chfn chfn.util-linux-ng 100
+	update-alternatives --install /usr/bin/newgrp newgrp newgrp.util-linux-ng 100
+	update-alternatives --install /usr/bin/chsh chsh chsh.util-linux-ng 100
+	update-alternatives --install /usr/bin/cal cal cal.util-linux-ng 100
+	update-alternatives --install /usr/bin/script script script.util-linux-ng 100
+	update-alternatives --install /usr/bin/flock flock flock.util-linux-ng 100
+	update-alternatives --install /bin/login login login.util-linux-ng 100
+	update-alternatives --install /sbin/vipw vipw vipw.util-linux-ng 100
+	update-alternatives --install /sbin/vigr vigr vigr.util-linux-ng 100
+	update-alternatives --install /sbin/blockdev blockdev blockdev.util-linux-ng 100
+	update-alternatives --install /usr/bin/setsid setsid setsid.util-linux-ng 100
+	update-alternatives --install /usr/bin/chrt chrt chrt.util-linux-ng 100
+	update-alternatives --install /sbin/uuidd uuidd uuidd.util-linux-ng 100
+
+	# There seems to be problem, atleast on nslu2, with these, until they are
+	# fixed the busybox ones have higher priority
+	update-alternatives --install /sbin/hwclock hwclock hwclock.util-linux-ng 10
+	update-alternatives --install /sbin/shutdown shutdown shutdown.util-linux-ng 10
+	update-alternatives --install /sbin/reboot reboot reboot.util-linux-ng 10
+	update-alternatives --install /sbin/halt halt halt.util-linux-ng 10

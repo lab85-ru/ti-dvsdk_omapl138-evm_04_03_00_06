@@ -1,0 +1,13 @@
+Package: alsa-server
+Version: 1.0.24.1-r0.6
+Description: Alsa sound library
+Section: libs/multimedia
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: LGPLv2.1
+Architecture: armv5te
+OE: alsa-lib
+Homepage: http://www.alsa-project.org
+Build: install/d0bd439
+Depends: libasound2 (>= 1.0.24.1), libc6 (>= 2.9)
+Source: ftp://ftp.alsa-project.org/pub/lib/alsa-lib-1.0.24.1.tar.bz2 file://fix-tstamp-declaration.patch file://fix_libmath.patch

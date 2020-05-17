@@ -1,0 +1,13 @@
+Package: libsm6
+Version: 1:1.2.0-r9.0.6
+Description: X11 Session management library
+Section: x11/libs
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT-X
+Architecture: armv5te
+OE: libsm
+Homepage: http://www.x.org
+Build: install/d0bd439
+Depends: libice6 (>= 1.0.7), libuuid1 (>= 2.18), libc6 (>= 2.9)
+Source: http://xorg.freedesktop.org/releases/individual/lib/libSM-1.2.0.tar.bz2;name=archive

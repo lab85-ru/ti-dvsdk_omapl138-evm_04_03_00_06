@@ -1,0 +1,3 @@
+/usr/bin/hexdump
+../../bin/busybox 50
+hexdump.util-linux-ng 100

@@ -1,0 +1,13 @@
+Package: bluez-hcidump
+Version: 1.42-r1.6
+Description: Linux Bluetooth Stack HCI Debugger Tool.
+Section: console
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: armv5te
+OE: bluez-hcidump
+Homepage: unknown
+Build: install/d0bd439
+Depends: bluez4 (>= 4.89), libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Source: http://bluez.sourceforge.net/download/bluez-hcidump-1.42.tar.gz

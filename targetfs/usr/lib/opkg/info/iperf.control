@@ -1,0 +1,13 @@
+Package: iperf
+Version: 2.0.4-r1.1.6
+Description: Iperf is a tool to measure maximum TCP bandwidth, allowing the tuning of various parameters and UDP characteristics
+Section: console/network
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: NewBSD
+Architecture: armv5te
+OE: iperf
+Homepage: http://dast.nlanr.net/Projects/Iperf/
+Build: install/d0bd439
+Depends: libstdc++6 (>= 4.3.3), libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Source: http://downloads.sourceforge.net/iperf/iperf-2.0.4.tar.gz file://000-Iperf_Fix-CPU-Usage.diff file://001-cast-to-max_size_t-instead-of-int.patch file://003-fix-hyphen-used-as-minus-sign.patch file://004-svn-r43-ro.patch file://005-iperf-die-on-bind-fail.patch file://006-iperf-die-on-connect-fail.patch file://007-iperf-reporter-deadlock.patch file://008-numofreport.patch file://009-delayloop.patch

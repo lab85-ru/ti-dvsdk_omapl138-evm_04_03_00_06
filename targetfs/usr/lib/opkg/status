@@ -1,0 +1,4422 @@
+Package: openssl-misc
+Version: 1.0.0d-r14.0.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: gst-plugin-mve
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libqt3supporte4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtsqle4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938118
+Auto-Installed: yes
+
+Package: busybox-mountall
+Version: 1.13.2-r42.4-arago3.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: pam-plugin-mail
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: module-init-tools-depmod
+Version: 3.12-r6.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: gst-plugin-asfmux
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstrtp-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugins-ugly-apps
+Version: 0.10.16-r11.1-arago2.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: qt4-embedded-linguist
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtxmle4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3), libz1 (>= 1.2.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: pam-plugin-filter
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: openssh-sftp-server
+Version: 5.6p1-r9.0.6
+Depends: libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: util-linux-ng-umount
+Version: 2.18-r36.0.6
+Depends: libblkid1 (>= 2.18), libuuid1 (>= 2.18), libc6 (>= 2.9)
+Provides: util-linux-umount
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libpam
+Version: 1.1.1-r2.6
+Depends: libc6 (>= 2.9)
+Recommends: libpam-meta, libpam-base-files
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-videoscale
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: gst-plugin-ximagesrc
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libz1 (>= 1.2.3), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libsm6 (>= 1.2.0), libuuid1 (>= 2.18), libice6 (>= 1.0.7), libx11-6 (>= 1.4.1), libxcb1 (>= 1.6), libpthread-stubs0 (>= 0.2), libxau6 (>= 1.0.6), libxdmcp6 (>= 1.1.0)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: busybox-syslog
+Version: 1.13.2-r42.4-arago3.6
+Depends: busybox
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Conffiles:
+ /etc/default/busybox-syslog a6ca0459d1639b4cad15efc04d6c2f93
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: pam-plugin-wheel
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-dvdsub
+Version: 0.10.16-r11.1-arago2.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-rtsp
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstinterfaces-0.10-0 (>= 0.10.30), libgstrtp-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstrtsp-0.10-0 (>= 0.10.30), libgstsdp-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libxdmcp6
+Version: 1:1.1.0-r9.0.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libgstfft-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: libc6
+Version: 2.9-r7.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: libgio-2.0-0
+Version: 2.24.1-r2.6
+Depends: libgobject-2.0-0 (>= 2.24.1), libgthread-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libgmodule-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: wl1271-bluetooth
+Version: 1.0-r57a.6
+Depends: kernel-2.6.37, update-modules, libopenobex1 (>= 1.5), bluez4 (>= 4.89), libc6 (>= 2.9)
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938111
+Auto-Installed: yes
+
+Package: opkg
+Version: 0.1.8+svnr609-r5.6
+Depends: libopkg0 (>= 0.1.8+svnr609), libc6 (>= 2.9)
+Provides: update-alternatives
+Replaces: opkg-nogpg, opkg-nogpg-nocurl
+Status: install user installed
+Architecture: armv5te
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: gst-plugin-gdp
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: iperf
+Version: 2.0.4-r1.1.6
+Depends: libstdc++6 (>= 4.3.3), libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624336
+Auto-Installed: yes
+
+Package: gst-plugin-app
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgstapp-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: kernel-2.6.37
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: ti-tisdk-loadmodule
+Version: 1.0-r3.6
+Depends: update-rc.d
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938118
+Auto-Installed: yes
+
+Package: libcom-err2
+Version: 1.41.14-r30.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: iw
+Version: 0.9.20-r3.6
+Depends: libnl-genl2 (>= 2.0), libnl2 (>= 2.0), libnl-nf2 (>= 2.0), libnl-route2 (>= 2.0), libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938109
+Auto-Installed: yes
+
+Package: ti-codecs-omapl138-server
+Version: 4_02_00_00-r57d.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938112
+Auto-Installed: yes
+
+Package: kernel-vmlinux
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: gst-plugin-mxf
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libgstrtp-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: libqtsqle4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938118
+Auto-Installed: yes
+
+Package: alsa-lib
+Version: 1.0.24.1-r0.6
+Depends: libasound2 (>= 1.0.24.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: gst-plugins-good-meta
+Version: 0.10.25-r11.0-arago4.6
+Depends: gst-plugins-good, gst-plugins-good-apps, gst-plugin-efence, gst-plugin-udp, gst-plugin-goom, gst-plugin-smpte, gst-plugin-png, gst-plugin-matroska, gst-plugin-auparse, gst-plugin-ossaudio, gst-plugin-goom2k1, gst-plugin-interleave, gst-plugin-level, gst-plugin-rtpmanager, gst-plugin-y4menc, gst-plugin-icydemux, gst-plugin-apetag, gst-plugin-replaygain, gst-plugin-multifile, gst-plugin-shapewipe, gst-plugin-wavparse, gst-plugin-effectv, gst-plugin-deinterlace, gst-plugin-multipart, gst-plugin-flxdec, gst-plugin-equalizer, gst-plugin-alpha, gst-plugin-navigationtest, gst-plugin-videomixer, gst-plugin-video4linux2, gst-plugin-avi, gst-plugin-id3demux, gst-plugin-debug, gst-plugin-autodetect, gst-plugin-videobox, gst-plugin-cutter, gst-plugin-videocrop, gst-plugin-jpeg, gst-plugin-ximagesrc, gst-plugin-videofilter, gst-plugin-rtsp, gst-plugin-audiofx, gst-plugin-wavenc, gst-plugin-spectrum, gst-plugin-qtdemux, gst-plugin-alphacolor, gst-plugin-alaw, gst-plugin-imagefreeze, gst-plugin-rtp, gst-plugin-flv, gst-plugin-oss4audio, gst-plugin-annodex, gst-plugin-mulaw
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: busybox
+Version: 1.13.2-r42.4-arago3.6
+Depends: busybox-mountall, update-rc.d, libc6 (>= 2.9)
+Recommends: libgcc1, libgcc1, busybox-syslog
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: qt4-embedded-designer
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtdesignercomponentse4 (>= 4.6.3), libqtdesignere4 (>= 4.6.3), libqtscripte4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938121
+Auto-Installed: yes
+
+Package: makedevs
+Version: 1.0.0-r10.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: tslib-conf
+Version: 1.0+gitr0+5f48c7b878862b67ba61-r28.5.6
+Provides: libts-0.0-conf
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugins-good
+Version: 0.10.25-r11.0-arago4.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: gst-plugin-videomixer
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), liborc-0.4-0 (>= 0.4.10), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libssl1.0.0
+Version: 1.0.0d-r14.0.6
+Depends: libcrypto1.0.0 (>= 1.0.0d), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: util-linux-ng-mountall
+Version: 2.18-r36.0.6
+Provides:
+Replaces: busybox-mountall
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: ti-codec-engine-examples
+Version: 2_26_02_11-r57a.6
+Depends: ti-cmem-module, ti-dsplink-module, libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938113
+Auto-Installed: yes
+
+Package: obexftp
+Version: 0.23-r1.6
+Depends: libopenobex1 (>= 1.5), libusb-0.1-4 (>= 0.1.3), libusb-1.0-0 (>= 1.0.8), libc6 (>= 2.9), bluez4 (>= 4.89)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938107
+Auto-Installed: yes
+
+Package: ussp-push
+Version: 0.11-r1.6
+Depends: libopenobex1 (>= 1.5), libusb-0.1-4 (>= 0.1.3), libusb-1.0-0 (>= 1.0.8), libc6 (>= 2.9), bluez4 (>= 4.89)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938107
+Auto-Installed: yes
+
+Package: linux-firmware-wl12xx
+Version: 0.r3m1rc2-r1+gitrc2e530abf58116fbc4eb3baedeb5b3ed092b2c8a-arago1.6
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938109
+Auto-Installed: yes
+
+Package: libice6
+Version: 1:1.0.7-r9.0.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libqtnetworke4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libz1 (>= 1.2.3), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938109
+Auto-Installed: yes
+
+Package: gst-plugin-frei0r
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgstvideo-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-faac
+Version: 0.10.20-r11.1-arago3.6
+Depends: libfaac0 (>= 1.24), libgstaudio-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-faad
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libfaad2 (>= 2.7), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: ti-linux-driver-examples-omapl
+Version: psp03.20.00.13-r3.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938107
+Auto-Installed: yes
+
+Package: gst-plugins-base-apps
+Version: 0.10.30-r11.0-arago4.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: libqtassistantcliente4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938118
+Auto-Installed: yes
+
+Package: gst-plugin-dccp
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libgcrypt11
+Version: 1.4.1-r0.6
+Depends: libgpg-error0 (>= 1.4), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938110
+Auto-Installed: yes
+
+Package: qt-embedded-widgets-demo
+Version: 1.2-r1.6
+Depends: libqtsvge4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Recommends: qt4-embedded-plugin-mousedriver-tslib
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: kernel-module-uio-pru
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: pam-plugin-group
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: util-linux-ng-readprofile
+Version: 2.18-r36.0.6
+Depends: libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides: util-linux-readprofile
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: pam-plugin-access
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libusb-0.1-4
+Version: 1:0.1.3-r0.6
+Depends: libusb-1.0-0 (>= 1.0.8), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-videocrop
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: alsa-states
+Version: 0.2.0-r23-arago1.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: openssl
+Version: 1.0.0d-r14.0.6
+Depends: libssl1.0.0 (>= 1.0.0d), libcrypto1.0.0 (>= 1.0.0d), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: ti-pru-sw-examples
+Version: 1.00.00-r1+svnr31.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: initscript-telnetd
+Version: 1.0-r2.6
+Depends: update-rc.d
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-liveadder
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: task-arago-console
+Version: 1.0-r15.6
+Depends: alsa-conf, alsa-conf-base, alsa-server, alsa-utils, alsa-utils-aconnect, alsa-utils-alsaconf, alsa-utils-alsactl, alsa-utils-alsamixer, alsa-utils-amixer, alsa-utils-iecset, alsa-utils-midi, alsa-utils-speakertest, alsa-state, tslib-conf, tslib-calibrate, tslib-tests, ncurses, ncurses-terminfo, ncurses-tools, e2fsprogs, e2fsprogs-e2fsck, e2fsprogs-mke2fs, dosfstools, util-linux-ng-fdisk, fbset, usbutils, i2c-tools, iproute2, libz1, libpng12-0, libjpeg8, libjpeg-tools, libfreetype6, thttpd, cppstub
+Recommends: kernel-modules
+Provides:
+Status: install user installed
+Architecture: all
+Installed-Time: 1324624335
+
+Package: gst-plugin-cog
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libpng12-0 (>= 1.2.44), libz1 (>= 1.2.3), liborc-0.4-0 (>= 0.4.10)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-asf
+Version: 0.10.16-r11.1-arago2.6
+Depends: libgstriff-0.10-0 (>= 0.10.30), libgstrtsp-0.10-0 (>= 0.10.30), libgstsdp-0.10-0 (>= 0.10.30), libgstrtp-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-hdvparse
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-videobox
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), liborc-0.4-0 (>= 0.4.10), libgstvideo-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: qt4-embedded-plugin-imageformat-jpeg
+Version: 4.6.3-r29.2-arago4.6
+Depends: libjpeg8 (>= 8b), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: libgstcdda-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: modutils-initscripts
+Version: 1.0-r3.6
+Depends: update-rc.d
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: gst-plugin-sndfile
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libsndfile1 (>= 1.0.24), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: util-linux-ng-mount
+Version: 2.18-r36.0.6
+Depends: libblkid1 (>= 2.18), libuuid1 (>= 2.18), libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides: util-linux-mount
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libgmodule-2.0-0
+Version: 2.24.1-r2.6
+Depends: libc6 (>= 2.9), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: task-arago-qte
+Version: 1.0-r8.6
+Depends: qt4-embedded, qt4-embedded-plugin-mousedriver-tslib, qt4-embedded-plugin-gfxdriver-gfxtransformed
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1468938118
+Auto-Installed: yes
+
+Package: libasound-module-bluez
+Version: 4.89-r8.0-arago2.6
+Depends: bluez4 (>= 4.89), libasound2 (>= 1.0.24.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938107
+Auto-Installed: yes
+
+Package: gst-plugin-playbin
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgstpbutils-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: kernel-modules
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Recommends: kernel-module-crc-ccitt, kernel-module-crc-t10dif, kernel-module-autofs4, kernel-module-minix, kernel-module-nls-utf8, kernel-module-nls-ascii, kernel-module-nfsd, kernel-module-xfrm6-mode-beet, kernel-module-xfrm6-mode-transport, kernel-module-xfrm6-mode-tunnel, kernel-module-sit, kernel-module-scsi-wait-scan, kernel-module-loop, kernel-module-rng-core, kernel-module-uio-pru, kernel-module-atkbd, kernel-module-xtkbd
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: libqtscripte4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938119
+Auto-Installed: yes
+
+Package: libpthread-stubs0
+Version: 0.2-r2.0.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: util-linux-ng-sfdisk
+Version: 2.18-r36.0.6
+Depends: libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides: util-linux-sfdisk
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: pam-plugin-securetty
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: alsa-utils-amixer
+Version: 1.0.24.2-r0.6
+Depends: libc6 (>= 2.9), libasound2 (>= 1.0.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-adpcmenc
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libjpeg8
+Version: 8b-r1.6
+Depends: libc6 (>= 2.9)
+Provides: libjpeg8
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: libopkg0
+Version: 0.1.8+svnr609-r5.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: libusb-1.0-0
+Version: 1.0.8-r0.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-debug
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: kernel-module-xtkbd
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: libuuid1
+Version: 2.18-r36.0.6
+Depends: libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-qtdemux
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstriff-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgstrtp-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: ncurses-tools
+Version: 5.9-r0.6
+Depends: ncurses, ncurses, libtinfo5 (>= 5.9), libc6 (>= 2.9), libtic5 (>= 5.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libnl2
+Version: 1:2.0-r5.0.6
+Depends: libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: kernel-module-minix
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: qt4-embedded-fonts-ttf-dejavu
+Version: 4.6.3-r29.2-arago4.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938122
+Auto-Installed: yes
+
+Package: gst-plugin-segmentclip
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: softap-udhcpd-config
+Version: 1.0-r0.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Conffiles:
+ /etc/udhcpd.conf 17398086620c160e6d48d5ee82bef9f8
+Installed-Time: 1468938110
+Auto-Installed: yes
+
+Package: gst-plugin-gio
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgio-2.0-0 (>= 2.24.1), libz1 (>= 1.2.3), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: gst-plugin-h264parse
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-freeze
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: base-files
+Version: 3.0.14-r100-arago1.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Conffiles:
+ /etc/fstab fcfdf6cb2d8b134ba87f9519e13c58ef
+ /etc/hostname d2b883237a9f4da8405f5b455ffadb44
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: alsa-conf-base
+Version: 1.0.24.1-r0.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: sysvinit-inittab
+Version: 2.86-r66-arago2.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Conffiles:
+ /etc/inittab c584dba8e1a41d534fe69224d8588ab3
+Installed-Time: 1324624336
+Auto-Installed: yes
+
+Package: gst-plugin-multifile
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libqtsvge4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libz1 (>= 1.2.3), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938119
+Auto-Installed: yes
+
+Package: gst-plugin-interleave
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libqtdesignercomponentse4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtscripte4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libqtdesignere4 (>= 4.6.3), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938119
+Auto-Installed: yes
+
+Package: qt4-embedded-tools
+Version: 4.6.3-r29.2-arago4.6
+Depends: libglib-2.0-0 (>= 2.24.1), libz1 (>= 1.2.3), libstdc++6 (>= 4.3.3), libc6 (>= 2.9), libgcc1 (>= 4.3.3), libqt3supporte4 (>= 4.6.3), libqtsqle4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938120
+Auto-Installed: yes
+
+Package: dosfstools
+Version: 2.11-r2.6
+Depends: libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: devmem2
+Version: 1.0-r7.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: libstdc++6
+Version: 4.3.3-r7.6
+Depends: libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: gst-plugin-videofilter
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: qt4-embedded-demos
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqthelpe4 (>= 4.6.3), libqtassistantcliente4 (>= 4.6.3), libqtsqle4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3), libqtwebkite4 (>= 4.6.3), libphonone4 (>= 4.6.3), libqtdbuse4 (>= 4.6.3), libqtsvge4 (>= 4.6.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938121
+Auto-Installed: yes
+
+Package: gst-plugin-avi
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstriff-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-ivfparse
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: pam-plugin-motd
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: wpa-supplicant-cli
+Version: 0.7.3+0.8.0-rc-r0+gitr0+b8fb017272ed4794339978c9fbc0e74571a44728.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: gst-plugin-flv
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: pam-plugin-warn
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libdbus-1-3
+Version: 1.2.24-r20.1-arago2.6
+Depends: libc6 (>= 2.9)
+Recommends: dbus
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: gst-plugins-bad-meta
+Version: 0.10.20-r11.1-arago3.6
+Depends: gst-plugins-bad, gst-plugins-bad-apps, libgstsignalprocessor-0.10-0, libgstphotography-0.10-0, libgstbasevideo-0.10-0, gst-plugin-liveadder, gst-plugin-frei0r, gst-plugin-pcapparse, gst-plugin-id3tag, gst-plugin-festival, gst-plugin-valve, gst-plugin-invtelecine, gst-plugin-legacyresample, gst-plugin-dtmf, gst-plugin-faac, gst-plugin-videomeasure, gst-plugin-mve, gst-plugin-h264parse, gst-plugin-dataurisrc, gst-plugin-asfmux, gst-plugin-sndfile, gst-plugin-vmnc, gst-plugin-subenc, gst-plugin-rtpmux, gst-plugin-dvdspu, gst-plugin-jpegformat, gst-plugin-speed, gst-plugin-videosignal, gst-plugin-segmentclip, gst-plugin-cdxaparse, gst-plugin-cog, gst-plugin-ivfparse, gst-plugin-modplug, gst-plugin-qtmux, gst-plugin-adpcmenc, gst-plugin-mpeg4videoparse, gst-plugin-debugutilsbad, gst-plugin-scaletempoplugin, gst-plugin-pnm, gst-plugin-shm, gst-plugin-gaudieffects, gst-plugin-nuvdemux, gst-plugin-mxf, gst-plugin-selector, gst-plugin-coloreffects, gst-plugin-videomaxrate, gst-plugin-rawparse, gst-plugin-tta, gst-plugin-camerabin, gst-plugin-siren, gst-plugin-audioparsersbad, gst-plugin-geometrictransform, gst-plugin-nsf, gst-plugin-stereo, gst-plugin-faad, gst-plugin-mpegvideoparse, gst-plugin-mpegdemux, gst-plugin-fbdevsink, gst-plugin-adpcmdec, gst-plugin-mpegpsmux, gst-plugin-autoconvert, gst-plugin-sdpelem, gst-plugin-aiff, gst-plugin-dccp, gst-plugin-vcdsrc, gst-plugin-alsaspdif, gst-plugin-mpegtsmux, gst-plugin-dvb, gst-plugin-hdvparse, gst-plugin-bayer, gst-plugin-freeze
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: pam-plugin-rootok
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: ti-dmai-apps
+Version: 1:2_20_00_15-r2.6
+Depends: ti-codecs-omapl138-server, ti-cmem-module, ti-dsplink-module, ti-dm365mm-module
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938112
+Auto-Installed: yes
+
+Package: gst-plugin-rtp
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), libgstrtp-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libgstapp-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: gst-plugin-geometrictransform
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: task-arago-base
+Version: 1.0-r14.6
+Depends: base-files, base-passwd, busybox, initscripts, modutils-initscripts, netbase, update-alternatives, module-init-tools, alsa-lib, alsa-utils-aplay, mtd-utils, curl, arago-feed-configs, initscript-telnetd, devmem2, ethtool, tcpdump
+Provides:
+Status: install user installed
+Architecture: all
+Installed-Time: 1324624333
+
+Package: task-arago-tisdk-graphics
+Version: 1.0-r12.6
+Depends: task-arago-qte, qt4-embedded-plugin-phonon-backend-gstreamer, qt4-embedded-plugin-imageformat-gif, qt4-embedded-plugin-imageformat-jpeg, libxml2, matrix-gui-e, qt-embedded-widgets-demo
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938123
+
+Package: libqtteste4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938119
+Auto-Installed: yes
+
+Package: u-boot
+Version: 2010.12-psp03.21.00.04.sdk-r0.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624336
+Auto-Installed: yes
+
+Package: openssl-conf
+Version: 1.0.0d-r14.0.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Conffiles:
+ /usr/lib/ssl/openssl.cnf 3f0ee810b7a5e7cc8c862efea1dd77ee
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: qt4-embedded-plugin-mousedriver-tslib
+Version: 4.6.3-r29.2-arago4.6
+Depends: libts-1.0-0 (>= 1.0+gitr0+5f48c7b878862b67ba61), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: gst-plugin-camerabin
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstphotography-0.10-0 (>= 0.10.20), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-rmdemux
+Version: 0.10.16-r11.1-arago2.6
+Depends: gstreamer (>= 0.10.30), libgstrtsp-0.10-0 (>= 0.10.30), libgstsdp-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-imagefreeze
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: usbutils
+Version: 0.86-r1.6
+Depends: libusb-0.1-4 (>= 0.1.3), libz1 (>= 1.2.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libjpeg-tools
+Version: 8b-r1.6
+Depends: libjpeg8 (>= 8b), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: libmount1
+Version: 2.18-r36.0.6
+Depends: libblkid1 (>= 2.18), libuuid1 (>= 2.18), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: initscripts
+Version: 1.0-r126.6
+Depends: makedevs
+Provides:
+Status: install user installed
+Architecture: armv5te
+Conffiles:
+ /etc/device_table 19faee0e28d44f1840c39c4f944141a2
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: qt4-embedded-examples
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtsvge4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3), libqthelpe4 (>= 4.6.3), libqtsqle4 (>= 4.6.3), libqtteste4 (>= 4.6.3), libqt3supporte4 (>= 4.6.3), libqtassistantcliente4 (>= 4.6.3), libqtwebkite4 (>= 4.6.3), libphonone4 (>= 4.6.3), libqtdbuse4 (>= 4.6.3), libqtscripte4 (>= 4.6.3), libqtscripttoolse4 (>= 4.6.3), libqtmultimediae4 (>= 4.6.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938122
+Auto-Installed: yes
+
+Package: libsidplay1
+Version: 1.36.59-r1.6
+Depends: libstdc++6 (>= 4.3.3), libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-icydemux
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libz1 (>= 1.2.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: pam-plugin-tally2
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libqtmultimediae4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libasound2 (>= 1.0.24.1), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938120
+Auto-Installed: yes
+
+Package: libcrypto1.0.0
+Version: 1.0.0d-r14.0.6
+Depends: libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Recommends: openssl-conf
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: kernel-module-atkbd
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: libtinfo5
+Version: 5.9-r0.6
+Depends: libc6 (>= 2.9)
+Recommends: ncurses-terminfo-base
+Suggests: ncurses-terminfo
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-videosignal
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-aiff
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libgobject-2.0-0
+Version: 2.24.1-r2.6
+Depends: libgthread-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: gst-plugin-nuvdemux
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: pam-plugin-time
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libmad0
+Version: 0.15.1b-r5.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-effectv
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: qt4-embedded-fonts-qpf
+Version: 4.6.3-r29.2-arago4.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: gst-plugin-videomaxrate
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: openobex-apps
+Version: 1.5-r3-arago2.6
+Depends: libopenobex1 (>= 1.5), libusb-0.1-4 (>= 0.1.3), libusb-1.0-0 (>= 1.0.8), libc6 (>= 2.9), bluez4 (>= 4.89)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938107
+Auto-Installed: yes
+
+Package: qt4-embedded-makeqpf
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: libgstphotography-0.10-0
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libqtxmle4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938118
+Auto-Installed: yes
+
+Package: gst-plugin-mpeg4videoparse
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: kernel-module-scsi-wait-scan
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: libopenobex1
+Version: 1.5-r3-arago2.6
+Depends: libusb-0.1-4 (>= 0.1.3), libusb-1.0-0 (>= 1.0.8), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938107
+Auto-Installed: yes
+
+Package: libpam-meta
+Version: 1.1.1-r2.6
+Depends: pam-plugin-filter, pam-plugin-rhosts, pam-plugin-namespace, pam-plugin-debug, pam-plugin-xauth, pam-plugin-tally2, pam-plugin-env, pam-plugin-deny, pam-plugin-echo, pam-plugin-unix, pam-plugin-time, pam-plugin-faildelay, pam-plugin-mail, pam-plugin-localuser, pam-plugin-issue, pam-plugin-lastlog, pam-plugin-nologin, pam-plugin-securetty, pam-plugin-umask, pam-plugin-succeed-if, pam-plugin-exec, pam-plugin-mkhomedir, pam-plugin-limits, pam-plugin-warn, pam-plugin-group, pam-plugin-permit, pam-plugin-tally, pam-plugin-timestamp, pam-plugin-loginuid, pam-plugin-wheel, pam-plugin-rootok, pam-plugin-motd, pam-plugin-keyinit, pam-plugin-stress, pam-plugin-pwhistory, pam-plugin-access, pam-plugin-shells, pam-plugin-listfile, pam-plugin-ftp
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-apetag
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), libgstpbutils-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-mad
+Version: 0.10.16-r11.1-arago2.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libmad0 (>= 0.15.1b), libid3tag0 (>= 0.15.1b), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: ti-dsplink-module
+Version: 1:1_65_01_05_eng-r57i.6
+Depends: update-modules
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938112
+Auto-Installed: yes
+
+Package: kernel-module-xfrm6-mode-beet
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37, kernel-module-ipv6
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: gst-plugin-id3tag
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libgstsdp-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: dbus-x11
+Version: 1.2.24-r20.1-arago2.6
+Depends: dbus, libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: gst-plugin-deinterlace
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), liborc-0.4-0 (>= 0.4.10), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-adder
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: pam-plugin-permit
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: am-benchmarks
+Version: 1.3-r2+svnr66.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: iproute2
+Version: 2.6.35.1-r4.0.6
+Depends: libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: gst-plugin-alaw
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-videomeasure
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-annodex
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libgthread-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libglib-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libgstvideo-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: psplash-support
+Version: 0.0+svnr422--arago1.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624336
+Auto-Installed: yes
+
+Package: pam-plugin-echo
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-audiofx
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgstfft-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-alsaspdif
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libasound2 (>= 1.0.24.1), libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: pointercal
+Version: 0.0-r22.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: alsa-utils-alsaconf
+Version: 1.0.24.2-r0.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-fbdevsink
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: netperf
+Version: 2.4.4-r3.6
+Depends: update-rc.d, libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938109
+Auto-Installed: yes
+
+Package: gst-plugin-festival
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libts-1.0-0
+Version: 1.0+gitr0+5f48c7b878862b67ba61-r28.5.6
+Depends: tslib-conf, libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Recommends: pointercal
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: libxml2
+Version: 2.7.8-r9.1.6
+Depends: libc6 (>= 2.9), libz1 (>= 1.2.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: gst-plugin-vcdsrc
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-efence
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: util-linux-ng
+Version: 2.18-r36.0.6
+Depends: util-linux-ng-mountall, util-linux-ng-umount, util-linux-ng-swaponoff, util-linux-ng-losetup, util-linux-ng-fsck, util-linux-ng-blkid, libblkid1 (>= 2.18), libuuid1 (>= 2.18), libc6 (>= 2.9), libgcc1 (>= 4.3.3), libz1 (>= 1.2.3), libtinfo5 (>= 5.9), libncursesw5 (>= 5.9), libpam (>= 1.1.1), libmount1 (>= 2.18)
+Recommends: util-linux-ng-fdisk, util-linux-ng-cfdisk, util-linux-ng-sfdisk, util-linux-ng-mount, util-linux-ng-readprofile
+Provides: util-linux
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-tta
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libphonone4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtdbuse4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938120
+Auto-Installed: yes
+
+Package: gst-plugin-video4linux2
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libv4l (>= 0.8.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-legacyresample
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-spectrum
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstfft-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libblkid1
+Version: 2.18-r36.0.6
+Depends: libuuid1 (>= 2.18), libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: alsa-state
+Version: 0.2.0-r23-arago1.6
+Depends: update-rc.d
+Recommends: alsa-states
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Conffiles:
+ /etc/asound.conf 7bf719bea3608da6c21382a4f5d4d3b3
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: alsa-conf
+Version: 1.0.24.1-r0.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: ti-wifi-utils
+Version: 0.0-r3+gitr0+268dbf03091b632c2697eb8028e90fe40513a9d8.6
+Depends: libnl2 (>= 2.0), libnl-genl2 (>= 2.0), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: gst-plugin-shapewipe
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgstvideo-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: tcpdump
+Version: 4.1.1-r1.6
+Depends: libpcap (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: libnl-route2
+Version: 1:2.0-r5.0.6
+Depends: libnl2 (>= 2.0), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938109
+Auto-Installed: yes
+
+Package: mtd-utils
+Version: 1.4.1-r0.6
+Depends: libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: libxcb1
+Version: 1.6-r4.1.6
+Depends: libpthread-stubs0 (>= 0.2), libxau6 (>= 1.0.6), libxdmcp6 (>= 1.1.0), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-dataurisrc
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: ti-dsplink-examples
+Version: 1:1_65_01_05_eng-r57i.6
+Depends: ti-dsplink-module, libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938124
+Auto-Installed: yes
+
+Package: gst-plugin-audiotestsrc
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: udev-utils
+Version: 141-r30.6-arago2.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624336
+Auto-Installed: yes
+
+Package: gst-plugin-dvb
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libgstrtsp-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: libqtscripttoolse4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtscripte4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938119
+Auto-Installed: yes
+
+Package: gst-plugin-mpegpsmux
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: util-linux-ng-swaponoff
+Version: 2.18-r36.0.6
+Depends: libblkid1 (>= 2.18), libuuid1 (>= 2.18), libc6 (>= 2.9)
+Provides: util-linux-swaponoff
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: kernel-module-rng-core
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: ethtool
+Version: 2.6.35-r1.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: kernel-module-autofs4
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: pam-plugin-umask
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libtic5
+Version: 5.9-r0.6
+Depends: libc6 (>= 2.9), libtinfo5 (>= 5.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libgstsignalprocessor-0.10-0
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: dbus
+Version: 1.2.24-r20.1-arago2.6
+Depends: update-rc.d, libc6 (>= 2.9), libdbus-1-3 (>= 1.2.24), libexpat1 (>= 2.0.1)
+Provides: dbus-1
+Replaces: dbus-1
+Conflicts: dbus-1
+Status: install ok unpacked
+Architecture: armv5te
+Conffiles:
+ /etc/dbus-1/system.conf cde0a6ef9dad7b80fce3b227753fa64e
+ /etc/dbus-1/session.conf 673ab3651353e67a32593236f7410d2f
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: dropbear
+Version: 0.51-r7.0.6
+Depends: update-rc.d, libc6 (>= 2.9), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Provides: ssh, sshd
+Status: install ok installed
+Architecture: armv5te
+Conffiles:
+ /etc/default/dropbear f0248adaf9261eef844229f1aab3579b
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: qt4-embedded
+Version: 4.6.3-r29.2-arago4.6
+Recommends: libqt3supporte4, libqtassistantcliente4, libqtclucenee4, libqtcoree4, libqtdbuse4, libqtdesignere4, libqtdesignercomponentse4, libqtguie4, libqthelpe4, libqtnetworke4, libqt-embeddedopengl4, libqtscripte4, libqtscripttoolse4, libqtsqle4, libqtsvge4, libqtteste4, libqt-embeddeduitools4, libqtwebkite4, libqtxmle4, libqt-embeddedxmlpatterns4, libphonone4, libqtmultimediae4, libqt-embeddedopenvg4, libqt-embeddedmediaservices4, libqt-embeddeddeclarative4, libqt-embeddedpvrqwswsegl4, qt4-embedded-tools, qt4-embedded-assistant, qt4-embedded-common, qt4-embedded-dbus, qt4-embedded-demos, qt4-embedded-designer, qt4-embedded-examples, qt4-embedded-fonts, qt4-embedded-fonts-ttf-vera, qt4-embedded-fonts-ttf-dejavu, qt4-embedded-fonts-pfa, qt4-embedded-fonts-pfb, qt4-embedded-fonts-qpf, qt4-embedded-linguist, qt4-embedded-makeqpf, qt4-embedded-mkspecs, qt4-embedded-pixeltool, qt4-embedded-qmlviewer, qt4-embedded-xmlpatterns, qt4-embedded-qt3to4
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938118
+Auto-Installed: yes
+
+Package: kernel-module-sit
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37, kernel-module-tunnel4, kernel-module-ipv6
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: gst-plugin-autoconvert
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libpcre0
+Version: 7.6-r8.6
+Depends: libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: gst-plugin-cdxaparse
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstriff-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: curl
+Version: 7.21.2-r5.0-arago1.6
+Depends: libcurl4 (>= 7.21.2), libc6 (>= 2.9), libz1 (>= 1.2.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-id3demux
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), libgstpbutils-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libz1 (>= 1.2.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libpam-base-files
+Version: 1.0-r7.6
+Depends: libpam
+Recommends: libpam-meta
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libqthelpe4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtsqle4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libqtclucenee4 (>= 4.6.3), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938119
+Auto-Installed: yes
+
+Package: pam-plugin-rhosts
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-audioconvert
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: wpa-supplicant
+Version: 0.7.3+0.8.0-rc-r0+gitr0+b8fb017272ed4794339978c9fbc0e74571a44728.6
+Depends: libnl2 (>= 2.0), libnl-genl2 (>= 2.0), libssl1.0.0 (>= 1.0.0d), libcrypto1.0.0 (>= 1.0.0d), libc6 (>= 2.9)
+Recommends: wpa-supplicant-passphrase, wpa-supplicant-cli
+Provides:
+Status: install ok unpacked
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: matrix-gui-e
+Version: 1.3-r24.16.6
+Depends: matrix-gui-common, update-rc.d, libpng12-0 (>= 1.2.44), libfreetype6 (>= 2.4.3), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libqtwebkite4 (>= 4.6.3), libphonone4 (>= 4.6.3), libqtdbuse4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Recommends: qt4-embedded-plugin-mousedriver-tslib, qt4-embedded-fonts
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: libqtwebkite4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libphonone4 (>= 4.6.3), libqtdbuse4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938120
+Auto-Installed: yes
+
+Package: i2c-tools
+Version: 3.0.3-r0.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: task-arago-tisdk-addons
+Version: 1.0-r16.6
+Depends: am-sysinfo, am-benchmarks, ti-pru-sw-examples
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938108
+
+Package: pam-plugin-nologin
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: opkg-collateral
+Version: 1.0-r3.6
+Provides:
+Status: install user installed
+Architecture: all
+Conffiles:
+ /etc/opkg/opkg.conf 7df7bcac0ec9573faba2d2d3b7e9bc3b
+Installed-Time: 1324624336
+
+Package: gst-plugin-dtmf
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstrtp-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libqtdbuse4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtxmle4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938118
+Auto-Installed: yes
+
+Package: task-arago-gst
+Version: 1.0-r21.6
+Depends: gstreamer, gst-plugins-base, gst-plugins-good, gst-plugins-bad, gst-plugins-ugly, gst-plugins-base-meta, gst-plugins-good-meta, gst-plugins-bad-meta, gst-plugins-ugly-meta
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938114
+Auto-Installed: yes
+
+Package: libncursesw5
+Version: 5.9-r0.6
+Depends: libc6 (>= 2.9), libtinfo5 (>= 5.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: kernel-module-xfrm6-mode-tunnel
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37, kernel-module-ipv6
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: gst-plugin-bayer
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: pam-plugin-stress
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-flxdec
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: e2fsprogs-badblocks
+Version: 1.41.14-r30.6
+Depends: libext2fs2 (>= 1.41.14), libcom-err2 (>= 1.41.14), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: alsa-utils-midi
+Version: 1.0.24.2-r0.6
+Depends: libasound2 (>= 1.0.24.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: alsa-utils-alsamixer
+Version: 1.0.24.2-r0.6
+Depends: libformw5 (>= 5.9), libmenuw5 (>= 5.9), libpanelw5 (>= 5.9), libncursesw5 (>= 5.9), libtinfo5 (>= 5.9), libasound2 (>= 1.0.24.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugins-good-apps
+Version: 0.10.25-r11.0-arago4.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-pcapparse
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-goom2k1
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: psplash-ti
+Version: 0.0+svnr422--arago1.6
+Depends: psplash-support, update-rc.d, libc6 (>= 2.9)
+Provides: virtual-psplash
+Conflicts: exquisite
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624336
+Auto-Installed: yes
+
+Package: gst-plugin-decodebin2
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgstpbutils-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: gst-plugin-goom
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), liborc-0.4-0 (>= 0.4.10), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: alsa-utils-iecset
+Version: 1.0.24.2-r0.6
+Depends: libc6 (>= 2.9), libasound2 (>= 1.0.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: kernel-module-nfsd
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37, kernel-module-exportfs
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: libsm6
+Version: 1:1.2.0-r9.0.6
+Depends: libice6 (>= 1.0.7), libuuid1 (>= 2.18), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: kernel-module-crc-t10dif
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: gst-plugin-oss4audio
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: fbset-modes
+Version: 0.1.0-r5.6
+Provides:
+Status: install ok installed
+Architecture: all
+Conffiles:
+ /etc/fb.modes b8de2484fab6925beba7fc258292ea2d
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: base-passwd
+Version: 3.5.20-r1.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: kernel-module-exportfs
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: gst-plugin-jpeg
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libjpeg8 (>= 8b), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugins-ugly-meta
+Version: 0.10.16-r11.1-arago2.6
+Depends: gst-plugins-ugly, gst-plugins-ugly-apps, gst-plugin-mpegaudioparse, gst-plugin-dvdlpcmdec, gst-plugin-mpegstream, gst-plugin-mad, gst-plugin-sid, gst-plugin-rmdemux, gst-plugin-dvdsub, gst-plugin-asf, gst-plugin-iec958
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-equalizer
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: pam-plugin-exec
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-dvdlpcmdec
+Version: 0.10.16-r11.1-arago2.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libgstnetbuffer-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: libgstpbutils-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: gst-plugins-bad
+Version: 0.10.20-r11.1-arago3.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: qt4-embedded-plugin-phonon-backend-gstreamer
+Version: 4.6.3-r29.2-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libgthread-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libgstinterfaces-0.10-0 (>= 0.10.30), libgstvideo-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libphonone4 (>= 4.6.3), libqtdbuse4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: pam-plugin-deny
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: thttpd
+Version: 2.25b-r8-arago1.6
+Depends: update-rc.d, libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: pam-plugin-pwhistory
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-mpegdemux
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: e2fsprogs-e2fsck
+Version: 1.41.14-r30.6
+Depends: libext2fs2 (>= 1.41.14), libcom-err2 (>= 1.41.14), libblkid1 (>= 2.18), libuuid1 (>= 2.18), libe2p2 (>= 1.41.14), libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-autodetect
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: pam-plugin-unix
+Version: 1.1.1-r2.6
+Depends: libc6 (>= 2.9), libpam (>= 1.1.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-modplug
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libmodplug0 (>= 0.8.7), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-volume
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: util-linux-ng-fsck
+Version: 2.18-r36.0.6
+Depends: libblkid1 (>= 2.18), libuuid1 (>= 2.18), libc6 (>= 2.9)
+Provides: e2fsprogs-fsck
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libgstinterfaces-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: gst-plugin-video4linux
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: gst-plugin-audiorate
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-videorate
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: util-linux-ng-fdisk
+Version: 2.18-r36.0.6
+Depends: libblkid1 (>= 2.18), libuuid1 (>= 2.18), libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides: util-linux-fdisk
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-subparse
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: libid3tag0
+Version: 0.15.1b-r3.6
+Depends: libz1 (>= 1.2.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: ti-dm365mm-module
+Version: 01_00_03-r57b.6
+Depends: kernel-2.6.37, update-modules
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938112
+Auto-Installed: yes
+
+Package: sysvinit-utils
+Version: 2.86-r66-arago2.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624336
+Auto-Installed: yes
+
+Package: iptables
+Version: 1.4.9.1-r7.1.6
+Depends: libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Recommends: kernel-module-ip-tables, kernel-module-iptable-nat, kernel-module-iptable-filter, kernel-module-ipt-masquerade
+Provides: iptables-utils
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624336
+Auto-Installed: yes
+
+Package: gst-plugins-base-meta
+Version: 0.10.30-r11.0-arago4.6
+Depends: gst-plugins-base, gst-plugins-base-apps, libgstfft-0.10-0, libgstsdp-0.10-0, libgstrtsp-0.10-0, libgstcdda-0.10-0, libgstpbutils-0.10-0, libgstapp-0.10-0, libgstaudio-0.10-0, libgstnetbuffer-0.10-0, libgstinterfaces-0.10-0, libgstriff-0.10-0, libgsttag-0.10-0, libgstvideo-0.10-0, libgstrtp-0.10-0, gst-plugin-subparse, gst-plugin-decodebin2, gst-plugin-videotestsrc, gst-plugin-audioresample, gst-plugin-app, gst-plugin-volume, gst-plugin-video4linux, gst-plugin-audiotestsrc, gst-plugin-videoscale, gst-plugin-gio, gst-plugin-gdp, gst-plugin-playbin, gst-plugin-audioconvert, gst-plugin-typefindfunctions, gst-plugin-audiorate, gst-plugin-adder, gst-plugin-alsa, gst-plugin-decodebin, gst-plugin-tcp, gst-plugin-ffmpegcolorspace, gst-plugin-videorate
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: util-linux-ng-cfdisk
+Version: 2.18-r36.0.6
+Depends: libncursesw5 (>= 5.9), libtinfo5 (>= 5.9), libblkid1 (>= 2.18), libuuid1 (>= 2.18), libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides: util-linux-cfdisk
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: kernel-module-nls-utf8
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: alsa-utils-aplay
+Version: 1.0.24.2-r0.6
+Depends: libc6 (>= 2.9), libasound2 (>= 1.0.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: pam-plugin-listfile
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libext2fs2
+Version: 1.41.14-r30.6
+Depends: libcom-err2 (>= 1.41.14), libgcc1 (>= 4.3.3), libc6 (>= 2.9), libblkid1 (>= 2.18)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libqtdesignere4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtscripte4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938118
+Auto-Installed: yes
+
+Package: qt4-embedded-fonts
+Version: 4.6.3-r29.2-arago4.6
+Recommends: qt4-embedded-fonts-ttf-vera, qt4-embedded-fonts-ttf-dejavu, qt4-embedded-fonts-pfa, qt4-embedded-fonts-pfb, qt4-embedded-fonts-qpf
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938122
+Auto-Installed: yes
+
+Package: gst-plugin-stereo
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-invtelecine
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: pam-plugin-tally
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: pam-plugin-debug
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: util-linux-ng-blkid
+Version: 2.18-r36.0.6
+Depends: libblkid1 (>= 2.18), libuuid1 (>= 2.18), libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides: e2fsprogs-blkid
+Replaces: e2fsprogs-blkid
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: pam-plugin-localuser
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: tslib-calibrate
+Version: 1.0+gitr0+5f48c7b878862b67ba61-r28.5.6
+Depends: libts-1.0-0 (>= 1.0+gitr0+5f48c7b878862b67ba61), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: udev
+Version: 141-r30.6-arago2.6
+Depends: module-init-tools-depmod, udev-utils, update-rc.d, libc6 (>= 2.9)
+Provides: hotplug, udev-compat-wrapper
+Status: install user installed
+Architecture: armv5te
+Installed-Time: 1324624336
+
+Package: bluez4
+Version: 4.89-r8.0-arago2.6
+Depends: update-rc.d, libc6 (>= 2.9), libglib-2.0-0 (>= 2.24.1), libdbus-1-3 (>= 1.2.24), libusb-0.1-4 (>= 0.1.3), libusb-1.0-0 (>= 1.0.8)
+Provides: bluez-utils, bluez-libs, bluez-utils-dbus
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938107
+Auto-Installed: yes
+
+Package: e2fsprogs
+Version: 1.41.14-r30.6
+Depends: util-linux-ng, e2fsprogs-badblocks, libe2p2 (>= 1.41.14), libcom-err2 (>= 1.41.14), libc6 (>= 2.9), libext2fs2 (>= 1.41.14), libuuid1 (>= 2.18), libgcc1 (>= 4.3.3), libss2 (>= 1.41.14), libblkid1 (>= 2.18)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libpcap
+Version: 1.1.1-r1.6
+Depends: libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-smpte
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: kernel-module-xfrm6-mode-transport
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: arago-feed-configs
+Version: 1.0-r11.6
+Recommends: opkg
+Provides:
+Status: install user installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-replaygain
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstpbutils-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: module-init-tools
+Version: 3.12-r6.6
+Depends: module-init-tools-depmod, libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: gst-plugin-auparse
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-mpegaudioparse
+Version: 0.10.16-r11.1-arago2.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libncurses5
+Version: 5.9-r0.6
+Depends: libc6 (>= 2.9), libtinfo5 (>= 5.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: libgthread-2.0-0
+Version: 2.24.1-r2.6
+Depends: libc6 (>= 2.9), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938110
+Auto-Installed: yes
+
+Package: gst-plugin-audioparsersbad
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: pam-plugin-issue
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugins-bad-apps
+Version: 0.10.20-r11.1-arago3.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libpanelw5
+Version: 5.9-r0.6
+Depends: libc6 (>= 2.9), libncursesw5 (>= 5.9), libtinfo5 (>= 5.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-decodebin
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgstpbutils-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libnl-genl2
+Version: 1:2.0-r5.0.6
+Depends: libnl2 (>= 2.0), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: gst-plugin-ffmpegcolorspace
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: ncurses-terminfo-base
+Version: 5.9-r0.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: qt4-embedded-pixeltool
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: sysvinit-pidof
+Version: 2.86-r66-arago2.6
+Depends: sysvinit-utils
+Provides:
+Status: install user installed
+Architecture: armv5te
+Installed-Time: 1324624336
+
+Package: qt4-embedded-qt3to4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtxmle4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: libsndfile1
+Version: 1.0.24-r0.6
+Depends: libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libss2
+Version: 1.41.14-r30.6
+Depends: libcom-err2 (>= 1.41.14), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: pam-plugin-env
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-typefindfunctions
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgio-2.0-0 (>= 2.24.1), libz1 (>= 1.2.3), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-valve
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: update-rc.d
+Version: 0.7-r2.6
+Provides:
+Status: install ok installed
+Architecture: all
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: alsa-utils-aconnect
+Version: 1.0.24.2-r0.6
+Depends: libasound2 (>= 1.0.24.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-matroska
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstriff-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libqtguie4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libpng12-0 (>= 1.2.44), libz1 (>= 1.2.3), libfreetype6 (>= 2.4.3), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938109
+Auto-Installed: yes
+
+Package: qt4-embedded-fonts-ttf-vera
+Version: 4.6.3-r29.2-arago4.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938122
+Auto-Installed: yes
+
+Package: tinylogin
+Version: 1.4-r7.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install user installed
+Architecture: armv5te
+Installed-Time: 1324624336
+
+Package: angstrom-version
+Version: 1:2011.06-r7.6
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624332
+
+Package: libcurl4
+Version: 7.21.2-r5.0-arago1.6
+Depends: libc6 (>= 2.9), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Recommends: curl-certs
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: kernel-module-nls-ascii
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: kernel-module-ipv6
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: gst-plugin-y4menc
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-rtpmux
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstrtp-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: task-arago-tisdk-bsp
+Version: 1.0-r20.6
+Depends: ti-linux-driver-examples-omapl, bluez4, bluez4-agent, libasound-module-bluez, bluez-hcidump, libopenobex1, openobex-apps, obexftp, ussp-push
+Recommends: kernel-modules, kernel-image-2.6.37, kernel-vmlinux, u-boot
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938108
+
+Package: gstreamer
+Version: 0.10.30-r1.6
+Depends: libgobject-2.0-0 (>= 2.24.1), libgthread-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libgmodule-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: wpa-gui-e
+Version: 0.7.3+0.8.0-rc-r3+gitr0+b8fb017272ed4794339978c9fbc0e74571a44728.6
+Depends: wpa-supplicant, libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938109
+Auto-Installed: yes
+
+Package: qt4-embedded-mkspecs
+Version: 4.6.3-r29.2-arago4.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: liborc-0.4-0
+Version: 0.4.10-r0.6
+Depends: libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: ti-c6run-apps
+Version: 0_98_03_03-r3.6
+Depends: ti-cmem-module, ti-dsplink-module, libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938126
+Auto-Installed: yes
+
+Package: pam-plugin-timestamp
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: htop
+Version: 0.9-r0.6
+Depends: ncurses-terminfo, libncurses5 (>= 5.9), libtinfo5 (>= 5.9), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: gst-plugin-alphacolor
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: kernel-module-crc-ccitt
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: pam-plugin-lastlog
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: matrix-gui-common
+Version: 1.4-r10.17.6
+Recommends: am-sysinfo
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: libmodplug0
+Version: 0.8.7-r1.6
+Depends: libstdc++6 (>= 4.3.3), libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-gaudieffects
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libz1
+Version: 1.2.3-r7.0.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: libnl-nf2
+Version: 1:2.0-r5.0.6
+Depends: libnl-route2 (>= 2.0), libnl2 (>= 2.0), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938109
+Auto-Installed: yes
+
+Package: gst-plugin-speed
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-vmnc
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-iec958
+Version: 0.10.16-r11.1-arago2.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libglib-2.0-0
+Version: 2.24.1-r2.6
+Depends: libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: libx11-6
+Version: 1:1.4.1-r9.0.6
+Depends: libxcb1 (>= 1.6), libpthread-stubs0 (>= 0.2), libxau6 (>= 1.0.6), libxdmcp6 (>= 1.1.0), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: pam-plugin-namespace
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: qt4-embedded-assistant
+Version: 4.6.3-r29.2-arago4.6
+Depends: libz1 (>= 1.2.3), libqtdbuse4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3), libqthelpe4 (>= 4.6.3), libqtsqle4 (>= 4.6.3), libqtwebkite4 (>= 4.6.3), libphonone4 (>= 4.6.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938120
+Auto-Installed: yes
+
+Package: crda
+Version: 1.1.1-r3.6
+Depends: udev, libgcrypt11 (>= 1.4.1), libc6 (>= 2.9), libnl-genl2 (>= 2.0), libnl2 (>= 2.0), libnl-nf2 (>= 2.0), libnl-route2 (>= 2.0)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938110
+Auto-Installed: yes
+
+Package: kernel-module-loop
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: libqtcoree4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938110
+Auto-Installed: yes
+
+Package: qt-mandelbrot-accel
+Version: 4.6-r2.6
+Depends: libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Recommends: qt4-embedded-plugin-mousedriver-tslib
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938126
+Auto-Installed: yes
+
+Package: netbase
+Version: 4.21-r50-arago3.6
+Depends: update-rc.d
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Conffiles:
+ /etc/network/options a3dfe287e7258722afb9cf254b31815e
+ /etc/hosts 27acad957c7cded40cd6ac50d23ddc66
+ /etc/network/interfaces 1d96879c3e73df97b868c9f420ee3140
+ /etc/rpc f0b6f6352bf886623adc04183120f83b
+ /etc/protocols e1b2c07d83ff5322a6353945a5c4b7e6
+ /etc/services 8a04f87ad04f4a1d3c7e6ca12e07290d
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: task-arago-tisdk-crypto
+Version: 1.0-r15.6
+Depends: openssl, wpa-supplicant, dropbear, openssh-sftp-server, openssl-misc, hostap-daemon, ti-wifi-utils, wireless-tools, htop, netperf, iw, linux-firmware-wl12xx, wpa-gui-e, crda, softap-udhcpd-config, ti-compat-wireless-wl12xx, wl1271-bluetooth
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938111
+
+Package: gst-plugin-adpcmdec
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugins-ugly
+Version: 0.10.16-r11.1-arago2.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: gst-plugin-cutter
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: task-arago-tisdk-multimedia
+Version: 1.0-r36.6
+Depends: ti-dmai-apps, ti-codec-engine-examples, ti-data, task-arago-gst, gstreamer-ti, ti-tisdk-loadmodule
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938118
+
+Package: fbset
+Version: 2.1-r4.6
+Depends: libc6 (>= 2.9)
+Recommends: fbset-modes
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libgcc1
+Version: 4.3.3-r7.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624332
+Auto-Installed: yes
+
+Package: pam-plugin-limits
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-mulaw
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-ossaudio
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: tslib-tests
+Version: 1.0+gitr0+5f48c7b878862b67ba61-r28.5.6
+Depends: libts-1.0-0 (>= 1.0+gitr0+5f48c7b878862b67ba61), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-tcp
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: task-arago-base-tisdk
+Version: 1.0-r5.6
+Depends: dbus, dbus-x11, libexpat1, libglib-2.0-0, libxml2, libpcre0, iptables, iperf, psplash-ti, u-boot
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624336
+
+Package: ti-cmem-module
+Version: 1:2_26_02_05-r57d.6
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938112
+Auto-Installed: yes
+
+Package: cppstub
+Version: 1.0-r4.6
+Depends: libstdc++6 (>= 4.3.3), libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: ncurses
+Version: 5.9-r0.6
+Depends: libtinfo5 (>= 5.9), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: ti-data
+Version: 1_00_00_19-r8.6
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938114
+Auto-Installed: yes
+
+Package: gst-plugins-base
+Version: 0.10.30-r11.0-arago4.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: libexpat1
+Version: 2.0.1-r3.0.6
+Depends: libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: alsa-utils-alsactl
+Version: 1.0.24.2-r0.6
+Depends: libasound2 (>= 1.0.24.1), libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: libfaac0
+Version: 1.24-r1.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-mpegvideoparse
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: pam-plugin-faildelay
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: bluez4-agent
+Version: 4.89-r8.0-arago2.6
+Depends: libdbus-1-3 (>= 1.2.24), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938107
+Auto-Installed: yes
+
+Package: libasound2
+Version: 1.0.24.1-r0.6
+Depends: alsa-conf-base, libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gstreamer-ti
+Version: svnr919-r93+r57.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Recommends: ti-codecs-omapl138-server, ti-cmem-module, ti-dsplink-module, ti-tisdk-loadmodule
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938118
+Auto-Installed: yes
+
+Package: libgstriff-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: util-linux-ng-losetup
+Version: 2.18-r36.0.6
+Depends: libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides: util-linux-losetup
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: alsa-utils-speakertest
+Version: 1.0.24.2-r0.6
+Depends: libc6 (>= 2.9), libasound2 (>= 1.0.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-multipart
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libpng12-0
+Version: 1.2.44-r3.0.6
+Depends: libz1 (>= 1.2.3), libc6 (>= 2.9)
+Provides: libpng3
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: ti-c6accel-apps
+Version: 1_01_00_07-r12.6
+Depends: ti-cmem-module, ti-dsplink-module, libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938125
+Auto-Installed: yes
+
+Package: gst-plugin-wavparse
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstriff-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libgstaudio-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: qt4-embedded-plugin-gfxdriver-gfxtransformed
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: pam-plugin-keyinit
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-navigationtest
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libgsttag-0.10-0
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: task-arago-tisdk-dsp
+Version: 1.0-r17.6
+Depends: ti-dsplink-examples, ti-c6accel-apps, ti-dsp-benchmark-apps, ti-c6run-apps, qt-mandelbrot-accel
+Provides:
+Status: install user installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938126
+
+Package: kernel-module-tunnel4
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Depends: update-modules, kernel-2.6.37
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: kernel-image-2.6.37
+Version: 2.6.37-psp03.21.00.04.sdk-r57.6
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: ti-compat-wireless-wl12xx
+Version: 0.20110517r3m1rc2-r57.6
+Depends: kernel-2.6.37, update-modules
+Provides:
+Status: install ok unpacked
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938110
+Auto-Installed: yes
+
+Package: gst-plugin-dvdspu
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: ncurses-terminfo
+Version: 5.9-r0.6
+Depends: ncurses-terminfo-base
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libqtclucenee4
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938118
+Auto-Installed: yes
+
+Package: libfaad2
+Version: 2.7-r0.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-videotestsrc
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: libmenuw5
+Version: 5.9-r0.6
+Depends: libc6 (>= 2.9), libncursesw5 (>= 5.9), libtinfo5 (>= 5.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-alsa
+Version: 0.10.30-r11.0-arago4.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libasound2 (>= 1.0.24.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libxau6
+Version: 1:1.0.6-r9.0.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libgpg-error0
+Version: 1.4-r7.1.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938110
+Auto-Installed: yes
+
+Package: alsa-utils
+Version: 1.0.24.2-r0.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-jpegformat
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: qt4-embedded-fonts-pfa
+Version: 4.6.3-r29.2-arago4.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938122
+Auto-Installed: yes
+
+Package: qt4-embedded-fonts-pfb
+Version: 4.6.3-r29.2-arago4.6
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938122
+Auto-Installed: yes
+
+Package: gst-plugin-mpegstream
+Version: 0.10.16-r11.1-arago2.6
+Depends: libgstaudio-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: e2fsprogs-mke2fs
+Version: 1.41.14-r30.6
+Depends: libext2fs2 (>= 1.41.14), libcom-err2 (>= 1.41.14), libblkid1 (>= 2.18), libuuid1 (>= 2.18), libe2p2 (>= 1.41.14), libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: libformw5
+Version: 5.9-r0.6
+Depends: libc6 (>= 2.9), libncursesw5 (>= 5.9), libtinfo5 (>= 5.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: gst-plugin-png
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libpng12-0 (>= 1.2.44), libz1 (>= 1.2.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-rawparse
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-alpha
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-shm
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: pam-plugin-succeed-if
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: wpa-supplicant-passphrase
+Version: 0.7.3+0.8.0-rc-r0+gitr0+b8fb017272ed4794339978c9fbc0e74571a44728.6
+Depends: libcrypto1.0.0 (>= 1.0.0d), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: gst-plugin-udp
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstnetbuffer-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-mpegtsmux
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-pnm
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: pam-plugin-loginuid
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: am-sysinfo
+Version: 1.0-r1+svnr6.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: gst-plugin-rtpmanager
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstnetbuffer-0.10-0 (>= 0.10.30), libgstrtp-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: qt4-embedded-plugin-imageformat-gif
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938123
+Auto-Installed: yes
+
+Package: update-modules
+Version: 1.0-r10.6
+Depends: module-init-tools-depmod
+Provides:
+Status: install ok unpacked
+Architecture: all
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: sysvinit
+Version: 2.86-r66-arago2.6
+Depends: sysvinit-inittab, libc6 (>= 2.9)
+Recommends: sysvinit-utils
+Provides:
+Status: install user installed
+Architecture: armv5te
+Installed-Time: 1324624336
+
+Package: wireless-tools
+Version: 29-r5.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: libv4l
+Version: 0.8.1-r0.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-level
+Version: 0.10.25-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: libe2p2
+Version: 1.41.14-r30.6
+Depends: libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-qtmux
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-debugutilsbad
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-subenc
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-sid
+Version: 0.10.16-r11.1-arago2.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libsidplay1 (>= 1.36.59), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-siren
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstrtp-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: bluez-hcidump
+Version: 1.42-r1.6
+Depends: bluez4 (>= 4.89), libgcc1 (>= 4.3.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938107
+Auto-Installed: yes
+
+Package: gst-plugin-wavenc
+Version: 0.10.25-r11.0-arago4.6
+Depends: libgstriff-0.10-0 (>= 0.10.30), libgstaudio-0.10-0 (>= 0.10.30), libgstinterfaces-0.10-0 (>= 0.10.30), libgsttag-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-nsf
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: libgstbasevideo-0.10-0
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938116
+Auto-Installed: yes
+
+Package: gst-plugin-sdpelem
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstinterfaces-0.10-0 (>= 0.10.30), libgstrtp-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgstsdp-0.10-0 (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-audioresample
+Version: 0.10.30-r11.0-arago4.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938115
+Auto-Installed: yes
+
+Package: alsa-server
+Version: 1.0.24.1-r0.6
+Depends: libasound2 (>= 1.0.24.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624333
+Auto-Installed: yes
+
+Package: pam-plugin-mkhomedir
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: ti-dsp-benchmark-apps
+Version: 1_00_00_02-r1.6
+Depends: ti-cmem-module, ti-dsplink-module, libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: da850-omapl138-evm
+Installed-Time: 1468938125
+Auto-Installed: yes
+
+Package: qt4-embedded-dbus
+Version: 4.6.3-r29.2-arago4.6
+Depends: libqtdbuse4 (>= 4.6.3), libqtxmle4 (>= 4.6.3), libqtcoree4 (>= 4.6.3), libglib-2.0-0 (>= 2.24.1), libc6 (>= 2.9), libstdc++6 (>= 4.3.3), libgcc1 (>= 4.3.3), libqtguie4 (>= 4.6.3), libqtnetworke4 (>= 4.6.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938120
+Auto-Installed: yes
+
+Package: hostap-daemon
+Version: 0.7.3+0.8.0-rc-r0gitr0+b8fb017272ed4794339978c9fbc0e74571a44728-arago2.6
+Depends: update-rc.d, libc6 (>= 2.9), libnl2 (>= 2.0), libnl-genl2 (>= 2.0), libssl1.0.0 (>= 1.0.0d), libcrypto1.0.0 (>= 1.0.0d)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Conffiles:
+ /etc/hostapd.conf 7b6930500760efdff1f50eb9e0abf7fe
+Installed-Time: 1468938108
+Auto-Installed: yes
+
+Package: libfreetype6
+Version: 2.4.3-r1-arago1.6
+Depends: libz1 (>= 1.2.3), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624335
+Auto-Installed: yes
+
+Package: pam-plugin-xauth
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: pam-plugin-ftp
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: pam-plugin-shells
+Version: 1.1.1-r2.6
+Depends: libpam (>= 1.1.1), libc6 (>= 2.9)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1324624334
+Auto-Installed: yes
+
+Package: gst-plugin-scaletempoplugin
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-coloreffects
+Version: 0.10.20-r11.1-arago3.6
+Depends: libgstvideo-0.10-0 (>= 0.10.30), gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+
+Package: gst-plugin-selector
+Version: 0.10.20-r11.1-arago3.6
+Depends: gstreamer (>= 0.10.30), libgobject-2.0-0 (>= 2.24.1), libgmodule-2.0-0 (>= 2.24.1), libxml2 (>= 2.7.8), libc6 (>= 2.9), libz1 (>= 1.2.3), libgthread-2.0-0 (>= 2.24.1), libglib-2.0-0 (>= 2.24.1), libgcc1 (>= 4.3.3)
+Provides:
+Status: install ok installed
+Architecture: armv5te
+Installed-Time: 1468938117
+Auto-Installed: yes
+

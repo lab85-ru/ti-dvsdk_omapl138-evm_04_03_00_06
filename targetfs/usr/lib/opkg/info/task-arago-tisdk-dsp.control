@@ -1,0 +1,13 @@
+Package: task-arago-tisdk-dsp
+Version: 1.0-r17.6
+Description: Task to install dsp binaries on da850-omapl138-evm
+Section: base
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: MIT
+Architecture: da850-omapl138-evm
+OE: task-arago-tisdk-dsp
+Homepage: unknown
+Build: install/d0bd439
+Depends: ti-dsplink-examples, ti-c6accel-apps, ti-dsp-benchmark-apps, ti-c6run-apps, qt-mandelbrot-accel
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-tisdk-dsp.bb

@@ -1,0 +1,3 @@
+/sbin/swapon
+../bin/busybox 50
+swapon.util-linux-ng 100

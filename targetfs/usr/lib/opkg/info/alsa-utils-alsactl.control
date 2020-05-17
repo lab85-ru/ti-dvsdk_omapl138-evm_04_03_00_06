@@ -1,0 +1,13 @@
+Package: alsa-utils-alsactl
+Version: 1.0.24.2-r0.6
+Description: saves/restores ALSA-settings in /etc/asound.state
+Section: console/utils
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2
+Architecture: armv5te
+OE: alsa-utils
+Homepage: http://www.alsa-project.org
+Build: install/d0bd439
+Depends: libasound2 (>= 1.0.24.1), libc6 (>= 2.9), libgcc1 (>= 4.3.3)
+Source: ftp://ftp.alsa-project.org/pub/utils/alsa-utils-1.0.24.2.tar.bz2 file://remove-xmlto.patch

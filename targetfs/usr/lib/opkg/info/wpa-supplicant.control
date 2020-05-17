@@ -1,0 +1,14 @@
+Package: wpa-supplicant
+Version: 0.7.3+0.8.0-rc-r0+gitr0+b8fb017272ed4794339978c9fbc0e74571a44728.6
+Description: A Client for Wi-Fi Protected Access (WPA).
+Section: network
+Priority: optional
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+License: GPLv2 | BSD
+Architecture: armv5te
+OE: wpa-supplicant
+Homepage: http://hostap.epitest.fi/wpa_supplicant/
+Build: install/d0bd439
+Depends: libnl2 (>= 2.0), libnl-genl2 (>= 2.0), libssl1.0.0 (>= 1.0.0d), libcrypto1.0.0 (>= 1.0.0d), libc6 (>= 2.9)
+Recommends: wpa-supplicant-passphrase, wpa-supplicant-cli
+Source: git://w1.fi/srv/git/hostap.git;protocol=git file://defconfig file://defaults-sane file://wpa-supplicant.sh file://wpa_supplicant.conf file://wpa_supplicant.conf-sane file://99_wpa_supplicant

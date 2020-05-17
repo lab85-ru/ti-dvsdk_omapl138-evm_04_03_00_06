@@ -1,0 +1,12 @@
+# Aliases extracted from modules themselves.
+alias devname:autofs autofs4
+alias char-major-10-235 autofs4
+alias block-major-7-* loop
+alias serio:ty02pr22id*ex* atkbd
+alias serio:ty06pr*id*ex* atkbd
+alias serio:ty01pr*id*ex* atkbd
+alias serio:ty00pr*id*ex* xtkbd
+alias spi:wl1251 wl1251_spi
+alias spi:wl1271 wl12xx_spi
+alias sdio:c*v104Cd9066* wl1251_sdio
+alias sdio:c*v0097d4076* wl12xx_sdio

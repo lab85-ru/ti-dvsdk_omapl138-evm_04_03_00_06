@@ -1,0 +1,371 @@
+Package: am-benchmarks-src
+Version: 1.3-r2+svnr66
+Section: system
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: f0d305d04ba9cfb341abbd670fbbcd89
+Size: 176886
+Filename: am-benchmarks-src_1.3-r2+svnr66_all.ipk
+Source: svn://gforge.ti.com/svn/am_benchmarks/;module=trunk;proto=https;user=anonymous;pswd=''
+Description: Patched sources for am-benchmarks
+Priority: Optional
+
+
+Package: am-sysinfo-src
+Version: 1.0-r1+svnr6
+Section: system
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 3f9feb5d27e79c841fe2044e4acf013e
+Size: 23124
+Filename: am-sysinfo-src_1.0-r1+svnr6_all.ipk
+Source: svn://gforge.ti.com/svn/am_sysinfo/;module=trunk;proto=https;user=anonymous;pswd=''
+Description: Patched sources for am-sysinfo
+Priority: Optional
+
+
+Package: gstreamer-ti-src
+Version: svnr919-r93+r57
+Section: multimedia
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 8ec5a58cde29b3edcf5c12067ba78e86
+Size: 181692
+Filename: gstreamer-ti-src_svnr919-r93+r57_all.ipk
+Source: svn://gforge.ti.com/svn/gstreamer_ti/trunk;module=gstreamer_ti;proto=https;user=anonymous;pswd=''  file://0001-Introducing-TIDmaiVideoSink-version-2.-rename-it-to-.patch;striplevel=4  file://0002-set-maxInterFrameInterval-params-needed-by-ittiam-co.patch;striplevel=4  file://0003-update-omapl138-cfg-to-use-cs.674.patch;striplevel=4  file://change-display-node-as-per-latest-psp.patch;striplevel=4
+Description: Patched sources for gstreamer-ti
+Priority: Optional
+
+
+Package: linux-davinci-src
+Version: 2.6.37-psp03.21.00.04.sdk-r57
+Section: kernel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 8430054e27872290109dcd1fb5ba1244
+Size: 95608040
+Filename: linux-davinci-src_2.6.37-psp03.21.00.04.sdk-r57_all.ipk
+Source: git://arago-project.org/git/projects/linux-davinci.git;protocol=git;branch=03.21.00.03 	file://defconfig  	file://0001-TI-WL12xx-MMC-patches-03.21.00.04.patch 	file://0002-da850-Set-maximum-OPP-frequency-to-456MHz.patch 	file://0003-AM18xx-WL1271-Enable-BT.patch 	file://0004-PSP03.21.00.04.sdk-activate-wireless-extensions.patch 	file://0005-Davinci-da850-Add-Mistral-WL12XX-config-support-to.patch 	file://0006-Add-wlan-and-BT-config-switches.patch         file://0007_fix-for-EDMA-hung-while-running-audio-video-together.patch 	 file://uio_pruss.patch
+Description: Patched sources for linux-davinci
+Priority: Optional
+
+
+Package: linux-firmware-wl12xx
+Version: 0.r3m1rc2-r1+gitrc2e530abf58116fbc4eb3baedeb5b3ed092b2c8a-arago1.6
+Section: base
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: fde479427d4813dae4d07fe5f18d235d
+Size: 823512
+Filename: linux-firmware-wl12xx_0.r3m1rc2-r1+gitrc2e530abf58116fbc4eb3baedeb5b3ed092b2c8a-arago1.6_all.ipk
+Source: https://gforge.ti.com/gf/download/frsrelease/557/4631/ti-linux-firmware-wl12xx-r3-m1-rc2.tar.gz
+Description: Firmware files for use with Linux kernel
+OE: linux-firmware
+HomePage: unknown
+Priority: optional
+
+
+Package: matrix-gui-e-src
+Version: 1.3-r24.16
+Section: multimedia
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: c7a72266b43e4e6328ba71fb4e3f0331
+Size: 2875038
+Filename: matrix-gui-e-src_1.3-r24.16_all.ipk
+Source: svn://gforge.ti.com/svn/matrix_gui/;module=trunk;proto=https;user=anonymous;pswd=''
+Description: Patched sources for matrix-gui-e
+Priority: Optional
+
+
+Package: task-arago-qte
+Version: 1.0-r8.6
+Depends: qt4-embedded, qt4-embedded-plugin-mousedriver-tslib, qt4-embedded-plugin-gfxdriver-gfxtransformed
+Section: base
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 7683280f223f8b81cab97d5bff977242
+Size: 750
+Filename: task-arago-qte_1.0-r8.6_all.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-qte.bb
+Description: Task to add Qt/Embedded and basic plugins
+OE: task-arago-qte
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-toolchain-tisdk-bsp-target
+Version: 1.0-r5.6
+Recommends: bluez4-dev, libopenobex-dev
+Section: base
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 02d6179a72dd273624607e49b999153d
+Size: 766
+Filename: task-arago-toolchain-tisdk-bsp-target_1.0-r5.6_all.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-bsp-target.bb
+Description: Task to build and install corresponding development packages for Board Support Package
+OE: task-arago-toolchain-tisdk-bsp-target
+HomePage: unknown
+Priority: optional
+
+
+Package: task-arago-toolchain-tisdk-multimedia-target
+Version: 1.0-r3.6
+Depends: gstreamer-dev, gst-plugins-base-dev, gst-plugins-good-dev, gst-plugins-ugly-dev, gst-plugins-bad-dev
+Section: base
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: a0d3498359b35b1d1af7c6f8ceff091a
+Size: 766
+Filename: task-arago-toolchain-tisdk-multimedia-target_1.0-r3.6_all.ipk
+Source: file:///datalocal/DVSDK43_HPDL380G7/arago/recipes/tasks/task-arago-toolchain-tisdk-multimedia-target.bb
+Description: Task to build and install header and libs in sdk
+OE: task-arago-toolchain-tisdk-multimedia-target
+HomePage: unknown
+Priority: optional
+
+
+Package: ti-audio-soc-example-src
+Version: 1_00_00_03-r6
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: ae9ecc21db9937185a4c56c1c9b837eb
+Size: 2210106
+Filename: ti-audio-soc-example-src_1_00_00_03-r6_all.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/apps_processors/Audio_soc_example/1_00/exports/audio_soc_example_1_00_00_03.tar.gz;name=audiosoctarball   file://0000_switch_to_arago_tool_chain.patch
+Description: Patched sources for ti-audio-soc-example
+Priority: Optional
+
+
+Package: ti-biospsp-src
+Version: 01_30_01-r2
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: f2004e176d14d1be1759a44f36fa8cc8
+Size: 101949432
+Filename: ti-biospsp-src_01_30_01-r2_all.ipk
+Source: ftp://ftp.india.ti.com/PSP/Releases/ODC/Freon_BIOS_PSP/REL.BIOSPSP.01.30.01.GA/BIOSPSP_01_30_01.tar.gz;name=biospsptarball
+Description: Patched sources for ti-biospsp
+Priority: Optional
+
+
+Package: ti-biosutils-src
+Version: 1_02_02-r1
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: b3606cc71ee2184f118bc0f1c09aa9d1
+Size: 977054
+Filename: ti-biosutils-src_1_02_02-r1_all.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/Bios_Utils/1_02_02_02/exports/biosutils_1_02_02.tar.gz;name=biosutilstarball
+Description: Patched sources for ti-biosutils
+Priority: Optional
+
+
+Package: ti-c6accel-src
+Version: 1_01_00_07-r12
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: bd961f16639a705e9e5afbd16e2ccaa0
+Size: 12783424
+Filename: ti-c6accel-src_1_01_00_07-r12_all.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/c6000/web/c6accel/latest/exports//c6accel_1_01_00_07_Linux-x86_Setup.bin;name=c6accelbin
+Description: Patched sources for ti-c6accel
+Priority: Optional
+
+
+Package: ti-c6run-src
+Version: 0_98_03_03-r3
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 30c185d57faf9f6840bc16bda0077c6f
+Size: 805026
+Filename: ti-c6run-src_0_98_03_03-r3_all.ipk
+Source: svn://gforge.ti.com/svn/dspeasy/;module=tags/0_98_03_03;proto=https;user=anonymous;pswd=''
+Description: Patched sources for ti-c6run
+Priority: Optional
+
+
+Package: ti-cgt6x-src
+Version: 6_1_14-r4
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: a5af9f9e2bc4e7e29941b13d022d571a
+Size: 76922636
+Filename: ti-cgt6x-src_6_1_14-r4_all.ipk
+Source: http://install.source.dir.local/ti_cgt_c6000_6.1.14_setup_linux_x86.bin;name=cgt6xbin
+Description: Patched sources for ti-cgt6x
+Priority: Optional
+
+
+Package: ti-codecs-omapl138-src
+Version: 4_02_00_00-r57d
+Section: multimedia
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 43c08b13639a930099a697939600ac23
+Size: 22019774
+Filename: ti-codecs-omapl138-src_4_02_00_00-r57d_all.ipk
+Source: git://arago-project.org/git/projects/codec-servers.git;protocol=git     http://install.dir.local.com/c64xplus_jpegenc_02_00_01_00_production.tar.gz;name=jpegenc     http://install.dir.local.com/c64xplus_jpegdec_02_00_01_01_production.tar.gz;name=jpegdec     http://install.dir.local.com/c64xplus_mpeg2dec_02_00_02_00_production.tar.gz;name=mpeg2dec     http://install.dir.local.com/c64xplus_mpeg4dec_02_01_00_00_production.tar.gz;name=mpeg4dec     http://install.dir.local.com/c64xplus_mpeg4enc_02_02_04_production.tar.gz;name=mpeg4enc     http://install.dir.local.com/dm6446_h264enc_02_02_00_02_production.tar.gz;name=h264enc     http://install.dir.local.com/dm6446_h264dec_2_00_002_production.tar.gz;name=h264dec     http://install.dir.local.com/dm6446_aachedec_01_30_03_00_production.tar.gz;name=aachedec     http://install.dir.local.com/dm6446_g711dec_1_12_00_000_production.tar.gz;name=g711dec     http://install.dir.local.com/dm6446_g711enc_1_12_00_000_production.tar.gz;name=g711enc
+Description: Patched sources for ti-codecs-omapl138
+Priority: Optional
+
+
+Package: ti-dm365mm-module-src
+Version: 01_00_03-r57b
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 3c4ce9690c492afd7d67e7d27d765646
+Size: 7550
+Filename: ti-dm365mm-module-src_01_00_03-r57b_all.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/dvsdk/DVSDK_3_10/latest/exports/dm365mm_01_00_03.tar.gz;name=dm365mmtarball        file://0001-Update-to-use-EVENTQ-1.patch         file://0002-dm365-porting-to-kernel-2.6.37.patch
+Description: Patched sources for ti-dm365mm-module
+Priority: Optional
+
+
+Package: ti-dmai-src
+Version: 2_20_00_15-r2
+Section: multimedia
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 1e01df571514d162f8e0e4f718e4c095
+Size: 835322
+Filename: ti-dmai-src_2_20_00_15-r2_all.ipk
+Source: svn://gforge.ti.com/svn/dmai/;module=tags/TAG_2_20_00_15;proto=https;user=anonymous;pswd='' 	    file://doxygen_templates.tar.gz         file://arago-tdox 	file://0001-dmai-porting-to-kernel-2.6.37.patch                   file://add-media-controller-support-dev-node-change.patch
+Description: Patched sources for ti-dmai
+Priority: Optional
+
+
+Package: ti-dspbios-src
+Version: 5_41_03_17-r1
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 718f44c5da8388d419e1bedd5dc151f4
+Size: 46818782
+Filename: ti-dspbios-src_5_41_03_17-r1_all.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/bios/dspbios/5_41_03_17/exports/bios_setuplinux_5_41_03_17.bin;name=biosbin
+Description: Patched sources for ti-dspbios
+Priority: Optional
+
+
+Package: ti-dsplink-src
+Version: 1_65_01_05_eng-r57i
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: c26c8e79128884c19572efd168c2b7ff
+Size: 18472222
+Filename: ti-dsplink-src_1_65_01_05_eng-r57i_all.ipk
+Source: http://www.sanb.design.ti.com/tisb_releases/DSPLink/1_65_01_05/exports/dsplink_linux_1_65_01_05_eng.tar.gz;name=dsplinktarball            file://ti-dsplink-examples-run.sh            file://0001-switch-to-arago-tool-chain.patch
+Description: Patched sources for ti-dsplink
+Priority: Optional
+
+
+Package: ti-edma3lld-src
+Version: 01_11_02_05-r2
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 2cc5cfc6bd09233ad819c668bcb91c91
+Size: 10463554
+Filename: ti-edma3lld-src_01_11_02_05-r2_all.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/edma3_lld/edma3-lld-bios5/01_11_02_05/exports/EDMA3_LLD_setuplinux_01_11_02_05.bin;name=edma3lldbin
+Description: Patched sources for ti-edma3lld
+Priority: Optional
+
+
+Package: ti-linux-driver-examples-omapl-src
+Version: psp03.20.00.13-r3
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 31193cf4d5ff48cfa89bfe8cd43eb372
+Size: 19446
+Filename: ti-linux-driver-examples-omapl-src_psp03.20.00.13-r3_all.ipk
+Source: ftp://nemo.sc.ti.com/pub/int-packages/omapl138-linux-driver-examples-psp03.20.00.13.tar.gz;name=linuxexamplestarball
+Description: Patched sources for ti-linux-driver-examples-omapl
+Priority: Optional
+
+
+Package: ti-tisdk-licenses-src
+Version: 1.0-r3
+Section: base
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 6d63a716d0e6581d9da534d356196386
+Size: 53746
+Filename: ti-tisdk-licenses-src_1.0-r3_all.ipk
+Source: file://ti-tisdk-licenses/APACHEv2.txt     file://ti-tisdk-licenses/ECLIPSEv1.txt     file://ti-tisdk-licenses/GPLv2.txt     file://ti-tisdk-licenses/GPLv3.txt     file://ti-tisdk-licenses/LGPLv2.1.txt     file://ti-tisdk-licenses/LGPLv3.txt     file://ti-tisdk-licenses/MPLv1.1.txt     file://ti-tisdk-licenses/TI_TSPA.txt     file://ti-tisdk-licenses/BSD.txt     file://ti-tisdk-licenses/MIT.txt     file://ti-tisdk-licenses/creativecommons.txt     file://ti-tisdk-licenses/openssl.txt     file://ti-tisdk-licenses/CC-BY-NC-ND-3.0.txt     file://ti-tisdk-licenses/lmbench.txt
+Description: Patched sources for ti-tisdk-licenses
+Priority: Optional
+
+
+Package: ti-xdctools-src
+Version: 3_16_03_36-r2
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: a3b2a9272e0725b1de48e0ebca48d575
+Size: 176741934
+Filename: ti-xdctools-src_3_16_03_36-r2_all.ipk
+Source: http://software-dl.ti.com/dsps/dsps_public_sw/sdo_sb/targetcontent/rtsc/3_16_03_36/exports/xdctools_setuplinux_3_16_03_36.bin;name=xdcbin
+Description: Patched sources for ti-xdctools
+Priority: Optional
+
+
+Package: update-modules
+Version: 1.0-r10.6
+Depends: module-init-tools-depmod
+Section: base
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 8ff663cf75c09c073464f128be4708da
+Size: 2520
+Filename: update-modules_1.0-r10.6_all.ipk
+Source: file://update-modules
+Description: Script to manage module configuration files
+OE: update-modules
+HomePage: unknown
+Priority: optional
+
+
+Package: update-rc.d-dev
+Version: 0.7-r2.6
+Depends: update-rc.d (= 0.7-r2.6)
+Recommends: update-rc.d-dev
+Section: devel
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: 60c6700af913c28cadb0d93dd9d442a5
+Size: 696
+Filename: update-rc.d-dev_0.7-r2.6_all.ipk
+Source: file://update-rc.d file://add-verbose.patch
+Description: Manage symlinks in /etc/rcN.d
+OE: update-rc.d
+HomePage: unknown
+Priority: standard
+
+
+Package: update-rc.d
+Version: 0.7-r2.6
+Section: base
+Architecture: all
+Maintainer: Arago Developers <arago-devel@gforge.ti.com>
+MD5Sum: ddc5b0698ca868beb343c4851cbd4905
+Size: 2566
+Filename: update-rc.d_0.7-r2.6_all.ipk
+Source: file://update-rc.d file://add-verbose.patch
+Description: Manage symlinks in /etc/rcN.d
+OE: update-rc.d
+HomePage: unknown
+Priority: standard
+
+
